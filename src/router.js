@@ -22,7 +22,7 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  document.title = to.name + ' - Mozillians';
+  document.title = `${to.name} - Mozillians`;
   window.focus();
   next();
 });

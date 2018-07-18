@@ -12,7 +12,7 @@
   body {
     background: #f4f4f4;
   }
-  
+
   h1,
   h2,
   h3,
@@ -25,7 +25,7 @@
   img,
   pre,
   audio,
-  video { 
+  video {
     max-width: 100%;
     overflow: auto;
   }

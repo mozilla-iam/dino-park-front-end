@@ -6,7 +6,7 @@
 export default {
   name: 'Tag',
   props: {
-    name: String
+    name: String,
   },
 };
 </script>
