@@ -1,9 +1,9 @@
 <template>
   <div class="person">
-    <h3>{{ first_name }} {{ last_name }}</h3>
-    <div>{{ preferred_title }}</div>
-    <div>{{ team }}</div>
-    <div>{{ location }}</div>
+    <div>{{ first_name }} {{ last_name }}</div>
+    <div v-if="preferred_title">{{ preferred_title }}</div>
+    <div v-if="team">{{ team }}</div>
+    <div v-if="location">{{ location }}</div>
   </div>
 </template>
 

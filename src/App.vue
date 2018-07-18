@@ -12,6 +12,24 @@
   body {
     background: #f4f4f4;
   }
+  
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 0;
+  }
+
+  img,
+  pre,
+  audio,
+  video { 
+    max-width: 100%;
+    overflow: auto;
+  }
+
   .visually-hidden {
     position: absolute;
     left: -9999em;
