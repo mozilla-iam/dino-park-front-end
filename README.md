@@ -1,18 +1,18 @@
-# Mozillians front-end
+# DinoPark front-end
 
 A front-end for the repositioned Mozillians, to display, edit and search for people's profiles.
 
 ## Setup
 
-To set up, you need the [yarn package manager](https://yarnpkg.com/lang/en/docs/install/) installed. 
+To install all resources for this project, please make sure to have [Node](https://nodejs.org/) installed, then run:
 
-For the first time only, run:
-
-```yarn install``` 
+```bash
+npm install
+```
 
 This will install the dependencies the project requires. Then run:
 
-```yarn serve```
+```npm run serve```
 
 This will start a local server.
 
