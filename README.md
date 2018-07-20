@@ -12,7 +12,9 @@ npm install
 
 This will install the dependencies the project requires. Then run:
 
-```npm run serve```
+```bash
+npm run serve
+```
 
 This will start a local server.
 
@@ -35,8 +37,6 @@ Unit tests are in the `tests` folder and ran with Jest.
 
 * We embrace the cascade where it makes sense.
 * We write as little CSS as possible.
-* No preprocessor, but we'll postprocess so that we can autoprefix.
-* We use CSS Variables for colors.
 * We don't scope CSS with JS, we use ‘naming for scoping’, i.e. by sticking to unique names, we have workable enough ‘scopes’. 
 * As a naming convention we follow BEM (block, element, modifier). Quick summary:
     * `.block` is a component
