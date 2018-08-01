@@ -20,3 +20,17 @@ export default {
 };
 </script>
 
+<style>
+  .vouch + .vouch {
+    margin-top: 1em;
+  }
+  .vouch blockquote {
+    background-color: var( --lightGrey );
+    border: 1px solid var( --midGrey );
+    padding: 1em 1.5em;
+    margin: 0 0 0 1em;
+  }
+  .vouch blockquote + .person {
+    border-top: 1px; /* collapse borders */
+  }
+</style>
