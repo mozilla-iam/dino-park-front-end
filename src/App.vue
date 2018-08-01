@@ -71,6 +71,13 @@
     border-color: var( --midGrey );
   }
 
+  a {
+    color: var( --blue );
+  }
+  a:hover { 
+    color: var( --black );
+  }
+
   .visually-hidden {
     position: absolute;
     left: -9999em;
