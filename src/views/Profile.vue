@@ -75,19 +75,19 @@
       </header>
       <h3>Mozilla</h3>
       <ul class="relation-list">
-        <Relation type="Email" label="Mozilla Reps ReMo">
+        <Relation category="Email" label="Mozilla Reps ReMo">
           <a href="#">philipp@mozilla.com</a>
         </Relation>
-        <Relation type="Email" label="Mozilla Discourse">
+        <Relation category="Email" label="Mozilla Discourse">
           <a href="#">@phls</a>
         </Relation>
       </ul>
       <h3>Elsewhere</h3>
       <ul class="relation-list">
-        <Relation type="Email" label="GitHub">
+        <Relation category="Email" label="GitHub">
           <a href="#">@phls</a>
         </Relation>
-        <Relation type="Email" label="LinkedIn">
+        <Relation category="Email" label="LinkedIn">
           <a href="#">philipp@mozilla.com</a>
         </Relation>
       </ul>
@@ -95,6 +95,9 @@
     </section>
     <section id="access-groups">
       <h2>Access Groups</h2>
+      <Relation category="NDA">
+        Invited by <a href="#">Rubén Martin</a>
+      </Relation>
     </section>
     <section id="vouches">
       <h2>Vouches</h2>

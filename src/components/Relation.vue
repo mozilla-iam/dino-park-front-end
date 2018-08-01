@@ -1,6 +1,6 @@
 <template>
   <li class="relation">
-    <h4 class="relation__type">{{ type }}</h4>
+    <h4 class="relation__category">{{ category }}</h4>
     <div class="relation__label">{{ label }}</div>
     <div class="relation__content"><slot></slot></div>
   </li>
@@ -10,7 +10,7 @@
 export default {
   name: 'Relation',
   props: {
-    type: String,
+    category: String,
     label: String
   },
 };
@@ -31,12 +31,20 @@ export default {
   .relation + .relation {
     margin-top: 1em;
   }
-    .relation__type,
+    .relation__category,
     .relation__label {
       display: inline;
       margin: 0;
     }
-    .relation__type {
+    .relation__category {
       margin-right: .5em;
+      font-size: 1em;
+      font-weight: 400;
+    }
+    .relation__label {
+      color: var( --darkGrey );
+    }
+    .relation__content {
+      color: var( --darkGrey );
     }
 </style>
