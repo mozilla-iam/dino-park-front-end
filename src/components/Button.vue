@@ -93,9 +93,13 @@ export default {
   color: var( --blue );
 }
 
-.button-text-only:active {
+.button--text-only:active {
   background-color: var( --black );
   color: var( --white);
   border-color: var( --black );
+}
+
+.button--full-width {
+  width: 100%;
 }
 </style>

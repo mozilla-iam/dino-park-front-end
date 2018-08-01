@@ -36,6 +36,16 @@
         </ul>
       </div>
     </section>
+    <nav>
+      <ul>
+        <li><a href="#relations">Relations</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#elsewhere">Find me elsewhere</a></li>
+        <li><a href="#access-groups">Access groups</a></li>
+        <li><a href="#vouches">Vouches</a></li>
+        <li><a href="#tags">Tags</a></li>
+      </ul>
+    </nav>
     <section id="relations">
       <header>
         <h2>Relations</h2>
@@ -91,7 +101,7 @@
           <a href="#">philipp@mozilla.com</a>
         </Relation>
       </ul>
-      <button type="button">Show all groups</button>
+      <Button type="button" text="Show all groups" modifier="button--full-width button--secondary" />
     </section>
     <section id="access-groups">
       <h2>Access Groups</h2>
@@ -102,6 +112,11 @@
     <section id="vouches">
       <h2>Vouches</h2>
       <Vouch v-for="vouch in todo.vouches" v-bind="vouch" :key="vouch.id" />
+      <button type="button">Show all 6 received vouches</button>
+    </section>
+    <section id="tags">
+      <h2>Tags</h2>
+      <Tag v-for-object="tags in profile.tags" v-bind="tag" />
       <button type="button">Show all 6 received vouches</button>
     </section>
   </main>
@@ -238,12 +253,52 @@ export default {
 </script>
 
 <style>
-.profile section {
-  background: #fff;
+.profile {
   max-width: 60em;
-  margin: 2em auto;
+  margin: 0 auto;
+}
+@media ( min-width: 50em ) {
+  .profile {
+    display: grid;
+    grid-template-columns: repeat( 4, 1fr );
+    grid-gap: 0 2em;
+  }
+}
+
+.profile nav {
+  grid-column: 1 / 2;
+  grid-row: 2;
+  margin-bottom: 2em;
+}
+  .profile nav ul {
+    padding: 0;
+    margin: 0;
+  }
+  .profile nav li {
+    list-style: none;
+  }
+  .profile nav a {
+    display: block;
+    padding: 1em;
+    background: var( --white );
+    text-decoration: none;
+    margin-bottom: 1px;
+    color: var( --darkGrey );
+  }
+    .profile nav a:hover {
+      color: var( --blue );
+    }
+
+.profile section {
   border: 1px solid #cfcfcf;
+  background: #fff;
   padding: 1.5em;
+  margin: 0 0 2em;
+  grid-column: 2 / -1;
+}
+
+.profile section:first-child {
+  grid-column: 1 / -1;
 }
 
 .profile section header {

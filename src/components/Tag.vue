@@ -1,12 +1,12 @@
 <template>
-  <span class="tag">{{ name }}</span>
+  <span class="tag">Test</span>
 </template>
 
 <script>
 export default {
   name: 'Tag',
   props: {
-    name: String,
+    tag: String,
   },
 };
 </script>

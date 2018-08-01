@@ -62,7 +62,8 @@
   img,
   pre,
   audio,
-  video {
+  video,
+  section {
     max-width: 100%;
     overflow: auto;
   }
