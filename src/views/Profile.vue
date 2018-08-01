@@ -1,8 +1,12 @@
 <template>
   <main class="profile">
-    <section id="intro">
+    <section id="intro" class="profile__intro">
       <h1>{{ profile.first_name }} {{ profile.last_name }}</h1>
       <p>{{ profile.title }} a.k.a. {{ profile.fun_title }} {{ profile.pronouns}}</p>
+      <div class="profile__headshot">
+        <img :src="profile.picture" alt="" />
+        <p>Mozillan for 4 years</p>
+      </div>
       <h2 class="visually-hidden">About</h2>
       <div class="team">
         <h3 class="visually-hidden">Team</h3>
@@ -16,51 +20,33 @@
       <p>{{ profile.description }}</p>
       <div class="meta">
         <h3 class="visually-hidden">Meta</h3>
-        <dl>
-          <dt>Worker type</dt>
-          <dd>{{ todo.worker_type }}</dd>
-        </dl>
-        <dl>
-          <dt>Desk number</dt>
-          <dd>{{ todo.desk_number }}</dd>
-        </dl>
-        <dl>
-          <dt>Cost centre</dt>
-          <dd>{{ todo.cost_centre }}</dd>
-        </dl>
-        <dl>
-          <dt>Profile created date</dt>
-          <dd>{{ profile.created }}</dd>
-        </dl>
-        <dl>
-          <dt>Last modified</dt>
-          <dd>{{ profile.last_modified }}</dd>
-        </dl>
-        <dl>
-          <dt>User ID</dt>
-          <dd>{{ profile.user_id }}</dd>
-        </dl>
-        <dl>
-          <dt>Employee ID</dt>
-          <dd>{{ todo.employee_id }}</dd>
-        </dl>
+        <Meta metaKey="Worker type" :metaValue="todo.worker_type" />
+        <Meta metaKey="Desk number" :metaValue="todo.desk_number" />
+        <Meta metaKey="Cost centre" :metaValue="todo.cost_centre" />
+        <Meta metaKey="Profile created date" :metaValue="profile.created" />
+        <Meta metaKey="Last modified" :metaValue="profile.last_modified" />
+        <Meta metaKey="Employee ID" :metaValue="todo.employee_id" />
       </div>
       <div class="actions">
         <h3 class="visually-hidden">Actions</h3>
         <ul>
-          <li><button type="button">Show more about me</button></li>
-          <li><button type="button">Vouch</button></li>
-          <li><button type="button">Report</button></li>
+          <li><Button text="Show more" modifier="button--text-only" /></li>
+          <li><Button text="Vouch" modifier="button--secondary" /></li>
+          <li><Button text="Report" modifier="button--secondary"/></li>
         </ul>
       </div>
     </section>
     <section id="relations">
-      <h2>Relations</h2>
-      <Person v-for="person in todo.team.members" v-bind="person" :key="person.id" />
+      <header>
+        <h2>Relations</h2>
+      </header>
+      <Person v-for="person in todo.team.members" v-bind="person" />
       <a href="/orgchart?focus_on=this_person@TODO">View Org Chart</a>
     </section>
     <section id="contact">
-      <h2>Contact</h2>
+      <header>
+        <h2>Contact</h2>
+      </header>
       <h3 class="visually-hidden">Contact options</h3>
       <button type="button">Show less contact info</button>
       <hr>
@@ -75,35 +61,35 @@
           <Key v-for="key in profile.ssh_public_keys" type="SSH" title="Title" :content="key" :key="key.id" />
         </div>
       </div>
+      <template v-if="profile.preferred_languages.length > 0">
       <hr>
-      <div v-if="profile.preferred_languages.length > 0" class="languages">
+      <div class="languages">
         <h3>Languages</h3>
         <Tag v-for="language in profile.preferred_languages" v-bind="language" :key="language.id" />
       </div>
+      </template>
     </section>
-    <section id="contact">
-      <h2>Find me elsewhere</h2>
+    <section id="elsewhere">
+      <header>
+        <h2>Find me elsewhere</h2>
+      </header>
       <h3>Mozilla</h3>
-      <ul>
-        <li>
-          <h4>Email <span>Mozilla Reps ReMo</span></h4>
-          <div><a href="#">@hmitsch</a></div>
-        </li>
-        <li>
-          <h4>Email <span>Mozilla Discourse</span></h4>
-          <div><a href="#">@hmitsch</a></div>
-        </li>
+      <ul class="relation-list">
+        <Relation type="Email" label="Mozilla Reps ReMo">
+          <a href="#">philipp@mozilla.com</a>
+        </Relation>
+        <Relation type="Email" label="Mozilla Discourse">
+          <a href="#">@phls</a>
+        </Relation>
       </ul>
       <h3>Elsewhere</h3>
-      <ul>
-        <li>
-          <h4>Email <span>Mozilla Reps ReMo</span></h4>
-          <div><a href="#">@hmitsch</a></div>
-        </li>
-        <li>
-          <h4>Email <span>Mozilla Discourse</span></h4>
-          <div><a href="#">@hmitsch</a></div>
-        </li>
+      <ul class="relation-list">
+        <Relation type="Email" label="GitHub">
+          <a href="#">@phls</a>
+        </Relation>
+        <Relation type="Email" label="LinkedIn">
+          <a href="#">philipp@mozilla.com</a>
+        </Relation>
       </ul>
       <button type="button">Show all groups</button>
     </section>
@@ -118,27 +104,23 @@
   </main>
 </template>
 
-<style>
-  section {
-    background: #fff;
-    max-width: 50em;
-    margin: 2em auto;
-    border: 1px solid #cfcfcf;
-    padding: 2em;
-  }
-</style>
-
 <script>
-import Person from '@/components/Person.vue';
+import Button from '@/components/Button.vue';
 import Key from '@/components/Key.vue';
+import Meta from '@/components/Meta.vue';
+import Person from '@/components/Person.vue';
+import Relation from '@/components/Relation.vue';
 import Tag from '@/components/Tag.vue';
 import Vouch from '@/components/Vouch.vue';
 
 export default {
   name: 'Profile',
   components: {
-    Person,
+    Button,
     Key,
+    Meta,
+    Person,
+    Relation,
     Tag,
     Vouch,
   },
@@ -251,3 +233,46 @@ export default {
   },
 };
 </script>
+
+<style>
+.profile section {
+  background: #fff;
+  max-width: 60em;
+  margin: 2em auto;
+  border: 1px solid #cfcfcf;
+  padding: 1.5em;
+}
+
+.profile section header {
+  padding: 1.5em;
+  margin: -1.5em -1.5em 1.5em -1.5em;
+  border-bottom: 1px solid #cfcfcf;
+}
+
+.profile section header h2 {
+  margin: 0;
+}
+
+@media( min-width: 50em ) {
+  .profile .profile__intro {
+    padding-left: 20em;
+    position: relative;
+  }
+  .profile__headshot {
+    position: absolute;
+    top: 2em;
+    left: 2em;
+    width: 15em;
+  }
+}
+
+@media( min-width: 60em ) {
+  .profile .profile__intro {
+    padding-left: 22em;
+  }
+  .profile__headshot {
+    top: 3em;
+    left: 3em;
+  }
+}
+</style>

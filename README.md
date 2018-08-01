@@ -38,6 +38,7 @@ Unit tests are in the `tests` folder and ran with Jest.
 * We embrace the cascade where it makes sense.
 * We write as little CSS as possible.
 * We don't scope CSS with JS, we use ‘naming for scoping’, i.e. by sticking to unique names, we have workable enough ‘scopes’. 
+* CSS is included with the highest level component that needs it. For example, styles that work for the whole app, go into the `App.vue` file. Styles that only apply to a Profile view go to `Profile.vue`, styles that only apply to tag commponents go to `Tag.vue`. 
 * As a naming convention we follow BEM (block, element, modifier). Quick summary:
     * `.block` is a component
     * `.block--modifier` is a variation on the block component
