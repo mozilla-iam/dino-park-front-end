@@ -11,7 +11,7 @@ export default {
   name: 'Relation',
   props: {
     category: String,
-    label: String
+    label: String,
   },
 };
 </script>

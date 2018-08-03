@@ -50,7 +50,9 @@
       <header>
         <h2>Relations</h2>
       </header>
-      <Person v-for="person in todo.team.members" v-bind="person" />
+      <Person v-for="person in todo.team.members"
+              :key="person"
+              v-bind="person" />
       <a href="/orgchart?focus_on=this_person@TODO">View Org Chart</a>
     </section>
     <section id="contact">
