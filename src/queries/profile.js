@@ -1,6 +1,7 @@
-import gql from 'graphql-tag';
+import gql from 'apollo-boost';
 
 export default gql`query{ profiles }`;
+
 export const PROFILE_QUERY = gql`query {
  profiles (userId:"email|JRaQVFHYgUPYExSPtdcWAzLu") { 
     firstName {

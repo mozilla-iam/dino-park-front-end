@@ -136,7 +136,7 @@ import Person from '@/components/Person.vue';
 import Relation from '@/components/Relation.vue';
 import Tag from '@/components/Tag.vue';
 import Vouch from '@/components/Vouch.vue';
-import { PROFILE_QUERY } from '@/graphql/profile';
+import { PROFILE_QUERY } from '@/queries/profile';
 
 export default {
   name: 'Profile',
