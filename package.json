@@ -9,7 +9,14 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "apollo-boost": "^0.1.12",
+    "apollo-cache-inmemory": "^1.2.6",
+    "apollo-client": "^2.3.7",
+    "apollo-link-http": "^1.5.4",
+    "graphql": "^0.13.2",
+    "graphql-tag": "^2.9.2",
     "vue": "^2.5.16",
+    "vue-apollo": "^3.0.0-beta.19",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
   },
@@ -24,6 +31,7 @@
     "babel-jest": "^23.0.1",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.0.1",
+    "vue-cli-plugin-apollo": "^0.16.2",
     "vue-template-compiler": "^2.5.16"
   },
   "browserslist": [
