@@ -31,6 +31,7 @@
   body {
     background: var( --lightGrey );
     font-family: "Open Sans", sans-serif;
+    scroll-behavior: smooth;
   }
 
   h1,
