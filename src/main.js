@@ -3,11 +3,9 @@ import ApolloClient from 'apollo-boost';
 import VueApollo from 'vue-apollo';
 import App from './App.vue';
 import router from './router';
-import store from './store';
 
 Vue.config.productionTip = true;
 
-  store,
 const client = new ApolloClient({
   uri: 'http://localhost:5000/graphql',
 });
