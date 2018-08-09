@@ -12,7 +12,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style>
 .button {
   text-align: center;
   font-weight: bold;
