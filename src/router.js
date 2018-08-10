@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from './views/Home.vue';
-import Profile from './views/Profile.vue';
+import PageHome from './views/PageHome.vue';
+import PageProfile from './views/PageProfile.vue';
 
 Vue.use(Router);
 
@@ -11,12 +11,12 @@ const router = new Router({
     {
       path: '/',
       name: 'Home',
-      component: Home,
+      component: PageHome,
     },
     {
       path: '/profile',
       name: 'Profile',
-      component: Profile,
+      component: PageProfile,
     },
   ],
 });

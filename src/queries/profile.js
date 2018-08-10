@@ -1,4 +1,4 @@
-import gql from 'apollo-boost';
+import { gql } from 'apollo-boost';
 
 export default gql`query{ profiles }`;
 
@@ -33,6 +33,24 @@ export const PROFILE_QUERY = gql`query {
     },
     userId {
       value
-    }
+    },
+    created {
+      value
+    },
+    lastModified {
+      value
+    },
+    pgpPublicKeys {
+      values
+    },
+    sshPublicKeys {
+      values
+    },
+    tags {
+      values
+    },
+    preferredLagnuage {
+      values
+    },
   } 
 }`;
