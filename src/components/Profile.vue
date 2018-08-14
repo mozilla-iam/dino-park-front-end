@@ -129,7 +129,9 @@
     </section>
     <section id="vouches">
       <h2>Vouches</h2>
-      <Vouch v-for="vouch in todo.vouches" v-bind="vouch" :key="vouch.id" />
+      <ShowMore buttonText="Show more" :initial="2" :items="4">
+        <Vouch v-for="vouch in todo.vouches" v-bind="vouch" :key="vouch.id" />
+      </ShowMore>
     </section>
     <section id="tags">
       <h2>Tags</h2>
@@ -146,6 +148,7 @@ import Key from '@/components/Key.vue';
 import Meta from '@/components/Meta.vue';
 import Person from '@/components/Person.vue';
 import Relation from '@/components/Relation.vue';
+import ShowMore from '@/components/functional/ShowMore.vue';
 import Tag from '@/components/Tag.vue';
 import Vouch from '@/components/Vouch.vue';
 
@@ -173,6 +176,7 @@ export default {
     Meta,
     Person,
     Relation,
+    ShowMore,
     Tag,
     Vouch,
   },
@@ -210,10 +214,28 @@ export default {
               first_name: 'Dino',
               last_name: 'McVouch',
               preferred_title: 'Mozillians.org bot',
-            },
+            }
           },
           {
             id: 2,
+            content: 'Henrik is an active Mozilla Rep, organizing events and working a lot with the community. Thank you for all the work',
+            voucher: {
+              first_name: 'Emma',
+              last_name: 'Irwin',
+              preferred_title: 'Open Innovation',
+            }
+          },
+          {
+            id: 3,
+            content: 'Henrik is an active Mozilla Rep, organizing events and working a lot with the community. Thank you for all the work',
+            voucher: {
+              first_name: 'Andrew',
+              last_name: 'Krug',
+              preferred_title: 'InfoSec',
+            }
+          },
+          {
+            id: 4,
             content: 'Henrik is an active Mozilla Rep, organizing events and working a lot with the community. Thank you for all the work',
             voucher: {
               first_name: 'Emma',

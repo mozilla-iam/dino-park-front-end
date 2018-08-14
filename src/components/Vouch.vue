@@ -1,8 +1,8 @@
 <template>
-  <div class="vouch">
+  <li class="vouch">
     <blockquote>{{ content }}</blockquote>
     <Person v-bind="voucher" />
-  </div>
+  </li>
 </template>
 
 <script>
