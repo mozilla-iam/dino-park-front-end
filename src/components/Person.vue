@@ -27,18 +27,40 @@ export default {
     margin-left: 1em;
     padding: 1em 1.5em;
     position: relative;
-    overflow: hidden;
   }
-  .person__name {
-    font-weight: 700;
-  }
-  .person__preferred-title {
-    color: var( --darkGrey );
-  }
-  .person__photo {
-    position: absolute;
-    top: 1em;
-    left: -1em;
-    width: 2em;
-  }
+    .person__name {
+      font-weight: 700;
+    }
+      .person__name a {
+        color: inherit;
+        text-decoration: none;
+      }
+      .person__name a::after {
+        content: '';
+        width: 1em;
+        height: 1em;
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 1px solid transparent;
+      }
+      .person__name a:focus {
+        outline: none;
+      }
+      .person__name a:focus::after {
+        border: 1px solid var(--blue);
+      }
+    .person__preferred-title {
+      color: var( --darkGrey );
+    }
+    .person__photo {
+      position: absolute;
+      top: 1em;
+      left: -1em;
+      width: 2em;
+      max-height: 2em;
+    }
 </style>
