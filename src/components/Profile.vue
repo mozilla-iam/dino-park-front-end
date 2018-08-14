@@ -192,17 +192,39 @@ export default {
           members: [
             {
               id: 1,
-              firstName: 'Katharina',
-              lastName: 'Borchert',
-              funTitle: 'Open Innovation',
-              officeLocation: 'San Francisco',
+              userId: {
+                value: 'katharina',
+              },
+              firstName: {
+                value: 'Katharina',
+              },
+              lastName: {
+                value: 'Borchert',
+              },
+              funTitle: {
+                value: 'Open Innovation',
+              },
+              officeLocation: {
+                value: 'San Francisco',
+              },
             },
             {
               id: 2,
-              first_name: 'Florian',
-              last_name: 'Merz',
-              funTitle: 'Open Innovation',
-              officeLocation: 'Berlin',
+              userId: {
+                value: 'florian',
+              },
+              firstName: {
+                value: 'Florian',
+              },
+              lastName: {
+                value: 'Merz',
+              },
+              funTitle: {
+                value: 'Open Innovation',
+              },
+              officeLocation: {
+                value: 'Berlin',
+              },
             },
           ],
         },
@@ -214,7 +236,7 @@ export default {
               first_name: 'Dino',
               last_name: 'McVouch',
               preferred_title: 'Mozillians.org bot',
-            }
+            },
           },
           {
             id: 2,
@@ -223,7 +245,7 @@ export default {
               first_name: 'Emma',
               last_name: 'Irwin',
               preferred_title: 'Open Innovation',
-            }
+            },
           },
           {
             id: 3,
@@ -232,7 +254,7 @@ export default {
               first_name: 'Andrew',
               last_name: 'Krug',
               preferred_title: 'InfoSec',
-            }
+            },
           },
           {
             id: 4,
@@ -247,17 +269,17 @@ export default {
         languages: [
           {
             id: 1,
-            tag: 'German'
+            tag: 'German',
           },
           {
             id: 2,
-            tag: 'English'
+            tag: 'English',
           },
           {
             id: 3,
-            tag: 'Italian'
+            tag: 'Italian',
           },
-        ]
+        ],
       },
     };
   },

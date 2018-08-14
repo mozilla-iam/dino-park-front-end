@@ -1,8 +1,8 @@
 <template>
   <div class="person">
-    <div class="person__name"><a :href="'/profile/'+ userId.value">{{ firstName.value }} {{ lastName.value }}</a></div>
-    <div v-if="funTitle.value" class="person__preferred-title">{{ funTitle.value }}</div>
-    <div v-if="officeLocation.value" class="person__location">{{ officeLocation.value }}</div>
+    <div class="person__name"><a v-if="userId" :href="'/profile/'+ userId.value">{{ firstName.value }} {{ lastName.value }}</a></div>
+    <div v-if="funTitle" class="person__preferred-title">{{ funTitle.value }}</div>
+    <div v-if="officeLocation" class="person__location">{{ officeLocation.value }}</div>
   </div>
 </template>
 

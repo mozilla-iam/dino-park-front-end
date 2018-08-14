@@ -7,7 +7,7 @@
       <template v-else-if="data">
         <main>
           <PersonList v-if="data.profiles">
-            <Person v-for="profile in data.profiles" v-bind="profile"></Person>
+            <Person v-for="profile in data.profiles" v-bind="profile" :key="profile.index"></Person>
           </PersonList>
         </main>
       </template>
@@ -17,15 +17,15 @@
 </template>
 
 <script>
-import Person from '@/components/Person';
-import PersonList from '@/components/PersonList';
+import Person from '@/components/Person.vue';
+import PersonList from '@/components/PersonList.vue';
 import { PROFILE_LIST } from '@/queries/profile';
 
 export default {
   name: 'PageHome',
   components: {
     Person,
-    PersonList
+    PersonList,
   },
   data() {
     return {
