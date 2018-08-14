@@ -76,7 +76,7 @@
   a {
     color: var( --blue );
   }
-  a:hover { 
+  a:hover {
     color: var( --black );
   }
 
