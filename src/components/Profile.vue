@@ -316,11 +316,12 @@ export default {
     padding: 1em;
     background: var( --white );
     text-decoration: none;
-    margin-bottom: 1px;
+    border-bottom: 1px solid var( --lightGrey );
     color: var( --darkGrey );
   }
     .profile nav a:hover {
       color: var( --blue );
+      border-bottom: 1px solid currentColor;
     }
 
 .profile section {

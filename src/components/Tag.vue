@@ -12,14 +12,16 @@ export default {
 </script>
 
 <style>
-    .tag {
-        display: inline-block;
-        vertical-align: top;
-        white-space: nowrap;
-        padding: .5em 1em;
-        background-color: var( --midGrey );
-        border-radius: 2em;
-        text-align: center;
-        text-decoration: none;
-    }
+  .tag {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: .5em;
+    white-space: nowrap;
+    padding: .5em 1em;
+    background-color: var( --lightGrey );
+    border-radius: 2em;
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+  }
 </style>
