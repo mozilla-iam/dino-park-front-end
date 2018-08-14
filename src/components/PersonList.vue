@@ -1,7 +1,7 @@
 <template>
-  <ul class="person-list">
+  <div class="person-list">
     <slot></slot>
-  </ul>
+  </div>
 </template>
 
 <script>

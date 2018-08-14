@@ -69,6 +69,9 @@ const PROFILE_LIST = gql`query {
     },
     funTitle {
       value
+    },
+    picture {
+      value
     }
   }
 }`;
