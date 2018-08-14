@@ -1,9 +1,7 @@
 import { gql } from 'apollo-boost';
 
-export default gql`query{ profiles }`;
-
-export const PROFILE_QUERY = gql`query {
- profiles (userId:"email|JRaQVFHYgUPYExSPtdcWAzLu") { 
+const PROFILE_QUERY = gql`query ($userId: String!) {
+ profiles (userId:$userId) { 
     firstName {
       value
     },
@@ -54,3 +52,25 @@ export const PROFILE_QUERY = gql`query {
     },
   } 
 }`;
+
+const PROFILE_LIST = gql`query {
+ profiles { 
+    userId {
+      value
+    },
+    firstName {
+      value
+    },
+    lastName {
+      value
+    },
+    officeLocation {
+      value
+    },
+    funTitle {
+      value
+    }
+  }
+}`;
+
+export { PROFILE_QUERY, PROFILE_LIST };
