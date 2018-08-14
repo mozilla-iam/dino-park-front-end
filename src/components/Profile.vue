@@ -192,17 +192,17 @@ export default {
           members: [
             {
               id: 1,
-              first_name: 'Katharina',
-              last_name: 'Borchert',
-              team: 'Open Innovation',
-              location: 'San Francisco',
+              firstName: 'Katharina',
+              lastName: 'Borchert',
+              funTitle: 'Open Innovation',
+              officeLocation: 'San Francisco',
             },
             {
               id: 2,
               first_name: 'Florian',
               last_name: 'Merz',
-              team: 'Open Innovation',
-              location: 'San Francisco',
+              funTitle: 'Open Innovation',
+              officeLocation: 'Berlin',
             },
           ],
         },

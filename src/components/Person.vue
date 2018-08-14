@@ -1,9 +1,8 @@
 <template>
   <div class="person">
-    <div class="person__name">{{ first_name }} {{ last_name }}</div>
-    <div v-if="preferred_title" class="person__preferred-title">{{ preferred_title }}</div>
-    <div v-if="team" class="person_team">{{ team }}</div>
-    <div v-if="location" class="person__location">{{ location }}</div>
+    <div class="person__name"><a :href="'/profile/'+ userId.value">{{ firstName.value }} {{ lastName.value }}</a></div>
+    <div v-if="funTitle.value" class="person__preferred-title">{{ funTitle.value }}</div>
+    <div v-if="officeLocation.value" class="person__location">{{ officeLocation.value }}</div>
   </div>
 </template>
 
@@ -11,11 +10,11 @@
 export default {
   name: 'Person',
   props: {
-    first_name: String,
-    last_name: String,
-    preferred_title: String,
-    team: String,
-    location: String,
+    userId: Object,
+    firstName: Object,
+    lastName: Object,
+    officeLocation: Object,
+    funTitle: Object,
   },
 };
 </script>
