@@ -324,7 +324,7 @@ export default {
     }
 
 .profile section {
-  border: 1px solid #cfcfcf;
+  border: 1px solid var(--midGrey);
   background: #fff;
   padding: 1.5em;
   margin: 0 0 2em;

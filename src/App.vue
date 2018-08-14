@@ -1,11 +1,20 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link>
-    </div>
+    <TopBar></TopBar>
     <router-view/>
   </div>
 </template>
+
+<script>
+import TopBar from '@/components/TopBar.vue';
+
+export default {
+  name: 'PageHome',
+  components: {
+    TopBar,
+  },
+};
+</script>
 
 <style>
   :root {
@@ -31,6 +40,7 @@
     background: var( --lightGrey );
     font-family: "Open Sans", sans-serif;
     scroll-behavior: smooth;
+    margin: 0;
   }
 
   h1,
