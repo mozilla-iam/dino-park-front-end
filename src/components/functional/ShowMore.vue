@@ -11,7 +11,6 @@
 export default {
   name: 'ShowMore',
   props: {
-    initial: Number,
     buttonText: String,
     alternateButtonText: String,
   },
