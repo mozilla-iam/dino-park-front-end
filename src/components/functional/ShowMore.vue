@@ -25,12 +25,12 @@ export default {
   computed: {
     overflowContent() {
       return this.$el.querySelector('.show-more__overflow');
-    }
+    },
   },
-  updated() {;
+  updated() {
     if (this.expanded) {
       this.overflowContent.focus();
-    } 
+    }
   },
   data() {
     return {
