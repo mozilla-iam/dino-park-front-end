@@ -21,7 +21,8 @@ export default {
 </script>
 
 <style>
-  .vouch + .vouch {
+  .vouch + .vouch,
+  .vouch + div {
     margin-top: 1em;
   }
   .vouch blockquote {
