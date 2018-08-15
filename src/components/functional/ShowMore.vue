@@ -22,11 +22,14 @@ export default {
       this.expanded = !this.expanded;
     },
   },
+  computed: {
+    showMoreMore() {
+      return this.$el.querySelector('.show-more__more');
+    }
+  },
   updated() {;
-    const el = this.$el.querySelector('.show-more__more');
-
     if (this.expanded) {
-      el.focus();
+      this.showMoreMore.focus();
     } 
   },
   data() {
