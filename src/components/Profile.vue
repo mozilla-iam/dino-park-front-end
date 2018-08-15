@@ -23,7 +23,7 @@
       </div>
       <p>{{ description.value }}</p>
       <ShowMore buttonText="Show more" alternateButtonText="Show less" :expanded="false">
-        <template slot="more">
+        <template slot="overflow">
           <div class="meta">
             <h3 class="visually-hidden">Meta</h3>
             <Meta metaKey="Worker type" :metaValue="todo.worker_type" />
@@ -129,7 +129,7 @@
         <template slot="base">
           <Vouch content="This is the best Mozillian!" :voucher="{ value: 'Jake' }" />
         </template>
-        <template slot="more">
+        <template slot="overflow">
           <Vouch v-for="vouch in todo.vouches" v-bind="vouch" :key="vouch.id" />
         </template>
       </ShowMore>
