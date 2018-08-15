@@ -22,23 +22,19 @@
         <div class="location"><strong>{{ locationPreference.value }} ({{ officeLocation.value }})</strong> 1:10pm local time | +0h CEST</div>
       </div>
       <p>{{ description.value }}</p>
-      <div class="meta">
-        <h3 class="visually-hidden">Meta</h3>
-        <Meta metaKey="Worker type" :metaValue="todo.worker_type" />
-        <Meta metaKey="Desk number" :metaValue="todo.desk_number" />
-        <Meta metaKey="Cost centre" :metaValue="todo.cost_centre" />
-        <Meta metaKey="Profile created date" :metaValue="created.value" />
-        <Meta metaKey="Last modified" :metaValue="lastModified.value" />
-        <Meta metaKey="Employee ID" :metaValue="todo.employee_id" />
-      </div>
-      <div class="actions">
-        <h3 class="visually-hidden">Actions</h3>
-        <ul>
-          <li><Button text="Show more" modifier="button--text-only" /></li>
-          <li><Button text="Vouch" modifier="button--secondary" /></li>
-          <li><Button text="Report" modifier="button--secondary"/></li>
-        </ul>
-      </div>
+      <ShowMore buttonText="Show more" alternateButtonText="Show less" :expanded="false">
+        <template slot="more">
+          <div class="meta">
+            <h3 class="visually-hidden">Meta</h3>
+            <Meta metaKey="Worker type" :metaValue="todo.worker_type" />
+            <Meta metaKey="Desk number" :metaValue="todo.desk_number" />
+            <Meta metaKey="Cost centre" :metaValue="todo.cost_centre" />
+            <Meta metaKey="Profile created date" :metaValue="created.value" />
+            <Meta metaKey="Last modified" :metaValue="lastModified.value" />
+            <Meta metaKey="Employee ID" :metaValue="todo.employee_id" />
+          </div>
+        </template>
+      </ShowMore>
     </section>
     <nav>
       <ul>
