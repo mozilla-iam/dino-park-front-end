@@ -129,8 +129,13 @@
     </section>
     <section id="vouches">
       <h2>Vouches</h2>
-      <ShowMore buttonText="Show more" alternateButtonText="Show less" :initial="2" :items="4" :collapsed="true">
-        <Vouch v-for="vouch in todo.vouches" v-bind="vouch" :key="vouch.id" />
+      <ShowMore buttonText="Show more" alternateButtonText="Show less" :expanded="false">
+        <template slot="base">
+          <Vouch content="This is the best Mozillian!" :voucher="{ value: 'Jake' }" />
+        </template>
+        <template slot="more">
+          <Vouch v-for="vouch in todo.vouches" v-bind="vouch" :key="vouch.id" />
+        </template>
       </ShowMore>
     </section>
     <section id="tags">

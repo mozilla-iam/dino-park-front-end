@@ -1,10 +1,9 @@
 <template>
   <div>
-    <slot></slot>
-    <button v-if="items > initial" type="button" v-on:click="toggleOverflow">
-      <template v-if="collapsed ">{{ buttonText }}</template>
-      <template v-else>{{ alternateButtonText }}</template>
-    </button>
+    <slot name="base">
+    </slot>
+    <button type="button" :aria-expanded="expanded ? 'true' : 'false'" v-on:click="toggleOverflow">{{ expanded ? alternateButtonText : buttonText }}</button>
+    <slot name="more" v-if="expanded"></slot>
   </div>
 </template>
 
@@ -15,39 +14,21 @@ export default {
     initial: Number,
     buttonText: String,
     alternateButtonText: String,
-    items: Number,
-  },
-  computed: {
-    overflowingItems() {
-      return this.$children.slice(this.initial);
-    },
   },
   methods: {
     toggleOverflow() {
-      // eslint-disable-next-line
-      this.collapsed ? this.collapsed = false : this.collapsed = true;
+      this.expanded = !this.expanded;
     },
   },
   watch: {
-    collapsed() {
-      if (this.collapsed) {
-        this.overflowingItems.forEach((item) => {
-          item.$el.setAttribute('hidden', 'true');
-        });
-      } else {
-        this.overflowingItems.forEach((item) => {
-          item.$el.removeAttribute('hidden');
-        });
-      }
+    expanded() {
+      // manage focus
     },
   },
   data() {
     return {
-      collapsed: null,
+      expanded: '',
     };
-  },
-  mounted() {
-    // this.rerender();
   },
 };
 </script>

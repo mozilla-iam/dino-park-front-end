@@ -6,9 +6,11 @@
       <template v-else-if="error">An error occured</template>
       <template v-else-if="data">
         <main>
-          <h1>Dino Park</h1>
-          <p>Welcome to the Mozilla directory</p>
-          <p>This site lists all core individuals and groups that participate in the Mozilla Project. We call ourselves Mozillians and this is where we connect and share with one another.</p>
+          <div class="intro">
+            <h1>Dino Park</h1>
+            <p>Welcome to the Mozilla directory</p>
+            <p>This site lists all core individuals and groups that participate in the Mozilla Project. We call ourselves Mozillians and this is where we connect and share with one another.</p>
+          </div>
           <PersonList v-if="data.profiles">
             <Person v-for="profile in data.profiles" v-bind="profile" :key="profile.index"></Person>
           </PersonList>
@@ -37,3 +39,17 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+  .intro {
+    text-align: center;
+    margin-bottom: 4em;
+  }
+  p:first-of-type {
+    font-size: 1.5em;
+  }
+  main {
+    max-width: 50em;
+    margin: 0 auto;
+  }
+</style>
