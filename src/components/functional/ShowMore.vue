@@ -2,11 +2,11 @@
   <div class="show-more">
     <slot name="base">
     </slot>
-    <div class="show-more__overflow" v-if="expanded" tabindex="0">
+    <div class="show-more__overflow" v-if="expanded" tabindex="-1">
       <slot name="overflow">
       </slot>
     </div>
-    <button type="button" :aria-expanded="expanded ? 'true' : 'false'" v-on:click="toggleOverflow">{{ expanded ? alternateButtonText : buttonText }}</button>
+    <button class="button button--secondary" type="button" :aria-expanded="expanded ? 'true' : 'false'" v-on:click="toggleOverflow">{{ expanded ? alternateButtonText : buttonText }}</button>
   </div>
 </template>
 

@@ -15,12 +15,14 @@ export default {
 <style>
 .button {
   text-align: center;
-  font-weight: bold;
   text-decoration: none;
-  padding: .5em 2em;
+  padding: .875em 3.5em;
   display: block;
-  font-size: 1em;
+  font-weight: 700;
+  font-size: .75em;
   font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   border-radius: 1.25em;
   background-color: var( --black );
   color: var( --white );
@@ -45,10 +47,9 @@ export default {
 }
 
 .button--secondary {
-  border-color: var( --black );
+  border-color: var( --darkGrey );
   background-color: transparent;
   color: var( --black );
-  text-transform: none;
 }
 
 .button--secondary:hover {

@@ -67,7 +67,7 @@ export default {
   }
 
   h3 {
-    font-weight: 700;
+    font-weight: 400;
     font-size: 1.25em;
     color: var( --darkGrey );
   }
@@ -82,7 +82,9 @@ export default {
   }
 
   hr {
-    border-color: var( --midGrey );
+    border: 0;
+    height: 1px;
+    background-color: var(--midGrey);
   }
 
   a {
@@ -95,6 +97,16 @@ export default {
   .visually-hidden {
     position: absolute;
     left: -9999em;
+  }
+
+  [tabindex="-1"]:focus {
+    outline: none; /* if tabindex is -1, focus was
+    set programmatically to something that is usually
+    not focused (ie not an interactive element), in
+    order to improve reading order in widgets; no
+    outline seems sensible as it usually concerns
+    large elements that people would not expect to
+    have focus. */
   }
 
   .actions ul {

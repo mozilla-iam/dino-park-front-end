@@ -1,6 +1,6 @@
 <template>
   <main class="profile">
-    <section id="intro" class="profile__intro">
+    <section id="intro" class="profile__section profile__intro">
       <div class="profile__name">
         <h1>{{ firstName.value }} {{ lastName.value }} </h1>
         <span class="profile__user-name">@phlsa</span>
@@ -12,19 +12,23 @@
         <p>Mozillan for 4 years</p>
       </div>
       <h2 class="visually-hidden">About</h2>
-      <div class="team">
-        <h3 class="visually-hidden">Team</h3>
-        <strong>{{ todo.team.name }}</strong>
-        {{ todo.team.members.length }} team members
+      <div class="profile__team-location">
+        <div class="profile__team">
+          <h3 class="visually-hidden">Team</h3>
+          <strong>{{ todo.team.name }}</strong>
+          {{ todo.team.members.length }} team members
+        </div>
+        <div class="profile__location">
+          <h3 class="visually-hidden">Location</h3>
+          <div class="location"><strong>{{ locationPreference.value }} ({{ officeLocation.value }})</strong> 1:10pm local time | +0h CEST</div>
+        </div>
       </div>
-      <div class="location">
-        <h3 class="visually-hidden">Location</h3>
-        <div class="location"><strong>{{ locationPreference.value }} ({{ officeLocation.value }})</strong> 1:10pm local time | +0h CEST</div>
+      <div class="profile__description">
+        <p>{{ description.value }}</p>
       </div>
-      <p>{{ description.value }}</p>
       <ShowMore buttonText="Show more" alternateButtonText="Show less" :expanded="false">
         <template slot="overflow">
-          <div class="meta">
+          <MetaList>
             <h3 class="visually-hidden">Meta</h3>
             <Meta metaKey="Worker type" :metaValue="todo.worker_type" />
             <Meta metaKey="Desk number" :metaValue="todo.desk_number" />
@@ -32,11 +36,11 @@
             <Meta metaKey="Profile created date" :metaValue="created.value" />
             <Meta metaKey="Last modified" :metaValue="lastModified.value" />
             <Meta metaKey="Employee ID" :metaValue="todo.employee_id" />
-          </div>
+          </MetaList>
         </template>
       </ShowMore>
     </section>
-    <nav>
+    <nav class="profile__nav">
       <ul>
         <li><a href="#relations">Relations</a></li>
         <li><a href="#contact">Contact</a></li>
@@ -46,22 +50,27 @@
         <li><a href="#tags">Tags</a></li>
       </ul>
     </nav>
-    <section id="relations">
-      <header>
+    <section id="relations" class="profile__section" style="padding-bottom: 0">
+      <header class="profile__section-header">
         <h2>Relations</h2>
+        <a href="/orgchart?focus_on=this_person@TODO" class="button button--secondary">View Org Chart</a>
       </header>
-      <Person v-for="person in todo.team.members"
-              v-bind="person"
-              v-bind:key="person.id" />
-      <a href="/orgchart?focus_on=this_person@TODO">View Org Chart</a>
+      <ReportingStructure>
+        <template slot="reports-to">
+          <h3>Reports to:</h3>
+          <Person v-bind="todo.team.members[0]" />
+        </template>
+        <template slot="manages">
+          <h3>Manages:</h3>
+          <Person v-bind="todo.team.members[1]" />
+        </template>
+      </ReportingStructure>
     </section>
-    <section id="contact">
-      <header>
+    <section id="contact" class="profile__section">
+      <header class="profile__section-header">
         <h2>Contact</h2>
       </header>
       <h3 class="visually-hidden">Contact options</h3>
-      <button type="button">Show less contact info</button>
-      <hr>
       <div v-if="pgpPublicKeys || sshPublicKeys">
         <h3>Keys</h3>
         <div v-if="pgpPublicKeys">
@@ -93,8 +102,8 @@
       </div>
       </template>
     </section>
-    <section id="elsewhere">
-      <header>
+    <section id="elsewhere" class="profile__section">
+      <header class="profile__section-header">
         <h2>Find me elsewhere</h2>
       </header>
       <h3>Mozilla</h3>
@@ -117,25 +126,31 @@
       </ul>
       <Button type="button" text="Show all groups" modifier="button--full-width button--secondary" />
     </section>
-    <section id="access-groups">
-      <h2>Access Groups</h2>
+    <section id="access-groups" class="profile__section">
+      <header class="profile__section-header">
+        <h2>Access Groups</h2>
+      </header>
       <Relation category="NDA">
         Invited by <a href="#">Rubén Martin</a>
       </Relation>
     </section>
-    <section id="vouches">
-      <h2>Vouches</h2>
+    <section id="vouches" class="profile__section">
+      <header class="profile__section-header">
+        <h2>Vouches</h2>
+      </header>
       <ShowMore buttonText="Show more" alternateButtonText="Show less" :expanded="false">
         <template slot="base">
-          <Vouch content="This is the best Mozillian!" :voucher="{ value: 'Jake' }" />
+          <Vouch v-bind="todo.vouches[3]" />
         </template>
         <template slot="overflow">
           <Vouch v-for="vouch in todo.vouches" v-bind="vouch" :key="vouch.id" />
         </template>
       </ShowMore>
     </section>
-    <section id="tags">
-      <h2>Tags</h2>
+    <section id="tags" class="profile__section">
+      <header class="profile__section-header">
+        <h2>Tags</h2>
+      </header>
       <Tag tag="HTML" />
       <Tag tag="GraphQL" />
       <Tag tag="Kubernetes" />
@@ -147,8 +162,10 @@
 import Button from '@/components/Button.vue';
 import Key from '@/components/Key.vue';
 import Meta from '@/components/Meta.vue';
+import MetaList from '@/components/MetaList.vue';
 import Person from '@/components/Person.vue';
 import Relation from '@/components/Relation.vue';
+import ReportingStructure from '@/components/ReportingStructure.vue';
 import ShowMore from '@/components/functional/ShowMore.vue';
 import Tag from '@/components/Tag.vue';
 import Vouch from '@/components/Vouch.vue';
@@ -175,8 +192,10 @@ export default {
     Button,
     Key,
     Meta,
+    MetaList,
     Person,
     Relation,
+    ReportingStructure,
     ShowMore,
     Tag,
     Vouch,
@@ -208,6 +227,9 @@ export default {
               officeLocation: {
                 value: 'San Francisco',
               },
+              picture: {
+                value: 'https://placekitten.com/100/100',
+              },
             },
             {
               id: 2,
@@ -226,6 +248,9 @@ export default {
               officeLocation: {
                 value: 'Berlin',
               },
+              picture: {
+                value: 'https://placekitten.com/100/100',
+              },
             },
           ],
         },
@@ -234,36 +259,96 @@ export default {
             id: 1,
             content: 'An automatic vouch for being a Mozilla employee.',
             voucher: {
-              first_name: 'Dino',
-              last_name: 'McVouch',
-              preferred_title: 'Mozillians.org bot',
+              userId: {
+                value: 'dino',
+              },
+              firstName: {
+                value: 'Dino',
+              },
+              lastName: {
+                value: 'McVouch',
+              },
+              funTitle: {
+                value: 'The Vouching Bot',
+              },
+              officeLocation: {
+                value: 'The internet',
+              },
+              picture: {
+                value: 'https://placekitten.com/100/100',
+              },
             },
           },
           {
             id: 2,
             content: 'Henrik is an active Mozilla Rep, organizing events and working a lot with the community. Thank you for all the work',
             voucher: {
-              first_name: 'Emma',
-              last_name: 'Irwin',
-              preferred_title: 'Open Innovation',
+              userId: {
+                value: 'florian',
+              },
+              firstName: {
+                value: 'Florian',
+              },
+              lastName: {
+                value: 'Merz',
+              },
+              funTitle: {
+                value: 'Open Innovation',
+              },
+              officeLocation: {
+                value: 'Berlin',
+              },
+              picture: {
+                value: 'https://placekitten.com/100/100',
+              },
             },
           },
           {
             id: 3,
             content: 'Henrik is an active Mozilla Rep, organizing events and working a lot with the community. Thank you for all the work',
             voucher: {
-              first_name: 'Andrew',
-              last_name: 'Krug',
-              preferred_title: 'InfoSec',
+              userId: {
+                value: 'andrew',
+              },
+              firstName: {
+                value: 'Andrew',
+              },
+              lastName: {
+                value: 'Krug',
+              },
+              funTitle: {
+                value: 'InfoSec',
+              },
+              officeLocation: {
+                value: 'Portland',
+              },
+              picture: {
+                value: 'https://placekitten.com/100/100',
+              },
             },
           },
           {
             id: 4,
             content: 'Henrik is an active Mozilla Rep, organizing events and working a lot with the community. Thank you for all the work',
             voucher: {
-              first_name: 'Emma',
-              last_name: 'Irwin',
-              preferred_title: 'Open Innovation',
+              userId: {
+                value: 'megan',
+              },
+              firstName: {
+                value: 'Megan',
+              },
+              lastName: {
+                value: 'Branson',
+              },
+              funTitle: {
+                value: 'Open Innovation',
+              },
+              officeLocation: {
+                value: 'Portland',
+              },
+              picture: {
+                value: 'https://placekitten.com/100/100',
+              },
             },
           },
         ],
@@ -300,19 +385,19 @@ export default {
   }
 }
 
-.profile nav {
+.profile__nav {
   grid-column: 1 / 2;
   grid-row: 2;
   margin-bottom: 2em;
 }
-  .profile nav ul {
+  .profile__nav ul {
     padding: 0;
     margin: 0;
   }
-  .profile nav li {
+  .profile__nav li {
     list-style: none;
   }
-  .profile nav a {
+  .profile__nav a {
     display: block;
     padding: 1em;
     background: var( --white );
@@ -320,32 +405,34 @@ export default {
     border-bottom: 1px solid var( --lightGrey );
     color: var( --darkGrey );
   }
-    .profile nav a:hover {
+    .profile__nav a:hover {
       color: var( --blue );
       border-bottom: 1px solid currentColor;
     }
 
-.profile section {
+.profile__section {
   border: 1px solid var(--midGrey);
   background: #fff;
   padding: 1.5em;
   margin: 0 0 2em;
   grid-column: 2 / -1;
 }
-
-.profile section:first-child {
+.profile__section:first-child {
   grid-column: 1 / -1;
 }
 
-.profile section header {
+.profile__section-header {
   padding: 1.5em;
   margin: -1.5em -1.5em 1.5em -1.5em;
   border-bottom: 1px solid #cfcfcf;
+  display: flex;
 }
-
-.profile section header h2 {
-  margin: 0;
-}
+  .profile__section-header h2 {
+    margin: 0;
+  }
+  .profile__section-header .button {
+    margin-left: auto;
+  }
 
 .profile__name {
   display: block;
@@ -368,7 +455,12 @@ export default {
 }
 
 .profile__title {
-  font-weight: 700;
+  font-weight: 400;
+  font-size: 1.25em;
+}
+
+.profile__funt-title {
+  color: var( --darkerGrey );
 }
 
 @media( min-width: 50em ) {
@@ -384,6 +476,17 @@ export default {
   }
 }
 
+.profile__location,
+.profile__team,
+.profile__description {
+  font-size: .875em;
+  color: var( --darkGrey );
+}
+    .profile__team-location strong {
+      display: block;
+      color: var( --black );
+    }
+
 @media( min-width: 60em ) {
   .profile .profile__intro {
     padding-left: 22em;
@@ -392,5 +495,17 @@ export default {
     top: 3em;
     left: 3em;
   }
+  .profile__team-location {
+    display: flex;
+  }
+    .profile__team-location div {
+      padding-left: 0;
+    }
+    .profile__team-location div:first-child {
+      border-right: 1px solid var( --midGrey );
+      margin-right: 1em;
+      padding-right: 1em;
+      padding-left: 0;
+    }
 }
 </style>

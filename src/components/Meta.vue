@@ -1,5 +1,5 @@
 <template>
-  <dl class="meta__item">
+  <dl class="meta-list__item">
     <dt>{{ metaKey }}</dt>
     <dd>{{ metaValue }}</dd>
   </dl>
@@ -17,18 +17,13 @@ export default {
 
 
 <style>
-.meta {
-  overflow: hidden;
-  display: grid;
-  grid-template-columns: repeat( 3, 1fr );
-}
-  .meta__item {
+  .meta-list__item {
     width: 50%;
     float: left;
     margin: 0 0 1em;
   }
 
-  .meta dt {
+  .meta-list__item dt {
     text-transform: uppercase;
     color: var( --darkGrey );
     font-weight: 700;
@@ -36,7 +31,13 @@ export default {
     letter-spacing: 0.0 25em;
   }
 
-  .meta dd {
+  .meta-list__item dd {
     margin-left: 0;
+  }
+
+  @supports ( display: grid ) {
+    .meta__list--item {
+      width: auto;
+    }
   }
 </style>
