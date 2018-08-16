@@ -1,4 +1,3 @@
-
 <template>
   <ApolloQuery :query="profileList">
     <template slot-scope="{ result: { loading, data, error } }">

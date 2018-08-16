@@ -32,14 +32,14 @@ export default {
   methods: {
     handleError() {
       console.log(this);
-    }
+    },
   },
   data() {
     return {
       mutateProfile: MUTATE_PROFILE,
       done: false,
       firstName: '',
-      lastName: '', 
+      lastName: '',
       primaryEmail: '',
       userId: '',
     };

@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'Loading',
+  name: 'LoadingSpinner',
 };
 </script>
 
@@ -18,7 +18,7 @@ export default {
     animation: rotateSpinner 1.2s linear infinite;
     transform-origin: center;
   }
-  
+
   @keyframes rotateSpinner {
     0% {
         transform: rotate(0deg);
