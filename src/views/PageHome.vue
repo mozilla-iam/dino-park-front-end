@@ -2,7 +2,7 @@
 <template>
   <ApolloQuery :query="profileList">
     <template slot-scope="{ result: { loading, data, error } }">
-      <template v-if="loading">Loading...</template>
+      <LoadingSpinner v-if="loading"></LoadingSpinner>
       <template v-else-if="error">An error occured</template>
       <template v-else-if="data">
         <main>
@@ -16,7 +16,7 @@
           </PersonList>
         </main>
       </template>
-      <template v-else>No result :(</template>
+      <LoadingSpinner v-else></LoadingSpinner>
     </template>
   </ApolloQuery>
 </template>
@@ -24,6 +24,7 @@
 <script>
 import Person from '@/components/Person.vue';
 import PersonList from '@/components/PersonList.vue';
+import LoadingSpinner from '@/components/LoadingSpinner.vue';
 import { PROFILE_LIST } from '@/queries/profile';
 
 export default {
@@ -31,6 +32,7 @@ export default {
   components: {
     Person,
     PersonList,
+    LoadingSpinner,
   },
   data() {
     return {
