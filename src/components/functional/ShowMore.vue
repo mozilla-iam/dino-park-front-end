@@ -22,14 +22,11 @@ export default {
       this.expanded = !this.expanded;
     },
   },
-  computed: {
-    overflowContent() {
-      return this.$el.querySelector('.show-more__overflow');
-    },
-  },
   updated() {
+    const overflowContent = this.$el.querySelector('.show-more__overflow');
+
     if (this.expanded) {
-      this.overflowContent.focus();
+      overflowContent.focus();
     }
   },
   data() {

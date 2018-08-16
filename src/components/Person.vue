@@ -27,6 +27,7 @@ export default {
     margin-left: 1em;
     padding: 1em 1.5em;
     position: relative;
+    background-color: var( --white );
   }
     .person__name {
       font-weight: 700;
