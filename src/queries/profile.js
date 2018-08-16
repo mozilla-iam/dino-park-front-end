@@ -76,4 +76,35 @@ const PROFILE_LIST = gql`query {
   }
 }`;
 
-export { PROFILE_QUERY, PROFILE_LIST };
+const MUTATE_PROFILE = gql`mutation updateProfile($userId: String!, $firstName: String, $lastName: String, $primaryEmail: String) {
+  editBasicProfile(
+    userId: $userId,
+    basicProfileData: {
+      firstName: {
+        value: $firstName
+      },
+      lastName: {
+        value: $lastName
+      },
+      primaryEmail: {
+        value: $primaryEmail
+      }
+    }
+  ) 
+  {
+    updatedProfile {
+      firstName {
+        value
+      }
+      lastName {
+        value
+      }
+      primaryEmail {
+        value
+      }
+    }
+  }
+}
+`;
+
+export { PROFILE_QUERY, PROFILE_LIST, MUTATE_PROFILE };
