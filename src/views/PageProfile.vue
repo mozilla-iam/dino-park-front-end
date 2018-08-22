@@ -8,7 +8,7 @@
           <p>An error occured while trying to go to {{ userId }}: </p></Error>
         </template>
       <template v-else-if="data">
-        <Profile v-bind="data.profiles[0]"></Profile>
+        <Profile v-bind="data.profile"></Profile>
       </template>
       <LoadingSpinner v-else></LoadingSpinner>
     </template>

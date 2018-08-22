@@ -1,7 +1,7 @@
 import { gql } from 'apollo-boost';
 
 const PROFILE_QUERY = gql`query ($userId: String!) {
- profiles (userId:$userId) { 
+ profile (userId:$userId) { 
     firstName {
       value
     },
