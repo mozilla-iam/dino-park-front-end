@@ -31,7 +31,7 @@ export default {
 
   /* @TODO make more elegant  */
   .profile__section .reporting-structure {
-    margin: -1.5em -1.5em -1.5em -1.5em; 
+    margin: -1.5em -1.5em -1.5em -1.5em;
   }
 
   .profile__section .reporting-structure > div {
