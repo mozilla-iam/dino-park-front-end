@@ -35,6 +35,6 @@ export default {
   }
 
   .profile__section .reporting-structure > div {
-    padding: 3em 1.5em;
+    padding: 1.5em 1.5em 3em;
   }
 </style>

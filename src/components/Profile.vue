@@ -50,7 +50,7 @@
         <li><a href="#tags">Tags</a></li>
       </ul>
     </nav>
-    <section id="relations" class="profile__section" style="padding-bottom: 0">
+    <section id="relations" class="profile__section">
       <header class="profile__section-header">
         <h2>Relations</h2>
         <a href="/orgchart?focus_on=this_person@TODO" class="button button--secondary">View Org Chart</a>
@@ -416,6 +416,7 @@ export default {
   padding: 1.5em;
   margin: 0 0 2em;
   grid-column: 2 / -1;
+  overflow: visible;
 }
 .profile__section:first-child {
   grid-column: 1 / -1;
