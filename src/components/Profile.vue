@@ -389,6 +389,8 @@ export default {
   grid-column: 1 / 2;
   grid-row: 2;
   margin-bottom: 2em;
+  position: sticky;
+  top: 0;
 }
   .profile__nav ul {
     padding: 0;
