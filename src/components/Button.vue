@@ -1,12 +1,13 @@
 <template>
-  <button type="button" :class="'button ' + modifier">{{ text }}</button>
+  <button type="button" :class="'button' + ( modifier ? ' ' + modifier : '' )">
+    <slot></slot>
+  </button>
 </template>
 
 <script>
 export default {
   name: 'Button',
   props: {
-    text: String,
     modifier: String,
   },
 };

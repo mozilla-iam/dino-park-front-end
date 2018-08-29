@@ -39,6 +39,14 @@
           </MetaList>
         </template>
       </ShowMore>
+      <button @click="$refs.changeInfo.isOpen = true">Change info</button>
+      <Modal ref="changeInfo">
+        <p>For me here</p>
+      </Modal>
+      <button @click="$refs.changeName.isOpen = true">Change name</button>
+      <Modal ref="changeName">
+        <p>For me here</p>
+      </Modal>
     </section>
     <nav class="profile__nav">
       <ul>
@@ -124,7 +132,7 @@
           <a href="#">philipp@mozilla.com</a>
         </Relation>
       </ul>
-      <Button type="button" text="Show all groups" modifier="button--full-width button--secondary" />
+      <Button type="button" modifier="button--full-width button--secondary">Show all groups</Button>
     </section>
     <section id="access-groups" class="profile__section">
       <header class="profile__section-header">
@@ -155,6 +163,9 @@
       <Tag tag="GraphQL" />
       <Tag tag="Kubernetes" />
     </section>
+    <Modal ref="change-details">
+      <p>Lorem ipsum dolor sit amet</p>
+    </Modal>
   </main>
 </template>
 
@@ -163,6 +174,7 @@ import Button from '@/components/Button.vue';
 import Key from '@/components/Key.vue';
 import Meta from '@/components/Meta.vue';
 import MetaList from '@/components/MetaList.vue';
+import Modal from '@/components/functional/Modal.vue';
 import Person from '@/components/Person.vue';
 import Relation from '@/components/Relation.vue';
 import ReportingStructure from '@/components/ReportingStructure.vue';
@@ -193,6 +205,7 @@ export default {
     Key,
     Meta,
     MetaList,
+    Modal,
     Person,
     Relation,
     ReportingStructure,
