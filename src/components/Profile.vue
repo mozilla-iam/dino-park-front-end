@@ -41,11 +41,9 @@
       </ShowMore>
       <button @click="$refs.changeInfo.isOpen = true">Change info</button>
       <Modal ref="changeInfo">
-        <p>For me here</p>
-      </Modal>
-      <button @click="$refs.changeName.isOpen = true">Change name</button>
-      <Modal ref="changeName">
-        <p>For me here</p>
+        <h2>Edit personal info</h2>
+        <p>This is a demo of opening a form in an overlay.</p>
+        <EditPersonalInfo/>
       </Modal>
     </section>
     <nav class="profile__nav">
@@ -163,14 +161,12 @@
       <Tag tag="GraphQL" />
       <Tag tag="Kubernetes" />
     </section>
-    <Modal ref="change-details">
-      <p>Lorem ipsum dolor sit amet</p>
-    </Modal>
   </main>
 </template>
 
 <script>
 import Button from '@/components/Button.vue';
+import EditPersonalInfo from '@/components/forms/EditPersonalInfo.vue';
 import Key from '@/components/Key.vue';
 import Meta from '@/components/Meta.vue';
 import MetaList from '@/components/MetaList.vue';
@@ -202,6 +198,7 @@ export default {
   },
   components: {
     Button,
+    EditPersonalInfo,
     Key,
     Meta,
     MetaList,
