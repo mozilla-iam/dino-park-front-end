@@ -1,31 +1,32 @@
 <template>
-  <div class="modal" v-if="isOpen">
-    <div class="modal__content">
-      <button @click="isOpen = false">Close</button>
-      <slot></slot>
+  <transition name="modal-">
+    <div class="modal" v-if="isOpen">
+      <div class="modal__content">
+        <button @click="isOpen = false">Close</button>
+        <slot></slot>
+      </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
 export default {
   name: 'Modal',
   watch: {
-    isOpen: function() {
+    isOpen() {
       if (this.isOpen) {
-        // lock body
-        // trap focus
-      }
-      else {
-        // return focus to last focused element
+        // @todo lock body
+        // @todo trap focus
+      } else {
+        // @todo return focus to last focused element
       }
     },
   },
   data() {
     return {
-      isOpen: false
-    }
-  }
+      isOpen: false,
+    };
+  },
 };
 </script>
 
@@ -41,13 +42,13 @@ export default {
     top: 0;
     left: 0;
     opacity: 1;
-    transition: opacity .5s;
     z-index: 2;
   }
-  .modal--off-screen {
+  .modal--enter-active {
+    transition: all .2s ease-in-out;
+  }
+  .modal--enter {
     opacity: 0;
-    position: absolute;
-    left: -100%;
   }
     .modal__content {
       max-width: 32em;
