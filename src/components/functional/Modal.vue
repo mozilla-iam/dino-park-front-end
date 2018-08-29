@@ -1,30 +1,37 @@
 <template>
-  <transition name="modal-">
-    <div class="modal" v-if="isOpen">
+    <div class="modal" v-show="isOpen" tabindex="-1" @keyup.esc="isOpen = false">
       <div class="modal__content">
         <button @click="isOpen = false">Close</button>
         <slot></slot>
       </div>
     </div>
-  </transition>
 </template>
 
 <script>
+import { bindFocusTrap, unbindFocusTrap } from '@/assets/js/trapFocus';
+
 export default {
   name: 'Modal',
-  watch: {
-    isOpen() {
-      if (this.isOpen) {
-        // @todo lock body
-        // @todo trap focus
-      } else {
-        // @todo return focus to last focused element
-      }
-    },
+  updated() {
+    if (this.isOpen) {
+      document.body.style.overflow = 'hidden';
+
+      this.$el.focus();
+
+      // @todo trap focus
+      // bindFocusTrap(this.modalElement);
+    } else {
+      document.body.style.overflow = 'visible';
+
+      // @todo unbind focus trap
+      // unbindFocusTrap(this.modalElement);
+      // @todo return focus to last focused element
+    }
   },
   data() {
     return {
       isOpen: false,
+      modalElement: this.$el,
     };
   },
 };
