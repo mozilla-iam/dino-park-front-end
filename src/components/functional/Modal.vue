@@ -1,10 +1,12 @@
 <template>
-    <div class="modal" v-show="isOpen" tabindex="-1" @keyup.esc="isOpen = false">
-      <div class="modal__content">
-        <button @click="isOpen = false">Close</button>
-        <slot></slot>
+    <transition name="modal-">
+      <div class="modal" v-show="isOpen" tabindex="-1" @keyup.esc="isOpen = false">
+        <div class="modal__content">
+          <button @click="isOpen = false">Close</button>
+          <slot></slot>
+        </div>
       </div>
-    </div>
+    </transition>
 </template>
 
 <script>
@@ -51,7 +53,8 @@ export default {
     opacity: 1;
     z-index: 2;
   }
-  .modal--enter-active {
+  .modal--enter-active,
+  .modal--leave-active {
     transition: all .2s ease-in-out;
   }
   .modal--enter {

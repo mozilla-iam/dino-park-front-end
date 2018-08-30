@@ -29,7 +29,7 @@
       <ShowMore buttonText="Show more" alternateButtonText="Show less" :expanded="false">
         <template slot="overflow">
           <MetaList>
-            <h3 class="visually-hidden">Meta</h3>
+            <h3 class="visually-hidden">Meta</h3> 
             <Meta metaKey="Worker type" :metaValue="todo.worker_type" />
             <Meta metaKey="Desk number" :metaValue="todo.desk_number" />
             <Meta metaKey="Cost centre" :metaValue="todo.cost_centre" />
@@ -39,12 +39,6 @@
           </MetaList>
         </template>
       </ShowMore>
-      <button @click="$refs.changeInfo.isOpen = true">Change info</button>
-      <Modal ref="changeInfo">
-        <h2>Edit personal info</h2>
-        <p>This is a demo of opening a form in an overlay.</p>
-        <EditPersonalInfo/>
-      </Modal>
     </section>
     <nav class="profile__nav">
       <ul>
@@ -160,6 +154,14 @@
       <Tag tag="HTML" />
       <Tag tag="GraphQL" />
       <Tag tag="Kubernetes" />
+    </section>
+    <section class="profile__section">
+      <button class="button button--secondary" @click="$refs.changeInfo.isOpen = true">Change info</button>
+      <Modal ref="changeInfo">
+        <h2>Edit personal info</h2>
+        <p>This is a demo of opening a form in an overlay.</p>
+        <EditPersonalInfo/>
+      </Modal>
     </section>
   </main>
 </template>
