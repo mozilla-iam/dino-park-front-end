@@ -22,6 +22,28 @@ This will start a local server.
 
 Unit tests are in the `tests` folder and ran with Jest.
 
+## App-wide patterns
+
+### Modal overlay
+
+We use the `<Modal>` component to describe the contents and behaviour of modal overlays.
+
+To add a modal overlay, we need to parts: something that triggers it, and the overlay itself.
+
+A trigger can be a `button` that `onclick` changes the `isOpen` value of an overlay to `true` (or a script that does that on whatever event required). The easiest is to link an overlay to its triggering button is to use refs, for example: 
+
+```markup
+<button @click="$refs.myOverlay.isOpen = true">Change info</button>
+<Modal ref="myOverlay">
+<!-- content goes here -->
+</Modal>
+```
+
+Notes: 
+
+* While a modal is open, scroll is prevented and focus is trapped inside the modal.
+* We don't do anything special to make the modal be layered on top of everything else. Increase the `z-index` if there are elements with a higher z-index. 
+
 ## Technical considerations
 
 ### General front-end practices
