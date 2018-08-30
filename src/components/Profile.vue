@@ -204,7 +204,7 @@ export default {
     pgpPublicKeys: Object,
     sshPublicKeys: Object,
     tags: Object,
-    preferredLagnuage: Object,
+    preferredLanguage: Object,
   },
   components: {
     Button,

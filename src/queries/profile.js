@@ -47,7 +47,7 @@ const PROFILE_QUERY = gql`query ($userId: String!) {
     tags {
       values
     },
-    preferredLagnuage {
+    preferredLanguage {
       values
     },
   } 
