@@ -39,6 +39,10 @@
           </MetaList>
         </template>
       </ShowMore>
+      <button @click="$refs.flagProfile.isOpen=true">Flag this profile</button>
+      <Modal ref="flagProfile" heading="Flag this profile">
+        <FlagProfile/>
+      </Modal>
     </section>
     <nav class="profile__nav">
       <ul>
@@ -167,8 +171,8 @@
 </template>
 
 <script>
+// components
 import Button from '@/components/Button.vue';
-import EditPersonalInfo from '@/components/forms/EditPersonalInfo.vue';
 import Key from '@/components/Key.vue';
 import Meta from '@/components/Meta.vue';
 import MetaList from '@/components/MetaList.vue';
@@ -179,6 +183,10 @@ import ReportingStructure from '@/components/ReportingStructure.vue';
 import ShowMore from '@/components/functional/ShowMore.vue';
 import Tag from '@/components/Tag.vue';
 import Vouch from '@/components/Vouch.vue';
+
+// forms
+import EditPersonalInfo from '@/components/forms/EditPersonalInfo.vue';
+import FlagProfile from '@/components/forms/FlagProfile.vue';
 
 export default {
   name: 'Profile',
@@ -201,6 +209,7 @@ export default {
   components: {
     Button,
     EditPersonalInfo,
+    FlagProfile,
     Key,
     Meta,
     MetaList,
