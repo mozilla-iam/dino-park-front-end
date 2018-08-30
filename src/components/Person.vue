@@ -1,9 +1,14 @@
 <template>
-  <div class="person">
+  <div :class="'person' + ( modifier ? ' ' + modifier : '' )">
     <img v-if="picture" :src="picture.value" class="person__photo" alt="">
-    <div class="person__name"><a v-if="userId" :href="'/profile/'+ userId.value">{{ firstName.value }} {{ lastName.value }}</a></div>
-    <div v-if="funTitle" class="person__preferred-title">{{ funTitle.value }}</div>
-    <div v-if="officeLocation" class="person__location">{{ officeLocation.value }}</div>
+    <div class="person__name-title">
+      <div class="person__name"><a v-if="userId" :href="'/profile/'+ userId.value">{{ firstName.value }} {{ lastName.value }}</a></div>
+      <div v-if="funTitle" class="person__preferred-title">{{ funTitle.value }}</div>
+    </div>
+    <div v-if="officeLocation" class="person__location">
+      <div v-if="modifier === 'person--wide'" class="person__location-label">Location</div>
+      {{ officeLocation.value }}
+    </div>
   </div>
 </template>
 
@@ -11,6 +16,7 @@
 export default {
   name: 'Person',
   props: {
+    modifier: String, 
     userId: Object,
     firstName: Object,
     lastName: Object,
@@ -29,6 +35,12 @@ export default {
     position: relative;
     background-color: var( --white );
   }
+  .person + .person {
+    margin-top: 1em;
+  }
+    .person > div {
+      font-size: .875em; /* reset font size of all contents */
+    }
     .person__name {
       font-weight: 700;
     }
@@ -63,5 +75,37 @@ export default {
       left: -1em;
       width: 2em;
       max-height: 2em;
+    }
+    .person__location-label {
+      color: var( --darkGrey );
+    }
+
+  .person--wide {
+    display: grid;
+    grid-template-columns: 1.5em 2fr 1fr 1.5em;
+    grid-template-rows: 1em auto 1em;
+    grid-column-gap: 1em;
+  }
+  @supports (display: grid) {
+    .person--wide {
+      padding: 0; /* with grid support, padding is done by the grid */
+    }
+  }
+  .person--wide::before {
+    grid-column: 1 / 2;
+  }
+    .person--wide .person__name-title {
+      grid-column-start: 2;
+      grid-row-start: 2;
+    }
+    .person--wide .person__location {
+      grid-column: 3 / -1;
+      grid-row: 1 / -1;
+    }
+    @supports (display:grid) {
+      .person--wide .person__location {
+        background-color: var( --lightGrey );
+        padding: 1em 1.5em;
+      }
     }
 </style>

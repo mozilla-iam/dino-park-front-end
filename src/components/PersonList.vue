@@ -12,8 +12,7 @@ export default {
 
 <style>
   .person-list {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 2em;
+    max-width: 30em;
+    margin: 0 auto;
   }
 </style>

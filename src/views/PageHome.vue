@@ -11,8 +11,8 @@
             <p>This site lists all core individuals and groups that participate in the Mozilla Project. We call ourselves Mozillians and this is where we connect and share with one another.</p>
           </div>
           <PersonList v-if="data.profiles">
-            <Person v-for="profile in data.profiles" v-bind="profile" :key="profile.index"></Person>
-          </PersonList>
+            <Person v-for="profile in data.profiles" v-bind="profile" :key="profile.index" modifier="person--wide"></Person>
+          </PersonList> 
         </main>
       </template>
       <LoadingSpinner v-else></LoadingSpinner>
