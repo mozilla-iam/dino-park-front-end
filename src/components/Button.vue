@@ -25,7 +25,7 @@ export default {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   border-radius: 1.25em;
-  background-color: var( --black );
+  background-color: var( --turqoise );
   color: var( --white );
   border: 1px solid transparent;
   transition: background-color .1s ease-in-out;
@@ -71,11 +71,7 @@ export default {
 
 .button--text-only {
   background-color: transparent;
-  text-transform: none;
   border: 1px solid transparent;
-  color: var( --blue );
-  text-align: left;
-  font-weight: normal;
   padding: .5em 1em;
 }
 
@@ -103,5 +99,22 @@ export default {
 
 .button--full-width {
   width: 100%;
+}
+
+.button--icon-only {
+  padding-left: 1em;
+  padding-right: 1em;
+  border-radius: 100%;
+  border-color: var(--midGrey);
+}
+.button--icon-only:hover {
+  background-color: var(--lightGrey);
+}
+  .button--icon-only img {
+    vertical-align: middle;
+  }
+
+.button img {
+  vertical-align: middle;
 }
 </style>

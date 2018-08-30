@@ -39,7 +39,7 @@
           </MetaList>
         </template>
       </ShowMore>
-      <button @click="$refs.flagProfile.isOpen=true">Flag this profile</button>
+      <button @click="$refs.flagProfile.isOpen=true" class="button button--secondary button--icon-only flag"><img src="@/assets/images/flag.svg" alt="" width="16" aria-hidden /><span class="visually-hidden">Flag this profile</span></button>
       <Modal ref="flagProfile" heading="Flag this profile">
         <FlagProfile/>
       </Modal>
@@ -514,6 +514,12 @@ export default {
 @media( min-width: 60em ) {
   .profile .profile__intro {
     padding-left: 22em;
+    padding-top: 3em;
+  }
+  .profile__intro .flag {
+    position: absolute; 
+    top: 1.5em;
+    right: 1.5em;
   }
   .profile__headshot {
     top: 3em;

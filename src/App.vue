@@ -33,6 +33,7 @@ export default {
   --darkYellow: #faba00;
   --green: #158640;
   --red: #ff4f5e;
+  --turqoise: #59cbb7;
   }
 
   * {
