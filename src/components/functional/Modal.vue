@@ -2,7 +2,10 @@
     <transition name="modal-">
       <div class="modal" v-show="isOpen" tabindex="-1" @keyup.esc="isOpen = false">
         <div class="modal__content">
-          <button @click="isOpen = false">Close</button>
+          <div class="modal__header">
+            <button @click="isOpen = false">Close</button>
+            <h1 v-if="heading">{{ heading }}</h1>
+          </div>
           <slot></slot>
         </div>
       </div>
@@ -14,6 +17,9 @@ import { bindFocusTrap, unbindFocusTrap } from '@/assets/js/trapFocus';
 
 export default {
   name: 'Modal',
+  props: {
+    heading: String,
+  },
   updated() {
     if (this.isOpen) {
       document.body.style.overflow = 'hidden';
@@ -63,9 +69,21 @@ export default {
     .modal__content {
       max-width: 32em;
       background: var(--white);
-      border: 1px solid var(--midGrey);
       padding: 1.5em;
       margin: auto;
       position: relative;
     }
+    .modal__header {
+      padding: 1em;
+      margin: -1.5em -1.5em 0;
+      border: 1px solid var(--midGrey);
+    }
+      .modal__header h1 {
+        font-size: 2.25em;
+        margin-bottom: 0;
+      }
+      .modal__header button {
+        float: right;
+        margin-left: 1em;
+      }
 </style>
