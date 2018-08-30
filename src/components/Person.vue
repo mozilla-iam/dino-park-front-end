@@ -16,7 +16,7 @@
 export default {
   name: 'Person',
   props: {
-    modifier: String, 
+    modifier: String,
     userId: Object,
     firstName: Object,
     lastName: Object,

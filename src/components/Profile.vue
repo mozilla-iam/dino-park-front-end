@@ -29,7 +29,7 @@
       <ShowMore buttonText="Show more" alternateButtonText="Show less" :expanded="false">
         <template slot="overflow">
           <MetaList>
-            <h3 class="visually-hidden">Meta</h3> 
+            <h3 class="visually-hidden">Meta</h3>
             <Meta metaKey="Worker type" :metaValue="todo.worker_type" />
             <Meta metaKey="Desk number" :metaValue="todo.desk_number" />
             <Meta metaKey="Cost centre" :metaValue="todo.cost_centre" />

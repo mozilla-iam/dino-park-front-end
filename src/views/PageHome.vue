@@ -12,7 +12,7 @@
           </div>
           <PersonList v-if="data.profiles">
             <Person v-for="profile in data.profiles" v-bind="profile" :key="profile.index" modifier="person--wide"></Person>
-          </PersonList> 
+          </PersonList>
         </main>
       </template>
       <LoadingSpinner v-else></LoadingSpinner>
