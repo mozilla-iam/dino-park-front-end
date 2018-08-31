@@ -24,6 +24,14 @@ Unit tests are in the `tests` folder and ran with Jest.
 
 ## App-wide patterns
 
+### Apollo/GraphQL 
+
+To transfer profile data between front-end components and the back-end, we use Apollo, a client for GraphQL transactions. 
+
+The **client** is defined in `main.js`, the queries are in the `queries` folder and the components that trigger Apollo to get (‘query’) and change (‘mutate’) data can be anywhere in the application. 
+
+We use the `<ApolloQuery>` and `<ApolloMutation>` components for querying and mutating. They contain a `<template>` with ` slot-scope` that has the data and error information in it. Within that template, data can be used as usual.
+
 ### Modal overlay
 
 We use the `<Modal>` component to describe the contents and behaviour of modal overlays.
