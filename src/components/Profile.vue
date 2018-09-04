@@ -6,7 +6,7 @@
         <span class="profile__user-name">@phlsa</span>
           <span class="profile__pronoun">{{ pronouns.value }}</span>
       </div>
-      <p><span class="profile__title">Senior Service Designer</span> <span class="profile__fun-title">{{ funTitle.value }}</span></p>
+      <p><span class="profile__title">{{ accessInformation.hris.values.businessTitle }}</span> <span class="profile__fun-title">{{ funTitle.value }}</span></p>
       <div class="profile__headshot">
         <img :src="picture.value" alt="" />
         <p>Mozillan for 4 years</p>
@@ -15,12 +15,12 @@
       <div class="profile__team-location">
         <div class="profile__team">
           <h3 class="visually-hidden">Team</h3>
-          <strong>{{ todo.team.name }}</strong>
-          {{ todo.team.members.length }} team members
+          <strong>{{ accessInformation.hris.values.team }}</strong>
+          {{ accessInformation.hris.values.entity }}
         </div>
         <div class="profile__location">
           <h3 class="visually-hidden">Location</h3>
-          <div class="location"><strong>{{ locationPreference.value }} ({{ officeLocation.value }})</strong> 1:10pm local time | +0h CEST</div>
+          <div class="location"><strong>{{ accessInformation.hris.values.locationDescription ({{ accessInformation.hris.values.locationDescription }})</strong>{{ accessInformation.hris.timeZone}}</div>
         </div>
       </div>
       <div class="profile__description">
@@ -30,12 +30,9 @@
         <template slot="overflow">
           <MetaList>
             <h3 class="visually-hidden">Meta</h3>
-            <Meta metaKey="Worker type" :metaValue="todo.worker_type" />
-            <Meta metaKey="Desk number" :metaValue="todo.desk_number" />
-            <Meta metaKey="Cost centre" :metaValue="todo.cost_centre" />
-            <Meta metaKey="Profile created date" :metaValue="created.value" />
-            <Meta metaKey="Last modified" :metaValue="lastModified.value" />
-            <Meta metaKey="Employee ID" :metaValue="todo.employee_id" />
+            <Meta metaKey="Worker type" :metaValue="accessInformation.hris.values.workerType" />
+            <Meta metaKey="Desk number" :metaValue="accessInformation.hris.values.wprDeskNumber" />
+            <Meta metaKey="Cost centre" :metaValue="accessInformation.hris.values.costCenter" />
           </MetaList>
         </template>
       </ShowMore>
@@ -191,6 +188,7 @@ import FlagProfile from '@/components/forms/FlagProfile.vue';
 export default {
   name: 'Profile',
   props: {
+    accessInformation: Object,
     firstName: Object,
     lastName: Object,
     pronouns: Object,

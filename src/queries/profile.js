@@ -2,6 +2,20 @@ import { gql } from 'apollo-boost';
 
 const PROFILE_QUERY = gql`query ($userId: String!) {
  profile (userId:$userId) { 
+    accessInformation {
+      hris {
+        values {
+          businessTitle,
+          team,
+          entity,
+          locationDescription,
+          timeZone,
+          workerType,
+          wprDeskNumber,
+          costCenter,
+        }
+      }
+    },
     firstName {
       value
     },

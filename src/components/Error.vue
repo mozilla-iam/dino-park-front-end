@@ -12,7 +12,9 @@ export default {
 
 <style>
   .error {
-    border: 1px solid red;
+    border-top: 3px solid red;
+    background-color: white;
+    margin: 1em;
     padding: 1em;
     margin-bottom: 1em;
   }

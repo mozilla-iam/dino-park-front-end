@@ -3,7 +3,10 @@
     <img v-if="picture" :src="picture.value" class="person__photo" alt="">
     <div class="person__name-title">
       <div class="person__name"><a v-if="userId" :href="'/profile/'+ userId.value">{{ firstName.value }} {{ lastName.value }}</a></div>
-      <div v-if="funTitle" class="person__preferred-title">{{ funTitle.value }}</div>
+      <div class="person__preferred-title">
+        <template v-if="funTitle">{{ funTitle.value }}</template>
+        <template v-else-if="accessInformation.hris.values.businessTitle">{{ "accessInformation.hris.values.businessTitle" }}</template>
+      </div>
     </div>
     <div v-if="officeLocation" class="person__location">
       <div v-if="modifier === 'person--wide'" class="person__location-label">Location</div>
@@ -16,6 +19,7 @@
 export default {
   name: 'Person',
   props: {
+    accessInformation: Object,
     modifier: String,
     userId: Object,
     firstName: Object,
