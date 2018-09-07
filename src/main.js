@@ -5,7 +5,7 @@ import App from './App.vue';
 import router from './router';
 
 const client = new ApolloClient({
-  uri: 'http://localhost:5000/graphql',
+  uri: '/graphql',
 });
 
 const apolloProvider = new VueApollo({
