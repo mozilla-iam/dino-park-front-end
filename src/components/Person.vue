@@ -1,5 +1,5 @@
 <template>
-  <div :class="'person' + ( modifier ? ' ' + modifier : '' )">
+  <div :class="'person' + ( modifier ? ' ' + modifier : '')">
     <img v-if="picture" :src="picture.value" class="person__photo" alt="">
     <div class="person__name-title">
       <div class="person__name"><a v-if="userId" :href="'/profile/'+ userId.value">{{ firstName.value }} {{ lastName.value }}</a></div>
@@ -33,11 +33,11 @@ export default {
 
 <style>
   .person {
-    border: 1px solid var( --midGrey );
+    border: 1px solid var(--midGrey);
     margin-left: 1em;
     padding: 1em 1.5em;
     position: relative;
-    background-color: var( --white );
+    background-color: var(--white);
   }
   .person + .person {
     margin-top: 1em;
@@ -71,7 +71,7 @@ export default {
         border: 1px solid var(--blue);
       }
     .person__preferred-title {
-      color: var( --darkGrey );
+      color: var(--darkGrey);
     }
     .person__photo {
       position: absolute;
@@ -81,7 +81,7 @@ export default {
       max-height: 2em;
     }
     .person__location-label {
-      color: var( --darkGrey );
+      color: var(--darkGrey);
     }
 
   .person--wide {
@@ -90,7 +90,7 @@ export default {
     grid-template-rows: 1em auto 1em;
     grid-column-gap: 1em;
   }
-  @supports (display: grid) {
+  @supports(display: grid) {
     .person--wide {
       padding: 0; /* with grid support, padding is done by the grid */
     }
@@ -106,9 +106,9 @@ export default {
       grid-column: 3 / -1;
       grid-row: 1 / -1;
     }
-    @supports (display:grid) {
+    @supports(display:grid) {
       .person--wide .person__location {
-        background-color: var( --lightGrey );
+        background-color: var(--lightGrey);
         padding: 1em 1.5em;
       }
     }

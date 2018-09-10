@@ -41,7 +41,7 @@ export default {
   }
 
   body {
-    background: var( --lightGrey );
+    background: var(--lightGrey);
     font-family: "Open Sans", sans-serif;
     scroll-behavior: smooth;
     margin: 0;
@@ -59,7 +59,12 @@ export default {
   h1 {
     font-family: "Zilla Slab", sans-serif;
     font-weight: 400;
-    font-size: 3em;
+    font-size: 2em;
+  }
+  @media(min-width:50em) {
+    h1 {
+      font-size: 3em;
+    }
   }
 
   h2 {
@@ -70,7 +75,7 @@ export default {
   h3 {
     font-weight: 400;
     font-size: 1.25em;
-    color: var( --darkGrey );
+    color: var(--darkGrey);
   }
 
   img,
@@ -89,10 +94,10 @@ export default {
   }
 
   a {
-    color: var( --blue );
+    color: var(--blue);
   }
   a:hover {
-    color: var( --black );
+    color: var(--black);
   }
 
   .visually-hidden {

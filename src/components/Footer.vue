@@ -14,13 +14,13 @@ export default {
 
 <style>
   .footer {
-    background-color: var( --black );
-    color: var( --white );
+    background-color: var(--black);
+    color: var(--white);
     text-align: center;
     margin-top: 2em;
   }
     .footer a {
-      color: var( --midGrey );
+      color: var(--midGrey);
       text-decoration: none;
       display: inline-block;
       vertical-align: middle;

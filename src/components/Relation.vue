@@ -25,7 +25,7 @@ export default {
 
   .relation {
     list-style: none;
-    border: 1px solid var( --midGrey );
+    border: 1px solid var(--midGrey);
     padding: 1em;
   }
   .relation + .relation {
@@ -42,9 +42,9 @@ export default {
       font-weight: 400;
     }
     .relation__label {
-      color: var( --darkGrey );
+      color: var(--darkGrey);
     }
     .relation__content {
-      color: var( --darkGrey );
+      color: var(--darkGrey);
     }
 </style>

@@ -21,8 +21,8 @@ export default {
   }
     .reporting-structure__reports-to {
       flex: 1;
-      background-color: var( --lightGrey );
-      border-right: 1px solid var( --midGrey );
+      background-color: var(--lightGrey);
+      border-right: 1px solid var(--midGrey);
     }
     .reporting-structure__manages {
       padding: 1.5em;

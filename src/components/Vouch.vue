@@ -25,8 +25,8 @@ export default {
     margin-bottom: 1em;
   }
     .vouch blockquote {
-      background-color: var( --lightGrey );
-      border: 1px solid var( --midGrey );
+      background-color: var(--lightGrey);
+      border: 1px solid var(--midGrey);
       padding: 1em 1.5em;
       margin: 0 0 0 1em;
     }

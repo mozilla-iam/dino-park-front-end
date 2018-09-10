@@ -25,7 +25,7 @@ export default {
 
   .meta-list__item dt {
     text-transform: uppercase;
-    color: var( --darkGrey );
+    color: var(--darkGrey);
     font-weight: 700;
     font-size: 90%;
     letter-spacing: 0.0 25em;
@@ -35,7 +35,7 @@ export default {
     margin-left: 0;
   }
 
-  @supports ( display: grid ) {
+  @supports(display: grid) {
     .meta__list--item {
       width: auto;
     }

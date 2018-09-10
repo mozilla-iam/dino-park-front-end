@@ -18,7 +18,7 @@ export default {
     border-bottom: 1px solid var(--midGrey);
     overflow: hidden;
     display: grid;
-    grid-template-columns: repeat( 3, 1fr );
+    grid-template-columns: repeat(3, 1fr);
     font-size: .875em;
   }
 </style>

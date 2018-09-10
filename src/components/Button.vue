@@ -1,5 +1,5 @@
 <template>
-  <button type="button" :class="'button' + ( modifier ? ' ' + modifier : '' )">
+  <button type="button" :class="'button' + ( modifier ? ' ' + modifier : '')">
     <slot></slot>
   </button>
 </template>
@@ -25,16 +25,16 @@ export default {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   border-radius: 1.25em;
-  background-color: var( --turqoise );
-  color: var( --white );
+  background-color: var(--turqoise);
+  color: var(--white);
   border: 1px solid transparent;
   transition: background-color .1s ease-in-out;
   appearance: none;
 }
 
 .button:hover {
-  background-color: var( --white );
-  color: var( --black );
+  background-color: var(--white);
+  color: var(--black);
   border-color: currentColor;
   text-decoration: none;
 }
@@ -42,31 +42,31 @@ export default {
 .button:focus {
   outline: none;
   outline: 0;
-  background-color: var( --lightGrey );
-  border-color: var( --lightGrey );
-  color: var( --blue );
+  background-color: var(--lightGrey);
+  border-color: var(--lightGrey);
+  color: var(--blue);
 }
 
 .button--secondary {
-  border-color: var( --darkGrey );
+  border-color: var(--darkGrey);
   background-color: transparent;
-  color: var( --black );
+  color: var(--black);
 }
 
 .button--secondary:hover {
-  background-color: var( --black );
-  color: var( --white );
+  background-color: var(--black);
+  color: var(--white);
   border-color: transparent;
 }
 
 .button--secondary:hover svg > path {
-  fill: var( --white );
+  fill: var(--white);
 }
 
 .button--secondary:active {
   background-color: transparent;
-  border-color: var( --black );
-  color: var( --black );
+  border-color: var(--black);
+  color: var(--black);
 }
 
 .button--text-only {
@@ -77,7 +77,7 @@ export default {
 
 .button--text-only:hover {
   background-color: transparent;
-  color: var( --darkerGrey );
+  color: var(--darkerGrey);
   border-color: transparent;
   text-decoration: underline;
   text-decoration-skip: ink;
@@ -86,15 +86,15 @@ export default {
 .button--text-only:focus {
   outline: none;
   outline: 0;
-  background-color: var( --lightGrey );
-  border-color: var( --lightGrey );
-  color: var( --blue );
+  background-color: var(--lightGrey);
+  border-color: var(--lightGrey);
+  color: var(--blue);
 }
 
 .button--text-only:active {
-  background-color: var( --black );
-  color: var( --white);
-  border-color: var( --black );
+  background-color: var(--black);
+  color: var(--white);
+  border-color: var(--black);
 }
 
 .button--full-width {

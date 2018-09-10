@@ -6,7 +6,7 @@
         <span class="profile__user-name">@phlsa</span>
           <span class="profile__pronoun">{{ pronouns.value }}</span>
       </div>
-      <p><span class="profile__title">{{ accessInformation.hris.values.businessTitle }}</span> <span class="profile__fun-title">{{ funTitle.value }}</span></p>
+      <p class="profile__title"><span class="profile__hr-title">{{ accessInformation.hris.values.businessTitle }}</span> <span class="profile__fun-title">{{ funTitle.value }}</span></p>
       <div class="profile__headshot">
         <img :src="picture.value" alt="" />
         <p>Mozillan for 4 years</p>
@@ -395,12 +395,14 @@ export default {
 .profile {
   max-width: 60em;
   margin: 0 auto;
+  padding: 0 1em;
 }
-@media ( min-width: 50em )     {
+@media (min-width: 50em)     {
   .profile {
     display: grid;
-    grid-template-columns: repeat( 4, 1fr );
+    grid-template-columns: repeat(4, 1fr);
     grid-gap: 0 2em;
+    padding: 0;
   }
 }
 
@@ -408,8 +410,9 @@ export default {
   grid-column: 1 / 2;
   grid-row: 2;
   margin-bottom: 2em;
-  position: sticky;
-  top: 0;
+  position: absolute;
+  left: -9999em;
+  top: -9999em;
 }
   .profile__nav ul {
     padding: 0;
@@ -421,15 +424,21 @@ export default {
   .profile__nav a {
     display: block;
     padding: 1em;
-    background: var( --white );
+    background: var(--white);
     text-decoration: none;
-    border-bottom: 1px solid var( --lightGrey );
-    color: var( --darkGrey );
+    border-bottom: 1px solid var(--lightGrey);
+    color: var(--darkGrey);
   }
     .profile__nav a:hover {
-      color: var( --blue );
+      color: var(--blue);
       border-bottom: 1px solid currentColor;
     }
+@media(min-width:50em) {
+  .profile__nav {
+    position: sticky;
+    top: 0;
+  }
+}
 
 .profile__section {
   border: 1px solid var(--midGrey);
@@ -458,70 +467,129 @@ export default {
 
 .profile__name {
   display: block;
+  text-align: center;
 }
   .profile__name h1 {
+    margin-bottom: 0.125em;
+  }
+  .profile__pronoun {
+    color: var(--darkGrey);
+  }
+@media(min-width:50em) {
+  .profile__name {
+    text-align: left;
+  }
+  .profile__name h1 {
     display: inline;
+    margin-bottom: 0;
   }
   .profile__user-name,
   .profile__pronoun {
     font-size: 1.5em;
     margin-left: 1em;
   }
-  .profile__pronoun {
-    color: var( --darkGrey );
-  }
-
-.profile__title,
-.profile__fun-title {
-  display: block;
 }
+
 
 .profile__title {
-  font-weight: 400;
-  font-size: 1.25em;
+  text-align: center;
 }
-
-.profile__funt-title {
-  color: var( --darkerGrey );
-}
-
-@media( min-width: 50em ) {
-  .profile .profile__intro {
-    padding-left: 20em;
-    position: relative;
+  .profile__hr-title,
+  .profile__fun-title {
+    display: block;
   }
+  .profile__hr-title {
+    font-weight: 400;
+    font-size: 1.25em;
+  }
+  .profile__fun-title {
+    color: var(--darkerGrey);
+  }
+@media(min-width:50em) {
+  .profile__title {
+    text-align: left;
+  }
+}
+
+.profile__intro {
+  position: relative;
+  padding-top: 10em;
+  margin-top: 5em;
+}
+@media(min-width: 50em) {
+  .profile__intro {
+    padding-top: inherit;
+    padding-left: 20em;
+    margin-top: 0;
+  }
+}
+@media(min-width:60em) {
+  .profile__intro {
+    padding-left: 22em;
+    padding-top: 3em;
+  }
+}
+
+
+.profile__headshot {
+  width: 6.25em;
+  height: 6.25em;
+  position: absolute;
+  top: -3.125em;
+  left: 50%;
+  margin-left: -3.125em;
+}
+  .profile__headshot img {
+    width: 100%;
+  }
+@supports(object-fit: cover) {
+  .profile__headshot img {
+    object-fit: cover;
+    height: 100%;
+  }
+}
+@media(min-width:50em) {
   .profile__headshot {
-    position: absolute;
     top: 2em;
     left: 2em;
     width: 15em;
+    height: 15em;
+    margin-left: 0;
   }
+}
+@media(min-width:60em) {
+  .profile__headshot {
+    top: 3em;
+    left: 3em;
+  }
+}
+
+.profile__intro .flag {
+  position: absolute;
+  top: 1.5em;
+  right: 1.5em;
 }
 
 .profile__location,
 .profile__team,
 .profile__description {
   font-size: .875em;
-  color: var( --darkGrey );
+  color: var(--darkGrey);
+}
+.profile__team {
+  padding-bottom: 1em;
+  margin-bottom: 1em;
+  border-bottom: 1px solid var(--midGrey);
 }
     .profile__team-location strong {
       display: block;
-      color: var( --black );
+      color: var(--black);
     }
-
-@media( min-width: 60em ) {
-  .profile .profile__intro {
-    padding-left: 22em;
-    padding-top: 3em;
-  }
-  .profile__intro .flag {
-    position: absolute; 
-    top: 1.5em;
-    right: 1.5em;
-  }
-  .profile__headshot {
-    top: 3em;
-    left: 3em;
+@media(min-width: 60em) {
+  .profile__team {
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border-bottom: 0;
   }
   .profile__team-location {
     display: flex;
@@ -530,7 +598,7 @@ export default {
       padding-left: 0;
     }
     .profile__team-location div:first-child {
-      border-right: 1px solid var( --midGrey );
+      border-right: 1px solid var(--midGrey);
       margin-right: 1em;
       padding-right: 1em;
       padding-left: 0;

@@ -14,7 +14,7 @@ export default {
 
 <style>
   .top-bar {
-    background-color: var( --white );
+    background-color: var(--white);
     border-bottom: 1px solid var(--midGrey);
     display: flex;
     align-items: center;
@@ -22,7 +22,7 @@ export default {
   }
     .top-bar__link {
       border-left: 1px solid var(--midGrey);
-      padding: .5em;
+      padding: 1.25em;
     }
     .top-bar__link--logo {
       margin-right: auto;
