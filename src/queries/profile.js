@@ -6,13 +6,13 @@ const PROFILE_QUERY = gql`query ($userId: String!) {
       hris {
         values {
           businessTitle,
-          team,
-          entity,
-          locationDescription,
-          timeZone,
-          workerType,
-          wprDeskNumber,
-          costCenter,
+          Team,
+          Entity,
+          LocationDescription,
+          TimeZone,
+          WorkerType,
+          WPRDeskNumber,
+          CostCenter,
         }
       }
     },
