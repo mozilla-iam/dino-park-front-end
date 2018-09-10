@@ -20,7 +20,7 @@
         </div>
         <div class="profile__location">
           <h3 class="visually-hidden">Location</h3>
-          <div class="location"><strong>{{ accessInformation.hris.values.locationDescription ({{ accessInformation.hris.values.locationDescription }})</strong>{{ accessInformation.hris.timeZone}}</div>
+          <div class="location"><strong>{{ accessInformation.hris.values.locationDescription }} ({{ accessInformation.hris.values.locationDescription }})</strong>{{ accessInformation.hris.timeZone}}</div>
         </div>
       </div>
       <div class="profile__description">
