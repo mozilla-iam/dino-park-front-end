@@ -1,0 +1,20 @@
+project: dino-park-front-end
+desc: The new front-end for DinoPark.
+env:
+  name: dino-park-front-end
+tasks:
+  package:
+    cmd: docker build -t {{ .name }} .
+  
+  run-docker:
+    cmd: docker run --rm -ti --name {{ .name }} {{ .name }}
+
+  run-k8s:
+    cmd: kubectl apply -f k8s/chart/
+
+  run-local:
+    cmd: npm run serve
+  
+  install-local:
+    cmd: npm install
+  
