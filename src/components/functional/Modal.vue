@@ -1,6 +1,6 @@
 <template>
     <transition name="modal-">
-      <div class="modal" v-show="isOpen" tabindex="-1" @keyup.esc="isOpen = false">
+      <div class="modal" v-show="isOpen" tabindex="-1" @keyup.esc="isOpen = false" ref="modalEl">
         <div class="modal__content">
           <div class="modal__header">
             <div class="modal__container">
@@ -26,24 +26,20 @@ export default {
   },
   updated() {
     if (this.isOpen) {
+      this.lastFocusedElement = document.activeElement;
       document.body.style.overflow = 'hidden';
-
       this.$el.focus();
-
-      // @todo trap focus
-      // bindFocusTrap(this.modalElement);
+      bindFocusTrap(this.$refs.modalEl);
     } else {
       document.body.style.overflow = 'visible';
-
-      // @todo unbind focus trap
-      // unbindFocusTrap(this.modalElement);
-      // @todo return focus to last focused element
+      unbindFocusTrap(this.$refs.modalEl);
+      this.lastFocusedElement.focus();
     }
   },
   data() {
     return {
       isOpen: false,
-      modalElement: this.$el,
+      lastFocusedElement: null,
     };
   },
 };

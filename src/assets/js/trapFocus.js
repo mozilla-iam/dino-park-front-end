@@ -1,5 +1,5 @@
-function trapFocus(element) {
-  console.log(element);
+function trapFocus(event) {
+  const element = event.target;
   const focusableEls = element.querySelectorAll('a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], select');
   const firstFocusableEl = focusableEls[0];
   const lastFocusableEl = focusableEls[focusableEls.length - 1];
