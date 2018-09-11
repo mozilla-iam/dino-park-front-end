@@ -29,6 +29,7 @@ export default {
       margin-left: 0;
       padding: 1em;
       border-right: 1px solid var(--midGrey);
+      max-width: none; /* don't shrink on small screens */
     }
     .top-bar__link--logo img {
       vertical-align: middle;
