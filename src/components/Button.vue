@@ -77,10 +77,8 @@ export default {
 
 .button--text-only:hover {
   background-color: transparent;
-  color: var(--darkerGrey);
-  border-color: transparent;
-  text-decoration: underline;
-  text-decoration-skip: ink;
+  border-color: var(--midGrey);
+  color: inherit;
 }
 
 .button--text-only:focus {
@@ -89,12 +87,6 @@ export default {
   background-color: var(--lightGrey);
   border-color: var(--lightGrey);
   color: var(--blue);
-}
-
-.button--text-only:active {
-  background-color: var(--black);
-  color: var(--white);
-  border-color: var(--black);
 }
 
 .button--full-width {

@@ -26,7 +26,7 @@
       <div class="profile__description">
         <p>{{ description.value }}</p>
       </div>
-      <ShowMore buttonText="Show more" alternateButtonText="Show less" :expanded="false">
+      <ShowMore buttonText="Show more" alternateButtonText="Show less" :expanded="false" buttonModifier="button--text-only">
         <template slot="overflow">
           <MetaList>
             <h3 class="visually-hidden">Meta</h3>
@@ -34,6 +34,12 @@
             <Meta metaKey="Desk number" :metaValue="accessInformation.hris.values.wprDeskNumber" />
             <Meta metaKey="Cost centre" :metaValue="accessInformation.hris.values.costCenter" />
           </MetaList>
+        </template>
+        <template slot="icon-expanded">
+          <img src="@/assets/images/chevron-up.svg" alt="" width="16" aria-hidden />
+        </template>
+        <template slot="icon-collapsed">
+          <img src="@/assets/images/chevron-down.svg" alt="" width="16" aria-hidden />
         </template>
       </ShowMore>
       <button @click="$refs.flagProfile.isOpen=true" class="button button--secondary button--icon-only flag"><img src="@/assets/images/flag.svg" alt="" width="16" aria-hidden /><span class="visually-hidden">Flag this profile</span></button>
@@ -583,7 +589,8 @@ export default {
 }
     .profile__team-location strong {
       display: block;
-      color: var(--black);
+      color: var(--darkGrey);
+      text-transform: uppercase;
     }
 @media(min-width: 60em) {
   .profile__team {
