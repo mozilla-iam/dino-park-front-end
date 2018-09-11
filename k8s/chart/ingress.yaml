@@ -1,0 +1,24 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: dino-park-ingress
+  namespace: dino-park
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  backend:
+    serviceName: dino-park-front-end-service
+    servicePort: 80
+  rules:
+  - host: dinopark.mozilla.community
+    http:
+      paths:
+      - path: /graphql
+        backend:
+          serviceName: iam-profile-faker-service
+          servicePort: 80
+      - path: /admin/users
+        backend:
+          serviceName: dino-cave-service
+          servicePort: 80

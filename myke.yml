@@ -2,12 +2,13 @@ project: dino-park-front-end
 desc: The new front-end for DinoPark.
 env:
   name: dino-park-front-end
+  image: mozillaparsys/dino-park-front-end
 tasks:
   package:
-    cmd: docker build -t {{ .name }} .
+    cmd: docker build -t {{ .image }} .
   
   run-docker:
-    cmd: docker run --rm -ti --name {{ .name }} {{ .name }}
+    cmd: docker run --rm -ti --name {{ .name }} {{ .image }}
 
   run-k8s:
     cmd: kubectl apply -f k8s/chart/
