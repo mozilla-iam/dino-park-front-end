@@ -11,6 +11,7 @@ const PROFILE_QUERY = gql`query ($userId: String!) {
           locationDescription,
           timeZone,
           workerType,
+          workerManager,
           wprDeskNumber,
           costCenter,
         }
@@ -104,7 +105,7 @@ const MUTATE_PROFILE = gql`mutation updateProfile($userId: String!, $firstName: 
         value: $primaryEmail
       }
     }
-  ) 
+ ) 
   {
     updatedProfile {
       firstName {
