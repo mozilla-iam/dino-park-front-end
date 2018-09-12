@@ -4,8 +4,6 @@ kind: Ingress
 metadata:
   name: dino-park-ingress
   namespace: dino-park
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   backend:
     serviceName: dino-park-front-end-service
