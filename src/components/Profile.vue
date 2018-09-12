@@ -47,16 +47,7 @@
         <FlagProfile/>
       </Modal>
     </section>
-    <nav class="profile__nav">
-      <ul>
-        <li><a href="#relations">Relations</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li><a href="#elsewhere">Find me elsewhere</a></li>
-        <li><a href="#access-groups">Access groups</a></li>
-        <li><a href="#vouches">Vouches</a></li>
-        <li><a href="#tags">Tags</a></li>
-      </ul>
-    </nav>
+    <ProfileNav></ProfileNav>
     <section id="relations" class="profile__section">
       <header class="profile__section-header">
         <h2>Relations</h2>
@@ -181,6 +172,7 @@ import Meta from '@/components/Meta.vue';
 import MetaList from '@/components/MetaList.vue';
 import Modal from '@/components/functional/Modal.vue';
 import Person from '@/components/Person.vue';
+import ProfileNav from '@/components/ProfileNav.vue';
 import Relation from '@/components/Relation.vue';
 import ReportingStructure from '@/components/ReportingStructure.vue';
 import ShowMore from '@/components/functional/ShowMore.vue';
@@ -219,6 +211,7 @@ export default {
     MetaList,
     Modal,
     Person,
+    ProfileNav,
     Relation,
     ReportingStructure,
     ShowMore,
@@ -392,6 +385,9 @@ export default {
           },
         ],
       },
+      navItems: {
+
+      },
     };
   },
 };
@@ -409,40 +405,6 @@ export default {
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 0 2em;
     padding: 0;
-  }
-}
-
-.profile__nav {
-  grid-column: 1 / 2;
-  grid-row: 2;
-  margin-bottom: 2em;
-  position: absolute;
-  left: -9999em;
-  top: -9999em;
-}
-  .profile__nav ul {
-    padding: 0;
-    margin: 0;
-  }
-  .profile__nav li {
-    list-style: none;
-  }
-  .profile__nav a {
-    display: block;
-    padding: 1em;
-    background: var(--white);
-    text-decoration: none;
-    border-bottom: 1px solid var(--lightGrey);
-    color: var(--darkGrey);
-  }
-    .profile__nav a:hover {
-      color: var(--blue);
-      border-bottom: 1px solid currentColor;
-    }
-@media(min-width:50em) {
-  .profile__nav {
-    position: sticky;
-    top: 0;
   }
 }
 
