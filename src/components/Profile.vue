@@ -26,7 +26,7 @@
       <div class="profile__description">
         <p>{{ description.value }}</p>
       </div>
-      <ShowMore buttonText="Show more" alternateButtonText="Show less" :expanded="false" buttonModifier="button--text-only">
+      <ShowMore buttonText="Show more" alternateButtonText="Show less" :expanded="false" buttonClass="button button--text-only">
         <template slot="overflow">
           <MetaList>
             <h3 class="visually-hidden">Meta</h3>
@@ -136,7 +136,7 @@
       <header class="profile__section-header">
         <h2>Vouches</h2>
       </header>
-      <ShowMore buttonText="Show more" alternateButtonText="Show less" :expanded="false">
+      <ShowMore buttonClass="button button--secondary" buttonText="Show more" alternateButtonText="Show less" :expanded="false">
         <template slot="base">
           <Vouch v-bind="todo.vouches[3]" />
         </template>

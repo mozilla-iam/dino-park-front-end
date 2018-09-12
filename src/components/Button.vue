@@ -73,6 +73,7 @@ export default {
   background-color: transparent;
   border: 1px solid transparent;
   padding: .5em 1em;
+  color: var(--black);
 }
 
 .button--text-only:hover {

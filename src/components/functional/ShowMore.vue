@@ -1,5 +1,5 @@
 <template>
-  <div class="show-more">
+  <div :class="'show-more' + ( transition ? ' show-more--transition' : '')">
     <slot name="base">
     </slot>
     <transition name="show-more__overflow-">
@@ -9,18 +9,19 @@
       </div>
     </transition>
     <button
-      :class="'button button--secondary' + ( buttonModifier ? ' ' + buttonModifier : '')"
+      :class="'show-more__button ' + ( buttonClass ? ' ' + buttonClass : '')"
       type="button"
       :aria-expanded="expanded ? 'true' : 'false'"
       v-on:click="toggleOverflow">
         <template v-if="expanded">
           <slot name="icon-expanded"></slot>
-          {{ alternateButtonText }}
+          <span class="show-more__button-text">{{ alternateButtonText }}</span>
         </template>
         <template v-else>
           <slot name="icon-collapsed"></slot>
-          {{ buttonText }}
+          <span class="show-more__button-text">{{ buttonText }}</span>
         </template>
+        <slot name="button-content"></slot>
       </button>
   </div>
 </template>
@@ -31,7 +32,8 @@ export default {
   props: {
     buttonText: String,
     alternateButtonText: String,
-    buttonModifier: String,
+    buttonClass: String,
+    transition: String,
   },
   methods: {
     toggleOverflow() {
@@ -54,13 +56,14 @@ export default {
 </script>
 
 <style>
-  .show-more__overflow--enter-active,
-  .show-more__overflow--leave-active {
+  .show-more--transition .show-more__overflow--enter-active,
+  .show-more--transition  .show-more__overflow--leave-active {
     transition: opacity .5s;
   }
-  .show-more__overflow--enter,
-  .show-more__overflow--leave-to {
+  .show-more--transition .show-more__overflow--enter,
+  .show-more--transition .show-more__overflow--leave-to {
     opacity: 0;
+    z-index: 1;
   }
 </style>
 

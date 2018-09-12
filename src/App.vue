@@ -34,6 +34,8 @@ export default {
   --green: #158640;
   --red: #ff4f5e;
   --turqoise: #59cbb7;
+
+  --layerModal: 2;
   }
 
   * {

@@ -57,7 +57,7 @@ export default {
     top: 0;
     left: 0;
     opacity: 1;
-    z-index: 2;
+    z-index: var(--layerModal);
   }
   .modal--enter-active,
   .modal--leave-active {
