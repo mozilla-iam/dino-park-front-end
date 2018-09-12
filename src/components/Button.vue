@@ -107,7 +107,17 @@ export default {
     vertical-align: middle;
   }
 
+.button--icon-end {
+  display: flex;
+}
+  .button--icon-end img {
+    order: 10;
+    margin-left: .5em;
+    margin-right: 0;
+  }
+
 .button img {
   vertical-align: middle;
+  margin-right: .5em;
 }
 </style>

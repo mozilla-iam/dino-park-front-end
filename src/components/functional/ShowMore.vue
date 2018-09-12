@@ -56,6 +56,9 @@ export default {
 </script>
 
 <style>
+  .show-more {
+    position: relative;
+  }
   .show-more--transition .show-more__overflow--enter-active,
   .show-more--transition  .show-more__overflow--leave-active {
     transition: opacity .5s;

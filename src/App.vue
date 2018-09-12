@@ -105,6 +105,22 @@ export default {
   .visually-hidden {
     position: absolute;
     left: -9999em;
+    top: -9999em;
+  }
+
+  /* best only use these classes on elements that
+     do not have anything else, we don't want it
+     to interfere with other display values */
+  .hide-mobile {
+    display: none;
+  }
+  @media(min-width:50em) {
+    .hide-mobile {
+      display: initial;
+    }
+    .hide-desktop {
+      display: none;
+    }
   }
 
   [tabindex="-1"]:focus {

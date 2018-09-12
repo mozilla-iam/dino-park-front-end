@@ -18,6 +18,12 @@ export default {
 <style>
   .reporting-structure {
     display: flex;
+    flex-direction: column;
+  }
+  @media(min-width:50em){
+    .reporting-structure {
+      flex-direction: row;
+    }
   }
     .reporting-structure__reports-to {
       flex: 1;

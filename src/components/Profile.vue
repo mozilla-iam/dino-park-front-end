@@ -1,48 +1,58 @@
 <template>
   <main class="profile">
     <section id="intro" class="profile__section profile__intro">
-      <div class="profile__name">
-        <h1>{{ firstName.value }} {{ lastName.value }} </h1>
-        <span class="profile__user-name">@phlsa</span>
-          <span class="profile__pronoun">{{ pronouns.value }}</span>
-      </div>
-      <p class="profile__title"><span class="profile__hr-title">{{ accessInformation.hris.values.businessTitle }}</span> <span class="profile__fun-title">{{ funTitle.value }}</span></p>
-      <div class="profile__headshot">
-        <img :src="picture.value" alt="" />
+      <div class="profile__intro-photo">
+        <div class="profile__headshot">
+          <img :src="picture.value" alt="" />
+        </div>
         <p>Mozillan for 4 years</p>
-      </div>
-      <h2 class="visually-hidden">About</h2>
-      <div class="profile__team-location">
-        <div class="profile__team">
-          <h3 class="visually-hidden">Team</h3>
-          <strong>{{ accessInformation.hris.values.team }}</strong>
-          {{ accessInformation.hris.values.entity }}
-        </div>
-        <div class="profile__location">
-          <h3 class="visually-hidden">Location</h3>
-          <div class="location"><strong>{{ accessInformation.hris.values.locationDescription }} ({{ accessInformation.hris.values.locationDescription }})</strong>{{ accessInformation.hris.timeZone}}</div>
+        <div class="hide-mobile">
+          <ContactMe></ContactMe>
         </div>
       </div>
-      <div class="profile__description">
-        <p>{{ description.value }}</p>
+      <div class="profile__intro-main">
+        <div class="profile__name">
+          <h1>{{ firstName.value }} {{ lastName.value }} </h1>
+          <span class="profile__user-name">@phlsa</span>
+            <span class="profile__pronoun">{{ pronouns.value }}</span>
+        </div>
+        <p class="profile__title"><span class="profile__hr-title">{{ accessInformation.hris.values.businessTitle }}</span> <span class="profile__fun-title">{{ funTitle.value }}</span></p>
+        <div class="hide-desktop">
+          <ContactMe></ContactMe>
+        </div>
+        <h2 class="visually-hidden">About</h2>
+        <div class="profile__team-location">
+          <div class="profile__team">
+            <h3 class="visually-hidden">Team</h3>
+            <strong>{{ accessInformation.hris.values.team }}</strong>
+            {{ accessInformation.hris.values.entity }}
+          </div>
+          <div class="profile__location">
+            <h3 class="visually-hidden">Location</h3>
+            <div class="location"><strong>{{ accessInformation.hris.values.locationDescription }} ({{ accessInformation.hris.values.locationDescription }})</strong>{{ accessInformation.hris.timeZone}}</div>
+          </div>
+        </div>
+        <div class="profile__description">
+          <p>{{ description.value }}</p>
+        </div>
+        <ShowMore buttonText="Show more" alternateButtonText="Show less" :expanded="false" buttonClass="button button--text-only">
+          <template slot="overflow">
+            <MetaList>
+              <h3 class="visually-hidden">Meta</h3>
+              <Meta metaKey="Worker type" :metaValue="accessInformation.hris.values.workerType" />
+              <Meta metaKey="Desk number" :metaValue="accessInformation.hris.values.wprDeskNumber" />
+              <Meta metaKey="Cost centre" :metaValue="accessInformation.hris.values.costCenter" />
+            </MetaList>
+          </template>
+          <template slot="icon-expanded">
+            <img src="@/assets/images/chevron-up.svg" alt="" width="16" aria-hidden />
+          </template>
+          <template slot="icon-collapsed">
+            <img src="@/assets/images/chevron-down.svg" alt="" width="16" aria-hidden />
+          </template>
+        </ShowMore>
       </div>
-      <ShowMore buttonText="Show more" alternateButtonText="Show less" :expanded="false" buttonClass="button button--text-only">
-        <template slot="overflow">
-          <MetaList>
-            <h3 class="visually-hidden">Meta</h3>
-            <Meta metaKey="Worker type" :metaValue="accessInformation.hris.values.workerType" />
-            <Meta metaKey="Desk number" :metaValue="accessInformation.hris.values.wprDeskNumber" />
-            <Meta metaKey="Cost centre" :metaValue="accessInformation.hris.values.costCenter" />
-          </MetaList>
-        </template>
-        <template slot="icon-expanded">
-          <img src="@/assets/images/chevron-up.svg" alt="" width="16" aria-hidden />
-        </template>
-        <template slot="icon-collapsed">
-          <img src="@/assets/images/chevron-down.svg" alt="" width="16" aria-hidden />
-        </template>
-      </ShowMore>
-      <button @click="$refs.flagProfile.isOpen=true" class="button button--secondary button--icon-only flag"><img src="@/assets/images/flag.svg" alt="" width="16" aria-hidden /><span class="visually-hidden">Flag this profile</span></button>
+      <button @click="$refs.flagProfile.isOpen=true" class="button button--secondary button--icon-only profile__flag"><img src="@/assets/images/flag.svg" alt="" width="16" aria-hidden /><span class="visually-hidden">Flag this profile</span></button>
       <Modal ref="flagProfile" heading="Flag this profile">
         <FlagProfile/>
       </Modal>
@@ -167,6 +177,7 @@
 <script>
 // components
 import Button from '@/components/Button.vue';
+import ContactMe from '@/components/ContactMe.vue';
 import Key from '@/components/Key.vue';
 import Meta from '@/components/Meta.vue';
 import MetaList from '@/components/MetaList.vue';
@@ -204,6 +215,7 @@ export default {
   },
   components: {
     Button,
+    ContactMe,
     EditPersonalInfo,
     FlagProfile,
     Key,
@@ -458,7 +470,6 @@ export default {
   }
 }
 
-
 .profile__title {
   text-align: center;
 }
@@ -481,23 +492,22 @@ export default {
 
 .profile__intro {
   position: relative;
-  padding-top: 10em;
+  padding-top: 4em;
   margin-top: 5em;
 }
 @media(min-width: 50em) {
   .profile__intro {
-    padding-top: inherit;
-    padding-left: 20em;
+    padding: 3em;
     margin-top: 0;
-  }
-}
-@media(min-width:60em) {
-  .profile__intro {
-    padding-left: 22em;
-    padding-top: 3em;
+    display: grid;
+    grid-gap: 2em;
+    grid-template-columns: 1fr 2fr;
   }
 }
 
+.profile__intro-photo {
+  text-align: center;
+}
 
 .profile__headshot {
   width: 6.25em;
@@ -518,21 +528,17 @@ export default {
 }
 @media(min-width:50em) {
   .profile__headshot {
-    top: 2em;
-    left: 2em;
+    position: static;
     width: 15em;
     height: 15em;
     margin-left: 0;
   }
-}
-@media(min-width:60em) {
-  .profile__headshot {
-    top: 3em;
-    left: 3em;
+  .profile__intro-photo .profile__headshot {
+    margin: 0 auto;
   }
 }
 
-.profile__intro .flag {
+.profile__flag {
   position: absolute;
   top: 1.5em;
   right: 1.5em;
