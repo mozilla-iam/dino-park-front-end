@@ -4,7 +4,7 @@
         <div class="modal__content">
           <div class="modal__header">
             <div class="modal__container">
-              <button @click="isOpen = false" class="button button--text-only button--secondary">Close <img src="@/assets/images/x.svg" alt="" width="20" aria-hidden /></button>
+              <button @click="isOpen = false" class="button button--text-only button--secondary">Close <img src="@/assets/images/x.svg" alt="" width="20" aria-hidden="true" /></button>
               <h1 v-if="heading">{{ heading }}</h1>
             </div>
           </div>
@@ -57,7 +57,7 @@ export default {
     top: 0;
     left: 0;
     opacity: 1;
-    z-index: 2;
+    z-index: var(--layerModal);
   }
   .modal--enter-active,
   .modal--leave-active {

@@ -34,6 +34,8 @@ export default {
   --green: #158640;
   --red: #ff4f5e;
   --turqoise: #59cbb7;
+
+  --layerModal: 2;
   }
 
   * {
@@ -103,6 +105,22 @@ export default {
   .visually-hidden {
     position: absolute;
     left: -9999em;
+    top: -9999em;
+  }
+
+  /* best only use these classes on elements that
+     do not have anything else, we don't want it
+     to interfere with other display values */
+  .hide-mobile {
+    display: none;
+  }
+  @media(min-width:50em) {
+    .hide-mobile {
+      display: initial;
+    }
+    .hide-desktop {
+      display: none;
+    }
   }
 
   [tabindex="-1"]:focus {

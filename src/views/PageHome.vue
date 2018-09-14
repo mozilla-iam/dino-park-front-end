@@ -6,7 +6,7 @@
       <template v-else-if="data">
         <main>
           <div class="intro">
-            <h1>Dino Park</h1>
+            <h1>DinoPark</h1>
             <p>Welcome to the Mozilla directory</p>
             <p>This site lists all core individuals and groups that participate in the Mozilla Project. We call ourselves Mozillians and this is where we connect and share with one another.</p>
           </div>
