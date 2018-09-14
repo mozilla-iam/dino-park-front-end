@@ -22,7 +22,7 @@
     <template slot="icon-collapsed">
       <img src="@/assets/images/chevron-down-white.svg" alt="" width="16" aria-hidden="true" />
     </template>
-  </ShowMore> 
+  </ShowMore>
 </template>
 
 <script>

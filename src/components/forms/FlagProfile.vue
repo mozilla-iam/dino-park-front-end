@@ -46,7 +46,6 @@ export default {
   },
   methods: {
     handleError() {
-      console.log(this);
     },
   },
   data() {
