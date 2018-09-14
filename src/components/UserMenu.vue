@@ -3,7 +3,7 @@
     <div class="user-menu__header">
       <button class="user-menu__close-button" type="button" @click="sendCloseEvent()">
         <span class="visually-hidden">Close user menu</span>
-        <img src="@/assets/images/user-demo.png" alt="" width="40" aria-hidden />
+        <img src="@/assets/images/user-demo.png" alt="" width="40" aria-hidden="true" />
       </button>
       <div class="user-menu__name">
         <span class="user-menu__header-name">Henrik Mitsch</span><br>

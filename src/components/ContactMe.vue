@@ -17,10 +17,10 @@
       </ul>
     </template>
     <template slot="icon-expanded">
-      <img src="@/assets/images/chevron-up-white.svg" alt="" width="16" aria-hidden />
+      <img src="@/assets/images/chevron-up-white.svg" alt="" width="16" aria-hidden="true" />
     </template>
     <template slot="icon-collapsed">
-      <img src="@/assets/images/chevron-down-white.svg" alt="" width="16" aria-hidden />
+      <img src="@/assets/images/chevron-down-white.svg" alt="" width="16" aria-hidden="true" />
     </template>
   </ShowMore> 
 </template>

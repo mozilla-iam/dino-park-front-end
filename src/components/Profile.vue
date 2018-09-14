@@ -45,14 +45,14 @@
             </MetaList>
           </template>
           <template slot="icon-expanded">
-            <img src="@/assets/images/chevron-up.svg" alt="" width="16" aria-hidden />
+            <img src="@/assets/images/chevron-up.svg" alt="" width="16" aria-hidden="true" />
           </template>
           <template slot="icon-collapsed">
-            <img src="@/assets/images/chevron-down.svg" alt="" width="16" aria-hidden />
+            <img src="@/assets/images/chevron-down.svg" alt="" width="16" aria-hidden="true" />
           </template>
         </ShowMore>
       </div>
-      <button @click="$refs.flagProfile.isOpen=true" class="button button--secondary button--icon-only profile__flag"><img src="@/assets/images/flag.svg" alt="" width="16" aria-hidden /><span class="visually-hidden">Flag this profile</span></button>
+      <button @click="$refs.flagProfile.isOpen=true" class="button button--secondary button--icon-only profile__flag"><img src="@/assets/images/flag.svg" alt="" width="16" aria-hidden="true" /><span class="visually-hidden">Flag this profile</span></button>
       <Modal ref="flagProfile" heading="Flag this profile">
         <FlagProfile/>
       </Modal>
@@ -138,9 +138,11 @@
       <header class="profile__section-header">
         <h2>Access Groups</h2>
       </header>
-      <Relation category="NDA">
-        Invited by <a href="#">Rubén Martin</a>
-      </Relation>
+      <ul class="relation-list">
+        <Relation category="NDA">
+          Invited by <a href="#">Rubén Martin</a>
+        </Relation>
+      </ul>
     </section>
     <section id="vouches" class="profile__section">
       <header class="profile__section-header">
