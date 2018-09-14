@@ -8,10 +8,10 @@
         </slot>
       </div>
     </transition>
-    <button 
-      :class="'button button--secondary' + ( buttonModifier ? ' ' + buttonModifier : '')" 
-      type="button" 
-      :aria-expanded="expanded ? 'true' : 'false'" 
+    <button
+      :class="'button button--secondary' + ( buttonModifier ? ' ' + buttonModifier : '')"
+      type="button"
+      :aria-expanded="expanded ? 'true' : 'false'"
       v-on:click="toggleOverflow">
         <template v-if="expanded">
           <slot name="icon-expanded"></slot>
