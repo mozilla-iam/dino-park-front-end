@@ -117,8 +117,4 @@ export default {
     margin-right: 0;
   }
 
-.button img {
-  vertical-align: middle;
-  margin-right: .5em;
-}
 </style>
