@@ -33,7 +33,7 @@ export default {
     buttonText: String,
     alternateButtonText: String,
     buttonClass: String,
-    transition: String,
+    transition: Boolean,
   },
   methods: {
     toggleOverflow() {
