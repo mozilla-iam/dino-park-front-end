@@ -1,7 +1,7 @@
 <template>
   <header class="top-bar">
     <a href="/" class="top-bar__link top-bar__link--logo"><img src="@/assets/images/mozilla.svg" alt="Mozilla logo" width="90" /></a>
-    <a href="/orgchart" class="top-bar__link"><img src="@/assets/images/org-chart.svg" alt="Org chart" width="20" /><span class="hide-mobile" aria-hidden>Org chart</span></a>
+    <a href="/orgchart" class="top-bar__link"><img src="@/assets/images/org-chart.svg" alt="Org chart" width="20" /><span class="hide-mobile" aria-hidden="true">Org chart</span></a>
     <ShowMore buttonText="Open user menu" alternateButtonText="Close user menu" buttonClass="top-bar__user-menu-toggle" :expanded="false" v-on:close-user-menu="closeUserMenu()" ref="showMoreEl">
       <template slot="overflow">
         <UserMenu></UserMenu>
