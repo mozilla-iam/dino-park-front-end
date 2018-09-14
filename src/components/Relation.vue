@@ -1,6 +1,6 @@
 <template>
   <li class="relation">
-    <h4 class="relation__category">{{ category }}</h4>
+    <h3 class="relation__category">{{ category }}</h3>
     <div class="relation__label">{{ label }}</div>
     <div class="relation__content"><slot></slot></div>
   </li>
