@@ -31,14 +31,10 @@ export default {
   transition: background-color .1s ease-in-out;
   appearance: none;
 }
-
 .button:hover {
-  background-color: var(--white);
-  color: var(--black);
-  border-color: currentColor;
+  background-color: rgb(186, 240, 231);
   text-decoration: none;
 }
-
 .button:focus {
   outline: none;
   outline: 0;
@@ -46,6 +42,10 @@ export default {
   border-color: var(--lightGrey);
   color: var(--blue);
 }
+  .button img {
+    vertical-align: middle;
+    margin-right: .5em;
+  }
 
 .button--secondary {
   border-color: var(--darkGrey);
@@ -105,6 +105,7 @@ export default {
 }
   .button--icon-only img {
     vertical-align: middle;
+    margin-right: 0;
   }
 
 .button--icon-end {
@@ -115,9 +116,4 @@ export default {
     margin-left: .5em;
     margin-right: 0;
   }
-
-.button img {
-  vertical-align: middle;
-  margin-right: .5em;
-}
 </style>
