@@ -1,0 +1,24 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dino-park-front-end-deployment
+  namespace: dino-park
+  labels:
+    app: dino-park-front-end
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dino-park-front-end
+  template:
+    metadata:
+      labels:
+        app: dino-park-front-end
+    spec:
+      containers:
+        - name: dino-park-front-end
+          image: mozillaparsys/dino-park-front-end:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80

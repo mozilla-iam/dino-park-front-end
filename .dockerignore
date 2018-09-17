@@ -2,6 +2,7 @@
 node_modules
 /dist
 myke.yml
+k8s/
 
 # local env files
 .env.local
