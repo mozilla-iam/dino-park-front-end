@@ -11,7 +11,7 @@ const PROFILE_QUERY = gql`query ($userId: String!) {
           locationDescription,
           timeZone,
           workerType,
-          workerManager,
+          workersManager,
           wprDeskNumber,
           costCenter,
         }
