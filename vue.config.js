@@ -20,6 +20,10 @@ module.exports = {
         target: 'http://localhost:5000',
         changeOrigin: true,
       },
+      '/orgchart': {
+        target: 'http://localhost:8888',
+        changeOrigin: true,
+      },
     },
   },
 };
