@@ -2,11 +2,11 @@
   <div class="orgchart">
     <LoadingSpinner v-if="loading"></LoadingSpinner>
     <div v-else-if="error" class="error">
-        <Error>
-          <h2>{{ error.message }}</h2>
-          <pre>{{ error }}</pre>
-          <p>An error occured while trying to go to load the Orgchart</p>
-        </Error>
+      <Error>
+        <h2>{{ error.message }}</h2>
+        <pre>{{ error }}</pre>
+        <p>An error occured while trying to go to load the Orgchart</p>
+      </Error>
     </div>
 
     <div v-else-if="tree" class="content">

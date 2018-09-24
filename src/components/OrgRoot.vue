@@ -23,7 +23,7 @@ export default {
 <style>
   .org-root {
     width: 80%;
-    margin: 0px auto;
+    margin: 0 auto;
   }
 
   .org-root ul {
