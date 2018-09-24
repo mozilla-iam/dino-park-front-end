@@ -36,12 +36,9 @@ export default {
     };
   },
   created() {
-    // fetch the data when the view is created and the data is
-    // already being observed
     this.fetchData();
   },
   watch: {
-    // call again the method if the route changes
     $route: 'fetchData',
   },
   methods: {
@@ -49,15 +46,11 @@ export default {
       this.error = null;
       this.post = null;
       this.loading = true;
-      // replace `getPost` with your data fetching util / API wrapper
       try {
         const data = await fetch('/orgchart');
-        console.log(data);
         const tree = await data.json();
-        console.log(tree);
         this.tree = tree;
       } catch (e) {
-        console.log(`DOOM ${e}`);
         this.error = e;
       }
       this.loading = false;

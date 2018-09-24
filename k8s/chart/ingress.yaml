@@ -16,6 +16,10 @@ spec:
         backend:
           serviceName: iam-profile-faker-service
           servicePort: 80
+      - path: /orgchart
+        backend:
+          serviceName: dino-tree-service
+          servicePort: 80
       - path: /admin/users
         backend:
           serviceName: dino-cave-service
