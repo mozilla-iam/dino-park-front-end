@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: dino-park-front-end
-          image: mozillaparsys/dino-park-front-end:latest
+          image: mozillaparsys/dino-park-frontend:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
