@@ -1,17 +1,12 @@
 <template>
-  <div class="orgchart">
+  <div class="org-chart">
     <LoadingSpinner v-if="loading"></LoadingSpinner>
-    <div v-else-if="error" class="error">
-      <Error>
-        <h2>{{ error.message }}</h2>
-        <pre>{{ error }}</pre>
-        <p>An error occured while trying to go to load the Orgchart</p>
-      </Error>
-    </div>
-
-    <div v-else-if="tree" class="content">
-      <OrgRoot :roots="tree"></OrgRoot>
-    </div>
+    <Error v-else-if="error">
+      <h2>{{ error.message }}</h2>
+      <pre>{{ error }}</pre>
+      <p>An error occured while trying to go to load the Orgchart</p>
+    </Error>
+    <OrgRoot v-else-if="tree" :roots="tree"></OrgRoot>
     <LoadingSpinner v-else></LoadingSpinner>
   </div>
 </template>

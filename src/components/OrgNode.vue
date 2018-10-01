@@ -1,21 +1,19 @@
 <template>
-  <div class="org-node">
-    <li>
-      <input :id="`${prefix}-${id}`" type="checkbox">
-      <span v-bind:class="['org-node__list', { 'org-node__leaf': (children.length === 0) }]">
-        <label :for="`${prefix}-${id}`">
-          <a :href="`/profile/${data.user_id}`">
-            {{ data.first_name }} {{ data.last_name }}
-          </a>
-          <span class="org-node__title">{{ data.title }}</span>
-          <span class="org-node__location">({{ data.location }})</span>
-        </label>
-        <ul v-for="(child, index) in children" :key="index">
-          <OrgNode :children="child.children" :data="child.data" :id="index" :prefix="`${prefix}-${id}`"></OrgNode>
-        </ul>
-      </span>
-    </li>
-  </div>
+  <li :id="data.user_id" class="org-node">
+    <input :id="`${prefix}-${id}`" type="checkbox">
+    <span v-bind:class="['org-node__list', { 'org-node__leaf': (children.length === 0) }]">
+      <label :for="`${prefix}-${id}`">
+        <a :href="`/profile/${data.user_id}`">
+          {{ data.first_name }} {{ data.last_name }}
+        </a>
+        <span class="org-node__title">{{ data.title }}</span>
+        <span class="org-node__location">({{ data.location }})</span>
+      </label>
+      <ul v-for="(child, index) in children" :key="index">
+        <OrgNode :children="child.children" :data="child.data" :id="index" :prefix="`${prefix}-${id}`"></OrgNode>
+      </ul>
+    </span>
+  </li>
 </template>
 
 <script>
@@ -39,7 +37,7 @@ export default {
   background-color: lightgray;
 }
 
-.org-node > li > input:checked + span.org-node__list::before {
+.org-node > input:checked + span.org-node__list::before {
   content: "▶";
   float: left;
 }
@@ -49,7 +47,7 @@ export default {
   float: left;
 }
 
-.org-node > li > input + span.org-node__list.org-node__leaf::before {
+.org-node > input + span.org-node__list.org-node__leaf::before {
   content: "●";
   float: left;
 }
@@ -61,11 +59,11 @@ export default {
   display: initial;
 }
 
-.org-node > li {
+.org-node {
   list-style: none;
 }
 
-.org-node > li > input:checked + span ul {
+.org-node > input:checked + span ul {
   display: none;
 }
 </style>
