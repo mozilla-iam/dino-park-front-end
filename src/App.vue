@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="app-container">
     <TopBar></TopBar>
     <router-view/>
     <Footer></Footer>
@@ -100,6 +100,12 @@ export default {
   }
   a:hover {
     color: var(--black);
+  }
+
+  .app-container {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
   }
 
   .visually-hidden {
