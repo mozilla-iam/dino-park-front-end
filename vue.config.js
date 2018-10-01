@@ -1,3 +1,6 @@
+const GRAPHQL_URL = process.env.DP_K8S ? 'http://dinopark.mozilla.community:80' : 'http://localhost:5000';
+const ORGCHART_URL = process.env.DP_K8S ? 'http://dinopark.mozilla.community:80' : 'http://localhost:8888';
+
 module.exports = {
   configureWebpack: {
     resolve: {
@@ -17,7 +20,11 @@ module.exports = {
   devServer: {
     proxy: {
       '/graphql': {
-        target: 'http://localhost:5000',
+        target: GRAPHQL_URL,
+        changeOrigin: true,
+      },
+      '/orgchart': {
+        target: ORGCHART_URL,
         changeOrigin: true,
       },
     },
