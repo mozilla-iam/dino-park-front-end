@@ -1,6 +1,6 @@
 import { gql } from 'apollo-boost';
 
-const PROFILE_QUERY = gql`query ($userId: String!) {
+const PROFILE = gql`query ($userId: String!) {
  profile (userId:$userId) { 
     accessInformation {
       hris {
@@ -68,6 +68,55 @@ const PROFILE_QUERY = gql`query ($userId: String!) {
   } 
 }`;
 
+const PREVIEW_PROFILE = gql`query ($previewUserId: String!) {
+ profile (userId:$previewUserId) { 
+    accessInformation {
+      hris {
+        values {
+          businessTitle,
+          team,
+          entity,
+          locationDescription,
+          timeZone,
+        }
+      }
+    },
+    firstName {
+      value
+    },
+    lastName {
+      value
+    },
+    funTitle {
+      value
+    },
+    picture {
+      value
+    },
+    pronouns {
+      value
+    },
+    alternativeName {
+      value
+    },
+    locationPreference {
+      value
+    },
+    officeLocation {
+      value
+    },
+    description {
+      value
+    },
+    userId {
+      value
+    },
+    created {
+      value
+    },
+  } 
+}`;
+
 const PROFILE_LIST = gql`query {
  profiles { 
     userId {
@@ -122,4 +171,4 @@ const MUTATE_PROFILE = gql`mutation updateProfile($userId: String!, $firstName: 
 }
 `;
 
-export { PROFILE_QUERY, PROFILE_LIST, MUTATE_PROFILE };
+export { PROFILE, PREVIEW_PROFILE, PROFILE_LIST, MUTATE_PROFILE };

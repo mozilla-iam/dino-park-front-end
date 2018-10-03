@@ -36,7 +36,6 @@ export default {
   },
   methods: {
     previewProfile(userId) {
-      console.log('Let\'s preview the profile of ' + userId);
       this.$store.commit('updatePreviewProfileId', {
         newId: userId,
       });

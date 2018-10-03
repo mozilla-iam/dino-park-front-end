@@ -19,7 +19,7 @@
 import Profile from '@/components/Profile.vue';
 import Error from '@/components/Error.vue';
 import LoadingSpinner from '@/components/LoadingSpinner.vue';
-import { PROFILE_QUERY } from '@/queries/profile';
+import { PROFILE } from '@/queries/profile';
 
 export default {
   name: 'PageProfile',
@@ -31,7 +31,7 @@ export default {
   data() {
     return {
       userId: this.$route.params.userId,
-      profileQuery: PROFILE_QUERY,
+      profileQuery: PROFILE,
     };
   },
 };
