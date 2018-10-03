@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import ApolloClient from 'apollo-boost';
 import VueApollo from 'vue-apollo';
-import Vuex from 'vuex'
 import App from './App.vue';
 import router from './router';
 import store from './store';
