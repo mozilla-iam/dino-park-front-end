@@ -86,6 +86,7 @@ export default {
       grid-template-columns: 1fr 1fr;
       align-items: start;
       grid-gap: 2em;
+      width: 100%;
     }
       .org-chart .profile-preview {
         position: sticky;

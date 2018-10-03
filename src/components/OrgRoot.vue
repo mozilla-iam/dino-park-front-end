@@ -25,6 +25,7 @@ export default {
     max-width: 40em;
     background-image: linear-gradient(var(--lightGrey) 0, var(--lightGrey) 50%, #fff 50%);
     background-size: auto 8em;
+    box-shadow: rgba(0,0,0,0.4) 0 0 4px 0;
   }
 
   .org-root ul {

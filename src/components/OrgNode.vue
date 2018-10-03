@@ -1,5 +1,5 @@
 <template>
-  <li :id="data.user_id" class="org-node">
+  <li :id="data.user_id" :class="'org-node' + ( data.user_id === $store.state.previewUserId ? ' org-node--current' : '')">
     <a :href="`/profile/${data.user_id}`" @click.prevent="previewProfile(data.user_id)">
       <span class="org-node__name">{{ data.first_name }} {{ data.last_name }}</span>
       <span class="org-node__title">{{ data.title }}</span>
@@ -49,6 +49,14 @@ export default {
   list-style: none;
   position: relative; /* positioning context for a::after */
   padding-left: 3em;
+  border-left: 5px solid transparent;
+}
+.org-node:hover {
+  background-color: var(--lightBlue);
+}
+.org-node--current {
+  border-left: 5px solid var(--blue);
+  background-color: var(--lightBlue);
 }
   .org-node a {
     display: block;
@@ -99,7 +107,7 @@ export default {
     max-width: 90%;
   }
   .org-node__toggle {
-    font-size: inherit; 
+    font-size: inherit;
     position: absolute;
     top: 0;
     left: 0;
