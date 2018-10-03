@@ -22,12 +22,14 @@ export default {
 
 <style>
   .org-root {
-    width: 80%;
-    margin: 0 auto;
+    max-width: 40em;
+    background-image: linear-gradient(var(--lightGrey) 0, var(--lightGrey) 50%, #fff 50%);
+    background-size: auto 8em;
   }
 
   .org-root ul {
-    padding-left: 1em;
+    padding: 0;
+    margin: 0;
   }
 
 </style>

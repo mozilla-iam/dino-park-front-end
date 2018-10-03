@@ -1,5 +1,5 @@
 <template>
-  <main class="profile">
+  <main class="profile container">
     <section id="intro" class="profile__section profile__intro">
       <div class="profile__intro-photo">
         <div class="profile__headshot">
@@ -408,17 +408,12 @@ export default {
 </script>
 
 <style>
-.profile {
-  max-width: 60em;
-  margin: 0 auto;
-  padding: 0 1em;
-}
 @media (min-width: 50em)     {
   .profile {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 0 2em;
-    padding: 0;
+    padding: 0 2em;
   }
 }
 

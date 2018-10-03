@@ -53,3 +53,18 @@ export default {
   },
 };
 </script>
+
+<style>
+  @media(min-width:50em) {
+    .org-chart {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+      grid-gap: 2em;
+    }
+      .org-chart .profile-preview {
+        position: sticky;
+        top: 6em;
+      }
+  }
+</style>

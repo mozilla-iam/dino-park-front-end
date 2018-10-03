@@ -47,8 +47,9 @@ export default {
       }
   @media(min-width:50em) {
     .profile__nav {
+      position: static;
       position: sticky;
-      top: 0;
+      top: 6em;
     }
   }
 </style>

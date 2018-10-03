@@ -29,13 +29,15 @@ export default {
   --black: #000;
   --backgroundColor: $lightGrey;
   --blue: #229DC4;
+  --lightBlue: #f2fcfd;
   --yellow: #fff44f;
   --darkYellow: #faba00;
   --green: #158640;
   --red: #ff4f5e;
   --turqoise: #59cbb7;
 
-  --layerModal: 2;
+  --layerTopBar: 2;
+  --layerModal: 3;
   }
 
   * {
@@ -47,6 +49,7 @@ export default {
     font-family: "Open Sans", sans-serif;
     scroll-behavior: smooth;
     margin: 0;
+    padding-top: 6em; /* allow for top bar */
   }
 
   h1,
@@ -102,11 +105,21 @@ export default {
     color: var(--black);
   }
 
+  .container {
+    max-width: 64em;
+    margin: 0 auto;
+    padding: 0 1em;
+  }
+
   .app-container {
     display: grid;
-    grid-template-rows: auto 1fr auto;
+    grid-template-rows: auto 1fr auto; /* this assumes an app container with 3 things:; header, content, footer; it makes header and footer as tall as they need to be, then gives remaining whitespace to content.  */
     min-height: 100vh;
   }
+    .app-container > * {
+      min-width: 0; /* ‘auto’ is default for grid children,
+      but that would break our responsiveness in this case */
+    }
 
   .visually-hidden {
     position: absolute;
