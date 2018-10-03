@@ -11,27 +11,16 @@
         </div>
       </div>
       <div class="profile__intro-main">
-        <div class="profile__name">
-          <h1>{{ firstName.value }} {{ lastName.value }} </h1>
-          <span class="profile__user-name">@phlsa</span>
-            <span class="profile__pronoun">{{ pronouns.value }}</span>
-        </div>
-        <p class="profile__title"><span class="profile__hr-title">{{ accessInformation.hris.values.businessTitle }}</span> <span class="profile__fun-title">{{ funTitle.value }}</span></p>
+        <ProfileName :firstName="firstName.value" :lastName="lastName.value" :pronouns="pronouns.value"></ProfileName>
+        <ProfileTitle :businessTitle="accessInformation.hris.values.businessTitle || null" :funTitle="funTitle.value"></ProfileTitle>
+        <ProfileTeamLocation :team="accessInformation.hris.values.team || null" :entity="accessInformation.hris.values.entity || null" :locationDescription="accessInformation.hris.values.locationDescription || null" :timeZone="accessInformation.hris.values.timeZone || null"></ProfileTeamLocation>
+
         <div class="hide-desktop">
           <ContactMe></ContactMe>
         </div>
+
         <h2 class="visually-hidden">About</h2>
-        <div class="profile__team-location">
-          <div class="profile__team">
-            <h3 class="visually-hidden">Team</h3>
-            <strong>{{ accessInformation.hris.values.team }}</strong>
-            {{ accessInformation.hris.values.entity }}
-          </div>
-          <div class="profile__location">
-            <h3 class="visually-hidden">Location</h3>
-            <div class="location"><strong>{{ accessInformation.hris.values.locationDescription }} ({{ accessInformation.hris.values.locationDescription }})</strong>{{ accessInformation.hris.timeZone}}</div>
-          </div>
-        </div>
+
         <div class="profile__description">
           <p>{{ description.value }}</p>
         </div>
@@ -185,6 +174,9 @@ import Meta from '@/components/Meta.vue';
 import MetaList from '@/components/MetaList.vue';
 import Modal from '@/components/functional/Modal.vue';
 import Person from '@/components/Person.vue';
+import ProfileName from '@/components/ProfileName.vue';
+import ProfileTitle from '@/components/ProfileTitle.vue';
+import ProfileTeamLocation from '@/components/ProfileTeamLocation.vue';
 import ProfileNav from '@/components/ProfileNav.vue';
 import Relation from '@/components/Relation.vue';
 import ReportingStructure from '@/components/ReportingStructure.vue';
@@ -225,7 +217,10 @@ export default {
     MetaList,
     Modal,
     Person,
+    ProfileName,
     ProfileNav,
+    ProfileTeamLocation,
+    ProfileTitle,
     Relation,
     ReportingStructure,
     ShowMore,
@@ -442,51 +437,6 @@ export default {
     margin-left: auto;
   }
 
-.profile__name {
-  display: block;
-  text-align: center;
-}
-  .profile__name h1 {
-    margin-bottom: 0.125em;
-  }
-  .profile__pronoun {
-    color: var(--darkGrey);
-  }
-@media(min-width:50em) {
-  .profile__name {
-    text-align: left;
-  }
-  .profile__name h1 {
-    display: inline;
-    margin-bottom: 0;
-  }
-  .profile__user-name,
-  .profile__pronoun {
-    font-size: 1.5em;
-    margin-left: 1em;
-  }
-}
-
-.profile__title {
-  text-align: center;
-}
-  .profile__hr-title,
-  .profile__fun-title {
-    display: block;
-  }
-  .profile__hr-title {
-    font-weight: 400;
-    font-size: 1.25em;
-  }
-  .profile__fun-title {
-    color: var(--darkerGrey);
-  }
-@media(min-width:50em) {
-  .profile__title {
-    text-align: left;
-  }
-}
-
 .profile__intro {
   position: relative;
   padding-top: 4em;
@@ -541,39 +491,9 @@ export default {
   right: 1.5em;
 }
 
-.profile__location,
-.profile__team,
 .profile__description {
   font-size: .875em;
   color: var(--darkGrey);
 }
-.profile__team {
-  padding-bottom: 1em;
-  margin-bottom: 1em;
-  border-bottom: 1px solid var(--midGrey);
-}
-    .profile__team-location strong {
-      display: block;
-      color: var(--darkGrey);
-      text-transform: uppercase;
-    }
-@media(min-width: 60em) {
-  .profile__team {
-    padding-bottom: 0;
-    margin-bottom: 0;
-    border-bottom: 0;
-  }
-  .profile__team-location {
-    display: flex;
-  }
-    .profile__team-location div {
-      padding-left: 0;
-    }
-    .profile__team-location div:first-child {
-      border-right: 1px solid var(--midGrey);
-      margin-right: 1em;
-      padding-right: 1em;
-      padding-left: 0;
-    }
-}
+
 </style>
