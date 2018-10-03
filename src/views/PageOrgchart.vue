@@ -32,7 +32,7 @@ import Error from '@/components/Error.vue';
 import LoadingSpinner from '@/components/LoadingSpinner.vue';
 import OrgRoot from '@/components/OrgRoot.vue';
 import ProfilePreview from '@/components/ProfilePreview.vue';
-import { PREVIEW_PROFILE   } from '@/queries/profile';
+import { PREVIEW_PROFILE } from '@/queries/profile';
 
 export default {
   name: 'PageOrgchart',
@@ -55,7 +55,7 @@ export default {
   },
   computed: {
     previewUserId() {
-        return this.$store.state;
+      return this.$store.state.previewUserId;
     },
   },
   watch: {

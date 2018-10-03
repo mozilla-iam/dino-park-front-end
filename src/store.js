@@ -9,7 +9,7 @@ export default new Vuex.Store({
   },
   mutations: {
     updatePreviewProfileId(state, update) {
-        state.previewUserId = update.newId;
+      state.previewUserId = update.newId; // eslint-disable-line no-param-reassign
     },
   },
   actions: {
