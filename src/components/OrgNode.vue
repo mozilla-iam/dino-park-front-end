@@ -49,45 +49,44 @@ export default {
 .org-node {
   list-style: none;
   position: relative; /* positioning context for a::after */
-  padding-left: 3em;
-  border-left: 5px solid transparent;
+  --nodeLevel: 1;
 }
-.org-node:hover {
-  background-color: var(--lightBlue);
-}
-.org-node--current {
-  border-left: 5px solid var(--blue);
-  background-color: var(--lightBlue);
-}
+  .org-node .org-node {
+    --nodeLevel: 2;
+  }
+    .org-node .org-node .org-node {
+      --nodeLevel: 3;
+    }
+      .org-node .org-node .org-node .org-node {
+        --nodeLevel: 4;
+      }
+        .org-node .org-node .org-node .org-node .org-node {
+          --nodeLevel: 5;
+        }
+          .org-node .org-node .org-node  .org-node .org-node .org-node {
+            --nodeLevel: 6;
+          }
+            .org-node .org-node .org-node  .org-node .org-node .org-node .org-node {
+              --nodeLevel: 7;
+            }
+              .org-node .org-node .org-node  .org-node .org-node .org-node .org-node .org-node {
+                --nodeLevel: 8;
+              }
   .org-node a {
     display: block;
     height: 4em;
     padding: .75em 0;
     text-decoration: none;
     color: inherit;
+    padding-left: 2em;
+    padding-left: calc((var(--nodeLevel) + 2) * 1em);
+    border-left: 5px solid transparent;
   }
-  .org-node:target > a {
-    background-color: blue;
+  .org-node--current > a {
+    border-left: 5px solid var(--blue);
+    background-color: var(--lightBlue);
   }
-  .org-node:target > a::after {
-    content: '';
-    width: 5px;
-    height: 100%;
-    background-color: var(--blue);
-    position: absolute;
-    left: 0;
-    top: 0;
-  }
-  .org-node a::before {
-    content: '';
-    width: 100%;
-    height: 4em;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-  }
+  .org-node:target > a,  
   .org-node a:hover,
   .org-node a:hover::after {
     background-color: var(--lightBlue);
@@ -112,6 +111,7 @@ export default {
     position: absolute;
     top: 0;
     left: 0;
+    left: calc((var(--nodeLevel) - 1) * 1em);
     width: 3em;
     height: 4em;
     z-index: 1;
