@@ -97,9 +97,12 @@ export default {
       grid-gap: 2em;
       width: 100%;
     }
-      .org-chart .profile-preview {
-        position: sticky;
-        top: 6em;
+      @media(min-height:32em) {
+        .org-chart .profile-preview {
+          position: fixed;
+          top: 6em;
+          max-width: 32em;
+        }
       }
   }
 </style>

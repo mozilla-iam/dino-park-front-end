@@ -85,11 +85,11 @@ export default {
     padding-left: calc((var(--nodeLevel) + 2) * 1em);
     border-left: 5px solid transparent;
   }
-  .org-node--current > a {
+  .org-node--current > a,
+  .org-node:target > a {
     border-left: 5px solid var(--blue);
     background-color: var(--lightBlue);
   }
-  .org-node:target > a,  
   .org-node a:hover,
   .org-node a:hover::after {
     background-color: var(--lightBlue);
@@ -116,7 +116,7 @@ export default {
     left: 0;
     left: calc((var(--nodeLevel) - 1) * 1em);
     width: 3em;
-    height: 4em;
+    height: 4em;  
     z-index: 1;
     border: 0;
     background-color: transparent;
