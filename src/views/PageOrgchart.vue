@@ -55,7 +55,7 @@ export default {
   },
   computed: {
     previewUserId() {
-      return this.$store.state.previewUserId;
+      return this.$store.state.profilePreview.userId;
     },
   },
   watch: {

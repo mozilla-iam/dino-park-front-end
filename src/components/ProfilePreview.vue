@@ -1,5 +1,5 @@
 <template>
-  <div class="profile-preview">
+  <div class="profile-preview" ref="profilePreviewElement" tabindex="-1">
     <ProfileName :firstName="firstName.value" :lastName="lastName.value" :pronouns="pronouns.value"></ProfileName>
     <div>Mozillian for 4 years</div>
     <ProfileTitle :businessTitle="accessInformation.hris.values.businessTitle || null" :funTitle="funTitle.value"></ProfileTitle>
@@ -47,10 +47,20 @@ export default {
   },
   methods: {
     closeProfile() {
+      const elementToReturnFocusTo = this.$store.state.profilePreview.lastTrigger;
+
       this.$store.commit('updatePreviewProfileId', {
         newId: null,
+        lastTrigger: null,
       });
+      
+      if (elementToReturnFocusTo) {
+        elementToReturnFocusTo.focus();
+      }
     },
+  },
+  mounted: function() {
+    this.$refs.profilePreviewElement.focus();
   },
 };
 </script>

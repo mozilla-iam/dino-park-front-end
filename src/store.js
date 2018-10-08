@@ -5,11 +5,15 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    previewUserId: null,
+    profilePreview: {
+      userId: null,
+      lastTrigger: null,
+    }
   },
   mutations: {
     updatePreviewProfileId(state, update) {
-      state.previewUserId = update.newId; // eslint-disable-line no-param-reassign
+      state.profilePreview.userId = update.newId; // eslint-disable-line no-param-reassign
+      state.profilePreview.lastTrigger = update.trigger; // eslint-disable-line no-param-reassign
     },
   },
   actions: {

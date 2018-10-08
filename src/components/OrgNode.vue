@@ -1,6 +1,6 @@
 <template>
-  <li :id="data.user_id" :class="'org-node' + ( data.user_id === $store.state.previewUserId ? ' org-node--current' : '')">
-    <a :href="`/profile/${data.user_id}`" @click.prevent="previewProfile(data.user_id)">
+  <li :id="data.user_id" :class="'org-node' + ( data.user_id === $store.state.profilePreview.userId ? ' org-node--current' : '')">
+    <a :href="`/profile/${data.user_id}`" @click.prevent="previewProfile(data.user_id)" ref="openProfileTrigger">
       <span class="org-node__name">{{ data.first_name }} {{ data.last_name }}</span>
       <span class="org-node__title">{{ data.title }}</span>
     </a>
@@ -38,6 +38,7 @@ export default {
     previewProfile(userId) {
       this.$store.commit('updatePreviewProfileId', {
         newId: userId,
+        trigger: this.$refs.openProfileTrigger,
       });
     },
   },
