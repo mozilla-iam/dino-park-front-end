@@ -40,6 +40,9 @@ export default {
         newId: userId,
         trigger: this.$refs.openProfileTrigger,
       });
+      if (window.history && history.pushState) {
+        history.pushState(null, null, '#' + userId);
+      }
     },
   },
 };

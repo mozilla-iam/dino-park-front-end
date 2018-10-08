@@ -52,6 +52,7 @@ export default {
   },
   created() {
     this.fetchData();
+    this.honourUriFragments();
   },
   computed: {
     previewUserId() {
@@ -74,6 +75,14 @@ export default {
         this.error = e;
       }
       this.loading = false;
+    },
+    honourUriFragments() {
+      if (window.location.hash) {
+        this.$store.commit('updatePreviewProfileId', {
+          newId: window.location.hash.substr(1),
+          trigger: document.body,
+        });
+      }
     },
   },
 };
