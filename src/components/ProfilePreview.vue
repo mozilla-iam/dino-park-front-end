@@ -15,8 +15,27 @@
     <hr class="profile-preview__divider">
     <div class="profile-preview__buttons">
       <ContactMe></ContactMe>
-      <a :href="'/profile/' + userId.value" class="button button--text-only">View full profile <img src="@/assets/images/chevron-right.svg" alt="" width="16" aria-hidden="true" /></a>
-      <button @click="closeProfile" class="button button--icon-only button--secondary profile-preview__close"><span class="visually-hidden">Close profile</span><img src="@/assets/images/x.svg" alt="" width="24" aria-hidden="true" /></button>
+      <a :href="'/profile/' + userId.value" class="button button--text-only">
+        View full profile 
+        <img src="@/assets/images/chevron-right.svg" alt="" width="16" aria-hidden="true" />
+      </a>
+      <button @click="closeProfile" class="button button--icon-only button--secondary profile-preview__close">
+        <span class="visually-hidden">Close profile</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
     </div>
   </div>
 </template>
@@ -115,11 +134,31 @@ export default {
     align-items: start;
   }
   .profile-preview__close {
-    position: absolute;
-    top: 2em;
-    right: 2em;
-    border-color: transparent;
+    position: fixed;
+    bottom: 1em;
+    left: 50%;
+    margin-left: -1.5em;
+    z-index: var(--layerModal);
+    background-color: var(--blue-60);
+    top: auto;
+    color: var(--white);
   }
+  .profile-preview__close:hover {
+    color: var(--black);
+  }
+  @media(min-width:50em) {
+    .profile-preview__close {
+      position: absolute;
+      top: 2em;
+      right: 2em;
+      left: auto;
+      bottom: auto;
+      color: var(--black);
+      border-color: transparent;
+      background-color: transparent;
+    }
+  }
+
   .profile-preview__divider {
     margin: 2em 0;
   }

@@ -89,20 +89,41 @@ export default {
 </script>
 
 <style>
+  .org-chart {
+    padding: 0;
+  }
   @media(min-width:50em) {
     .org-chart {
+      padding: 0 1em;
       display: grid;
       grid-template-columns: 1fr 1fr;
       align-items: start;
       grid-gap: 2em;
       width: 100%;
     }
-      @media(min-height:32em) {
+  }
+      .org-chart .profile-preview {
+        position: fixed;
+        z-index: var(--layerModal);
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+      }
+      @media(min-width:50em) {
         .org-chart .profile-preview {
-          position: fixed;
+          z-index: inherit;
+          width: auto;
+          height: auto;
+          left: auto;
+          right: auto;
+        }
+      }
+      @media(min-height:32em) and (min-width:50em) {
+        .org-chart .profile-preview {
           top: 6em;
           max-width: 32em;
         }
       }
-  }
 </style>

@@ -48,11 +48,10 @@ export default {
     font-family: "Open Sans", sans-serif;
     scroll-behavior: smooth;
     margin: 0;
-    padding-top: 4em; /* allow for top bar */
   }
   @media(min-width:50em) {
     body {
-      padding-top: 6em;
+      padding-top: 8em; /* allow for top bar */
     }
   }
 
@@ -110,9 +109,13 @@ export default {
   }
 
   .container {
-    max-width: 64em;
-    margin: 0 auto;
     padding: 0 1em;
+  }
+  @media(min-width:50em) {
+    .container {
+      max-width: 64em;
+      margin: 0 auto;
+    }
   }
 
   .app-container {

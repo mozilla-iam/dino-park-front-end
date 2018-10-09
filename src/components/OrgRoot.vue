@@ -26,7 +26,6 @@ export default {
     max-width: 40em;
     background-image: linear-gradient(var(--gray-10) 0, var(--gray-10) 50%, #fff 50%);
     background-size: auto 8em;
-    margin: 0 -1em;
   }
   @media(min-width:50em) {
     .org-root {

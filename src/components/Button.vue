@@ -44,9 +44,9 @@ export default {
   border-color: var(--gray-20);
   color: var(--blue-60);
 }
-  .button img {
+  .button img,
+  .button svg {
     vertical-align: middle;
-    margin-right: .5em;
   }
 
 .button--secondary {
