@@ -20,7 +20,7 @@ export default {
 <style>
   .relation-list {
     padding: 0;
-    margin: 0;
+    margin: 0 0 2em 0;
   }
 
   .relation {

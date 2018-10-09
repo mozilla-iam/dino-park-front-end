@@ -24,7 +24,7 @@
         <div class="profile__description">
           <p>{{ description.value }}</p>
         </div>
-        <ShowMore buttonText="Show more" alternateButtonText="Show less" :expanded="false" buttonClass="button button--text-only" :transition="true">
+        <ShowMore buttonText="Show more" alternateButtonText="Show less" :expanded="false" buttonClass="button button--text-only button--less-padding" :transition="true">
           <template slot="overflow">
             <MetaList>
               <h3 class="visually-hidden">Meta</h3>
@@ -50,7 +50,7 @@
     <section id="relations" class="profile__section">
       <header class="profile__section-header">
         <h2>Relations</h2>
-        <a href="/orgchart?focus_on=this_person@TODO" class="button button--secondary">View Org Chart</a>
+        <a :href="'/org#' + userId.value" class="button button--secondary">View Org Chart</a>
       </header>
       <ReportingStructure>
         <template slot="reports-to">
@@ -70,15 +70,15 @@
       <h3 class="visually-hidden">Contact options</h3>
       <div v-if="pgpPublicKeys || sshPublicKeys">
         <h3>Keys</h3>
-        <div v-if="pgpPublicKeys">
+        <template v-if="pgpPublicKeys">
           <h4 class="visually-hidden">PGP</h4>
           <Key v-for="key in pgpPublicKeys.values"
                type="PGP"
                title="Title"
                :content="key"
                :key="key" />
-        </div>
-        <div v-if="sshPublicKeys">
+        </template>
+        <template v-if="sshPublicKeys">
           <h4 class="visually-hidden">SSH</h4>
           <Key
             v-for="key in sshPublicKeys.values"
@@ -86,10 +86,9 @@
             title="Title"
             :content="key"
             :key="key" />
-        </div>
+        </template>
       </div>
       <template v-if="todo.languages.length > 0">
-      <hr>
       <div class="languages">
         <h3>Languages</h3>
         <Tag
@@ -206,6 +205,7 @@ export default {
     sshPublicKeys: Object,
     tags: Object,
     preferredLanguage: Object,
+    userId: Object,
   },
   components: {
     Button,
@@ -429,6 +429,12 @@ export default {
 .profile__section:first-child {
   grid-column: 1 / -1;
 }
+  .profile__section h3 {
+    margin: 1.5em 0 1em;
+  }
+  .profile__section .reporting-structure h3 {
+    margin-top: 0;
+  }
 
 .profile__section-header {
   padding: 1.5em;

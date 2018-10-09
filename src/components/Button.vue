@@ -74,7 +74,6 @@ export default {
 .button--text-only {
   background-color: transparent;
   border: 1px solid transparent;
-  padding: .5em 1em;
   color: var(--black);
 }
 
@@ -96,6 +95,10 @@ export default {
   width: 100%;
 }
 
+.button--less-padding {
+  padding: .5em 1em;
+}
+
 .button--icon-only {
   padding-left: 1em;
   padding-right: 1em;
@@ -113,7 +116,8 @@ export default {
 .button--icon-end {
   display: flex;
 }
-  .button--icon-end img {
+  .button--icon-end img,
+  .button--icon-end svg {
     order: 10;
     margin-left: .5em;
     margin-right: 0;
