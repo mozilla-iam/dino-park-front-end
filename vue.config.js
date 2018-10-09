@@ -2,6 +2,7 @@ const GRAPHQL_URL = process.env.DP_K8S ? 'http://dinopark.mozilla.community:80' 
 const ORGCHART_URL = process.env.DP_K8S ? 'http://dinopark.mozilla.community:80' : 'http://localhost:8888';
 
 module.exports = {
+  filenameHashing: false,
   configureWebpack: {
     resolve: {
       // .mjs needed for https://github.com/graphql/graphql-js/issues/1272
