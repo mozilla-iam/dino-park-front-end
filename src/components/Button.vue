@@ -79,15 +79,15 @@ export default {
 
 .button--text-only:hover {
   background-color: transparent;
-  border-color: var(--midGrey);
+  border-color: var(--gray-30);
   color: inherit;
 }
 
 .button--text-only:focus {
   outline: none;
   outline: 0;
-  background-color: var(--lightGrey);
-  border-color: var(--lightGrey);
+  background-color: var(--gray-20);
+  border-color: var(--gray-20);
   color: var(--blue-60);
 }
 
@@ -103,10 +103,10 @@ export default {
   padding-left: 1em;
   padding-right: 1em;
   border-radius: 100%;
-  border-color: var(--midGrey);
+  border-color: var(--gray-30);
 }
 .button--icon-only:hover {
-  background-color: var(--lightGrey);
+  background-color: var(--gray-20);
 }
   .button--icon-only img {
     vertical-align: middle;
@@ -119,7 +119,7 @@ export default {
   .button--icon-end img,
   .button--icon-end svg {
     order: 10;
-    margin-left: .5em;
+    margin-left: .75em;
     margin-right: 0;
   }
 

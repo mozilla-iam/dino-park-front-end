@@ -21,7 +21,6 @@ export default {
 
 <style>
   :root {
-  /* new */
   --gray-10: #f9f9fa;
   --gray-20: #ededf0;
   --gray-30: #d7d7db;
@@ -29,26 +28,15 @@ export default {
   --gray-50: #737373;
   --gray-60: #4a4a4f;
   --blue-60: #0060df;
-
-  /* old */
-  --lightGrey: #f4f4f4;
-  --midGrey: #e5e5e5;
-  --darkGrey: #777;
-  --darkerGrey: #595959;
   --white: #fff;
   --black: #000;
-  --backgroundColor: $lightGrey;
+
   --lightBlue: #f2fcfd;
-  --yellow: #fff44f;
-  --darkYellow: #faba00;
-  --green: #158640;
-  --red: #ff4f5e;
-  --turqoise: #59cbb7;
 
   --layerTopBar: 2;
   --layerModal: 3;
 
-  --shadowCard: 0 .25em .25em 0 rgba(210, 210, 210, 0.5);
+  --shadowCard: 0 .25em .25em 0 rgba(210, 210, 210, .5);
   }
 
   * {
@@ -96,7 +84,7 @@ export default {
   h3 {
     font-weight: 400;
     font-size: 1.25em;
-    color: var(--darkGrey);
+    color: var(--gray-50);
   }
 
   img,
@@ -111,7 +99,7 @@ export default {
   hr {
     border: 0;
     height: 1px;
-    background-color: var(--midGrey);
+    background-color: var(--gray-20);
   }
 
   a {

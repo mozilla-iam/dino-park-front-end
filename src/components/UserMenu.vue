@@ -55,7 +55,7 @@ export default {
     }
     .user-menu__header {
       padding: 1em;
-      border-bottom: 1px solid var(--darkGrey);
+      border-bottom: 1px solid var(--gray-50);
       display: flex;
       position: relative;
     }
@@ -69,7 +69,7 @@ export default {
         border: 1px dotted var(--white);
       }
     .user-menu__log-out {
-      border-top: 1px solid var(--darkGrey);
+      border-top: 1px solid var(--gray-50);
       padding: 1em;
       margin-top: auto; /* works because it is a flex item in a flex container */
     }
@@ -79,7 +79,7 @@ export default {
       font-size: .9em;
     }
     .user-menu__header-email {
-      color: var(--lightGrey);
+      color: var(--gray-10);
     }
     .user-menu__items {
       padding: 0;

@@ -20,7 +20,7 @@ export default {
     margin-top: 2em;
   }
     .footer a {
-      color: var(--midGrey);
+      color: var(--gray-30);
       text-decoration: none;
       display: inline-block;
       vertical-align: middle;

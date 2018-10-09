@@ -39,8 +39,8 @@ export default {
       padding: 1em;
       background: var(--white);
       text-decoration: none;
-      border-bottom: 1px solid var(--lightGrey);
-      color: var(--darkGrey);
+      border-bottom: 1px solid var(--gray-20);
+      color: var(--gray-50);
     }
       .profile__nav a:hover {
         color: var(--blue-60);

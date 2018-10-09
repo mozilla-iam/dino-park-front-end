@@ -63,7 +63,7 @@ export default {
 <style>
   .contact-me {
     background-color: var(--white);
-    box-shadow: 0 .125em .25em .125em var(--midGrey);
+    box-shadow: 0 .125em .25em .125em rgba(210, 210, 210, .5);
     text-align: left;
     padding-left: 0;
     margin: 0 .5em; /* ensure there's enough space for shadow */
@@ -75,7 +75,7 @@ export default {
     .contact-me__item {
       list-style: none;
       padding-left: 0;
-      border-top: 1px solid var(--midGrey);
+      border-top: 1px solid var(--gray-30);
     }
     .contact-me__item:first-child {
       border-top: 0;
@@ -88,7 +88,7 @@ export default {
       min-width: 20em;
     }
     .contact-me__pair:hover {
-      background-color: var(--midGrey);
+      background-color: var(--gray-30);
     }
     .contact-me__key {
       flex: none;

@@ -106,7 +106,7 @@ export default {
     font-weight: 700;
   }
   .org-node__title {
-    color: var(--darkGrey);
+    color: var(--gray-50);
     max-width: 90%;
   }
   .org-node__toggle {

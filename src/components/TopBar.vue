@@ -1,7 +1,7 @@
 <template>
   <header class="top-bar">
     <a href="/" class="top-bar__link top-bar__link--logo"><img src="@/assets/images/mozilla.svg" alt="Mozilla logo" width="90" /></a>
-    <a href="/org" class="top-bar__link"><img src="@/assets/images/org-chart.svg" alt="Org chart" width="20" /><span class="hide-mobile" aria-hidden="true">Org chart</span></a>
+    <a href="/org" class="top-bar__link"><img src="@/assets/images/org-chart.svg" alt="Org chart" width="20" /></a>
     <ShowMore buttonText="Open user menu" alternateButtonText="Close user menu" buttonClass="top-bar__user-menu-toggle" :expanded="false" v-on:close-user-menu="closeUserMenu()" ref="showMoreEl">
       <template slot="overflow">
         <UserMenu></UserMenu>
@@ -34,17 +34,17 @@ export default {
 <style>
   .top-bar {
     background-color: var(--white);
-    border-bottom: 1px solid var(--midGrey);
+    border-bottom: 1px solid var(--gray-30);
     display: flex;
     align-items: center;
     margin-bottom: 2em;
     position: fixed;
     width: 100%;
     top: 0;
+    padding: .25em;
     z-index: var(--layerTopBar);
   }
     .top-bar__link {
-      border-left: 1px solid var(--midGrey);
       padding: 1.25em;
       text-transform: uppercase;
       font-size: .9em;
@@ -55,16 +55,10 @@ export default {
     .top-bar__link img {
       vertical-align: middle;
     }
-    @media(min-width:50em) {
-      .top-bar__link img {
-        margin-right: 1em;
-      }
-    }
     .top-bar__link--logo {
       margin-right: auto;
       margin-left: 0;
       padding: 1em;
-      border-right: 1px solid var(--midGrey);
       max-width: none; /* don't shrink on small screens */
     }
     .top-bar__link--logo img {
@@ -72,7 +66,6 @@ export default {
     }
     .top-bar .show-more {
       padding: .5em 1em;
-      border-left: 1px solid var(--midGrey);
     }
     .top-bar__user-menu-toggle {
       border: 0;

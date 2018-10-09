@@ -28,16 +28,16 @@ export default {
 .profile__location,
 .profile__team {
   font-size: .875em;
-  color: var(--darkGrey);
+  color: var(--gray-50);
 }
 .profile__team {
   padding-bottom: 1em;
   margin-bottom: 1em;
-  border-bottom: 1px solid var(--midGrey);
+  border-bottom: 1px solid var(--gray-30);
 }
     .profile__team-location strong {
       display: block;
-      color: var(--darkGrey);
+      color: var(--gray-50);
       text-transform: uppercase;
     }
 @media(min-width: 60em) {
@@ -53,7 +53,7 @@ export default {
       padding-left: 0;
     }
     .profile__team-location div:first-child {
-      border-right: 1px solid var(--midGrey);
+      border-right: 1px solid var(--gray-30);
       margin-right: 1em;
       padding-right: 1em;
       padding-left: 0;

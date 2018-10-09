@@ -25,7 +25,7 @@ export default {
     font-size: 1.25em;
   }
   .profile__fun-title {
-    color: var(--darkerGrey);
+    color: var(--gray-60);
   }
 @media(min-width:50em) {
   .profile__title {
