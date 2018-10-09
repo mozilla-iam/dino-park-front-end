@@ -87,7 +87,7 @@ export default {
   }
   .org-node--current > a,
   .org-node:target > a {
-    border-left: 5px solid var(--blue);
+    border-left: 5px solid var(--blue-60);
     background-color: var(--lightBlue);
   }
   .org-node a:hover,

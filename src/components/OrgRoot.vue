@@ -24,13 +24,13 @@ export default {
   .org-root {
     width: 100%;
     max-width: 40em;
-    background-image: linear-gradient(var(--lightGrey) 0, var(--lightGrey) 50%, #fff 50%);
+    background-image: linear-gradient(var(--gray-10) 0, var(--gray-10) 50%, #fff 50%);
     background-size: auto 8em;
     margin: 0 -1em;
   }
   @media(min-width:50em) {
     .org-root {
-      box-shadow: rgba(0,0,0,0.4) 0 0 4px 0;
+      box-shadow: var(--shadowCard);
       margin: 0;
     }
   }

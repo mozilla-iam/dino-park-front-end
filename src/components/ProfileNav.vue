@@ -25,6 +25,7 @@ export default {
     position: absolute;
     left: -9999em;
     top: -9999em;
+    box-shadow: var(--shadowCard);
   }
     .profile__nav ul {
       padding: 0;
@@ -42,7 +43,7 @@ export default {
       color: var(--darkGrey);
     }
       .profile__nav a:hover {
-        color: var(--blue);
+        color: var(--blue-60);
         border-bottom: 1px solid currentColor;
       }
   @media(min-width:50em) {

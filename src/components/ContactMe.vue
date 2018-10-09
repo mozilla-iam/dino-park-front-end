@@ -73,7 +73,7 @@ export default {
     }
     .contact-me__value {
       flex: 1;
-      color: var(--blue);
+      color: var(--blue-60);
     }
     .contact-me__button {
       margin: 0 auto;

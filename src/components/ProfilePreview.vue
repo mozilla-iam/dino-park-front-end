@@ -69,6 +69,7 @@ export default {
 .profile-preview {
   background: var(--white);
   padding: 1em;
+  box-shadow: var(--shadowCard);
 }
   .profile-preview .profile__name {
     display: block;

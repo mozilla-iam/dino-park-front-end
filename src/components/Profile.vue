@@ -413,12 +413,18 @@ export default {
 }
 
 .profile__section {
-  border: 1px solid var(--midGrey);
+  border: 1px solid #ccc;
   background: #fff;
   padding: 1.5em;
   margin: 0 0 2em;
   grid-column: 2 / -1;
   overflow: visible;
+}
+@supports (--key: value) {
+  .profile__section {
+    border: 0;
+    box-shadow: var(--shadowCard);
+  }
 }
 .profile__section:first-child {
   grid-column: 1 / -1;

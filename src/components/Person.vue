@@ -68,7 +68,7 @@ export default {
         outline: none;
       }
       .person__name a:focus::after {
-        border: 1px solid var(--blue);
+        border: 1px solid var(--blue-60);
       }
     .person__preferred-title {
       color: var(--darkGrey);

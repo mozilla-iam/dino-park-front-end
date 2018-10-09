@@ -25,22 +25,24 @@ export default {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   border-radius: 1.25em;
-  background-color: var(--turqoise);
+  background-color: var(--blue-60);
   color: var(--white);
   border: 1px solid transparent;
   transition: background-color .1s ease-in-out;
   appearance: none;
 }
 .button:hover {
-  background-color: rgb(186, 240, 231);
+  background-color: var(--white);
+  border: 1px solid var(--blue-60);
+  color: var(--blue-60);
   text-decoration: none;
 }
 .button:focus {
   outline: none;
   outline: 0;
-  background-color: var(--lightGrey);
-  border-color: var(--lightGrey);
-  color: var(--blue);
+  background-color: var(--gray-20);
+  border-color: var(--gray-20);
+  color: var(--blue-60);
 }
   .button img {
     vertical-align: middle;
@@ -48,7 +50,7 @@ export default {
   }
 
 .button--secondary {
-  border-color: var(--darkGrey);
+  border-color: var(--gray-50);
   background-color: transparent;
   color: var(--black);
 }
@@ -87,7 +89,7 @@ export default {
   outline: 0;
   background-color: var(--lightGrey);
   border-color: var(--lightGrey);
-  color: var(--blue);
+  color: var(--blue-60);
 }
 
 .button--full-width {

@@ -21,6 +21,16 @@ export default {
 
 <style>
   :root {
+  /* new */
+  --gray-10: #f9f9fa;
+  --gray-20: #ededf0;
+  --gray-30: #d7d7db;
+  --gray-40: #b1b1b3;
+  --gray-50: #737373;
+  --gray-60: #4a4a4f;
+  --blue-60: #0060df;
+
+  /* old */
   --lightGrey: #f4f4f4;
   --midGrey: #e5e5e5;
   --darkGrey: #777;
@@ -28,7 +38,6 @@ export default {
   --white: #fff;
   --black: #000;
   --backgroundColor: $lightGrey;
-  --blue: #229DC4;
   --lightBlue: #f2fcfd;
   --yellow: #fff44f;
   --darkYellow: #faba00;
@@ -38,6 +47,8 @@ export default {
 
   --layerTopBar: 2;
   --layerModal: 3;
+
+  --shadowCard: 0 .25em .25em 0 rgba(210, 210, 210, 0.5);
   }
 
   * {
@@ -45,7 +56,7 @@ export default {
   }
 
   body {
-    background: var(--lightGrey);
+    background: var(--gray-20);
     font-family: "Open Sans", sans-serif;
     scroll-behavior: smooth;
     margin: 0;
@@ -104,7 +115,7 @@ export default {
   }
 
   a {
-    color: var(--blue);
+    color: var(--blue-60);
   }
   a:hover {
     color: var(--black);
