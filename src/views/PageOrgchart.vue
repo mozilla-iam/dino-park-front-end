@@ -19,7 +19,10 @@
             <p>An error occured while trying to view {{ previewUserId }}: </p></Error>
           </template>
         <template v-else-if="data">
-          <ProfilePreview v-bind="data.profile"></ProfilePreview>
+          <ProfilePreview v-if="desktopView" v-bind="data.profile"></ProfilePreview>
+          <Modal v-else :initiallyOpen="true" :closeButton="false">
+            <ProfilePreview v-bind="data.profile"></ProfilePreview>
+          </Modal>
         </template>
         <LoadingSpinner v-else></LoadingSpinner>
       </template>
@@ -31,6 +34,7 @@
 import Error from '@/components/Error.vue';
 import LoadingSpinner from '@/components/LoadingSpinner.vue';
 import OrgRoot from '@/components/OrgRoot.vue';
+import Modal from '@/components/functional/Modal.vue';
 import ProfilePreview from '@/components/ProfilePreview.vue';
 import { PREVIEW_PROFILE } from '@/queries/profile';
 
@@ -39,6 +43,7 @@ export default {
   components: {
     Error,
     LoadingSpinner,
+    Modal,
     OrgRoot,
     ProfilePreview,
   },
@@ -53,14 +58,23 @@ export default {
   created() {
     this.fetchData();
     this.honourUriFragments();
+    window.addEventListener('resize', this.updateView);
   },
   computed: {
     previewUserId() {
       return this.$store.state.profilePreview.userId;
     },
+    desktopView() {
+      return this.$store.state.profilePreview.desktopView;
+    },
   },
   watch: {
     $route: 'fetchData',
+    desktopView: function() {
+      if (desktopView === true) {
+        modalEl.isOpen = true;
+      }
+    }
   },
   methods: {
     async fetchData() {
@@ -84,6 +98,21 @@ export default {
         });
       }
     },
+    updateView() {
+      if ( matchMedia("(min-width:50em)").matches ) {
+        if (this.$store.state.profilePreview.desktopView !== true) {
+          this.$store.commit('toggleProfilePreviewDesktopView', {
+            desktopView: true,
+          });
+        }
+      } else {
+        if (this.$store.state.profilePreview.desktopView !== false) {
+          this.$store.commit('toggleProfilePreviewDesktopView', {
+            desktopView: false,
+          });
+        }
+      }
+    },
   },
 };
 </script>
@@ -97,33 +126,28 @@ export default {
       padding: 0 1em;
       display: grid;
       grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto 1fr;
       align-items: start;
       grid-gap: 2em;
       width: 100%;
     }
+    .org-chart__chart {
+      grid-row: 1 / 3;
+    }
+    .org-chart div:nth-child(2) /* @TODO: remove wrapping div that apollo adds and refer to .profile-preview here*/ {
+      grid-row: 1 / 2;
+      grid-column: 2 / 3;
+    }
+    .org-chart::after /* so that there is space taken up underneath the preview, that is as much as the org chart column takes up in total. This lets us use position:sticky on the profile preview */ {
+      content: '';
+      grid-column: 2 / 3;
+      grid-row: 2 / 3;
+    }
   }
-      .org-chart .profile-preview {
-        position: fixed;
-        z-index: var(--layerModal);
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        right: 0;
-      }
-      @media(min-width:50em) {
-        .org-chart .profile-preview {
-          z-index: inherit;
-          width: auto;
-          height: auto;
-          left: auto;
-          right: auto;
-        }
-      }
-      @media(min-height:32em) and (min-width:50em) {
-        .org-chart .profile-preview {
-          top: 6em;
-          max-width: 32em;
-        }
-      }
+  @media(min-height:32em) and (min-width:50em) {
+    .org-chart div:nth-child(2) {
+      position: sticky;
+      top: 6em;
+    }
+  }
 </style>

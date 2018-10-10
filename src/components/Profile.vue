@@ -42,7 +42,7 @@
         </ShowMore>
       </div>
       <button @click="$refs.flagProfile.isOpen=true" class="button button--secondary button--icon-only profile__flag"><img src="@/assets/images/flag.svg" alt="" width="16" aria-hidden="true" /><span class="visually-hidden">Flag this profile</span></button>
-      <Modal ref="flagProfile" heading="Flag this profile">
+      <Modal ref="flagProfile" heading="Flag this profile" :closeButton="true">
         <FlagProfile/>
       </Modal>
     </section>
@@ -155,7 +155,7 @@
     </section>
     <section class="profile__section">
       <button class="button button--secondary" @click="$refs.changeInfo.isOpen = true">Change info</button>
-      <Modal ref="changeInfo">
+      <Modal ref="changeInfo" :closeButton="true">
         <h2>Edit personal info</h2>
         <p>This is a demo of opening a form in an overlay.</p>
         <EditPersonalInfo/>

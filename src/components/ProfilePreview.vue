@@ -6,6 +6,9 @@
     <div class="profile-preview__since">Mozillian for 4 years <span class="visually-hidden">since </span><span class="profile-preview__since-start-date">July, 2016</span></div>
     <ProfileName :firstName="firstName.value" :lastName="lastName.value" :pronouns="pronouns.value"></ProfileName>
     <ProfileTitle :businessTitle="accessInformation.hris.values.businessTitle || null" :funTitle="funTitle.value"></ProfileTitle>
+    <div class="hide-desktop">
+      <ContactMe></ContactMe>
+    </div>
     <ProfileTeamLocation :team="accessInformation.hris.values.team || null" :entity="accessInformation.hris.values.entity || null" :locationDescription="accessInformation.hris.values.locationDescription || null" :timeZone="accessInformation.hris.values.timeZone || null"></ProfileTeamLocation>
 
     <h2 class="visually-hidden">About</h2>
@@ -14,7 +17,9 @@
     </div>
     <hr class="profile-preview__divider">
     <div class="profile-preview__buttons">
-      <ContactMe></ContactMe>
+      <div class="hide-mobile">
+        <ContactMe></ContactMe>
+      </div>
       <a :href="'/profile/' + userId.value" class="button button--text-only">
         View full profile 
         <img src="@/assets/images/chevron-right.svg" alt="" width="16" aria-hidden="true" />
@@ -130,10 +135,39 @@ export default {
     }
   .profile-preview__buttons {
     display: flex;
-    justify-content: space-around;
     align-items: start;
+    justify-content: center;
+  } 
+  @media(min-width:50em) {
+    .profile-preview__buttons {
+      justify-content: space-around;
+    }
   }
   .profile-preview__close {
+    position: absolute;
+    top: 2em;
+    right: 2em;
+    left: auto;
+    bottom: auto;
+    color: var(--black);
+    border-color: transparent;
+    background-color: transparent;
+  }
+  .profile-preview__divider {
+    margin: 2em 0;
+  }
+
+ .modal .profile-preview {
+    padding: 3em 0 0;
+    box-shadow: none;
+ }
+ .modal .profile-preview__image {
+    position: absolute;
+    top: -5.25em; /* half of 6.5em picture height + 2em modal padding */
+    left: 50%;
+    margin-left: -3.25em; /* half of 6.5em picture height */
+ }
+ .modal .profile-preview__close {
     position: fixed;
     bottom: 1em;
     left: 50%;
@@ -143,23 +177,10 @@ export default {
     top: auto;
     color: var(--white);
   }
-  .profile-preview__close:hover {
+  .modal .profile-preview__close:hover {
     color: var(--black);
   }
-  @media(min-width:50em) {
-    .profile-preview__close {
-      position: absolute;
-      top: 2em;
-      right: 2em;
-      left: auto;
-      bottom: auto;
-      color: var(--black);
-      border-color: transparent;
-      background-color: transparent;
-    }
+  .modal .profile-preview__since {
+    text-align: center;
   }
-
-  .profile-preview__divider {
-    margin: 2em 0;
-  }
-</style>
+ </style>

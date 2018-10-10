@@ -51,7 +51,7 @@ export default {
   }
   @media(min-width:50em) {
     body {
-      padding-top: 8em; /* allow for top bar */
+      padding-top: 6em; /* allow for top bar */
     }
   }
 
@@ -126,6 +126,12 @@ export default {
     .app-container > * {
       min-width: 0; /* ‘auto’ is default for grid children,
       but that would break our responsiveness in this case */
+    }
+    .app-container > main {
+      grid-row: 2 / 3;
+    }
+    .app-container > footer {
+      grid-row: 3 / 4;
     }
 
   .visually-hidden {
