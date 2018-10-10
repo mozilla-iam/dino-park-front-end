@@ -169,7 +169,7 @@ export default {
  }
  .modal .profile-preview__close {
     position: fixed;
-    bottom: 1em;
+    bottom: 2em;
     left: 50%;
     margin-left: -1.5em;
     z-index: var(--layerModal);

@@ -10,21 +10,23 @@
       <OrgRoot v-else-if="tree" :roots="tree"></OrgRoot>
       <LoadingSpinner v-else></LoadingSpinner>
     </div>
-    <ApolloQuery v-if="previewUserId" :query="previewProfileQuery" :variables="{ previewUserId }">
+    <ApolloQuery v-if="previewUserId" :query="previewProfileQuery" :variables="{ previewUserId }" :tag="null">
       <template slot-scope="{ result: { loading, data, error } }">
-        <LoadingSpinner v-if="loading"></LoadingSpinner>
-        <template v-else-if="error">
-          <Error><h2>{{ error.message }}</h2>
-            <pre>{{ error }}</pre>
-            <p>An error occured while trying to view {{ previewUserId }}: </p></Error>
+        <div class="org-chart__preview">
+          <LoadingSpinner v-if="loading"></LoadingSpinner>
+          <template v-else-if="error">
+            <Error><h2>{{ error.message }}</h2>
+              <pre>{{ error }}</pre>
+              <p>An error occured while trying to view {{ previewUserId }}: </p></Error>
+            </template>
+          <template v-else-if="data">
+            <ProfilePreview v-if="desktopView" v-bind="data.profile"></ProfilePreview>
+            <Modal v-else :initiallyOpen="true" :closeButton="false" ref="modalEl">
+              <ProfilePreview v-bind="data.profile"></ProfilePreview>
+            </Modal>
           </template>
-        <template v-else-if="data">
-          <ProfilePreview v-if="desktopView" v-bind="data.profile"></ProfilePreview>
-          <Modal v-else :initiallyOpen="true" :closeButton="false">
-            <ProfilePreview v-bind="data.profile"></ProfilePreview>
-          </Modal>
-        </template>
-        <LoadingSpinner v-else></LoadingSpinner>
+          <LoadingSpinner v-else></LoadingSpinner>
+        </div>
       </template>
     </ApolloQuery>
   </main>
@@ -131,21 +133,21 @@ export default {
       grid-gap: 2em;
       width: 100%;
     }
-    .org-chart__chart {
-      grid-row: 1 / 3;
-    }
-    .org-chart div:nth-child(2) /* @TODO: remove wrapping div that apollo adds and refer to .profile-preview here*/ {
-      grid-row: 1 / 2;
-      grid-column: 2 / 3;
-    }
     .org-chart::after /* so that there is space taken up underneath the preview, that is as much as the org chart column takes up in total. This lets us use position:sticky on the profile preview */ {
       content: '';
       grid-column: 2 / 3;
       grid-row: 2 / 3;
     }
+    .org-chart__chart {
+      grid-row: 1 / 3;
+    }
+    .org-chart__preview {
+      grid-row: 1 / 2;
+      grid-column: 2 / 3;
+    }
   }
   @media(min-height:32em) and (min-width:50em) {
-    .org-chart div:nth-child(2) {
+    .org-chart__preview {
       position: sticky;
       top: 6em;
     }
