@@ -1,5 +1,5 @@
-const GRAPHQL_URL = process.env.DP_K8S ? 'http://dinopark.mozilla.community:80' : 'http://localhost:5000';
-const ORGCHART_URL = process.env.DP_K8S ? 'http://dinopark.mozilla.community:80' : 'http://localhost:8888';
+const GRAPHQL_URL = process.env.DP_K8S ? 'http://dinopark.mozilla.community' : 'http://localhost:5000';
+const ORGCHART_URL = process.env.DP_K8S ? 'http://dinopark.mozilla.community' : 'http://localhost:8888';
 
 module.exports = {
   configureWebpack: {
