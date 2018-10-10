@@ -1,6 +1,8 @@
 # build stage
 FROM node:9.11.1-alpine as build-stage
 
+ARG baseurl=/
+ENV DP_BASE_URL=$baseurl
 WORKDIR /app
 COPY package.json ./
 RUN npm install

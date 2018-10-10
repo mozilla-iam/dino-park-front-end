@@ -1,0 +1,4 @@
+env: prod
+latest: true
+name: dino-park-front-end
+namespace: dino-park

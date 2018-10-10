@@ -1,17 +1,30 @@
+{{ if eq .Values.latest true }}
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: dino-park-ingress
-  namespace: dino-park
+  namespace: {{ .Values.namespace }}
+  annotations:
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
+  {{- if eq .Values.env "dev" }}
+  tls:
+    - hosts:
+      - dinopark.mozilla.community
+  {{ end -}}
   backend:
-    serviceName: dino-park-front-end-service
+    serviceName: {{ .Values.name }}-service
     servicePort: 80
   rules:
   - host: dinopark.mozilla.community
     http:
       paths:
+      - path: /base
+        backend:
+          serviceName: {{ .Values.name }}-service
+          servicePort: 80
       - path: /graphql
         backend:
           serviceName: iam-profile-faker-service
@@ -24,3 +37,4 @@ spec:
         backend:
           serviceName: dino-cave-service
           servicePort: 80
+{{ end }}
