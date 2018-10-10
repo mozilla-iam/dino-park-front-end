@@ -176,6 +176,7 @@ export default {
     background-color: var(--blue-60);
     top: auto;
     color: var(--white);
+    box-shadow: 0 .125em .25em 0 var(--gray-40);
   }
   .modal .profile-preview__close:hover {
     color: var(--black);

@@ -72,11 +72,11 @@ export default {
   },
   watch: {
     $route: 'fetchData',
-    desktopView: function() {
-      if (desktopView === true) {
-        modalEl.isOpen = true;
+    desktopView: function toggleModal() {
+      if (this.desktopView === true) {
+        this.modalEl.isOpen = true;
       }
-    }
+    },
   },
   methods: {
     async fetchData() {
@@ -101,18 +101,16 @@ export default {
       }
     },
     updateView() {
-      if ( matchMedia("(min-width:50em)").matches ) {
+      if (matchMedia('(min-width:50em)').matches) {
         if (this.$store.state.profilePreview.desktopView !== true) {
           this.$store.commit('toggleProfilePreviewDesktopView', {
             desktopView: true,
           });
         }
-      } else {
-        if (this.$store.state.profilePreview.desktopView !== false) {
-          this.$store.commit('toggleProfilePreviewDesktopView', {
-            desktopView: false,
-          });
-        }
+      } else if (this.$store.state.profilePreview.desktopView !== false) {
+        this.$store.commit('toggleProfilePreviewDesktopView', {
+          desktopView: false,
+        });
       }
     },
   },

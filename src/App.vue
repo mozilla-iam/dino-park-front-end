@@ -48,6 +48,7 @@ export default {
     font-family: "Open Sans", sans-serif;
     scroll-behavior: smooth;
     margin: 0;
+    padding-top: 4em;
   }
   @media(min-width:50em) {
     body {

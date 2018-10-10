@@ -36,7 +36,7 @@ export default {
     };
   },
   created() {
-    if ( this.initiallyOpen ) {
+    if (this.initiallyOpen) {
       this.isOpen = true;
       this.init();
     }
@@ -87,6 +87,7 @@ export default {
     left: 0;
     opacity: 1;
     z-index: var(--layerModal);
+    overflow: auto;
   }
   .modal--enter-active,
   .modal--leave-active {
