@@ -9,7 +9,7 @@
           </a>
         </li>
         <li class="contact-me__item">
-          <a href="tel:hmitsch@mozilla.com" class="contact-me__pair">
+          <a href="mailto:hmitsch@mozilla.com" class="contact-me__pair">
             <span class="contact-me__key">Email me</span>
             <span class="contact-me__value">hmitsch@mozilla.com</span>
           </a>
