@@ -35,7 +35,7 @@ export default {
       lastFocusedElement: null,
     };
   },
-  created() {
+  mounted() {
     if (this.initiallyOpen) {
       this.isOpen = true;
       this.init();
@@ -58,7 +58,7 @@ export default {
     lockFocus() {
       this.lastFocusedElement = document.activeElement;
       bindFocusTrap(this.$refs.modalEl);
-      this.$el.focus();
+      this.$refs.modalEl.focus();
     },
     undoLockFocus() {
       unbindFocusTrap(this.$refs.modalEl);
@@ -70,7 +70,7 @@ export default {
     enableBackgroundScrolling() {
       document.body.style.overflow = 'visible';
     },
-  }
+  },
 };
 </script>
 
