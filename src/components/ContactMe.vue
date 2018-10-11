@@ -9,7 +9,7 @@
           </a>
         </li>
         <li class="contact-me__item">
-          <a href="tel:hmitsch@mozilla.com" class="contact-me__pair">
+          <a href="mailto:hmitsch@mozilla.com" class="contact-me__pair">
             <span class="contact-me__key">Email me</span>
             <span class="contact-me__value">hmitsch@mozilla.com</span>
           </a>
@@ -17,10 +17,34 @@
       </ul>
     </template>
     <template slot="icon-expanded">
-      <img src="@/assets/images/chevron-up-white.svg" alt="" width="16" aria-hidden="true" />
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <polyline points="18 15 12 9 6 15" />
+      </svg>
     </template>
     <template slot="icon-collapsed">
-      <img src="@/assets/images/chevron-down-white.svg" alt="" width="16" aria-hidden="true" />
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <polyline points="6 9 12 15 18 9" />
+      </svg>
     </template>
   </ShowMore>
 </template>
@@ -39,7 +63,7 @@ export default {
 <style>
   .contact-me {
     background-color: var(--white);
-    box-shadow: 0 .125em .25em .125em var(--midGrey);
+    box-shadow: 0 .125em .25em .125em rgba(210, 210, 210, .5);
     text-align: left;
     padding-left: 0;
     margin: 0 .5em; /* ensure there's enough space for shadow */
@@ -51,7 +75,7 @@ export default {
     .contact-me__item {
       list-style: none;
       padding-left: 0;
-      border-top: 1px solid var(--midGrey);
+      border-top: 1px solid var(--gray-30);
     }
     .contact-me__item:first-child {
       border-top: 0;
@@ -64,7 +88,7 @@ export default {
       min-width: 20em;
     }
     .contact-me__pair:hover {
-      background-color: var(--midGrey);
+      background-color: var(--gray-30);
     }
     .contact-me__key {
       flex: none;
@@ -73,7 +97,7 @@ export default {
     }
     .contact-me__value {
       flex: 1;
-      color: var(--blue);
+      color: var(--blue-60);
     }
     .contact-me__button {
       margin: 0 auto;

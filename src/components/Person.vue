@@ -5,7 +5,7 @@
       <div class="person__name"><a v-if="userId" :href="'/profile/'+ userId.value">{{ firstName.value }} {{ lastName.value }}</a></div>
       <div class="person__preferred-title">
         <template v-if="funTitle">{{ funTitle.value }}</template>
-        <template v-else-if="accessInformation.hris.values.businessTitle">{{ "accessInformation.hris.values.businessTitle" }}</template>
+        <template v-else-if="accessInformation && accessInformation.hris.values.businessTitle">{{ "accessInformation.hris.values.businessTitle" }}</template>
       </div>
     </div>
     <div v-if="officeLocation" class="person__location">
@@ -33,7 +33,7 @@ export default {
 
 <style>
   .person {
-    border: 1px solid var(--midGrey);
+    border: 1px solid var(--gray-30);
     margin-left: 1em;
     padding: 1em 1.5em;
     position: relative;
@@ -68,10 +68,10 @@ export default {
         outline: none;
       }
       .person__name a:focus::after {
-        border: 1px solid var(--blue);
+        border: 1px solid var(--blue-60);
       }
     .person__preferred-title {
-      color: var(--darkGrey);
+      color: var(--gray-50);
     }
     .person__photo {
       position: absolute;
@@ -81,7 +81,7 @@ export default {
       max-height: 2em;
     }
     .person__location-label {
-      color: var(--darkGrey);
+      color: var(--gray-50);
     }
 
   .person--wide {
@@ -108,7 +108,7 @@ export default {
     }
     @supports(display:grid) {
       .person--wide .person__location {
-        background-color: var(--lightGrey);
+        background-color: var(--gray-10);
         padding: 1em 1.5em;
       }
     }

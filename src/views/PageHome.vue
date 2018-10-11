@@ -4,7 +4,7 @@
       <LoadingSpinner v-if="loading"></LoadingSpinner>
       <template v-else-if="error">An error occured</template>
       <template v-else-if="data">
-        <main>
+        <main class="container home">
           <div class="intro">
             <h1>DinoPark</h1>
             <p>Welcome to the Mozilla directory</p>
@@ -41,12 +41,15 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+  .home {
+    padding-top: 2em;
+  }
   .intro {
     text-align: center;
     margin-bottom: 4em;
   }
-  p:first-of-type {
+  .home p:first-of-type {
     font-size: 1.5em;
   }
   main {

@@ -25,7 +25,7 @@ export default {
 
   .meta-list__item dt {
     text-transform: uppercase;
-    color: var(--darkGrey);
+    color: var(--gray-50);
     font-weight: 700;
     font-size: 90%;
     letter-spacing: 0.0 25em;

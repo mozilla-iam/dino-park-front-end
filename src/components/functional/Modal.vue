@@ -4,7 +4,7 @@
         <div class="modal__content">
           <div class="modal__header">
             <div class="modal__container">
-              <button @click="isOpen = false" class="button button--text-only button--secondary">Close <img src="@/assets/images/x.svg" alt="" width="20" aria-hidden="true" /></button>
+              <button v-if="closeButton" @click="isOpen = false" class="button button--text-only button--secondary">Close <img src="@/assets/images/x.svg" alt="" width="20" aria-hidden="true" /></button>
               <h1 v-if="heading">{{ heading }}</h1>
             </div>
           </div>
@@ -23,24 +23,53 @@ export default {
   name: 'Modal',
   props: {
     heading: String,
+    initiallyOpen: Boolean,
+    closeButton: Boolean,
   },
   updated() {
-    if (this.isOpen) {
-      this.lastFocusedElement = document.activeElement;
-      document.body.style.overflow = 'hidden';
-      this.$el.focus();
-      bindFocusTrap(this.$refs.modalEl);
-    } else {
-      document.body.style.overflow = 'visible';
-      unbindFocusTrap(this.$refs.modalEl);
-      this.lastFocusedElement.focus();
-    }
+    this.init();
   },
   data() {
     return {
       isOpen: false,
       lastFocusedElement: null,
     };
+  },
+  mounted() {
+    if (this.initiallyOpen) {
+      this.isOpen = true;
+      this.init();
+    }
+  },
+  beforeDestroy() {
+    this.undoLockFocus();
+    this.enableBackgroundScrolling();
+  },
+  methods: {
+    init() {
+      if (this.isOpen) {
+        this.lockFocus();
+        this.preventBackgroundScrolling();
+      } else {
+        this.undoLockFocus();
+        this.enableBackgroundScrolling();
+      }
+    },
+    lockFocus() {
+      this.lastFocusedElement = document.activeElement;
+      bindFocusTrap(this.$refs.modalEl);
+      this.$refs.modalEl.focus();
+    },
+    undoLockFocus() {
+      unbindFocusTrap(this.$refs.modalEl);
+      this.lastFocusedElement.focus();
+    },
+    preventBackgroundScrolling() {
+      document.body.style.overflow = 'hidden';
+    },
+    enableBackgroundScrolling() {
+      document.body.style.overflow = 'visible';
+    },
   },
 };
 </script>
@@ -50,7 +79,7 @@ export default {
     width: 100%;
     height: 100%;
     position: fixed;
-    background: rgba(0,0,0, .5);
+    background: rgba(0,0,0, .7);
     display: flex;
     align-items: center;
     padding: 1em;
@@ -58,6 +87,7 @@ export default {
     left: 0;
     opacity: 1;
     z-index: var(--layerModal);
+    overflow: auto;
   }
   .modal--enter-active,
   .modal--leave-active {
@@ -73,6 +103,10 @@ export default {
       padding: 1.5em;
       margin: auto;
       position: relative;
+    }
+    .org-chart .modal__content {
+      margin: 3.25em auto auto;
+      padding-bottom: 6em; /* allow space for fixed close button */
     }
     .modal__container {
       max-width: 32em;

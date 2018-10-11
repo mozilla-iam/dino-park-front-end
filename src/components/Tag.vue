@@ -18,7 +18,7 @@ export default {
     margin-right: .5em;
     white-space: nowrap;
     padding: .5em 1em;
-    background-color: var(--lightGrey);
+    background-color: var(--gray-10);
     border-radius: 2em;
     text-align: center;
     text-decoration: none;

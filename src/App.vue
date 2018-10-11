@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="app-container">
     <TopBar></TopBar>
     <router-view/>
     <Footer></Footer>
@@ -21,21 +21,22 @@ export default {
 
 <style>
   :root {
-  --lightGrey: #f4f4f4;
-  --midGrey: #e5e5e5;
-  --darkGrey: #777;
-  --darkerGrey: #595959;
+  --gray-10: #f9f9fa;
+  --gray-20: #ededf0;
+  --gray-30: #d7d7db;
+  --gray-40: #b1b1b3;
+  --gray-50: #737373;
+  --gray-60: #4a4a4f;
+  --blue-60: #0060df;
   --white: #fff;
   --black: #000;
-  --backgroundColor: $lightGrey;
-  --blue: #229DC4;
-  --yellow: #fff44f;
-  --darkYellow: #faba00;
-  --green: #158640;
-  --red: #ff4f5e;
-  --turqoise: #59cbb7;
 
-  --layerModal: 2;
+  --lightBlue: #f2fcfd;
+
+  --layerTopBar: 2;
+  --layerModal: 3;
+
+  --shadowCard: 0 .25em .25em 0 rgba(210, 210, 210, .5);
   }
 
   * {
@@ -43,10 +44,16 @@ export default {
   }
 
   body {
-    background: var(--lightGrey);
+    background: var(--gray-20);
     font-family: "Open Sans", sans-serif;
     scroll-behavior: smooth;
     margin: 0;
+    padding-top: 4em;
+  }
+  @media(min-width:50em) {
+    body {
+      padding-top: 6em; /* allow for top bar */
+    }
   }
 
   h1,
@@ -77,7 +84,7 @@ export default {
   h3 {
     font-weight: 400;
     font-size: 1.25em;
-    color: var(--darkGrey);
+    color: var(--gray-50);
   }
 
   img,
@@ -92,15 +99,41 @@ export default {
   hr {
     border: 0;
     height: 1px;
-    background-color: var(--midGrey);
+    background-color: var(--gray-20);
   }
 
   a {
-    color: var(--blue);
+    color: var(--blue-60);
   }
   a:hover {
     color: var(--black);
   }
+
+  .container {
+    padding: 0 1em;
+  }
+  @media(min-width:50em) {
+    .container {
+      max-width: 64em;
+      margin: 0 auto;
+    }
+  }
+
+  .app-container {
+    display: grid;
+    grid-template-rows: auto 1fr auto; /* this assumes an app container with 3 things:; header, content, footer; it makes header and footer as tall as they need to be, then gives remaining whitespace to content.  */
+    min-height: 100vh;
+  }
+    .app-container > * {
+      min-width: 0; /* ‘auto’ is default for grid children,
+      but that would break our responsiveness in this case */
+    }
+    .app-container > main {
+      grid-row: 2 / 3;
+    }
+    .app-container > footer {
+      grid-row: 3 / 4;
+    }
 
   .visually-hidden {
     position: absolute;

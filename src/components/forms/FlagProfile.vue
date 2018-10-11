@@ -112,7 +112,7 @@ export default {
       outline: none;
     }
     .checkboxes__item input:focus + label::before {
-      border-color: var(--blue);
+      border-color: var(--blue--60);
     }
 
   .form__actions {

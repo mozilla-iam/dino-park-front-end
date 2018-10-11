@@ -1,5 +1,5 @@
 <template>
-  <main class="profile">
+  <main class="profile container">
     <section id="intro" class="profile__section profile__intro">
       <div class="profile__intro-photo">
         <div class="profile__headshot">
@@ -11,31 +11,20 @@
         </div>
       </div>
       <div class="profile__intro-main">
-        <div class="profile__name">
-          <h1>{{ firstName.value }} {{ lastName.value }} </h1>
-          <span class="profile__user-name">@phlsa</span>
-            <span class="profile__pronoun">{{ pronouns.value }}</span>
-        </div>
-        <p class="profile__title"><span class="profile__hr-title">{{ accessInformation.hris.values.businessTitle }}</span> <span class="profile__fun-title">{{ funTitle.value }}</span></p>
+        <ProfileName :firstName="firstName.value" :lastName="lastName.value" :pronouns="pronouns.value"></ProfileName>
+        <ProfileTitle :businessTitle="accessInformation.hris.values.businessTitle || null" :funTitle="funTitle.value"></ProfileTitle>
+        <ProfileTeamLocation :team="accessInformation.hris.values.team || null" :entity="accessInformation.hris.values.entity || null" :locationDescription="accessInformation.hris.values.locationDescription || null" :timeZone="accessInformation.hris.values.timeZone || null"></ProfileTeamLocation>
+
         <div class="hide-desktop">
           <ContactMe></ContactMe>
         </div>
+
         <h2 class="visually-hidden">About</h2>
-        <div class="profile__team-location">
-          <div class="profile__team">
-            <h3 class="visually-hidden">Team</h3>
-            <strong>{{ accessInformation.hris.values.team }}</strong>
-            {{ accessInformation.hris.values.entity }}
-          </div>
-          <div class="profile__location">
-            <h3 class="visually-hidden">Location</h3>
-            <div class="location"><strong>{{ accessInformation.hris.values.locationDescription }} ({{ accessInformation.hris.values.locationDescription }})</strong>{{ accessInformation.hris.timeZone}}</div>
-          </div>
-        </div>
+
         <div class="profile__description">
           <p>{{ description.value }}</p>
         </div>
-        <ShowMore buttonText="Show more" alternateButtonText="Show less" :expanded="false" buttonClass="button button--text-only" :transition="true">
+        <ShowMore buttonText="Show more" alternateButtonText="Show less" :expanded="false" buttonClass="button button--text-only button--less-padding" :transition="true">
           <template slot="overflow">
             <MetaList>
               <h3 class="visually-hidden">Meta</h3>
@@ -53,7 +42,7 @@
         </ShowMore>
       </div>
       <button @click="$refs.flagProfile.isOpen=true" class="button button--secondary button--icon-only profile__flag"><img src="@/assets/images/flag.svg" alt="" width="16" aria-hidden="true" /><span class="visually-hidden">Flag this profile</span></button>
-      <Modal ref="flagProfile" heading="Flag this profile">
+      <Modal ref="flagProfile" heading="Flag this profile" :closeButton="true">
         <FlagProfile/>
       </Modal>
     </section>
@@ -61,7 +50,7 @@
     <section id="relations" class="profile__section">
       <header class="profile__section-header">
         <h2>Relations</h2>
-        <a href="/orgchart?focus_on=this_person@TODO" class="button button--secondary">View Org Chart</a>
+        <a :href="'/org#' + userId.value" class="button button--secondary">View Org Chart</a>
       </header>
       <ReportingStructure>
         <template slot="reports-to">
@@ -81,15 +70,15 @@
       <h3 class="visually-hidden">Contact options</h3>
       <div v-if="pgpPublicKeys || sshPublicKeys">
         <h3>Keys</h3>
-        <div v-if="pgpPublicKeys">
+        <template v-if="pgpPublicKeys">
           <h4 class="visually-hidden">PGP</h4>
           <Key v-for="key in pgpPublicKeys.values"
                type="PGP"
                title="Title"
                :content="key"
                :key="key" />
-        </div>
-        <div v-if="sshPublicKeys">
+        </template>
+        <template v-if="sshPublicKeys">
           <h4 class="visually-hidden">SSH</h4>
           <Key
             v-for="key in sshPublicKeys.values"
@@ -97,10 +86,9 @@
             title="Title"
             :content="key"
             :key="key" />
-        </div>
+        </template>
       </div>
       <template v-if="todo.languages.length > 0">
-      <hr>
       <div class="languages">
         <h3>Languages</h3>
         <Tag
@@ -167,7 +155,7 @@
     </section>
     <section class="profile__section">
       <button class="button button--secondary" @click="$refs.changeInfo.isOpen = true">Change info</button>
-      <Modal ref="changeInfo">
+      <Modal ref="changeInfo" :closeButton="true">
         <h2>Edit personal info</h2>
         <p>This is a demo of opening a form in an overlay.</p>
         <EditPersonalInfo/>
@@ -185,6 +173,9 @@ import Meta from '@/components/Meta.vue';
 import MetaList from '@/components/MetaList.vue';
 import Modal from '@/components/functional/Modal.vue';
 import Person from '@/components/Person.vue';
+import ProfileName from '@/components/ProfileName.vue';
+import ProfileTitle from '@/components/ProfileTitle.vue';
+import ProfileTeamLocation from '@/components/ProfileTeamLocation.vue';
 import ProfileNav from '@/components/ProfileNav.vue';
 import Relation from '@/components/Relation.vue';
 import ReportingStructure from '@/components/ReportingStructure.vue';
@@ -214,6 +205,7 @@ export default {
     sshPublicKeys: Object,
     tags: Object,
     preferredLanguage: Object,
+    userId: Object,
   },
   components: {
     Button,
@@ -225,7 +217,10 @@ export default {
     MetaList,
     Modal,
     Person,
+    ProfileName,
     ProfileNav,
+    ProfileTeamLocation,
+    ProfileTitle,
     Relation,
     ReportingStructure,
     ShowMore,
@@ -408,31 +403,38 @@ export default {
 </script>
 
 <style>
-.profile {
-  max-width: 60em;
-  margin: 0 auto;
-  padding: 0 1em;
-}
 @media (min-width: 50em)     {
   .profile {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 0 2em;
-    padding: 0;
+    padding: 0 2em;
   }
 }
 
 .profile__section {
-  border: 1px solid var(--midGrey);
+  border: 1px solid #ccc;
   background: #fff;
   padding: 1.5em;
   margin: 0 0 2em;
   grid-column: 2 / -1;
   overflow: visible;
 }
+@supports (--key: value) {
+  .profile__section {
+    border: 0;
+    box-shadow: var(--shadowCard);
+  }
+}
 .profile__section:first-child {
   grid-column: 1 / -1;
 }
+  .profile__section h3 {
+    margin: 1.5em 0 1em;
+  }
+  .profile__section .reporting-structure h3 {
+    margin-top: 0;
+  }
 
 .profile__section-header {
   padding: 1.5em;
@@ -446,51 +448,6 @@ export default {
   .profile__section-header .button {
     margin-left: auto;
   }
-
-.profile__name {
-  display: block;
-  text-align: center;
-}
-  .profile__name h1 {
-    margin-bottom: 0.125em;
-  }
-  .profile__pronoun {
-    color: var(--darkGrey);
-  }
-@media(min-width:50em) {
-  .profile__name {
-    text-align: left;
-  }
-  .profile__name h1 {
-    display: inline;
-    margin-bottom: 0;
-  }
-  .profile__user-name,
-  .profile__pronoun {
-    font-size: 1.5em;
-    margin-left: 1em;
-  }
-}
-
-.profile__title {
-  text-align: center;
-}
-  .profile__hr-title,
-  .profile__fun-title {
-    display: block;
-  }
-  .profile__hr-title {
-    font-weight: 400;
-    font-size: 1.25em;
-  }
-  .profile__fun-title {
-    color: var(--darkerGrey);
-  }
-@media(min-width:50em) {
-  .profile__title {
-    text-align: left;
-  }
-}
 
 .profile__intro {
   position: relative;
@@ -546,39 +503,9 @@ export default {
   right: 1.5em;
 }
 
-.profile__location,
-.profile__team,
 .profile__description {
   font-size: .875em;
-  color: var(--darkGrey);
+  color: var(--gray-50);
 }
-.profile__team {
-  padding-bottom: 1em;
-  margin-bottom: 1em;
-  border-bottom: 1px solid var(--midGrey);
-}
-    .profile__team-location strong {
-      display: block;
-      color: var(--darkGrey);
-      text-transform: uppercase;
-    }
-@media(min-width: 60em) {
-  .profile__team {
-    padding-bottom: 0;
-    margin-bottom: 0;
-    border-bottom: 0;
-  }
-  .profile__team-location {
-    display: flex;
-  }
-    .profile__team-location div {
-      padding-left: 0;
-    }
-    .profile__team-location div:first-child {
-      border-right: 1px solid var(--midGrey);
-      margin-right: 1em;
-      padding-right: 1em;
-      padding-left: 0;
-    }
-}
+
 </style>

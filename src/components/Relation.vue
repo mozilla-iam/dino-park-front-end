@@ -20,12 +20,12 @@ export default {
 <style>
   .relation-list {
     padding: 0;
-    margin: 0;
+    margin: 0 0 2em 0;
   }
 
   .relation {
     list-style: none;
-    border: 1px solid var(--midGrey);
+    border: 1px solid var(--gray-30);
     padding: 1em;
   }
   .relation + .relation {
@@ -42,9 +42,9 @@ export default {
       font-weight: 400;
     }
     .relation__label {
-      color: var(--darkGrey);
+      color: var(--gray-50);
     }
     .relation__content {
-      color: var(--darkGrey);
+      color: var(--gray-50);
     }
 </style>

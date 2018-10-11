@@ -25,6 +25,7 @@ export default {
     position: absolute;
     left: -9999em;
     top: -9999em;
+    box-shadow: var(--shadowCard);
   }
     .profile__nav ul {
       padding: 0;
@@ -38,17 +39,18 @@ export default {
       padding: 1em;
       background: var(--white);
       text-decoration: none;
-      border-bottom: 1px solid var(--lightGrey);
-      color: var(--darkGrey);
+      border-bottom: 1px solid var(--gray-20);
+      color: var(--gray-50);
     }
       .profile__nav a:hover {
-        color: var(--blue);
+        color: var(--blue-60);
         border-bottom: 1px solid currentColor;
       }
   @media(min-width:50em) {
     .profile__nav {
+      position: static;
       position: sticky;
-      top: 0;
+      top: 6em;
     }
   }
 </style>

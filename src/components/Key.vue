@@ -18,7 +18,7 @@ export default {
 
 <style>
 .key {
-  border: 1px solid var(--midGrey);
+  border: 1px solid var(--gray-30);
   padding: .5em;
 }
 
@@ -27,7 +27,7 @@ export default {
 }
 
 .key h5 strong {
-  color: var(--darkGrey);
+  color: var(--gray-50);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-weight: 400;
