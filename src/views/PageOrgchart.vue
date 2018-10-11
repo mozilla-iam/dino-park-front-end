@@ -61,6 +61,7 @@ export default {
     this.fetchData();
     this.honourUriFragments();
     window.addEventListener('resize', this.updateView);
+    this.updateView();
   },
   computed: {
     previewUserId() {
