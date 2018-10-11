@@ -49,7 +49,7 @@ export default {
     text-align: center;
     margin-bottom: 4em;
   }
-  p:first-of-type {
+  .home p:first-of-type {
     font-size: 1.5em;
   }
   main {

@@ -73,7 +73,7 @@ export default {
   watch: {
     $route: 'fetchData',
     desktopView: function toggleModal() {
-      if (this.desktopView === true) {
+      if (this.modalEl && this.desktopView === true) {
         this.modalEl.isOpen = true;
       }
     },
@@ -120,6 +120,7 @@ export default {
 <style>
   .org-chart {
     padding: 0;
+    width: 100%;
   }
   @media(min-width:50em) {
     .org-chart {
@@ -129,7 +130,6 @@ export default {
       grid-template-rows: auto 1fr;
       align-items: start;
       grid-gap: 2em;
-      width: 100%;
     }
     .org-chart::after /* so that there is space taken up underneath the preview, that is as much as the org chart column takes up in total. This lets us use position:sticky on the profile preview */ {
       content: '';

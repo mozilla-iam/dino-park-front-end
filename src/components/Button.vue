@@ -17,7 +17,7 @@ export default {
 .button {
   text-align: center;
   text-decoration: none;
-  padding: .875em 3.5em;
+  padding: 1em 2.5em;
   display: block;
   font-weight: 700;
   font-size: .75em;
@@ -29,6 +29,7 @@ export default {
   color: var(--white);
   border: 1px solid transparent;
   transition: background-color .1s ease-in-out;
+  -webkit-appearance: none;
   appearance: none;
 }
 .button:hover {

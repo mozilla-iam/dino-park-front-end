@@ -27,6 +27,7 @@ export default {
   }
   .profile__pronoun {
     color: var(--gray-50);
+    margin-left: .5em;
   }
 @media(min-width:50em) {
   .profile__name {

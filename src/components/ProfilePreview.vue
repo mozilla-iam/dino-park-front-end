@@ -21,7 +21,7 @@
         <ContactMe></ContactMe>
       </div>
       <a :href="'/profile/' + userId.value" class="button button--text-only">
-        View full profile 
+        View full profile
         <img src="@/assets/images/chevron-right.svg" alt="" width="16" aria-hidden="true" />
       </a>
       <button @click="closeProfile" class="button button--icon-only button--secondary profile-preview__close">
@@ -83,13 +83,13 @@ export default {
         newId: null,
         lastTrigger: null,
       });
-      
+
       if (elementToReturnFocusTo) {
         elementToReturnFocusTo.focus();
       }
     },
   },
-  mounted: function() {
+  mounted() {
     this.$refs.profilePreviewElement.focus();
   },
 };
@@ -137,7 +137,7 @@ export default {
     display: flex;
     align-items: start;
     justify-content: center;
-  } 
+  }
   @media(min-width:50em) {
     .profile-preview__buttons {
       justify-content: space-around;
@@ -171,7 +171,8 @@ export default {
     position: fixed;
     bottom: 2em;
     left: 50%;
-    margin-left: -1.5em;
+    width: 4em;
+    margin-left: -2em;
     z-index: var(--layerModal);
     background-color: var(--blue-60);
     top: auto;
