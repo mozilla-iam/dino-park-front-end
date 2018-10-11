@@ -1,9 +1,9 @@
 <template>
-  <li :id="data.user_id" :class="'org-node' + ( data.user_id === $store.state.profilePreview.userId ? ' org-node--current' : '')">
-    <a :href="`/profile/${data.user_id}`" @click.prevent="previewProfile(data.user_id)" ref="openProfileTrigger">
+  <li :id="data.user_id" :class="'org-node' + ( data.user_id === this.$route.params.userId ? ' org-node--current' : '')">
+    <router-link :to="{ name: 'Orgchart', params: { userId: data.user_id } }">
       <span class="org-node__name">{{ data.first_name }} {{ data.last_name }}</span>
       <span class="org-node__title">{{ data.title }}</span>
-    </a>
+    </router-link>
     <ShowMore v-if="children.length > 0" :buttonText="`Expand ${data.first_name} ${data.last_name}`" :alternateButtonText="`Collapse ${data.first_name} ${data.last_name}`" :expanded="false" buttonClass="org-node__toggle" :transition="true">
       <template slot="overflow">
         <ul v-for="(child, index) in children" :key="index">
@@ -33,17 +33,6 @@ export default {
   },
   components: {
     ShowMore,
-  },
-  methods: {
-    previewProfile(userId) {
-      this.$store.commit('updatePreviewProfileId', {
-        newId: userId,
-        trigger: this.$refs.openProfileTrigger,
-      });
-      if (window.history && history.pushState) {
-        history.pushState(null, null, '#' + userId);
-      }
-    },
   },
 };
 </script>
@@ -116,7 +105,7 @@ export default {
     left: 0;
     left: calc((var(--nodeLevel) - 1) * 1em);
     width: 3em;
-    height: 4em;  
+    height: 4em;
     z-index: 1;
     border: 0;
     background-color: transparent;

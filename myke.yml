@@ -3,18 +3,24 @@ desc: The new front-end for DinoPark.
 env:
   name: dino-park-front-end
   image: mozillaparsys/dino-park-front-end
+  default_base: /beta/
 tasks:
   package:
-    cmd: docker build -t {{ .image }} .
+    cmd: docker build --build-arg baseurl={{ .baseurl | default .default_base }} -t {{ .image }} .
   
   run-docker:
     cmd: docker run --rm -ti --name {{ .name }} {{ .image }}
 
   run-k8s:
-    cmd: kubectl apply -f k8s/chart/
+    cmd: kubectl apply -f k8s/
 
   run-local:
     cmd: npm run serve
+
+  run-local-online:
+    cmd: |-
+      export DP_K8S=1
+      npm run serve
   
   install-local:
     cmd: npm install

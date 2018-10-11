@@ -65,14 +65,13 @@ export default {
   },
   computed: {
     previewUserId() {
-      return this.$store.state.profilePreview.userId;
+      return this.$route.params.userId;
     },
     desktopView() {
       return this.$store.state.profilePreview.desktopView;
     },
   },
   watch: {
-    $route: 'fetchData',
     desktopView: function toggleModal() {
       if (this.modalEl && this.desktopView === true) {
         this.modalEl.isOpen = true;
@@ -94,9 +93,8 @@ export default {
       this.loading = false;
     },
     honourUriFragments() {
-      if (window.location.hash) {
-        this.$store.commit('updatePreviewProfileId', {
-          newId: window.location.hash.substr(1),
+      if (this.$route.params.userId) {
+        this.$store.commit('updatePreviewProfileLastTrigger', {
           trigger: document.body,
         });
       }

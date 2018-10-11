@@ -20,10 +20,10 @@
       <div class="hide-mobile">
         <ContactMe></ContactMe>
       </div>
-      <a :href="'/profile/' + userId.value" class="button button--text-only">
+      <router-link :to="{ name: 'Profile', params: { userId: userId.value } }" class="button button--text-only">
         View full profile
         <img src="@/assets/images/chevron-right.svg" alt="" width="16" aria-hidden="true" />
-      </a>
+      </router-link>
       <button @click="closeProfile" class="button button--icon-only button--secondary profile-preview__close">
         <span class="visually-hidden">Close profile</span>
         <svg
@@ -79,10 +79,10 @@ export default {
     closeProfile() {
       const elementToReturnFocusTo = this.$store.state.profilePreview.lastTrigger;
 
-      this.$store.commit('updatePreviewProfileId', {
-        newId: null,
+      this.$store.commit('updatePreviewProfileLastTrigger', {
         lastTrigger: null,
       });
+      this.$router.push({ name: 'Orgchart' });
 
       if (elementToReturnFocusTo) {
         elementToReturnFocusTo.focus();

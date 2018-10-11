@@ -12,6 +12,10 @@ spec:
   - host: dinopark.mozilla.community
     http:
       paths:
+      - path: /beta
+        backend:
+          serviceName: dino-park-front-end-service
+          servicePort: 80
       - path: /graphql
         backend:
           serviceName: iam-profile-faker-service
