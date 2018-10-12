@@ -83,7 +83,7 @@ export default {
     },
   },
   mounted() {
-    this.lastActive = document.activeElement || document.body;
+    this.lastActive = document.activeElement;
     this.$refs.profilePreviewElement.focus();
   },
 };
