@@ -59,20 +59,18 @@ export default {
   },
   created() {
     this.fetchData();
-    this.honourUriFragments();
     window.addEventListener('resize', this.updateView);
     this.updateView();
   },
   computed: {
     previewUserId() {
-      return this.$store.state.profilePreview.userId;
+      return this.$route.params.userId;
     },
     desktopView() {
       return this.$store.state.profilePreview.desktopView;
     },
   },
   watch: {
-    $route: 'fetchData',
     desktopView: function toggleModal() {
       if (this.modalEl && this.desktopView === true) {
         this.modalEl.isOpen = true;
@@ -92,14 +90,6 @@ export default {
         this.error = e;
       }
       this.loading = false;
-    },
-    honourUriFragments() {
-      if (window.location.hash) {
-        this.$store.commit('updatePreviewProfileId', {
-          newId: window.location.hash.substr(1),
-          trigger: document.body,
-        });
-      }
     },
     updateView() {
       if (matchMedia('(min-width:50em)').matches) {

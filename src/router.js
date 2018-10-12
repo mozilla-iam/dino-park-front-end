@@ -7,6 +7,7 @@ import PageOrgchart from './views/PageOrgchart.vue';
 Vue.use(Router);
 
 const router = new Router({
+  base: process.env.BASE_URL,
   mode: 'history',
   routes: [
     {
@@ -21,7 +22,7 @@ const router = new Router({
       props: true,
     },
     {
-      path: '/org',
+      path: '/org/:userId?',
       name: 'Orgchart',
       component: PageOrgchart,
       props: true,
