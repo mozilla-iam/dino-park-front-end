@@ -59,7 +59,6 @@ export default {
   },
   created() {
     this.fetchData();
-    this.honourUriFragments();
     window.addEventListener('resize', this.updateView);
     this.updateView();
   },
@@ -91,13 +90,6 @@ export default {
         this.error = e;
       }
       this.loading = false;
-    },
-    honourUriFragments() {
-      if (this.$route.params.userId) {
-        this.$store.commit('updatePreviewProfileLastTrigger', {
-          trigger: document.body,
-        });
-      }
     },
     updateView() {
       if (matchMedia('(min-width:50em)').matches) {

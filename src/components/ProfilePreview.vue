@@ -77,19 +77,13 @@ export default {
   },
   methods: {
     closeProfile() {
-      const elementToReturnFocusTo = this.$store.state.profilePreview.lastTrigger;
-
-      this.$store.commit('updatePreviewProfileLastTrigger', {
-        lastTrigger: null,
-      });
       this.$router.push({ name: 'Orgchart' });
-
-      if (elementToReturnFocusTo) {
-        elementToReturnFocusTo.focus();
-      }
+      this.lastActive.focus();
+      this.lastActive = document.body;
     },
   },
   mounted() {
+    this.lastActive = document.activeElement || document.body;
     this.$refs.profilePreviewElement.focus();
   },
 };
