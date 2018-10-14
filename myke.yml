@@ -12,7 +12,7 @@ tasks:
     cmd: docker run --rm -ti --name {{ .name }} {{ .image }}
 
   run-k8s:
-    cmd: kubectl apply -f k8s/
+    cmd: kubectl apply -f k8s/chart/
 
   run-local:
     cmd: npm run serve
