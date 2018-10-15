@@ -8,7 +8,7 @@
       <p>An error occured while trying to go to load the search results</p>
     </Error>
     <template v-else-if="results">
-      <p>{{ results.total }} results</p>
+      <p>{{ results.total }} results for <strong>{{ this.$route.params.query }}</strong></p>
       <SearchResultList :results="results"></SearchResultList>
     </template>
     <LoadingSpinner v-else></LoadingSpinner>
