@@ -3,9 +3,12 @@
     <div class="top-bar__bar">
       <router-link :to="{ name: 'Home' }" class="top-bar__link top-bar__link--logo"><img src="@/assets/images/mozilla.svg" alt="Mozilla logo" width="90" /></router-link>
       <SearchForm class="hide-mobile"></SearchForm>
-      <button class="hide-desktop" @click="toggleMobileSearch">
-        <template v-if="mobileSearchOpen">Hide search</template>
-        <template v-else>Show search</template>
+      <button class="hide-desktop top-bar__search" @click="toggleMobileSearch">
+        <img src="@/assets/images/search.svg" alt="" role="presentation" aria-hidden="true" width="20" />
+        <span class="visually-hidden">
+          <template v-if="mobileSearchOpen">Hide search</template>
+          <template v-else>Show search</template>
+        </span>
       </button>
       <router-link :to="{ name: 'Orgchart' }" class="top-bar__link"><img src="@/assets/images/org-chart.svg" alt="Org chart" width="20" /></router-link>
       <ShowMore buttonText="Open user menu" alternateButtonText="Close user menu" buttonClass="top-bar__user-menu-toggle" :expanded="false" v-on:close-user-menu="closeUserMenu()" ref="showMoreEl">
@@ -62,7 +65,11 @@ export default {
     top: 0;
     padding: .25em;
     z-index: var(--layerTopBar);
-  }
+  } 
+    .top-bar__search {
+      border: 0;
+      background-color: transparent;
+    }
     .top-bar__link {
       padding: 1.25em;
       text-transform: uppercase;
