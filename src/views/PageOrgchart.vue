@@ -5,7 +5,7 @@
       <Error v-else-if="error">
         <h2>{{ error.message }}</h2>
         <pre>{{ error }}</pre>
-        <p>An error occured while trying to go to load the Orgchart</p>
+        <p>An error occured while trying to go to load the org chart.</p>
       </Error>
       <OrgRoot v-else-if="tree" :roots="tree"></OrgRoot>
       <LoadingSpinner v-else></LoadingSpinner>

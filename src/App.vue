@@ -111,6 +111,7 @@ export default {
 
   .container {
     padding: 0 1em;
+    width: 100%;
   }
   @media(min-width:50em) {
     .container {

@@ -1,6 +1,7 @@
 <template>
   <header class="top-bar">
     <router-link :to="{ name: 'Home' }" class="top-bar__link top-bar__link--logo"><img src="@/assets/images/mozilla.svg" alt="Mozilla logo" width="90" /></router-link>
+    <SearchForm></SearchForm>
     <router-link :to="{ name: 'Orgchart' }" class="top-bar__link"><img src="@/assets/images/org-chart.svg" alt="Org chart" width="20" /></router-link>
     <ShowMore buttonText="Open user menu" alternateButtonText="Close user menu" buttonClass="top-bar__user-menu-toggle" :expanded="false" v-on:close-user-menu="closeUserMenu()" ref="showMoreEl">
       <template slot="overflow">
@@ -14,12 +15,14 @@
 </template>
 
 <script>
+import SearchForm from '@/components/SearchForm.vue';
 import ShowMore from '@/components/functional/ShowMore.vue';
 import UserMenu from '@/components/UserMenu.vue';
 
 export default {
   name: 'TopBar',
   components: {
+    SearchForm,
     ShowMore,
     UserMenu,
   },
@@ -27,6 +30,11 @@ export default {
     closeUserMenu() {
       this.$refs.showMoreEl.expanded = false;
     },
+  },
+  data() {
+    return {
+      searchQuery: '',
+    };
   },
 };
 </script>
