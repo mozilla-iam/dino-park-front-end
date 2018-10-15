@@ -1,5 +1,5 @@
 <template>
-  <form class="search-form" :action="'/search/' + searchQuery" @submit="preventEmptySubmit">
+  <form :class="'search-form' + ( modifier ? ' ' + modifier : '')" :action="'/search/' + searchQuery" @submit="preventEmptySubmit">
     <fieldset>
       <legend class="visually-hidden">Search</legend>
       <div class="search-form__fields">
@@ -17,14 +17,19 @@
 <script>
 export default {
   name: 'SearchForm',
+  props: {
+    modifier: String,
+  },
   methods: {
     preventEmptySubmit(event) {
       if(!this.$refs.searchQueryField.value) {
         event.preventDefault();
         this.$refs.searchQueryField.focus();
-        console.log('empty11! ');
       }
     },
+  },
+  mounted() {
+    this.$refs.searchQueryField.focus();
   },
   data() {
     return {
@@ -73,4 +78,9 @@ export default {
       .search-form__submit img {
         vertical-align: middle;
       }
+
+.search-form--small {
+  padding: 1em;
+  max-width: none;
+}
 </style>

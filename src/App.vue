@@ -48,12 +48,7 @@ export default {
     font-family: "Open Sans", sans-serif;
     scroll-behavior: smooth;
     margin: 0;
-    padding-top: 4em;
-  }
-  @media(min-width:50em) {
-    body {
-      padding-top: 6em; /* allow for top bar */
-    }
+    padding-top: 4.5em;  /* allow for top bar */
   }
 
   h1,

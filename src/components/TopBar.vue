@@ -1,16 +1,23 @@
 <template>
   <header class="top-bar">
-    <router-link :to="{ name: 'Home' }" class="top-bar__link top-bar__link--logo"><img src="@/assets/images/mozilla.svg" alt="Mozilla logo" width="90" /></router-link>
-    <SearchForm></SearchForm>
-    <router-link :to="{ name: 'Orgchart' }" class="top-bar__link"><img src="@/assets/images/org-chart.svg" alt="Org chart" width="20" /></router-link>
-    <ShowMore buttonText="Open user menu" alternateButtonText="Close user menu" buttonClass="top-bar__user-menu-toggle" :expanded="false" v-on:close-user-menu="closeUserMenu()" ref="showMoreEl">
-      <template slot="overflow">
-        <UserMenu></UserMenu>
-      </template>
-      <template slot="button-content">
-        <img src="@/assets/images/user-demo.png" alt="Avatar" width="40" />
-      </template>
-    </ShowMore>
+    <div class="top-bar__bar">
+      <router-link :to="{ name: 'Home' }" class="top-bar__link top-bar__link--logo"><img src="@/assets/images/mozilla.svg" alt="Mozilla logo" width="90" /></router-link>
+      <SearchForm class="hide-mobile"></SearchForm>
+      <button class="hide-desktop" @click="toggleMobileSearch">
+        <template v-if="mobileSearchOpen">Hide search</template>
+        <template v-else>Show search</template>
+      </button>
+      <router-link :to="{ name: 'Orgchart' }" class="top-bar__link"><img src="@/assets/images/org-chart.svg" alt="Org chart" width="20" /></router-link>
+      <ShowMore buttonText="Open user menu" alternateButtonText="Close user menu" buttonClass="top-bar__user-menu-toggle" :expanded="false" v-on:close-user-menu="closeUserMenu()" ref="showMoreEl">
+        <template slot="overflow">
+          <UserMenu></UserMenu>
+        </template>
+        <template slot="button-content">
+          <img src="@/assets/images/user-demo.png" alt="Avatar" width="40" />
+        </template>
+      </ShowMore>
+    </div>
+    <SearchForm modifier="search-form--small hide-desktop" v-if="mobileSearchOpen"></SearchForm>
   </header>
 </template>
 
@@ -30,17 +37,21 @@ export default {
     closeUserMenu() {
       this.$refs.showMoreEl.expanded = false;
     },
+    toggleMobileSearch() {
+      this.mobileSearchOpen ? this.mobileSearchOpen = false : this.mobileSearchOpen = true;
+    }
   },
   data() {
     return {
       searchQuery: '',
+      mobileSearchOpen: false,
     };
   },
 };
 </script>
 
 <style>
-  .top-bar {
+  .top-bar__bar {
     background-color: var(--white);
     border-bottom: 1px solid var(--gray-30);
     display: flex;
