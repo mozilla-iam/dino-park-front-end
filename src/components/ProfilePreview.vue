@@ -187,12 +187,15 @@ export default {
     bottom: 2em;
     left: 50%;
     width: 4em;
+    height: 4em;
     margin-left: -2em;
     z-index: var(--layerModal);
     background-color: var(--blue-60);
     top: auto;
     color: var(--white);
     box-shadow: 0 .125em .25em 0 var(--gray-40);
+    display: flex;
+    align-items: center;
   }
   .modal .profile-preview__close:hover {
     color: var(--black);
