@@ -1,5 +1,5 @@
 <template>
-  <form :class="'search-form' + ( modifier ? ' ' + modifier : '')" :action="'/search/' + searchQuery" @submit="preventEmptySubmit">
+  <form :class="'search-form' + ( modifier ? ' ' + modifier : '')" :action="this.$router.resolve({ name: 'Search', params: { query: searchQuery }}).href" @submit="preventEmptySubmit">
     <fieldset>
       <legend class="visually-hidden">Search</legend>
       <div class="search-form__fields">

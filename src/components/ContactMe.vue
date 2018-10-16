@@ -78,7 +78,7 @@ export default {
       left: 50%;
       width: 20em;
       margin: 0 .5em 0 -10em;
-    }   
+    }
   }
     .contact-me::before {
       content: '';
