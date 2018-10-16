@@ -106,6 +106,10 @@ export default {
     color: var(--black);
   }
 
+  button {
+    cursor: pointer; /* as per issue #50 :'( */;
+  }
+
   .container {
     padding: 0 1em;
     width: 100%;

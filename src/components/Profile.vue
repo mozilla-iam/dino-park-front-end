@@ -88,13 +88,12 @@
             :key="key" />
         </template>
       </div>
-      <template v-if="todo.languages.length > 0">
+      <template v-if="preferred_languages">
       <div class="languages">
         <h3>Languages</h3>
         <Tag
-          v-for="language in todo.languages"
-          v-bind="language"
-          :key="language.id" />
+          v-for="(language, index) in preferred_languages.values"
+          :tag="language" :key="`language-${index}`" />
       </div>
       </template>
     </section>
@@ -132,26 +131,11 @@
         </Relation>
       </ul>
     </section>
-    <section id="vouches" class="profile__section">
-      <header class="profile__section-header">
-        <h2>Vouches</h2>
-      </header>
-      <ShowMore buttonClass="button button--secondary" buttonText="Show more" alternateButtonText="Show less" :expanded="false">
-        <template slot="base">
-          <Vouch v-bind="todo.vouches[3]" />
-        </template>
-        <template slot="overflow">
-          <Vouch v-for="vouch in todo.vouches" v-bind="vouch" :key="vouch.id" />
-        </template>
-      </ShowMore>
-    </section>
     <section id="tags" class="profile__section">
       <header class="profile__section-header">
         <h2>Tags</h2>
       </header>
-      <Tag tag="HTML" />
-      <Tag tag="GraphQL" />
-      <Tag tag="Kubernetes" />
+      <Tag v-for="(tag, index) in tags.values" :tag="tag" :key="`tag-${index}`" />
     </section>
     <section class="profile__section">
       <button class="button button--secondary" @click="$refs.changeInfo.isOpen = true">Change info</button>
@@ -226,178 +210,6 @@ export default {
     ShowMore,
     Tag,
     Vouch,
-  },
-  data() {
-    return {
-      todo: {
-        worker_type: 'Contractor',
-        desk_number: 'SF4908',
-        cost_centre: '1003 - Office of CIO',
-        employee_id: '12345',
-        team: {
-          name: 'Open Innovation',
-          members: [
-            {
-              id: 1,
-              userId: {
-                value: 'katharina',
-              },
-              firstName: {
-                value: 'Katharina',
-              },
-              lastName: {
-                value: 'Borchert',
-              },
-              funTitle: {
-                value: 'Open Innovation',
-              },
-              officeLocation: {
-                value: 'San Francisco',
-              },
-              picture: {
-                value: 'https://placekitten.com/100/100',
-              },
-            },
-            {
-              id: 2,
-              userId: {
-                value: 'florian',
-              },
-              firstName: {
-                value: 'Florian',
-              },
-              lastName: {
-                value: 'Merz',
-              },
-              funTitle: {
-                value: 'Open Innovation',
-              },
-              officeLocation: {
-                value: 'Berlin',
-              },
-              picture: {
-                value: 'https://placekitten.com/100/100',
-              },
-            },
-          ],
-        },
-        vouches: [
-          {
-            id: 1,
-            content: 'An automatic vouch for being a Mozilla employee.',
-            voucher: {
-              userId: {
-                value: 'dino',
-              },
-              firstName: {
-                value: 'Dino',
-              },
-              lastName: {
-                value: 'McVouch',
-              },
-              funTitle: {
-                value: 'The Vouching Bot',
-              },
-              officeLocation: {
-                value: 'The internet',
-              },
-              picture: {
-                value: 'https://placekitten.com/100/100',
-              },
-            },
-          },
-          {
-            id: 2,
-            content: 'Henrik is an active Mozilla Rep, organizing events and working a lot with the community. Thank you for all the work',
-            voucher: {
-              userId: {
-                value: 'florian',
-              },
-              firstName: {
-                value: 'Florian',
-              },
-              lastName: {
-                value: 'Merz',
-              },
-              funTitle: {
-                value: 'Open Innovation',
-              },
-              officeLocation: {
-                value: 'Berlin',
-              },
-              picture: {
-                value: 'https://placekitten.com/100/100',
-              },
-            },
-          },
-          {
-            id: 3,
-            content: 'Henrik is an active Mozilla Rep, organizing events and working a lot with the community. Thank you for all the work',
-            voucher: {
-              userId: {
-                value: 'andrew',
-              },
-              firstName: {
-                value: 'Andrew',
-              },
-              lastName: {
-                value: 'Krug',
-              },
-              funTitle: {
-                value: 'InfoSec',
-              },
-              officeLocation: {
-                value: 'Portland',
-              },
-              picture: {
-                value: 'https://placekitten.com/100/100',
-              },
-            },
-          },
-          {
-            id: 4,
-            content: 'Henrik is an active Mozilla Rep, organizing events and working a lot with the community. Thank you for all the work',
-            voucher: {
-              userId: {
-                value: 'megan',
-              },
-              firstName: {
-                value: 'Megan',
-              },
-              lastName: {
-                value: 'Branson',
-              },
-              funTitle: {
-                value: 'Open Innovation',
-              },
-              officeLocation: {
-                value: 'Portland',
-              },
-              picture: {
-                value: 'https://placekitten.com/100/100',
-              },
-            },
-          },
-        ],
-        languages: [
-          {
-            id: 1,
-            tag: 'German',
-          },
-          {
-            id: 2,
-            tag: 'English',
-          },
-          {
-            id: 3,
-            tag: 'Italian',
-          },
-        ],
-      },
-      navItems: {
-
-      },
-    };
   },
 };
 </script>

@@ -24,7 +24,7 @@ export default {
   font-family: inherit;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  border-radius: 1.25em;
+  border-radius: 2.5em;
   background-color: var(--blue-60);
   color: var(--white);
   border: 1px solid transparent;
@@ -74,14 +74,14 @@ export default {
 
 .button--text-only {
   background-color: transparent;
-  border: 1px solid transparent;
+  border-color: transparent;
   color: var(--black);
 }
 
 .button--text-only:hover {
   background-color: transparent;
-  border-color: var(--gray-30);
-  color: inherit;
+  border-color: transparent;
+  color: var(--blue-60);
 }
 
 .button--text-only:focus {

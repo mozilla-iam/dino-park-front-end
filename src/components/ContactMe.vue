@@ -66,15 +66,37 @@ export default {
     box-shadow: 0 .125em .25em .125em rgba(210, 210, 210, .5);
     text-align: left;
     padding-left: 0;
-    margin: 0 .5em; /* ensure there's enough space for shadow */
     z-index: calc(var(--modalLayer) - 1);
     position: absolute;
-    top: 2.5em;
-    left: -2em;
+    top: 3.5em;
+    left: 0;
+    width: calc(100% + 4.5em);
+    margin: 0 -2.25em;
   }
+  @media(min-width:50em) {
+    .contact-me {
+      left: 50%;
+      width: 20em;
+      margin: 0 .5em 0 -10em;
+    }   
+  }
+    .contact-me::before {
+      content: '';
+      width: 1em;
+      height: 1em;
+      background-color: var(--white);
+      position: absolute;
+      left: 50%;
+      margin-left: -.5em;
+      margin-top: -.5em;
+      transform: rotate(-45deg);
+      box-shadow: 0 0 .25em 0 var(--gray-30);
+    }
     .contact-me__item {
       list-style: none;
       padding-left: 0;
+      background-color: var(--white);
+      position: relative;
       border-top: 1px solid var(--gray-30);
     }
     .contact-me__item:first-child {
