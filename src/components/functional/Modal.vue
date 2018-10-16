@@ -106,7 +106,8 @@ export default {
     }
     .org-chart .modal__content {
       margin: 3.25em auto auto;
-      padding-bottom: 6em; /* allow space for fixed close button */
+      padding-bottom: 5em; /* allow space for fixed close button */
+      min-height: calc(100vh - 4.25em);
     }
     .modal__container {
       max-width: 32em;
