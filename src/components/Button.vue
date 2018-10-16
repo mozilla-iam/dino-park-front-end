@@ -31,6 +31,7 @@ export default {
   transition: background-color .1s ease-in-out;
   -webkit-appearance: none;
   appearance: none;
+  cursor: pointer; /* as per issue #50 :'( */;
 }
 .button:hover {
   background-color: var(--white);
