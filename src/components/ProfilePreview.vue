@@ -129,6 +129,7 @@ export default {
     border-radius: .25em;
     overflow: hidden;
     object-fit: cover;
+    margin-bottom: 1em;
   }
   .profile-preview__since {
     position: relative;
