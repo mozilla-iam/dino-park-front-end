@@ -41,7 +41,7 @@ export default {
       this.$refs.showMoreEl.expanded = false;
     },
     toggleMobileSearch() {
-      this.mobileSearchOpen ? this.mobileSearchOpen = false : this.mobileSearchOpen = true;
+      this.mobileSearchOpen = !this.mobileSearchOpen;
     },
   },
   data() {

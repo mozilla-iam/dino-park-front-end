@@ -45,7 +45,7 @@ export default {
       this.post = null;
       this.loading = true;
       try {
-        const data = await fetch('http://localhost:8889/search/simple/public/' + this.$route.params.query);
+        const data = await fetch(`/search/simple/public/${this.$route.params.query}`);
         const results = await data.json();
         this.results = results;
       } catch (e) {
