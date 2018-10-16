@@ -34,7 +34,6 @@ export default {
     text-align: left;
   }
   .profile__name h1 {
-    display: inline;
     margin-bottom: 0;
   }
   .profile__user-name,
