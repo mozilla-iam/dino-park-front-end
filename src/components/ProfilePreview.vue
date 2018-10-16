@@ -147,6 +147,10 @@ export default {
     border-color: transparent;
     background-color: transparent;
   }
+  .profile-preview__close:hover {
+    background-color: transparent;
+    color: var(--blue-60);
+  }
   .profile-preview__divider {
     margin: 2em 0;
   }
