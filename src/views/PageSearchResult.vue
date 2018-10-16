@@ -1,7 +1,10 @@
 <template>
   <main class="container">
     <h1>Search results</h1>
-    <LoadingSpinner v-if="loading"></LoadingSpinner>
+    <template v-if="!this.$route.params.query">
+      <p>You have not searched.</p>
+    </template>
+    <LoadingSpinner v-else-if="loading"></LoadingSpinner>
     <Error v-else-if="error">
       <h2>{{ error.message }}</h2>
       <pre>{{ error }}</pre>
@@ -11,10 +14,6 @@
       <p>{{ results.total }} results for <strong>{{ this.$route.params.query }}</strong></p>
       <SearchResultList :results="results"></SearchResultList>
     </template>
-    <template v-else>
-      <p>You have not searched.</p>
-    </template>
-    <LoadingSpinner v-else></LoadingSpinner>
   </main>
 </template>
 

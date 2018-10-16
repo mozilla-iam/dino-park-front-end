@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     preventEmptySubmit(event) {
-      if(!this.$refs.searchQueryField.value) {
+      if (!this.$refs.searchQueryField.value) {
         event.preventDefault();
         this.$refs.searchQueryField.focus();
       }
@@ -35,7 +35,7 @@ export default {
     return {
       searchQuery: null,
     };
-  },  
+  },
 };
 </script>
 

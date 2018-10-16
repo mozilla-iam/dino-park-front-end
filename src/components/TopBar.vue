@@ -42,7 +42,7 @@ export default {
     },
     toggleMobileSearch() {
       this.mobileSearchOpen ? this.mobileSearchOpen = false : this.mobileSearchOpen = true;
-    }
+    },
   },
   data() {
     return {
@@ -65,7 +65,7 @@ export default {
     top: 0;
     padding: .25em;
     z-index: var(--layerTopBar);
-  } 
+  }
     .top-bar__search {
       border: 0;
       background-color: transparent;
