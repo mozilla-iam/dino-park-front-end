@@ -24,7 +24,7 @@ export default {
   font-family: inherit;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  border-radius: 1.25em;
+  border-radius: 2.5em;
   background-color: var(--blue-60);
   color: var(--white);
   border: 1px solid transparent;
