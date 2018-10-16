@@ -60,14 +60,11 @@ export default {
        padding: .5em;
        background-color: var(--white);
      }
-     .search-form__fields input:focus,
-     .search-form__fields button:focus {
-       outline: none;
-       outline: 0;
-       border-color: var(--blue-60);
-     }
      .search-form__input {
        width: 100%;
+       -webkit-appearance: none;
+       appearance: none;
+       border-radius: 0;
      }
     .search-form__submit {
        border: 0;
@@ -82,5 +79,7 @@ export default {
 .search-form--small {
   padding: 1em;
   max-width: none;
+  background: var(--white);
+  margin-bottom: 1em;
 }
 </style>

@@ -13,7 +13,7 @@ export default {
     results: Object,
   },
   components: {
-    SearchResult
+    SearchResult,
   },
 };
 </script>
@@ -21,9 +21,14 @@ export default {
 <style>
   .search-result-list {
     padding: 0;
-    margin: 0;
+    margin: 0 -1em;
   }
-  .search-result-list li {
-    list-style: none;
+  @media(min-width:50em) {
+    .search-result-list {
+      margin: 0;
+    }
   }
+    .search-result-list li {
+      list-style: none;
+    }
 </style>
