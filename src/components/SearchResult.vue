@@ -1,5 +1,6 @@
 <template>
   <li class="search-result">
+    <img v-if="picture.value" :src="picture.value" alt="" class="search-result__image">
     <div>
       <div class="search-result__name">{{ first_name.value }} {{ last_name.value }}</div>
       <div class="search-result__title">{{ fun_title.value }}</div>
@@ -34,6 +35,18 @@ export default {
     width: 100%;
     align-items: center;
   }
+    .search-result__image {
+      width: 3em;
+      height: 3em;
+      margin-right: 1em;
+      border-radius: var(--imageRadius);
+    }
+    .search-result__name {
+      font-weight: 700;
+    }
+    .search-result__title {
+      color: var(--gray-50);
+    }
     .search-result__link {
       margin-left: auto;
     }

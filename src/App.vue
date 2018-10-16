@@ -37,6 +37,8 @@ export default {
   --layerModal: 3;
 
   --shadowCard: 0 .25em .25em 0 rgba(210, 210, 210, .5);
+
+  --imageRadius: .25em;
   }
 
   * {
