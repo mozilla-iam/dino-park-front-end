@@ -22,11 +22,27 @@
       </div>
       <router-link :to="{ name: 'Profile', params: { userId: userId.value } }" class="button button--text-only">
         View full profile
-        <img src="@/assets/images/chevron-right.svg" alt="" width="16" aria-hidden="true" />
+        <svg
+          aria-hidden="true"
+          role="presentation"
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <polyline points="9 18 15 12 9 6" />
+        </svg>
       </router-link>
       <button @click="closeProfile" class="button button--icon-only button--secondary profile-preview__close">
         <span class="visually-hidden">Close profile</span>
         <svg
+          aria-hidden="true"
+          role="presentation"
           xmlns="http://www.w3.org/2000/svg"
           width="24"
           height="24"

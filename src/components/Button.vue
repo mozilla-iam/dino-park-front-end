@@ -74,14 +74,14 @@ export default {
 
 .button--text-only {
   background-color: transparent;
-  border: 1px solid transparent;
+  border-color: transparent;
   color: var(--black);
 }
 
 .button--text-only:hover {
   background-color: transparent;
-  border-color: var(--gray-30);
-  color: inherit;
+  border-color: transparent;
+  color: var(--blue-60);
 }
 
 .button--text-only:focus {
