@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import PageHome from './views/PageHome.vue';
 import PageProfile from './views/PageProfile.vue';
 import PageOrgchart from './views/PageOrgchart.vue';
+import PageSearchResult from './views/PageSearchResult.vue';
 
 Vue.use(Router);
 
@@ -25,6 +26,12 @@ const router = new Router({
       path: '/org/:userId?',
       name: 'Orgchart',
       component: PageOrgchart,
+      props: true,
+    },
+    {
+      path: '/search/:query?',
+      name: 'Search results',
+      component: PageSearchResult,
       props: true,
     },
   ],

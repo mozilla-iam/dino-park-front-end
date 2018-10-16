@@ -1,5 +1,6 @@
 const GRAPHQL_URL = process.env.DP_K8S ? 'http://dinopark.mozilla.community:80' : 'http://localhost:5000';
 const ORGCHART_URL = process.env.DP_K8S ? 'http://dinopark.mozilla.community:80' : 'http://localhost:8888';
+const SEARCH_URL = process.env.DP_K8S ? 'http://dinopark.mozilla.community:80' : 'http://localhost:8889';
 const BASE_URL = process.env.DP_BASE_URL || '/';
 
 module.exports = {
@@ -28,6 +29,10 @@ module.exports = {
       },
       '/orgchart': {
         target: ORGCHART_URL,
+        changeOrigin: true,
+      },
+      '/search': {
+        target: SEARCH_URL,
         changeOrigin: true,
       },
     },

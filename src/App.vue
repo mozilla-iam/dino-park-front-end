@@ -37,6 +37,8 @@ export default {
   --layerModal: 3;
 
   --shadowCard: 0 .25em .25em 0 rgba(210, 210, 210, .5);
+
+  --imageRadius: .25em;
   }
 
   * {
@@ -48,12 +50,7 @@ export default {
     font-family: "Open Sans", sans-serif;
     scroll-behavior: smooth;
     margin: 0;
-    padding-top: 4em;
-  }
-  @media(min-width:50em) {
-    body {
-      padding-top: 6em; /* allow for top bar */
-    }
+    padding-top: 4.5em;  /* allow for top bar */
   }
 
   h1,
@@ -111,6 +108,7 @@ export default {
 
   .container {
     padding: 0 1em;
+    width: 100%;
   }
   @media(min-width:50em) {
     .container {
