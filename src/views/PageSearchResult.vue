@@ -7,9 +7,12 @@
       <pre>{{ error }}</pre>
       <p>An error occured while trying to go to load the search results</p>
     </Error>
-    <template v-else-if="results">
+    <template v-else-if="this.$route.params.query && results">
       <p>{{ results.total }} results for <strong>{{ this.$route.params.query }}</strong></p>
       <SearchResultList :results="results"></SearchResultList>
+    </template>
+    <template v-else>
+      <p>You have not searched.</p>
     </template>
     <LoadingSpinner v-else></LoadingSpinner>
   </main>
