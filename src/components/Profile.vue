@@ -89,12 +89,13 @@
         </template>
       </div>
       <template v-if="preferredLanguage && preferredLanguage.length > 0">
-      <div class="languages">
-        <h3>Languages</h3>
-        <Tag
-          v-for="(language, index) in preferred_languages.values"
-          :tag="language" :key="`language-${index}`" />      
-        </Tag>
+        <div class="languages">
+          <h3>Languages</h3>
+          <Tag
+            v-for="(language, index) in preferred_languages.values"
+            :tag="language" :key="`language-${index}`" />      
+          </Tag>
+        </div>
       </template>
     </section>
     <section id="elsewhere" class="profile__section">
