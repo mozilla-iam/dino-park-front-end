@@ -211,6 +211,59 @@ export default {
     Tag,
     Vouch,
   },
+  data() {
+    return {
+      todo: {
+        team: {
+          name: 'Open Innovation',
+          members: [
+            {
+              id: 1,
+              userId: {
+                value: 'katharina',
+              },
+              firstName: {
+                value: 'Katharina',
+              },
+              lastName: {
+                value: 'Borchert',
+              },
+              funTitle: {
+                value: 'Open Innovation',
+              },
+              officeLocation: {
+                value: 'San Francisco',
+              },
+              picture: {
+                value: 'https://placekitten.com/100/100',
+              },
+            },
+            {
+              id: 2,
+              userId: {
+                value: 'florian',
+              },
+              firstName: {
+                value: 'Florian',
+              },
+              lastName: {
+                value: 'Merz',
+              },
+              funTitle: {
+                value: 'Open Innovation',
+              },
+              officeLocation: {
+                value: 'Berlin',
+              },
+              picture: {
+                value: 'https://placekitten.com/100/100',
+              },
+            },
+          ],
+        },
+      },
+    };
+  },
 };
 </script>
 
