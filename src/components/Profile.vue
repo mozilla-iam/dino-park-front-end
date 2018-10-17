@@ -220,7 +220,7 @@ export default {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 0 2em;
-    padding: 0 2em;
+    padding: 2em;
   }
 }
 
