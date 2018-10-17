@@ -1,4 +1,5 @@
 ---
+{{ if eq .Values.env "dev" }}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -28,3 +29,4 @@ spec:
         backend:
           serviceName: dino-cave-service
           servicePort: 80
+{{ end }}
