@@ -1,5 +1,6 @@
 <template>
   <div class="reporting-structure">
+    <LoadingSpinner v-if="loading"></LoadingSpinner>
     <div v-if="hasManager" class="reporting-structure__reports-to">
       <slot name="reports-to"></slot>
     </div>
@@ -10,11 +11,17 @@
 </template>
 
 <script>
+import LoadingSpinner from '@/components/LoadingSpinner.vue';
+
 export default {
   name: 'ReportingStructure',
   props: {
     hasManager: false,
     hasDirects: false,
+    loading: false,
+  },
+  components: {
+    LoadingSpinner,
   },
 };
 </script>
