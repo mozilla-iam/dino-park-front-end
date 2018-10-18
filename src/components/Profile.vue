@@ -52,11 +52,28 @@
       <ReportingStructure :hasManager="relations.manager" :hasDirects="relations.directs">
         <template slot="reports-to">
           <h3>Reports to:</h3>
-          <Person :picture="{ value: relations.manager.picture }" :userId="{ value: relations.manager.user_id }" :firstName="{ value: relations.manager.first_name }" :lastName="{ value: relations.manager.last_name }" :title="{ value: relations.manager.title }" :funTitle="{ value: relations.manager.fun_title }" :location="{ value: relations.manager.location }"  />
+          <Person 
+            :picture="{ value: relations.manager.picture }" 
+            :userId="{ value: relations.manager.user_id }" 
+            :firstName="{ value: relations.manager.first_name }" 
+            :lastName="{ value: relations.manager.last_name }" 
+            :title="{ value: relations.manager.title }" 
+            :funTitle="{ value: relations.manager.fun_title }" 
+            :location="{ value: relations.manager.location }"  
+          />
         </template>
         <template slot="manages">
           <h3>Manages:</h3>
-          <Person v-for="(relation, index) in relations.directs" :picture="{ value: relation.picture }" :userId="{ value: relation.user_id }" :firstName="{ value: relation.first_name }" :lastName="{ value: relation.last_name }" :title="{ value: relation.title }" :funTitle="{ value: relation.fun_title }" :location="{ value: relation.location }"  />
+          <Person 
+            v-for="(relation, index) in relations.directs" 
+            :picture="{ value: relation.picture }" 
+            :userId="{ value: relation.user_id }" 
+            :firstName="{ value: relation.first_name }" 
+            :lastName="{ value: relation.last_name }" 
+            :title="{ value: relation.title }" 
+            :funTitle="{ value: relation.fun_title }" 
+            :location="{ value: relation.location }"  
+            />
         </template>
       </ReportingStructure>
     </section>
