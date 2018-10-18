@@ -93,7 +93,7 @@
           <h3>Languages</h3>
           <Tag
             v-for="(language, index) in preferred_languages.values"
-            :tag="language" :key="`language-${index}`" />      
+            :tag="language" :key="`language-${index}`" >
           </Tag>
         </div>
       </template>
