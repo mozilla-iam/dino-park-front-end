@@ -6,7 +6,7 @@ import router from './router';
 import store from './store';
 
 const client = new ApolloClient({
-  uri: '/api/v3/graphql',
+  uri: '/api/v3/graphql/',
 });
 
 const apolloProvider = new VueApollo({
