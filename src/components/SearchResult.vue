@@ -5,10 +5,10 @@
       <div class="search-result__name">{{ first_name.value }} {{ last_name.value }}</div>
       <div class="search-result__title">{{ fun_title.value }}</div>
     </div>
-    <a :href="'/org/' + user_id.value" class="search-result__link">
+    <router-link :to="{ name: 'Orgchart', params: { userId: user_id.value } }" class="search-result__link">
       <img src="@/assets/images/org-chart.svg" width="30" alt="" aria-hidden="true" role="presentation" />
       <span class="visually-hidden">View {{ user_id.value }} in org chart</span>
-    </a>
+    </router-link>
   </li>
 </template>
 
