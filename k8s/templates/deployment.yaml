@@ -19,7 +19,11 @@ spec:
       containers:
         - name: {{ .Values.name }}
           image: {{ .Values.docker_registry | default "mozillaparsys" }}/{{ .Values.name }}:{{ .Values.rev }}
+          {{ if eq .Values.env "dev" -}}
           imagePullPolicy: IfNotPresent
+          {{- else -}}
+          imagePullPolicy: Always
+          {{- end }}
           resources:
             requests:
               memory: 512Mi
