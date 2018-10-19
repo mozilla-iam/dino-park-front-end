@@ -83,7 +83,7 @@ export default {
       this.post = null;
       this.loading = true;
       try {
-        const data = await fetch('/orgchart');
+        const data = await fetch('/api/v3/orgchart');
         const tree = await data.json();
         this.tree = tree;
       } catch (e) {
