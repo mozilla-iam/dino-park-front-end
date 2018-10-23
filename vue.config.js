@@ -1,4 +1,4 @@
-const DINOPARK_URL = process.env.DP_K8S ? 'https://web-mozillians.dinopark.infra.iam.mozilla.com:80' : 'http://localhost:8081';
+const DINOPARK_URL = process.env.DP_K8S ? 'http://dinopark.mozilla.community:80' : 'http://localhost:8081';
 const BASE_URL = process.env.DP_BASE_URL || '/beta/';
 
 module.exports = {
