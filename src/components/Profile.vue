@@ -14,13 +14,10 @@
         <ProfileName :firstName="firstName.value" :lastName="lastName.value" :pronouns="pronouns.value"></ProfileName>
         <ProfileTitle :businessTitle="businessTitle.value || null" :funTitle="funTitle.value || null"></ProfileTitle>
         <ProfileTeamLocation :team="team.value || null" :entity="entity.value || null" :locationDescription="locationDescription.value || null" :timeZone="timeZone.value || null"></ProfileTeamLocation>
-
         <div class="hide-desktop">
           <ContactMe></ContactMe>
         </div>
-
         <h2 class="visually-hidden">About</h2>
-
         <div class="profile__description">
           <p>{{ description.value }}</p>
         </div>
@@ -47,19 +44,36 @@
       </Modal>
     </section>
     <ProfileNav></ProfileNav>
-    <section id="relations" class="profile__section">
+    <section v-if="relations" id="relations" class="profile__section">
       <header class="profile__section-header">
         <h2>Relations</h2>
-        <a :href="'/org#' + userId.value" class="button button--secondary">View Org Chart</a>
+        <a :href="'/org/' + userId.value" class="button button--secondary">View Org Chart</a>
       </header>
-      <ReportingStructure>
+      <ReportingStructure :hasManager="relations.manager" :hasDirects="relations.directs">
         <template slot="reports-to">
           <h3>Reports to:</h3>
-          <Person v-bind="todo.team.members[0]" />
+          <Person 
+            :picture="{ value: relations.manager.picture }" 
+            :userId="{ value: relations.manager.user_id }" 
+            :firstName="{ value: relations.manager.first_name }" 
+            :lastName="{ value: relations.manager.last_name }" 
+            :title="{ value: relations.manager.title }" 
+            :funTitle="{ value: relations.manager.fun_title }" 
+            :location="{ value: relations.manager.location }"  
+          />
         </template>
         <template slot="manages">
           <h3>Manages:</h3>
-          <Person v-bind="todo.team.members[1]" />
+          <Person 
+            v-for="(relation, index) in relations.directs" 
+            :picture="{ value: relation.picture }" 
+            :userId="{ value: relation.user_id }" 
+            :firstName="{ value: relation.first_name }" 
+            :lastName="{ value: relation.last_name }" 
+            :title="{ value: relation.title }" 
+            :funTitle="{ value: relation.fun_title }" 
+            :location="{ value: relation.location }"  
+            />
         </template>
       </ReportingStructure>
     </section>
@@ -219,8 +233,29 @@ export default {
     Tag,
     Vouch,
   },
+  methods: {
+    async fetchData() {
+      this.loadingRelationsError = null;
+      this.loadingRelations = true;
+      try {
+        const data = await fetch(`/orgchart/related/${this.userId.value}`);
+        const relations = await data.json();
+        this.relations = relations;
+      } catch (e) {
+        this.loadingRelationsError = e;
+      }
+      this.loading = false;
+      console.log(this.relations);
+    },    
+  },
+  created() {
+    this.fetchData();
+  },
   data() {
     return {
+      relations: null,
+      loadingRelations: false,
+      loadingRelationsError: null,
       todo: {
         team: {
           name: 'Open Innovation',
