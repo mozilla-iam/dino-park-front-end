@@ -1,14 +1,14 @@
 <template>
   <li class="search-result">
-    <img v-if="picture.value" :src="picture.value" alt="" class="search-result__image">
+    <img v-if="picture" :src="picture" alt="" class="search-result__image">
     <div>
-      <div class="search-result__name">{{ first_name.value }} {{ last_name.value }}</div>
-      <div class="search-result__title">{{ fun_title.value }}</div>
+      <div class="search-result__name">{{ first_name }} {{ last_name }}</div>
+      <div class="search-result__title">{{ fun_title }}</div>
     </div>
-    <a :href="'/org/' + user_id.value" class="search-result__link">
+    <router-link :to="{ name: 'Orgchart', params: { userId: user_id } }" class="search-result__link">
       <img src="@/assets/images/org-chart.svg" width="30" alt="" aria-hidden="true" role="presentation" />
-      <span class="visually-hidden">View {{ user_id.value }} in org chart</span>
-    </a>
+      <span class="visually-hidden">View {{ user_id }} in org chart</span>
+    </router-link>
   </li>
 </template>
 

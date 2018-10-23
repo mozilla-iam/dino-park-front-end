@@ -5,7 +5,7 @@
       <div class="person__name"><a v-if="userId" :href="'/profile/'+ userId.value">{{ firstName.value }} {{ lastName.value }}</a></div>
       <div class="person__preferred-title">
         <template v-if="funTitle">{{ funTitle.value }}</template>
-        <template v-else-if="accessInformation && accessInformation.hris.values.businessTitle">{{ "accessInformation.hris.values.businessTitle" }}</template>
+        <template v-else-if="businessTitle">{{ "businessTitle.value" }}</template>
       </div>
     </div>
     <div v-if="officeLocation" class="person__location">
@@ -19,7 +19,7 @@
 export default {
   name: 'Person',
   props: {
-    accessInformation: Object,
+    businessTitle: Object,
     modifier: String,
     userId: Object,
     firstName: Object,
