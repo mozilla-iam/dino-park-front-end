@@ -2,21 +2,6 @@ import { gql } from 'apollo-boost';
 
 const PROFILE = gql`query ($userId: String!) {
  profile (userId:$userId) { 
-    accessInformation {
-      hris {
-        values {
-          businessTitle,
-          team,
-          entity,
-          locationDescription,
-          timeZone,
-          workerType,
-          workersManager,
-          wprDeskNumber,
-          costCenter,
-        }
-      }
-    },
     firstName {
       value
     },
@@ -65,22 +50,35 @@ const PROFILE = gql`query ($userId: String!) {
     preferredLanguage {
       values
     },
+    businessTitle {
+      value
+    },
+    team {
+      value
+    },
+    entity {
+      value
+    },
+    locationDescription {
+      value
+    },
+    timeZone {
+      value
+    },
+    workerType {
+      value
+    },
+    wprDeskNumber {
+      value
+    },
+    costCenter {
+      value
+    },
   } 
 }`;
 
 const PREVIEW_PROFILE = gql`query ($previewUserId: String!) {
  profile (userId:$previewUserId) { 
-    accessInformation {
-      hris {
-        values {
-          businessTitle,
-          team,
-          entity,
-          locationDescription,
-          timeZone,
-        }
-      }
-    },
     firstName {
       value
     },
@@ -112,6 +110,21 @@ const PREVIEW_PROFILE = gql`query ($previewUserId: String!) {
       value
     },
     created {
+      value
+    },
+    businessTitle {
+      value
+    },
+    team {
+      value
+    },
+    entity {
+      value
+    },
+    locationDescription {
+      value
+    },
+    timeZone {
       value
     },
   } 

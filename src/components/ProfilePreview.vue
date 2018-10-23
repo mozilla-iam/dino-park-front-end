@@ -5,11 +5,11 @@
     </div>
     <div class="profile-preview__since">Mozillian for 4 years <span class="visually-hidden">since </span><span class="profile-preview__since-start-date">July, 2016</span></div>
     <ProfileName :firstName="firstName.value" :lastName="lastName.value" :pronouns="pronouns.value"></ProfileName>
-    <ProfileTitle :businessTitle="accessInformation.hris.values.businessTitle || null" :funTitle="funTitle.value"></ProfileTitle>
+    <ProfileTitle :businessTitle="businessTitle.value || null" :funTitle="funTitle.value"></ProfileTitle>
     <div class="hide-desktop">
       <ContactMe></ContactMe>
     </div>
-    <ProfileTeamLocation :team="accessInformation.hris.values.team || null" :entity="accessInformation.hris.values.entity || null" :locationDescription="accessInformation.hris.values.locationDescription || null" :timeZone="accessInformation.hris.values.timeZone || null"></ProfileTeamLocation>
+    <ProfileTeamLocation :team="team.value || null" :entity="entity.value || null" :locationDescription="locationDescription.value || null" :timeZone="timeZone.value || null"></ProfileTeamLocation>
 
     <h2 class="visually-hidden">About</h2>
     <div class="profile__description">
@@ -70,10 +70,14 @@ import ProfileTeamLocation from '@/components/ProfileTeamLocation.vue';
 export default {
   name: 'ProfilePreview',
   props: {
+    businessTitle: Object,
+    locationDescription: Object,
+    team: Object,
+    timeZone: Object,
+    entity: Object,
     type: String,
     title: String,
     content: String,
-    accessInformation: Object,
     firstName: Object,
     lastName: Object,
     pronouns: Object,
