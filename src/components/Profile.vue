@@ -12,8 +12,8 @@
       </div>
       <div class="profile__intro-main">
         <ProfileName :firstName="firstName.value" :lastName="lastName.value" :pronouns="pronouns.value"></ProfileName>
-        <ProfileTitle :businessTitle="accessInformation.hris.values.businessTitle || null" :funTitle="funTitle.value"></ProfileTitle>
-        <ProfileTeamLocation :team="accessInformation.hris.values.team || null" :entity="accessInformation.hris.values.entity || null" :locationDescription="accessInformation.hris.values.locationDescription || null" :timeZone="accessInformation.hris.values.timeZone || null"></ProfileTeamLocation>
+        <ProfileTitle :businessTitle="businessTitle.value || null" :funTitle="funTitle.value || null"></ProfileTitle>
+        <ProfileTeamLocation :team="team.value || null" :entity="entity.value || null" :locationDescription="locationDescription.value || null" :timeZone="timeZone.value || null"></ProfileTeamLocation>
 
         <div class="hide-desktop">
           <ContactMe></ContactMe>
@@ -28,9 +28,9 @@
           <template slot="overflow">
             <MetaList>
               <h3 class="visually-hidden">Meta</h3>
-              <Meta metaKey="Worker type" :metaValue="accessInformation.hris.values.workerType" />
-              <Meta metaKey="Desk number" :metaValue="accessInformation.hris.values.wprDeskNumber" />
-              <Meta metaKey="Cost centre" :metaValue="accessInformation.hris.values.costCenter" />
+              <Meta metaKey="Worker type" :metaValue="workerType.value" />
+              <Meta metaKey="Desk number" :metaValue="wprDeskNumber.value" />
+              <Meta metaKey="Cost centre" :metaValue="costCenter.value" />
             </MetaList>
           </template>
           <template slot="icon-expanded">
@@ -175,7 +175,14 @@ import FlagProfile from '@/components/forms/FlagProfile.vue';
 export default {
   name: 'Profile',
   props: {
-    accessInformation: Object,
+    businessTitle: Object,
+    locationDescription: Object,
+    team: Object,
+    timeZone: Object,
+    entity: Object,
+    workerType: Object,
+    wprDeskNumber: Object,
+    costCenter: Object,
     firstName: Object,
     lastName: Object,
     pronouns: Object,
