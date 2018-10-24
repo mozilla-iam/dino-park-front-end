@@ -1,5 +1,5 @@
 <template>
-  <form :class="'search-form' + ( modifier ? ' ' + modifier : '')" :action="this.$router.resolve({ name: 'Search', params: { query: searchQuery }}).href" @submit="preventEmptySubmit">
+  <form :class="'search-form' + ( modifier ? ' ' + modifier : '')" :action="this.$router.resolve({ name: 'Search', query: { query: searchQuery }}).href" @submit="preventEmptySubmit" method="GET">
     <fieldset>
       <legend class="visually-hidden">Search</legend>
       <div class="search-form__fields">
@@ -33,7 +33,7 @@ export default {
   },
   data() {
     return {
-      searchQuery: null,
+      searchQuery: this.$route.query.query || null,
     };
   },
 };

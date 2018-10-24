@@ -1,7 +1,7 @@
 <template>
   <main class="container">
-    <h1>Search results</h1>
-    <template v-if="!this.$route.params.query">
+    <h1 class="visually-hidden">Search results</h1>
+    <SearchScope/>
     <template v-if="!this.$route.query.query">
       <p>You have not searched.</p>
     </template>
@@ -22,6 +22,7 @@
 import Error from '@/components/Error.vue';
 import LoadingSpinner from '@/components/LoadingSpinner.vue';
 import SearchResultList from '@/components/SearchResultList.vue';
+import SearchScope from '@/components/SearchScope.vue';
 
 export default {
   name: 'PageSearchResult',
@@ -29,6 +30,7 @@ export default {
     Error,
     LoadingSpinner,
     SearchResultList,
+    SearchScope,
   },
   data() {
     return {
