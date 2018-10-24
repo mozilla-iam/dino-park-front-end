@@ -1,11 +1,11 @@
 <template>
   <li class="search-result">
     <img v-if="picture" :src="picture" alt="" class="search-result__image">
-    <div>
+    <router-link :to="{ name: 'Profile', params: { userId: user_id } }" class="search-result__profile-link">
       <div class="search-result__name">{{ first_name }} {{ last_name }}</div>
       <div class="search-result__title">{{ fun_title }}</div>
-    </div>
-    <router-link :to="{ name: 'OrgchartHighlight', params: { userId: user_id } }" class="search-result__link">
+    </router-link>
+    <router-link :to="{ name: 'OrgchartHighlight', params: { userId: user_id } }" class="search-result__orgchart-link">
       <img src="@/assets/images/org-chart.svg" width="30" alt="" aria-hidden="true" role="presentation" />
       <span class="visually-hidden">View {{ user_id }} in org chart</span>
     </router-link>
@@ -41,13 +41,18 @@ export default {
       margin-right: 1em;
       border-radius: var(--imageRadius);
     }
+    .search-result__profile-link {
+      text-decoration: none;
+    }
     .search-result__name {
       font-weight: 700;
+      color: var(--black);
     }
     .search-result__title {
       color: var(--gray-50);
+      text-decoration: none;
     }
-    .search-result__link {
+    .search-result__orgchart-link {
       margin-left: auto;
     }
 </style>
