@@ -5,7 +5,7 @@
       <div class="search-result__name">{{ first_name }} {{ last_name }}</div>
       <div class="search-result__title">{{ fun_title }}</div>
     </div>
-    <router-link :to="{ name: 'Orgchart', params: { userId: user_id } }" class="search-result__link">
+    <router-link :to="{ name: 'OrgchartHighlight', params: { userId: user_id } }" class="search-result__link">
       <img src="@/assets/images/org-chart.svg" width="30" alt="" aria-hidden="true" role="presentation" />
       <span class="visually-hidden">View {{ user_id }} in org chart</span>
     </router-link>
@@ -16,11 +16,11 @@
 export default {
   name: 'SearchResult',
   props: {
-    first_name: Object,
-    last_name: Object,
-    fun_title: Object,
-    user_id: Object,
-    picture: Object,
+    first_name: String,
+    last_name: String,
+    fun_title: String,
+    user_id: String,
+    picture: String,
   },
 };
 </script>

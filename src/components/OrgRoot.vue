@@ -1,7 +1,7 @@
 <template>
   <div class="org-root">
     <ul v-for="(root, index) in roots" :key="index">
-      <OrgNode :children="root.children" :data="root.data" :id="index" :prefix="`${index}`"></OrgNode>
+      <OrgNode :children="root.children" :data="root.data" :id="index" :prefix="`${index}`" :trace="trace"></OrgNode>
     </ul>
   </div>
 </template>
@@ -16,6 +16,7 @@ export default {
   },
   props: {
     roots: Array,
+    trace: String,
   },
 };
 </script>

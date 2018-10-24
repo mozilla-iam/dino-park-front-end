@@ -44,37 +44,12 @@
       </Modal>
     </section>
     <ProfileNav></ProfileNav>
-    <section v-if="relations" id="relations" class="profile__section">
+    <section v-if="manager || directs.length > 0" id="relations" class="profile__section">
       <header class="profile__section-header">
         <h2>Relations</h2>
-        <a :href="'/org/' + userId.value" class="button button--secondary">View Org Chart</a>
+        <router-link :to="{ name: 'OrgchartHighlight', params: { userId: userId.value } }" class="button button--secondary">View Org Chart</router-link>
       </header>
-      <ReportingStructure :hasManager="relations.manager" :hasDirects="relations.directs">
-        <template slot="reports-to">
-          <h3>Reports to:</h3>
-          <Person 
-            :picture="{ value: relations.manager.picture }" 
-            :userId="{ value: relations.manager.user_id }" 
-            :firstName="{ value: relations.manager.first_name }" 
-            :lastName="{ value: relations.manager.last_name }" 
-            :title="{ value: relations.manager.title }" 
-            :funTitle="{ value: relations.manager.fun_title }" 
-            :location="{ value: relations.manager.location }"  
-          />
-        </template>
-        <template slot="manages">
-          <h3>Manages:</h3>
-          <Person 
-            v-for="(relation, index) in relations.directs" 
-            :picture="{ value: relation.picture }" 
-            :userId="{ value: relation.user_id }" 
-            :firstName="{ value: relation.first_name }" 
-            :lastName="{ value: relation.last_name }" 
-            :title="{ value: relation.title }" 
-            :funTitle="{ value: relation.fun_title }" 
-            :location="{ value: relation.location }"  
-            />
-        </template>
+      <ReportingStructure :manager="manager" :directs="directs">
       </ReportingStructure>
     </section>
     <section id="contact" class="profile__section">
@@ -212,6 +187,8 @@ export default {
     tags: Object,
     preferredLanguage: Object,
     userId: Object,
+    manager: Object,
+    directs: Array,
   },
   components: {
     Button,
@@ -232,80 +209,6 @@ export default {
     ShowMore,
     Tag,
     Vouch,
-  },
-  methods: {
-    async fetchData() {
-      this.loadingRelationsError = null;
-      this.loadingRelations = true;
-      try {
-        const data = await fetch(`/orgchart/related/${this.userId.value}`);
-        const relations = await data.json();
-        this.relations = relations;
-      } catch (e) {
-        this.loadingRelationsError = e;
-      }
-      this.loading = false;
-      console.log(this.relations);
-    },    
-  },
-  created() {
-    this.fetchData();
-  },
-  data() {
-    return {
-      relations: null,
-      loadingRelations: false,
-      loadingRelationsError: null,
-      todo: {
-        team: {
-          name: 'Open Innovation',
-          members: [
-            {
-              id: 1,
-              userId: {
-                value: 'katharina',
-              },
-              firstName: {
-                value: 'Katharina',
-              },
-              lastName: {
-                value: 'Borchert',
-              },
-              funTitle: {
-                value: 'Open Innovation',
-              },
-              officeLocation: {
-                value: 'San Francisco',
-              },
-              picture: {
-                value: 'https://placekitten.com/100/100',
-              },
-            },
-            {
-              id: 2,
-              userId: {
-                value: 'florian',
-              },
-              firstName: {
-                value: 'Florian',
-              },
-              lastName: {
-                value: 'Merz',
-              },
-              funTitle: {
-                value: 'Open Innovation',
-              },
-              officeLocation: {
-                value: 'Berlin',
-              },
-              picture: {
-                value: 'https://placekitten.com/100/100',
-              },
-            },
-          ],
-        },
-      },
-    };
   },
 };
 </script>
