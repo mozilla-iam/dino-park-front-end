@@ -1,33 +1,78 @@
 <template>
   <div class="user-menu">
     <div class="user-menu__header">
-      <button class="user-menu__close-button" type="button" @click="sendCloseEvent()">
+      <button class="user-menu__close-avatar" type="button" @click="sendCloseEvent()">
         <span class="visually-hidden">Close user menu</span>
         <img src="@/assets/images/user-demo.png" alt="" width="40" aria-hidden="true" />
       </button>
       <div class="user-menu__name">
-        <span class="user-menu__header-name">Henrik Mitsch</span><br>
+        <span class="user-menu__header-name">Henrik Mitsch</span>
         <span class="user-menu__header-email">hmitsch@mozilla.com</span>
       </div>
+      <button class="user-menu__close-button" type="button" @click="sendCloseEvent()">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          role="presentation"
+          aria-hidden="true"
+        >
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
     </div>
     <ul class="user-menu__items">
-      <li><a href="#">My profile</a></li>
-      <li><a href="#">Dashboard</a></li>
-      <li><a href="#">Notifications</a></li>
-      <li><a href="#">Identity Settings</a></li>
-      <li><a href="#">Manage Auto-Login</a></li>
+      <li>
+        <a href="#">
+          <span>My profile</span>
+          <Icon id="user" :width="24" :height="24" />
+        </a>
+      </li>
+      <li>
+        <a href="https://sso.mozilla.com">
+          <span>Dashboard</span>
+          <Icon id="dashboard" :width="24" :height="24" />
+        </a>
+      </li>
+      <li>
+        <a href="https://sso.mozilla.com/notifications">
+          <span>Notifications</span>
+          <Icon id="bell" :width="24" :height="24" />
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <span>Manage Auto-Login</span>
+          <Icon id="sliders" :width="24" :height="24" />
+        </a>
+      </li>
     </ul>
-    <a href="#" class="user-menu__log-out">Log out</a>
+    <a href="#" class="user-menu__log-out">
+      <span>Log out</span>
+      <Icon id="log-out" :width="24" :height="24" />
+    </a>
   </div>
 </template>
 
 <script>
+import Icon from '@/components/Icon.vue';
+
 export default {
   name: 'UserMenu',
   methods: {
     sendCloseEvent() {
       this.$parent.$emit('close-user-menu');
     },
+  },
+  components: {
+    Icon,
   },
 };
 </script>
@@ -44,58 +89,88 @@ export default {
     height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow: auto; /* have scrollbar when needed */
   }
-  @media(min-width:20em) {
+  @media(min-width:30em) {
     .user-menu {
       left: auto;
+      height: auto;
     }
   }
     .user-menu a {
       color: var(--white);
+      display: flex;
+      padding: 1em 1.75em;
+      text-decoration: none;
     }
+      .user-menu a svg {
+        margin-left: auto;
+      }
     .user-menu__header {
-      padding: 1em;
+      padding: .675em 1.75em;
       border-bottom: 1px solid var(--gray-50);
       display: flex;
       position: relative;
     }
+      .user-menu__close-avatar,
       .user-menu__close-button {
         border: 0;
         background: transparent;
-        margin-right: 1em;
+        color: var(--white);
         border: 1px dotted transparent;
+        padding: 0;
       }
+      .user-menu__close-avatar:focus,
       .user-menu__close-button:focus {
-        border: 1px dotted var(--white);
+        border: 1px dotted currentColor;
+      }
+      .user-menu__close-avatar {
+        margin-right: 1.5em;
+      }
+        .user-menu__close-avatar img {
+          min-width: 2.75em;
+        }
+      .user-menu__close-button {
+        margin-left: auto;
+      }
+      .user-menu__close-button:hover {
+        color: var(--gray-40);
       }
     .user-menu__log-out {
       border-top: 1px solid var(--gray-50);
-      padding: 1em;
       margin-top: auto; /* works because it is a flex item in a flex container */
+    }
+    .user-menu__log-out:hover {
+      color: var(--gray-40);
     }
     .user-menu__header-name,
     .user-menu__header-email,
-    .user-menu__items {
-      font-size: .9em;
+    .user-menu a span {
+      font-size: .9em; /* we set this on the deepest level possible so that it does not affect the paddings around it */
+      margin-right: 2em;
+      max-width: 12em;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      display: block;
     }
     .user-menu__header-email {
-      color: var(--gray-10);
+      color: var(--gray-40);
     }
     .user-menu__items {
       padding: 0;
-      margin: 1em 0;
+      margin: auto 0;
+    }
+    @media(min-width:30em) {
+      .user-menu__items {
+        margin: 2em 0;
+      }
     }
       .user-menu__items li {
         list-style: none;
         padding: 0.125em;
       }
-      .user-menu__items a {
-        padding: 2em;
-        display: block;
-        text-decoration: none;
-      }
       .user-menu__items a:hover {
-        color: inherit;
-        background-color: rgba(0,0,0,0.5);
+        color: var(--gray-40);
       }
 </style>
