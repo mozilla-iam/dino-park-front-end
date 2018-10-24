@@ -29,7 +29,10 @@ const router = new Router({
       props: true,
     },
     {
-      path: '/s/:query?',
+      path: '/s',
+      query: {
+        query: ':query',
+      },
       name: 'Search',
       component: PageSearchResult,
       props: true,

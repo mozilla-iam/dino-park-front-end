@@ -2,6 +2,7 @@
   <main class="container">
     <h1>Search results</h1>
     <template v-if="!this.$route.params.query">
+    <template v-if="!this.$route.query.query">
       <p>You have not searched.</p>
     </template>
     <LoadingSpinner v-else-if="loading"></LoadingSpinner>
@@ -10,8 +11,8 @@
       <pre>{{ error }}</pre>
       <p>An error occured while trying to go to load the search results</p>
     </Error>
-    <template v-else-if="this.$route.params.query && results">
-      <p>{{ results.total }} results for <strong>{{ this.$route.params.query }}</strong></p>
+    <template v-else-if="this.$route.query.query && results">
+      <p>{{ results.total }} results for <strong>{{ this.$route.query.query }}</strong></p>
       <SearchResultList :results="results"></SearchResultList>
     </template>
   </main>
@@ -45,7 +46,7 @@ export default {
       this.post = null;
       this.loading = true;
       try {
-        const data = await fetch(`/api/v3/search/simple/${this.$route.params.query}`);
+        const data = await fetch(`/api/v3/search/simple/${this.$route.query.query}`);
         const results = await data.json();
         this.results = results;
       } catch (e) {

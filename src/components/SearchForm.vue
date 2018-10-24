@@ -8,7 +8,7 @@
           <span class="visually-hidden">Search</span>
         </button>
         <label for="search-query" class="visually-hidden">Search term</label>
-        <input type="search" id="search-query" v-model="searchQuery" class="search-form__input" ref="searchQueryField">
+        <input type="search" id="search-query" name="query" v-model="searchQuery" class="search-form__input" ref="searchQueryField">
       </div>
     </fieldset>
   </form>
