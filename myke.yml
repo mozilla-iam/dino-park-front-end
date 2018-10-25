@@ -7,15 +7,15 @@ env:
 tasks:
   package:
     cmd: docker build --build-arg baseurl={{ .baseurl | default .default_base }} -t {{ .image }} .
-  
+
   run-docker:
     cmd: docker run --rm -ti --name {{ .name }} {{ .image }}
 
   run-k8s:
-    cmd: qdht -f k8s/values.yaml -f k8s/values/staging.yaml k8s/ | kubectl apply -f -
+    cmd: helm template -f k8s/values.yaml -f k8s/values/staging.yaml k8s/ | kubectl apply -f -
 
   run-dev:
-    cmd: qdht -f k8s/values.yaml -f k8s/values/dev.yaml k8s/ | kubectl apply -f -
+    cmd: helm template -f k8s/values.yaml -f k8s/values/dev.yaml k8s/ | kubectl apply -f -
 
   run-local:
     cmd: npm run serve
@@ -24,6 +24,6 @@ tasks:
     cmd: |-
       export DP_K8S=1
       npm run serve
-  
+
   install-local:
     cmd: npm install
