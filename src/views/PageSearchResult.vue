@@ -1,5 +1,5 @@
 <template>
-  <main class="container">
+  <main class="container search-results">
     <h1 class="visually-hidden">Search results</h1>
     <SearchScope/>
     <template v-if="!this.$route.query.query">
@@ -61,4 +61,7 @@ export default {
 </script>
 
 <style>
+.search-results {
+  padding-top: 1em;
+}
 </style>
