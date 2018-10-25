@@ -22,15 +22,6 @@
   </form>
 </template>
 
-- Got far in building this new SearchScope component that lets user pick between 'scopes' that then get added to the router's query parameter.
-- lots of sync with Florian on that, because it ties into what we want to do with filters
-- some sync with megan, received test template for user tests at mozfest
-- made slides
-- synced with roxana on testing
-
-- finish searchscope in time for sprint review
-- update my slides, Megan willl read
-
 <script>
 export default {
   name: 'SearchScope',
