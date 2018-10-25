@@ -34,10 +34,20 @@ export default {
     alternateButtonText: String,
     buttonClass: String,
     transition: Boolean,
+    trace: String,
+    prefix: String,
   },
   methods: {
     toggleOverflow() {
       this.expanded = !this.expanded;
+    },
+  },
+  watch: {
+    trace() {
+      if (this.trace || this.prefix) {
+        this.expanded = this.prefix === this.trace || this.trace.startsWith(`${this.prefix}-`) || this.expanded;
+      }
+      return this.expanded;
     },
   },
   updated() {
@@ -49,7 +59,7 @@ export default {
   },
   data() {
     return {
-      expanded: '',
+      expanded: false,
     };
   },
 };

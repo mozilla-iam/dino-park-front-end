@@ -74,6 +74,24 @@ const PROFILE = gql`query ($userId: String!) {
     costCenter {
       value
     },
+    manager {
+      userId
+      firstName
+      lastName
+      picture
+      title
+      funTitle
+      location
+    },
+    directs {
+      userId
+      firstName
+      lastName
+      picture
+      title
+      funTitle
+      location
+    },
   } 
 }`;
 

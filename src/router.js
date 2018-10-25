@@ -23,6 +23,12 @@ const router = new Router({
       props: true,
     },
     {
+      path: '/o/highlight/:userId/',
+      name: 'OrgchartHighlight',
+      component: PageOrgchart,
+      props: true,
+    },
+    {
       path: '/o/:userId?',
       name: 'Orgchart',
       component: PageOrgchart,

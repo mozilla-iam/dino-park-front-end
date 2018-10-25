@@ -7,7 +7,7 @@
         <pre>{{ error }}</pre>
         <p>An error occured while trying to go to load the org chart.</p>
       </Error>
-      <OrgRoot v-else-if="tree" :roots="tree"></OrgRoot>
+      <OrgRoot v-else-if="tree" :roots="tree" :trace="trace || ''"></OrgRoot>
       <LoadingSpinner v-else></LoadingSpinner>
     </div>
     <ApolloQuery v-if="previewUserId" :query="previewProfileQuery" :variables="{ previewUserId }" :tag="null">
@@ -15,10 +15,12 @@
         <div class="org-chart__preview">
           <LoadingSpinner v-if="loading"></LoadingSpinner>
           <template v-else-if="error">
-            <Error><h2>{{ error.message }}</h2>
+            <Error>
+              <h2>{{ error.message }}</h2>
               <pre>{{ error }}</pre>
-              <p>An error occured while trying to view {{ previewUserId }}: </p></Error>
-            </template>
+              <p>An error occured while trying to view {{ previewUserId }}: </p>
+            </Error>
+          </template>
           <template v-else-if="data">
             <ProfilePreview v-if="desktopView" v-bind="data.profile"></ProfilePreview>
             <Modal v-else :initiallyOpen="true" :closeButton="false" ref="modalEl">
@@ -54,6 +56,7 @@ export default {
       loading: false,
       post: null,
       error: null,
+      trace: '',
       previewProfileQuery: PREVIEW_PROFILE,
     };
   },
@@ -61,6 +64,20 @@ export default {
     this.fetchData();
     window.addEventListener('resize', this.updateView);
     this.updateView();
+  },
+  async updated() {
+    const { userId } = this.$route.params;
+    if (userId && this.$route.name === 'OrgchartHighlight') {
+      try {
+        const data = await fetch(`/api/v3/orgchart/trace/${userId}`);
+        const trace = await data.json();
+        this.trace = trace.trace;
+      } catch (e) {
+        this.error = e;
+      }
+    } else {
+      this.trace = '';
+    }
   },
   computed: {
     previewUserId() {
@@ -109,36 +126,36 @@ export default {
 </script>
 
 <style>
+.org-chart {
+  padding: 0;
+  width: 100%;
+}
+@media (min-width: 50em) {
   .org-chart {
-    padding: 0;
-    width: 100%;
+    padding: 0 2em;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
+    align-items: start;
+    grid-gap: 2em;
   }
-  @media(min-width:50em) {
-    .org-chart {
-      padding: 0 2em;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: auto 1fr;
-      align-items: start;
-      grid-gap: 2em;
-    }
-    .org-chart::after /* so that there is space taken up underneath the preview, that is as much as the org chart column takes up in total. This lets us use position:sticky on the profile preview */ {
-      content: '';
-      grid-column: 2 / 3;
-      grid-row: 2 / 3;
-    }
-    .org-chart__chart {
-      grid-row: 1 / 3;
-    }
-    .org-chart__preview {
-      grid-row: 1 / 2;
-      grid-column: 2 / 3;
-    }
+  .org-chart::after /* so that there is space taken up underneath the preview, that is as much as the org chart column takes up in total. This lets us use position:sticky on the profile preview */ {
+    content: "";
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
   }
-  @media(min-height:32em) and (min-width:50em) {
-    .org-chart__preview {
-      position: sticky;
-      top: 6em;
-    }
+  .org-chart__chart {
+    grid-row: 1 / 3;
   }
+  .org-chart__preview {
+    grid-row: 1 / 2;
+    grid-column: 2 / 3;
+  }
+}
+@media (min-height: 32em) and (min-width: 50em) {
+  .org-chart__preview {
+    position: sticky;
+    top: 6em;
+  }
+}
 </style>
