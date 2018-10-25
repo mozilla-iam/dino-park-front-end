@@ -1,6 +1,6 @@
 <template>
-  <form ref="searchScopeForm" class="search-scope" method="GET" :action="this.$router.resolve({ 
-    name: 'Search', 
+  <form ref="searchScopeForm" class="search-scope" method="GET" :action="this.$router.resolve({
+    name: 'Search',
     query: {
       query: currentQuery,
       scope: scope,
@@ -42,7 +42,7 @@ export default {
         query: {
           query: this.currentQuery,
           scope: this.scope,
-        }
+        },
       });
     },
   },
