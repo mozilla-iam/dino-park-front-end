@@ -34,16 +34,36 @@ export default {
     display: flex;
     width: 100%;
     align-items: center;
+    position: relative;
   }
     .search-result__image {
       width: 3em;
       height: 3em;
       margin-right: 1em;
       border-radius: var(--imageRadius);
+      position: relative;
+      z-index: 1;
     }
     .search-result__profile-link {
       text-decoration: none;
     }
+    .search-result__profile-link::before {
+      content: '';
+      display: block;
+      background: transparent;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      transition: background-color 0.2s ease-in-out;
+    }
+    .search-result__profile-link:hover::before {
+      background-color: var(--lightBlue);
+    }
+      .search-result__profile-link div {
+        position: relative;
+      }
     .search-result__name {
       font-weight: 700;
       color: var(--black);
@@ -54,5 +74,6 @@ export default {
     }
     .search-result__orgchart-link {
       margin-left: auto;
+      position: relative; /* so that it stacks on top of search result link */
     }
 </style>
