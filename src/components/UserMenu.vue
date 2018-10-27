@@ -1,5 +1,5 @@
 <template>
-  <div class="user-menu">
+  <div class="user-menu" ref="userMenuEl">
     <div class="user-menu__header">
       <button class="user-menu__close-avatar" type="button" @click="sendCloseEvent()">
         <span class="visually-hidden">Close user menu</span>
@@ -70,6 +70,21 @@ export default {
     sendCloseEvent() {
       this.$parent.$emit('close-user-menu');
     },
+    handleDocumentClick(event) {
+      // closes user menu if clicked anywhere, except the 
+      // user menu element itself. Note this also closes
+      // it when clicked in _children_ of the user menu,
+      // including links (after they are followed)
+      if(event.target !== this.$refs.userMenuEl) {
+        this.sendCloseEvent();
+      }
+    },
+  },
+  mounted() {
+    document.addEventListener('click', this.handleDocumentClick);
+  },
+  destroyed() {
+    document.removeEventListener('click', this.handleDocumentClick);
   },
   components: {
     Icon,
