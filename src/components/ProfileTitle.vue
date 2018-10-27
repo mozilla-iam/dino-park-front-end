@@ -22,7 +22,12 @@ export default {
   }
   .profile__hr-title {
     font-weight: 400;
-    font-size: 1.25em;
+    font-size: 1em;
+  }
+  @media(min-width:37.5em) {
+    .profile__hr-title {
+      font-size: 1.25em;
+    }
   }
   .profile__fun-title {
     color: var(--gray-60);

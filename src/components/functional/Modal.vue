@@ -104,10 +104,9 @@ export default {
       margin: auto;
       position: relative;
     }
-    .org-chart .modal__content {
-      margin: 3.25em auto auto;
-      padding-bottom: 5em; /* allow space for fixed close button */
-      min-height: calc(100vh - 4.25em);
+    .org-chart__preview .modal__content {
+      min-height: calc( 100% + 1em);
+      margin-bottom: -1em;
     }
     .modal__container {
       max-width: 32em;

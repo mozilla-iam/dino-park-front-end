@@ -160,8 +160,8 @@ export default {
   }
   .profile-preview__close {
     position: absolute;
-    top: 2em;
-    right: 2em;
+    top: 1em;
+    right: 1em;
     left: auto;
     bottom: auto;
     color: var(--black);
@@ -181,28 +181,13 @@ export default {
     box-shadow: none;
  }
  .modal .profile-preview__image {
-    position: absolute;
-    top: -5.25em; /* half of 6.5em picture height + 2em modal padding */
-    left: 50%;
-    margin-left: -3.25em; /* half of 6.5em picture height */
+    margin: 0 auto;
  }
  .modal .profile-preview__close {
     position: fixed;
-    bottom: 2em;
-    left: 50%;
-    width: 4em;
-    height: 4em;
-    margin-left: -2em;
+    top: 2em;
+    right: 2em;
     z-index: var(--layerModal);
-    background-color: var(--blue-60);
-    top: auto;
-    color: var(--white);
-    box-shadow: 0 .125em .25em 0 var(--gray-40);
-    display: flex;
-    align-items: center;
-  }
-  .modal .profile-preview__close:hover {
-    color: var(--black);
   }
   .modal .profile-preview__since {
     text-align: center;

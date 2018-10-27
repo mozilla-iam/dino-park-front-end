@@ -65,7 +65,12 @@ export default {
   h1 {
     font-family: "Zilla Slab", sans-serif;
     font-weight: 400;
-    font-size: 2em;
+    font-size: 1.5em;
+  }
+  @media(min-width:37.5em) {
+    h1 {
+      font-size: 2em;
+    }
   }
   @media(min-width:50em) {
     h1 {
