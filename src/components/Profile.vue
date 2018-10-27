@@ -31,10 +31,10 @@
             </MetaList>
           </template>
           <template slot="icon-expanded">
-            <img src="@/assets/images/chevron-up.svg" alt="" width="16" aria-hidden="true" />
+            <Icon id="chevron-up" width="24" height="24" />
           </template>
           <template slot="icon-collapsed">
-            <img src="@/assets/images/chevron-down.svg" alt="" width="16" aria-hidden="true" />
+            <Icon id="chevron-down" width="24" height="24" />
           </template>
         </ShowMore>
       </div>
@@ -142,6 +142,7 @@
 // components
 import Button from '@/components/Button.vue';
 import ContactMe from '@/components/ContactMe.vue';
+import Icon from '@/components/Icon.vue';
 import Key from '@/components/Key.vue';
 import Meta from '@/components/Meta.vue';
 import MetaList from '@/components/MetaList.vue';
@@ -194,6 +195,7 @@ export default {
     Button,
     ContactMe,
     EditPersonalInfo,
+    Icon,
     FlagProfile,
     Key,
     Meta,
