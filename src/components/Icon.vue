@@ -19,6 +19,34 @@
     <template v-else-if="id === 'log-out'">
       <path fill="currentColor" d="M11.373 20.182c0 .49-.328.818-.82.818H6.459C5.065 21 4 19.936 4 18.545V5.455C4 4.064 5.065 3 6.458 3h4.096c.491 0 .819.327.819.818 0 .491-.328.818-.82.818H6.459c-.492 0-.82.328-.82.819v13.09c0 .491.328.819.82.819h4.096c.491 0 .819.327.819.818zm8.93-7.855c.081-.163.081-.409 0-.654-.083-.082-.083-.164-.165-.246l-3.276-3.272a.793.793 0 0 0-1.147 0 .79.79 0 0 0 0 1.145l1.884 1.882H9.734c-.491 0-.819.327-.819.818 0 .49.328.818.82.818h7.864L15.715 14.7a.79.79 0 0 0 0 1.145c.163.164.41.246.573.246.164 0 .41-.082.574-.246l3.276-3.272c.082-.082.164-.164.164-.246z"/>
     </template>
+    <template v-else-if="id === 'chevron-up'">
+      <polyline points="18 15 12 9 6 15" stroke="currentColor" stroke-width="2" stroke-line-ap="round" fill="none" stroke-linejoin="round"/>  
+    </template>
+    <template v-else-if="id === 'chevron-down'">
+      <polyline points="6 9 12 15 18 9" stroke="currentColor" stroke-width="2" stroke-line-ap="round" fill="none" stroke-linejoin="round"/>  
+    </template>
+    <template v-else-if="id === 'org-chart'">
+      <path d="M11.5 12a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm0 2a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7zm7 8a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7zm0-2a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM3.5 7a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7zm0-2a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM3 7h1v1H3V7zm0 2h1v1H3V9zm1 3h-.5a.5.5 0 0 1-.5-.5V11h1v1zm1 0v-1h1v1H5zm2 0v-1h1v1H7zm4 2h1v1h-1v-1zm0 2h1v1h-1v-1zm1 3h-.5a.5.5 0 0 1-.5-.5V18h1v1zm1 0v-1h1v1h-1z" fill="currentColor" fill-rule="nonzero" />
+    </template>
+    <template v-else-if="id === 'at-sign'">
+      <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </template>
+    <template v-else-if="id === 'crown'">
+      <path id="a" d="M20.085 19.099a1.05 1.05 0 0 1 1.046 1.05c0 .572-.508 1.051-1.087 1.051H1.846A1.053 1.053 0 0 1 .8 20.15c0-.577.472-1.051 1.046-1.051h18.239zM19.46 1.133c.72-.617 1.74-.269 1.74.735v14.196c0 .568-.46 1.03-1.026 1.03H1.891a1.029 1.029 0 0 1-1.026-1.03V1.827c0-.98 1.058-1.328 1.75-.73l3.76 3.362 3.823-3.369c.425-.388.976-.384 1.435-.002l3.936 3.482 3.89-3.437zm-.312 3.172l-2.852 2.436c-.4.401-1.051.401-1.442.008l-3.936-3.482-3.824 3.371c-.34.323-.995.366-1.44.003L2.917 4.287v10.746h16.231V4.305z" fill="currentColor" />
+    </template>
+    <template v-else-if="id === 'book'">
+      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"  />
+    </template>
+    <template v-else-if="id === 'bookmark'">
+      <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </template>
+    <template v-else-if="id === 'user-check'">
+      <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      <circle cx="8.5" cy="7" r="4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      <polyline points="17 11 19 13 23 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </template>
   </svg>
 </template>
 
