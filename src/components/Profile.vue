@@ -1,6 +1,6 @@
 <template>
   <main class="profile container">
-    <section id="intro" class="profile__section profile__intro">
+    <section class="profile__section profile__intro">
       <div class="profile__intro-photo">
         <div class="profile__headshot">
           <img :src="picture.value" alt="" />
@@ -31,10 +31,10 @@
             </MetaList>
           </template>
           <template slot="icon-expanded">
-            <Icon id="chevron-up" width="24" height="24" />
+            <Icon id="chevron-up" :width="24" :height="24" />
           </template>
           <template slot="icon-collapsed">
-            <Icon id="chevron-down" width="24" height="24" />
+            <Icon id="chevron-down" :width="24" :height="24" />
           </template>
         </ShowMore>
       </div>
@@ -44,7 +44,8 @@
       </Modal>
     </section>
     <ProfileNav></ProfileNav>
-    <section v-if="manager || directs.length > 0" id="relations" class="profile__section">
+    <section v-if="manager || directs.length > 0" class="profile__section">
+      <a name="relations" class="profile__anchor"></a>
       <header class="profile__section-header">
         <h2>Relations</h2>
         <router-link :to="{ name: 'OrgchartHighlight', params: { userId: userId.value } }" class="button button--secondary">View Org Chart</router-link>
@@ -52,7 +53,8 @@
       <ReportingStructure :manager="manager" :directs="directs">
       </ReportingStructure>
     </section>
-    <section id="contact" class="profile__section">
+    <section class="profile__section">
+      <a name="contact" class="profile__anchor"></a>
       <header class="profile__section-header">
         <h2>Contact</h2>
       </header>
@@ -87,9 +89,10 @@
         </div>
       </template>
     </section>
-    <section id="elsewhere" class="profile__section">
+    <section class="profile__section">
+      <a name="other-accounts" class="profile__anchor"></a>
       <header class="profile__section-header">
-        <h2>Find me elsewhere</h2>
+        <h2>Other accounts</h2>
       </header>
       <h3>Mozilla</h3>
       <ul class="relation-list">
@@ -109,9 +112,9 @@
           <a href="#">philipp@mozilla.com</a>
         </Relation>
       </ul>
-      <Button type="button" modifier="button--full-width button--secondary">Show all groups</Button>
     </section>
-    <section id="access-groups" class="profile__section">
+    <section class="profile__section">
+      <a name="access-groups" class="profile__anchor"></a>
       <header class="profile__section-header">
         <h2>Access Groups</h2>
       </header>
@@ -121,19 +124,12 @@
         </Relation>
       </ul>
     </section>
-    <section id="tags" class="profile__section">
+    <section class="profile__section">
+      <a name="tags" class="profile__anchor"></a>
       <header class="profile__section-header">
         <h2>Tags</h2>
       </header>
       <Tag v-for="(tag, index) in tags.values" :tag="tag" :key="`tag-${index}`" />
-    </section>
-    <section class="profile__section">
-      <button class="button button--secondary" @click="$refs.changeInfo.isOpen = true">Change info</button>
-      <Modal ref="changeInfo" :closeButton="true">
-        <h2>Edit personal info</h2>
-        <p>This is a demo of opening a form in an overlay.</p>
-        <EditPersonalInfo/>
-      </Modal>
     </section>
   </main>
 </template>
@@ -216,11 +212,12 @@ export default {
 </script>
 
 <style>
-@media (min-width: 50em)     {
+@media (min-width: 50em) {
   .profile {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 0 2em;
+    align-items: start;
     padding: 2em;
   }
 }
@@ -319,6 +316,11 @@ export default {
 .profile__description {
   font-size: .875em;
   color: var(--gray-50);
+}
+
+.profile__anchor {
+  top: -6.5em;
+  position: relative;
 }
 
 </style>

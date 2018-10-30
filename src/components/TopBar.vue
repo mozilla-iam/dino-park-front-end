@@ -115,6 +115,9 @@ export default {
       background-color: none;
       padding: 0;
     }
+      .top-bar__user-menu-toggle img {
+        margin-right: 0;
+      }
       .top-bar__user-menu-toggle .show-more__button-text {
         position: absolute;
         left: -9999em;
