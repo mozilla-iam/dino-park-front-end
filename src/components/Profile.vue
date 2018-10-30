@@ -1,7 +1,6 @@
 <template>
   <main class="profile container">
     <section class="profile__section profile__intro">
-      <a name="intro" class="profile__anchor"></a>
       <div class="profile__intro-photo">
         <div class="profile__headshot">
           <img :src="picture.value" alt="" />
