@@ -78,5 +78,9 @@ export default {
     opacity: 0;
     z-index: 1;
   }
+    .show-more svg,
+    .show-more img {
+      margin-right: 1.5em;
+    }
 </style>
 
