@@ -32,6 +32,7 @@ export default {
   data() {
     return {
       isOpen: false,
+      focusLocked: false,
       lastFocusedElement: null,
     };
   },
@@ -42,8 +43,10 @@ export default {
     }
   },
   beforeDestroy() {
-    this.undoLockFocus();
-    this.enableBackgroundScrolling();
+    if(this.focusLocked) {
+      this.undoLockFocus();
+      this.enableBackgroundScrolling();
+    }
   },
   methods: {
     init() {
@@ -59,10 +62,12 @@ export default {
       this.lastFocusedElement = document.activeElement;
       bindFocusTrap(this.$refs.modalEl);
       this.$refs.modalEl.focus();
+      this.focusLocked = true;
     },
     undoLockFocus() {
       unbindFocusTrap(this.$refs.modalEl);
       this.lastFocusedElement.focus();
+      this.focusLocked = false;
     },
     preventBackgroundScrolling() {
       document.body.style.overflow = 'hidden';
