@@ -5,7 +5,6 @@
         <div class="profile__headshot">
           <img :src="picture.value" alt="" />
         </div>
-        <p>Mozillan for 4 years</p>
         <div class="hide-mobile">
           <ContactMe></ContactMe>
         </div>
