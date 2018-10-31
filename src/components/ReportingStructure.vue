@@ -50,14 +50,20 @@ export default {
   computed: {
     directsView() {
       return this.directs.length > 1 ? 'person--borderless person--avatar-only' : 'person--borderless';
-    }
+    },
   },
 };
 </script>
 
 <style>
+.reporting-structure__manages {
+  margin-left: -1.5em;
+  margin-right: -1.5em;
+  padding: 0 1.5em 1.5em;
+}
 .reporting-structure__reports-to + .reporting-structure__manages {
   margin-top: 2em;
   border-top: 1px solid var(--gray-30);
+  padding-top: 1.5em;
 }
 </style>
