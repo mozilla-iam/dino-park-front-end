@@ -3,14 +3,12 @@
     <div class="profile-preview__image">
       <img v-if="picture" :src="picture.value" alt="" />
     </div>
-    <div class="profile-preview__since">Mozillian for 4 years <span class="visually-hidden">since </span><span class="profile-preview__since-start-date">July, 2016</span></div>
     <ProfileName :firstName="firstName.value" :lastName="lastName.value" :pronouns="pronouns.value"></ProfileName>
     <ProfileTitle :businessTitle="businessTitle.value || null" :funTitle="funTitle.value"></ProfileTitle>
     <div class="hide-desktop">
       <ContactMe></ContactMe>
     </div>
     <ProfileTeamLocation :team="team.value || null" :entity="entity.value || null" :locationPreference="locationPreference.value || null" :officeLocation="officeLocation.value || null" :timezone="timezone.value || null"></ProfileTeamLocation>
-
     <h2 class="visually-hidden">About</h2>
     <div class="profile__description">
       <p>{{ description.value }}</p>
@@ -134,19 +132,6 @@ export default {
     object-fit: cover;
     margin-bottom: 1em;
   }
-  .profile-preview__since {
-    position: relative;
-    margin-bottom: 1em;
-  }
-    .profile-preview__since-start-date {
-      position: absolute;
-      left: -9999em;
-    }
-    .profile-preview__since:hover .profile-preview__since-start-date {
-      position: absolute;
-      top: -1em;
-      left: 0;
-    }
   .profile-preview__buttons {
     display: flex;
     align-items: start;
