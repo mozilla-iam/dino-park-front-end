@@ -7,7 +7,7 @@
     </div>
     <div class="profile__location">
       <h3 class="visually-hidden">Location</h3>
-      <div class="location"><strong>{{ locationDescription }} ({{ locationDescription }})</strong>{{ timeZone}}</div>
+      <div class="location"><strong>{{ locationPreference }} ({{ locationPreference }})</strong>{{ timezone }}</div>
     </div>
   </div>
 </template>
@@ -18,8 +18,8 @@ export default {
   props: {
     team: String,
     entity: String,
-    locationDescription: String,
-    timeZone: String,
+    locationPreference: String,
+    timezone: String,
   },
 };
 </script>
