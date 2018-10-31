@@ -4,6 +4,7 @@
     <div v-if="manager" class="reporting-structure__reports-to">
           <h3>Reports to:</h3>
           <Person
+            modifier="person--borderless"
             :picture="{ value: manager.picture }"
             :userId="{ value: manager.userId }"
             :firstName="{ value: manager.firstName }"
@@ -17,14 +18,15 @@
           <h3>Manages:</h3>
           <Person
             v-for="(direct, index) in directs"
+            :modifier="directsView"
             :key="`direct-${index}`"
             :picture="{ value: direct.picture }"
             :userId="{ value: direct.userId }"
             :firstName="{ value: direct.firstName }"
             :lastName="{ value: direct.lastName }"
-            :title="{ value: direct.title }"
-            :funTitle="{ value: direct.funTitle }"
-            :location="{ value: direct.location }"
+            :title="{ value: direct.title.value }"
+            :funTitle="{ value: direct.funTitle.value }"
+            :location="{ value: direct.location.value }"
             />
     </div>
   </div>
@@ -45,35 +47,17 @@ export default {
     LoadingSpinner,
     Person,
   },
+  computed: {
+    directsView() {
+      return this.directs.length > 1 ? 'person--borderless person--avatar-only' : 'person--borderless';
+    }
+  },
 };
 </script>
 
 <style>
-  .reporting-structure {
-    display: flex;
-    flex-direction: column;
-  }
-  @media(min-width:50em){
-    .reporting-structure {
-      flex-direction: row;
-    }
-  }
-    .reporting-structure__reports-to {
-      flex: 1;
-      background-color: var(--gray-10);
-      border-right: 1px solid var(--gray-20);
-    }
-    .reporting-structure__manages {
-      padding: 1.5em;
-      flex: 2;
-    }
-
-  /* @TODO make more elegant  */
-  .profile__section .reporting-structure {
-    margin: -1.5em -1.5em -1.5em -1.5em;
-  }
-
-  .profile__section .reporting-structure > div {
-    padding: 1.5em 1.5em 5em;
-  }
+.reporting-structure__reports-to + .reporting-structure__manages {
+  margin-top: 2em;
+  border-top: 1px solid var(--gray-30);
+}
 </style>

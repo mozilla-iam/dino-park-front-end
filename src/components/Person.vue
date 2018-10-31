@@ -1,6 +1,6 @@
 <template>
   <div :class="'person' + ( modifier ? ' ' + modifier : '')">
-    <img v-if="picture" :src="picture.value" class="person__photo" alt="">
+    <img v-if="picture" :src="picture.value" class="person__photo" alt="" aria-hidden="true" role="presentation" :title="firstName.value + ' ' + lastName.value">
     <div class="person__name-title">
       <div class="person__name"><a v-if="userId" :href="'/profile/'+ userId.value">{{ firstName.value }} {{ lastName.value }}</a></div>
       <div class="person__preferred-title">
@@ -111,5 +111,30 @@ export default {
         background-color: var(--gray-10);
         padding: 1em 1.5em;
       }
+    }
+
+  .person--borderless {
+    border: 0;
+    margin-left: 0;
+    padding: 0;
+    background-color: transparent;
+    display: flex;
+  }
+    .person--borderless .person__photo {
+      position: static;
+      align-self: center;
+      margin-right: 1em;
+    }
+  .person--avatar-only {
+    display: inline-block;
+    vertical-align: top;
+  }
+    .person--avatar-only + .person--avatar-only {
+      margin-top: 0;
+    }
+    .person--avatar-only .person__name-title {
+      position: absolute;
+      left: -9999em;
+      top: -9999em;
     }
 </style>
