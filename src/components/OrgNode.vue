@@ -4,7 +4,7 @@
       <span class="org-node__name">{{ data.first_name }} {{ data.last_name }}</span>
       <span class="org-node__title">{{ data.title }}</span>
     </router-link>
-    <ShowMore v-if="children.length > 0" :buttonText="`Expand ${data.first_name} ${data.last_name}`" :alternateButtonText="`Collapse ${data.first_name} ${data.last_name}`" :trace="trace" :prefix="prefix" buttonClass="org-node__toggle" :transition="false">
+    <ShowMore v-if="children.length > 0" :buttonText="`Expand ${data.first_name} ${data.last_name}`" :alternateButtonText="`Collapse ${data.first_name} ${data.last_name}`" :trace="trace" :prefix="prefix" buttonClass="org-node__toggle" :transition="false" :expanded="firstLevel">
       <template slot="overflow">
         <ul v-for="(child, index) in children" :key="index">
           <OrgNode :children="child.children" :data="child.data" :id="index" :prefix="`${prefix}-${id}`" :trace="trace"></OrgNode>
@@ -42,6 +42,11 @@ export default {
         e.scrollIntoView(false);
       }
     }
+  },
+  computed: {
+    firstLevel() {
+      return !this.prefix.includes('-');
+    },
   },
 };
 </script>
