@@ -43,7 +43,7 @@ export default {
     }
   },
   beforeDestroy() {
-    if(this.focusLocked) {
+    if (this.focusLocked) {
       this.undoLockFocus();
       this.enableBackgroundScrolling();
     }
