@@ -12,7 +12,7 @@
       <div class="profile__intro-main">
         <ProfileName :firstName="firstName.value" :lastName="lastName.value" :pronouns="pronouns.value"></ProfileName>
         <ProfileTitle :businessTitle="businessTitle.value || null" :funTitle="funTitle.value || null"></ProfileTitle>
-        <ProfileTeamLocation :team="team.value || null" :entity="entity.value || null" :locationDescription="locationDescription.value || null" :timeZone="timeZone.value || null"></ProfileTeamLocation>
+        <ProfileTeamLocation :team="team.value || null" :entity="entity.value || null" :locationPreference="locationPreference.value || null" :officeLocation="officeLocation.value || null" :timezone="timezone.value || null"></ProfileTeamLocation>
         <div class="hide-desktop">
           <ContactMe></ContactMe>
         </div>
@@ -161,9 +161,8 @@ export default {
   name: 'Profile',
   props: {
     businessTitle: Object,
-    locationDescription: Object,
     team: Object,
-    timeZone: Object,
+    timezone: Object,
     entity: Object,
     workerType: Object,
     wprDeskNumber: Object,
