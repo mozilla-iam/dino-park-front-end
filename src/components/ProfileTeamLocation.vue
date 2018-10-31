@@ -7,7 +7,7 @@
     </div>
     <div class="profile__location">
       <h3 class="visually-hidden">Location</h3>
-      <div class="location"><strong>{{ locationPreference }} ({{ locationPreference }})</strong>{{ timezone }}</div>
+      <div class="location"><strong>{{ locationPreference }} ({{ officeLocation }})</strong>{{ timezone }}</div>
     </div>
   </div>
 </template>
@@ -19,6 +19,7 @@ export default {
     team: String,
     entity: String,
     locationPreference: String,
+    officeLocation: String,
     timezone: String,
   },
 };
