@@ -54,7 +54,7 @@ export default {
 @media(min-width:50em) {
   .profile__nav {
     grid-column: 1 / 2;
-    grid-row: 2;
+    grid-row: 2 / 4;
     position: sticky;
     top: 6em;
   }

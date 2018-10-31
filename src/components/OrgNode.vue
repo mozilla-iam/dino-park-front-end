@@ -133,6 +133,9 @@ export default {
   -webkit-appearance: none;
   appearance: none;
 }
+  .org-node__toggle img {
+    margin-right: 0;
+  }
 .org-node .show-more {
   position: static; /* so that it is explicitly not a positioning context */
 }
