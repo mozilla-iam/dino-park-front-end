@@ -79,6 +79,7 @@ export default {
       left: -1em;
       width: 2em;
       max-height: 2em;
+      border-radius: var(--imageRadius);
     }
     .person__location-label {
       color: var(--gray-50);

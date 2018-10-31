@@ -283,9 +283,11 @@ export default {
   top: -3.125em;
   left: 50%;
   margin-left: -3.125em;
+  margin-bottom: 1em;
 }
   .profile__headshot img {
     width: 100%;
+    border-radius: var(--imageRadius);
   }
 @supports(object-fit: cover) {
   .profile__headshot img {
@@ -301,7 +303,7 @@ export default {
     margin-left: 0;
   }
   .profile__intro-photo .profile__headshot {
-    margin: 0 auto;
+    margin: 0 auto 1em;
   }
 }
 
