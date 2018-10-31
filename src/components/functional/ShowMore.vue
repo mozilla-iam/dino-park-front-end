@@ -36,6 +36,10 @@ export default {
     transition: Boolean,
     trace: String,
     prefix: String,
+    expanded: {
+      type: Boolean,
+      default: false,
+    },
   },
   methods: {
     toggleOverflow() {
@@ -56,11 +60,6 @@ export default {
     if (this.expanded) {
       overflowContent.focus();
     }
-  },
-  data() {
-    return {
-      expanded: false,
-    };
   },
 };
 </script>
