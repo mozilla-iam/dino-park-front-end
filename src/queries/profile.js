@@ -59,10 +59,10 @@ const PROFILE = gql`query ($userId: String!) {
     entity {
       value
     },
-    locationDescription {
+    locationPreference {
       value
     },
-    timeZone {
+    timezone {
       value
     },
     workerType {
@@ -139,10 +139,10 @@ const PREVIEW_PROFILE = gql`query ($previewUserId: String!) {
     entity {
       value
     },
-    locationDescription {
+    locationPreference {
       value
     },
-    timeZone {
+    timezone {
       value
     },
   } 

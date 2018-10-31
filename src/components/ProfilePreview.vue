@@ -9,7 +9,7 @@
     <div class="hide-desktop">
       <ContactMe></ContactMe>
     </div>
-    <ProfileTeamLocation :team="team.value || null" :entity="entity.value || null" :locationDescription="locationDescription.value || null" :timeZone="timeZone.value || null"></ProfileTeamLocation>
+    <ProfileTeamLocation :team="team.value || null" :entity="entity.value || null" :locationPreference="locationPreference.value || null" :officeLocation="officeLocation.value || null" :timezone="timezone.value || null"></ProfileTeamLocation>
 
     <h2 class="visually-hidden">About</h2>
     <div class="profile__description">
@@ -71,9 +71,9 @@ export default {
   name: 'ProfilePreview',
   props: {
     businessTitle: Object,
-    locationDescription: Object,
+    locationPreference: Object,
     team: Object,
-    timeZone: Object,
+    timezone: Object,
     entity: Object,
     type: String,
     title: String,
@@ -83,7 +83,6 @@ export default {
     pronouns: Object,
     funTitle: Object,
     picture: Object,
-    locationPreference: Object,
     officeLocation: Object,
     description: Object,
     created: Object,
