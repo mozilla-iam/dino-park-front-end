@@ -10,7 +10,7 @@
           <template v-else>Show search</template>
         </span>
       </button>
-      <router-link :to="{ name: 'Orgchart' }" class="top-bar__link" exact-active-class="top-bar__link--current"><img src="@/assets/images/org-chart.svg" alt="Org chart" width="20" /></router-link>
+      <router-link :to="{ name: 'Orgchart' }" class="top-bar__link" exact-active-class="top-bar__link--current"><img src="@/assets/images/org-chart.svg" alt="Org chart" width="20" title="Org chart" /></router-link>
       <ShowMore buttonText="Open user menu" alternateButtonText="Close user menu" buttonClass="top-bar__user-menu-toggle" :expanded="false" v-on:close-user-menu="closeUserMenu()" ref="showMoreEl">
         <template slot="overflow">
           <UserMenu></UserMenu>

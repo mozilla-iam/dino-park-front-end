@@ -1,8 +1,14 @@
 <template>
   <div :class="'person' + ( modifier ? ' ' + modifier : '')">
-    <img v-if="picture" :src="picture.value" class="person__photo" alt="" aria-hidden="true" role="presentation" :title="firstName.value + ' ' + lastName.value">
+    <router-link :to="{ name: 'Profile', params: { userId: userId.value } }">
+      <img v-if="picture" :src="picture.value" class="person__photo" alt="" aria-hidden="true" role="presentation" :title="firstName.value + ' ' + lastName.value">
+    </router-link>
     <div class="person__name-title">
-      <div class="person__name"><a v-if="userId" :href="'/profile/'+ userId.value">{{ firstName.value }} {{ lastName.value }}</a></div>
+      <div class="person__name">
+        <router-link :to="{ name: 'Profile', params: { userId: userId.value } }">
+          {{ firstName.value }} {{ lastName.value }}
+        </router-link>
+      </div>
       <div class="person__preferred-title">
         <template v-if="funTitle">{{ funTitle.value }}</template>
         <template v-else-if="businessTitle">{{ "businessTitle.value" }}</template>
