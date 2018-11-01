@@ -1,6 +1,7 @@
 <template>
   <li :id="data.user_id" :class="'org-node' + ( data.user_id === this.$route.params.userId ? ' org-node--current' : '')">
     <router-link :to="{ name: 'Orgchart', params: { userId: data.user_id } }" :id="`org-node-${prefix}`">
+      <img class="org-node__photo" :src="data.picture" alt="" role="presentation" aria-hidden="true">
       <span class="org-node__name">{{ data.first_name }} {{ data.last_name }}</span>
       <span class="org-node__title">{{ data.title }}</span>
     </router-link>
@@ -11,16 +12,17 @@
         </ul>
       </template>
       <template slot="icon-expanded">
-        <img src="@/assets/images/collapse.svg" alt="" width="16" aria-hidden="true" />
+        <img src="@/assets/images/collapse.svg" alt="" width="16" aria-hidden="true" class="org-node__icon" />
       </template>
       <template slot="icon-collapsed">
-        <img src="@/assets/images/expand.svg" alt="" width="16" aria-hidden="true" />
+        <img src="@/assets/images/expand.svg" alt="" width="16" aria-hidden="true" class="org-node__icon"/>
       </template>
     </ShowMore>
   </li>
 </template>
 
 <script>
+import Person from '@/components/Person.vue';
 import ShowMore from '@/components/functional/ShowMore.vue';
 
 export default {
@@ -92,7 +94,7 @@ export default {
   text-decoration: none;
   color: inherit;
   padding-left: 2em;
-  padding-left: calc((var(--nodeLevel) + 2) * 1em);
+  padding-left: calc((var(--nodeLevel) + 2) * .95em);
   border-left: 5px solid transparent;
 }
 .org-node--current > a,
@@ -142,5 +144,13 @@ export default {
 .org-node .show-more__button-text {
   position: absolute;
   left: -9999em;
+}
+.org-node__photo,
+.show-more .org-node__photo {
+  width: 2.25em;
+  border-radius: var(--imageRadius);
+  float: left;
+  margin-top: 0.125em;
+  margin-right: 1em;
 }
 </style>
