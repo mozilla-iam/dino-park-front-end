@@ -49,14 +49,21 @@ export default {
 <style>
 .profile__nav {
   margin-bottom: 2em;
+  margin-left: -1em;
+  margin-right: -1em;
   box-shadow: var(--shadowCard);
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 4;
 }
 @media(min-width:50em) {
   .profile__nav {
     grid-column: 1 / 2;
     grid-row: 2 / 4;
-    position: sticky;
     top: 6em;
+    margin-left: 0;
+    margin-right: 0;
   }
 }
   .profile__nav ul {
@@ -79,7 +86,7 @@ export default {
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    padding: 1em;
+    padding: 1.35em;
     background: var(--white);
     text-decoration: none;
     border-bottom: 2px solid var(--gray-20);

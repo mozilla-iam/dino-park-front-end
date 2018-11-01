@@ -161,11 +161,11 @@ export default {
   }
 
  .modal .profile-preview {
-    padding: 3em 0 0;
+    padding: 2em 0 0;
     box-shadow: none;
  }
  .modal .profile-preview__image {
-    margin: 0 auto;
+    margin: 0 auto 1em;
  }
  .modal .profile-preview__close {
     position: fixed;
