@@ -259,7 +259,7 @@ export default {
 
 .profile__intro {
   position: relative;
-  padding-top: 4em;
+  padding-top: 5em;
   margin-top: 5em;
 }
 @media(min-width: 50em) {
