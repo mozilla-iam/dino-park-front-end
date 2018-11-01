@@ -28,18 +28,18 @@ export default {
   },
   methods: {
     watchCurrentSections() {
-      const sections = this.links.map(link => { return document.getElementById(link.id); });
+      const sections = this.links.map(link => document.getElementById(link.id));
       const observer = new IntersectionObserver(this.updateCurrent, {
         rootMargin: '-120px',
         treshold: 1,
       });
-      
-      sections.forEach(section => {
+
+      sections.forEach((section) => {
         observer.observe(section);
       });
     },
-    updateCurrent(entries, observer) {
-      entries.forEach(entry => {
+    updateCurrent(entries) {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
           this.currentNavItem = entry.target.id;
         }
@@ -52,7 +52,7 @@ export default {
   data() {
     return {
       currentNavItem: null,
-    }
+    };
   },
 };
 </script>
