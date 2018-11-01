@@ -1,14 +1,20 @@
 <template>
   <footer class="footer">
-    <a href="/"><img src="@/assets/images/envelope.svg" alt="" aria-hidden="true" width="16" />Help desk</a>
-    <a href="/"><img src="@/assets/images/legal.svg" alt="" aria-hidden="true" width="16" />Legal</a>
-    <a href="/"><img src="@/assets/images/privacy.svg" alt="" aria-hidden="true" width="16" />Privacy</a>
+    <a href="/" class="footer__link"><Icon id="mail" :width="18" :height="18" /> Help desk</a>
+    <a href="/" class="footer__link"><Icon id="legal" :width="18" :height="18" /> Legal</a>
+    <a href="/" class="footer__link"><Icon id="privacy" :width="18" :height="18" /> Privacy</a>
+    <a href="https://www.mozilla.org/en-US/about/governance/policies/participation/" class="footer__link footer__link--cpg">Community Participation Guidelines</a>
   </footer>
 </template>
 
 <script>
+import Icon from '@/components/Icon.vue';
+
 export default {
   name: 'Footer',
+  components: {
+    Icon,
+  },
 };
 </script>
 
@@ -18,20 +24,29 @@ export default {
     color: var(--white);
     text-align: center;
     margin-top: 2em;
+    padding: 2em 0;
   }
-    .footer a {
-      color: var(--gray-30);
+    .footer__link {
+      color: var(--gray-40);
       text-decoration: none;
       display: inline-block;
       vertical-align: middle;
-      padding: 1em 2em;
+      padding: 1.5em 2em;
+      font-size: .9em;
+      line-height: 1;
     }
-    .footer a:hover {
+    .footer__link:hover {
       color: inherit;
     }
-    .footer a img {
+    .footer__link svg {
       margin-right: .75em;
       display: inline-block;
       vertical-align: middle;
+    }
+    .footer__link--cpg {
+      display: block;
+      margin: 0 auto;
+      padding-top: 0;
+      text-decoration: underline;
     }
 </style>

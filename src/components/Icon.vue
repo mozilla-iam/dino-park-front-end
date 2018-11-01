@@ -1,5 +1,5 @@
 <template>
-  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" :width="width" :height="height" :viewport="'0 0 ' + width + ' ' + height" aria-hidden="true"" role="presentation">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" :width="width" :height="height" :viewport="'0 0 ' + width + ' ' + height" aria-hidden="true" role="presentation">
     <template v-if="id === 'user'">
       <path fill="currentColor" d="M20.2 18.3v1.8c0 .54-.36.9-.9.9s-.9-.36-.9-.9v-1.8c0-1.53-1.17-2.7-2.7-2.7H8.5c-1.53 0-2.7 1.17-2.7 2.7v1.8c0 .54-.36.9-.9.9s-.9-.36-.9-.9v-1.8c0-2.52 1.98-4.5 4.5-4.5h7.2c2.52 0 4.5 1.98 4.5 4.5zM7.6 7.5C7.6 4.98 9.58 3 12.1 3s4.5 1.98 4.5 4.5-1.98 4.5-4.5 4.5-4.5-1.98-4.5-4.5zm1.8 0c0 1.53 1.17 2.7 2.7 2.7 1.53 0 2.7-1.17 2.7-2.7 0-1.53-1.17-2.7-2.7-2.7-1.53 0-2.7 1.17-2.7 2.7z"/>
     </template>
@@ -48,6 +48,15 @@
       <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
       <circle cx="8.5" cy="7" r="4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
       <polyline points="17 11 19 13 23 9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </template>
+    <template v-else-if="id === 'mail'">
+      <path d="m9 17.333a8.333 8.333 0 1 0 0-16.666 8.333 8.333 0 0 0 0 16.666zm4.605-9.505a2.883 2.883 0 0 1 -.49.426 93.757 93.757 0 0 0 -2.437 1.689c-.411.303-.92.675-1.454.675h-.01c-.533 0-1.042-.372-1.453-.675-.798-.583-1.62-1.136-2.433-1.69a2.737 2.737 0 0 1 -.495-.425v3.887c0 .43.353.783.784.783h7.205c.43 0 .783-.352.783-.783zm0-1.743a.789.789 0 0 0 -.783-.783h-7.205c-.524 0-.784.41-.784.89 0 .446.495 1 .842 1.234.759.529 1.528 1.057 2.286 1.59.318.221.857.672 1.253.672h.01c.397 0 .935-.45 1.253-.671.76-.534 1.528-1.062 2.291-1.59.431-.3.837-.794.837-1.342z" fill="currentColor" fill-rule="evenodd"/>
+    </template>
+    <template v-else-if="id === 'privacy'">
+      <path id="a" d="M9 .667a8.333 8.333 0 1 1 0 16.667A8.333 8.333 0 0 1 9 .667zm3.509 12.34V7.744h-.906v-.968c0-1.433-1.168-2.6-2.603-2.6a2.605 2.605 0 0 0-2.602 2.6v.968h-.907v5.263h7.018zM9 5.317c.806 0 1.461.654 1.461 1.46v.967H7.54v-.967c0-.806.656-1.46 1.461-1.46z" fill="currentColor" fill-rule="evenodd" />
+    </template>
+    <template v-else-if="id === 'legal'">
+      <path id="a" d="M13.982 6.425l-5.745 6.719a.136.136 0 0 1-.189.015l-3.825-3.15a.128.128 0 0 1-.017-.182l1.183-1.383a.134.134 0 0 1 .186-.015l2.317 1.907 4.479-5.237a.134.134 0 0 1 .186-.016l1.41 1.16a.126.126 0 0 1 .015.182M9 .667a8.334 8.334 0 1 0 0 16.667A8.334 8.334 0 0 0 9 .667" fill="currentColor" fill-rule="evenodd" />
     </template>
   </svg>
 </template>
