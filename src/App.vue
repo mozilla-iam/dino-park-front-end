@@ -85,7 +85,7 @@ export default {
 
   h3 {
     font-weight: 400;
-    font-size: 1.25em;
+    font-size: 1em;
     color: var(--gray-50);
   }
 

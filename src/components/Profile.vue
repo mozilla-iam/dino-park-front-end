@@ -12,10 +12,10 @@
       <div class="profile__intro-main">
         <ProfileName :firstName="firstName.value" :lastName="lastName.value" :pronouns="pronouns.value"></ProfileName>
         <ProfileTitle :businessTitle="businessTitle.value || null" :funTitle="funTitle.value || null"></ProfileTitle>
-        <ProfileTeamLocation :team="team.value || null" :entity="entity.value || null" :locationPreference="locationPreference.value || null" :officeLocation="officeLocation.value || null" :timezone="timezone.value || null"></ProfileTeamLocation>
         <div class="hide-desktop">
           <ContactMe></ContactMe>
         </div>
+        <ProfileTeamLocation :team="team.value || null" :entity="entity.value || null" :locationPreference="locationPreference.value || null" :officeLocation="officeLocation.value || null" :timezone="timezone.value || null"></ProfileTeamLocation>
         <h2 class="visually-hidden">About</h2>
         <div class="profile__description">
           <p>{{ description.value }}</p>
@@ -47,7 +47,7 @@
       <a name="relations" class="profile__anchor"></a>
       <header class="profile__section-header">
         <h2>Relations</h2>
-        <router-link :to="{ name: 'OrgchartHighlight', params: { userId: userId.value } }" class="button button--secondary">View Org Chart</router-link>
+        <router-link :to="{ name: 'OrgchartHighlight', params: { userId: userId.value } }" class="button button--secondary button--small">Org Chart</router-link>
       </header>
       <ReportingStructure :manager="manager" :directs="directs">
       </ReportingStructure>
@@ -259,7 +259,7 @@ export default {
 
 .profile__intro {
   position: relative;
-  padding-top: 4em;
+  padding-top: 5em;
   margin-top: 5em;
 }
 @media(min-width: 50em) {
@@ -283,9 +283,11 @@ export default {
   top: -3.125em;
   left: 50%;
   margin-left: -3.125em;
+  margin-bottom: 1em;
 }
   .profile__headshot img {
     width: 100%;
+    border-radius: var(--imageRadius);
   }
 @supports(object-fit: cover) {
   .profile__headshot img {
@@ -301,7 +303,7 @@ export default {
     margin-left: 0;
   }
   .profile__intro-photo .profile__headshot {
-    margin: 0 auto;
+    margin: 0 auto 1em;
   }
 }
 

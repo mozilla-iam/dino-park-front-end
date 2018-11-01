@@ -117,6 +117,7 @@ export default {
     }
       .top-bar__user-menu-toggle img {
         margin-right: 0;
+        border-radius: var(--imageRadius);
       }
       .top-bar__user-menu-toggle .show-more__button-text {
         position: absolute;

@@ -92,6 +92,12 @@ export default {
   color: var(--blue-60);
 }
 
+.button--small {
+  padding: .5em 1.5em;
+  font-weight: 400;
+  text-transform: none;
+}
+
 .button--full-width {
   width: 100%;
 }
