@@ -24,9 +24,9 @@
             :userId="{ value: direct.userId }"
             :firstName="{ value: direct.firstName }"
             :lastName="{ value: direct.lastName }"
-            :title="{ value: direct.title.value }"
-            :funTitle="{ value: direct.funTitle.value }"
-            :location="{ value: direct.location.value }"
+            :title="{ value: direct.title }"
+            :funTitle="{ value: direct.funTitle }"
+            :location="{ value: direct.location }"
             />
     </div>
   </div>

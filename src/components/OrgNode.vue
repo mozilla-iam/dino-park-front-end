@@ -22,7 +22,6 @@
 </template>
 
 <script>
-import Person from '@/components/Person.vue';
 import ShowMore from '@/components/functional/ShowMore.vue';
 
 export default {
