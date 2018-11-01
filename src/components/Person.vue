@@ -77,8 +77,8 @@ export default {
       position: absolute;
       top: 1em;
       left: -1em;
-      width: 2em;
-      max-height: 2em;
+      width: 2.25em;
+      max-height: 2.25em;
       border-radius: var(--imageRadius);
     }
     .person__location-label {
@@ -129,6 +129,7 @@ export default {
   .person--avatar-only {
     display: inline-block;
     vertical-align: top;
+    margin-bottom: .5em;
   }
     .person--avatar-only + .person--avatar-only {
       margin-top: 0;

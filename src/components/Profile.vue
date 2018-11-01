@@ -47,7 +47,7 @@
       <a name="relations" class="profile__anchor"></a>
       <header class="profile__section-header">
         <h2>Relations</h2>
-        <router-link :to="{ name: 'OrgchartHighlight', params: { userId: userId.value } }" class="button button--secondary">View Org Chart</router-link>
+        <router-link :to="{ name: 'OrgchartHighlight', params: { userId: userId.value } }" class="button button--secondary button--small">Org Chart</router-link>
       </header>
       <ReportingStructure :manager="manager" :directs="directs">
       </ReportingStructure>
