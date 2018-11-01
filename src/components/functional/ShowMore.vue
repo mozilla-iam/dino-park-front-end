@@ -36,10 +36,6 @@ export default {
     transition: Boolean,
     trace: String,
     prefix: String,
-    expanded: {
-      type: Boolean,
-      default: false,
-    },
   },
   methods: {
     toggleOverflow() {
@@ -49,7 +45,7 @@ export default {
   watch: {
     trace() {
       if (this.trace || this.prefix) {
-        this.expanded = this.prefix === this.trace || this.trace.startsWith(`${this.prefix}-`) || this.expanded;
+        this.expanded = this.trace.startsWith(`${this.prefix}-`) || this.expanded;
       }
       return this.expanded;
     },
@@ -60,6 +56,12 @@ export default {
     if (this.expanded) {
       overflowContent.focus();
     }
+  },
+  data() {
+    const state = (this.trace && this.trace.startsWith(`${this.prefix}-`));
+    return {
+      expanded: state || (this.prefix && !this.prefix.includes('-')),
+    };
   },
 };
 </script>

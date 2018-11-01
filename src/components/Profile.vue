@@ -62,20 +62,20 @@
         <h3>Keys</h3>
         <template v-if="pgpPublicKeys">
           <h4 class="visually-hidden">PGP</h4>
-          <Key v-for="key in pgpPublicKeys.values"
+          <Key v-for="pgp in pgpPublicKeys"
                type="PGP"
-               title="Title"
-               :content="key"
-               :key="key" />
+               :title="pgp.key"
+               :content="pgp.value"
+               :key="pgp.key" />
         </template>
         <template v-if="sshPublicKeys">
           <h4 class="visually-hidden">SSH</h4>
           <Key
-            v-for="key in sshPublicKeys.values"
+            v-for="ssh in sshPublicKeys"
             type="SSH"
-            title="Title"
-            :content="key"
-            :key="key" />
+            :title="ssh.key"
+            :content="ssh.value"
+            :key="ssh.key" />
         </template>
       </div>
       <template v-if="preferredLanguage && preferredLanguage.length > 0">
@@ -177,8 +177,8 @@ export default {
     description: Object,
     created: Object,
     lastModified: Object,
-    pgpPublicKeys: Object,
-    sshPublicKeys: Object,
+    pgpPublicKeys: Array,
+    sshPublicKeys: Array,
     tags: Object,
     preferredLanguage: Object,
     userId: Object,
