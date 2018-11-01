@@ -1,7 +1,7 @@
 import { gql } from 'apollo-boost';
 
 const PROFILE = gql`query ($userId: String!) {
- profile (userId:$userId) { 
+ profile (userId:$userId) {
     firstName {
       value
     },
@@ -94,11 +94,16 @@ const PROFILE = gql`query ($userId: String!) {
       funTitle
       location
     },
-  } 
+    accessInformation {
+      mozilliansorg {
+        values
+      }
+    },
+  }
 }`;
 
 const PREVIEW_PROFILE = gql`query ($previewUserId: String!) {
- profile (userId:$previewUserId) { 
+ profile (userId:$previewUserId) {
     firstName {
       value
     },
@@ -147,11 +152,30 @@ const PREVIEW_PROFILE = gql`query ($previewUserId: String!) {
     timezone {
       value
     },
-  } 
+  }
+}`;
+const USER_MENU_PROFILE = gql`query {
+ profile {
+    firstName {
+      value
+    },
+    lastName {
+      value
+    },
+    picture {
+      value
+    },
+    userId {
+      value
+    },
+    primaryEmail {
+      value
+    },
+  }
 }`;
 
 const PROFILE_LIST = gql`query {
- profiles { 
+ profiles {
     userId {
       value
     },
@@ -187,7 +211,7 @@ const MUTATE_PROFILE = gql`mutation updateProfile($userId: String!, $firstName: 
         value: $primaryEmail
       }
     }
- ) 
+ )
   {
     updatedProfile {
       firstName {
@@ -204,4 +228,4 @@ const MUTATE_PROFILE = gql`mutation updateProfile($userId: String!, $firstName: 
 }
 `;
 
-export { PROFILE, PREVIEW_PROFILE, PROFILE_LIST, MUTATE_PROFILE };
+export { PROFILE, PREVIEW_PROFILE, USER_MENU_PROFILE, PROFILE_LIST, MUTATE_PROFILE };

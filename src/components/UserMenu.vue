@@ -3,11 +3,11 @@
     <div class="user-menu__header">
       <button class="user-menu__close-avatar" type="button" @click="sendCloseEvent()">
         <span class="visually-hidden">Close user menu</span>
-        <img src="@/assets/images/user-demo.png" alt="" width="40" aria-hidden="true" />
+        <img :src="picture.value" alt="" width="40" aria-hidden="true" />
       </button>
       <div class="user-menu__name">
-        <span class="user-menu__header-name">Henrik Mitsch</span>
-        <span class="user-menu__header-email">hmitsch@mozilla.com</span>
+        <span class="user-menu__header-name">{{ firstName.value }} {{ lastName.value }}</span>
+        <span class="user-menu__header-email">{{ primaryEmail.value }}</span>
       </div>
       <button class="user-menu__close-button" type="button" @click="sendCloseEvent()">
         <svg
@@ -30,10 +30,10 @@
     </div>
     <ul class="user-menu__items">
       <li>
-        <a href="#">
+        <router-link :to="{ name: 'Profile', params: { userId: userId.value } }">
           <span>My profile</span>
           <Icon id="user" :width="24" :height="24" />
-        </a>
+        </router-link>
       </li>
       <li>
         <a href="https://sso.mozilla.com">
@@ -66,6 +66,13 @@ import Icon from '@/components/Icon.vue';
 
 export default {
   name: 'UserMenu',
+  props: {
+    firstName: Object,
+    lastName: Object,
+    picture: Object,
+    userId: Object,
+    primaryEmail: Object,
+  },
   methods: {
     sendCloseEvent() {
       this.$parent.$emit('close-user-menu');

@@ -118,7 +118,7 @@
         <h2>Access Groups</h2>
       </header>
       <ul class="relation-list">
-        <Relation category="NDA">
+        <Relation v-for="(group, index) in accessInformation.mozilliansorg.values" :key="`group-${index}`" :category="group">
           Invited by <a href="#">Rubén Martin</a>
         </Relation>
       </ul>
@@ -184,6 +184,7 @@ export default {
     userId: Object,
     manager: Object,
     directs: Array,
+    accessInformation: Object,
   },
   components: {
     Button,
