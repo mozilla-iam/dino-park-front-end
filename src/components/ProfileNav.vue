@@ -28,8 +28,11 @@ export default {
   },
   methods: {
     watchCurrentSections() {
-      const sections = this.links.map(link => { return document.getElementById(link.id).parentNode; });
-      const observer = new IntersectionObserver(this.updateCurrent);
+      const sections = this.links.map(link => { return document.getElementById(link.id); });
+      const observer = new IntersectionObserver(this.updateCurrent, {
+        rootMargin: '-30px',
+        treshold: 1,
+      });
       
       sections.forEach(section => {
         observer.observe(section);
@@ -38,7 +41,7 @@ export default {
     updateCurrent(entries, observer) {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          this.current = entry.target.firstChild.id;
+          this.current = entry.target.id;
         }
       });
     },
