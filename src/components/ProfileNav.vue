@@ -2,7 +2,7 @@
   <nav class="profile__nav">
     <ul>
       <li v-for="(link, index) in links" :key="index">
-        <a v-if="current === link.id" :href="'#' + link.id" class="profile__nav-link profile__nav-link--current">
+        <a v-if="link.id === currentNavItem" :href="'#' + link.id" class="profile__nav-link profile__nav-link--current">
           <Icon :id="link.iconId" :width="24" :height="24" />
           <span class="profile__nav-label">{{ link.label}}</span>
         </a>
@@ -30,7 +30,7 @@ export default {
     watchCurrentSections() {
       const sections = this.links.map(link => { return document.getElementById(link.id); });
       const observer = new IntersectionObserver(this.updateCurrent, {
-        rootMargin: '-30px',
+        rootMargin: '-120px',
         treshold: 1,
       });
       
@@ -41,7 +41,7 @@ export default {
     updateCurrent(entries, observer) {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          this.current = entry.target.id;
+          this.currentNavItem = entry.target.id;
         }
       });
     },
@@ -51,7 +51,7 @@ export default {
   },
   data() {
     return {
-      current: null,
+      currentNavItem: null,
     }
   },
 };
