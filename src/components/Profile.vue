@@ -42,9 +42,9 @@
         <FlagProfile/>
       </Modal>
     </section>
-    <ProfileNav></ProfileNav>
+    <ProfileNav :links="profileNav"></ProfileNav>
     <section v-if="manager || directs.length > 0" class="profile__section">
-      <a name="relations" class="profile__anchor"></a>
+      <a id="relations" class="profile__anchor"></a>
       <header class="profile__section-header">
         <h2>Relations</h2>
         <router-link :to="{ name: 'OrgchartHighlight', params: { userId: userId.value } }" class="button button--secondary button--small">Org Chart</router-link>
@@ -53,7 +53,7 @@
       </ReportingStructure>
     </section>
     <section class="profile__section">
-      <a name="contact" class="profile__anchor"></a>
+      <a id="contact" class="profile__anchor"></a>
       <header class="profile__section-header">
         <h2>Contact</h2>
       </header>
@@ -89,7 +89,7 @@
       </template>
     </section>
     <section class="profile__section">
-      <a name="other-accounts" class="profile__anchor"></a>
+      <a id="other-accounts" class="profile__anchor"></a>
       <header class="profile__section-header">
         <h2>Other accounts</h2>
       </header>
@@ -113,7 +113,7 @@
       </ul>
     </section>
     <section class="profile__section">
-      <a name="access-groups" class="profile__anchor"></a>
+      <a id="access-groups" class="profile__anchor"></a>
       <header class="profile__section-header">
         <h2>Access Groups</h2>
       </header>
@@ -124,7 +124,7 @@
       </ul>
     </section>
     <section class="profile__section">
-      <a name="tags" class="profile__anchor"></a>
+      <a id="tags" class="profile__anchor"></a>
       <header class="profile__section-header">
         <h2>Tags</h2>
       </header>
@@ -205,6 +205,37 @@ export default {
     ShowMore,
     Tag,
     Vouch,
+  },
+  data() {
+    return {
+      profileNav: [
+        {
+          id: 'relations',
+          iconId: 'org-chart',
+          label: 'Relations',
+        },
+        {
+          id: 'contact',
+          iconId: 'book',
+          label: 'Contact',
+        },
+        {
+          id: 'other-accounts',
+          iconId: 'at-sign',
+          label: 'Other accounts',
+        },
+        {
+          id: 'access-groups',
+          iconId: 'crown',
+          label: 'Access groups',
+        },
+        {
+          id: 'tags',
+          iconId: 'bookmark',
+          label: 'Tags',
+        },
+      ],
+    };
   },
 };
 </script>
