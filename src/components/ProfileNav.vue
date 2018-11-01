@@ -1,34 +1,14 @@
 <template>
   <nav class="profile__nav">
     <ul>
-      <li>
-        <a href="#relations">
-          <Icon id="org-chart" :width="24" :height="24" />
-          <span class="profile__nav-label">Relations</span>
+      <li v-for="(link, index) in links" :key="index">
+        <a v-if="current === link.id" :href="'#' + link.id" class="profile__nav-link profile__nav-link--current">
+          <Icon :id="link.iconId" :width="24" :height="24" />
+          <span class="profile__nav-label">{{ link.label}}</span>
         </a>
-      </li>
-      <li>
-        <a href="#contact">
-          <Icon id="book" :width="24" :height="24" />
-          <span class="profile__nav-label">Contact</span>
-        </a>
-      </li>
-      <li>
-        <a href="#other-accounts">
-          <Icon id="at-sign" :width="24" :height="24" />
-          <span class="profile__nav-label">Other accounts</span>
-        </a>
-      </li>
-      <li>
-        <a href="#access-groups">
-          <Icon id="crown" :width="24" :height="24" />
-          <span class="profile__nav-label">Access groups</span>
-        </a>
-      </li>
-      <li>
-        <a href="#tags">
-          <Icon id="bookmark" :width="24" :height="24" />
-          <span class="profile__nav-label">Tags</span>
+        <a v-else :href="'#' + link.id" :class="'profile__nav-link'">
+          <Icon :id="link.iconId" :width="24" :height="24" />
+          <span class="profile__nav-label hide-mobile">{{ link.label}}</span>
         </a>
       </li>
     </ul>
@@ -40,6 +20,9 @@ import Icon from '@/components/Icon.vue';
 
 export default {
   name: 'ProfileNav',
+  props: {
+    links: Array,
+  },
   components: {
     Icon,
   },
