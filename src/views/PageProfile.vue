@@ -28,9 +28,11 @@ export default {
     Error,
     LoadingSpinner,
   },
+  computed: {
+    userId() { return this.$route.params.userId; },
+  },
   data() {
     return {
-      userId: this.$route.params.userId,
       profileQuery: PROFILE,
     };
   },
