@@ -25,15 +25,15 @@ phases:
     commands:
       - export COMMIT_SHA=$CODEBUILD_RESOLVED_SOURCE_VERSION
       - export DEPLOY_ENV=$(echo $CODEBUILD_WEBHOOK_TRIGGER | sed -e 's/tag\/.*-\(.*\)/\1/' | sed -e 's/branch\/master/dev/')
-      - export MASTER=$([[ $CODEBUILD_WEBHOOK_TRIGGER == "branch/master" ]] && echo 1)
+      - export MASTER=$(if [ "$CODEBUILD_WEBHOOK_TRIGGER" = "branch/master" ]; then echo 1; fi)
       - echo "running for ${COMMIT_SHA} in ${DEPLOY_ENV}"
       - aws eks update-kubeconfig --name $CLUSTER_NAME
       - aws ecr get-login --region us-west-2 --no-include-email | bash
   build:
     commands:
-      - docker build -t $IMAGE_NAME:$COMMIT_SHA .
-      - docker tag $IMAGE_NAME:$COMMIT_SHA $DOCKER_REGISTRY/$IMAGE_NAME:$COMMIT_SHA
-      - docker push $DOCKER_REGISTRY/$IMAGE_NAME:$COMMIT_SHA
+      - [ -n "$MASTER" ] && docker build -t $IMAGE_NAME:$COMMIT_SHA .
+      - [ -n "$MASTER" ] && docker tag $IMAGE_NAME:$COMMIT_SHA $DOCKER_REGISTRY/$IMAGE_NAME:$COMMIT_SHA
+      - [ -n "$MASTER" ] && docker push $DOCKER_REGISTRY/$IMAGE_NAME:$COMMIT_SHA
   post_build:
     commands:
       - echo "Finding appropriate deployment environment"
