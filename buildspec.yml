@@ -31,9 +31,9 @@ phases:
       - aws ecr get-login --region us-west-2 --no-include-email | bash
   build:
     commands:
-      - [ -n "$MASTER" ] && docker build -t $IMAGE_NAME:$COMMIT_SHA .
-      - [ -n "$MASTER" ] && docker tag $IMAGE_NAME:$COMMIT_SHA $DOCKER_REGISTRY/$IMAGE_NAME:$COMMIT_SHA
-      - [ -n "$MASTER" ] && docker push $DOCKER_REGISTRY/$IMAGE_NAME:$COMMIT_SHA
+      - '[ -n "$MASTER" ] && docker build -t $IMAGE_NAME:$COMMIT_SHA .'
+      - '[ -n "$MASTER" ] && docker tag $IMAGE_NAME:$COMMIT_SHA $DOCKER_REGISTRY/$IMAGE_NAME:$COMMIT_SHA'
+      - '[ -n "$MASTER" ] && docker push $DOCKER_REGISTRY/$IMAGE_NAME:$COMMIT_SHA'
   post_build:
     commands:
       - echo "Finding appropriate deployment environment"
