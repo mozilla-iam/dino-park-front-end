@@ -39,12 +39,10 @@ const PROFILE = gql`query ($userId: String!) {
       value
     },
     pgpPublicKeys {
-      key,
-      value
+      values
     },
     sshPublicKeys {
-      key,
-      value
+      values
     },
     tags {
       values
