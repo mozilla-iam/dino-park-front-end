@@ -58,31 +58,31 @@
         <h2>Contact</h2>
       </header>
       <h3 class="visually-hidden">Contact options</h3>
-      <div v-if="pgpPublicKeys || sshPublicKeys">
+      <div v-if="pgpPublicKeys.values || sshPublicKeys.values">
         <h3>Keys</h3>
-        <template v-if="pgpPublicKeys">
+        <template v-if="pgpPublicKeys.values">
           <h4 class="visually-hidden">PGP</h4>
-          <Key v-for="pgp in pgpPublicKeys"
+          <Key v-for="pgp in pgpPublicKeys.values"
                type="PGP"
                :title="pgp.key"
                :content="pgp.value"
                :key="pgp.key" />
         </template>
-        <template v-if="sshPublicKeys">
+        <template v-if="sshPublicKeys.values">
           <h4 class="visually-hidden">SSH</h4>
           <Key
-            v-for="ssh in sshPublicKeys"
+            v-for="ssh in sshPublicKeys.values"
             type="SSH"
             :title="ssh.key"
             :content="ssh.value"
             :key="ssh.key" />
         </template>
       </div>
-      <template v-if="preferredLanguage && preferredLanguage.length > 0">
+      <template v-if="preferredLanguage.values && preferredLanguage.values.length > 0">
         <div class="languages">
           <h3>Languages</h3>
           <Tag
-            v-for="(language, index) in preferred_languages.values"
+            v-for="(language, index) in preferredLanguage.values"
             :tag="language" :key="`language-${index}`" >
           </Tag>
         </div>
@@ -175,8 +175,8 @@ export default {
     description: Object,
     created: Object,
     lastModified: Object,
-    pgpPublicKeys: Array,
-    sshPublicKeys: Array,
+    pgpPublicKeys: Object,
+    sshPublicKeys: Object,
     tags: Object,
     preferredLanguage: Object,
     userId: Object,
