@@ -78,7 +78,7 @@
             :key="ssh.key" />
         </template>
       </div>
-      <template v-if="preferredLanguage.values && preferredLanguage.values.length > 0">
+      <template v-if="preferredLanguage && preferredLanguage.values && preferredLanguage.values.length > 0">
         <div class="languages">
           <h3>Languages</h3>
           <Tag
