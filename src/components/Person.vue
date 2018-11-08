@@ -1,7 +1,7 @@
 <template>
   <div :class="'person' + ( modifier ? ' ' + modifier : '')">
     <router-link :to="{ name: 'Profile', params: { userId: userId.value } }">
-      <img v-if="picture" :src="picture.value" class="person__photo" alt="" aria-hidden="true" role="presentation" :title="firstName.value + ' ' + lastName.value">
+      <Picture :picture="picture.value" :username="userId.value" cls="person__photo" :title="firstName.value + ' ' + lastName.value" size="100"></Picture>
     </router-link>
     <div class="person__name-title">
       <div class="person__name">
@@ -22,6 +22,8 @@
 </template>
 
 <script>
+import Picture from '@/components/Picture.vue';
+
 export default {
   name: 'Person',
   props: {
@@ -33,6 +35,9 @@ export default {
     officeLocation: Object,
     funTitle: Object,
     picture: Object,
+  },
+  components: {
+    Picture,
   },
 };
 </script>
