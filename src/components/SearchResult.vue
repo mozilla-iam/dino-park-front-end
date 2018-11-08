@@ -1,6 +1,6 @@
 <template>
   <li class="search-result">
-    <img v-if="picture" :src="picture" alt="" class="search-result__image">
+    <Picture :picture="picture" :username="user_id" cls="search-result__image" size="40"></Picture>
     <router-link :to="{ name: 'Profile', params: { userId: user_id } }" class="search-result__profile-link">
       <div class="search-result__name">{{ first_name }} {{ last_name }}</div>
       <div class="search-result__title">{{ fun_title }}</div>
@@ -13,6 +13,8 @@
 </template>
 
 <script>
+import Picture from '@/components/Picture.vue';
+
 export default {
   name: 'SearchResult',
   props: {
@@ -21,6 +23,9 @@ export default {
     fun_title: String,
     user_id: String,
     picture: String,
+  },
+  components: {
+    Picture,
   },
 };
 </script>
