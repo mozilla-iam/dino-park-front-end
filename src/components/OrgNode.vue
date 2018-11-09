@@ -1,7 +1,7 @@
 <template>
   <li :id="data.user_id" :class="'org-node' + ( data.user_id === this.$route.params.userId ? ' org-node--current' : '')">
     <router-link :to="{ name: 'Orgchart', params: { userId: data.user_id } }" :id="`org-node-${prefix}`">
-      <img class="org-node__photo" :src="data.picture" alt="" role="presentation" aria-hidden="true">
+      <UserPicture :picture="data.picture" :username="data.user_id" cls="org-node__photo" size="40"></UserPicture>
       <span class="org-node__name">{{ data.first_name }} {{ data.last_name }}</span>
       <span class="org-node__title">{{ data.title }}</span>
     </router-link>
@@ -23,6 +23,7 @@
 
 <script>
 import ShowMore from '@/components/functional/ShowMore.vue';
+import UserPicture from '@/components/UserPicture.vue';
 
 export default {
   name: 'OrgNode',
@@ -34,6 +35,7 @@ export default {
   },
   components: {
     ShowMore,
+    UserPicture,
   },
   mounted() {
     if (this.data.user_id === this.$route.params.userId) {

@@ -1,7 +1,7 @@
 <template>
   <div class="profile-preview" ref="profilePreviewElement" tabindex="-1">
     <div class="profile-preview__image">
-      <img v-if="picture" :src="picture.value" alt="" />
+      <UserPicture :picture="picture.value" :username="userId.value" size="100"></UserPicture>
     </div>
     <ProfileName :firstName="firstName.value" :lastName="lastName.value" :pronouns="pronouns.value"></ProfileName>
     <ProfileTitle :businessTitle="businessTitle.value || null" :funTitle="funTitle.value"></ProfileTitle>
@@ -61,6 +61,7 @@
 
 <script>
 import ContactMe from '@/components/ContactMe.vue';
+import UserPicture from '@/components/UserPicture.vue';
 import ProfileName from '@/components/ProfileName.vue';
 import ProfileTitle from '@/components/ProfileTitle.vue';
 import ProfileTeamLocation from '@/components/ProfileTeamLocation.vue';
@@ -88,6 +89,7 @@ export default {
   },
   components: {
     ContactMe,
+    UserPicture,
     ProfileName,
     ProfileTitle,
     ProfileTeamLocation,
