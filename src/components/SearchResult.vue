@@ -1,6 +1,6 @@
 <template>
   <li class="search-result">
-    <Picture :picture="picture" :username="user_id" cls="search-result__image" size="40"></Picture>
+    <UserPicture :picture="picture" :username="user_id" cls="search-result__image" size="40"></UserPicture>
     <router-link :to="{ name: 'Profile', params: { userId: user_id } }" class="search-result__profile-link">
       <div class="search-result__name">{{ first_name }} {{ last_name }}</div>
       <div class="search-result__title">{{ fun_title }}</div>
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import Picture from '@/components/Picture.vue';
+import UserPicture from '@/components/UserPicture.vue';
 
 export default {
   name: 'SearchResult',
@@ -25,7 +25,7 @@ export default {
     picture: String,
   },
   components: {
-    Picture,
+    UserPicture,
   },
 };
 </script>

@@ -3,7 +3,7 @@
     <div class="user-menu__header">
       <button class="user-menu__close-avatar" type="button" @click="sendCloseEvent()">
         <span class="visually-hidden">Close user menu</span>
-        <Picture :picture="picture.value" :username="userId.value" cls="''" size="40"></Picture>
+        <UserPicture :picture="picture.value" :username="userId.value" size="40"></UserPicture>
       </button>
       <div class="user-menu__name">
         <span class="user-menu__header-name">{{ firstName.value }} {{ lastName.value }}</span>
@@ -63,7 +63,7 @@
 
 <script>
 import Icon from '@/components/Icon.vue';
-import Picture from '@/components/Picture.vue';
+import UserPicture from '@/components/UserPicture.vue';
 
 export default {
   name: 'UserMenu',
@@ -96,7 +96,7 @@ export default {
   },
   components: {
     Icon,
-    Picture,
+    UserPicture,
   },
 };
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div :class="'person' + ( modifier ? ' ' + modifier : '')">
     <router-link :to="{ name: 'Profile', params: { userId: userId.value } }">
-      <Picture :picture="picture.value" :username="userId.value" cls="person__photo" :title="firstName.value + ' ' + lastName.value" size="100"></Picture>
+      <UserPicture :picture="picture.value" :username="userId.value" cls="person__photo" :title="firstName.value + ' ' + lastName.value" size="100"></UserPicture>
     </router-link>
     <div class="person__name-title">
       <div class="person__name">
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import Picture from '@/components/Picture.vue';
+import UserPicture from '@/components/UserPicture.vue';
 
 export default {
   name: 'Person',
@@ -37,7 +37,7 @@ export default {
     picture: Object,
   },
   components: {
-    Picture,
+    UserPicture,
   },
 };
 </script>

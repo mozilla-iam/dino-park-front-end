@@ -26,7 +26,7 @@
                 <UserMenu v-bind="data.profile"></UserMenu>
               </template>
               <template slot="button-content">
-                <Picture :picture="data.profile.picture.value" :username="data.profile.userId.value" cls="''" size="40"></Picture>
+                <UserPicture :picture="data.profile.picture.value" :username="data.profile.userId.value" size="40"></UserPicture>
               </template>
             </ShowMore>
           </template>
@@ -45,7 +45,7 @@ import SearchForm from '@/components/SearchForm.vue';
 import ShowMore from '@/components/functional/ShowMore.vue';
 import UserMenu from '@/components/UserMenu.vue';
 import Error from '@/components/Error.vue';
-import Picture from '@/components/Picture.vue';
+import UserPicture from '@/components/UserPicture.vue';
 import { USER_MENU_PROFILE } from '@/queries/profile';
 
 export default {
@@ -55,7 +55,7 @@ export default {
     ShowMore,
     UserMenu,
     Error,
-    Picture,
+    UserPicture,
   },
   methods: {
     closeUserMenu() {
