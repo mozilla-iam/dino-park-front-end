@@ -25,7 +25,7 @@ function sha256(str) {
 }
 
 export default {
-  name: 'Picture',
+  name: 'UserPicture',
   props: {
     size: String,
     picture: String,
@@ -35,15 +35,15 @@ export default {
   },
   watch: {
     username() {
-      this.updatePicture();
+      this.updateUserPicture();
     },
   },
   data() {
-    this.updatePicture();
+    this.updateUserPicture();
     return { src: this.picture };
   },
   methods: {
-    updatePicture() {
+    updateUserPicture() {
       if (this.picture === null) {
         sha256(this.username).then((hash) => {
           const identicon = new Identicon(hash, { size: this.size, format: 'svg' });

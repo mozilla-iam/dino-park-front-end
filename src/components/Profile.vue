@@ -3,7 +3,7 @@
     <section class="profile__section profile__intro">
       <div class="profile__intro-photo">
         <div class="profile__headshot">
-          <Picture :picture="picture.value" :username="userId.value" size="230"></Picture>
+          <UserPicture :picture="picture.value" :username="userId.value" size="230"></UserPicture>
         </div>
         <div class="hide-mobile">
           <ContactMe></ContactMe>
@@ -142,7 +142,7 @@ import Meta from '@/components/Meta.vue';
 import MetaList from '@/components/MetaList.vue';
 import Modal from '@/components/functional/Modal.vue';
 import Person from '@/components/Person.vue';
-import Picture from '@/components/Picture.vue';
+import UserPicture from '@/components/UserPicture.vue';
 import ProfileName from '@/components/ProfileName.vue';
 import ProfileTitle from '@/components/ProfileTitle.vue';
 import ProfileTeamLocation from '@/components/ProfileTeamLocation.vue';
@@ -197,7 +197,7 @@ export default {
     MetaList,
     Modal,
     Person,
-    Picture,
+    UserPicture,
     ProfileName,
     ProfileNav,
     ProfileTeamLocation,
