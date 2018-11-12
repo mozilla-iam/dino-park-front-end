@@ -9,9 +9,7 @@
             :userId="{ value: manager.userId }"
             :firstName="{ value: manager.firstName }"
             :lastName="{ value: manager.lastName }"
-            :title="{ value: manager.title }"
             :funTitle="{ value: manager.funTitle }"
-            :location="{ value: manager.location }"
           />
     </div>
     <div v-if="directs.length > 0" class="reporting-structure__manages">
@@ -24,9 +22,7 @@
             :userId="{ value: direct.userId }"
             :firstName="{ value: direct.firstName }"
             :lastName="{ value: direct.lastName }"
-            :title="{ value: direct.title }"
             :funTitle="{ value: direct.funTitle }"
-            :location="{ value: direct.location }"
             />
     </div>
   </div>
