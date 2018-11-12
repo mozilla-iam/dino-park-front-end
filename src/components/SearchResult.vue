@@ -1,6 +1,6 @@
 <template>
   <li class="search-result">
-    <UserPicture :picture="picture" :username="user_id" cls="search-result__image" :size="40"></UserPicture>
+    <UserPicture :picture="picture" :username="user_id" cls="search-result__image" :size="40" dinoType="Staff"></UserPicture>
     <router-link :to="{ name: 'Profile', params: { userId: user_id } }" class="search-result__profile-link">
       <div class="search-result__name">{{ first_name }} {{ last_name }}</div>
       <div class="search-result__title">{{ fun_title }}</div>
@@ -41,12 +41,8 @@ export default {
     align-items: center;
     position: relative;
   }
-    .search-result__image {
-      width: 3em;
-      height: 3em;
+    .search-result .user-picture {
       margin-right: 1em;
-      border-radius: var(--imageRadius);
-      position: relative;
       z-index: 1;
     }
     .search-result__profile-link {
