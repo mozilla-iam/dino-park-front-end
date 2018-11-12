@@ -1,10 +1,7 @@
 <template>
   <div :class="'person' + ( modifier ? ' ' + modifier : '')">
     <router-link :to="{ name: 'Profile', params: { userId: userId.value } }" aria-hidden="true" role="presentation">
-      <div class="person__photo">
-      <UserPicture :picture="picture.value" :username="userId.value" cls="person__photo" :title="firstName.value + ' ' + lastName.value" size="100"></UserPicture>
-        <DinoType type="Staff" size="small" />
-      </div>
+      <UserPicture :picture="picture.value" :username="userId.value" :title="firstName.value + ' ' + lastName.value" :size="40" dinoType="Staff" />
     </router-link>
     <div class="person__name-title">
       <div class="person__name">
@@ -89,16 +86,6 @@ export default {
     .person__preferred-title {
       color: var(--gray-50);
     }
-    .person__photo {
-      position: absolute;
-      top: 1em;
-      left: -1em;
-      width: 2.25em;
-      height: 2.25em;
-    }
-      .person__photo img {
-        border-radius: var(--imageRadius);
-      }
     .person__location-label {
       color: var(--gray-50);
     }
@@ -139,8 +126,7 @@ export default {
     background-color: transparent;
     display: flex;
   }
-    .person--borderless .person__photo {
-      position: static;
+    .person--borderless .user-picture {
       align-self: center;
       margin-right: 1em;
     }

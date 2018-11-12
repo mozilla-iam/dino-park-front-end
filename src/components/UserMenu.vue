@@ -3,7 +3,7 @@
     <div class="user-menu__header">
       <button class="user-menu__close-avatar" type="button" @click="sendCloseEvent()">
         <span class="visually-hidden">Close user menu</span>
-        <UserPicture :picture="picture.value" :username="userId.value" size="40"></UserPicture>
+        <UserPicture :picture="picture.value" :username="userId.value" :size="40"></UserPicture>
       </button>
       <div class="user-menu__name">
         <span class="user-menu__header-name">{{ firstName.value }} {{ lastName.value }}</span>
@@ -149,11 +149,8 @@ export default {
         border: 1px dotted currentColor;
       }
       .user-menu__close-avatar {
-        margin-right: 1.5em;
+        margin-right: 1em;
       }
-        .user-menu__close-avatar img {
-          min-width: 2.75em;
-        }
       .user-menu__close-button {
         margin-left: auto;
       }

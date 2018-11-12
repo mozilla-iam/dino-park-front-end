@@ -1,7 +1,7 @@
 <template>
   <div class="profile-preview" ref="profilePreviewElement" tabindex="-1">
     <div class="profile-preview__image">
-      <UserPicture :picture="picture.value" :username="userId.value" size="100"></UserPicture>
+      <UserPicture :picture="picture.value" :username="userId.value" :size="100" dinoType="Staff" />
     </div>
     <ProfileName :firstName="firstName.value" :lastName="lastName.value" :pronouns="pronouns.value"></ProfileName>
     <ProfileTitle :businessTitle="businessTitle.value || null" :funTitle="funTitle.value"></ProfileTitle>
@@ -103,7 +103,9 @@ export default {
   },
   mounted() {
     this.lastActive = document.activeElement;
-    this.$refs.profilePreviewElement.focus();
+    if (this.$refs.profilePreviewElement) {
+      this.$refs.profilePreviewElement.focus();
+    }
   },
 };
 </script>

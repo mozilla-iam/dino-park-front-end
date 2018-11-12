@@ -69,6 +69,7 @@ export default {
 <style>
   .show-more {
     position: relative;
+    font: inherit;
   }
   .show-more--transition .show-more__overflow--enter-active,
   .show-more--transition  .show-more__overflow--leave-active {
@@ -79,8 +80,8 @@ export default {
     opacity: 0;
     z-index: 1;
   }
-    .show-more svg,
-    .show-more img {
+    .show-more__button > svg,
+    .show-more__button > img {
       margin-right: 1.5em;
     }
 </style>

@@ -1,9 +1,13 @@
 <template>
-  <img :class="cls" :src="src" alt="" :width="size" :title="title" role="presentation" aria-hidden="true">
+  <div :class="'user-picture' + ( modifier ? ' ' + modifier : '')" :style="`width: ${size}px; height: ${size}px;`">
+    <img :class="cls" :src="src" alt="" :width="size" :title="title" role="presentation" aria-hidden="true">
+    <DinoType v-if="dinoType" :type="dinoType" :size="dinoTypeSize" />
+  </div>
 </template>
 
 
 <script>
+import DinoType from '@/components/DinoType.vue';
 import Identicon from 'identicon.js';
 
 function hex(buffer) {
@@ -27,11 +31,15 @@ function sha256(str) {
 export default {
   name: 'UserPicture',
   props: {
-    size: String,
+    size: Number,
     picture: String,
     username: String,
     title: String,
     cls: String,
+    dinoType: String,
+  },
+  components: {
+    DinoType,
   },
   watch: {
     username() {
@@ -39,18 +47,73 @@ export default {
     },
   },
   data() {
+    this.decidePictureCategory(this.size);
     this.updateUserPicture();
-    return { src: this.picture };
+    return {
+      src: this.picture,
+    };
   },
   methods: {
     updateUserPicture() {
-      if (this.picture === null) {
+      if (this.picture === null || this.picture === '/beta/img/user-demo.png') {
         sha256(this.username).then((hash) => {
           const identicon = new Identicon(hash, { size: this.size, format: 'svg' });
           this.src = `data:image/svg+xml;base64,${identicon.toString()}`;
         });
       }
     },
+    decidePictureCategory(size) {
+      if (size <= 40) {
+        this.modifier = 'user-picture--small';
+        this.dinoTypeSize = 'small';
+        return;
+      }
+      if (size <= 100) {
+        this.modifier = 'user-picture--medium';
+        this.dinoTypeSize = 'medium';
+        return;
+      }
+      this.modifier = 'user-picture--large';
+      this.dinoTypeSize = 'large';
+    }
   },
 };
 </script>
+
+<style>
+.user-picture {
+  position: relative;
+}
+  .user-picture img {
+    border-radius: var(--imageRadius);
+  }
+  .user-picture .dino-type {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    line-height: 1;
+    padding: .25em;
+  }
+  .user-picture--small .dino-type {
+    font-size: .75em;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    border-radius: var(--imageRadius) 0;
+    padding: .25em;
+  }
+  .user-picture--medium .dino-type {
+    font-size: .75em;
+    letter-spacing: .05em;
+    padding: .3em .6em;
+    border-radius: var(--imageRadius) 0;
+  }
+  .user-picture--large .dino-type {
+    left: 50%;
+    right: auto;
+    bottom: -.5em;
+    transform: translate(-50%,25%);
+    font-size: .9em;
+    padding: .75em 2em;
+    border-radius: 2em;
+  }
+</style>

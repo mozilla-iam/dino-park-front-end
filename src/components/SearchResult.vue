@@ -1,12 +1,12 @@
 <template>
   <li class="search-result">
-    <UserPicture :picture="picture" :username="user_id" cls="search-result__image" size="40"></UserPicture>
+    <UserPicture :picture="picture" :username="user_id" cls="search-result__image" :size="40"></UserPicture>
     <router-link :to="{ name: 'Profile', params: { userId: user_id } }" class="search-result__profile-link">
       <div class="search-result__name">{{ first_name }} {{ last_name }}</div>
       <div class="search-result__title">{{ fun_title }}</div>
     </router-link>
     <router-link :to="{ name: 'OrgchartHighlight', params: { userId: user_id } }" class="search-result__orgchart-link">
-      <img src="@/assets/images/org-chart.svg" width="30" alt="" aria-hidden="true" role="presentation" />
+      <img src="@/assets/images/org-chart.svg" width="26" alt="" aria-hidden="true" role="presentation" />
       <span class="visually-hidden">View {{ user_id }} in org chart</span>
     </router-link>
   </li>
