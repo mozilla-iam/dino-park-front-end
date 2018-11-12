@@ -2,7 +2,7 @@
   <div :class="'person' + ( modifier ? ' ' + modifier : '')">
     <router-link :to="{ name: 'Profile', params: { userId: userId.value } }" aria-hidden="true" role="presentation">
       <div class="person__photo">
-      <UserPicture :picture="picture.value" :username="userId.value" cls="person__photo" :title="firstName.value + ' ' + lastName.value" size="100"></UserPicture>
+        <UserPicture :picture="picture.value" :username="userId.value" cls="person__photo" :title="firstName.value + ' ' + lastName.value" size="100"></UserPicture>
         <DinoType type="Staff" size="small" />
       </div>
     </router-link>
