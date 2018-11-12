@@ -1,7 +1,10 @@
 <template>
   <div :class="'person' + ( modifier ? ' ' + modifier : '')">
-    <router-link :to="{ name: 'Profile', params: { userId: userId.value } }">
+    <router-link :to="{ name: 'Profile', params: { userId: userId.value } }" aria-hidden="true" role="presentation">
+      <div class="person__photo">
       <UserPicture :picture="picture.value" :username="userId.value" cls="person__photo" :title="firstName.value + ' ' + lastName.value" size="100"></UserPicture>
+        <DinoType type="Staff" size="small" />
+      </div>
     </router-link>
     <div class="person__name-title">
       <div class="person__name">
@@ -22,6 +25,7 @@
 </template>
 
 <script>
+import DinoType from '@/components/DinoType.vue';
 import UserPicture from '@/components/UserPicture.vue';
 
 export default {
@@ -37,6 +41,7 @@ export default {
     picture: Object,
   },
   components: {
+    DinoType,
     UserPicture,
   },
 };
@@ -89,9 +94,11 @@ export default {
       top: 1em;
       left: -1em;
       width: 2.25em;
-      max-height: 2.25em;
-      border-radius: var(--imageRadius);
+      height: 2.25em;
     }
+      .person__photo img {
+        border-radius: var(--imageRadius);
+      }
     .person__location-label {
       color: var(--gray-50);
     }
