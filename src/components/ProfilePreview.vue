@@ -116,6 +116,7 @@ export default {
   padding: 2em;
   box-shadow: var(--shadowCard);
   position: relative;
+  border-radius: var(--cardRadius);
 }
   .profile-preview .profile__name {
     display: block;

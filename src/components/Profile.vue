@@ -260,6 +260,7 @@ export default {
   margin: 0 0 2em;
   grid-column: 2 / -1;
   overflow: visible;
+  border-radius: var(--cardRadius);
 }
 @supports (--key: value) {
   .profile__section {

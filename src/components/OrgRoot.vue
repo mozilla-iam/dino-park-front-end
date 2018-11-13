@@ -27,6 +27,7 @@ export default {
     max-width: 40em;
     background-image: linear-gradient(var(--gray-10) 0, var(--gray-10) 50%, #fff 50%);
     background-size: auto 8em;
+    border-radius: var(--cardRadius);
   }
   @media(min-width:50em) {
     .org-root {
