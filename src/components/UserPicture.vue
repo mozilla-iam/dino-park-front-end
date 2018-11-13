@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     updateUserPicture() {
-      if (this.picture === null || this.picture === '/beta/img/user-demo.png') {
+      if (this.picture === null) {
         sha256(this.username).then((hash) => {
           const identicon = new Identicon(hash, { size: this.size, format: 'svg' });
           this.src = `data:image/svg+xml;base64,${identicon.toString()}`;
@@ -75,7 +75,7 @@ export default {
       }
       this.modifier = 'user-picture--large';
       this.dinoTypeSize = 'large';
-    }
+    },
   },
 };
 </script>
