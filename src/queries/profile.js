@@ -1,78 +1,33 @@
 import { gql } from 'apollo-boost';
 
 const PROFILE = gql`query ($userId: String!) {
- profile (userId:$userId) {
-    firstName {
-      value
-    },
-    lastName {
-      value
-    },
-    funTitle {
-      value
-    },
-    picture {
-      value
-    },
-    pronouns {
-      value
-    },
-    alternativeName {
-      value
-    },
-    locationPreference {
-      value
-    },
-    officeLocation {
-      value
-    },
-    description {
-      value
-    },
-    userId {
-      value
-    },
-    created {
-      value
-    },
-    lastModified {
-      value
-    },
-    pgpPublicKeys {
-      values
-    },
-    sshPublicKeys {
-      values
-    },
-    tags {
-      values
-    },
-    preferredLanguage {
-      values
-    },
-    businessTitle {
-      value
-    },
-    team {
-      value
-    },
-    entity {
-      value
-    },
-    locationPreference {
-      value
-    },
-    timezone {
-      value
-    },
-    workerType {
-      value
-    },
-    wprDeskNumber {
-      value
-    },
-    costCenter {
-      value
+ profile (username:$username) {
+    firstName,
+    lastName,
+    username,
+    funTitle,
+    picture,
+    pronouns,
+    alternativeName,
+    location,
+    officeLocation,
+    description,
+    dinoId,
+    created,
+    lastModified,
+    pgpPublicKeys,
+    sshPublicKeys,
+    tags,
+    preferredLanguage,
+    timezone,
+    staffInformation {
+      staff,
+      team,
+      title,
+      workerType,
+      wprDeskNumber,
+      costCenter,
+      officeLocation,
     },
     manager {
       userId
@@ -93,82 +48,39 @@ const PROFILE = gql`query ($userId: String!) {
       location
     },
     accessInformation {
-      mozilliansorg {
-        values
-      }
+      mozilliansorg,
     },
   }
 }`;
 
 const PREVIEW_PROFILE = gql`query ($previewUserId: String!) {
  profile (userId:$previewUserId) {
-    firstName {
-      value
-    },
-    lastName {
-      value
-    },
-    funTitle {
-      value
-    },
-    picture {
-      value
-    },
-    pronouns {
-      value
-    },
-    alternativeName {
-      value
-    },
-    locationPreference {
-      value
-    },
-    officeLocation {
-      value
-    },
-    description {
-      value
-    },
-    userId {
-      value
-    },
-    created {
-      value
-    },
-    businessTitle {
-      value
-    },
-    team {
-      value
-    },
-    entity {
-      value
-    },
-    locationPreference {
-      value
-    },
-    timezone {
-      value
-    },
+    firstName,
+    lastName,
+    funTitle,
+    picture,
+    pronouns,
+    alternativeName,
+    locationPreference,
+    officeLocation,
+    description,
+    userId,
+    created,
+    businessTitle,
+    team,
+    entity,
+    locationPreference,
+    timezone,
   }
 }`;
 const USER_MENU_PROFILE = gql`query {
  profile {
-    firstName {
-      value
-    },
-    lastName {
-      value
-    },
-    picture {
-      value
-    },
-    userId {
-      value
-    },
-    primaryEmail {
-      value
-    },
+    firstName,
+    lastName,
+    picture,
+    dinoId,
+    username,
+    primaryEmail,
   }
 }`;
 
