@@ -64,18 +64,14 @@ export default {
     },
     decidePictureCategory(size) {
       if (size <= 40) {
-        this.modifier = 'user-picture--small';
         this.dinoTypeSize = 'small';
-        return;
-      }
-      if (size <= 100) {
-        this.modifier = 'user-picture--medium';
+      } else if (size <= 100) {
         this.dinoTypeSize = 'medium';
-        return;
+      } else {
+        this.dinoTypeSize = 'large';
       }
-      this.modifier = 'user-picture--large';
-      this.dinoTypeSize = 'large';
-    }
+      this.modifier = `user-picture--${this.dinoTypeSize}`;
+    },
   },
 };
 </script>
