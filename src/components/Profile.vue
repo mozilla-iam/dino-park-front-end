@@ -3,7 +3,7 @@
     <section class="profile__section profile__intro">
       <div class="profile__intro-photo">
         <div class="profile__headshot">
-          <UserPicture :picture="picture.value" :username="userId.value" size="230"></UserPicture>
+          <UserPicture :picture="picture.value" :username="userId.value" :size="230" dinoType="Staff"></UserPicture>
         </div>
         <div class="hide-mobile">
           <ContactMe></ContactMe>
@@ -336,7 +336,7 @@ export default {
     margin-left: 0;
   }
   .profile__intro-photo .profile__headshot {
-    margin: 0 auto 1em;
+    margin: 0 auto 3em;
   }
 }
 

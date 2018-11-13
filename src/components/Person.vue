@@ -1,19 +1,17 @@
 <template>
   <div :class="'person' + ( modifier ? ' ' + modifier : '')">
+    <UserPicture :picture="picture.value" :username="userId.value" :title="firstName.value + ' ' + lastName.value" :size="40" dinoType="Staff" />
     <router-link :to="{ name: 'Profile', params: { userId: userId.value } }">
-      <UserPicture :picture="picture.value" :username="userId.value" cls="person__photo" :title="firstName.value + ' ' + lastName.value" size="100"></UserPicture>
+      <div class="person__name-title">
+        <div class="person__name">
+            {{ firstName.value }} {{ lastName.value }}
+        </div>
+        <div class="person__preferred-title">
+          <template v-if="funTitle">{{ funTitle.value }}</template>
+          <template v-else-if="businessTitle">{{ "businessTitle.value" }}</template>
+        </div>
+      </div>
     </router-link>
-    <div class="person__name-title">
-      <div class="person__name">
-        <router-link :to="{ name: 'Profile', params: { userId: userId.value } }">
-          {{ firstName.value }} {{ lastName.value }}
-        </router-link>
-      </div>
-      <div class="person__preferred-title">
-        <template v-if="funTitle">{{ funTitle.value }}</template>
-        <template v-else-if="businessTitle">{{ "businessTitle.value" }}</template>
-      </div>
-    </div>
     <div v-if="officeLocation" class="person__location">
       <div v-if="modifier === 'person--wide'" class="person__location-label">Location</div>
       {{ officeLocation.value }}
@@ -22,6 +20,7 @@
 </template>
 
 <script>
+import DinoType from '@/components/DinoType.vue';
 import UserPicture from '@/components/UserPicture.vue';
 
 export default {
@@ -37,6 +36,7 @@ export default {
     picture: Object,
   },
   components: {
+    DinoType,
     UserPicture,
   },
 };
@@ -59,11 +59,11 @@ export default {
     .person__name {
       font-weight: 700;
     }
-      .person__name a {
+      .person a {
         color: inherit;
         text-decoration: none;
       }
-      .person__name a::after {
+      .person a::after {
         content: '';
         width: 1em;
         height: 1em;
@@ -75,22 +75,14 @@ export default {
         height: 100%;
         border: 1px solid transparent;
       }
-      .person__name a:focus {
+      .person a:focus {
         outline: none;
       }
-      .person__name a:focus::after {
-        border: 1px solid var(--blue-60);
+      .person a:focus::after {
+        outline: 1px solid var(--blue-60);
       }
     .person__preferred-title {
       color: var(--gray-50);
-    }
-    .person__photo {
-      position: absolute;
-      top: 1em;
-      left: -1em;
-      width: 2.25em;
-      max-height: 2.25em;
-      border-radius: var(--imageRadius);
     }
     .person__location-label {
       color: var(--gray-50);
@@ -132,8 +124,7 @@ export default {
     background-color: transparent;
     display: flex;
   }
-    .person--borderless .person__photo {
-      position: static;
+    .person--borderless .user-picture {
       align-self: center;
       margin-right: 1em;
     }
@@ -141,13 +132,19 @@ export default {
     display: inline-block;
     vertical-align: top;
     margin-bottom: .5em;
+    margin-right: 1em;
   }
     .person--avatar-only + .person--avatar-only {
       margin-top: 0;
     }
     .person--avatar-only .person__name-title {
       position: absolute;
-      left: -9999em;
-      top: -9999em;
+      width: 1px;
+      height: 1px;
+      clip: rect(1px, 1px, 1px, 1px);
+      overflow: hidden;
+    }
+    .person--avatar-only .user-picture {
+      margin-right: 0;
     }
 </style>

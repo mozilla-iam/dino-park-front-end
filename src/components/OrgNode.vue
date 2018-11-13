@@ -1,7 +1,7 @@
 <template>
   <li :id="data.user_id" :class="'org-node' + ( data.user_id === this.$route.params.userId ? ' org-node--current' : '')">
     <router-link :to="{ name: 'Orgchart', params: { userId: data.user_id } }" :id="`org-node-${prefix}`">
-      <UserPicture :picture="data.picture" :username="data.user_id" cls="org-node__photo" size="40"></UserPicture>
+      <UserPicture :picture="data.picture" :username="data.user_id" :size="40" dinoType="Staff"></UserPicture>
       <span class="org-node__name">{{ data.first_name }} {{ data.last_name }}</span>
       <span class="org-node__title">{{ data.title }}</span>
     </router-link>
@@ -89,7 +89,7 @@ export default {
   text-decoration: none;
   color: inherit;
   padding-left: 2em;
-  padding-left: calc((var(--nodeLevel) + 2) * .95em);
+  padding-left: calc((var(--nodeLevel) + 2) * .85em);
   border-left: 5px solid transparent;
 }
 .org-node--current > a,
@@ -140,12 +140,8 @@ export default {
   position: absolute;
   left: -9999em;
 }
-.org-node__photo,
-.show-more .org-node__photo {
-  width: 2.25em;
-  border-radius: var(--imageRadius);
+.org-node .user-picture {
   float: left;
-  margin-top: 0.125em;
-  margin-right: 1em;
+  margin-right: .75em;
 }
 </style>

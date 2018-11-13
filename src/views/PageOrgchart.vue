@@ -132,7 +132,7 @@ export default {
 }
 @media (min-width: 50em) {
   .org-chart {
-    padding: 0 2em;
+    padding: 2em;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto 1fr;
