@@ -1,7 +1,7 @@
 <template>
   <li :id="data.user_id" :class="'org-node' + ( data.user_id === this.$route.params.userId ? ' org-node--current' : '')">
     <router-link :to="{ name: 'Orgchart', params: { userId: data.user_id } }" :id="`org-node-${prefix}`">
-      <UserPicture :picture="data.picture" :username="data.user_id" :size="40"></UserPicture>
+      <UserPicture :picture="data.picture" :username="data.user_id" :size="40" dinoType="Staff"></UserPicture>
       <span class="org-node__name">{{ data.first_name }} {{ data.last_name }}</span>
       <span class="org-node__title">{{ data.title }}</span>
     </router-link>
