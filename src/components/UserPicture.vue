@@ -95,7 +95,7 @@ export default {
     height: 2.5em;
   }
     .user-picture--small .dino-type {
-      font-size: .65em;
+      font-size: .75em;
       text-transform: uppercase;
       letter-spacing: .1em;
       border-radius: var(--imageRadius) 0;
@@ -106,7 +106,7 @@ export default {
     height: 6.25em;
   }
     .user-picture--medium .dino-type {
-      font-size: .75em;
+      font-size: .9em;
       letter-spacing: .05em;
       padding: .3em .6em .3em 1.2em;
       border-radius: 1em 0 var(--imageRadius);
@@ -116,7 +116,6 @@ export default {
     height: 6.25em;
   }
     .user-picture--large .dino-type {
-      font-size: .75em;
       letter-spacing: .05em;
       padding: .3em .6em .3em 1.2em;
       border-radius: 1em 0 var(--imageRadius);
@@ -131,7 +130,6 @@ export default {
         right: auto;
         bottom: -.5em;
         transform: translate(-50%,25%);
-        font-size: .9em;
         padding: .75em 2em;
         border-radius: 2em;
       }

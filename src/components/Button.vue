@@ -19,10 +19,7 @@ export default {
   text-decoration: none;
   padding: 1em 2.5em;
   display: block;
-  font-weight: 700;
-  font-size: .75em;
   font-family: inherit;
-  text-transform: uppercase;
   letter-spacing: 0.05em;
   border-radius: 2.5em;
   background-color: var(--blue-60);
@@ -94,8 +91,7 @@ export default {
 
 .button--small {
   padding: .5em 1.5em;
-  font-weight: 400;
-  text-transform: none;
+  font-size: .9em;
 }
 
 .button--full-width {

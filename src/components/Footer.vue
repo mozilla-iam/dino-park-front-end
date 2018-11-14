@@ -32,7 +32,6 @@ export default {
       display: inline-block;
       vertical-align: middle;
       padding: 1.5em 2em;
-      font-size: .9em;
       line-height: 1;
     }
     .footer__link:hover {
