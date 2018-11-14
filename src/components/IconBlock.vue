@@ -26,8 +26,10 @@ export default {
   list-style: none;
   display: flex; /* avoid breaking between columns */
   flex-direction: column;
+  justify-content: center;
   margin-bottom: 1em;
   padding-left: 1.5em;
+  min-height: 3.5em;
   position: relative;
 }
   .icon-block__heading {
