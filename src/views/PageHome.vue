@@ -2,7 +2,7 @@
   <main class="container home">
     <div class="intro">
       <h1>DinoPark</h1>
-      <p>Welcome to the Mozilla directory</p>
+      <p>Welcome to the new Mozilla directory</p>
       <p>This site lists all core individuals and groups that participate in the Mozilla Project. We call ourselves Mozillians and this is where we connect and share with one another.</p>
     </div>
   </main>
