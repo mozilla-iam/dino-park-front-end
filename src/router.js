@@ -17,7 +17,7 @@ const router = new Router({
       component: PageHome,
     },
     {
-      path: '/p/:userId',
+      path: '/p/:username',
       name: 'Profile',
       component: PageProfile,
       props: true,

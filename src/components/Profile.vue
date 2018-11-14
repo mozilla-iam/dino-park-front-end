@@ -3,30 +3,30 @@
     <section class="profile__section profile__intro">
       <div class="profile__intro-photo">
         <div class="profile__headshot">
-          <UserPicture :picture="picture.value" :username="userId.value" :size="230" dinoType="Staff"></UserPicture>
+          <UserPicture :picture="picture" :username="username" :size="230" :dinoType="staffInformation.staff ? 'Staff' : 'Mozillian'"></UserPicture>
         </div>
         <div class="hide-mobile">
-          <ContactMe></ContactMe>
+          <ContactMe :primaryEmail="primaryEmail" :phoneNumbers="phoneNumbers"></ContactMe>
         </div>
       </div>
       <div class="profile__intro-main">
-        <ProfileName :firstName="firstName.value" :lastName="lastName.value" :pronouns="pronouns.value"></ProfileName>
-        <ProfileTitle :businessTitle="businessTitle.value || null" :funTitle="funTitle.value || null"></ProfileTitle>
+        <ProfileName :firstName="firstName" :lastName="lastName" :pronouns="pronouns"></ProfileName>
+        <ProfileTitle :businessTitle="staffInformation.title" :funTitle="funTitle"></ProfileTitle>
         <div class="hide-desktop">
           <ContactMe></ContactMe>
         </div>
-        <ProfileTeamLocation :team="team.value || null" :entity="entity.value || null" :locationPreference="locationPreference.value || null" :officeLocation="officeLocation.value || null" :timezone="timezone.value || null"></ProfileTeamLocation>
+        <ProfileTeamLocation :team="staffInformation.team" :entity="'Mozilla'" :location="location" :officeLocation="staffInformation.officeLocation" :timezone="timezone"></ProfileTeamLocation>
         <h2 class="visually-hidden">About</h2>
         <div class="profile__description">
-          <p>{{ description.value }}</p>
+          <p>{{ description }}</p>
         </div>
         <ShowMore buttonText="Show more" alternateButtonText="Show less" :expanded="false" buttonClass="button button--text-only button--less-padding" :transition="true">
           <template slot="overflow">
             <MetaList>
               <h3 class="visually-hidden">Meta</h3>
-              <Meta metaKey="Worker type" :metaValue="workerType.value" />
-              <Meta metaKey="Desk number" :metaValue="wprDeskNumber.value" />
-              <Meta metaKey="Cost centre" :metaValue="costCenter.value" />
+              <Meta metaKey="Worker type" :metaValue="staffInformation.workerType" />
+              <Meta metaKey="Desk number" :metaValue="staffInformation.wprDeskNumber" />
+              <Meta metaKey="Cost centre" :metaValue="staffInformation.costCenter" />
             </MetaList>
           </template>
           <template slot="icon-expanded">
@@ -43,7 +43,7 @@
       <a id="relations" class="profile__anchor"></a>
       <header class="profile__section-header">
         <h2>Relations</h2>
-        <router-link :to="{ name: 'OrgchartHighlight', params: { userId: userId.value } }" class="button button--secondary button--small">
+        <router-link :to="{ name: 'OrgchartHighlight', params: { username } }" class="button button--secondary button--small">
           Org Chart
           <svg
             aria-hidden="true"
@@ -79,17 +79,17 @@
           <a href="mailto:psackl@mozilla.com">psackl@mozilla.com</a>
         </IconBlock>
       </IconBlockList>
-      <div v-if="pgpPublicKeys.values || sshPublicKeys.values">
+      <div v-if="pgpPublicKeys || sshPublicKeys">
         <h3>Keys</h3>
         <template v-if="pgpPublicKeys.values">
           <h4 class="visually-hidden">PGP</h4>
-          <Key v-for="pgp in pgpPublicKeys.values"
+          <Key v-for="pgp in pgpPublicKeys"
                type="PGP"
                :title="pgp.key"
                :content="pgp.value"
                :key="pgp.key" />
         </template>
-        <template v-if="sshPublicKeys.values">
+        <template v-if="sshPublicKeys">
           <h4 class="visually-hidden">SSH</h4>
           <Key
             v-for="ssh in sshPublicKeys.values"
@@ -99,11 +99,11 @@
             :key="ssh.key" />
         </template>
       </div>
-      <template v-if="preferredLanguage && preferredLanguage.values && preferredLanguage.values.length > 0">
+      <template v-if="languages && languages.length > 0">
         <div class="languages">
           <h3>Languages</h3>
           <Tag
-            v-for="(language, index) in preferredLanguage.values"
+            v-for="(language, index) in languages"
             :tag="language" :key="`language-${index}`" >
           </Tag>
         </div>
@@ -149,7 +149,7 @@
         <h2>Access Groups</h2>
       </header>
       <IconBlockList modifier="icon-block-list--multi-col">
-        <IconBlock v-for="(group, index) in accessInformation.mozilliansorg.values" :key="`group-${index}`" icon="dino">
+        <IconBlock v-for="(group, index) in accessInformation.mozilliansorg" :key="`group-${index}`" icon="group">
           {{ group }}
         </IconBlock>
       </IconBlockList>
@@ -159,7 +159,7 @@
       <header class="profile__section-header">
         <h2>Tags</h2>
       </header>
-      <Tag v-for="(tag, index) in tags.values" :tag="tag" :key="`tag-${index}`" />
+      <Tag v-for="(tag, index) in tags" :tag="tag" :key="`tag-${index}`" />
     </section>
   </main>
 </template>
@@ -192,28 +192,25 @@ import EditPersonalInfo from '@/components/forms/EditPersonalInfo.vue';
 export default {
   name: 'Profile',
   props: {
-    businessTitle: Object,
-    team: Object,
-    timezone: Object,
-    entity: Object,
-    workerType: Object,
-    wprDeskNumber: Object,
-    costCenter: Object,
-    firstName: Object,
-    lastName: Object,
-    pronouns: Object,
-    funTitle: Object,
-    picture: Object,
-    locationPreference: Object,
-    officeLocation: Object,
-    description: Object,
+    staffInformation: Object,
+    username: String,
+    primaryEmail: String,
+    phoneNumbers: Array,
+    timezone: String,
+    firstName: String,
+    lastName: String,
+    pronouns: String,
+    funTitle: String,
+    picture: String,
+    location: String,
+    description: String,
     created: Object,
     lastModified: Object,
-    pgpPublicKeys: Object,
-    sshPublicKeys: Object,
+    pgpPublicKeys: Array,
+    sshPublicKeys: Array,
     tags: Object,
-    preferredLanguage: Object,
-    userId: Object,
+    languages: Array,
+    userId: String,
     manager: Object,
     directs: Array,
     accessInformation: Object,

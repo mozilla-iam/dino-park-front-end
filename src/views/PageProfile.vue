@@ -1,5 +1,5 @@
 <template>
-  <ApolloQuery :query="profileQuery" :variables="{ userId }">
+  <ApolloQuery :query="profileQuery" :variables="{ username }">
     <template slot-scope="{ result: { loading, data, error } }">
       <LoadingSpinner v-if="loading"></LoadingSpinner>
       <template v-else-if="error">
@@ -29,7 +29,7 @@ export default {
     LoadingSpinner,
   },
   computed: {
-    userId() { return this.$route.params.userId; },
+    username() { return this.$route.params.username; },
   },
   data() {
     return {

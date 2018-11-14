@@ -1,25 +1,39 @@
 import { gql } from 'apollo-boost';
 
-const PROFILE = gql`query ($userId: String!) {
+const PROFILE = gql`query ($username: String!) {
  profile (username:$username) {
-    firstName,
-    lastName,
-    username,
-    funTitle,
-    picture,
-    pronouns,
     alternativeName,
-    location,
-    officeLocation,
+    created,
     description,
     dinoId,
-    created,
+    firstName,
+    funTitle,
     lastModified,
-    pgpPublicKeys,
-    sshPublicKeys,
+    lastName,
+    location,
+    pgpPublicKeys { 
+      key,
+      value
+    },
+    picture,
+    languages,
+    primaryEmail
+    pronouns,
+    sshPublicKeys {
+      key,
+      value
+    },
     tags,
-    preferredLanguage,
     timezone,
+    uris {
+      key,
+      value
+    }
+    username,
+    phoneNumbers {
+      key,
+      value
+    }
     staffInformation {
       staff,
       team,
