@@ -1,7 +1,7 @@
 <template>
   <div class="key">
     <h5><strong>{{ type }}</strong>: {{ title }}</h5>
-    <pre>{{ content }}</pre>
+    <textarea rows="2" v-model="content"></textarea>
   </div>
 </template>
 
@@ -22,14 +22,26 @@ export default {
   padding: .5em;
 }
 
-.key + .key {
+.key + .key,
+.key + .visually-hidden + .key /* there could be a visually hidden heading between keys, in that case also add space */ {
   margin-top: 1em;
 }
 
-.key h5 strong {
+.key h5 {
   color: var(--gray-50);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: .05em;
   font-weight: 400;
+  margin-bottom: .25em;
+}
+  .key h5 strong {
+    text-transform: uppercase;
+    font-weight: 400;
+  }
+
+.key textarea {
+  font: inherit;
+  width: 100%;
+  border: 0;
+  font-size: .9em;
 }
 </style>
