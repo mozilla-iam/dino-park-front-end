@@ -83,7 +83,6 @@ export default {
       font-weight: 400;
     }
     .checkboxes__item p {
-      font-size: .9em;
       margin-top: .5em;
       margin-bottom: 0;
     }

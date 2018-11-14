@@ -167,7 +167,6 @@ export default {
     .user-menu__header-name,
     .user-menu__header-email,
     .user-menu a span {
-      font-size: .9em; /* we set this on the deepest level possible so that it does not affect the paddings around it */
       margin-right: 2em;
       max-width: 12em;
       overflow: hidden;

@@ -107,7 +107,6 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
   display: block;
-  font-size: 90%;
 }
 .org-node__name {
   font-weight: 700;

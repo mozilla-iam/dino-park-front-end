@@ -355,7 +355,6 @@ export default {
 }
 
 .profile__description {
-  font-size: .875em;
   color: var(--gray-50);
 }
 

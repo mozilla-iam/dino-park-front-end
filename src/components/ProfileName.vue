@@ -29,17 +29,24 @@ export default {
     color: var(--gray-50);
     margin-left: .5em;
   }
+  .profile__user-name,
+  .profile__pronoun {
+    font-size: 1.25em;
+    color: var(--gray-50);
+  }
 @media(min-width:50em) {
   .profile__name {
     text-align: left;
   }
   .profile__name h1 {
     margin-bottom: 0;
+  } 
+  .profile__pronoun {
+    margin-left: 1em;
   }
   .profile__user-name,
   .profile__pronoun {
-    font-size: 1.5em;
-    margin-left: 1em;
+    font-size: 1.75em;
   }
 }
 </style>
