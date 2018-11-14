@@ -93,34 +93,39 @@
       <header class="profile__section-header">
         <h2>Other accounts</h2>
       </header>
-      <h3>Mozilla</h3>
-      <ul class="relation-list">
-        <Relation category="Email" label="Mozilla Reps ReMo">
-          <a href="#">philipp@mozilla.com</a>
-        </Relation>
-        <Relation category="Email" label="Mozilla Discourse">
-          <a href="#">@phls</a>
-        </Relation>
-      </ul>
-      <h3>Elsewhere</h3>
-      <ul class="relation-list">
-        <Relation category="Email" label="GitHub">
-          <a href="#">@phls</a>
-        </Relation>
-        <Relation category="Email" label="LinkedIn">
-          <a href="#">philipp@mozilla.com</a>
-        </Relation>
-      </ul>
+      <div class="profile__external-accounts">
+        <div>
+          <h3>Mozilla</h3>
+          <IconBlockList>
+            <IconBlock heading="Email" subHeading="Mozilla Reps ReMo" icon="mozilla">
+              <a href="#">@phls</a>
+            </IconBlock>
+            <IconBlock heading="Email" subHeading="Mozilla Discourse" icon="mozilla">
+              <a href="#">@phls</a>
+            </IconBlock>
+          </IconBlockList>
+        </div>
+        <div>
+          <h3>Elsewhere</h3>
+            <IconBlock heading="Email" subHeading="GitHub" icon="github">
+              <a href="#">@phls</a>
+            </IconBlock>
+            <IconBlock heading="Email" subHeading="LinkedIn" icon="linkedin">
+              <a href="mailto:philipp@mozilla.com">philipp@mozilla.com</a>
+            </IconBlock>
+        </div>
+      </div>
     </section>
     <section class="profile__section">
       <a id="access-groups" class="profile__anchor"></a>
       <header class="profile__section-header">
         <h2>Access Groups</h2>
       </header>
-      <ul class="relation-list">
-        <Relation v-for="(group, index) in accessInformation.mozilliansorg.values" :key="`group-${index}`" :category="group">
-        </Relation>
-      </ul>
+      <IconBlockList modifier="icon-block-list--multi-col">
+        <IconBlock v-for="(group, index) in accessInformation.mozilliansorg.values" :key="`group-${index}`" icon="group">
+          {{ group }}
+        </IconBlock>
+      </IconBlockList>
     </section>
     <section class="profile__section">
       <a id="tags" class="profile__anchor"></a>
@@ -137,6 +142,8 @@
 import Button from '@/components/Button.vue';
 import ContactMe from '@/components/ContactMe.vue';
 import Icon from '@/components/Icon.vue';
+import IconBlock from '@/components/IconBlock.vue';
+import IconBlockList from '@/components/IconBlockList.vue';
 import Key from '@/components/Key.vue';
 import Meta from '@/components/Meta.vue';
 import MetaList from '@/components/MetaList.vue';
@@ -147,7 +154,6 @@ import ProfileName from '@/components/ProfileName.vue';
 import ProfileTitle from '@/components/ProfileTitle.vue';
 import ProfileTeamLocation from '@/components/ProfileTeamLocation.vue';
 import ProfileNav from '@/components/ProfileNav.vue';
-import Relation from '@/components/Relation.vue';
 import ReportingStructure from '@/components/ReportingStructure.vue';
 import ShowMore from '@/components/functional/ShowMore.vue';
 import Tag from '@/components/Tag.vue';
@@ -191,6 +197,8 @@ export default {
     ContactMe,
     EditPersonalInfo,
     Icon,
+    IconBlock,
+    IconBlockList,
     FlagProfile,
     Key,
     Meta,
@@ -202,7 +210,6 @@ export default {
     ProfileNav,
     ProfileTeamLocation,
     ProfileTitle,
-    Relation,
     ReportingStructure,
     ShowMore,
     Tag,
@@ -357,4 +364,14 @@ export default {
   position: relative;
 }
 
+@media (min-width: 50em) {
+  .profile__external-accounts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 2em;
+  }
+    .profile__external-accounts h3 {
+      margin-top: 0; /* because grid item margins don't collapse */
+    }
+}
 </style>
