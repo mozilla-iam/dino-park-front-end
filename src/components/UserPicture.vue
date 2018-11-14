@@ -95,7 +95,7 @@ export default {
     height: 2.5em;
   }
     .user-picture--small .dino-type {
-      font-size: .75em;
+      font-size: .65em;
       text-transform: uppercase;
       letter-spacing: .1em;
       border-radius: var(--imageRadius) 0;
