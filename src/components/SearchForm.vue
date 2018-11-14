@@ -29,6 +29,7 @@ export default {
     },
   },
   mounted() {
+    window.scrollTo({ top: 0 });
     this.$refs.searchQueryField.focus();
   },
   data() {

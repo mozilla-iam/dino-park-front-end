@@ -6,7 +6,7 @@
       <div class="search-result__title">{{ fun_title }}</div>
     </router-link>
     <router-link :to="{ name: 'OrgchartHighlight', params: { userId: user_id } }" class="search-result__orgchart-link">
-      <img src="@/assets/images/org-chart.svg" width="26" alt="" aria-hidden="true" role="presentation" />
+      <img src="@/assets/images/org-chart.svg" width="20" alt="" aria-hidden="true" role="presentation" />
       <span class="visually-hidden">View {{ user_id }} in org chart</span>
     </router-link>
   </li>
@@ -75,6 +75,7 @@ export default {
     }
     .search-result__orgchart-link {
       margin-left: auto;
+      margin-right: .5em;
       position: relative; /* so that it stacks on top of search result link */
     }
 </style>

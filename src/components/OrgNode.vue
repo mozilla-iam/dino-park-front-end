@@ -90,11 +90,11 @@ export default {
   color: inherit;
   padding-left: 2em;
   padding-left: calc((var(--nodeLevel) + 2) * .85em);
-  border-left: 5px solid transparent;
+  border-left: .25em solid transparent;
 }
 .org-node--current > a,
 .org-node:target > a {
-  border-left: 5px solid var(--blue-60);
+  border-left: .25em solid var(--blue-60);
   background-color: var(--lightBlue);
 }
 .org-node a:hover,
