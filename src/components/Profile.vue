@@ -58,6 +58,14 @@
         <h2>Contact</h2>
       </header>
       <h3 class="visually-hidden">Contact options</h3>
+      <IconBlockList modifier="icon-block-list--multi-col">
+        <IconBlock heading="Phone" subHeading="primary" icon="phone">
+          <a href="+4916093146619">0049 160 93146619</a>
+        </IconBlock>
+        <IconBlock heading="Email" subHeading="primary" icon="email">
+          <a href="mailto:psackl@mozilla.com">psackl@mozilla.com</a>
+        </IconBlock>
+      </IconBlockList>
       <div v-if="pgpPublicKeys.values || sshPublicKeys.values">
         <h3>Keys</h3>
         <template v-if="pgpPublicKeys.values">
