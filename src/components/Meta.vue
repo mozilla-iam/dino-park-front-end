@@ -27,7 +27,8 @@ export default {
     text-transform: uppercase;
     color: var(--gray-50);
     font-weight: 700;
-    letter-spacing: 0.0 25em;
+    letter-spacing: 0.025em;
+    font-size: .9em;
   }
 
   .meta-list__item dd {
