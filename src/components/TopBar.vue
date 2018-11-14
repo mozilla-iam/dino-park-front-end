@@ -100,7 +100,6 @@ export default {
 .top-bar__link {
   padding: 1.25em;
   text-transform: uppercase;
-  font-size: 0.9em;
   color: var(--black);
   font-weight: 700;
   text-decoration: none;

@@ -42,6 +42,5 @@ export default {
   font: inherit;
   width: 100%;
   border: 0;
-  font-size: .9em;
 }
 </style>

@@ -86,5 +86,11 @@ export default {
     .show-more__button > img {
       margin-right: 1.5em;
     }
+    .show-more__button-text {
+      font-size: .9em;
+    }
+    .show-more__button-text.contact-me__button {
+      font-size: 1em;
+    }
 </style>
 

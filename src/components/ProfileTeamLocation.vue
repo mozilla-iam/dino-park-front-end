@@ -28,7 +28,6 @@ export default {
 <style>
 .profile__location,
 .profile__team {
-  font-size: .875em;
   color: var(--gray-50);
 }
 .profile__team {
@@ -39,6 +38,7 @@ export default {
     .profile__team-location strong {
       display: block;
       color: var(--gray-50);
+      font-size: .9em;
       text-transform: uppercase;
     }
 @media(min-width: 60em) {
@@ -49,6 +49,7 @@ export default {
   }
   .profile__team-location {
     display: flex;
+    margin: 2em 0;
   }
     .profile__team-location div {
       padding-left: 0;

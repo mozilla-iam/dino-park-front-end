@@ -19,6 +19,5 @@ export default {
     overflow: hidden;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    font-size: .875em;
   }
 </style>

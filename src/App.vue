@@ -52,6 +52,7 @@ export default {
     scroll-behavior: smooth;
     margin: 0;
     padding-top: 4.5em;  /* allow for top bar */
+    font-size: 87.5%;
   }
 
   h1,
@@ -66,16 +67,11 @@ export default {
   h1 {
     font-family: "Zilla Slab", sans-serif;
     font-weight: 400;
-    font-size: 1.5em;
-  }
-  @media(min-width:37.5em) {
-    h1 {
-      font-size: 2em;
-    }
+    font-size: 2.5em;
   }
   @media(min-width:50em) {
     h1 {
-      font-size: 3em;
+      font-size: 3.5em;
     }
   }
 
@@ -86,8 +82,13 @@ export default {
 
   h3 {
     font-weight: 400;
-    font-size: 1em;
+    font-size: 1.125em;
     color: var(--gray-50);
+  }
+
+  h4,
+  h5 {
+    font-size: 1em;
   }
 
   img,

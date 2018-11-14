@@ -104,7 +104,6 @@ export default {
     border-left: 1px solid var(--grey-30);
     color: var(--gray-50);
     text-align: center;
-    font-size: .75em;
   }
   li:first-child .profile__nav-link {
     border-left: 0;
@@ -119,7 +118,6 @@ export default {
       flex-direction: row;
       justify-content: start;
       padding: 1.5em;
-      font-size: .9em;
     }
   }
     .profile__nav-link svg {
