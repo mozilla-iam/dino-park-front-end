@@ -17,25 +17,25 @@ const router = new Router({
       component: PageHome,
     },
     {
-      path: '/p/:userId',
+      path: '/profile/:userId',
       name: 'Profile',
       component: PageProfile,
       props: true,
     },
     {
-      path: '/o/highlight/:userId/',
+      path: '/org-chart/highlight/:userId/',
       name: 'OrgchartHighlight',
       component: PageOrgchart,
       props: true,
     },
     {
-      path: '/o/:userId?',
+      path: '/org-chart/:userId?',
       name: 'Orgchart',
       component: PageOrgchart,
       props: true,
     },
     {
-      path: '/s',
+      path: '/search',
       query: {
         query: ':query',
         scope: ':scope',
@@ -48,7 +48,16 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  document.title = `${to.name} - Mozillians`;
+  switch (to.name) {
+    case 'OrgchartHighlight':
+      document.title = `${to.params.userId} - Org chart - Mozillians`;
+      break;
+    case 'Orgchart':
+      document.title = 'Org chart - Mozillians';
+      break;
+    default:
+      document.title = `${to.name} - Mozillians`;
+  }
   window.focus();
   next();
 });
