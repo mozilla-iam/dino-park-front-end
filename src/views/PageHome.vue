@@ -10,18 +10,22 @@
     </div>
     <CardRow>
       <Card>
-        <a href="/discourse">
-          <h2>Your feedback matters</h2>
+          <div class="card__icon">
+            <img src="@/assets/images/message-large.svg" alt="" role="presentation" />
+          </div>
+          <h2><a href="/discourse">Your feedback matters</a></h2>
           <p>Join us on Discourse and let us know how we can make the Mozilla Directory even better.</p>
         </a>
       </Card>
       <Card>
-        <a href="/faq">
-          <h2>Your Privacy is Protected.</h2>
-          <p>Your profile data is fully hidden from public view. Read our <a href="#">FAQ</a> for details.</p>
-        </a>
+        <div class="card__icon">
+          <img src="@/assets/images/lock-large.svg" alt="" role="presentation" />
+        </div>
+        <h2><a href="/faq">Your privacy is protected</a></h2>
+        <p>Your profile data is fully hidden from public view. Read our <a href="#">FAQ</a> for details.</p>
       </Card>
       <Card modifier="card--centered-content">
+          <img src="@/assets/images/edit-large.svg" alt="" role="presentation" />
           <h2>Upcoming Additions</h2>
           <p>Our next update will introduce profile editing and advanced privacy settings.</p>
       </Card>
@@ -55,6 +59,7 @@ export default {
     padding: 2em;
     margin-bottom: 2em;
     box-shadow: var(--shadowCard);
+
   }
   .home__intro > img {
     margin-bottom: 1em;
@@ -80,7 +85,8 @@ export default {
   }
   @media (min-width: 50em) {
     .home__intro {
-      overflow: hidden;
+      display: inline-block;
+      width: 100%;
       padding: 4em 4em 2em;
     }
       .home__intro > img {

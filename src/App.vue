@@ -78,6 +78,7 @@ export default {
   h2 {
     font-weight: 400;
     font-size: 1.5em;
+    margin-bottom: .5em;
   }
 
   h3 {
