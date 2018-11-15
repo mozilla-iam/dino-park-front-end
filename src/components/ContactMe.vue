@@ -112,6 +112,7 @@ export default {
       color: inherit;
       padding: .5em;
       min-width: 20em;
+      max-width: 30em;
       align-items: center;
       font-size: 1.125em;
     }
@@ -127,6 +128,8 @@ export default {
     .contact-me__value {
       flex: 1;
       color: var(--blue-60);
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .contact-me__button {
       margin: 0 auto;
