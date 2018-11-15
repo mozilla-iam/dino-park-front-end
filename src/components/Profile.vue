@@ -37,10 +37,6 @@
           </template>
         </ShowMore>
       </div>
-      <button @click="$refs.flagProfile.isOpen=true" class="button button--secondary button--icon-only profile__flag"><img src="@/assets/images/flag.svg" alt="" width="16" aria-hidden="true" /><span class="visually-hidden">Flag this profile</span></button>
-      <Modal ref="flagProfile" heading="Flag this profile" :closeButton="true">
-        <FlagProfile/>
-      </Modal>
     </section>
     <ProfileNav :links="profileNav"></ProfileNav>
     <section v-if="manager || directs.length > 0" class="profile__section">
@@ -192,7 +188,6 @@ import Vouch from '@/components/Vouch.vue';
 
 // forms
 import EditPersonalInfo from '@/components/forms/EditPersonalInfo.vue';
-import FlagProfile from '@/components/forms/FlagProfile.vue';
 
 export default {
   name: 'Profile',
@@ -230,7 +225,6 @@ export default {
     Icon,
     IconBlock,
     IconBlockList,
-    FlagProfile,
     Key,
     Meta,
     MetaList,
