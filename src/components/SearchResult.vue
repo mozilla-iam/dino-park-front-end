@@ -48,6 +48,10 @@ export default {
     .search-result__profile-link {
       text-decoration: none;
     }
+    .search-result .user-picture,
+    .search-result__org-chart-link {
+      flex: none;
+    }
     .search-result__profile-link::before {
       content: '';
       display: block;
@@ -77,5 +81,6 @@ export default {
       margin-left: auto;
       margin-right: .5em;
       position: relative; /* so that it stacks on top of search result link */
+      line-height: 1; /* avoid extra space underneath image */
     }
 </style>

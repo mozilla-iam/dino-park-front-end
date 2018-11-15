@@ -69,7 +69,7 @@ export default {
     font-weight: 400;
     font-size: 2.5em;
   }
-  @media(min-width:50em) {
+  @media(min-width:57.5em) {
     h1 {
       font-size: 3.5em;
     }
@@ -121,9 +121,9 @@ export default {
     padding: 0 1em;
     width: 100%;
   }
-  @media(min-width:50em) {
+  @media(min-width:57.5em) {
     .container {
-      max-width: 64em;
+      max-width: 74em;
       margin: 0 auto;
     }
   }
@@ -156,7 +156,7 @@ export default {
   .hide-mobile {
     display: none;
   }
-  @media(min-width:50em) {
+  @media(min-width:57.5em) {
     .hide-mobile {
       display: initial;
     }

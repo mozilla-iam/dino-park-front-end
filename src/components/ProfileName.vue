@@ -34,7 +34,7 @@ export default {
     font-size: 1.25em;
     color: var(--gray-50);
   }
-@media(min-width:50em) {
+@media(min-width:57.5em) {
   .profile__name {
     text-align: left;
   }

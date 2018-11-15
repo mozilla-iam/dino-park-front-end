@@ -68,7 +68,7 @@ export default {
   top: 0;
   z-index: var(--layerTopBar);
 }
-@media(min-width:50em) {
+@media(min-width:57.5em) {
   .profile__nav {
     grid-column: 1 / 2;
     grid-row: 2 / 4;
@@ -82,7 +82,7 @@ export default {
     margin: 0;
     display: flex;
   }
-  @media(min-width:50em) {
+  @media(min-width:57.5em) {
     .profile__nav ul {
       display: block;
     }
@@ -112,7 +112,7 @@ export default {
     color: var(--blue-60);
     border-bottom: 2px solid currentColor;
   }
-  @media(min-width:50em) {
+  @media(min-width:57.5em) {
     .profile__nav-link {
       text-align: left;
       flex-direction: row;
@@ -124,7 +124,7 @@ export default {
       order: 2;
       margin-top: .5em;
     }
-    @media (min-width:50em) {
+    @media (min-width:57.5em) {
       .profile__nav-link svg {
         order: 0;
         margin-top: 0;

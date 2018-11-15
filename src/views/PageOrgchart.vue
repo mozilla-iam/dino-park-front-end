@@ -109,7 +109,7 @@ export default {
       this.loading = false;
     },
     updateView() {
-      if (matchMedia('(min-width:50em)').matches) {
+      if (matchMedia('(min-width: 57.5em)').matches) {
         if (this.$store.state.profilePreview.desktopView !== true) {
           this.$store.commit('toggleProfilePreviewDesktopView', {
             desktopView: true,
@@ -130,7 +130,7 @@ export default {
   padding: 0;
   width: 100%;
 }
-@media (min-width: 50em) {
+@media (min-width: 57.5em) {
   .org-chart {
     padding: 2em;
     display: grid;
@@ -152,7 +152,7 @@ export default {
     grid-column: 2 / 3;
   }
 }
-@media (min-height: 32em) and (min-width: 50em) {
+@media (min-height: 36em) and (min-width: 57.5em) {
   .org-chart__preview {
     position: sticky;
     top: 6em;

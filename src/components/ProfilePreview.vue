@@ -142,7 +142,7 @@ export default {
     align-items: start;
     justify-content: center;
   }
-  @media(min-width:50em) {
+  @media(min-width:57.5em) {
     .profile-preview__buttons {
       justify-content: space-around;
     }
