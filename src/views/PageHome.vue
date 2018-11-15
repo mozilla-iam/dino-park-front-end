@@ -10,12 +10,11 @@
     </div>
     <CardRow>
       <Card>
-          <div class="card__icon">
-            <img src="@/assets/images/message-large.svg" alt="" role="presentation" />
-          </div>
-          <h2><a href="/discourse">Your feedback matters</a></h2>
-          <p>Join us on Discourse and let us know how we can make the Mozilla Directory even better.</p>
-        </a>
+        <div class="card__icon">
+          <img src="@/assets/images/message-large.svg" alt="" role="presentation" />
+        </div>
+        <h2><a href="/discourse">Your feedback matters</a></h2>
+        <p>Join us on Discourse and let us know how we can make the Mozilla Directory even better.</p>
       </Card>
       <Card>
         <div class="card__icon">
