@@ -2,28 +2,32 @@
   <div class="reporting-structure">
     <LoadingSpinner v-if="loading"></LoadingSpinner>
     <div v-if="manager" class="reporting-structure__reports-to">
-          <h3>Reports to:</h3>
-          <Person
-            modifier="person--borderless"
-            :picture="{ value: manager.picture }"
-            :userId="{ value: manager.userId }"
-            :firstName="{ value: manager.firstName }"
-            :lastName="{ value: manager.lastName }"
-            :funTitle="{ value: manager.funTitle }"
-          />
+      <h3>Reports to:</h3>
+      <div>
+        <Person
+          modifier="person--borderless"
+          :picture="{ value: manager.picture }"
+          :userId="{ value: manager.userId }"
+          :firstName="{ value: manager.firstName }"
+          :lastName="{ value: manager.lastName }"
+          :funTitle="{ value: manager.funTitle }"
+        />
+      </div>
     </div>
     <div v-if="directs.length > 0" class="reporting-structure__manages">
-          <h3>Manages:</h3>
-          <Person
-            v-for="(direct, index) in directs"
-            :modifier="directsView"
-            :key="`direct-${index}`"
-            :picture="{ value: direct.picture }"
-            :userId="{ value: direct.userId }"
-            :firstName="{ value: direct.firstName }"
-            :lastName="{ value: direct.lastName }"
-            :funTitle="{ value: direct.funTitle }"
-            />
+      <h3>Manages:</h3>
+      <div>
+        <Person
+          v-for="(direct, index) in directs"
+          :modifier="directsView"
+          :key="`direct-${index}`"
+          :picture="{ value: direct.picture }"
+          :userId="{ value: direct.userId }"
+          :firstName="{ value: direct.firstName }"
+          :lastName="{ value: direct.lastName }"
+          :funTitle="{ value: direct.funTitle }"
+          />
+        </div>
     </div>
   </div>
 </template>
@@ -61,5 +65,13 @@ export default {
   margin-top: 2em;
   border-top: 1px solid var(--gray-30);
   padding-top: 1.5em;
+}
+@media (min-width: 50em) {
+  .reporting-structure__reports-to,
+  .reporting-structure__manages {
+    display: grid;
+    grid-gap: 2em;
+    grid-template-columns: 7em 1fr;
+  }
 }
 </style>

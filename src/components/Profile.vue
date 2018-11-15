@@ -37,17 +37,30 @@
           </template>
         </ShowMore>
       </div>
-      <button @click="$refs.flagProfile.isOpen=true" class="button button--secondary button--icon-only profile__flag"><img src="@/assets/images/flag.svg" alt="" width="16" aria-hidden="true" /><span class="visually-hidden">Flag this profile</span></button>
-      <Modal ref="flagProfile" heading="Flag this profile" :closeButton="true">
-        <FlagProfile/>
-      </Modal>
     </section>
     <ProfileNav :links="profileNav"></ProfileNav>
     <section v-if="manager || directs.length > 0" class="profile__section">
       <a id="relations" class="profile__anchor"></a>
       <header class="profile__section-header">
         <h2>Relations</h2>
-        <router-link :to="{ name: 'OrgchartHighlight', params: { userId: userId.value } }" class="button button--secondary button--small">Org Chart</router-link>
+        <router-link :to="{ name: 'OrgchartHighlight', params: { userId: userId.value } }" class="button button--secondary button--small">
+          Org Chart
+          <svg
+            aria-hidden="true"
+            role="presentation"
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+          <polyline points="9 18 15 12 9 6" />
+        </svg>
+        </router-link>
       </header>
       <ReportingStructure :manager="manager" :directs="directs">
       </ReportingStructure>
@@ -175,7 +188,6 @@ import Vouch from '@/components/Vouch.vue';
 
 // forms
 import EditPersonalInfo from '@/components/forms/EditPersonalInfo.vue';
-import FlagProfile from '@/components/forms/FlagProfile.vue';
 
 export default {
   name: 'Profile',
@@ -213,7 +225,6 @@ export default {
     Icon,
     IconBlock,
     IconBlockList,
-    FlagProfile,
     Key,
     Meta,
     MetaList,

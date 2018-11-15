@@ -29,6 +29,10 @@ export default {
     border: 1px solid var(--gray-30);
     box-shadow: none;
   }
+    .card h2 {
+      font-weight: 700;
+      font-size: 1.25em;
+    }
     .card h2 > a {
       color: inherit;
       text-decoration: none;
