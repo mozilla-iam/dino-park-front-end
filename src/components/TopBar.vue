@@ -98,7 +98,7 @@ export default {
   background-color: var(--gray-20);
 }
 .top-bar__link {
-  padding: 1.25em;
+  padding: .75em;
   text-transform: uppercase;
   color: var(--black);
   font-weight: 700;
@@ -109,15 +109,24 @@ export default {
 }
 .top-bar__link--current {
   position: relative;
+  background-color: var(--gray-20);
 }
-.top-bar__link--current::after {
-  content: "";
-  height: 2px;
-  background: black;
-  width: 100%;
-  position: absolute;
-  bottom: -0.5em;
-  left: 0;
+.top-bar__search-toggle[aria-expanded="true"] + .top-bar__link--current {
+  background-color: transparent;
+}
+@media (min-width: 50em ) {
+  .top-bar__link--current {
+    background-color: transparent;
+  }
+  .top-bar__link--current::after {
+    content: "";
+    height: 2px;
+    background: black;
+    width: 100%;
+    position: absolute;
+    bottom: -0.5em;
+    left: 0;
+  }
 }
 .top-bar__link--logo {
   margin-right: auto;
