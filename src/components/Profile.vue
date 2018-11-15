@@ -47,7 +47,24 @@
       <a id="relations" class="profile__anchor"></a>
       <header class="profile__section-header">
         <h2>Relations</h2>
-        <router-link :to="{ name: 'OrgchartHighlight', params: { userId: userId.value } }" class="button button--secondary button--small">Org Chart</router-link>
+        <router-link :to="{ name: 'OrgchartHighlight', params: { userId: userId.value } }" class="button button--secondary button--small">
+          Org Chart
+          <svg
+            aria-hidden="true"
+            role="presentation"
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+          <polyline points="9 18 15 12 9 6" />
+        </svg>
+        </router-link>
       </header>
       <ReportingStructure :manager="manager" :directs="directs">
       </ReportingStructure>
