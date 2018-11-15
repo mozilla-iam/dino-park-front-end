@@ -51,11 +51,13 @@ export default {
     background-size: 1em;
     background-position: center center;
     background-repeat: no-repeat;
+    background-image: url('../assets/images/icon-blocks/dino.svg');
   }
   .icon-block__icon--letter {
     text-align: center;
     line-height: 1.6;
     font-weight: 700;
+    background-image: none;
   }
   .icon-block__icon--aim {
     background-image: url('../assets/images/icon-blocks/aim.svg');
