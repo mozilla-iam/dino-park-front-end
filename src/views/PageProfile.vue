@@ -5,7 +5,7 @@
       <template v-else-if="error">
         <Error><h2>{{ error.message }}</h2>
           <pre>{{ error }}</pre>
-          <p>An error occured while trying to go to {{ userId }}: </p></Error>
+          <p>An error occured while trying to go to {{ username }}: </p></Error>
         </template>
       <template v-else-if="data">
         <Profile v-bind="data.profile"></Profile>

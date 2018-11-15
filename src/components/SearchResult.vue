@@ -7,7 +7,7 @@
     </router-link>
     <router-link :to="{ name: 'OrgchartHighlight', params: { username: username } }" class="search-result__orgchart-link">
       <img src="@/assets/images/org-chart.svg" width="20" alt="" aria-hidden="true" role="presentation" />
-      <span class="visually-hidden">View {{ user_id }} in org chart</span>
+      <span class="visually-hidden">View {{ username }} in org chart</span>
     </router-link>
   </li>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <li :id="data.user_id" :class="'org-node' + ( data.username === this.$route.params.username ? ' org-node--current' : '')">
+  <li :id="data.username" :class="'org-node' + ( data.username === this.$route.params.username ? ' org-node--current' : '')">
     <router-link :to="{ name: 'Orgchart', params: { username: data.username } }" :id="`org-node-${prefix}`">
       <UserPicture :picture="data.picture" :username="data.username" :size="40" dinoType="Staff"></UserPicture>
       <span class="org-node__name">{{ data.firstName }} {{ data.lastName }}</span>
@@ -38,8 +38,8 @@ export default {
     UserPicture,
   },
   mounted() {
-    if (this.data.user_id === this.$route.params.userId) {
-      const e = document.getElementById(`${this.data.user_id}`);
+    if (this.data.username === this.$route.params.username) {
+      const e = document.getElementById(`${this.data.username}`);
       if (e) {
         e.scrollIntoView(false);
       }
