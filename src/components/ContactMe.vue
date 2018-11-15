@@ -76,12 +76,13 @@ export default {
     left: 0;
     width: calc(100% + 4.5em);
     margin: 0 -2.25em;
+    color: var(--gray-60);
   }
   @media(min-width:57.5em) {
     .contact-me {
       left: 50%;
-      width: 20em;
-      margin: 0 .5em 0 -10em;
+      width: 24em;
+      margin: 0 .5em 0 -12em;
     }
   }
     .contact-me::before {
@@ -101,10 +102,9 @@ export default {
       padding-left: 0;
       background-color: var(--white);
       position: relative;
-      border-top: 1px solid var(--gray-30);
     }
-    .contact-me__item:first-child {
-      border-top: 0;
+    .contact-me__item:nth-child(even) {
+      background-color: var(--gray-10);
     }
     .contact-me__pair {
       display: flex;
@@ -112,16 +112,17 @@ export default {
       color: inherit;
       padding: .5em;
       min-width: 20em;
+      align-items: center;
+      font-size: 1.125em;
     }
     .contact-me__pair:hover {
-      background-color: var(--gray-30);
+      background-color: var(--gray-20);
     }
     .contact-me__key {
       flex: none;
       width: 30%;
       padding-right: 1em;
       font-family: "Zilla Slab", sans-serif;
-      font-size: 1.125em;
     }
     .contact-me__value {
       flex: 1;
@@ -130,5 +131,10 @@ export default {
     .contact-me__button {
       margin: 0 auto;
       margin-bottom: 2em;
+    }
+    .contact-me svg {
+      color: var(--gray-60);
+      transform: scale(0.75);
+      margin-right: .5em;
     }
 </style>
