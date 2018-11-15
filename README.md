@@ -18,7 +18,7 @@ npm run serve
 
 This will start a local server.
 
-Note that this does not give you data. To use the front-end with data, you must point the `DP_K8S` variable to a URL that serves DinoPark data, for example using [dino-park-dev-tools[(https://github.com/mozilla-iam/dino-park-dev-tools).
+Note that this does not give you data. To use the front-end with data, you must point the `DP_K8S` variable to a URL that serves DinoPark data, for example using [dino-park-dev-tools](https://github.com/mozilla-iam/dino-park-dev-tools).
 
 ```
 export DP_K8S=[url goes here]
