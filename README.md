@@ -18,6 +18,12 @@ npm run serve
 
 This will start a local server.
 
+Note that this does not give you data. To use the front-end with data, you must point the `DP_K8S` variable to a URL that serves DinoPark data, for example using [dino-park-dev-tools[(https://github.com/mozilla-iam/dino-park-dev-tools).
+
+```
+export DP_K8S=[url goes here]
+``` 
+
 ## Tests
 
 Unit tests are in the `tests` folder and ran with Jest.
@@ -52,11 +58,17 @@ Notes:
 * While a modal is open, scroll is prevented and focus is trapped inside the modal.
 * We don't do anything special to make the modal be layered on top of everything else. Increase the `z-index` if there are elements with a higher z-index. 
 
+### ShowMore
+
+There is a `<ShowMore>` component used anywhere you would show more content using a button.
+
+It has the opened/closed state conveyed to Assistive Technologies (AT) through ARIA and focus is moved to the newly opened content.
+
 ## Technical considerations
 
 ### General front-end practices
 
-* We ensure our code complies to the [Web Content Accessibility Guidelines](https://www.w3.org/WAI/WCAG21/quickref/?versions=2.1) (WCAG)], so that Mozillians is usable by all and we comply with relevant legislation.
+* We ensure our code complies to the [Web Content Accessibility Guidelines](https://www.w3.org/WAI/WCAG21/quickref/?versions=2.1) (WCAG), so that Mozillians is usable by all and we comply with relevant legislation.
     * Example: our autocomplete works well with keyboard, screenreaders and dictation 
 * We prefer web platform features to library-specific workarounds
     * Example: we make sure form elements are in a `form` tag and submitting works (by pressing ENTER in an element, by firing `form.submit()`, by pressing GO on iOS, etc)
