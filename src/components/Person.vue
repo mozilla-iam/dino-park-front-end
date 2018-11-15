@@ -8,7 +8,7 @@
         </div>
         <div class="person__preferred-title">
           <template v-if="funTitle">{{ funTitle }}</template>
-          <template v-else-if="title">{{ "title" }}</template>
+          <template v-else-if="title">{{ title }}</template>
         </div>
       </div>
     </router-link>

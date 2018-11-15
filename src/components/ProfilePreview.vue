@@ -72,7 +72,7 @@ export default {
     staffInformation: Object,
     username: String,
     primaryEmail: String,
-    phoneNumbers: Array,
+    phoneNumbers: Object,
     timezone: String,
     firstName: String,
     lastName: String,

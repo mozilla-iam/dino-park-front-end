@@ -39,6 +39,7 @@ const PROFILE = gql`query ($username: String!) {
       title
       funTitle
       location
+      username
     },
     directs {
       userId
@@ -48,6 +49,7 @@ const PROFILE = gql`query ($username: String!) {
       title
       funTitle
       location
+      username
     },
     accessInformation {
       mozilliansorg,
