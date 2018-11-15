@@ -20,6 +20,7 @@ export default {
   padding: 1em 2em;
   display: block;
   font-family: inherit;
+  font-size: .9em;
   letter-spacing: 0.05em;
   border-radius: 2.5em;
   background-color: var(--blue-60);
