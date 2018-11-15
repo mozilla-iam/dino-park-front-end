@@ -123,7 +123,7 @@ export default {
   }
   @media(min-width:57.5em) {
     .container {
-      max-width: 88em;
+      max-width: 74em;
       margin: 0 auto;
     }
   }
