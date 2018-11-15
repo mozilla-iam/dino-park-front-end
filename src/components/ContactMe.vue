@@ -59,15 +59,14 @@ export default {
   name: 'ContactMe',
   props: {
     primaryEmail: String,
-    phoneNumbers: Array,
+    phoneNumbers: Object,
   },
   components: {
     Icon,
     ShowMore,
   },
   data() {
-    const ldapNumber = this.phoneNumbers && this.phoneNumbers.filter(({ key }) => key === 'LDAP-1')[0];
-    const phoneNumber = ldapNumber && ldapNumber.value;
+    const phoneNumber = this.phoneNumbers && this.phoneNumbers['LDAP-1'];
     return {
       phoneNumber,
     };

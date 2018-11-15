@@ -40,7 +40,7 @@
     </section>
     <ProfileNav :links="profileNav"></ProfileNav>
     <section v-if="manager || directs.length > 0" class="profile__section">
-      <a id="relations" class="profile__anchor"></a>
+      <a id="nav-relations" class="profile__anchor"></a>
       <header class="profile__section-header">
         <h2>Relations</h2>
         <router-link :to="{ name: 'OrgchartHighlight', params: { username } }" class="button button--secondary button--small">
@@ -66,7 +66,7 @@
       </ReportingStructure>
     </section>
     <section class="profile__section">
-      <a id="contact" class="profile__anchor"></a>
+      <a id="nav-contact" class="profile__anchor"></a>
       <header class="profile__section-header">
         <h2>Contact</h2>
       </header>
@@ -75,28 +75,27 @@
         <IconBlock heading="Email" subHeading="primary" icon="email">
           <a :href="`mailto:${primaryEmail}`">{{ primaryEmail }}</a>
         </IconBlock>
-        <IconBlock v-for="(number, index) in phoneNumbers" :key="`phoneNumber-${index}`" heading="Phone" :subHeading="number.key" icon="phone">
-          <a :href="number.value">{{ number.value }}</a>
+        <IconBlock v-for="[key, value] in Object.entries(phoneNumbers || {})" :key="`phoneNumber-${key}`" heading="Phone" :subHeading="key" icon="phone">
+          <a :href="value">{{ value }}</a>
         </IconBlock>
       </IconBlockList>
       <div v-if="pgpPublicKeys || sshPublicKeys">
         <h3>Keys</h3>
-        <template v-if="pgpPublicKeys && pgpPublicKeys.length > 0">
+        <template v-if="pgpPublicKeys && Object.keys(pgpPublicKeys).length > 0">
           <h4 class="visually-hidden">PGP</h4>
-          <Key v-for="pgp in pgpPublicKeys"
+          <Key v-for="[key, value] in Object.entries(pgpPublicKeys)"
                type="PGP"
-               :title="pgp.key"
-               :content="pgp.value"
-               :key="`pgp-${pgp.key}`" />
+               :title="key"
+               :content="value"
+               :key="`pgp-${key}`" />
         </template>
-        <template v-if="sshPublicKeys && sshPublicKeys.length > 0">
+        <template v-if="sshPublicKeys && Object.keys(sshPublicKeys).length > 0">
           <h4 class="visually-hidden">SSH</h4>
-          <Key
-            v-for="ssh in sshPublicKeys"
-            type="SSH"
-            :title="ssh.key"
-            :content="ssh.value"
-            :key="`ssh-${ssh.key}`" />
+          <Key v-for="[key, value] in Object.entries(sshPublicKeys)"
+              type="SSH"
+              :title="key"
+              :content="value"
+              :key="`ssh-${key}`" />
         </template>
       </div>
       <template v-if="languages && languages.length > 0">
@@ -110,7 +109,7 @@
       </template>
     </section>
     <section class="profile__section">
-      <a id="other-accounts" class="profile__anchor"></a>
+      <a id="nav-other-accounts" class="profile__anchor"></a>
       <header class="profile__section-header">
         <h2>Other accounts</h2>
       </header>
@@ -144,7 +143,7 @@
       </div>
     </section>
     <section class="profile__section">
-      <a id="access-groups" class="profile__anchor"></a>
+      <a id="nav-access-groups" class="profile__anchor"></a>
       <header class="profile__section-header">
         <h2>Access Groups</h2>
       </header>
@@ -155,7 +154,7 @@
       </IconBlockList>
     </section>
     <section class="profile__section">
-      <a id="tags" class="profile__anchor"></a>
+      <a id="nav-tags" class="profile__anchor"></a>
       <header class="profile__section-header">
         <h2>Tags</h2>
       </header>
@@ -195,7 +194,7 @@ export default {
     staffInformation: Object,
     username: String,
     primaryEmail: String,
-    phoneNumbers: Array,
+    phoneNumbers: Object,
     timezone: String,
     firstName: String,
     lastName: String,
@@ -204,8 +203,8 @@ export default {
     picture: String,
     location: String,
     description: String,
-    pgpPublicKeys: Array,
-    sshPublicKeys: Array,
+    pgpPublicKeys: Object,
+    sshPublicKeys: Object,
     tags: Array,
     languages: Array,
     userId: String,
@@ -239,27 +238,27 @@ export default {
     return {
       profileNav: [
         {
-          id: 'relations',
+          id: 'nav-relations',
           iconId: 'org-chart',
           label: 'Relations',
         },
         {
-          id: 'contact',
+          id: 'nav-contact',
           iconId: 'book',
           label: 'Contact',
         },
         {
-          id: 'other-accounts',
+          id: 'nav-other-accounts',
           iconId: 'at-sign',
           label: 'Other accounts',
         },
         {
-          id: 'access-groups',
+          id: 'nav-access-groups',
           iconId: 'crown',
           label: 'Access groups',
         },
         {
-          id: 'tags',
+          id: 'nav-tags',
           iconId: 'bookmark',
           label: 'Tags',
         },

@@ -1,6 +1,6 @@
 <template>
   <div :class="'person' + ( modifier ? ' ' + modifier : '')">
-    <UserPicture :picture="picture" :username="userId.value" :title="firstName.value + ' ' + lastName.value" :size="40" dinoType="Staff" />
+    <UserPicture :picture="picture" :username="username" :title="firstName + ' ' + lastName" :size="40" dinoType="Staff" />
     <router-link :to="{ name: 'Profile', params: { username } }">
       <div class="person__name-title">
         <div class="person__name">
@@ -28,7 +28,7 @@ export default {
   props: {
     title: String,
     modifier: String,
-    useername: String,
+    username: String,
     firstName: String,
     lastName: String,
     officeLocation: String,

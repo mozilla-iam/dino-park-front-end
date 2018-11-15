@@ -11,29 +11,17 @@ const PROFILE = gql`query ($username: String!) {
     lastModified,
     lastName,
     location,
-    pgpPublicKeys { 
-      key,
-      value
-    },
+    pgpPublicKeys,
     picture,
     languages,
     primaryEmail
     pronouns,
-    sshPublicKeys {
-      key,
-      value
-    },
+    sshPublicKeys,
     tags,
     timezone,
-    uris {
-      key,
-      value
-    }
+    uris,
     username,
-    phoneNumbers {
-      key,
-      value
-    }
+    phoneNumbers,
     staffInformation {
       staff,
       team,
@@ -81,10 +69,7 @@ const PREVIEW_PROFILE = gql`query ($username: String!) {
     pronouns,
     timezone,
     username,
-    phoneNumbers {
-      key,
-      value
-    }
+    phoneNumbers,
     staffInformation {
       staff,
       team,

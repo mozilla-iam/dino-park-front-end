@@ -6,11 +6,7 @@
       <div>
         <Person
           modifier="person--borderless"
-          :picture="{ value: manager.picture }"
-          :userId="{ value: manager.userId }"
-          :firstName="{ value: manager.firstName }"
-          :lastName="{ value: manager.lastName }"
-          :funTitle="{ value: manager.funTitle }"
+          v-bind="manager"
         />
       </div>
     </div>
@@ -21,13 +17,9 @@
           v-for="(direct, index) in directs"
           :modifier="directsView"
           :key="`direct-${index}`"
-          :picture="{ value: direct.picture }"
-          :userId="{ value: direct.userId }"
-          :firstName="{ value: direct.firstName }"
-          :lastName="{ value: direct.lastName }"
-          :funTitle="{ value: direct.funTitle }"
+          v-bind="direct"
           />
-        </div>
+      </div>
     </div>
   </div>
 </template>
