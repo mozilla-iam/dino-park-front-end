@@ -4,7 +4,7 @@
     <router-link :to="{ name: 'Profile', params: { username } }">
       <div class="person__name-title">
         <div class="person__name">
-            {{ firstName }} {{ lastName.value }}
+            {{ firstName }} {{ lastName }}
         </div>
         <div class="person__preferred-title">
           <template v-if="funTitle">{{ funTitle }}</template>
