@@ -3,11 +3,11 @@
     <div class="user-menu__header">
       <button class="user-menu__close-avatar" type="button" @click="sendCloseEvent()">
         <span class="visually-hidden">Close user menu</span>
-        <UserPicture :picture="picture.value" :username="userId.value" :size="40"></UserPicture>
+        <UserPicture :picture="picture" :username="username" :size="40"></UserPicture>
       </button>
       <div class="user-menu__name">
-        <span class="user-menu__header-name">{{ firstName.value }} {{ lastName.value }}</span>
-        <span class="user-menu__header-email">{{ primaryEmail.value }}</span>
+        <span class="user-menu__header-name">{{ firstName }} {{ lastName }}</span>
+        <span class="user-menu__header-email">{{ primaryEmail }}</span>
       </div>
       <button class="user-menu__close-button" type="button" @click="sendCloseEvent()">
         <svg
@@ -30,7 +30,7 @@
     </div>
     <ul class="user-menu__items">
       <li>
-        <router-link :to="{ name: 'Profile', params: { userId: userId.value } }">
+        <router-link :to="{ name: 'Profile', params: { username: username } }">
           <span>My profile</span>
           <Icon id="user" :width="24" :height="24" />
         </router-link>
@@ -68,11 +68,11 @@ import UserPicture from '@/components/UserPicture.vue';
 export default {
   name: 'UserMenu',
   props: {
-    firstName: Object,
-    lastName: Object,
-    picture: Object,
-    userId: Object,
-    primaryEmail: Object,
+    firstName: String,
+    lastName: String,
+    picture: String,
+    username: String,
+    primaryEmail: String,
   },
   methods: {
     sendCloseEvent() {

@@ -1,24 +1,24 @@
 <template>
   <div class="profile-preview" ref="profilePreviewElement" tabindex="-1">
     <div class="profile-preview__image">
-      <UserPicture :picture="picture.value" :username="userId.value" :size="100" dinoType="Staff" />
+      <UserPicture :picture="picture" :username="username" :size="100" dinoType="Staff" />
     </div>
-    <ProfileName :firstName="firstName.value" :lastName="lastName.value" :pronouns="pronouns.value"></ProfileName>
-    <ProfileTitle :businessTitle="businessTitle.value || null" :funTitle="funTitle.value"></ProfileTitle>
+    <ProfileName :firstName="firstName" :lastName="lastName" :pronouns="pronouns"></ProfileName>
+    <ProfileTitle :businessTitle="staffInformation.title" :funTitle="funTitle"></ProfileTitle>
     <div class="hide-desktop">
-      <ContactMe></ContactMe>
+      <ContactMe :primaryEmail="primaryEmail" :phoneNumbers="phoneNumbers"></ContactMe>
     </div>
-    <ProfileTeamLocation :team="team.value || null" :entity="entity.value || null" :locationPreference="locationPreference.value || null" :officeLocation="officeLocation.value || null" :timezone="timezone.value || null"></ProfileTeamLocation>
+    <ProfileTeamLocation :team="staffInformation.team" :entity="'Mozilla'" :location="location" :officeLocation="staffInformation.officeLocation" :timezone="timezone"></ProfileTeamLocation>
     <h2 class="visually-hidden">About</h2>
     <div class="profile__description">
-      <p>{{ description.value }}</p>
+      <p>{{ description }}</p>
     </div>
     <hr class="profile-preview__divider">
     <div class="profile-preview__buttons">
       <div class="hide-mobile">
-        <ContactMe></ContactMe>
+        <ContactMe :primaryEmail="primaryEmail" :phoneNumbers="phoneNumbers"></ContactMe>
       </div>
-      <router-link :to="{ name: 'Profile', params: { userId: userId.value } }" class="button button--text-only">
+      <router-link :to="{ name: 'Profile', params: { username: username } }" class="button button--text-only">
         View full profile
         <svg
           aria-hidden="true"
@@ -69,23 +69,19 @@ import ProfileTeamLocation from '@/components/ProfileTeamLocation.vue';
 export default {
   name: 'ProfilePreview',
   props: {
-    businessTitle: Object,
-    locationPreference: Object,
-    team: Object,
-    timezone: Object,
-    entity: Object,
-    type: String,
-    title: String,
-    content: String,
-    firstName: Object,
-    lastName: Object,
-    pronouns: Object,
-    funTitle: Object,
-    picture: Object,
-    officeLocation: Object,
-    description: Object,
-    created: Object,
-    userId: Object,
+    staffInformation: Object,
+    username: String,
+    primaryEmail: String,
+    phoneNumbers: Object,
+    timezone: String,
+    firstName: String,
+    lastName: String,
+    pronouns: String,
+    funTitle: String,
+    picture: String,
+    location: String,
+    description: String,
+    userId: String,
   },
   components: {
     ContactMe,

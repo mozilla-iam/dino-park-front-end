@@ -66,7 +66,9 @@ export default {
     },
     undoLockFocus() {
       unbindFocusTrap(this.$refs.modalEl);
-      this.lastFocusedElement.focus();
+      if (this.lastFocusedElement) {
+        this.lastFocusedElement.focus();
+      }
       this.focusLocked = false;
     },
     preventBackgroundScrolling() {

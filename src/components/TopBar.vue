@@ -26,7 +26,7 @@
                 <UserMenu v-bind="data.profile"></UserMenu>
               </template>
               <template slot="button-content">
-                <UserPicture :picture="null" :username="data.profile.userId.value" :size="40" dinoType="Staff"></UserPicture>
+                <UserPicture :picture="data.profile.picture" :username="data.profile.username" :size="40" dinoType="Staff"></UserPicture>
               </template>
             </ShowMore>
           </template>

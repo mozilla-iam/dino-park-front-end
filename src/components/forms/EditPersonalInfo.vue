@@ -23,8 +23,6 @@
 </template>
 
 <script>
-import { MUTATE_PROFILE } from '@/queries/profile';
-
 export default {
   name: 'MutateDemo',
   props: {
@@ -35,7 +33,7 @@ export default {
   },
   data() {
     return {
-      mutateProfile: MUTATE_PROFILE,
+      mutateProfile: null,
       done: false,
       firstName: '',
       lastName: '',

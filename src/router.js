@@ -17,19 +17,19 @@ const router = new Router({
       component: PageHome,
     },
     {
-      path: '/p/:userId',
+      path: '/p/:username',
       name: 'Profile',
       component: PageProfile,
       props: true,
     },
     {
-      path: '/o/highlight/:userId/',
+      path: '/o/highlight/:username/',
       name: 'OrgchartHighlight',
       component: PageOrgchart,
       props: true,
     },
     {
-      path: '/o/:userId?',
+      path: '/o/:username?',
       name: 'Orgchart',
       component: PageOrgchart,
       props: true,

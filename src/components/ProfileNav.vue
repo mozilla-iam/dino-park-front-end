@@ -28,7 +28,7 @@ export default {
   },
   methods: {
     watchCurrentSections() {
-      const sections = this.links.map(link => document.getElementById(link.id));
+      const sections = this.links.map(link => document.getElementById(link.id)).filter(e => e !== null);
       const observer = new IntersectionObserver(this.updateCurrent, {
         rootMargin: '-120px',
         treshold: 1,

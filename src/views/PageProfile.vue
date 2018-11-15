@@ -1,11 +1,11 @@
 <template>
-  <ApolloQuery :query="profileQuery" :variables="{ userId }">
+  <ApolloQuery :query="profileQuery" :variables="{ username }">
     <template slot-scope="{ result: { loading, data, error } }">
       <LoadingSpinner v-if="loading"></LoadingSpinner>
       <template v-else-if="error">
         <Error><h2>{{ error.message }}</h2>
           <pre>{{ error }}</pre>
-          <p>An error occured while trying to go to {{ userId }}: </p></Error>
+          <p>An error occured while trying to go to {{ username }}: </p></Error>
         </template>
       <template v-else-if="data">
         <Profile v-bind="data.profile"></Profile>
@@ -29,7 +29,7 @@ export default {
     LoadingSpinner,
   },
   computed: {
-    userId() { return this.$route.params.userId; },
+    username() { return this.$route.params.username; },
   },
   data() {
     return {

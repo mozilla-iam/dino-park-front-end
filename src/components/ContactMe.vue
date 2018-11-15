@@ -2,18 +2,18 @@
   <ShowMore buttonText="Contact me" alternateButtonText="Contact me" :expanded="false" buttonClass="button button--icon-end contact-me__button" :transition="true">
     <template slot="overflow">
       <ul class="contact-me">
-        <li class="contact-me__item">
+        <li v-if="phoneNumber" class="contact-me__item">
           <a href="tel:568-830-0598" class="contact-me__pair">
             <Icon id="phone-forwarded" :width="24" :height="24" />
             <span class="contact-me__key">Call me</span>
-            <span class="contact-me__value">568-830-0598</span>
+            <span class="contact-me__value">{{ phoneNumber }}</span>
           </a>
         </li>
         <li class="contact-me__item">
-          <a href="mailto:hmitsch@mozilla.com" class="contact-me__pair">
+          <a :href="`mailto:${primaryEmail}`" class="contact-me__pair">
             <Icon id="at-sign" :width="24" :height="24" />
             <span class="contact-me__key">Email me</span>
-            <span class="contact-me__value">hmitsch@mozilla.com</span>
+            <span class="contact-me__value">{{ primaryEmail }}</span>
           </a>
         </li>
       </ul>
@@ -57,9 +57,19 @@ import ShowMore from '@/components/functional/ShowMore.vue';
 
 export default {
   name: 'ContactMe',
+  props: {
+    primaryEmail: String,
+    phoneNumbers: Object,
+  },
   components: {
     Icon,
     ShowMore,
+  },
+  data() {
+    const phoneNumber = this.phoneNumbers && this.phoneNumbers['LDAP-1'];
+    return {
+      phoneNumber,
+    };
   },
 };
 </script>
