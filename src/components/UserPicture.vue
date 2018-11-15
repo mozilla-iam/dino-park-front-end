@@ -120,7 +120,7 @@ export default {
       padding: .3em .6em .3em 1.2em;
       border-radius: 1em 0 var(--imageRadius);
     }
-  @media (min-width:50em) {
+  @media (min-width:57.5em) {
     .user-picture--large {
       width: 15em;
       height: 15em;

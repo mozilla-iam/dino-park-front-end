@@ -258,7 +258,7 @@ export default {
 </script>
 
 <style>
-@media (min-width: 50em) {
+@media (min-width: 57.5em) {
   .profile {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -311,7 +311,7 @@ export default {
   padding-top: 5em;
   margin-top: 5em;
 }
-@media(min-width: 50em) {
+@media(min-width: 57.5em) {
   .profile__intro {
     padding: 3em;
     margin-top: 0;
@@ -344,7 +344,7 @@ export default {
     height: 100%;
   }
 }
-@media(min-width:50em) {
+@media(min-width:57.5em) {
   .profile__headshot {
     position: static;
     width: 15em;
@@ -371,7 +371,7 @@ export default {
   position: relative;
 }
 
-@media (min-width: 50em) {
+@media (min-width: 57.5em) {
   .profile__external-accounts {
     display: grid;
     grid-template-columns: 1fr 1fr;

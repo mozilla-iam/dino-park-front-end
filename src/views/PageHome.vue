@@ -31,7 +31,7 @@ export default {
     font-size: 1.5em;
   }
   main {
-    max-width: 50em;
+    max-width: 57.5em;
     margin: 0 auto;
   }
 </style>

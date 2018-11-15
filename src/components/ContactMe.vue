@@ -77,7 +77,7 @@ export default {
     width: calc(100% + 4.5em);
     margin: 0 -2.25em;
   }
-  @media(min-width:50em) {
+  @media(min-width:57.5em) {
     .contact-me {
       left: 50%;
       width: 20em;
