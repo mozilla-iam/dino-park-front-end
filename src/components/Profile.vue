@@ -111,6 +111,9 @@
             <IconBlock heading="Email" subHeading="Mozilla Discourse" icon="mozilla">
               <a href="#">@phls</a>
             </IconBlock>
+            <IconBlock heading="Email" subHeading="Bugzilla" icon="mozilla">
+              <a href="https://bugzilla.com/phls">phls</a>
+            </IconBlock>
           </IconBlockList>
         </div>
         <div>
@@ -121,6 +124,9 @@
             <IconBlock heading="Email" subHeading="LinkedIn" icon="linkedin">
               <a href="mailto:philipp@mozilla.com">philipp@mozilla.com</a>
             </IconBlock>
+            <IconBlock heading="Email" subHeading="Platform with no icon">
+              <a href="https://platform.com/philipp423">philipp423</a>
+            </IconBlock>
         </div>
       </div>
     </section>
@@ -130,7 +136,7 @@
         <h2>Access Groups</h2>
       </header>
       <IconBlockList modifier="icon-block-list--multi-col">
-        <IconBlock v-for="(group, index) in accessInformation.mozilliansorg.values" :key="`group-${index}`" icon="group">
+        <IconBlock v-for="(group, index) in accessInformation.mozilliansorg.values" :key="`group-${index}`" icon="dino">
           {{ group }}
         </IconBlock>
       </IconBlockList>
