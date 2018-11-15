@@ -30,7 +30,7 @@
     </div>
     <ul class="user-menu__items">
       <li>
-        <router-link :to="{ name: 'Profile', params: { userId: username } }">
+        <router-link :to="{ name: 'Profile', params: { username: username } }">
           <span>My profile</span>
           <Icon id="user" :width="24" :height="24" />
         </router-link>

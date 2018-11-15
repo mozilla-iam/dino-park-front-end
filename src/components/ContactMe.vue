@@ -66,12 +66,12 @@ export default {
     ShowMore,
   },
   data() {
-    const ldapNumber = this.phoneNumbers && this.phoneNumbers.filter(({ key }) => key === "LDAP-1")[0];
+    const ldapNumber = this.phoneNumbers && this.phoneNumbers.filter(({ key }) => key === 'LDAP-1')[0];
     const phoneNumber = ldapNumber && ldapNumber.value;
     return {
       phoneNumber,
-    }
-  }
+    };
+  },
 };
 </script>
 

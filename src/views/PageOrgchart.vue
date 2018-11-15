@@ -10,7 +10,7 @@
       <OrgRoot v-else-if="tree" :roots="tree" :trace="trace || ''"></OrgRoot>
       <LoadingSpinner v-else></LoadingSpinner>
     </div>
-    <ApolloQuery v-if="previewUserId" :query="previewProfileQuery" :variables="{ previewUserId }" :tag="null">
+    <ApolloQuery v-if="username" :query="previewProfileQuery" :variables="{ username }" :tag="null">
       <template slot-scope="{ result: { loading, data, error } }">
         <div class="org-chart__preview">
           <LoadingSpinner v-if="loading"></LoadingSpinner>
@@ -66,10 +66,10 @@ export default {
     this.updateView();
   },
   async updated() {
-    const { userId } = this.$route.params;
-    if (userId && this.$route.name === 'OrgchartHighlight') {
+    const { username } = this.$route.params;
+    if (username && this.$route.name === 'OrgchartHighlight') {
       try {
-        const data = await fetch(`/api/v3/orgchart/trace/${userId}`);
+        const data = await fetch(`/api/v3/orgchart/trace/${username}`);
         const trace = await data.json();
         this.trace = trace.trace;
       } catch (e) {
@@ -80,8 +80,8 @@ export default {
     }
   },
   computed: {
-    previewUserId() {
-      return this.$route.params.userId;
+    username() {
+      return this.$route.params.username;
     },
     desktopView() {
       return this.$store.state.profilePreview.desktopView;

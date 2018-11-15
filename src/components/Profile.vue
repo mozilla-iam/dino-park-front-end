@@ -10,10 +10,10 @@
         </div>
       </div>
       <div class="profile__intro-main">
-        <ProfileName :firstName="firstName" :lastName="lastName" :pronouns="pronouns"></ProfileName>
+        <ProfileName :firstName="firstName" :lastName="lastName" :username="username" :pronouns="pronouns"></ProfileName>
         <ProfileTitle :businessTitle="staffInformation.title" :funTitle="funTitle"></ProfileTitle>
         <div class="hide-desktop">
-          <ContactMe></ContactMe>
+          <ContactMe :primaryEmail="primaryEmail" :phoneNumbers="phoneNumbers"></ContactMe>
         </div>
         <ProfileTeamLocation :team="staffInformation.team" :entity="'Mozilla'" :location="location" :officeLocation="staffInformation.officeLocation" :timezone="timezone"></ProfileTeamLocation>
         <h2 class="visually-hidden">About</h2>
@@ -72,31 +72,31 @@
       </header>
       <h3 class="visually-hidden">Contact options</h3>
       <IconBlockList modifier="icon-block-list--multi-col">
-        <IconBlock heading="Phone" subHeading="primary" icon="phone">
-          <a href="+4916093146619">0049 160 93146619</a>
-        </IconBlock>
         <IconBlock heading="Email" subHeading="primary" icon="email">
-          <a href="mailto:psackl@mozilla.com">psackl@mozilla.com</a>
+          <a :href="`mailto:${primaryEmail}`">{{ primaryEmail }}</a>
+        </IconBlock>
+        <IconBlock v-for="(number, index) in phoneNumbers" :key="`phoneNumber-${index}`" heading="Phone" :subHeading="number.key" icon="phone">
+          <a :href="number.value">{{ number.value }}</a>
         </IconBlock>
       </IconBlockList>
       <div v-if="pgpPublicKeys || sshPublicKeys">
         <h3>Keys</h3>
-        <template v-if="pgpPublicKeys.values">
+        <template v-if="pgpPublicKeys && pgpPublicKeys.length > 0">
           <h4 class="visually-hidden">PGP</h4>
           <Key v-for="pgp in pgpPublicKeys"
                type="PGP"
                :title="pgp.key"
                :content="pgp.value"
-               :key="pgp.key" />
+               :key="`pgp-${pgp.key}`" />
         </template>
-        <template v-if="sshPublicKeys">
+        <template v-if="sshPublicKeys && sshPublicKeys.length > 0">
           <h4 class="visually-hidden">SSH</h4>
           <Key
-            v-for="ssh in sshPublicKeys.values"
+            v-for="ssh in sshPublicKeys"
             type="SSH"
             :title="ssh.key"
             :content="ssh.value"
-            :key="ssh.key" />
+            :key="`ssh-${ssh.key}`" />
         </template>
       </div>
       <template v-if="languages && languages.length > 0">
@@ -204,11 +204,9 @@ export default {
     picture: String,
     location: String,
     description: String,
-    created: Object,
-    lastModified: Object,
     pgpPublicKeys: Array,
     sshPublicKeys: Array,
-    tags: Object,
+    tags: Array,
     languages: Array,
     userId: String,
     manager: Object,

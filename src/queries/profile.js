@@ -67,26 +67,33 @@ const PROFILE = gql`query ($username: String!) {
   }
 }`;
 
-const PREVIEW_PROFILE = gql`query ($previewUserId: String!) {
- profile (userId:$previewUserId) {
-    firstName,
-    lastName,
-    funTitle,
-    picture,
-    pronouns,
+const PREVIEW_PROFILE = gql`query ($username: String!) {
+ profile (username:$username) {
     alternativeName,
-    locationPreference,
-    officeLocation,
     description,
-    userId,
-    created,
-    businessTitle,
-    team,
-    entity,
-    locationPreference,
+    dinoId,
+    firstName,
+    funTitle,
+    lastName,
+    location,
+    picture,
+    primaryEmail
+    pronouns,
     timezone,
+    username,
+    phoneNumbers {
+      key,
+      value
+    }
+    staffInformation {
+      staff,
+      team,
+      title,
+      officeLocation,
+    },
   }
 }`;
+
 const USER_MENU_PROFILE = gql`query {
  profile {
     firstName,
@@ -98,58 +105,4 @@ const USER_MENU_PROFILE = gql`query {
   }
 }`;
 
-const PROFILE_LIST = gql`query {
- profiles {
-    userId {
-      value
-    },
-    firstName {
-      value
-    },
-    lastName {
-      value
-    },
-    officeLocation {
-      value
-    },
-    funTitle {
-      value
-    },
-    picture {
-      value
-    }
-  }
-}`;
-
-const MUTATE_PROFILE = gql`mutation updateProfile($userId: String!, $firstName: String, $lastName: String, $primaryEmail: String) {
-  editBasicProfile(
-    userId: $userId,
-    basicProfileData: {
-      firstName: {
-        value: $firstName
-      },
-      lastName: {
-        value: $lastName
-      },
-      primaryEmail: {
-        value: $primaryEmail
-      }
-    }
- )
-  {
-    updatedProfile {
-      firstName {
-        value
-      }
-      lastName {
-        value
-      }
-      primaryEmail {
-        value
-      }
-    }
-  }
-}
-`;
-
-export { PROFILE, PREVIEW_PROFILE, USER_MENU_PROFILE, PROFILE_LIST, MUTATE_PROFILE };
+export { PROFILE, PREVIEW_PROFILE, USER_MENU_PROFILE };

@@ -7,7 +7,7 @@
     </div>
     <div class="profile__location">
       <h3 class="visually-hidden">Location</h3>
-      <div class="location"><strong>{{ location }} ({{ officeLocation }})</strong>{{ timezone }}</div>
+      <div class="location"><strong>{{ location || officeLocation }} {{ location && officeLocation }}</strong>{{ timezone }}</div>
     </div>
   </div>
 </template>

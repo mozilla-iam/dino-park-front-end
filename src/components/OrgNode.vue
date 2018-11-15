@@ -1,11 +1,11 @@
 <template>
-  <li :id="data.user_id" :class="'org-node' + ( data.user_id === this.$route.params.userId ? ' org-node--current' : '')">
-    <router-link :to="{ name: 'Orgchart', params: { userId: data.user_id } }" :id="`org-node-${prefix}`">
+  <li :id="data.user_id" :class="'org-node' + ( data.username === this.$route.params.username ? ' org-node--current' : '')">
+    <router-link :to="{ name: 'Orgchart', params: { username: data.username } }" :id="`org-node-${prefix}`">
       <UserPicture :picture="data.picture" :username="data.user_id" :size="40" dinoType="Staff"></UserPicture>
-      <span class="org-node__name">{{ data.first_name }} {{ data.last_name }}</span>
+      <span class="org-node__name">{{ data.firstName }} {{ data.lastName }}</span>
       <span class="org-node__title">{{ data.title }}</span>
     </router-link>
-    <ShowMore v-if="children.length > 0" :buttonText="`Expand ${data.first_name} ${data.last_name}`" :alternateButtonText="`Collapse ${data.first_name} ${data.last_name}`" :trace="trace" :prefix="prefix" buttonClass="org-node__toggle" :transition="false">
+    <ShowMore v-if="children.length > 0" :buttonText="`Expand ${data.firstName} ${data.lastName}`" :alternateButtonText="`Collapse ${data.firstName} ${data.lastName}`" :trace="trace" :prefix="prefix" buttonClass="org-node__toggle" :transition="false">
       <template slot="overflow">
         <ul v-for="(child, index) in children" :key="index">
           <OrgNode :children="child.children" :data="child.data" :prefix="`${prefix}-${index}`" :trace="trace"></OrgNode>
