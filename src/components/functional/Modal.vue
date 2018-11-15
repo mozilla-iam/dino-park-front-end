@@ -102,7 +102,6 @@ export default {
     opacity: 0;
   }
     .modal__content {
-      max-width: 57.5em;
       width: 100%;
       background: var(--white);
       padding: 1.5em;

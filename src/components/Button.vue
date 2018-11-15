@@ -17,7 +17,7 @@ export default {
 .button {
   text-align: center;
   text-decoration: none;
-  padding: 1em 2.5em;
+  padding: 1em 2em;
   display: block;
   font-family: inherit;
   letter-spacing: 0.05em;

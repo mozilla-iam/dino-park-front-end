@@ -109,7 +109,7 @@ export default {
       this.loading = false;
     },
     updateView() {
-      if (matchMedia('(min-width: 50em)').matches) {
+      if (matchMedia('(min-width: 57.5em)').matches) {
         if (this.$store.state.profilePreview.desktopView !== true) {
           this.$store.commit('toggleProfilePreviewDesktopView', {
             desktopView: true,
