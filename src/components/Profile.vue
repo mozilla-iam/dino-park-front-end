@@ -148,7 +148,7 @@
         <h2>Access Groups</h2>
       </header>
       <IconBlockList modifier="icon-block-list--multi-col">
-        <IconBlock v-for="(group, index) in accessInformation.mozilliansorg" :key="`group-${index}`" icon="group">
+        <IconBlock v-for="(group, index) in accessInformation.mozilliansorg" :key="`group-${index}`" icon="dino">
           {{ group }}
         </IconBlock>
       </IconBlockList>
