@@ -40,7 +40,7 @@ export default {
   }
   .profile__name h1 {
     margin-bottom: 0;
-  } 
+  }
   .profile__pronoun {
     margin-left: 1em;
   }
