@@ -4,12 +4,14 @@
       <ul class="contact-me">
         <li class="contact-me__item">
           <a href="tel:568-830-0598" class="contact-me__pair">
+            <Icon id="phone-forwarded" :width="24" :height="24" />
             <span class="contact-me__key">Call me</span>
             <span class="contact-me__value">568-830-0598</span>
           </a>
         </li>
         <li class="contact-me__item">
           <a href="mailto:hmitsch@mozilla.com" class="contact-me__pair">
+            <Icon id="at-sign" :width="24" :height="24" />
             <span class="contact-me__key">Email me</span>
             <span class="contact-me__value">hmitsch@mozilla.com</span>
           </a>
@@ -50,11 +52,13 @@
 </template>
 
 <script>
+import Icon from '@/components/Icon.vue';
 import ShowMore from '@/components/functional/ShowMore.vue';
 
 export default {
   name: 'ContactMe',
   components: {
+    Icon,
     ShowMore,
   },
 };
@@ -116,6 +120,8 @@ export default {
       flex: none;
       width: 30%;
       padding-right: 1em;
+      font-family: "Zilla Slab", sans-serif;
+      font-size: 1.125em;
     }
     .contact-me__value {
       flex: 1;
