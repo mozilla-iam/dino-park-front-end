@@ -48,6 +48,10 @@ export default {
     .search-result__profile-link {
       text-decoration: none;
     }
+    .search-result .user-picture,
+    .search-result__profile-link {
+      flex: none;
+    }
     .search-result__profile-link::before {
       content: '';
       display: block;
