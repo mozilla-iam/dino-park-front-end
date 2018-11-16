@@ -50,7 +50,7 @@ export default {
     this.decidePictureCategory(this.size);
     this.updateUserPicture();
     return {
-      src: this.picture,
+      src: `/beta/avatar/${this.slot}/${this.picture}`,
     };
   },
   methods: {
@@ -65,10 +65,13 @@ export default {
     decidePictureCategory(size) {
       if (size <= 40) {
         this.dinoTypeSize = 'small';
+        this.slot = 40;
       } else if (size <= 100) {
         this.dinoTypeSize = 'medium';
+        this.slot = 100;
       } else {
         this.dinoTypeSize = 'large';
+        this.slot = 230;
       }
       this.modifier = `user-picture--${this.dinoTypeSize}`;
     },
