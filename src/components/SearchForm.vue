@@ -28,10 +28,6 @@ export default {
       }
     },
   },
-  mounted() {
-    window.scrollTo({ top: 0 });
-    this.$refs.searchQueryField.focus();
-  },
   data() {
     return {
       searchQuery: this.$route.query.query || null,
@@ -82,5 +78,8 @@ export default {
   max-width: none;
   background: var(--white);
   margin-bottom: 1em;
+  position: fixed;
+  z-index: var(--layerTopBar);
+  box-shadow: var(--shadowCard);
 }
 </style>

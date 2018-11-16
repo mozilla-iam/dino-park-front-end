@@ -1,13 +1,13 @@
 <template>
   <li class="search-result">
-    <UserPicture :picture="picture" :username="user_id" cls="search-result__image" :size="40" dinoType="Staff"></UserPicture>
-    <router-link :to="{ name: 'Profile', params: { userId: user_id } }" class="search-result__profile-link">
-      <div class="search-result__name">{{ first_name }} {{ last_name }}</div>
-      <div class="search-result__title">{{ fun_title }}</div>
+    <UserPicture :picture="picture" :username="username" cls="search-result__image" :size="40" dinoType="Staff"></UserPicture>
+    <router-link :to="{ name: 'Profile', params: { username: username } }" class="search-result__profile-link">
+      <div class="search-result__name">{{ firstName }} {{ lastName }}</div>
+      <div class="search-result__title">{{ title || funTitle }}</div>
     </router-link>
-    <router-link :to="{ name: 'OrgchartHighlight', params: { userId: user_id } }" class="search-result__orgchart-link">
+    <router-link :to="{ name: 'OrgchartHighlight', params: { username: username } }" class="search-result__orgchart-link">
       <img src="@/assets/images/org-chart.svg" width="20" alt="" aria-hidden="true" role="presentation" />
-      <span class="visually-hidden">View {{ user_id }} in org chart</span>
+      <span class="visually-hidden">View {{ username }} in org chart</span>
     </router-link>
   </li>
 </template>
@@ -18,10 +18,11 @@ import UserPicture from '@/components/UserPicture.vue';
 export default {
   name: 'SearchResult',
   props: {
-    first_name: String,
-    last_name: String,
-    fun_title: String,
-    user_id: String,
+    firstName: String,
+    lastName: String,
+    funTitle: String,
+    title: String,
+    username: String,
     picture: String,
   },
   components: {
@@ -47,6 +48,10 @@ export default {
     }
     .search-result__profile-link {
       text-decoration: none;
+    }
+    .search-result .user-picture,
+    .search-result__org-chart-link {
+      flex: none;
     }
     .search-result__profile-link::before {
       content: '';
@@ -77,5 +82,6 @@ export default {
       margin-left: auto;
       margin-right: .5em;
       position: relative; /* so that it stacks on top of search result link */
+      line-height: 1; /* avoid extra space underneath image */
     }
 </style>

@@ -1,20 +1,20 @@
 <template>
   <div :class="'person' + ( modifier ? ' ' + modifier : '')">
-    <UserPicture :picture="picture.value" :username="userId.value" :title="firstName.value + ' ' + lastName.value" :size="40" dinoType="Staff" />
-    <router-link :to="{ name: 'Profile', params: { userId: userId.value } }">
+    <UserPicture :picture="picture" :username="username" :title="firstName + ' ' + lastName" :size="40" dinoType="Staff" />
+    <router-link :to="{ name: 'Profile', params: { username } }">
       <div class="person__name-title">
         <div class="person__name">
-            {{ firstName.value }} {{ lastName.value }}
+            {{ firstName }} {{ lastName }}
         </div>
         <div class="person__preferred-title">
-          <template v-if="funTitle">{{ funTitle.value }}</template>
-          <template v-else-if="businessTitle">{{ "businessTitle.value" }}</template>
+          <template v-if="funTitle">{{ funTitle }}</template>
+          <template v-else-if="title">{{ title }}</template>
         </div>
       </div>
     </router-link>
     <div v-if="officeLocation" class="person__location">
       <div v-if="modifier === 'person--wide'" class="person__location-label">Location</div>
-      {{ officeLocation.value }}
+      {{ officeLocation }}
     </div>
   </div>
 </template>
@@ -26,14 +26,14 @@ import UserPicture from '@/components/UserPicture.vue';
 export default {
   name: 'Person',
   props: {
-    businessTitle: Object,
+    title: String,
     modifier: String,
-    userId: Object,
-    firstName: Object,
-    lastName: Object,
-    officeLocation: Object,
-    funTitle: Object,
-    picture: Object,
+    username: String,
+    firstName: String,
+    lastName: String,
+    officeLocation: String,
+    funTitle: String,
+    picture: String,
   },
   components: {
     DinoType,

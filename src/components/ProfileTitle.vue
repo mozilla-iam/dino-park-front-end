@@ -24,7 +24,7 @@ export default {
     font-weight: 400;
     font-size: 1.25em;
   }
-  @media(min-width:37.5em) {
+  @media(min-width:42em) {
     .profile__hr-title {
       font-size: 1.425em;
     }
@@ -33,7 +33,7 @@ export default {
     color: var(--gray-60);
     font-size: 1.125em;
   }
-@media(min-width:50em) {
+@media(min-width:57.5em) {
   .profile__title {
     text-align: left;
   }

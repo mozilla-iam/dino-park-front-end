@@ -66,7 +66,9 @@ export default {
     },
     undoLockFocus() {
       unbindFocusTrap(this.$refs.modalEl);
-      this.lastFocusedElement.focus();
+      if (this.lastFocusedElement) {
+        this.lastFocusedElement.focus();
+      }
       this.focusLocked = false;
     },
     preventBackgroundScrolling() {
@@ -102,7 +104,6 @@ export default {
     opacity: 0;
   }
     .modal__content {
-      max-width: 50em;
       width: 100%;
       background: var(--white);
       padding: 1.5em;
@@ -123,7 +124,7 @@ export default {
       border: 1px solid var(--midGrey);
       position: relative;
     }
-    @media (min-width: 50em) {
+    @media (min-width: 57.5em) {
       .modal__header {
         padding: 3em 1em 1em;
       }

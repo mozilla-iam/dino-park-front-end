@@ -2,16 +2,18 @@
   <ShowMore buttonText="Contact me" alternateButtonText="Contact me" :expanded="false" buttonClass="button button--icon-end contact-me__button" :transition="true">
     <template slot="overflow">
       <ul class="contact-me">
-        <li class="contact-me__item">
+        <li v-if="phoneNumber" class="contact-me__item">
           <a href="tel:568-830-0598" class="contact-me__pair">
+            <Icon id="phone-forwarded" :width="24" :height="24" />
             <span class="contact-me__key">Call me</span>
-            <span class="contact-me__value">568-830-0598</span>
+            <span class="contact-me__value">{{ phoneNumber }}</span>
           </a>
         </li>
         <li class="contact-me__item">
-          <a href="mailto:hmitsch@mozilla.com" class="contact-me__pair">
+          <a :href="`mailto:${primaryEmail}`" class="contact-me__pair">
+            <Icon id="at-sign" :width="24" :height="24" />
             <span class="contact-me__key">Email me</span>
-            <span class="contact-me__value">hmitsch@mozilla.com</span>
+            <span class="contact-me__value">{{ primaryEmail }}</span>
           </a>
         </li>
       </ul>
@@ -50,12 +52,24 @@
 </template>
 
 <script>
+import Icon from '@/components/Icon.vue';
 import ShowMore from '@/components/functional/ShowMore.vue';
 
 export default {
   name: 'ContactMe',
+  props: {
+    primaryEmail: String,
+    phoneNumbers: Object,
+  },
   components: {
+    Icon,
     ShowMore,
+  },
+  data() {
+    const phoneNumber = this.phoneNumbers && this.phoneNumbers['LDAP-1'];
+    return {
+      phoneNumber,
+    };
   },
 };
 </script>
@@ -72,12 +86,13 @@ export default {
     left: 0;
     width: calc(100% + 4.5em);
     margin: 0 -2.25em;
+    color: var(--gray-60);
   }
-  @media(min-width:50em) {
+  @media(min-width:57.5em) {
     .contact-me {
       left: 50%;
-      width: 20em;
-      margin: 0 .5em 0 -10em;
+      width: 24em;
+      margin: 0 .5em 0 -12em;
     }
   }
     .contact-me::before {
@@ -97,10 +112,9 @@ export default {
       padding-left: 0;
       background-color: var(--white);
       position: relative;
-      border-top: 1px solid var(--gray-30);
     }
-    .contact-me__item:first-child {
-      border-top: 0;
+    .contact-me__item:nth-child(even) {
+      background-color: var(--gray-10);
     }
     .contact-me__pair {
       display: flex;
@@ -108,21 +122,32 @@ export default {
       color: inherit;
       padding: .5em;
       min-width: 20em;
+      max-width: 30em;
+      align-items: center;
+      font-size: 1.125em;
     }
     .contact-me__pair:hover {
-      background-color: var(--gray-30);
+      background-color: var(--gray-20);
     }
     .contact-me__key {
       flex: none;
       width: 30%;
       padding-right: 1em;
+      font-family: "Zilla Slab", sans-serif;
     }
     .contact-me__value {
       flex: 1;
       color: var(--blue-60);
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .contact-me__button {
       margin: 0 auto;
       margin-bottom: 2em;
+    }
+    .contact-me svg {
+      color: var(--gray-60);
+      transform: scale(0.75);
+      margin-right: .5em;
     }
 </style>

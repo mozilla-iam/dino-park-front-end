@@ -1,78 +1,35 @@
 import { gql } from 'apollo-boost';
 
-const PROFILE = gql`query ($userId: String!) {
- profile (userId:$userId) {
-    firstName {
-      value
-    },
-    lastName {
-      value
-    },
-    funTitle {
-      value
-    },
-    picture {
-      value
-    },
-    pronouns {
-      value
-    },
-    alternativeName {
-      value
-    },
-    locationPreference {
-      value
-    },
-    officeLocation {
-      value
-    },
-    description {
-      value
-    },
-    userId {
-      value
-    },
-    created {
-      value
-    },
-    lastModified {
-      value
-    },
-    pgpPublicKeys {
-      values
-    },
-    sshPublicKeys {
-      values
-    },
-    tags {
-      values
-    },
-    preferredLanguage {
-      values
-    },
-    businessTitle {
-      value
-    },
-    team {
-      value
-    },
-    entity {
-      value
-    },
-    locationPreference {
-      value
-    },
-    timezone {
-      value
-    },
-    workerType {
-      value
-    },
-    wprDeskNumber {
-      value
-    },
-    costCenter {
-      value
+const PROFILE = gql`query ($username: String!) {
+ profile (username:$username) {
+    alternativeName,
+    created,
+    description,
+    dinoId,
+    firstName,
+    funTitle,
+    lastModified,
+    lastName,
+    location,
+    pgpPublicKeys,
+    picture,
+    languages,
+    primaryEmail
+    pronouns,
+    sshPublicKeys,
+    tags,
+    timezone,
+    uris,
+    username,
+    phoneNumbers,
+    staffInformation {
+      staff,
+      team,
+      title,
+      workerType,
+      wprDeskNumber,
+      costCenter,
+      officeLocation,
     },
     manager {
       userId
@@ -82,6 +39,7 @@ const PROFILE = gql`query ($userId: String!) {
       title
       funTitle
       location
+      username
     },
     directs {
       userId
@@ -91,139 +49,47 @@ const PROFILE = gql`query ($userId: String!) {
       title
       funTitle
       location
+      username
     },
     accessInformation {
-      mozilliansorg {
-        values
-      }
+      mozilliansorg,
     },
   }
 }`;
 
-const PREVIEW_PROFILE = gql`query ($previewUserId: String!) {
- profile (userId:$previewUserId) {
-    firstName {
-      value
-    },
-    lastName {
-      value
-    },
-    funTitle {
-      value
-    },
-    picture {
-      value
-    },
-    pronouns {
-      value
-    },
-    alternativeName {
-      value
-    },
-    locationPreference {
-      value
-    },
-    officeLocation {
-      value
-    },
-    description {
-      value
-    },
-    userId {
-      value
-    },
-    created {
-      value
-    },
-    businessTitle {
-      value
-    },
-    team {
-      value
-    },
-    entity {
-      value
-    },
-    locationPreference {
-      value
-    },
-    timezone {
-      value
+const PREVIEW_PROFILE = gql`query ($username: String!) {
+ profile (username:$username) {
+    alternativeName,
+    description,
+    dinoId,
+    firstName,
+    funTitle,
+    lastName,
+    location,
+    picture,
+    primaryEmail
+    pronouns,
+    timezone,
+    username,
+    phoneNumbers,
+    staffInformation {
+      staff,
+      team,
+      title,
+      officeLocation,
     },
   }
 }`;
+
 const USER_MENU_PROFILE = gql`query {
  profile {
-    firstName {
-      value
-    },
-    lastName {
-      value
-    },
-    picture {
-      value
-    },
-    userId {
-      value
-    },
-    primaryEmail {
-      value
-    },
+    firstName,
+    lastName,
+    picture,
+    dinoId,
+    username,
+    primaryEmail,
   }
 }`;
 
-const PROFILE_LIST = gql`query {
- profiles {
-    userId {
-      value
-    },
-    firstName {
-      value
-    },
-    lastName {
-      value
-    },
-    officeLocation {
-      value
-    },
-    funTitle {
-      value
-    },
-    picture {
-      value
-    }
-  }
-}`;
-
-const MUTATE_PROFILE = gql`mutation updateProfile($userId: String!, $firstName: String, $lastName: String, $primaryEmail: String) {
-  editBasicProfile(
-    userId: $userId,
-    basicProfileData: {
-      firstName: {
-        value: $firstName
-      },
-      lastName: {
-        value: $lastName
-      },
-      primaryEmail: {
-        value: $primaryEmail
-      }
-    }
- )
-  {
-    updatedProfile {
-      firstName {
-        value
-      }
-      lastName {
-        value
-      }
-      primaryEmail {
-        value
-      }
-    }
-  }
-}
-`;
-
-export { PROFILE, PREVIEW_PROFILE, USER_MENU_PROFILE, PROFILE_LIST, MUTATE_PROFILE };
+export { PROFILE, PREVIEW_PROFILE, USER_MENU_PROFILE };

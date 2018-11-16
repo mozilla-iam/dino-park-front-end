@@ -23,7 +23,7 @@ export default {
     padding: 0;
     margin: 0 -1em;
   }
-  @media(min-width:50em) {
+  @media(min-width:57.5em) {
     .search-result-list {
       margin: 0;
     }

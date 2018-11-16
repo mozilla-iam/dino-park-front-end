@@ -1,7 +1,7 @@
 <template>
   <div class="profile__name">
     <h1>{{ firstName }} {{ lastName }} </h1>
-    <span class="profile__user-name">@phlsa</span>
+    <span class="profile__user-name">{{ username }}</span>
       <span class="profile__pronoun">{{ pronouns }}</span>
   </div>
 </template>
@@ -12,6 +12,7 @@ export default {
   props: {
     firstName: String,
     lastName: String,
+    username: String,
     pronouns: String,
   },
 };
@@ -34,7 +35,7 @@ export default {
     font-size: 1.25em;
     color: var(--gray-50);
   }
-@media(min-width:50em) {
+@media(min-width:57.5em) {
   .profile__name {
     text-align: left;
   }
