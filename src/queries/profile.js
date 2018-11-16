@@ -5,7 +5,6 @@ const PROFILE = gql`query ($username: String!) {
     alternativeName,
     created,
     description,
-    dinoId,
     firstName,
     funTitle,
     lastModified,
@@ -61,7 +60,6 @@ const PREVIEW_PROFILE = gql`query ($username: String!) {
  profile (username:$username) {
     alternativeName,
     description,
-    dinoId,
     firstName,
     funTitle,
     lastName,
@@ -86,7 +84,6 @@ const USER_MENU_PROFILE = gql`query {
     firstName,
     lastName,
     picture,
-    dinoId,
     username,
     primaryEmail,
   }
