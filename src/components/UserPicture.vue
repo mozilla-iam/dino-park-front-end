@@ -60,6 +60,8 @@ export default {
           const identicon = new Identicon(hash, { size: this.size, format: 'svg' });
           this.src = `data:image/svg+xml;base64,${identicon.toString()}`;
         });
+      } else {
+        this.src = `/beta/avatar/${this.slot}/${this.picture}`;
       }
     },
     decidePictureCategory(size) {
