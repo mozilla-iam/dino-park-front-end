@@ -29,6 +29,9 @@ export default {
     background-size: auto 8em;
     border-radius: var(--cardRadius);
   }
+  .org-root ~ .org-root {
+    margin-top: 4em;
+  }
   @media(min-width:57.5em) {
     .org-root {
       box-shadow: var(--shadowCard);
