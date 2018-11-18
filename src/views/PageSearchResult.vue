@@ -48,7 +48,7 @@ export default {
       this.post = null;
       this.loading = true;
       try {
-        const data = await fetch(`/api/v3/search/simple/${this.$route.query.query}`);
+        const data = await fetch(`/api/v3/search/simple/${this.$route.query.query}?w=${this.$route.query.scope}`);
         const results = await data.json();
         this.results = results;
       } catch (e) {

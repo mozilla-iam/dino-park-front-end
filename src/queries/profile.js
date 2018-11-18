@@ -31,7 +31,6 @@ const PROFILE = gql`query ($username: String!) {
       officeLocation,
     },
     manager {
-      userId
       firstName
       lastName
       picture
@@ -41,7 +40,6 @@ const PROFILE = gql`query ($username: String!) {
       username
     },
     directs {
-      userId
       firstName
       lastName
       picture

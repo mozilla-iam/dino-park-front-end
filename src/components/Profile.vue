@@ -15,7 +15,7 @@
         <div class="hide-desktop">
           <ContactMe :primaryEmail="primaryEmail" :phoneNumbers="phoneNumbers"></ContactMe>
         </div>
-        <ProfileTeamLocation :team="staffInformation.team" :entity="'Mozilla'" :location="location" :officeLocation="staffInformation.officeLocation" :timezone="timezone"></ProfileTeamLocation>
+        <ProfileTeamLocation :team="staffInformation.team" :entity="company(staffInformation, primaryEmail)" :location="location" :officeLocation="staffInformation.officeLocation" :timezone="timezone"></ProfileTeamLocation>
         <h2 class="visually-hidden">About</h2>
         <div class="profile__description">
           <p>{{ description }}</p>
@@ -39,7 +39,7 @@
       </div>
     </section>
     <ProfileNav :links="profileNav"></ProfileNav>
-    <section v-if="manager || directs.length > 0" class="profile__section">
+    <section v-if="staffInformation.staff" class="profile__section">
       <a id="nav-relations" class="profile__anchor"></a>
       <header class="profile__section-header">
         <h2>Relations</h2>
@@ -62,7 +62,7 @@
         </svg>
         </router-link>
       </header>
-      <ReportingStructure :manager="manager" :directs="directs">
+      <ReportingStructure v-if="manager || directs.length > 0" :manager="manager" :directs="directs">
       </ReportingStructure>
     </section>
     <section class="profile__section">
@@ -108,52 +108,42 @@
         </div>
       </template>
     </section>
-    <section class="profile__section">
+    <section v-if="sections.accounts" class="profile__section">
       <a id="nav-other-accounts" class="profile__anchor"></a>
       <header class="profile__section-header">
         <h2>Other accounts</h2>
       </header>
       <div class="profile__external-accounts">
-        <div>
+        <div v-if="accounts.mozilla.length">
           <h3>Mozilla</h3>
           <IconBlockList>
-            <IconBlock heading="Email" subHeading="Mozilla Reps ReMo" icon="mozilla">
-              <a href="#">@phls</a>
-            </IconBlock>
-            <IconBlock heading="Email" subHeading="Mozilla Discourse" icon="mozilla">
-              <a href="#">@phls</a>
-            </IconBlock>
-            <IconBlock heading="Email" subHeading="Bugzilla" icon="mozilla">
-              <a href="https://bugzilla.com/phls">phls</a>
+            <IconBlock v-for="(acc, index) in accounts.mozilla" :key="`acc-moz-${index}`" :heading="acc.text" :icon="acc.icon">
+              <a href="#">{{ acc.value }}</a>
             </IconBlock>
           </IconBlockList>
         </div>
-        <div>
+        <div v-if="accounts.other.length">
           <h3>Elsewhere</h3>
-            <IconBlock heading="Email" subHeading="GitHub" icon="github">
-              <a href="#">@phls</a>
+          <IconBlockList>
+            <IconBlock v-for="(acc, index) in accounts.other" :key="`acc-other-${index}`" :heading="acc.text" :icon="acc.icon">
+              <a href="#">{{ acc.value }}</a>
             </IconBlock>
-            <IconBlock heading="Email" subHeading="LinkedIn" icon="linkedin">
-              <a href="mailto:philipp@mozilla.com">philipp@mozilla.com</a>
-            </IconBlock>
-            <IconBlock heading="Email" subHeading="Platform with no icon">
-              <a href="https://platform.com/philipp423">philipp423</a>
-            </IconBlock>
+          </IconBlockList>
         </div>
       </div>
     </section>
-    <section class="profile__section">
+    <section v-if="Object.keys(accessInformation.mozilliansorg || {}).length > 0" class="profile__section">
       <a id="nav-access-groups" class="profile__anchor"></a>
       <header class="profile__section-header">
         <h2>Access Groups</h2>
       </header>
       <IconBlockList modifier="icon-block-list--multi-col">
-        <IconBlock v-for="(group, index) in accessInformation.mozilliansorg" :key="`group-${index}`" icon="dino">
+        <IconBlock v-for="[group] in Object.entries(accessInformation.mozilliansorg)" :key="`group-${group}`" icon="dino">
           {{ group }}
         </IconBlock>
       </IconBlockList>
     </section>
-    <section class="profile__section">
+    <section v-if="(tags || []).length > 0" class="profile__section">
       <a id="nav-tags" class="profile__anchor"></a>
       <header class="profile__section-header">
         <h2>Tags</h2>
@@ -185,10 +175,15 @@ import ShowMore from '@/components/functional/ShowMore.vue';
 import Tag from '@/components/Tag.vue';
 import Vouch from '@/components/Vouch.vue';
 
+// mixins
+import CompanyMixin from '@/components/mixins/CompanyMixin.vue';
+import AccountsMixin from '@/components/mixins/AccountsMixin.vue';
+
 // forms
 import EditPersonalInfo from '@/components/forms/EditPersonalInfo.vue';
 
 export default {
+  mixins: [CompanyMixin, AccountsMixin],
   name: 'Profile',
   props: {
     staffInformation: Object,
@@ -211,6 +206,7 @@ export default {
     manager: Object,
     directs: Array,
     accessInformation: Object,
+    uris: Object,
   },
   components: {
     Button,
@@ -233,6 +229,23 @@ export default {
     ShowMore,
     Tag,
     Vouch,
+  },
+  computed: {
+    accounts() {
+      const wellKnown = Object.entries(this.uris || {})
+        .map(kv => this.account(kv))
+        .filter(a => a !== null);
+      const mozilla = wellKnown.filter(({ moz }) => moz);
+      const other = wellKnown.filter(({ moz }) => !moz);
+      return { mozilla, other };
+    },
+    sections() {
+      return {
+        relations: this.staffInformation.staff,
+        contact: true,
+        accounts: this.accounts.mozilla.length + this.accounts.other.length > 0,
+      };
+    },
   },
   data() {
     return {

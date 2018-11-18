@@ -7,7 +7,8 @@
         <pre>{{ error }}</pre>
         <p>An error occured while trying to go to load the org chart.</p>
       </Error>
-      <OrgRoot v-else-if="tree" :roots="tree" :trace="trace || ''"></OrgRoot>
+      <OrgRoot v-if="tree" :roots="tree" :trace="trace || ''"></OrgRoot>
+      <OrgRoot v-if="loose" :roots="loose" :trace="looseTrace || ''"></OrgRoot>
       <LoadingSpinner v-else></LoadingSpinner>
     </div>
     <ApolloQuery v-if="username" :query="previewProfileQuery" :variables="{ username }" :tag="null">
@@ -56,7 +57,10 @@ export default {
       loading: false,
       post: null,
       error: null,
+      tree: [],
+      loose: [],
       trace: '',
+      looseTrace: '',
       previewProfileQuery: PREVIEW_PROFILE,
     };
   },
@@ -70,8 +74,14 @@ export default {
     if (username && this.$route.name === 'OrgchartHighlight') {
       try {
         const data = await fetch(`/api/v3/orgchart/trace/${username}`);
-        const trace = await data.json();
-        this.trace = trace.trace;
+        const { trace } = await data.json();
+        if (trace.startsWith('-1-')) {
+          this.looseTrace = trace.substr(3);
+          this.trace = '';
+        } else {
+          this.looseTrace = '';
+          this.trace = trace;
+        }
       } catch (e) {
         this.error = e;
       }
@@ -101,8 +111,9 @@ export default {
       this.loading = true;
       try {
         const data = await fetch('/api/v3/orgchart');
-        const tree = await data.json();
-        this.tree = tree;
+        const orgchart = await data.json();
+        this.tree = orgchart.forrest;
+        this.loose = orgchart.loose;
       } catch (e) {
         this.error = e;
       }

@@ -1,5 +1,5 @@
 <template>
-  <form ref="searchScopeForm" class="search-scope" method="GET" :action="this.$router.resolve({
+  <form id="search-scope-form" ref="searchScopeForm" class="search-scope" method="GET" :action="this.$router.resolve({
     name: 'Search',
     query: {
       query: currentQuery,
@@ -10,7 +10,7 @@
       <legend class="visually-hidden">Set search scope</legend>
       <input type="hidden" name="query" :value="currentQuery" />
       <div class="search-scope__choices">
-        <input id="search-scope-all" type="radio" name="scope" value="all" v-model="scope" >
+        <input id="search-scope-all" type="radio" name="scope" value="all" v-model="scope">
         <label for="search-scope-all">All</label>
         <input id="search-scope-staff" type="radio" name="scope" value="staff" v-model="scope">
         <label for="search-scope-staff">Staff</label>
@@ -27,7 +27,7 @@ export default {
   name: 'SearchScope',
   data() {
     return {
-      scope: this.$route.query.scope || null,
+      scope: this.$route.query.scope || 'all',
     };
   },
   computed: {
@@ -45,6 +45,13 @@ export default {
         },
       });
     },
+  },
+  mounted() {
+    const inputs = document.querySelectorAll('.search-scope__choices input');
+    const form = document.getElementById('search-scope-form');
+    inputs.forEach((input) => {
+      input.addEventListener('change', () => form.submit());
+    });
   },
 };
 </script>
