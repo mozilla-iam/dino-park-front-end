@@ -78,7 +78,7 @@ const PREVIEW_PROFILE = gql`query ($username: String!) {
 }`;
 
 const USER_MENU_PROFILE = gql`query {
- profile {
+ userMenu {
     firstName,
     lastName,
     picture,
