@@ -42,6 +42,9 @@ export default {
   created() {
     this.fetchData();
   },
+  watch: {
+    '$route': 'fetchData'
+  },
   methods: {
     async fetchData() {
       this.error = null;

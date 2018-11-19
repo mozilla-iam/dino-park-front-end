@@ -1,5 +1,5 @@
 <template>
-  <form :class="'search-form' + ( modifier ? ' ' + modifier : '')" :action="this.$router.resolve({ name: 'Search', query: { query: searchQuery }}).href" @submit="preventEmptySubmit" method="GET">
+  <form :class="'search-form' + ( modifier ? ' ' + modifier : '')" :action="this.$router.resolve({ name: 'Search', query: { query: searchQuery }}).href" @submit="handleSubmit" method="GET">
     <fieldset>
       <legend class="visually-hidden">Search</legend>
       <div class="search-form__fields">
@@ -21,10 +21,19 @@ export default {
     modifier: String,
   },
   methods: {
-    preventEmptySubmit(event) {
-      if (!this.$refs.searchQueryField.value) {
-        event.preventDefault();
+    handleSubmit(event) {
+      event.preventDefault();
+
+      if (!this.searchQuery.length > 0) {
         this.$refs.searchQueryField.focus();
+      }
+      else {
+        this.$router.push({
+          name: 'Search',
+          query: {
+            query: this.searchQuery,
+          },
+        });
       }
     },
   },
