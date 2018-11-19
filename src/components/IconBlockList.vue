@@ -15,10 +15,12 @@ export default {
 
 <style>
 .icon-block-list {
-  padding-left: 0;
+  padding-left: 1em;
 }
+@media (min-width: 50em) {
   .icon-block-list--multi-col {
     columns: 2;
     column-gap: 2em;
   }
+}
 </style>

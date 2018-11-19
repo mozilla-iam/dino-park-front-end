@@ -46,13 +46,6 @@ export default {
       });
     },
   },
-  mounted() {
-    const inputs = document.querySelectorAll('.search-scope__choices input');
-    const form = document.getElementById('search-scope-form');
-    inputs.forEach((input) => {
-      input.addEventListener('change', () => form.submit());
-    });
-  },
 };
 </script>
 

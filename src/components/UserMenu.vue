@@ -135,6 +135,7 @@ export default {
       border-bottom: 1px solid var(--gray-50);
       display: flex;
       position: relative;
+      flex: none;
     }
       .user-menu__close-avatar,
       .user-menu__close-button {
