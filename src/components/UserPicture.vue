@@ -1,6 +1,6 @@
 <template>
   <div :class="'user-picture' + ( modifier ? ' ' + modifier : '')">
-    <img :class="cls" :src="src" alt="" :width="size" :title="title" role="presentation" aria-hidden="true">
+    <img :class="cls" :src="src" alt="" :width="size" role="presentation" aria-hidden="true">
     <DinoType v-if="dinoType" :type="dinoType" :size="dinoTypeSize" />
   </div>
 </template>
@@ -34,7 +34,6 @@ export default {
     size: Number,
     picture: String,
     username: String,
-    title: String,
     cls: String,
     dinoType: String,
   },

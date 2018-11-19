@@ -1,7 +1,7 @@
 <template>
   <div :class="'person' + ( modifier ? ' ' + modifier : '')">
-    <UserPicture :picture="picture" :username="username" :title="firstName + ' ' + lastName" :size="40" dinoType="Staff" />
-    <router-link :to="{ name: 'Profile', params: { username } }">
+    <UserPicture :picture="picture" :username="username" :size="40" dinoType="Staff" />
+    <router-link :to="{ name: 'Profile', params: { username } }" :title="`${firstName} ${lastName}`">
       <div class="person__name-title">
         <div class="person__name">
             {{ firstName }} {{ lastName }}
