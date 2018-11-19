@@ -15,6 +15,7 @@ export default {
   .card-row {
     overflow-x: auto;
     max-width: 100%;
+    max-width: calc(100vw - 2em);
     white-space: nowrap;
     display: flex;
   }
@@ -23,8 +24,13 @@ export default {
       flex-direction: column;
       margin-right: 2em;
       margin-bottom: 1em;
-      width: 22.666em;
+      width: 75vw;
       flex: none;
       white-space: normal;
+    }
+    @media (min-width: 50em) {
+      .card-row .card {
+        width: 22.666em;
+      }
     }
 </style>
