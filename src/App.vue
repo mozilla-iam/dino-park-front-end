@@ -147,9 +147,15 @@ export default {
     }
 
   .visually-hidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
     position: absolute;
-    left: -9999em;
-    top: -9999em;
+    white-space: nowrap;
   }
 
   /* best only use these classes on elements that
