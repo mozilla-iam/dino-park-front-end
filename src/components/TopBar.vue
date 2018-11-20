@@ -23,10 +23,10 @@
           <template v-else-if="data">
             <ShowMore buttonText="Open user menu" alternateButtonText="Close user menu" buttonClass="top-bar__user-menu-toggle" :expanded="false" v-on:close-user-menu="closeUserMenu()" ref="showMoreEl">
               <template slot="overflow">
-                <UserMenu v-bind="data.profile"></UserMenu>
+                <UserMenu v-bind="data.userMenu"></UserMenu>
               </template>
               <template slot="button-content">
-                <UserPicture :picture="data.profile.picture" :username="data.profile.username" :size="40" dinoType="Staff"></UserPicture>
+                <UserPicture :picture="data.userMenu.picture" :username="data.userMenu.username" :size="40" dinoType="Staff"></UserPicture>
               </template>
             </ShowMore>
           </template>

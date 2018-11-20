@@ -234,7 +234,7 @@ export default {
     accounts() {
       const wellKnown = Object.entries(this.uris || {})
         .map(kv => this.account(kv))
-        .filter(a => a !== null);
+        .filter(a => a !== null && typeof a !== 'undefined');
       const mozilla = wellKnown.filter(({ moz }) => moz);
       const other = wellKnown.filter(({ moz }) => !moz);
       return { mozilla, other };

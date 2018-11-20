@@ -41,7 +41,7 @@ export default {
       background: var(--white);
       padding: .75em 3em;
       color: var(--gray-50);
-      position: absolute; 
+      position: absolute;
       top: -2.5em;
       line-height: 1;
       width: 100%;

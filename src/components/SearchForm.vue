@@ -26,8 +26,7 @@ export default {
 
       if (!this.searchQuery.length > 0) {
         this.$refs.searchQueryField.focus();
-      }
-      else {
+      } else {
         this.$router.push({
           name: 'Search',
           query: {
