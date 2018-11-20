@@ -171,6 +171,9 @@ export default {
     .user-menu__log-out:hover {
       color: var(--gray-40);
     }
+    .user-menu__faux-link.user-menu__log-out:hover {
+      color: var(--gray-50);
+    }
     .user-menu__header-name,
     .user-menu__header-email,
     .user-menu a span {
