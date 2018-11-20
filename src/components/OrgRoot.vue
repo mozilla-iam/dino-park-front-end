@@ -33,10 +33,21 @@ export default {
     border-radius: var(--cardRadius);
     position: relative;
   }
+  @media(min-width:57.5em) {
+    .org-root {
+      box-shadow: var(--shadowCard);
+      margin: 0;
+    }
+  }
+    .org-root ul {
+      padding: 0;
+      margin: 0;
+    }
+
   .org-root--loose {
     margin-top: 5em;
   }
-    .org-root > h2 {
+    .org-root--loose > h2 {
       font-size: 1em;
       background: var(--white);
       padding: .75em 3em;
@@ -48,16 +59,6 @@ export default {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-    }
-  @media(min-width:57.5em) {
-    .org-root {
-      box-shadow: var(--shadowCard);
-      margin: 0;
-    }
-  }
-    .org-root ul {
-      padding: 0;
-      margin: 0;
     }
 
 </style>
