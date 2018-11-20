@@ -62,7 +62,7 @@ export default {
   }
      .search-form__fields input,
      .search-form__fields button {
-       font-size: inherit;
+       font-size: 1.15em;
        border: 1px solid var(--gray-30);
        padding: .5em;
        background-color: var(--white);
