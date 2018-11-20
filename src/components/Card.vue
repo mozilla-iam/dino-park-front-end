@@ -36,6 +36,9 @@ export default {
     .card h2 > a {
       color: inherit;
       text-decoration: none;
+      display: inline;
+      border-bottom: 2px solid transparent;
+      transition: border-bottom-color .1s ease-in-out;
     }
     .card h2 > a::after {
       content: '';
@@ -44,6 +47,15 @@ export default {
       left: 0;
       right: 0;
       bottom: 0;
+      transition: box-shadow  .1s ease-in-out;
+    }
+    .card h2 > a:hover,
+    .card h2 > a:focus {
+      border-bottom: 2px solid var(--black);
+    }
+    .card h2 > a:hover::after,
+    .card h2 > a:focus::after {
+      box-shadow: 0 0 0 4px var(--gray-30);
     }
     .card__icon {
       padding: 4em;
