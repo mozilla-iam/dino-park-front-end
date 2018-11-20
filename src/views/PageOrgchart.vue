@@ -145,7 +145,7 @@ export default {
   .org-chart {
     padding: 2em;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 45em 1fr;
     grid-template-rows: auto 1fr;
     align-items: start;
     grid-gap: 2em;

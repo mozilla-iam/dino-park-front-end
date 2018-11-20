@@ -27,7 +27,7 @@ export default {
 <style>
   .org-root {
     width: 100%;
-    max-width: 40em;
+    max-width: 45em;
     background-image: linear-gradient(var(--gray-10) 0, var(--gray-10) 50%, #fff 50%);
     background-size: auto 8em;
     border-radius: var(--cardRadius);
