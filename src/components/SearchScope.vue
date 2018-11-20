@@ -80,4 +80,7 @@ export default {
     border-radius: 0 2em 2em 0;
     padding-right: 1.5em;
   }
+  .search-scope + p {
+    text-align: center;
+  }
 </style>

@@ -86,6 +86,15 @@ export default {
 }
   .user-picture img {
     border-radius: var(--imageRadius);
+    max-height: 100%;
+  }
+  @supports (object-fit: cover) {
+    .user-picture img {
+      width: 100%;
+      height: 100%;
+      max-height: none;
+      object-fit: cover;
+    }
   }
   .user-picture .dino-type {
     position: absolute;

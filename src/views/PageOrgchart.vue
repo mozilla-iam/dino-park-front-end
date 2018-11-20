@@ -7,8 +7,8 @@
         <pre>{{ error }}</pre>
         <p>An error occured while trying to go to load the org chart.</p>
       </Error>
-      <OrgRoot v-if="tree" :roots="tree" :trace="trace || ''"></OrgRoot>
-      <OrgRoot v-if="loose" :roots="loose" :trace="looseTrace || ''" heading="People who need their manager set" modifier="org-chart--loose"></OrgRoot>
+      <OrgRoot v-if="tree && !loading" :roots="tree" :trace="trace || ''"></OrgRoot>
+      <OrgRoot v-if="loose && !loading" :roots="loose" :trace="looseTrace || ''" heading="People who need their manager set" modifier="org-root--loose"></OrgRoot>
       <LoadingSpinner v-else></LoadingSpinner>
     </div>
     <ApolloQuery v-if="username" :query="previewProfileQuery" :variables="{ username }" :tag="null">
@@ -145,10 +145,11 @@ export default {
   .org-chart {
     padding: 2em;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 45em 1fr;
     grid-template-rows: auto 1fr;
     align-items: start;
     grid-gap: 2em;
+    max-width: 82em;
   }
   .org-chart::after /* so that there is space taken up underneath the preview, that is as much as the org chart column takes up in total. This lets us use position:sticky on the profile preview */ {
     content: "";

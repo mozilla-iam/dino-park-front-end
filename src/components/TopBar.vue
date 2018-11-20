@@ -36,7 +36,7 @@
         </template>
       </ApolloQuery>
     </div>
-    <SearchForm modifier="search-form--small hide-desktop" v-if="mobileSearchOpen" id="mobile-search"></SearchForm>
+    <SearchForm modifier="search-form--small hide-desktop" v-if="mobileSearchOpen" id="mobile-search" v-on:close-search-form="closeMobileSearchForm()"></SearchForm>
   </header>
 </template>
 
@@ -60,6 +60,9 @@ export default {
   methods: {
     closeUserMenu() {
       this.$refs.showMoreEl.expanded = false;
+    },
+    closeMobileSearchForm() {
+      this.mobileSearchOpen = false;
     },
     toggleMobileSearch() {
       this.mobileSearchOpen = !this.mobileSearchOpen;
@@ -124,7 +127,7 @@ export default {
     background: black;
     width: 100%;
     position: absolute;
-    bottom: -0.5em;
+    bottom: -0.75em;
     left: 0;
   }
 }

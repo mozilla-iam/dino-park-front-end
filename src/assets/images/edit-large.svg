@@ -4,9 +4,9 @@
     </defs>
     <g fill="none" fill-rule="evenodd" transform="translate(0 5.224)">
         <use fill="#4A4A4F" fill-rule="nonzero" xlink:href="#a"/>
-        <path stroke="#F9F9FA" stroke-linecap="round" stroke-linejoin="round" stroke-width="10" d="M23.662 26.621l2.087-9.975L42.564 0c2.027.203 3.686.944 4.976 2.224 1.29 1.28 2.21 2.951 2.76 5.014L33.13 24.77l-9.468 1.85z"/>
-        <path fill="#F9F9FA" d="M27.35 13.486h10.08l-2.705 9.325H27.35z"/>
-        <path stroke="#4A4A4F" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M23.662 26.621l2.087-9.975L40.873 2.543c2.028.203 3.687.944 4.977 2.224 1.29 1.28 2.21 2.951 2.76 5.014l-15.48 14.99-9.468 1.85z"/>
-        <path stroke="#4A4A4F" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M25.813 16.954c2.414.928 4.033 1.805 4.858 2.633.825.827 1.656 2.437 2.493 4.828M24.584 24.415l1.23 1.17"/>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="10" d="M23.662 26.621l2.087-9.975L42.564 0c2.027.203 3.686.944 4.976 2.224 1.29 1.28 2.21 2.951 2.76 5.014L33.13 24.77l-9.468 1.85z" stroke="#ededf0"/>
+        <path d="M27.35 13.486h10.08l-2.705 9.325H27.35z" fill="#ededf0"/>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M23.662 26.621l2.087-9.975L40.873 2.543c2.028.203 3.687.944 4.977 2.224 1.29 1.28 2.21 2.951 2.76 5.014l-15.48 14.99-9.468 1.85z" stroke="#4A4A4F"/>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M25.813 16.954c2.414.928 4.033 1.805 4.858 2.633.825.827 1.656 2.437 2.493 4.828M24.584 24.415l1.23 1.17" stroke="#4A4A4F"/>
     </g>
 </svg>
