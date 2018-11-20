@@ -36,7 +36,8 @@ export default {
     background: var(--white);
     padding: 1em;
     box-shadow: var(--shadowCard);
-    margin-bottom: 1em;
+    margin: 0 auto 1em;
+    max-width: 45em;
     display: flex;
     width: 100%;
     align-items: center;
