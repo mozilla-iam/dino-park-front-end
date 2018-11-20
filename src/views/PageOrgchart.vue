@@ -7,8 +7,8 @@
         <pre>{{ error }}</pre>
         <p>An error occured while trying to go to load the org chart.</p>
       </Error>
-      <OrgRoot v-if="tree" :roots="tree" :trace="trace || ''"></OrgRoot>
-      <OrgRoot v-if="loose" :roots="loose" :trace="looseTrace || ''" heading="People who need their manager set" modifier="org-chart--loose"></OrgRoot>
+      <OrgRoot v-if="tree && !loading" :roots="tree" :trace="trace || ''"></OrgRoot>
+      <OrgRoot v-if="loose && !loading" :roots="loose" :trace="looseTrace || ''" heading="People who need their manager set" modifier="org-root--loose"></OrgRoot>
       <LoadingSpinner v-else></LoadingSpinner>
     </div>
     <ApolloQuery v-if="username" :query="previewProfileQuery" :variables="{ username }" :tag="null">
