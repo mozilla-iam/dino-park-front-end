@@ -122,7 +122,6 @@ export default {
       color: inherit;
       padding: .5em;
       min-width: 20em;
-      max-width: 30em;
       align-items: center;
       font-size: 1.125em;
     }
