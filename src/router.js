@@ -48,8 +48,19 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  document.title = `${to.name} - Mozillians`;
-  window.focus();
+  switch (to.name) {
+    case 'OrgchartHighlight':
+      document.title = `${to.params.username} - Org chart - Mozillians`;
+      break;
+    case 'Orgchart':
+      document.title = 'Org chart - Mozillians';
+      break;
+    case 'Profile':
+      document.title = `${to.params.username} - Profile - Mozillians`;
+      break;
+    default:
+      document.title = `${to.name} - Mozillians`;
+  }
   next();
 });
 
