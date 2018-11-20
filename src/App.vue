@@ -32,6 +32,7 @@ export default {
   --black: #000;
 
   --lightBlue: #f2fcfd;
+  --transparentBlue: rgba(69, 161, 255, 0.54);
 
   --layerTopBar: 2;
   --layerModal: 3;
@@ -164,6 +165,12 @@ export default {
     .hide-desktop {
       display: none;
     }
+  }
+
+  :focus {
+    outline: 1px solid var(--blue-60);
+    box-shadow: 0 0 2px 2px var(--transparentBlue);
+    -moz-outline-radius: 2px;
   }
 
   [tabindex="-1"]:focus {

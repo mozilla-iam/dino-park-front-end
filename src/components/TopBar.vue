@@ -133,20 +133,17 @@ export default {
 }
 .top-bar__link--logo {
   margin-right: auto;
-  margin-left: 0;
-  padding: 1em;
+  margin: 1em auto 1em 1em;
   max-width: none; /* don't shrink on small screens */
+  padding: 0;
 }
 .top-bar__link--logo img {
   vertical-align: middle;
 }
-.top-bar .show-more {
-  padding: 0.5em 1em;
-}
 .top-bar__user-menu-toggle {
   border: 0;
-  background-color: none;
-  padding: 0;
+  background-color: transparent;
+  padding: 1em;
 }
 .top-bar__user-menu-toggle img {
   margin-right: 0;

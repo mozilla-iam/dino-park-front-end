@@ -3,12 +3,12 @@
     <fieldset>
       <legend class="visually-hidden">Search</legend>
       <div class="search-form__fields">
+        <label for="search-query" class="visually-hidden">Search term</label>
+        <input type="search" id="search-query" name="query" v-model="searchQuery" class="search-form__input" ref="searchQueryField" placeholder="Search for people by name">
         <button type="submit" class="search-form__submit">
           <img src="@/assets/images/search.svg" alt="" role="presentation" aria-hidden="true" width="20" />
           <span class="visually-hidden">Search</span>
         </button>
-        <label for="search-query" class="visually-hidden">Search term</label>
-        <input type="search" id="search-query" name="query" v-model="searchQuery" class="search-form__input" ref="searchQueryField" placeholder="Search for people by name">
       </div>
     </fieldset>
   </form>
@@ -58,6 +58,7 @@ export default {
   .search-form__fields {
     display: flex;
     flex-direction: row;
+    position: relative;
   }
      .search-form__fields input,
      .search-form__fields button {
@@ -71,12 +72,17 @@ export default {
        -webkit-appearance: none;
        appearance: none;
        border-radius: 0;
+       padding-left: 3em;
+       text-align: center;
      }
     .search-form__submit {
        border: 0;
        appearance: none;
        width: 2.5em;
        margin-right: -1px;
+       position: absolute;
+       left: 0;
+       top: 0;
     }
       .search-form__submit img {
         vertical-align: middle;
