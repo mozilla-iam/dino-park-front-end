@@ -34,6 +34,7 @@ export default {
             query: this.searchQuery,
           },
         });
+        this.$emit('close-search-form');
       }
     },
   },
