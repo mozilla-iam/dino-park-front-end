@@ -149,6 +149,7 @@ export default {
     grid-template-rows: auto 1fr;
     align-items: start;
     grid-gap: 2em;
+    max-width: 82em;
   }
   .org-chart::after /* so that there is space taken up underneath the preview, that is as much as the org chart column takes up in total. This lets us use position:sticky on the profile preview */ {
     content: "";
