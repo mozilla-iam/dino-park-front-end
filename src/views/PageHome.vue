@@ -21,7 +21,7 @@
           <img src="@/assets/images/lock-large.svg" alt="" role="presentation" />
         </div>
         <h2><a href="/faq">Your privacy is protected</a></h2>
-        <p>Your profile data is fully hidden from public view. Read our <a href="#">FAQ</a> for details.</p>
+        <p>Your profile data is fully hidden from public view. Read our FAQ for details.</p>
       </Card>
       <Card modifier="card--centered-content">
           <img src="@/assets/images/edit-large.svg" alt="" role="presentation" />
