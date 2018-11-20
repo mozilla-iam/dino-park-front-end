@@ -35,7 +35,7 @@ const router = new Router({
       props: true,
     },
     {
-      path: '/search',
+      path: '/s',
       query: {
         query: ':query',
         scope: ':scope',
@@ -58,7 +58,6 @@ router.beforeEach((to, from, next) => {
     default:
       document.title = `${to.name} - Mozillians`;
   }
-  window.focus();
   next();
 });
 
