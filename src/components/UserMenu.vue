@@ -48,16 +48,16 @@
         </a>
       </li>
       <li>
-        <a href="#">
+        <span class="user-menu__faux-link">
           <span>Manage Auto-Login</span>
           <Icon id="sliders" :width="24" :height="24" />
-        </a>
+        </span>
       </li>
     </ul>
-    <a href="#" class="user-menu__log-out">
+    <span class="user-menu__faux-link user-menu__log-out">
       <span>Log out</span>
       <Icon id="log-out" :width="24" :height="24" />
-    </a>
+    </span>
   </div>
 </template>
 
@@ -121,15 +121,21 @@ export default {
       height: auto;
     }
   }
-    .user-menu a {
+    .user-menu a,
+    .user-menu__faux-link {
       color: var(--white);
       display: flex;
       padding: 1em 1.75em;
       text-decoration: none;
     }
-      .user-menu a svg {
+      .user-menu a svg,
+      .user-menu__faux-link svg {
         margin-left: auto;
       }
+    .user-menu__faux-link {
+      color: var(--gray-50);
+      cursor: not-allowed;
+    }
     .user-menu__header {
       padding: .675em 1.75em;
       border-bottom: 1px solid var(--gray-50);
