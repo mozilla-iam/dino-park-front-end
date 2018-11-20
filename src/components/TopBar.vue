@@ -127,7 +127,7 @@ export default {
     background: black;
     width: 100%;
     position: absolute;
-    bottom: -0.5em;
+    bottom: -0.75em;
     left: 0;
   }
 }
