@@ -83,9 +83,17 @@ export default {
 <style>
 .user-picture {
   position: relative;
+  overflow: hidden;
 }
   .user-picture img {
     border-radius: var(--imageRadius);
+  }
+  @supports (object-fit: cover) {
+    .user-picture img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
   .user-picture .dino-type {
     position: absolute;
