@@ -15,12 +15,13 @@ export default {
     username: String,
     pronouns: String,
   },
-  beforeMount() {
-    if (this.username && this.username.length === 30) {
-      this.prettierUsername = null;
-    } else {
-      this.prettierUsername = this.username;
-    }
+  computed: {
+    prettierUsername() {
+      if (this.username && this.username.length === 30) {
+        return null;
+      }
+      return this.username;
+    },
   },
 };
 </script>
