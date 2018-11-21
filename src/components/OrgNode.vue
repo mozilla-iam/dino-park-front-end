@@ -136,8 +136,15 @@ export default {
   position: static; /* so that it is explicitly not a positioning context */
 }
 .org-node .show-more__button-text {
+  border: 0;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
   position: absolute;
-  left: -9999em;
+  white-space: nowrap;
 }
 .org-node .user-picture {
   float: left;
