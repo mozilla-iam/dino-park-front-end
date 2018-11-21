@@ -20,6 +20,7 @@ export default {
     box-shadow: var(--shadowCard);
     padding: 1em;
     position: relative;
+    border-radius: var(--cardRadius);
   }
   .card--centered-content {
     align-items: center;
@@ -64,6 +65,7 @@ export default {
       align-content: center;
       justify-content: center;
       margin: -1em -1em 1em;
+      border-radius: var(--cardRadius) var(--cardRadius) 0 0;
     }
     .card h2 + p {
       margin-top: 0;

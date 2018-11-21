@@ -41,6 +41,7 @@ export default {
     display: flex;
     width: 100%;
     align-items: center;
+    border-radius: var(--cardRadius);
     position: relative;
   }
     .search-result .user-picture {

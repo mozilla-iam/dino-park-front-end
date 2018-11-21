@@ -70,6 +70,7 @@ export default {
 }
 @media(min-width:57.5em) {
   .profile__nav {
+    border-radius: var(--imageRadius);
     grid-column: 1 / 2;
     grid-row: 2 / 4;
     top: 6em;
@@ -91,6 +92,17 @@ export default {
     list-style: none;
     flex: 1;
   }
+  @media (min-width: 57.5em) {
+    .profile__nav li:first-child,
+    .profile__nav li:first-child a {
+      border-radius: var(--cardRadius) var(--cardRadius) 0 0;
+    }
+    .profile__nav li:last-child,
+    .profile__nav li:last-child a {
+      border-radius: 0 0 var(--imageRadius) var(--imageRadius);
+    }
+  }
+
   .profile__nav-link {
     display: flex;
     flex-direction: column;
