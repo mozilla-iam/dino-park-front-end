@@ -1,7 +1,7 @@
 <template>
   <div class="profile__name">
     <h1>{{ firstName }} {{ lastName }} </h1>
-    <span class="profile__user-name" v-if="username">{{ username }}</span>
+    <span class="profile__user-name" v-if="prettierUsername">{{ prettierUsername }}</span>
     <span class="profile__pronoun" v-if="pronouns">{{ pronouns }}</span>
   </div>
 </template>
@@ -14,6 +14,13 @@ export default {
     lastName: String,
     username: String,
     pronouns: String,
+  },
+  beforeMount() {
+    if (this.username && this.username.length === 30) {
+      this.prettierUsername = null;
+    } else {
+      this.prettierUsername = this.username;
+    }
   },
 };
 </script>
@@ -28,6 +35,8 @@ export default {
   }
   .profile__pronoun {
     color: var(--gray-50);
+  }
+  .profile__user-name + .profile__pronoun {
     margin-left: .5em;
   }
   .profile__user-name,
@@ -42,7 +51,7 @@ export default {
   .profile__name h1 {
     margin-bottom: 0;
   }
-  .profile__pronoun {
+  .profile__user-name + .profile__pronoun {
     margin-left: 1em;
   }
   .profile__user-name,
