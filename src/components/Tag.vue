@@ -1,5 +1,5 @@
 <template>
-  <a :href="'/search?tag=' + tag " class="tag">{{ tag }}</a>
+  <span class="tag">{{ tag }}</span>
 </template>
 
 <script>
