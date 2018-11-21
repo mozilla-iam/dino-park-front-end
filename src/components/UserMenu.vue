@@ -92,14 +92,14 @@ export default {
   mounted() {
     document.addEventListener('click', this.handleDocumentClick);
 
-    if (matchMedia("(min-width: 50em)").matches === false) {
+    if (matchMedia('(min-width: 50em)').matches === false) {
       Modal.methods.preventBackgroundScrolling();
     }
   },
   destroyed() {
     document.removeEventListener('click', this.handleDocumentClick);
 
-    if (matchMedia("(min-width: 50em)").matches === false) {
+    if (matchMedia('(min-width: 50em)').matches === false) {
       Modal.methods.enableBackgroundScrolling();
     }
   },
