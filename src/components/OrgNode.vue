@@ -89,7 +89,7 @@ export default {
   text-decoration: none;
   color: inherit;
   padding-left: 2em;
-  padding-left: calc((var(--nodeLevel) + 2) * .85em);
+  padding-left: calc(((var(--nodeLevel) + 1) * 1em) + .25em);
   border-left: .25em solid transparent;
 }
 .org-node--current > a,
