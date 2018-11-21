@@ -5,7 +5,7 @@
       <span class="org-node__name">{{ data.firstName }} {{ data.lastName }}</span>
       <span class="org-node__title">{{ data.title }}</span>
     </router-link>
-    <ShowMore v-if="children.length > 0" :buttonText="`Expand ${data.firstName} ${data.lastName}`" :alternateButtonText="`Collapse ${data.firstName} ${data.lastName}`" :trace="trace" :prefix="prefix" buttonClass="org-node__toggle" :transition="false">
+    <ShowMore v-if="children.length > 0" :buttonText="`Expand ${data.firstName} ${data.lastName}`" :alternateButtonText="`Collapse ${data.firstName} ${data.lastName}`" :trace="trace" :prefix="prefix" buttonClass="org-node__toggle" :transition="false" :moveFocus="false" :overflowBefore="false">
       <template slot="overflow">
         <ul v-for="(child, index) in children" :key="index">
           <OrgNode :children="child.children" :data="child.data" :prefix="`${prefix}-${index}`" :trace="trace"></OrgNode>
