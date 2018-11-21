@@ -59,6 +59,7 @@ export default {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      border-radius: var(--cardRadius) var(--cardRadius) 0 0;
     }
 
 </style>

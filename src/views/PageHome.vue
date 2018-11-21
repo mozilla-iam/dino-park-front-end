@@ -58,7 +58,7 @@ export default {
     padding: 2em;
     margin-bottom: 2em;
     box-shadow: var(--shadowCard);
-
+    border-radius: var(--cardRadius);
   }
   .home__intro > img {
     margin-bottom: 1em;
