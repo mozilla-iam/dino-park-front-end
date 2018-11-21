@@ -2,7 +2,7 @@
   <div :class="'show-more' + ( transition ? ' show-more--transition' : '')">
     <slot name="base">
     </slot>
-    <transition name="show-more__overflow-">
+    <transition v-if="overflowBefore" name="show-more__overflow-">
       <div class="show-more__overflow" v-if="expanded" tabindex="-1">
         <slot name="overflow">
         </slot>
@@ -23,7 +23,13 @@
         </template>
         <slot name="button-content"></slot>
       </button>
-  </div>
+     <transition v-if="overflowBefore === false" name="show-more__overflow-">
+        <div class="show-more__overflow" v-if="expanded" tabindex="-1">
+          <slot name="overflow">
+          </slot>
+        </div>
+      </transition>
+     </div>
 </template>
 
 <script>
@@ -36,6 +42,14 @@ export default {
     transition: Boolean,
     trace: String,
     prefix: String,
+    moveFocus: {
+      type: Boolean,
+      default: true,
+    },
+    overflowBefore: {
+      type: Boolean,
+      default: true,
+    },
   },
   methods: {
     toggleOverflow() {
@@ -53,7 +67,7 @@ export default {
   updated() {
     const overflowContent = this.$el.querySelector('.show-more__overflow');
 
-    if (this.expanded) {
+    if (this.expanded && this.moveFocus) {
       overflowContent.focus();
     }
   },
