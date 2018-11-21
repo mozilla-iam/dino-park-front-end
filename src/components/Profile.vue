@@ -20,7 +20,7 @@
         <div class="profile__description">
           <p>{{ description }}</p>
         </div>
-        <ShowMore buttonText="Show more" alternateButtonText="Show less" :expanded="false" buttonClass="button button--text-only button--less-padding" :transition="true">
+        <ShowMore buttonText="Show More" alternateButtonText="Show Less" :expanded="false" buttonClass="button button--text-only button--less-padding" :transition="true">
           <template slot="overflow">
             <MetaList>
               <h3 class="visually-hidden">Meta</h3>
@@ -76,7 +76,7 @@
           <a :href="`mailto:${primaryEmail}`">{{ primaryEmail }}</a>
         </IconBlock>
         <IconBlock v-for="[key, value] in Object.entries(phoneNumbers || {})" :key="`phoneNumber-${key}`" heading="Phone" :subHeading="key" icon="phone">
-          <a :href="value">{{ value }}</a>
+          <a :href="`tel:${value}`">{{ value }}</a>
         </IconBlock>
       </IconBlockList>
       <div v-if="pgpPublicKeys || sshPublicKeys">

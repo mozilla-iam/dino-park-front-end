@@ -64,6 +64,7 @@
 <script>
 import Icon from '@/components/Icon.vue';
 import UserPicture from '@/components/UserPicture.vue';
+import Modal from '@/components/functional/Modal.vue';
 
 export default {
   name: 'UserMenu',
@@ -90,9 +91,17 @@ export default {
   },
   mounted() {
     document.addEventListener('click', this.handleDocumentClick);
+
+    if (matchMedia('(min-width: 50em)').matches === false) {
+      Modal.methods.preventBackgroundScrolling();
+    }
   },
   destroyed() {
     document.removeEventListener('click', this.handleDocumentClick);
+
+    if (matchMedia('(min-width: 50em)').matches === false) {
+      Modal.methods.enableBackgroundScrolling();
+    }
   },
   components: {
     Icon,

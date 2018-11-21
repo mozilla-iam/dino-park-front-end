@@ -13,14 +13,14 @@
         <div class="card__icon">
           <img src="@/assets/images/message-large.svg" alt="" role="presentation" />
         </div>
-        <h2><a href="/discourse">Your feedback matters</a></h2>
+        <h2><a href="https://discourse.mozilla.org/c/iam/dinopark">Your feedback matters</a></h2>
         <p>Join us on Discourse and let us know how we can make the Mozilla Directory even better.</p>
       </Card>
       <Card>
         <div class="card__icon">
           <img src="@/assets/images/lock-large.svg" alt="" role="presentation" />
         </div>
-        <h2><a href="/faq">Your privacy is protected</a></h2>
+        <h2><a href="https://discourse.mozilla.org/t/dinopark-faq/33564">Your privacy is protected</a></h2>
         <p>Your profile data is fully hidden from public view. Read our FAQ for details.</p>
       </Card>
       <Card modifier="card--centered-content">
@@ -58,7 +58,7 @@ export default {
     padding: 2em;
     margin-bottom: 2em;
     box-shadow: var(--shadowCard);
-
+    border-radius: var(--cardRadius);
   }
   .home__intro > img {
     margin-bottom: 1em;
