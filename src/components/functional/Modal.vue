@@ -75,11 +75,16 @@ export default {
       document.body.style.overflow = 'hidden';
       document.body.style.position = 'fixed';
       document.documentElement.style.position = 'fixed';
+      document.body.addEventListener('touchmove', this.preventDefault, { passive: false });
     },
     enableBackgroundScrolling() {
       document.body.style.overflow = 'visible';
       document.body.style.position = 'static';
       document.documentElement.style.position = 'static';
+      document.body.removeEventListener('touchmove', this.preventDefault, { passive: false });
+    },
+    preventDefault(e) {
+      e.preventDefault();
     },
   },
 };
