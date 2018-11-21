@@ -1,8 +1,8 @@
 <template>
   <div class="profile__name">
     <h1>{{ firstName }} {{ lastName }} </h1>
-    <span class="profile__user-name">{{ username }}</span>
-      <span class="profile__pronoun">{{ pronouns }}</span>
+    <span class="profile__user-name" v-if="username">{{ username }}</span>
+    <span class="profile__pronoun" v-if="pronouns">{{ pronouns }}</span>
   </div>
 </template>
 
