@@ -73,9 +73,13 @@ export default {
     },
     preventBackgroundScrolling() {
       document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.documentElement.style.position = 'fixed';
     },
     enableBackgroundScrolling() {
       document.body.style.overflow = 'visible';
+      document.body.style.position = 'static';
+      document.documentElement.style.position = 'static';
     },
   },
 };
