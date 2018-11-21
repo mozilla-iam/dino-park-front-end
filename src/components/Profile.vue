@@ -76,7 +76,7 @@
           <a :href="`mailto:${primaryEmail}`">{{ primaryEmail }}</a>
         </IconBlock>
         <IconBlock v-for="[key, value] in Object.entries(phoneNumbers || {})" :key="`phoneNumber-${key}`" heading="Phone" :subHeading="key" icon="phone">
-          <a :href="value">{{ value }}</a>
+          <a :href="`tel:${value}`">{{ value }}</a>
         </IconBlock>
       </IconBlockList>
       <div v-if="pgpPublicKeys || sshPublicKeys">
