@@ -3,7 +3,7 @@
     <template slot="overflow">
       <ul class="contact-me">
         <li v-if="phoneNumber" class="contact-me__item">
-          <a href="tel:568-830-0598" class="contact-me__pair">
+          <a href="`tel:${phoneNumber}`" class="contact-me__pair">
             <Icon id="phone-forwarded" :width="24" :height="24" />
             <span class="contact-me__key">Call Me</span>
             <span class="contact-me__value">{{ phoneNumber }}</span>
