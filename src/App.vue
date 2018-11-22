@@ -52,7 +52,7 @@ export default {
     font-family: "Open Sans", sans-serif;
     scroll-behavior: smooth;
     margin: 0;
-    padding-top: 4.5em;  /* allow for top bar */
+    padding-top: 5.5em;  /* allow for top bar */
     font-size: 87.5%;
   }
 
