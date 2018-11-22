@@ -162,6 +162,9 @@ export default {
     background-color: transparent;
     color: var(--blue-60);
   }
+  .profile-preview__close {
+    -moz-outline-radius: 2px;
+  }
   .profile-preview__divider {
     margin: 2em 0;
   }

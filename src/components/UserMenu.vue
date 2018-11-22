@@ -124,6 +124,11 @@ export default {
       padding: 1em 1.75em;
       text-decoration: none;
     }
+    .user-menu a:focus,
+    .user-menu button:focus {
+      outline: 1px solid var(--white);
+      box-shadow: none;
+    }
       .user-menu a svg,
       .user-menu__faux-link svg {
         margin-left: auto;
