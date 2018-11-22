@@ -4,7 +4,24 @@
       <legend class="visually-hidden">Search</legend>
       <div class="search-form__fields">
         <label for="search-query" class="visually-hidden">Search term</label>
-        <input type="search" id="search-query" name="query" v-model="searchQuery" class="search-form__input" ref="searchQueryField" placeholder="Search for people by name">
+        <input type="text" id="search-query" name="query" v-model="searchQuery" class="search-form__input" ref="searchQueryField" placeholder="Search for people by name">
+        <button type="button" v-if="searchQuery && searchQuery.length > 0" @click="clearQuery" class="search-form__clear-button">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+          <span class="visually-hidden">Clear query</span>
+        </button>
         <button type="submit" class="search-form__submit">
           <img src="@/assets/images/search.svg" alt="" role="presentation" aria-hidden="true" width="20" />
           <span class="visually-hidden">Search</span>
@@ -36,6 +53,9 @@ export default {
         this.$emit('close-search-form');
       }
     },
+    clearQuery() {
+      this.searchQuery = null;
+    },
   },
   data() {
     return {
@@ -64,12 +84,14 @@ export default {
     position: relative;
   }
      .search-form__fields input,
-     .search-form__fields button {
+     .search-form__fields button[type="submit"] {
+       background-color: var(--white);
        font-size: 1.15em;
        border: 1px solid var(--gray-30);
        padding: .5em;
-       background-color: var(--white);
      }
+     .search-form__fields button[type="submit"] {
+    }
      .search-form__input {
        width: 100%;
        -webkit-appearance: none;
@@ -90,6 +112,17 @@ export default {
       .search-form__submit img {
         vertical-align: middle;
       }
+    .search-form__clear-button {
+      background-color: var(--white);
+      position: absolute;
+      right: 0;
+      border: 0;
+      top: 1em;
+      right: 1em;
+      width: 2em;
+      padding: 0;
+      line-height: 1;
+    }
 
 .search-form--small {
   padding: 1em;
