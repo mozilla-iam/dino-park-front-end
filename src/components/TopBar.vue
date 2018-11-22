@@ -3,13 +3,14 @@
     <div class="top-bar__bar">
       <router-link :to="{ name: 'Home' }" class="top-bar__link top-bar__link--logo"><img src="@/assets/images/mozilla.svg" alt="Mozilla logo" width="90" /></router-link>
       <SearchForm class="hide-mobile"></SearchForm>
-      <button class="hide-desktop top-bar__search-toggle" @click="toggleMobileSearch" aria-controls="mobile-search" :aria-expanded="mobileSearchOpen ? 'true' : 'false'">
-        <img src="@/assets/images/search.svg" alt="" role="presentation" aria-hidden="true" width="20" />
-        <span class="visually-hidden">
-          <template v-if="mobileSearchOpen">Hide search</template>
-          <template v-else>Show search</template>
-        </span>
-      </button>
+      <ShowMore buttonText="Open search" alternateButtonText="Close search" buttonClass="hide-desktop top-bar__search-toggle" :expanded="false" :closeWhenClickedOutside="true" ref="showMoreSearch">
+        <template slot="overflow">
+          <SearchForm modifier="search-form--small hide-desktop" id="mobile-search" v-on:close-search-form="closeMobileSearchForm()"></SearchForm>
+        </template>
+        <template slot="button-content">
+          <img src="@/assets/images/search.svg" alt="" role="presentation" aria-hidden="true" width="20" />
+        </template>
+      </ShowMore>
       <router-link :to="{ name: 'Orgchart' }" class="top-bar__link" exact-active-class="top-bar__link--current"><img src="@/assets/images/org-chart.svg" alt="Org chart" width="20" title="Org chart" /></router-link>
       <ApolloQuery :query="profileQuery">
         <template slot-scope="{ result: { loading, data, error } }">
@@ -21,7 +22,7 @@
             </Error>
           </template>
           <template v-else-if="data">
-            <ShowMore buttonText="Open user menu" alternateButtonText="Close user menu" buttonClass="top-bar__user-menu-toggle" :expanded="false" v-on:close-user-menu="closeUserMenu()" ref="showMoreEl" :closeWhenClickedOutside="true">
+            <ShowMore buttonText="Open user menu" alternateButtonText="Close user menu" buttonClass="top-bar__user-menu-toggle" :expanded="false" v-on:close-user-menu="closeUserMenu()" ref="showMoreUserMenu" :closeWhenClickedOutside="true">
               <template slot="overflow">
                 <UserMenu v-bind="data.userMenu"></UserMenu>
               </template>
@@ -59,13 +60,10 @@ export default {
   },
   methods: {
     closeUserMenu() {
-      this.$refs.showMoreEl.expanded = false;
+      this.$refs.showMoreUserMenu.expanded = false;
     },
     closeMobileSearchForm() {
-      this.mobileSearchOpen = false;
-    },
-    toggleMobileSearch() {
-      this.mobileSearchOpen = !this.mobileSearchOpen;
+      this.$refs.showMoreSearch.expanded = false;
     },
   },
   data() {
@@ -142,6 +140,7 @@ export default {
 }
 .top-bar .show-more {
   padding: 0.5em 1em;
+  position: static;
 }
 .top-bar__user-menu-toggle {
   border: 0;
@@ -149,9 +148,13 @@ export default {
   padding: 0;
 }
 .top-bar__user-menu-toggle img {
-  margin-right: 0;
   border-radius: var(--imageRadius);
 }
+.top-bar__user-menu-toggle img,
+.top-bar__search-toggle img {
+  margin-right: 0;
+}
+.top-bar__search-toggle .show-more__button-text,
 .top-bar__user-menu-toggle .show-more__button-text {
   position: absolute;
   left: -9999em;
