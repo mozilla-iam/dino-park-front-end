@@ -52,11 +52,17 @@ export default {
 <style>
 .search-scope fieldset {
   border: 0;
+  display: block;
+  text-align: center;
 }
 .search-scope__choices {
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   margin-right: -1px; /* to mitigate hack to not have double borders */
+}
+.search-scope__choices:focus-within {
+  outline: 1px solid var(--black);
+  -moz-outline-radius: 2em;
 }
   .search-scope__choices input {
     position: absolute;
