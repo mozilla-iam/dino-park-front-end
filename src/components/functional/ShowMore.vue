@@ -45,6 +45,7 @@ export default {
     closeWhenClickedOutside: {
       type: Boolean,
       default: false,
+    },
     moveFocus: {
       type: Boolean,
       default: true,
