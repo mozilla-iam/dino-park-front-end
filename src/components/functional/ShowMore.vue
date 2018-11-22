@@ -54,14 +54,6 @@ export default {
       type: Boolean,
       default: true,
     },
-    moveFocus: {
-      type: Boolean,
-      default: true,
-    },
-    overflowBefore: {
-      type: Boolean,
-      default: true,
-    },
   },
   methods: {
     toggleOverflow() {
