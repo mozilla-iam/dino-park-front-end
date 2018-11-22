@@ -105,13 +105,29 @@ export default {
   color: var(--black);
   font-weight: 700;
   text-decoration: none;
+  transition: background-color .2s ease-in-out;
 }
 .top-bar__link img {
   vertical-align: middle;
 }
+.top-bar__link:hover {
+  background-color: var(--gray-20);
+}
 .top-bar__link--current {
   position: relative;
   background-color: var(--gray-20);
+}
+.top-bar__link--current:focus {
+  outline: none;
+}
+.top-bar__link--current:focus::before /* because of https://bugzilla.mozilla.org/show_bug.cgi?id=687311 */ {
+  content: '';
+  border: 1px solid var(--blue-60);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
 }
 .top-bar__search-toggle[aria-expanded="true"] + .top-bar__link--current {
   background-color: transparent;
@@ -122,18 +138,21 @@ export default {
   }
   .top-bar__link--current::after {
     content: "";
-    height: 2px;
+    height: .1428em;
     background: black;
     width: 100%;
     position: absolute;
-    bottom: -0.75em;
+    bottom: -1.4em;
     left: 0;
+  }
+  .top-bar__link--current {
+    outline: none;
   }
 }
 .top-bar__link--logo {
   margin-right: auto;
-  margin: 1em auto 1em 1em;
-  padding: 1.725em;
+  margin: 1.6em auto 1.6em 1.6em;
+  padding: 0;
   max-width: none; /* don't shrink on small screens */
 }
 .top-bar__link--logo img {
@@ -150,7 +169,10 @@ export default {
 .top-bar__user-menu-toggle {
   border: 0;
   background-color: transparent;
-  padding: 1em;
+  padding: 1.6em;
+}
+.top-bar__user-menu-toggle:hover {
+  background-color: var(--gray-20);
 }
 .top-bar__user-menu-toggle img {
   margin-right: 0;
