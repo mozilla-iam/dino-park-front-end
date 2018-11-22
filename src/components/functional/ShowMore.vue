@@ -1,5 +1,5 @@
 <template>
-  <div :class="'show-more' + ( transition ? ' show-more--transition' : '')">
+  <div :class="'show-more' + ( transition ? ' show-more--transition' : '') + ( expanded ? ' show-more--expanded' : '' )">
     <slot name="base">
     </slot>
     <transition v-if="overflowBefore" name="show-more__overflow-">
@@ -85,9 +85,11 @@ export default {
 
       if (this.closeWhenClickedOutside) {
         document.addEventListener('click', this.handleDocumentClick);
+        document.addEventListener('touchstart', this.handleDocumentClick);
       }
     } else if (this.closeWhenClickedOutside) {
       document.removeEventListener('click', this.handleDocumentClick);
+      document.removeEventListener('touchstart', this.handleDocumentClick);
     }
   },
   data() {

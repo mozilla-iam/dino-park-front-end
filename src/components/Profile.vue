@@ -132,6 +132,12 @@
         </div>
       </div>
     </section>
+    <section v-else class="profile__section profile__section--disabled">
+      <header class="profile__section-header">
+        <h2>Other Accounts</h2>
+      </header>
+      <p>No other accounts have been added</p>
+    </section>
     <section v-if="Object.keys(accessInformation.mozilliansorg || {}).length > 0" class="profile__section">
       <a id="nav-access-groups" class="profile__anchor"></a>
       <header class="profile__section-header">
@@ -143,12 +149,24 @@
         </IconBlock>
       </IconBlockList>
     </section>
+    <section v-else class="profile__section profile__section--disabled">
+      <header class="profile__section-header">
+        <h2>Access Groups</h2>
+      </header>
+      <p>No access groups available</p>
+    </section>
     <section v-if="(tags || []).length > 0" class="profile__section">
       <a id="nav-tags" class="profile__anchor"></a>
       <header class="profile__section-header">
         <h2>Tags</h2>
       </header>
       <Tag v-for="(tag, index) in tags" :tag="tag" :key="`tag-${index}`" />
+    </section>
+    <section v-else class="profile__section profile__section--disabled">
+      <header class="profile__section-header">
+        <h2>Tags</h2>
+      </header>
+      <p>No tags have been added</p>
     </section>
   </main>
 </template>
@@ -307,6 +325,11 @@ export default {
     box-shadow: var(--shadowCard);
   }
 }
+.profile__section--disabled {
+  background-color: var(--gray-20);
+  color: var(--gray-50);
+  border: 2px solid var(--gray-30);
+}
 .profile__section:first-child {
   grid-column: 1 / -1;
 }
@@ -320,7 +343,7 @@ export default {
 .profile__section-header {
   padding: 1.5em;
   margin: -1.5em -1.5em 1.5em -1.5em;
-  border-bottom: 1px solid #cfcfcf;
+  border-bottom: 1px solid var(--gray-30);
   display: flex;
 }
   .profile__section-header h2 {
