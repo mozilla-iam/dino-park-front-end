@@ -46,9 +46,11 @@ export default {
       this.expanded = !this.expanded;
     },
     handleDocumentClick(event) {
-      // closes user menu if clicked anywhere, except the
-      // expanded element itself
-      if (event.target !== this.$refs.overflowContentElement) {
+      const expandedEl = this.$refs.overflowContentElement.firstElementChild;
+
+      // closes overflow content if clicked anywhere, except the
+      // overflowing content itself
+      if (event.target !== expandedEl && expandedEl.contains(event.target) === false) {
         this.expanded = false;
       }
     },
@@ -66,15 +68,12 @@ export default {
 
     if (this.expanded) {
       overflowContent.focus();
-  
+
       if (this.closeWhenClickedOutside) {
         document.addEventListener('click', this.handleDocumentClick);
       }
-    }
-    else {
-      if (this.closeWhenClickedOutside) {
-        document.removeEventListener('click', this.handleDocumentClick);
-      }
+    } else if (this.closeWhenClickedOutside) {
+      document.removeEventListener('click', this.handleDocumentClick);
     }
   },
   data() {
