@@ -1,6 +1,6 @@
 <template>
   <footer class="footer">
-    <a href="/" class="footer__link"><Icon id="mail" :width="18" :height="18" /> Help desk</a>
+    <a href="https://discourse.mozilla.org/c/iam/dinopark" class="footer__link"><Icon id="discourse" :width="18" :height="18" /> Feedback</a>
     <a href="https://www.mozilla.org/en-US/legal" class="footer__link"><Icon id="legal" :width="18" :height="18" /> Legal</a>
     <a href="https://www.mozilla.org/en-US/privacy/" class="footer__link"><Icon id="privacy" :width="18" :height="18" /> Privacy</a>
     <a href="https://github.com/mozilla-iam/dino-park-issues" class="footer__link"><Icon id="legal" :width="18" :height="18" /> GitHub</a>
