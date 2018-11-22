@@ -1,5 +1,5 @@
 <template>
-  <ShowMore buttonText="Contact Me" alternateButtonText="Contact Me" :expanded="false" buttonClass="button button--icon-end contact-me__button" :transition="true">
+  <ShowMore buttonText="Contact Me" alternateButtonText="Contact Me" :expanded="false" buttonClass="button button--icon-end contact-me__button" :transition="true" :closeWhenClickedOutside="true">
     <template slot="overflow">
       <ul class="contact-me">
         <li v-if="phoneNumber" class="contact-me__item">
