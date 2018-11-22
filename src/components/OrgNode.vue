@@ -5,7 +5,7 @@
       <span class="org-node__name">{{ data.firstName }} {{ data.lastName }}</span>
       <span class="org-node__title">{{ data.title }}</span>
     </router-link>
-    <ShowMore v-if="children.length > 0" :buttonText="`Expand ${data.firstName} ${data.lastName}`" :alternateButtonText="`Collapse ${data.firstName} ${data.lastName}`" :trace="trace" :prefix="prefix" buttonClass="org-node__toggle" :transition="false">
+    <ShowMore v-if="children.length > 0" :buttonText="`Expand ${data.firstName} ${data.lastName}`" :alternateButtonText="`Collapse ${data.firstName} ${data.lastName}`" :trace="trace" :prefix="prefix" buttonClass="org-node__toggle" :transition="false" :moveFocus="false" :overflowBefore="false">
       <template slot="overflow">
         <ul v-for="(child, index) in children" :key="index">
           <OrgNode :children="child.children" :data="child.data" :prefix="`${prefix}-${index}`" :trace="trace"></OrgNode>
@@ -122,22 +122,35 @@ export default {
   left: 0;
   left: calc((var(--nodeLevel) - 1) * 1em);
   width: 3em;
-  height: 4em;
+  height: 3em;
+  margin: .5em 0;
   z-index: 1;
   border: 0;
   background-color: transparent;
   -webkit-appearance: none;
   appearance: none;
+  border-radius: var(--cardRadius);
+}
+.org-node__toggle:hover {
+  background-color: var(--gray-20);
 }
   .org-node__toggle img {
     margin-right: 0;
+    margin-bottom: -2px;
   }
 .org-node .show-more {
   position: static; /* so that it is explicitly not a positioning context */
 }
 .org-node .show-more__button-text {
+  border: 0;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
   position: absolute;
-  left: -9999em;
+  white-space: nowrap;
 }
 .org-node .user-picture {
   float: left;

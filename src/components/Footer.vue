@@ -4,7 +4,9 @@
     <a href="https://www.mozilla.org/en-US/legal" class="footer__link"><Icon id="legal" :width="18" :height="18" /> Legal</a>
     <a href="https://www.mozilla.org/en-US/privacy/" class="footer__link"><Icon id="privacy" :width="18" :height="18" /> Privacy</a>
     <a href="https://github.com/mozilla-iam/dino-park-issues" class="footer__link"><Icon id="github" :width="18" :height="18" /> GitHub</a>
-    <a href="https://www.mozilla.org/en-US/about/governance/policies/participation/" class="footer__link footer__link--cpg">Community Participation Guidelines</a>
+    <div>
+      <a href="https://www.mozilla.org/en-US/about/governance/policies/participation/" class="footer__link footer__link--cpg">Community Participation Guidelines</a>
+    </div>
   </footer>
 </template>
 
@@ -32,11 +34,17 @@ export default {
       text-decoration: none;
       display: inline-block;
       vertical-align: middle;
-      padding: 1.5em 2em;
+      padding: 0.5em 2em;
+      margin: 1em 0;
       line-height: 1;
     }
     .footer__link:hover {
       color: inherit;
+    }
+    .footer__link:focus {
+      outline: 1px solid var(--white);
+      -moz-outline-radius: 2em; /*  not on standards track; Moz-only property */
+      box-shadow: none;
     }
     .footer__link svg {
       margin-right: .75em;
@@ -44,7 +52,7 @@ export default {
       vertical-align: middle;
     }
     .footer__link--cpg {
-      display: block;
+      display: inline-block;
       margin: 0 auto;
       padding-top: 0;
       text-decoration: underline;

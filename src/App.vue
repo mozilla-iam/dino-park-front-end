@@ -32,6 +32,7 @@ export default {
   --black: #000;
 
   --lightBlue: #f2fcfd;
+  --transparentBlue: rgba(69, 161, 255, 0.54);
 
   --layerTopBar: 2;
   --layerModal: 3;
@@ -146,9 +147,15 @@ export default {
     }
 
   .visually-hidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
     position: absolute;
-    left: -9999em;
-    top: -9999em;
+    white-space: nowrap;
   }
 
   /* best only use these classes on elements that
@@ -164,6 +171,19 @@ export default {
     .hide-desktop {
       display: none;
     }
+  }
+
+  :focus {
+    outline: 1px solid var(--blue-60);
+    box-shadow: 0 0 2px 2px var(--transparentBlue);
+    -moz-outline-radius: 2px;
+  }
+  :hover:focus {
+    outline: none;
+    box-shadow: none;
+  }
+  ::-moz-focus-inner {
+    border: 0;
   }
 
   [tabindex="-1"]:focus {

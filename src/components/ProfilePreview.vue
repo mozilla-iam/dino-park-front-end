@@ -1,5 +1,24 @@
 <template>
   <div class="profile-preview" ref="profilePreviewElement" tabindex="-1">
+    <button @click="closeProfile" class="button button--icon-only button--secondary profile-preview__close">
+      <span class="visually-hidden">Close profile</span>
+      <svg
+        aria-hidden="true"
+        role="presentation"
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <line x1="18" y1="6" x2="6" y2="18" />
+        <line x1="6" y1="6" x2="18" y2="18" />
+      </svg>
+    </button>
     <div class="profile-preview__image">
       <UserPicture :picture="picture" :username="username" :size="100" dinoType="Staff" />
     </div>
@@ -36,25 +55,6 @@
           <polyline points="9 18 15 12 9 6" />
         </svg>
       </router-link>
-      <button @click="closeProfile" class="button button--icon-only button--secondary profile-preview__close">
-        <span class="visually-hidden">Close profile</span>
-        <svg
-          aria-hidden="true"
-          role="presentation"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <line x1="18" y1="6" x2="6" y2="18" />
-          <line x1="6" y1="6" x2="18" y2="18" />
-        </svg>
-      </button>
     </div>
   </div>
 </template>
@@ -103,7 +103,9 @@ export default {
   mounted() {
     this.lastActive = document.activeElement;
     if (this.$refs.profilePreviewElement) {
-      this.$refs.profilePreviewElement.focus();
+      const firstButton = this.$refs.profilePreviewElement.querySelector('button');
+      console.log(firstButton);
+      firstButton.focus();
     }
   },
 };
@@ -159,6 +161,9 @@ export default {
   .profile-preview__close:hover {
     background-color: transparent;
     color: var(--blue-60);
+  }
+  .profile-preview__close {
+    -moz-outline-radius: 2px;
   }
   .profile-preview__divider {
     margin: 2em 0;

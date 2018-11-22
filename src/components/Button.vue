@@ -37,11 +37,7 @@ export default {
   text-decoration: none;
 }
 .button:focus {
-  outline: none;
-  outline: 0;
-  background-color: var(--gray-20);
-  border-color: var(--gray-20);
-  color: var(--blue-60);
+  -moz-outline-radius: 2.5em;
 }
   .button img,
   .button svg {
@@ -59,7 +55,9 @@ export default {
   color: var(--white);
   border-color: transparent;
 }
-
+.button--secondary:focus {
+  -moz-outline-radius: 2.5em;
+}
 .button--secondary:hover svg > path {
   fill: var(--white);
 }
@@ -79,14 +77,6 @@ export default {
 .button--text-only:hover {
   background-color: transparent;
   border-color: transparent;
-  color: var(--blue-60);
-}
-
-.button--text-only:focus {
-  outline: none;
-  outline: 0;
-  background-color: var(--gray-20);
-  border-color: var(--gray-20);
   color: var(--blue-60);
 }
 
