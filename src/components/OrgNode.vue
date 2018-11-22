@@ -122,15 +122,21 @@ export default {
   left: 0;
   left: calc((var(--nodeLevel) - 1) * 1em);
   width: 3em;
-  height: 4em;
+  height: 3em;
+  margin: .5em 0;
   z-index: 1;
   border: 0;
   background-color: transparent;
   -webkit-appearance: none;
   appearance: none;
+  border-radius: var(--cardRadius);
+}
+.org-node__toggle:hover {
+  background-color: var(--gray-20);
 }
   .org-node__toggle img {
     margin-right: 0;
+    margin-bottom: -2px;
   }
 .org-node .show-more {
   position: static; /* so that it is explicitly not a positioning context */

@@ -82,8 +82,12 @@ export default {
     }
     .search-result__orgchart-link {
       margin-left: auto;
-      margin-right: .5em;
       position: relative; /* so that it stacks on top of search result link */
       line-height: 1; /* avoid extra space underneath image */
+      border-radius: var(--cardRadius);
+      padding: .72em;
+    }
+    .search-result__orgchart-link:hover {
+      background-color: var(--gray-20);
     }
 </style>
