@@ -178,6 +178,13 @@ export default {
     box-shadow: 0 0 2px 2px var(--transparentBlue);
     -moz-outline-radius: 2px;
   }
+  :hover:focus {
+    outline: none;
+    box-shadow: none;
+  }
+  ::-moz-focus-inner {
+    border: 0;
+  }
 
   [tabindex="-1"]:focus {
     outline: none; /* if tabindex is -1, focus was
