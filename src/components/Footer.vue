@@ -43,7 +43,7 @@ export default {
     }
     .footer__link:focus {
       outline: 1px solid var(--white);
-      -moz-border-radius: 2em;
+      -moz-outline-radius: 2em; /*  not on standards track; Moz-only property */
     }
     .footer__link svg {
       margin-right: .75em;

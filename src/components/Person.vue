@@ -75,12 +75,6 @@ export default {
         height: 100%;
         border: 1px solid transparent;
       }
-      .person a:focus {
-        outline: none;
-      }
-      .person a:focus::after {
-        outline: 1px solid var(--blue-60);
-      }
     .person__preferred-title {
       color: var(--gray-50);
     }

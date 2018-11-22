@@ -37,7 +37,7 @@ export default {
   text-decoration: none;
 }
 .button:focus {
-  outline: none; /* box shadow*/
+  -moz-outline-radius: 2.5em;
 }
   .button img,
   .button svg {
@@ -56,7 +56,7 @@ export default {
   border-color: transparent;
 }
 .button--secondary:focus {
-  outline: 1px solid var(--blue-60);
+  -moz-outline-radius: 2.5em;
 }
 .button--secondary:hover svg > path {
   fill: var(--white);
