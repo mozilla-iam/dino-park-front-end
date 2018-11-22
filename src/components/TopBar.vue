@@ -1,7 +1,7 @@
 <template>
   <header class="top-bar">
     <div class="top-bar__bar">
-      <router-link :to="{ name: 'Home' }" class="top-bar__link top-bar__link--logo"><img src="@/assets/images/mozilla.svg" alt="Mozilla logo" width="90" /></router-link>
+      <router-link :to="{ name: 'Home' }" class="top-bar__link top-bar__link--logo"><img src="@/assets/images/mozilla.svg" alt="Mozilla logo" width="112" height="32" /></router-link>
       <SearchForm class="hide-mobile"></SearchForm>
       <button class="hide-desktop top-bar__search-toggle" @click="toggleMobileSearch" aria-controls="mobile-search" :aria-expanded="mobileSearchOpen ? 'true' : 'false'">
         <img src="@/assets/images/search.svg" alt="" role="presentation" aria-hidden="true" width="20" />
@@ -88,7 +88,6 @@ export default {
   position: fixed;
   width: 100%;
   top: 0;
-  padding: 0.25em;
   z-index: var(--layerTopBar);
 }
 .top-bar__search-toggle {
@@ -134,8 +133,8 @@ export default {
 .top-bar__link--logo {
   margin-right: auto;
   margin: 1em auto 1em 1em;
+  padding: 1.725em;
   max-width: none; /* don't shrink on small screens */
-  padding: 0;
 }
 .top-bar__link--logo img {
   vertical-align: middle;
