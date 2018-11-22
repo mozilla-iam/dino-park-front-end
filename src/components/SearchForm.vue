@@ -99,7 +99,7 @@ export default {
   position: fixed;
   left: 0;
   right: 0;
-  top: 4em;
+  top: 5em;
   z-index: var(--layerTopBar);
   box-shadow: var(--shadowCard);
 }

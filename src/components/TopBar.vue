@@ -91,7 +91,7 @@ export default {
 .top-bar__search-toggle {
   border: 0;
   background-color: transparent;
-  padding: 1em;
+  padding: .75em;
   line-height: 0;
 }
 .top-bar__search-toggle[aria-expanded="true"] {
@@ -127,7 +127,7 @@ export default {
   bottom: 0;
   position: absolute;
 }
-.top-bar__search-toggle[aria-expanded="true"] + .top-bar__link--current {
+.show-more--expanded + .top-bar__link--current {
   background-color: transparent;
 }
 @media (min-width: 50em ) {
