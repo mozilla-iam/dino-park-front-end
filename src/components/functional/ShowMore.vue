@@ -3,7 +3,7 @@
     <slot name="base">
     </slot>
     <transition name="show-more__overflow-">
-      <div class="show-more__overflow" v-if="expanded" tabindex="-1">
+      <div class="show-more__overflow" v-if="expanded" tabindex="-1" ref="overflowContentElement">
         <slot name="overflow">
         </slot>
       </div>
@@ -36,10 +36,21 @@ export default {
     transition: Boolean,
     trace: String,
     prefix: String,
+    closeWhenClickedOutside: {
+      type: Boolean,
+      default: false,
+    },
   },
   methods: {
     toggleOverflow() {
       this.expanded = !this.expanded;
+    },
+    handleDocumentClick(event) {
+      // closes user menu if clicked anywhere, except the
+      // expanded element itself
+      if (event.target !== this.$refs.overflowContentElement) {
+        this.expanded = false;
+      }
     },
   },
   watch: {
@@ -51,10 +62,19 @@ export default {
     },
   },
   updated() {
-    const overflowContent = this.$el.querySelector('.show-more__overflow');
+    const overflowContent = this.$refs.overflowContentElement;
 
     if (this.expanded) {
       overflowContent.focus();
+  
+      if (this.closeWhenClickedOutside) {
+        document.addEventListener('click', this.handleDocumentClick);
+      }
+    }
+    else {
+      if (this.closeWhenClickedOutside) {
+        document.removeEventListener('click', this.handleDocumentClick);
+      }
     }
   },
   data() {
