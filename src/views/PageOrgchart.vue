@@ -133,6 +133,11 @@ export default {
       }
     },
   },
+  mounted() {
+    const searchField = document.getElementById('search-query');
+
+    searchField.focus();
+  },
 };
 </script>
 

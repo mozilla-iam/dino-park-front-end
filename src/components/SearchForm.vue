@@ -42,6 +42,9 @@ export default {
       searchQuery: this.$route.query.query || null,
     };
   },
+  mounted() {
+    this.$refs.searchQueryField.focus();
+  },
 };
 </script>
 
