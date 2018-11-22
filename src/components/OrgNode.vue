@@ -124,6 +124,7 @@ export default {
   width: 2.5em;
   height: 2.5em;
   margin: .75em 0;
+  padding: .65em;
   z-index: 1;
   border: 0;
   background-color: transparent;
