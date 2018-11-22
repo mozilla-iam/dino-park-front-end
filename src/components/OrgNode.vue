@@ -89,7 +89,7 @@ export default {
   text-decoration: none;
   color: inherit;
   padding-left: 2em;
-  padding-left: calc(((var(--nodeLevel) + 1) * 1em) + .75em);
+  padding-left: calc(((var(--nodeLevel) + 1) * 1em) + 1.25em);
   border-left: .25em solid transparent;
 }
 .org-node--current > a,
@@ -120,16 +120,16 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  left: calc((var(--nodeLevel) - 1) * 1em);
-  width: 3em;
-  height: 3em;
-  margin: .5em 0;
+  left: calc((var(--nodeLevel) - 1) * 1em + .5em);
+  width: 2.5em;
+  height: 2.5em;
+  margin: .75em 0;
   z-index: 1;
   border: 0;
   background-color: transparent;
   -webkit-appearance: none;
   appearance: none;
-  border-radius: var(--cardRadius);
+  border-radius: var(--imageRadius);
 }
 .org-node__toggle:hover {
   background-color: var(--gray-20);
