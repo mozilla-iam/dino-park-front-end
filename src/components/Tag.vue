@@ -15,7 +15,7 @@ export default {
   .tag {
     display: inline-block;
     vertical-align: top;
-    margin-right: .5em;
+    margin: 0 .5em .5em 0;
     white-space: nowrap;
     padding: .5em 1em;
     background-color: var(--gray-10);
