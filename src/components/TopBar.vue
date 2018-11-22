@@ -21,7 +21,7 @@
             </Error>
           </template>
           <template v-else-if="data">
-            <ShowMore buttonText="Open user menu" alternateButtonText="Close user menu" buttonClass="top-bar__user-menu-toggle" :expanded="false" v-on:close-user-menu="closeUserMenu()" ref="showMoreEl">
+            <ShowMore buttonText="Open user menu" alternateButtonText="Close user menu" buttonClass="top-bar__user-menu-toggle" :expanded="false" v-on:close-user-menu="closeUserMenu()" ref="showMoreEl" :closeWhenClickedOutside="true">
               <template slot="overflow">
                 <UserMenu v-bind="data.userMenu"></UserMenu>
               </template>
