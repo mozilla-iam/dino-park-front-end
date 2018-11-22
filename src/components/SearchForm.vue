@@ -94,6 +94,9 @@ export default {
   background: var(--white);
   margin-bottom: 1em;
   position: fixed;
+  left: 0;
+  right: 0;
+  top: 4em;
   z-index: var(--layerTopBar);
   box-shadow: var(--shadowCard);
 }
