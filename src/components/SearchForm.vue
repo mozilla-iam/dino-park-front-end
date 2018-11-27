@@ -56,6 +56,7 @@ export default {
     },
     clearQuery() {
       this.searchQuery = null;
+      this.$refs.searchQueryField.focus();
     },
   },
   computed: {
