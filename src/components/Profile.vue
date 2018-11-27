@@ -43,7 +43,7 @@
       <a id="nav-relations" class="profile__anchor"></a>
       <header class="profile__section-header">
         <h2>Relations</h2>
-        <router-link :to="{ name: 'OrgchartHighlight', params: { username } }" class="button button--secondary button--small">
+        <router-link :to="{ name: 'OrgchartHighlight', params: { username } }" class="button button--secondary button--small hide-mobile">
           Org Chart
           <svg
             aria-hidden="true"
@@ -399,7 +399,7 @@ export default {
     margin-left: 0;
   }
   .profile__intro-photo .profile__headshot {
-    margin: 0 auto 3em;
+    margin: 0 auto 4em;
   }
 }
 
@@ -414,7 +414,7 @@ export default {
 }
 
 .profile__anchor {
-  top: -6.5em;
+  top: -8.5em;
   position: relative;
 }
 

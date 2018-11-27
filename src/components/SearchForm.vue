@@ -4,7 +4,7 @@
       <legend class="visually-hidden">Search</legend>
       <div class="search-form__fields">
         <label for="search-query" class="visually-hidden">Search term</label>
-        <input type="text" id="search-query" name="query" v-model="searchQuery" class="search-form__input" ref="searchQueryField" placeholder="Search for people by name">
+        <input type="text" id="search-query" name="query" v-model="searchQuery" class="search-form__input" ref="searchQueryField" placeholder="Search for people">
         <button type="button" v-if="searchQuery && searchQuery.length > 0" @click="clearQuery" class="search-form__clear-button">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -56,6 +56,7 @@ export default {
     },
     clearQuery() {
       this.searchQuery = null;
+      this.$refs.searchQueryField.focus();
     },
   },
   computed: {
@@ -83,7 +84,7 @@ export default {
 .search-form {
   margin-right: auto;
   width: 100%;
-  max-width: 25em;
+  max-width: 31em;
 }
   .search-form fieldset {
     border: 0;
@@ -96,30 +97,40 @@ export default {
   }
      .search-form__fields input,
      .search-form__fields button[type="submit"] {
-       background-color: var(--white);
        font-size: 1.15em;
        border: 1px solid var(--gray-30);
-       padding: .5em;
      }
      .search-form__input {
        width: 100%;
+       background-color: var(--white);
        -webkit-appearance: none;
        appearance: none;
        border-radius: 0;
+       padding: .5em;
        padding-left: 3em;
+     }
+     .search-form__input::placeholder {
        text-align: center;
      }
     .search-form__submit {
        border: 0;
        appearance: none;
+       background-color: var(--white);
        width: 2.5em;
+       padding: .5em;
        margin-right: -1px;
        position: absolute;
        left: 0;
        top: 0;
+       bottom: 0;
+       transition: background-color .2s ease-in-out;
+    }
+    .search-form__submit:hover {
+      background-color: var(--gray-20);
     }
       .search-form__submit img {
         vertical-align: middle;
+        width: 1.15em;
       }
     .search-form__clear-button {
       background-color: var(--white);
