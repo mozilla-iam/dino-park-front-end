@@ -4,7 +4,7 @@
       <legend class="visually-hidden">Search</legend>
       <div class="search-form__fields">
         <label for="search-query" class="visually-hidden">Search term</label>
-        <input type="text" id="search-query" name="query" v-model="searchQuery" class="search-form__input" ref="searchQueryField" placeholder="Search for people by name">
+        <input type="text" id="search-query" name="query" v-model="searchQuery" class="search-form__input" ref="searchQueryField" placeholder="Search for people">
         <button type="button" v-if="searchQuery && searchQuery.length > 0" @click="clearQuery" class="search-form__clear-button">
           <svg
             xmlns="http://www.w3.org/2000/svg"
