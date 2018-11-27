@@ -99,7 +99,6 @@ export default {
      .search-form__fields button[type="submit"] {
        font-size: 1.15em;
        border: 1px solid var(--gray-30);
-       padding: .5em;
      }
      .search-form__input {
        width: 100%;
@@ -107,7 +106,10 @@ export default {
        -webkit-appearance: none;
        appearance: none;
        border-radius: 0;
+       padding: .5em;
        padding-left: 3em;
+     }
+     .search-form__input::placeholder {
        text-align: center;
      }
     .search-form__submit {
@@ -115,6 +117,7 @@ export default {
        appearance: none;
        background-color: var(--white);
        width: 2.5em;
+       padding: .5em;
        margin-right: -1px;
        position: absolute;
        left: 0;
