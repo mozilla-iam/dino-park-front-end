@@ -126,6 +126,7 @@ export default {
     }
       .search-form__submit img {
         vertical-align: middle;
+        width: 1.15em;
       }
     .search-form__clear-button {
       background-color: var(--white);
