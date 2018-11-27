@@ -18,7 +18,7 @@ export default {
   },
   methods: {
     awaitTabbing() {
-      document.addEventListener('keydown', function(e) {
+      document.addEventListener('keydown', (e) => {
         if (e.key === 'Tab') {
           document.body.classList.add('focus-styles');
         }

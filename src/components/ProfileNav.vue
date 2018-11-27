@@ -30,8 +30,7 @@ export default {
     updateCurrentItem(event) {
       if (event.target.tagName === 'A') {
         this.currentNavItem = event.target.hash.substr(1);
-      }
-      else if (event.target.parentElement.tagName === 'A') {
+      } else if (event.target.parentElement.tagName === 'A') {
         this.currentNavItem = event.target.parentElement.hash.substr(1);
       }
     },
