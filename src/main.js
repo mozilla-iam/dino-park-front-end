@@ -12,6 +12,13 @@ const client = new ApolloClient({
 
 const apolloProvider = new VueApollo({
   defaultClient: client,
+  errorHandler(error) {
+    const { networkError } = error;
+    if (networkError && networkError.statusCode === 302) {
+      console.log('Got 302 → relaoding…');
+      window.location.reload();
+    }
+  },
 });
 
 Vue.use(VueApollo);

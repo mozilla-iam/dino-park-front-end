@@ -51,7 +51,14 @@ export default {
       this.post = null;
       this.loading = true;
       try {
-        const data = await fetch(`/api/v3/search/simple/${this.$route.query.query}?w=${this.$route.query.who}`);
+        const data = await fetch(`/api/v3/search/simple/${this.$route.query.query}?w=${this.$route.query.who}`)
+          .then((res) => {
+            if (res.status === 302) {
+              window.location.reload();
+              return new Response("[]", { status: 200 });
+            }
+            return res;
+          });
         const results = await data.json();
         this.results = results;
       } catch (e) {

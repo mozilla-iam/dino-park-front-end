@@ -71,7 +71,14 @@ export default {
     const { username } = this.$route.params;
     if (username && this.$route.name === 'OrgchartHighlight') {
       try {
-        const data = await fetch(`/api/v3/orgchart/trace/${username}`);
+        const data = await fetch(`/api/v3/orgchart/trace/${username}`)
+          .then((res) => {
+            if (res.status === 302) {
+              window.location.reload();
+              return new Response("", { status: 200 });
+            }
+            return res;
+          });
         const { trace } = await data.json();
         if (trace && trace.startsWith('-1-')) {
           this.looseTrace = trace.substr(3);
@@ -108,7 +115,14 @@ export default {
       this.post = null;
       this.loading = true;
       try {
-        const data = await fetch('/api/v3/orgchart');
+        const data = await fetch('/api/v3/orgchart')
+          .then((res) => {
+            if (res.status === 302) {
+              window.location.reload();
+              return new Response("[]", { status: 200 });
+            }
+            return res;
+          });
         const orgchart = await data.json();
         this.tree = orgchart.forrest;
         this.loose = orgchart.loose;
