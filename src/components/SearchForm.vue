@@ -97,13 +97,13 @@ export default {
   }
      .search-form__fields input,
      .search-form__fields button[type="submit"] {
-       background-color: var(--white);
        font-size: 1.15em;
        border: 1px solid var(--gray-30);
        padding: .5em;
      }
      .search-form__input {
        width: 100%;
+       background-color: var(--white);
        -webkit-appearance: none;
        appearance: none;
        border-radius: 0;
@@ -113,11 +113,16 @@ export default {
     .search-form__submit {
        border: 0;
        appearance: none;
+       background-color: var(--white);
        width: 2.5em;
        margin-right: -1px;
        position: absolute;
        left: 0;
        top: 0;
+       transition: background-color .2s ease-in-out;
+    }
+    .search-form__submit:hover {
+      background-color: var(--gray-20);
     }
       .search-form__submit img {
         vertical-align: middle;
