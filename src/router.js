@@ -38,7 +38,7 @@ const router = new Router({
       path: '/s',
       query: {
         query: ':query',
-        scope: ':scope',
+        who: ':who',
       },
       name: 'Search',
       component: PageSearchResult,

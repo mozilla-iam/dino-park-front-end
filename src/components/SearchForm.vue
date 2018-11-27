@@ -1,5 +1,5 @@
 <template>
-  <form :class="'search-form' + ( modifier ? ' ' + modifier : '')" :action="this.$router.resolve({ name: 'Search', query: { query: searchQuery }}).href" @submit="handleSubmit" method="GET">
+  <form :class="'search-form' + ( modifier ? ' ' + modifier : '')" :action="this.$router.resolve({ name: 'Search', query: { query, who, }}).href" @submit="handleSubmit" method="GET">
     <fieldset>
       <legend class="visually-hidden">Search</legend>
       <div class="search-form__fields">
@@ -48,6 +48,7 @@ export default {
           name: 'Search',
           query: {
             query: this.searchQuery,
+            who: this.who,
           },
         });
         this.$emit('close-search-form');
@@ -57,9 +58,19 @@ export default {
       this.searchQuery = null;
     },
   },
+  computed: {
+    query: {
+      get() {
+        return this.$route.query.query || null;
+      },
+    },
+    who() {
+      return this.$route.query.who || 'all';
+    },
+  },
   data() {
     return {
-      searchQuery: this.$route.query.query || null,
+      searchQuery: this.query,
     };
   },
   mounted() {
@@ -90,8 +101,6 @@ export default {
        border: 1px solid var(--gray-30);
        padding: .5em;
      }
-     .search-form__fields button[type="submit"] {
-    }
      .search-form__input {
        width: 100%;
        -webkit-appearance: none;
