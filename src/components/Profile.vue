@@ -43,7 +43,7 @@
       <a id="nav-relations" class="profile__anchor"></a>
       <header class="profile__section-header">
         <h2>Relations</h2>
-        <router-link :to="{ name: 'OrgchartHighlight', params: { username } }" class="button button--secondary button--small">
+        <router-link :to="{ name: 'OrgchartHighlight', params: { username } }" class="button button--secondary button--small hide-mobile">
           Org Chart
           <svg
             aria-hidden="true"
