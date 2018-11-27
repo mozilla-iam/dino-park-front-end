@@ -75,7 +75,7 @@ export default {
           .then((res) => {
             if (res.status === 302) {
               window.location.reload();
-              return new Response("", { status: 200 });
+              return new Response('', { status: 200 });
             }
             return res;
           });
@@ -119,7 +119,7 @@ export default {
           .then((res) => {
             if (res.status === 302) {
               window.location.reload();
-              return new Response("[]", { status: 200 });
+              return new Response('[]', { status: 200 });
             }
             return res;
           });

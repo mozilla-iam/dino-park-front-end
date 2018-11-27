@@ -29,7 +29,6 @@
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "vue-axe": "^1.0.7",
-    "vue-cli-plugin-apollo": "^0.16.6",
     "vue-template-compiler": "^2.5.17"
   },
   "browserslist": [
