@@ -41,7 +41,7 @@ export default {
     .footer__link:hover {
       color: inherit;
     }
-    .footer__link:focus {
+    .focus-styles .footer__link:focus {
       outline: 1px solid var(--white);
       -moz-outline-radius: 2em; /*  not on standards track; Moz-only property */
       box-shadow: none;

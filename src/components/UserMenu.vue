@@ -124,8 +124,8 @@ export default {
       padding: 1em 1.75em;
       text-decoration: none;
     }
-    .user-menu a:focus,
-    .user-menu button:focus {
+    .focus-styles .user-menu a:focus,
+    .focus-styles .user-menu button:focus {
       outline: 1px solid var(--white);
       box-shadow: none;
     }
@@ -152,8 +152,8 @@ export default {
         border: 1px dotted transparent;
         padding: 0;
       }
-      .user-menu__close-avatar:focus,
-      .user-menu__close-button:focus {
+      .focus-styles .user-menu__close-avatar:focus,
+      .focus-styles .user-menu__close-button:focus {
         border: 1px dotted currentColor;
       }
       .user-menu__close-avatar {

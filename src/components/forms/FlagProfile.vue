@@ -105,10 +105,10 @@ export default {
       background-size: 1em;
       background-repeat: no-repeat;
     }
-    .checkboxes__item input:focus {
+    .focus-styles .checkboxes__item input:focus {
       outline: none;
     }
-    .checkboxes__item input:focus + label::before {
+    .focus-styles .checkboxes__item input:focus + label::before {
       border-color: var(--blue--60);
     }
 

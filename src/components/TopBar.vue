@@ -114,10 +114,10 @@ export default {
   position: relative;
   background-color: var(--gray-20);
 }
-.top-bar__link--current:focus {
+.focus-styles .top-bar__link--current:focus {
   outline: none;
 }
-.top-bar__link--current:focus::before /* because of https://bugzilla.mozilla.org/show_bug.cgi?id=687311 */ {
+.focus-styles .top-bar__link--current:focus::before /* because of https://bugzilla.mozilla.org/show_bug.cgi?id=687311 */ {
   content: '';
   border: 1px solid var(--blue-60);
   top: 0;
