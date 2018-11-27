@@ -399,7 +399,7 @@ export default {
     margin-left: 0;
   }
   .profile__intro-photo .profile__headshot {
-    margin: 0 auto 3em;
+    margin: 0 auto 4em;
   }
 }
 
