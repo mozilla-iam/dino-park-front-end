@@ -65,11 +65,10 @@ export default {
     Icon,
     ShowMore,
   },
-  data() {
-    const phoneNumber = this.phoneNumbers && this.phoneNumbers['LDAP-1'];
-    return {
-      phoneNumber,
-    };
+  computed: {
+    phoneNumber() {
+      return this.phoneNumbers && this.phoneNumbers['LDAP-1'];
+    },
   },
 };
 </script>

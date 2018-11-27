@@ -45,23 +45,20 @@ export default {
       this.updateUserPicture();
     },
   },
-  data() {
-    this.decidePictureCategory(this.size);
-    this.updateUserPicture();
-    return {
-      src: `/beta/avatar/${this.slot}/${this.picture}`,
-    };
+  asyncComputed: {
+    async src() {
+      this.decidePictureCategory(this.size);
+      return this.updateUserPicture();
+    },
   },
   methods: {
-    updateUserPicture() {
+    async updateUserPicture() {
       if (this.picture === null || this.picture === '/beta/img/user-demo.png') {
-        sha256(this.username).then((hash) => {
-          const identicon = new Identicon(hash, { size: this.size, format: 'svg' });
-          this.src = `data:image/svg+xml;base64,${identicon.toString()}`;
-        });
-      } else {
-        this.src = `/beta/avatar/${this.slot}/${this.picture}`;
+        const hash = await sha256(this.username);
+        const identicon = new Identicon(hash, { size: this.size, format: 'svg' });
+        return `data:image/svg+xml;base64,${identicon.toString()}`;
       }
+      return `/beta/avatar/${this.slot}/${this.picture}`;
     },
     decidePictureCategory(size) {
       if (size <= 40) {

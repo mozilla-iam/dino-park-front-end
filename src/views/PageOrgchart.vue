@@ -1,8 +1,7 @@
 <template>
   <main class="container org-chart">
     <div class="org-chart__chart">
-      <LoadingSpinner v-if="loading"></LoadingSpinner>
-      <Error v-else-if="error">
+      <Error v-if="error">
         <h2>{{ error.message }}</h2>
         <pre>{{ error }}</pre>
         <p>An error occured while trying to go to load the org chart.</p>
@@ -14,8 +13,7 @@
     <ApolloQuery v-if="username" :query="previewProfileQuery" :variables="{ username }" :tag="null">
       <template slot-scope="{ result: { loading, data, error } }">
         <div class="org-chart__preview">
-          <LoadingSpinner v-if="loading"></LoadingSpinner>
-          <template v-else-if="error">
+          <template v-if="error">
             <Error>
               <h2>{{ error.message }}</h2>
               <pre>{{ error }}</pre>
@@ -75,7 +73,7 @@ export default {
       try {
         const data = await fetch(`/api/v3/orgchart/trace/${username}`);
         const { trace } = await data.json();
-        if (trace.startsWith('-1-')) {
+        if (trace && trace.startsWith('-1-')) {
           this.looseTrace = trace.substr(3);
           this.trace = '';
         } else {

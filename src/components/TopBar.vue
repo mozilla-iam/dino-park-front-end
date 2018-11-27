@@ -68,7 +68,6 @@ export default {
   },
   data() {
     return {
-      searchQuery: '',
       mobileSearchOpen: false,
       profileQuery: USER_MENU_PROFILE,
     };
