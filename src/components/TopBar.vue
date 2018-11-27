@@ -103,6 +103,7 @@ export default {
   font-weight: 700;
   text-decoration: none;
   transition: background-color .2s ease-in-out;
+  border-radius: var(--imageRadius);
 }
 .top-bar__link img {
   vertical-align: middle;
