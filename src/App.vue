@@ -16,6 +16,18 @@ export default {
     TopBar,
     Footer,
   },
+  methods: {
+    awaitTabbing() {
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Tab') {
+          document.body.classList.add('focus-styles');
+        }
+      });
+    },
+  },
+  mounted() {
+    this.awaitTabbing();
+  },
 };
 </script>
 
@@ -173,17 +185,22 @@ export default {
     }
   }
 
-  :focus {
+  :focus,
+  ::-moz-focus-inner {
+    outline: none;
+    border: 0;
+  }
+  .focus-styles :focus {
     outline: 1px solid var(--blue-60);
     box-shadow: 0 0 2px 2px var(--transparentBlue);
     -moz-outline-radius: 2px;
   }
-  :hover:focus {
+  .focus-styles ::-moz-focus-inner {
+    border: 0;
+  }
+  .focus-styles :focus:not(:focus-visible) /* don't show focus if element didn't gain focus by means of keyboard  */ {
     outline: none;
     box-shadow: none;
-  }
-  ::-moz-focus-inner {
-    border: 0;
   }
 
   [tabindex="-1"]:focus {
