@@ -84,7 +84,7 @@ export default {
 .search-form {
   margin-right: auto;
   width: 100%;
-  max-width: 25em;
+  max-width: 31em;
 }
   .search-form fieldset {
     border: 0;
@@ -119,6 +119,7 @@ export default {
        position: absolute;
        left: 0;
        top: 0;
+       bottom: 0;
        transition: background-color .2s ease-in-out;
     }
     .search-form__submit:hover {
