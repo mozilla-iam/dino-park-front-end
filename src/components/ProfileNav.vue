@@ -2,11 +2,11 @@
   <nav class="profile__nav">
     <ul>
       <li v-for="(link, index) in links" :key="index">
-        <a v-if="link.id === currentNavItem" :href="'#' + link.id" class="profile__nav-link profile__nav-link--current">
+        <a v-if="link.id === currentNavItem" :href="'#' + link.id" class="profile__nav-link profile__nav-link--current" @click="updateCurrentItem">
           <Icon :id="link.iconId" :width="24" :height="24" />
           <span class="profile__nav-label">{{ link.label}}</span>
         </a>
-        <a v-else :href="'#' + link.id" :class="'profile__nav-link'">
+        <a v-else :href="'#' + link.id" :class="'profile__nav-link'" @click="updateCurrentItem">
           <Icon :id="link.iconId" :width="24" :height="24" />
           <span class="profile__nav-label hide-mobile">{{ link.label}}</span>
         </a>
@@ -27,27 +27,14 @@ export default {
     Icon,
   },
   methods: {
-    watchCurrentSections() {
-      const sections = this.links.map(link => document.getElementById(link.id)).filter(e => e !== null);
-      const observer = new IntersectionObserver(this.updateCurrent, {
-        rootMargin: '-120px',
-        treshold: 1,
-      });
-
-      sections.forEach((section) => {
-        observer.observe(section);
-      });
+    updateCurrentItem(event) {
+      if (event.target.tagName === 'A') {
+        this.currentNavItem = event.target.hash.substr(1);
+      }
+      else if (event.target.parentElement.tagName === 'A') {
+        this.currentNavItem = event.target.parentElement.hash.substr(1);
+      }
     },
-    updateCurrent(entries) {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          this.currentNavItem = entry.target.id;
-        }
-      });
-    },
-  },
-  mounted() {
-    this.watchCurrentSections();
   },
   data() {
     return {
@@ -73,7 +60,7 @@ export default {
     border-radius: var(--imageRadius);
     grid-column: 1 / 2;
     grid-row: 2 / 4;
-    top: 6em;
+    top: 8em;
     margin-left: 0;
     margin-right: 0;
   }

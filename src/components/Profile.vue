@@ -414,7 +414,7 @@ export default {
 }
 
 .profile__anchor {
-  top: -6.5em;
+  top: -8.5em;
   position: relative;
 }
 
