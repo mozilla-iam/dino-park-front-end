@@ -69,12 +69,15 @@ export default {
   .search-who__choices label {
     background-color: var(--white);
     padding: .75em 1em;
-    border: 1px solid var(--blue-60);
+    color: var(--gray-60);
+    border: 1px solid var(--gray-40);
     margin-left: -1px; /* hack to not have double borders */
+    margin-right: -1px;
   }
   .search-who__choices input:checked + label {
     background-color: var(--blue-60);
     color: var(--white);
+    border-color: var(--blue-60);
   }
   .search-who__choices label:first-of-type {
     border-radius: 2em 0em 0 2em;
