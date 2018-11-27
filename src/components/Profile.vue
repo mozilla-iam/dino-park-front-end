@@ -43,24 +43,26 @@
       <a id="nav-relations" class="profile__anchor"></a>
       <header class="profile__section-header">
         <h2>Relations</h2>
-        <router-link :to="{ name: 'OrgchartHighlight', params: { username } }" class="button button--secondary button--small hide-mobile">
-          Org Chart
-          <svg
-            aria-hidden="true"
-            role="presentation"
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-          <polyline points="9 18 15 12 9 6" />
-        </svg>
-        </router-link>
+        <div class="hide-mobile profile__section-header-button-holder">
+          <router-link :to="{ name: 'OrgchartHighlight', params: { username } }" class="button button--secondary button--small">
+            Org Chart
+            <svg
+              aria-hidden="true"
+              role="presentation"
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </router-link>
+        </div>
       </header>
       <ReportingStructure v-if="manager || directs.length > 0" :manager="manager" :directs="directs">
       </ReportingStructure>
@@ -349,7 +351,7 @@ export default {
   .profile__section-header h2 {
     margin: 0;
   }
-  .profile__section-header .button {
+  .profile__section-header-button-holder {
     margin-left: auto;
   }
 
