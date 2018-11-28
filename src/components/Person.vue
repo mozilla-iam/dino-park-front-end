@@ -1,6 +1,6 @@
 <template>
   <div :class="'person' + ( modifier ? ' ' + modifier : '')">
-    <UserPicture :picture="picture" :username="username" :size="40" dinoType="Staff" />
+    <UserPicture :picture="picture" :username="username" :size="40" :isStaff="true" />
     <router-link :to="{ name: 'Profile', params: { username } }" :title="`${firstName} ${lastName}`">
       <div class="person__name-title">
         <div class="person__name">

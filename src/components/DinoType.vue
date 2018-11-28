@@ -1,10 +1,10 @@
 <template>
   <span class="dino-type">
     <template v-if="size === 'small'">
-      <span aria-hidden="true">{{ type[0] }}</span>
-      <span class="visually-hidden">{{ type }}</span>
+      <span aria-hidden="true">S</span>
+      <span class="visually-hidden">Staff</span>
     </template>
-    <template v-else>{{ type }}</template>
+    <template v-else>Staff</template>
   </span>
 </template>
 
@@ -12,7 +12,6 @@
 export default {
   name: 'DinoType',
   props: {
-    type: String,
     size: String,
   },
 };

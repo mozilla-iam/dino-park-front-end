@@ -1,7 +1,7 @@
 <template>
   <div :class="'user-picture' + ( modifier ? ' ' + modifier : '')">
     <img :class="cls" :src="src" alt="" :width="size" role="presentation" aria-hidden="true">
-    <DinoType v-if="dinoType" :type="dinoType" :size="dinoTypeSize" />
+    <DinoType v-if="isStaff" :size="dinoTypeSize" />
   </div>
 </template>
 
@@ -35,7 +35,7 @@ export default {
     picture: String,
     username: String,
     cls: String,
-    dinoType: String,
+    isStaff: Boolean,
   },
   components: {
     DinoType,
