@@ -12,6 +12,12 @@ const client = new ApolloClient({
 
 const apolloProvider = new VueApollo({
   defaultClient: client,
+  errorHandler(error) {
+    const { networkError } = error;
+    if (networkError instanceof TypeError && networkError.message.startsWith('NetworkError')) {
+      window.location.reload();
+    }
+  },
 });
 
 Vue.use(VueApollo);

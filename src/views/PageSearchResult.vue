@@ -55,6 +55,10 @@ export default {
         const results = await data.json();
         this.results = results;
       } catch (e) {
+        if (e instanceof TypeError && e.message.startsWith('NetworkError')) {
+          window.location.reload();
+          return;
+        }
         this.error = e;
       }
       this.loading = false;
