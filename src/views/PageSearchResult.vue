@@ -76,8 +76,8 @@ export default {
       try {
         const params = new URLSearchParams([
           ['q', this.$route.query.query],
-          ['w', this.$route.query.who]
-        ])
+          ['w', this.$route.query.who],
+        ]);
         const data = await fetch(`/api/v3/search/simple/?${params.toString()}`);
         const results = await data.json();
         this.results = results;
