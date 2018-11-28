@@ -1,7 +1,7 @@
 <template>
   <div class="profile__name">
     <h1>{{ firstName }} {{ lastName }} </h1>
-    <span class="profile__user-name" v-if="prettierUsername">{{ prettierUsername }}</span>
+    <span class="profile__user-name" v-if="prettierUsername">@{{ prettierUsername }}</span>
     <span class="profile__pronoun" v-if="pronouns">{{ pronouns }}</span>
   </div>
 </template>

@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { bindFocusTrap, unbindFocusTrap } from '@/assets/js/trapFocus';
+import { bindFocusTrap, unbindFocusTrap } from '@/assets/js/trap-focus';
 
 export default {
   name: 'Modal',

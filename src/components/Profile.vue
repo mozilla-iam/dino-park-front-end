@@ -20,7 +20,7 @@
         <div class="profile__description">
           <p>{{ description }}</p>
         </div>
-        <ShowMore buttonText="Show More" alternateButtonText="Show Less" :expanded="false" buttonClass="button button--text-only button--less-padding" :transition="true">
+        <ShowMore v-if="this.staffInformation.staff" buttonText="Show More" alternateButtonText="Show Less" :expanded="false" buttonClass="button button--text-only button--less-padding" :transition="true">
           <template slot="overflow">
             <MetaList>
               <h3 class="visually-hidden">Meta</h3>
@@ -38,7 +38,7 @@
         </ShowMore>
       </div>
     </section>
-    <ProfileNav :links="profileNav"></ProfileNav>
+    <ProfileNav :links="profileNav" :onStaffProfile="staffInformation.staff"></ProfileNav>
     <section v-if="staffInformation.staff" class="profile__section">
       <a id="nav-relations" class="profile__anchor"></a>
       <header class="profile__section-header">
@@ -274,6 +274,7 @@ export default {
           id: 'nav-relations',
           iconId: 'org-chart',
           label: 'Relations',
+          staffOnly: true,
         },
         {
           id: 'nav-contact',
