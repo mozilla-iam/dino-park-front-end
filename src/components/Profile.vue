@@ -20,7 +20,7 @@
         <div class="profile__description">
           <p>{{ description }}</p>
         </div>
-        <ShowMore buttonText="Show More" alternateButtonText="Show Less" :expanded="false" buttonClass="button button--text-only button--less-padding" :transition="true">
+        <ShowMore v-if="this.staffInformation.staff" buttonText="Show More" alternateButtonText="Show Less" :expanded="false" buttonClass="button button--text-only button--less-padding" :transition="true">
           <template slot="overflow">
             <MetaList>
               <h3 class="visually-hidden">Meta</h3>
