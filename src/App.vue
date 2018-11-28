@@ -10,6 +10,8 @@
 import TopBar from '@/components/TopBar.vue';
 import Footer from '@/components/Footer.vue';
 
+import isDNTEnabled from '@/assets/js/dnt-enabled';
+
 export default {
   name: 'PageHome',
   components: {
@@ -24,9 +26,30 @@ export default {
         }
       });
     },
+    loadGA() {
+      const dntEnabled = isDNTEnabled();
+      const googleId = 'UA-84301250-19';
+
+      if (dntEnabled === false) {
+        const firstScriptTag = document.querySelector('script');
+        const newTag = document.createElement('script');
+
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          'gtm.start': new Date().getTime(),
+          event: 'gtm.js',
+        });
+
+        newTag.async = true;
+        newTag.src = `https://www.googletagmanager.com/gtm.js?id=${googleId}`;
+
+        firstScriptTag.parentNode.insertBefore(newTag, firstScriptTag);
+      }
+    },
   },
   mounted() {
     this.awaitTabbing();
+    this.loadGA();
   },
 };
 </script>
