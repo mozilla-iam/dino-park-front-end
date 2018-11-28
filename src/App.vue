@@ -28,7 +28,7 @@ export default {
     },
     loadGA() {
       const dntEnabled = isDNTEnabled();
-      const googleId = 'UA-84301250-19';
+      const googleId = 'GTM-5GCB5DL';
 
       if (dntEnabled === false) {
         const firstScriptTag = document.querySelector('script');
