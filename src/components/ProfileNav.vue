@@ -31,7 +31,7 @@ export default {
     profileLinks() {
       if (this.onStaffProfile) {
         return this.links;
-      } 
+      }
 
       return this.links.filter((link) => {
         if (!link.staffOnly) {
