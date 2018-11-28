@@ -38,7 +38,7 @@
         </ShowMore>
       </div>
     </section>
-    <ProfileNav :links="profileNav"></ProfileNav>
+    <ProfileNav :links="profileNav" :onStaffProfile="staffInformation.staff"></ProfileNav>
     <section v-if="staffInformation.staff" class="profile__section">
       <a id="nav-relations" class="profile__anchor"></a>
       <header class="profile__section-header">
@@ -274,6 +274,7 @@ export default {
           id: 'nav-relations',
           iconId: 'org-chart',
           label: 'Relations',
+          staffOnly: true,
         },
         {
           id: 'nav-contact',

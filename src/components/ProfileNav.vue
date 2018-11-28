@@ -1,7 +1,7 @@
 <template>
   <nav class="profile__nav">
     <ul>
-      <li v-for="(link, index) in links" :key="index">
+      <li v-for="(link, index) in profileLinks" :key="index">
         <a v-if="link.id === currentNavItem" :href="'#' + link.id" class="profile__nav-link profile__nav-link--current" @click="updateCurrentItem">
           <Icon :id="link.iconId" :width="24" :height="24" />
           <span class="profile__nav-label">{{ link.label}}</span>
@@ -22,9 +22,24 @@ export default {
   name: 'ProfileNav',
   props: {
     links: Array,
+    onStaffProfile: Boolean,
   },
   components: {
     Icon,
+  },
+  computed: {
+    profileLinks() {
+      if (this.onStaffProfile) {
+        return this.links;
+      } 
+
+      return this.links.filter((link) => {
+        if (!link.staffOnly) {
+          return link;
+        }
+        return null;
+      });
+    },
   },
   methods: {
     updateCurrentItem(event) {
