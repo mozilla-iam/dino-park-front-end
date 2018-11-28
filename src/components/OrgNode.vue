@@ -101,6 +101,11 @@ export default {
 .org-node a:hover::after {
   background-color: var(--lightBlue);
 }
+.org-node a:focus,
+.org-node:target > a {
+  position: relative;
+  z-index: calc(var(--layerTopBar) - 1);
+}
 .org-node__name,
 .org-node__title {
   overflow: hidden;
