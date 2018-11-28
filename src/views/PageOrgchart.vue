@@ -71,14 +71,7 @@ export default {
     const { username } = this.$route.params;
     if (username && this.$route.name === 'OrgchartHighlight') {
       try {
-        const data = await fetch(`/api/v3/orgchart/trace/${username}`)
-          .then((res) => {
-            if (res.status === 302) {
-              window.location.reload();
-              return new Response('', { status: 200 });
-            }
-            return res;
-          });
+        const data = await fetch(`/api/v3/orgchart/trace/${encodeURIComponent(username)}`);
         const { trace } = await data.json();
         if (trace && trace.startsWith('-1-')) {
           this.looseTrace = trace.substr(3);
@@ -88,6 +81,10 @@ export default {
           this.trace = trace;
         }
       } catch (e) {
+        if (e instanceof TypeError && e.message.startsWith('NetworkError')) {
+          window.location.reload();
+          return;
+        }
         this.error = e;
       }
     } else {
@@ -115,18 +112,15 @@ export default {
       this.post = null;
       this.loading = true;
       try {
-        const data = await fetch('/api/v3/orgchart')
-          .then((res) => {
-            if (res.status === 302) {
-              window.location.reload();
-              return new Response('[]', { status: 200 });
-            }
-            return res;
-          });
+        const data = await fetch('/api/v3/orgchart/');
         const orgchart = await data.json();
         this.tree = orgchart.forrest;
         this.loose = orgchart.loose;
       } catch (e) {
+        if (e instanceof TypeError && e.message.startsWith('NetworkError')) {
+          window.location.reload();
+          return;
+        }
         this.error = e;
       }
       this.loading = false;
