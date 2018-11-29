@@ -92,7 +92,9 @@ export default {
     },
   },
   updated() {
-    this.$refs.searchResultsContainer.focus();
+    if (this.$refs.searchResultsContainer) {
+      this.$refs.searchResultsContainer.focus();
+    }
   },
 };
 </script>
