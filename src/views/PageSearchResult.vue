@@ -25,7 +25,7 @@
         <template slot="message">
           <h1 class="visually-hidden">Error</h1>
           <h2>No results found for <strong>{{ this.$route.query.query }}</strong></h2>
-          <p>Some suggections include:</p>
+          <p>Some suggestions include:</p>
           <ul>
             <li>Make sure that all words are spelled correctly.</li>
             <li>Try using different keywords or more general keywords.</li>
