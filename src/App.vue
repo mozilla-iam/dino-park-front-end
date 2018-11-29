@@ -216,7 +216,7 @@ export default {
   }
   .focus-styles :focus {
     outline: 1px solid var(--blue-60);
-    box-shadow: 0 0 2px 2px var(--transparentBlue);
+    box-shadow: 0 0 0 2px var(--transparentBlue);
     -moz-outline-radius: 2px;
   }
   .focus-styles ::-moz-focus-inner {
