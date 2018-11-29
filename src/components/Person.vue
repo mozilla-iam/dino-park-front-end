@@ -65,15 +65,21 @@ export default {
       }
       .person a::after {
         content: '';
-        width: 1em;
-        height: 1em;
         display: block;
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        border: 1px solid transparent;
+      }
+      .focus-styles .person a:focus {
+        outline: none;
+        box-shadow: none;
+      }
+      .focus-styles .person a:focus::after {
+        outline: 1px solid var(--blue-60);
+        box-shadow: 0 0 0 2px var(--transparentBlue);
+        -moz-outline-radius: 2px;
       }
     .person__preferred-title {
       color: var(--gray-50);
