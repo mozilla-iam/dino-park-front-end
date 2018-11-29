@@ -20,7 +20,7 @@
       </svg>
     </button>
     <div class="profile-preview__image">
-      <UserPicture :picture="picture" :username="username" :size="100" dinoType="Staff" />
+      <UserPicture :picture="picture" :username="username" :size="100" :isStaff="staffInformation.staff" />
     </div>
     <ProfileName :firstName="firstName" :lastName="lastName" :pronouns="pronouns"></ProfileName>
     <ProfileTitle :businessTitle="staffInformation.title" :funTitle="funTitle"></ProfileTitle>
