@@ -8,13 +8,16 @@
     <div class="profile__location">
       <h3 class="visually-hidden">Location</h3>
       <div>
-        <RouterLink :to="{
+        <RouterLink v-if="officeLocation" :to="{
           name: 'Search',
           query: {
             query: locationSearchString,
           }}">
           <strong>{{ location || officeLocation }} {{ location && officeLocation }}</strong>{{ timezone }}
         </RouterLink>
+        <template v-else>
+          <strong>{{ location || officeLocation }} {{ location && officeLocation }}</strong>{{ timezone }}
+        </template>
       </div>
     </div>
   </div>
@@ -32,7 +35,7 @@ export default {
   },
   computed: {
     locationSearchString() {
-      return 'officeLocation:"' + this.officeLocation + '" OR location:"' + this.location + '"'; // eslint-disable-line 
+      return 'officeLocation:"' + this.officeLocation + '"'; // eslint-disable-line 
     },
   },
 };
