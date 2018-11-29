@@ -5,7 +5,7 @@
       <template v-else-if="data && data.profile !== null">
         <Profile v-bind="data.profile"></Profile>
       </template>
-      <template v-else>
+      <template v-else-if="data && data.profile === null">
         <main class="container">
           <Error>
             <template slot="image">
@@ -21,6 +21,7 @@
           </Error>
         </main>
       </template>
+      <LoadingSpinner v-else></LoadingSpinner>
     </template>
   </ApolloQuery>
 </template>
