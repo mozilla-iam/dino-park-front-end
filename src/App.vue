@@ -169,6 +169,7 @@ export default {
     display: grid;
     grid-template-rows: auto 1fr auto; /* this assumes an app container with 3 things:; header, content, footer; it makes header and footer as tall as they need to be, then gives remaining whitespace to content.  */
     min-height: calc(100vh - 5.5em);
+    align-items: center; /* if there is not enough content, that content will center in the available space */
   }
     .app-container > * {
       min-width: 0; /* ‘auto’ is default for grid children,
