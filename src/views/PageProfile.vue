@@ -2,15 +2,31 @@
   <ApolloQuery :query="profileQuery" :variables="{ username }">
     <template slot-scope="{ result: { loading, data, error } }">
       <LoadingSpinner v-if="loading"></LoadingSpinner>
-      <template v-else-if="data">
+      <template v-else-if="data && data.profile !== null">
         <Profile v-bind="data.profile"></Profile>
       </template>
-      <LoadingSpinner v-else></LoadingSpinner>
+      <template v-else>
+        <main class="container">
+          <Error>
+            <template slot="image">
+              <img src="@/assets/images/dino-1.png" srcset="@/assets/images/dino-1@2x.png 2x, @/assets/images/dino-1@3x.png 3x" />
+            </template>
+            <template slot="message">
+              <h1 class="visually-hidden">Error</h1>
+              <h2>This page isn't available</h2>
+              <p>Sorry, the link you followed may be broken or the page may have been removed.</p>
+              <RouterLink :to="{ name: 'Home' }" class="button">Go to homepage</RouterLink>
+              <p><small>Please submit all bugs or issues to the team’s Discourse.</small></p>
+            </template>
+          </Error>
+        </main>
+      </template>
     </template>
   </ApolloQuery>
 </template>
 
 <script>
+import Error from '@/components/Error.vue';
 import Profile from '@/components/Profile.vue';
 import LoadingSpinner from '@/components/LoadingSpinner.vue';
 import { PROFILE } from '@/queries/profile';
@@ -18,6 +34,7 @@ import { PROFILE } from '@/queries/profile';
 export default {
   name: 'PageProfile',
   components: {
+    Error,
     Profile,
     LoadingSpinner,
   },
