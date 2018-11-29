@@ -1,5 +1,5 @@
 <template>
-  <main class="container search-results">
+  <main class="container search-results" ref="searchResultsContainer" tabindex="-1">
     <h1 class="visually-hidden">Search results</h1>
     <SearchScope/>
     <template v-if="!this.$route.query.query">
@@ -90,6 +90,9 @@ export default {
       }
       this.loading = false;
     },
+  },
+  updated() {
+    this.$refs.searchResultsContainer.focus();
   },
 };
 </script>
