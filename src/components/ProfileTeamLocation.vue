@@ -32,7 +32,7 @@ export default {
   },
   computed: {
     locationSearchString() {
-      return 'officeLocation:"' + this.officeLocation + '" OR location:"' + this.location + '"';
+      return 'officeLocation:"' + this.officeLocation + '" OR location:"' + this.location + '"'; // eslint-disable-line 
     },
   },
 };
