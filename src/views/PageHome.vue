@@ -5,7 +5,7 @@
            srcset="@/assets/images/laptop-phone@2x.jpg 2x" />
       <h1>Welcome to the Mozilla Directory</h1>
       <p>A secure place to quickly find your team members and easily discover new ones, now in beta.</p>
-      <p><router-link :to="{ name: 'Orgchart' }" class="button">View the Org Chart<Icon id="chevron-right" :width="24" :height="24" /></router-link></p>
+      <p><RouterLink :to="{ name: 'Orgchart' }" class="button">View the Org Chart<Icon id="chevron-right" :width="24" :height="24" /></RouterLink></p>
       <p><small>This is a beta version, let us know what you think.</small></p>
     </div>
     <CardRow>

@@ -1,7 +1,7 @@
 <template>
   <div :class="'person' + ( modifier ? ' ' + modifier : '')">
     <UserPicture :picture="picture" :username="username" :size="40" :isStaff="true" />
-    <router-link :to="{ name: 'Profile', params: { username } }" :title="`${firstName} ${lastName}`">
+    <RouterLink :to="{ name: 'Profile', params: { username } }" :title="`${firstName} ${lastName}`">
       <div class="person__name-title">
         <div class="person__name">
             {{ firstName }} {{ lastName }}
@@ -11,7 +11,7 @@
           <template v-else-if="title">{{ title }}</template>
         </div>
       </div>
-    </router-link>
+    </RouterLink>
     <div v-if="officeLocation" class="person__location">
       <div v-if="modifier === 'person--wide'" class="person__location-label">Location</div>
       {{ officeLocation }}
