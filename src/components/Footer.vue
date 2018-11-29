@@ -1,11 +1,11 @@
 <template>
   <footer class="footer">
-    <a href="https://discourse.mozilla.org/c/iam/dinopark" class="footer__link"><Icon id="discourse" :width="18" :height="18" /> Feedback</a>
-    <a href="https://www.mozilla.org/en-US/legal" class="footer__link"><Icon id="legal" :width="18" :height="18" /> Legal</a>
-    <a href="https://www.mozilla.org/en-US/privacy/" class="footer__link"><Icon id="privacy" :width="18" :height="18" /> Privacy</a>
-    <a href="https://github.com/mozilla-iam/dino-park-issues" class="footer__link"><Icon id="github" :width="18" :height="18" /> GitHub</a>
+    <a href="https://discourse.mozilla.org/c/iam/dinopark" class="footer__link" target="_blank" rel="noopener noreferrer"><Icon id="discourse" :width="18" :height="18" /> Feedback</a>
+    <a href="https://www.mozilla.org/en-US/legal" class="footer__link" target="_blank" rel="noopener noreferrer"><Icon id="legal" :width="18" :height="18" /> Legal</a>
+    <a href="https://www.mozilla.org/en-US/privacy/" class="footer__link" target="_blank" rel="noopener noreferrer"><Icon id="privacy" :width="18" :height="18" /> Privacy</a>
+    <a href="https://github.com/mozilla-iam/dino-park-issues" class="footer__link" target="_blank" rel="noopener noreferrer"><Icon id="github" :width="18" :height="18" /> GitHub</a>
     <div>
-      <a href="https://www.mozilla.org/en-US/about/governance/policies/participation/" class="footer__link footer__link--cpg">Community Participation Guidelines</a>
+      <a href="https://www.mozilla.org/en-US/about/governance/policies/participation/" class="footer__link footer__link--cpg" target="_blank" rel="noopener noreferrer">Community Participation Guidelines</a>
     </div>
   </footer>
 </template>
