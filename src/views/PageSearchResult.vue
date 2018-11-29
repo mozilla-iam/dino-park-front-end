@@ -102,5 +102,6 @@ export default {
 <style>
 .search-results {
   padding-top: 1em;
+  align-self: start;
 }
 </style>
