@@ -236,6 +236,7 @@ export default {
     outline seems sensible as it usually concerns
     large elements that people would not expect to
     have focus. */
+    box-shadow: none;
   }
 
   .actions ul {
