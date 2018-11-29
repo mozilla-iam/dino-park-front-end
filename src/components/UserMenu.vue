@@ -28,7 +28,7 @@
         </svg>
       </button>
     </div>
-    <ul class="user-menu__items">
+    <ul class="user-menu__items" @click="closeOnLinkClick">
       <li>
         <RouterLink :to="{ name: 'Profile', params: { username: username } }">
           <span>My profile</span>
@@ -78,6 +78,12 @@ export default {
   methods: {
     sendCloseEvent() {
       this.$parent.$emit('close-user-menu');
+    },
+    closeOnLinkClick(e) {
+      console.log(e.target.tagName);
+      if (e.target.tagName === 'A') {
+        this.$parent.$emit('close-user-menu');
+      }
     },
   },
   mounted() {

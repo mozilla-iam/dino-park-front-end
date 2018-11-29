@@ -104,7 +104,6 @@ export default {
     this.lastActive = document.activeElement;
     if (this.$refs.profilePreviewElement) {
       const firstButton = this.$refs.profilePreviewElement.querySelector('button');
-      console.log(firstButton);
       firstButton.focus();
     }
   },
