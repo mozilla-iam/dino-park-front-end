@@ -7,7 +7,18 @@
     </div>
     <div class="profile__location">
       <h3 class="visually-hidden">Location</h3>
-      <div class="location"><strong>{{ location || officeLocation }} {{ location && officeLocation }}</strong>{{ timezone }}</div>
+      <div>
+        <RouterLink v-if="officeLocation" :to="{
+          name: 'Search',
+          query: {
+            query: locationSearchString,
+          }}">
+          <strong>{{ location || officeLocation }} {{ location && officeLocation }}</strong>{{ timezone }}
+        </RouterLink>
+        <template v-else>
+          <strong>{{ location || officeLocation }} {{ location && officeLocation }}</strong>{{ timezone }}
+        </template>
+      </div>
     </div>
   </div>
 </template>
@@ -22,6 +33,11 @@ export default {
     officeLocation: String,
     timezone: String,
   },
+  computed: {
+    locationSearchString() {
+      return 'officeLocation:"' + this.officeLocation + '"'; // eslint-disable-line 
+    },
+  },
 };
 </script>
 
@@ -29,6 +45,11 @@ export default {
 .profile__location,
 .profile__team {
   color: var(--gray-50);
+}
+.profile__location a,
+.profile__team a {
+  color: inherit;
+  text-decoration: none;
 }
 .profile__team {
   padding-bottom: 1em;

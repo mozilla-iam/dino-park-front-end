@@ -56,16 +56,16 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   switch (to.name) {
     case 'OrgchartHighlight':
-      document.title = `${to.params.username} - Org chart - Mozillians`;
+      document.title = `${to.params.username} - Org chart - Mozilla Directory`;
       break;
     case 'Orgchart':
-      document.title = 'Org chart - Mozillians';
+      document.title = 'Org chart - Mozilla Directory';
       break;
     case 'Profile':
-      document.title = `${to.params.username} - Profile - Mozillians`;
+      document.title = `${to.params.username} - Profile - Mozilla Directory`;
       break;
     default:
-      document.title = `${to.name} - Mozillians`;
+      document.title = `${to.name} - Mozilla Directory`;
   }
   next();
 });
