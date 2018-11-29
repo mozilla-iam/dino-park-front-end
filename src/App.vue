@@ -227,7 +227,7 @@ export default {
     box-shadow: none;
   }
 
-  [tabindex="-1"]:focus {
+  .focus-styles [tabindex="-1"]:focus {
     outline: none; /* if tabindex is -1, focus was
     set programmatically to something that is usually
     not focused (ie not an interactive element), in

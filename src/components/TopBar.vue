@@ -14,14 +14,7 @@
       <RouterLink :to="{ name: 'Orgchart' }" class="top-bar__link" exact-active-class="top-bar__link--current"><img src="@/assets/images/org-chart.svg" alt="Org chart" width="20" title="Org chart" /></RouterLink>
       <ApolloQuery :query="profileQuery">
         <template slot-scope="{ result: { loading, data, error } }">
-          <template v-if="error">
-            <Error>
-              <h2>{{ error.message }}</h2>
-              <pre>{{ error }}</pre>
-              <p>An error occured while trying to go fetch user profile</p>
-            </Error>
-          </template>
-          <template v-else-if="data">
+          <template v-if="data">
               <ShowMore buttonText="Open user menu" alternateButtonText="Close user menu" buttonClass="top-bar__user-menu-toggle" :expanded="false" v-on:close-user-menu="closeUserMenu()" ref="showMoreUserMenu" :closeWhenClickedOutside="true">
               <template slot="overflow">
                 <UserMenu v-bind="data.userMenu"></UserMenu>
@@ -45,7 +38,6 @@
 import SearchForm from '@/components/SearchForm.vue';
 import ShowMore from '@/components/functional/ShowMore.vue';
 import UserMenu from '@/components/UserMenu.vue';
-import Error from '@/components/Error.vue';
 import UserPicture from '@/components/UserPicture.vue';
 import { USER_MENU_PROFILE } from '@/queries/profile';
 
@@ -55,7 +47,6 @@ export default {
     SearchForm,
     ShowMore,
     UserMenu,
-    Error,
     UserPicture,
   },
   methods: {

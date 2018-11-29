@@ -4,6 +4,7 @@ import PageHome from './views/PageHome.vue';
 import PageProfile from './views/PageProfile.vue';
 import PageOrgchart from './views/PageOrgchart.vue';
 import PageSearchResult from './views/PageSearchResult.vue';
+import PageUnknown from './views/PageUnknown.vue';
 
 Vue.use(Router);
 
@@ -11,6 +12,11 @@ const router = new Router({
   base: process.env.BASE_URL,
   mode: 'history',
   routes: [
+    {
+      path: '*',
+      name: 'Unknown',
+      component: PageUnknown,
+    },
     {
       path: '/',
       name: 'Home',

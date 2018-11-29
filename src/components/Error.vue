@@ -1,6 +1,11 @@
 <template>
   <div class="error">
-    <slot></slot>
+    <div class="error__image">
+      <slot name="image"></slot>
+    </div>
+    <div class="error__message">
+      <slot name="message"></slot>
+    </div>
   </div>
 </template>
 
@@ -11,17 +16,31 @@ export default {
 </script>
 
 <style>
-  .error {
-    border-top: 3px solid red;
-    background-color: white;
-    margin: 1em;
-    padding: 1em;
-    margin-bottom: 1em;
+.error__image {
+  margin: 2em 0;
+  text-align: center;
+}
+  .error__image img {
+    max-width: 80%;
   }
-    .error p {
+  .error__message > .button {
+    margin: 4em 0;
+    display: inline-block;
+  }
+@media (min-width: 57.5em) {
+  .error {
+    display: flex;
+    margin: 4em;
+  }
+    .error__image {
       margin: 0;
     }
-    .error p + p {
-      margin-top: 1em;
+      .error__image img {
+        max-width: none;
+      }
+    .error__image,
+    .error__message {
+      flex: 1;
     }
+}
 </style>

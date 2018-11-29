@@ -1,11 +1,6 @@
 <template>
   <main class="container org-chart">
     <div class="org-chart__chart">
-      <Error v-if="error">
-        <h2>{{ error.message }}</h2>
-        <pre>{{ error }}</pre>
-        <p>An error occured while trying to go to load the org chart.</p>
-      </Error>
       <OrgRoot v-if="tree && !loading" :roots="tree" :trace="trace || ''"></OrgRoot>
       <OrgRoot v-if="loose && !loading" :roots="loose" :trace="looseTrace || ''" heading="People who need their manager set" modifier="org-root--loose"></OrgRoot>
       <LoadingSpinner v-else></LoadingSpinner>
@@ -13,14 +8,7 @@
     <ApolloQuery v-if="username" :query="previewProfileQuery" :variables="{ username }" :tag="null">
       <template slot-scope="{ result: { loading, data, error } }">
         <div class="org-chart__preview">
-          <template v-if="error">
-            <Error>
-              <h2>{{ error.message }}</h2>
-              <pre>{{ error }}</pre>
-              <p>An error occured while trying to view {{ previewUserId }}: </p>
-            </Error>
-          </template>
-          <template v-else-if="data">
+          <template v-if="data">
             <ProfilePreview v-if="desktopView" v-bind="data.profile"></ProfilePreview>
             <Modal v-else :initiallyOpen="true" :closeButton="false" ref="modalEl">
               <ProfilePreview v-bind="data.profile"></ProfilePreview>
@@ -34,7 +22,6 @@
 </template>
 
 <script>
-import Error from '@/components/Error.vue';
 import LoadingSpinner from '@/components/LoadingSpinner.vue';
 import OrgRoot from '@/components/OrgRoot.vue';
 import Modal from '@/components/functional/Modal.vue';
@@ -44,7 +31,6 @@ import { PREVIEW_PROFILE } from '@/queries/profile';
 export default {
   name: 'PageOrgchart',
   components: {
-    Error,
     LoadingSpinner,
     Modal,
     OrgRoot,
