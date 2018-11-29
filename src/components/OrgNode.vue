@@ -1,10 +1,10 @@
 <template>
   <li :id="data.username" :class="'org-node' + ( data.username === this.$route.params.username ? ' org-node--current' : '')">
-    <router-link :to="{ name: 'OrgchartHighlight', params: { username: data.username } }" :id="`org-node-${prefix}`">
+    <RouterLink :to="{ name: 'OrgchartHighlight', params: { username: data.username } }" :id="`org-node-${prefix}`">
       <UserPicture :picture="data.picture" :username="data.username" :size="40" dinoType="Staff"></UserPicture>
       <span class="org-node__name">{{ data.firstName }} {{ data.lastName }}</span>
       <span class="org-node__title">{{ data.title }}</span>
-    </router-link>
+    </RouterLink>
     <ShowMore v-if="children.length > 0" :buttonText="`Expand ${data.firstName} ${data.lastName}`" :alternateButtonText="`Collapse ${data.firstName} ${data.lastName}`" :trace="trace" :prefix="prefix" buttonClass="org-node__toggle" :transition="false" :moveFocus="false" :overflowBefore="false">
       <template slot="overflow">
         <ul v-for="(child, index) in children" :key="index">

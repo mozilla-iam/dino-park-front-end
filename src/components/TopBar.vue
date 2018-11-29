@@ -1,7 +1,7 @@
 <template>
   <header class="top-bar">
     <div class="top-bar__bar">
-      <router-link :to="{ name: 'Home' }" class="top-bar__link top-bar__link--logo"><img src="@/assets/images/mozilla.svg" alt="Mozilla logo" /></router-link>
+      <RouterLink :to="{ name: 'Home' }" class="top-bar__link top-bar__link--logo"><img src="@/assets/images/mozilla.svg" alt="Mozilla logo" /></RouterLink>
       <SearchForm class="hide-mobile"></SearchForm>
       <ShowMore buttonText="Open search" alternateButtonText="Close search" buttonClass="hide-desktop top-bar__search-toggle" :expanded="false" :closeWhenClickedOutside="true" ref="showMoreSearch">
         <template slot="overflow">
@@ -11,7 +11,7 @@
           <img src="@/assets/images/search.svg" alt="" role="presentation" aria-hidden="true" width="20" />
         </template>
       </ShowMore>
-      <router-link :to="{ name: 'Orgchart' }" class="top-bar__link" exact-active-class="top-bar__link--current"><img src="@/assets/images/org-chart.svg" alt="Org chart" width="20" title="Org chart" /></router-link>
+      <RouterLink :to="{ name: 'Orgchart' }" class="top-bar__link" exact-active-class="top-bar__link--current"><img src="@/assets/images/org-chart.svg" alt="Org chart" width="20" title="Org chart" /></RouterLink>
       <ApolloQuery :query="profileQuery">
         <template slot-scope="{ result: { loading, data, error } }">
           <template v-if="error">

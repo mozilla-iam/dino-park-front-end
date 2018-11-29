@@ -44,7 +44,7 @@
       <header class="profile__section-header">
         <h2>Relations</h2>
         <div class="hide-mobile profile__section-header-button-holder">
-          <router-link :to="{ name: 'OrgchartHighlight', params: { username } }" class="button button--secondary button--small">
+          <RouterLink :to="{ name: 'OrgchartHighlight', params: { username } }" class="button button--secondary button--small">
             Org Chart
             <svg
               aria-hidden="true"
@@ -61,7 +61,7 @@
             >
               <polyline points="9 18 15 12 9 6" />
             </svg>
-          </router-link>
+          </RouterLink>
         </div>
       </header>
       <ReportingStructure v-if="manager || directs.length > 0" :manager="manager" :directs="directs">

@@ -37,7 +37,7 @@
       <div class="hide-mobile">
         <ContactMe :primaryEmail="primaryEmail" :phoneNumbers="phoneNumbers"></ContactMe>
       </div>
-      <router-link :to="{ name: 'Profile', params: { username: username } }" class="button button--text-only">
+      <RouterLink :to="{ name: 'Profile', params: { username: username } }" class="button button--text-only">
         View full profile
         <svg
           aria-hidden="true"
@@ -54,7 +54,7 @@
         >
           <polyline points="9 18 15 12 9 6" />
         </svg>
-      </router-link>
+      </RouterLink>
     </div>
   </div>
 </template>
