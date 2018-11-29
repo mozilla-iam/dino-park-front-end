@@ -80,7 +80,6 @@ export default {
       this.$parent.$emit('close-user-menu');
     },
     closeOnLinkClick(e) {
-      console.log(e.target.tagName);
       if (e.target.tagName === 'A') {
         this.$parent.$emit('close-user-menu');
       }
