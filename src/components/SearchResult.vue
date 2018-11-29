@@ -1,11 +1,11 @@
 <template>
   <li class="search-result">
-    <UserPicture :picture="picture" :username="username" cls="search-result__image" :size="40" dinoType="Staff"></UserPicture>
+    <UserPicture :picture="picture" :username="username" cls="search-result__image" :size="40" :isStaff="isStaff"></UserPicture>
     <router-link :to="{ name: 'Profile', params: { username: username } }" class="search-result__profile-link">
       <div class="search-result__name">{{ firstName }} {{ lastName }}</div>
       <div class="search-result__title">{{ title || funTitle }}</div>
     </router-link>
-    <router-link :to="{ name: 'OrgchartHighlight', params: { username: username } }" class="search-result__orgchart-link">
+    <router-link v-if="isStaff" :to="{ name: 'OrgchartHighlight', params: { username: username } }" class="search-result__orgchart-link">
       <img src="@/assets/images/org-chart.svg" width="20" alt="" aria-hidden="true" role="presentation" />
       <span class="visually-hidden">View {{ username }} in org chart</span>
     </router-link>
@@ -24,6 +24,7 @@ export default {
     title: String,
     username: String,
     picture: String,
+    isStaff: Boolean,
   },
   components: {
     UserPicture,

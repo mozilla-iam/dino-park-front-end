@@ -3,7 +3,7 @@
     <section class="profile__section profile__intro">
       <div class="profile__intro-photo">
         <div class="profile__headshot">
-          <UserPicture :picture="picture" :username="username" :size="230" :dinoType="staffInformation.staff ? 'Staff' : 'Mozillian'"></UserPicture>
+          <UserPicture :picture="picture" :username="username" :size="230" :isStaff="staffInformation.staff"></UserPicture>
         </div>
         <div class="hide-mobile">
           <ContactMe :primaryEmail="primaryEmail" :phoneNumbers="phoneNumbers"></ContactMe>
@@ -120,7 +120,7 @@
           <h3>Mozilla</h3>
           <IconBlockList>
             <IconBlock v-for="(acc, index) in accounts.mozilla" :key="`acc-moz-${index}`" :heading="acc.text" :icon="acc.icon">
-              <a href="#">{{ acc.value }}</a>
+              <a :href="acc.value" target="_blank" rel="noreferrer noopener">{{ acc.value }}</a>
             </IconBlock>
           </IconBlockList>
         </div>
@@ -128,7 +128,7 @@
           <h3>Elsewhere</h3>
           <IconBlockList>
             <IconBlock v-for="(acc, index) in accounts.other" :key="`acc-other-${index}`" :heading="acc.text" :icon="acc.icon">
-              <a href="#">{{ acc.value }}</a>
+              <a :href="acc.value" target="_blank" rel="noreferrer noopener">{{ acc.value }}</a>
             </IconBlock>
           </IconBlockList>
         </div>
