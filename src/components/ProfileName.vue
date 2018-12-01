@@ -17,7 +17,7 @@ export default {
   },
   computed: {
     prettierUsername() {
-      if (this.username && this.username.length === 30) {
+      if (this.username && this.username.startsWith('r--')) {
         return null;
       }
       return this.username;
