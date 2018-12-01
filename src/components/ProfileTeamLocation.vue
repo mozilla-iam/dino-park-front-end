@@ -13,10 +13,10 @@
           query: {
             query: locationSearchString,
           }}">
-          <strong>{{ location || officeLocation }} {{ location && officeLocation }}</strong>{{ timezone }}
+          <strong>{{ location || officeLocation }} {{ location && officeLocation && `(${officeLocation})` }}</strong>{{ timezone }}
         </RouterLink>
         <template v-else>
-          <strong>{{ location || officeLocation }} {{ location && officeLocation }}</strong>{{ timezone }}
+          <strong>{{ location || officeLocation }} {{ location && officeLocation && `(${officeLocation})` }}</strong>{{ timezone }}
         </template>
       </div>
     </div>
