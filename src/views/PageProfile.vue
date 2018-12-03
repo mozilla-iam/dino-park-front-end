@@ -42,6 +42,11 @@ export default {
   computed: {
     username() { return this.$route.params.username; },
   },
+  watch: {
+    $route() {
+      window.scrollTo(0, 0);
+    },
+  },
   data() {
     return {
       profileQuery: PROFILE,

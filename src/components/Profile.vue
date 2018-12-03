@@ -135,6 +135,7 @@
       </div>
     </section>
     <section v-else class="profile__section profile__section--disabled">
+      <a id="nav-other-accounts" class="profile__anchor"></a>
       <header class="profile__section-header">
         <h2>Other Accounts</h2>
       </header>
@@ -152,6 +153,7 @@
       </IconBlockList>
     </section>
     <section v-else class="profile__section profile__section--disabled">
+      <a id="nav-access-groups" class="profile__anchor"></a>
       <header class="profile__section-header">
         <h2>Access Groups</h2>
       </header>
@@ -165,6 +167,7 @@
       <Tag v-for="(tag, index) in tags" :tag="tag" :key="`tag-${index}`" />
     </section>
     <section v-else class="profile__section profile__section--disabled">
+      <a id="nav-tags" class="profile__anchor"></a>
       <header class="profile__section-header">
         <h2>Tags</h2>
       </header>
@@ -284,12 +287,12 @@ export default {
         {
           id: 'nav-other-accounts',
           iconId: 'at-sign',
-          label: 'Other accounts',
+          label: 'Other Accounts',
         },
         {
           id: 'nav-access-groups',
           iconId: 'crown',
-          label: 'Access groups',
+          label: 'Access Groups',
         },
         {
           id: 'nav-tags',
