@@ -6,8 +6,10 @@
         <UserPicture :picture="picture" :username="username" :size="40"></UserPicture>
       </button>
       <div class="user-menu__name">
-        <span class="user-menu__header-name">{{ firstName }} {{ lastName }}</span>
-        <span class="user-menu__header-email">{{ primaryEmail }}</span>
+        <RouterLink :to="{ name: 'Profile', params: { username: username } }">
+          <span class="user-menu__header-name">{{ firstName }} {{ lastName }}</span>
+          <span class="user-menu__header-email">{{ primaryEmail }}</span>
+        </RouterLink>
       </div>
       <button class="user-menu__close-button" type="button" @click="sendCloseEvent()">
         <svg
@@ -31,7 +33,7 @@
     <ul class="user-menu__items" @click="closeOnLinkClick">
       <li>
         <RouterLink :to="{ name: 'Profile', params: { username: username } }">
-          <span>My profile</span>
+          <span>My Profile</span>
           <Icon id="user" :width="24" :height="24" />
         </RouterLink>
       </li>
@@ -55,7 +57,7 @@
       </li>
     </ul>
     <span class="user-menu__faux-link user-menu__log-out">
-      <span>Log out</span>
+      <span>Log Out</span>
       <Icon id="log-out" :width="24" :height="24" />
     </span>
   </div>
@@ -122,19 +124,24 @@ export default {
       height: auto;
     }
   }
-    .user-menu a,
-    .user-menu__faux-link {
+    .user-menu a {
       color: var(--white);
-      display: flex;
-      padding: 1em 1.75em;
       text-decoration: none;
     }
-    .focus-styles .user-menu a:focus,
+    .user-menu a:hover {
+      color: var(--white);
+    }
+    .user-menu__items a,
+    .user-menu__faux-link {
+      display: flex;
+      padding: 1em 1.75em;
+    }
+    .focus-styles .user-menu__items a:focus,
     .focus-styles .user-menu button:focus {
       outline: 1px solid var(--white);
       box-shadow: none;
     }
-      .user-menu a svg,
+      .user-menu__items a svg,
       .user-menu__faux-link svg {
         margin-left: auto;
       }
@@ -202,11 +209,11 @@ export default {
         margin: 2em 0;
       }
     }
+      .user-menu__items a:hover {
+        color: var(--gray-40);
+      }
       .user-menu__items li {
         list-style: none;
         padding: 0.125em;
-      }
-      .user-menu__items a:hover {
-        color: var(--gray-40);
       }
 </style>
