@@ -215,15 +215,12 @@ export default {
     border: 0;
   }
   .focus-styles :focus {
-    outline: 1px solid var(--blue-60);
-    box-shadow: 0 0 0 2px var(--transparentBlue);
-    -moz-outline-radius: 2px;
+    box-shadow: 0px 0 0 1px var(--blue-60), 0 0 0 3px var(--transparentBlue);
   }
   .focus-styles ::-moz-focus-inner {
     border: 0;
   }
   .focus-styles :focus:not(:focus-visible) /* don't show focus if element didn't gain focus by means of keyboard  */ {
-    outline: none;
     box-shadow: none;
   }
 
