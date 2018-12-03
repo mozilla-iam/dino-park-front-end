@@ -136,7 +136,7 @@ export default {
       display: flex;
       padding: 1em 1.75em;
     }
-    .focus-styles .user-menu__items a:focus,
+    .focus-styles .user-menu a:focus,
     .focus-styles .user-menu button:focus {
       outline: 1px solid var(--white);
       box-shadow: none;

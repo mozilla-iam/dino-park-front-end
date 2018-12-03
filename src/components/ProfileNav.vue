@@ -125,6 +125,10 @@ export default {
     color: var(--blue-60);
     border-bottom: 2px solid currentColor;
   }
+  .profile__nav-link:focus {
+    position: relative;
+    z-index: 1;
+  }
   @media(min-width:57.5em) {
     .profile__nav-link {
       text-align: left;
