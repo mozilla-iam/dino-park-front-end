@@ -284,12 +284,12 @@ export default {
         {
           id: 'nav-other-accounts',
           iconId: 'at-sign',
-          label: 'Other accounts',
+          label: 'Other Accounts',
         },
         {
           id: 'nav-access-groups',
           iconId: 'crown',
-          label: 'Access groups',
+          label: 'Access Groups',
         },
         {
           id: 'nav-tags',
