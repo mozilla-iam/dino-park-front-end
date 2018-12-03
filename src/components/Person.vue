@@ -73,13 +73,10 @@ export default {
         height: 100%;
       }
       .focus-styles .person a:focus {
-        outline: none;
         box-shadow: none;
       }
       .focus-styles .person a:focus::after {
-        outline: 1px solid var(--blue-60);
-        box-shadow: 0 0 0 2px var(--transparentBlue);
-        -moz-outline-radius: 2px;
+        box-shadow: 0px 0 0 1px var(--blue-60), 0 0 0 3px var(--transparentBlue);
       }
     .person__preferred-title {
       color: var(--gray-50);

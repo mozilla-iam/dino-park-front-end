@@ -111,7 +111,6 @@ export default {
 }
 .focus-styles .top-bar__link--current:focus::before /* because of https://bugzilla.mozilla.org/show_bug.cgi?id=687311 */ {
   content: '';
-  border: 1px solid var(--blue-60);
   top: 0;
   left: 0;
   right: 0;
