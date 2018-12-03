@@ -43,7 +43,7 @@ export default {
     username() { return this.$route.params.username; },
   },
   watch: {
-    $route() {
+    username() {
       window.scrollTo(0, 0);
     },
   },
