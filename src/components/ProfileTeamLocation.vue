@@ -8,15 +8,18 @@
     <div class="profile__location">
       <h3 class="visually-hidden">Location</h3>
       <div>
-        <RouterLink v-if="officeLocation" :to="{
+        <template v-if="officeLocation">
+          <RouterLink :to="{
           name: 'Search',
           query: {
             query: locationSearchString,
-          }}">
-          <strong>{{ location || officeLocation }} {{ location && officeLocation && `(${officeLocation})` }}</strong>{{ timezone }}
-        </RouterLink>
+          }}">{{ location || officeLocation }} {{ location && officeLocation && `(${officeLocation})` }}
+          </RouterLink>
+          {{ timezone }}
+        </template>
         <template v-else>
-          <strong>{{ location || officeLocation }} {{ location && officeLocation && `(${officeLocation})` }}</strong>{{ timezone }}
+          <strong>{{ location || officeLocation }} {{ location && officeLocation && `(${officeLocation})` }}</strong>
+          {{ timezone }}
         </template>
       </div>
     </div>
@@ -56,8 +59,10 @@ export default {
   margin-bottom: 1em;
   border-bottom: 1px solid var(--gray-30);
 }
+    .profile__team-location a,
     .profile__team-location strong {
       display: block;
+      font-weight: 700;
       color: var(--gray-50);
       font-size: .9em;
       text-transform: uppercase;
