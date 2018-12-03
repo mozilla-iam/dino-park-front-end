@@ -215,6 +215,7 @@ export default {
     border: 0;
   }
   .focus-styles :focus {
+    outline: none;
     box-shadow: 0px 0 0 1px var(--blue-60), 0 0 0 3px var(--transparentBlue);
   }
   .focus-styles ::-moz-focus-inner {
