@@ -58,7 +58,9 @@ export default {
     if (this.data.username === this.$route.params.username) {
       const e = document.getElementById(`${this.data.username}`);
       if (e) {
-        e.scrollIntoView(false);
+        e.scrollIntoView({
+          block: 'center',
+        });
       }
     }
   },
