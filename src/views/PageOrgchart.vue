@@ -166,7 +166,7 @@ export default {
 @media (min-height: 36em) and (min-width: 57.5em) {
   .org-chart__preview {
     position: sticky;
-    top: 6em;
+    top: 7.5em;
   }
 }
 </style>
