@@ -1,9 +1,9 @@
 <template>
-  <div :class="'show-more' + ( transition ? ' show-more--transition' : '') + ( expanded ? ' show-more--expanded' : '' )">
+  <div :class="'show-more' + ( transition ? ' show-more--transition' : '') + ( isExpanded ? ' show-more--expanded' : '' )">
     <slot name="base">
     </slot>
     <transition v-if="overflowBefore" name="show-more__overflow-">
-      <div class="show-more__overflow" v-if="expanded" tabindex="-1" ref="overflowContentElement">
+      <div class="show-more__overflow" v-if="isExpanded" tabindex="-1" ref="overflowContentElement">
         <slot name="overflow">
         </slot>
       </div>
@@ -11,9 +11,9 @@
     <button
       :class="'show-more__button ' + ( buttonClass ? ' ' + buttonClass : '')"
       type="button"
-      :aria-expanded="expanded ? 'true' : 'false'"
+      :aria-expanded="isExpanded ? 'true' : 'false'"
       v-on:click="toggleOverflow">
-        <template v-if="expanded">
+        <template v-if="isExpanded">
           <slot name="icon-expanded"></slot>
           <span class="show-more__button-text">{{ alternateButtonText }}</span>
         </template>
@@ -24,7 +24,7 @@
         <slot name="button-content"></slot>
       </button>
      <transition v-if="overflowBefore === false" name="show-more__overflow-">
-        <div class="show-more__overflow" v-if="expanded" tabindex="-1">
+        <div class="show-more__overflow" v-if="isExpanded" tabindex="-1">
           <slot name="overflow">
           </slot>
         </div>
@@ -40,8 +40,7 @@ export default {
     alternateButtonText: String,
     buttonClass: String,
     transition: Boolean,
-    trace: String,
-    prefix: String,
+    expanded: Boolean,
     closeWhenClickedOutside: {
       type: Boolean,
       default: false,
@@ -56,8 +55,12 @@ export default {
     },
   },
   methods: {
-    toggleOverflow() {
-      this.expanded = !this.expanded;
+    toggleOverflow(event) {
+      this.isExpanded = !this.isExpanded;
+
+      if (event.altKey) {
+        this.$emit('expand-all');
+      }
     },
     handleDocumentClick(event) {
       const expandedEl = this.$refs.overflowContentElement.firstElementChild;
@@ -65,22 +68,19 @@ export default {
       // closes overflow content if clicked anywhere, except the
       // overflowing content itself
       if (event.target !== expandedEl && expandedEl.contains(event.target) === false) {
-        this.expanded = false;
+        this.isExpanded = false;
       }
     },
   },
-  watch: {
-    trace() {
-      if (this.trace || this.prefix) {
-        this.expanded = this.trace.startsWith(`${this.prefix}-`) || this.expanded;
-      }
-      return this.expanded;
-    },
+  data() {
+    return {
+      isExpanded: this.expanded,
+    };
   },
   updated() {
     const overflowContent = this.$refs.overflowContentElement;
 
-    if (this.expanded && this.moveFocus) {
+    if (this.isExpanded && this.moveFocus) {
       overflowContent.focus();
 
       if (this.closeWhenClickedOutside) {
@@ -91,12 +91,6 @@ export default {
       document.removeEventListener('click', this.handleDocumentClick);
       document.removeEventListener('touchstart', this.handleDocumentClick);
     }
-  },
-  data() {
-    const state = (this.trace && this.trace.startsWith(`${this.prefix}-`));
-    return {
-      expanded: state || (this.prefix && !this.prefix.includes('-')),
-    };
   },
 };
 </script>
