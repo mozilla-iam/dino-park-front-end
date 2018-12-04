@@ -209,9 +209,10 @@ export default {
     }
   }
 
-  :focus,
-  ::-moz-focus-inner {
+  :focus {
     outline: none;
+  }
+  ::-moz-focus-inner {
     border: 0;
   }
   .focus-styles :focus {

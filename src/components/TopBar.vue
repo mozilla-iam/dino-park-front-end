@@ -15,7 +15,7 @@
       <ApolloQuery :query="profileQuery">
         <template slot-scope="{ result: { loading, data, error } }">
           <template v-if="data">
-              <ShowMore buttonText="Open user menu" alternateButtonText="Close user menu" buttonClass="top-bar__user-menu-toggle" :expanded="false" v-on:close-user-menu="closeUserMenu()" ref="showMoreUserMenu" :closeWhenClickedOutside="true">
+              <ShowMore buttonText="Open user menu" alternateButtonText="Close user menu" buttonClass="top-bar__user-menu-toggle" :expanded="false" @close-user-menu="closeUserMenu" ref="showMoreUserMenu" :closeWhenClickedOutside="true">
               <template slot="overflow">
                 <UserMenu v-bind="data.userMenu"></UserMenu>
               </template>
@@ -51,10 +51,10 @@ export default {
   },
   methods: {
     closeUserMenu() {
-      this.$refs.showMoreUserMenu.expanded = false;
+      this.$refs.showMoreUserMenu.isExpanded = false;
     },
     closeMobileSearchForm() {
-      this.$refs.showMoreSearch.expanded = false;
+      this.$refs.showMoreSearch.isExpanded = false;
     },
   },
   data() {

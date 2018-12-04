@@ -5,10 +5,10 @@
       <span class="org-node__name">{{ data.firstName }} {{ data.lastName }}</span>
       <span class="org-node__title">{{ data.title }}</span>
     </RouterLink>
-    <ShowMore v-if="children.length > 0" :buttonText="`Expand ${data.firstName} ${data.lastName}`" :alternateButtonText="`Collapse ${data.firstName} ${data.lastName}`" :trace="trace" :prefix="prefix" buttonClass="org-node__toggle" :transition="false" :moveFocus="false" :overflowBefore="false">
+    <ShowMore v-if="children.length > 0" :buttonText="`Expand ${data.firstName} ${data.lastName}`" :alternateButtonText="`Collapse ${data.firstName} ${data.lastName}`" buttonClass="org-node__toggle" :transition="false" :moveFocus="false" :overflowBefore="false" :expanded="expandAllChildren || orgNodeExpanded" @expand-all="handleExpandAll">
       <template slot="overflow">
         <ul v-for="(child, index) in children" :key="index">
-          <OrgNode :children="child.children" :data="child.data" :prefix="`${prefix}-${index}`" :trace="trace"></OrgNode>
+          <OrgNode :children="child.children" :data="child.data" :prefix="`${prefix}-${index}`" :trace="trace" :expandAllChildren="shouldExpandAllChildren"></OrgNode>
         </ul>
       </template>
       <template slot="icon-expanded">
@@ -32,18 +32,45 @@ export default {
     data: Object,
     prefix: String,
     trace: String,
+    expandAllChildren: {
+      type: Boolean,
+      default: false,
+    },
   },
   components: {
     ShowMore,
     UserPicture,
   },
+  watch: {
+    trace() {
+      if (this.trace || this.prefix) {
+        this.orgNodeExpanded = this.trace.startsWith(`${this.prefix}-`) || this.orgNodeExpanded;
+      }
+      return this.orgNodeExpanded;
+    },
+  },
+  methods: {
+    handleExpandAll() {
+      this.shouldExpandAllChildren = !this.shouldExpandAllChildren;
+    },
+  },
   mounted() {
     if (this.data.username === this.$route.params.username) {
       const e = document.getElementById(`${this.data.username}`);
       if (e) {
-        e.scrollIntoView(false);
+        e.scrollIntoView({
+          block: 'center',
+        });
       }
     }
+  },
+  data() {
+    const state = (this.trace && this.trace.startsWith(`${this.prefix}-`));
+
+    return {
+      orgNodeExpanded: state || (this.prefix && !this.prefix.includes('-')),
+      shouldExpandAllChildren: this.expandAllChildren || false,
+    };
   },
 };
 </script>
