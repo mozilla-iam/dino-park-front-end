@@ -77,6 +77,11 @@ export default {
       isExpanded: this.expanded,
     };
   },
+  watch: {
+    expanded() {
+      this.isExpanded = this.expanded;
+    },
+  },
   updated() {
     const overflowContent = this.$refs.overflowContentElement;
 
