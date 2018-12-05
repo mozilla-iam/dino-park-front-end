@@ -54,7 +54,12 @@ export default {
   methods: {
     async updateUserPicture() {
       if (this.picture === null || this.picture === '/beta/img/user-demo.png') {
-        const hash = await sha256(this.username);
+        let hash;
+        if (window.crypto && window.crypto.subtle) {
+          hash = await sha256(this.username);
+        } else {
+          hash = '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb'; // 'user'
+        }
         const identicon = new Identicon(hash, { size: this.size, format: 'svg' });
         return `data:image/svg+xml;base64,${identicon.toString()}`;
       }
