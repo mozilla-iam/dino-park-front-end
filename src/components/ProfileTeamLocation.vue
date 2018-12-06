@@ -72,8 +72,11 @@ export default {
       display: block;
       font-weight: 700;
       color: var(--gray-50);
-      font-size: .9em;
       text-transform: uppercase;
+    }
+    .profile__team-location div > a,
+    .profile__team-location div > strong {
+      font-size: .9em;
     }
 @media(min-width: 60em) {
   .profile__team {
