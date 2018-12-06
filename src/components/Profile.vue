@@ -100,11 +100,11 @@
               :key="`ssh-${key}`" />
         </template>
       </div>
-      <template v-if="languages && languages.length > 0">
+      <template v-if="languagesSorted && languagesSorted.length > 0">
         <div class="languages">
           <h3>Languages</h3>
           <Tag
-            v-for="(language, index) in languages"
+            v-for="(language, index) in languagesSorted"
             :tag="language" :key="`language-${index}`" >
           </Tag>
         </div>
@@ -159,12 +159,12 @@
       </header>
       <p>No access groups available</p>
     </section>
-    <section v-if="(tags || []).length > 0" class="profile__section">
+    <section v-if="(tagsSorted || []).length > 0" class="profile__section">
       <a id="nav-tags" class="profile__anchor"></a>
       <header class="profile__section-header">
         <h2>Tags</h2>
       </header>
-      <Tag v-for="(tag, index) in tags" :tag="tag" :key="`tag-${index}`" />
+      <Tag v-for="(tag, index) in tagsSorted" :tag="tag" :key="`tag-${index}`" />
     </section>
     <section v-else class="profile__section profile__section--disabled">
       <a id="nav-tags" class="profile__anchor"></a>
@@ -253,6 +253,11 @@ export default {
     Tag,
     Vouch,
   },
+  methods: {
+    alphabetise(array) {
+      return array ? array.sort() : null;
+    },
+  },
   computed: {
     accounts() {
       const wellKnown = Object.entries(this.uris || {})
@@ -268,6 +273,12 @@ export default {
         contact: true,
         accounts: this.accounts.mozilla.length + this.accounts.other.length > 0,
       };
+    },
+    tagsSorted() {
+      return this.alphabetise(this.tags);
+    },
+    languagesSorted() {
+      return this.alphabetise(this.languages);
     },
   },
   data() {
