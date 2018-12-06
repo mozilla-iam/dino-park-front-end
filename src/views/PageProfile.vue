@@ -42,16 +42,6 @@ export default {
   computed: {
     username() { return this.$route.params.username; },
   },
-  watch: {
-    $route(to, from) {
-      if (to.path !== from.path) {
-        window.scrollTo(0, 0);
-      }
-    },
-  },
-  mounted() {
-    window.scrollTo(0, 0);
-  },
   data() {
     return {
       profileQuery: PROFILE,

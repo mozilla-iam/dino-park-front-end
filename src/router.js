@@ -70,4 +70,13 @@ router.beforeEach((to, from, next) => {
   next();
 });
 
+router.afterEach((to, from) => {
+  // we don't want to do anything if `path` is same (ie when only hash changes)
+  if (to.name === 'Profile' && to.path !== from.path) {
+    Vue.nextTick(() => {
+      window.scrollTo(0, 0);
+    });
+  }
+});
+
 export default router;
