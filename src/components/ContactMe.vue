@@ -2,13 +2,6 @@
   <ShowMore buttonText="Contact Me" alternateButtonText="Contact Me" :expanded="false" buttonClass="button button--icon-end contact-me__button" :transition="true" :closeWhenClickedOutside="true" :moveFocus="false" :overflowBefore="false">
     <template slot="overflow">
       <ul class="contact-me">
-        <li v-if="phoneNumber" class="contact-me__item">
-          <a :href="`tel:${phoneNumber}`" class="contact-me__pair">
-            <Icon id="phone-forwarded" :width="24" :height="24" />
-            <span class="contact-me__key">Call Me</span>
-            <span class="contact-me__value">{{ phoneNumber }}</span>
-          </a>
-        </li>
         <li class="contact-me__item">
           <a :href="`mailto:${primaryEmail}`" class="contact-me__pair">
             <Icon id="at-sign" :width="24" :height="24" />

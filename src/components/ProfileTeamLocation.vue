@@ -2,7 +2,14 @@
   <div class="profile__team-location">
     <div class="profile__team">
       <h3 class="visually-hidden">Team</h3>
-      <strong>{{ team }}</strong>
+      <strong>
+        <RouterLink v-if="teamManager" :to="{ name: 'Profile', params: { username: teamManager.username } }">
+          {{ team }}
+        </RouterLink>
+        <template v-else>
+          {{ team }}
+        </template>
+      </strong>
       {{ entity }}
     </div>
     <div class="profile__location">
@@ -31,6 +38,7 @@ export default {
   name: 'ProfileTeamLocation',
   props: {
     team: String,
+    teamManager: Object,
     entity: String,
     location: String,
     officeLocation: String,

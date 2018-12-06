@@ -43,9 +43,14 @@ export default {
     username() { return this.$route.params.username; },
   },
   watch: {
-    username() {
-      window.scrollTo(0, 0);
+    $route(to, from) {
+      if (to.path !== from.path) {
+        window.scrollTo(0, 0);
+      }
     },
+  },
+  mounted() {
+    window.scrollTo(0, 0);
   },
   data() {
     return {
