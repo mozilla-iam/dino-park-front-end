@@ -69,6 +69,7 @@ export default {
           e.scrollIntoView(false);
         }
       }
+      this.orgNodeExpanded = true;
     }
   },
   data() {
