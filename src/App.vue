@@ -68,6 +68,7 @@ export default {
 
   --lightBlue: #f2fcfd;
   --transparentBlue: rgba(69, 161, 255, 0.54);
+  --transparentWhite: rgba(255, 255, 255, 0.54);
 
   --layerTopBar: 2;
   --layerModal: 3;

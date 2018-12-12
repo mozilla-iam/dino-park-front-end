@@ -36,9 +36,6 @@ export default {
   color: var(--blue-60);
   text-decoration: none;
 }
-.button:focus {
-  -moz-outline-radius: 2.5em;
-}
   .button img,
   .button svg {
     vertical-align: middle;
@@ -55,16 +52,12 @@ export default {
   color: var(--white);
   border-color: transparent;
 }
-.button--secondary:focus {
-  -moz-outline-radius: 2.5em;
-}
 .button--secondary:hover svg > path {
   fill: var(--white);
 }
 
 .button--secondary:active {
   background-color: transparent;
-  border-color: var(--black);
   color: var(--black);
 }
 
@@ -96,8 +89,8 @@ export default {
 .button--icon-only {
   padding-left: 1em;
   padding-right: 1em;
-  border-radius: 100%;
   border-color: var(--gray-30);
+  border-radius: var(--cardRadius);
 }
 .button--icon-only:hover {
   background-color: var(--gray-20);

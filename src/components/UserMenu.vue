@@ -127,6 +127,8 @@ export default {
     .user-menu a {
       color: var(--white);
       text-decoration: none;
+      margin: 0 2px;
+      display: block;
     }
     .user-menu a:hover {
       color: var(--white);
@@ -138,9 +140,8 @@ export default {
     }
     .focus-styles .user-menu a:focus,
     .focus-styles .user-menu button:focus {
-      outline: 1px solid var(--white);
-      box-shadow: none;
-    }
+        box-shadow: 0px 0 0 1px var(--white), 0 0 0 3px var(--transparentWhite);
+      }
       .user-menu__items a svg,
       .user-menu__faux-link svg {
         margin-left: auto;

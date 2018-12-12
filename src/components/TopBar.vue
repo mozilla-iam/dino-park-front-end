@@ -142,6 +142,7 @@ export default {
   margin: 1.6em auto 1.6em 1.6em;
   padding: 0;
   max-width: none; /* don't shrink on small screens */
+  border-radius: 0;
 }
 .top-bar__link--logo img {
   vertical-align: middle;
