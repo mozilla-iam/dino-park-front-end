@@ -34,16 +34,16 @@ export default {
       text-decoration: none;
       display: inline-block;
       vertical-align: middle;
-      padding: 0.5em 2em;
-      margin: 1em 0;
+      padding: 0.9em 1.5em;
+      margin: 1em .5em;
+      border-radius: 2em;
       line-height: 1;
     }
     .footer__link:hover {
       color: inherit;
     }
     .focus-styles .footer__link:focus {
-      outline: 1px solid var(--white);
-      box-shadow: none;
+      box-shadow: 0px 0 0 1px var(--white), 0 0 0 3px var(--transparentWhite);
     }
     .footer__link svg {
       margin-right: .75em;
@@ -53,7 +53,7 @@ export default {
     .footer__link--cpg {
       display: inline-block;
       margin: 0 auto;
-      padding-top: 0;
+      padding: 0.5em;
       text-decoration: underline;
     }
 </style>
