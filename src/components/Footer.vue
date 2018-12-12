@@ -55,5 +55,6 @@ export default {
       margin: 0 auto;
       padding: 0.5em;
       text-decoration: underline;
+      border-radius: var(--imageRadius)
     }
 </style>

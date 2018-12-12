@@ -85,7 +85,7 @@ export default {
       margin-left: auto;
       position: relative; /* so that it stacks on top of search result link */
       line-height: 1; /* avoid extra space underneath image */
-      border-radius: var(--cardRadius);
+      border-radius: var(--imageRadius);
       padding: .72em;
     }
     .search-result__orgchart-link:hover {
