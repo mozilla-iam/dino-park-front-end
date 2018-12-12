@@ -60,7 +60,6 @@ export default {
 }
 .search-who__choices:focus-within {
   outline: 1px solid var(--black);
-  -moz-outline-radius: 2em;
 }
   .search-who__choices input {
     position: absolute;

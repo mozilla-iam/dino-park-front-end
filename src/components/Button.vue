@@ -36,9 +36,6 @@ export default {
   color: var(--blue-60);
   text-decoration: none;
 }
-.button:focus {
-  -moz-outline-radius: 2.5em;
-}
   .button img,
   .button svg {
     vertical-align: middle;
@@ -54,9 +51,6 @@ export default {
   background-color: var(--black);
   color: var(--white);
   border-color: transparent;
-}
-.button--secondary:focus {
-  -moz-outline-radius: 2.5em;
 }
 .button--secondary:hover svg > path {
   fill: var(--white);
