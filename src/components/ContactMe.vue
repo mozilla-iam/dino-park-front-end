@@ -116,9 +116,13 @@ export default {
       min-width: 20em;
       align-items: center;
       font-size: 1.125em;
+      position: relative;
     }
     .contact-me__pair:hover {
       background-color: var(--gray-20);
+    }
+    .contact-me__pair:focus {
+      z-index: 1;
     }
     .contact-me__key {
       flex: none;
