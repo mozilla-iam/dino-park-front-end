@@ -87,8 +87,7 @@ export default {
 }
 
 .button--icon-only {
-  padding-left: 1em;
-  padding-right: 1em;
+  padding: .5em;
   border-color: var(--gray-30);
   border-radius: var(--cardRadius);
 }

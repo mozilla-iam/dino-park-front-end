@@ -156,6 +156,7 @@ export default {
       display: flex;
       position: relative;
       flex: none;
+      align-items: center;
     }
       .user-menu__close-avatar,
       .user-menu__close-button {
@@ -177,6 +178,9 @@ export default {
       }
       .user-menu__close-button:hover {
         color: var(--gray-40);
+      }
+      .user-menu__close-button svg {
+        vertical-align: middle;
       }
     .user-menu__log-out {
       border-top: 1px solid var(--gray-50);
