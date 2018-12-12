@@ -49,6 +49,7 @@ export default {
       right: 0;
       bottom: 0;
       transition: box-shadow  .1s ease-in-out;
+      border-radius: var(--cardRadius);
     }
     .card h2 > a:hover,
     .card h2 > a:focus {
