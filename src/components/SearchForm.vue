@@ -158,6 +158,9 @@ export default {
       padding: 0;
       line-height: 1;
     }
+    .search-form__clear-button:hover {
+      color: var(--blue-60);
+    }
 
 .search-form--small {
   padding: 1em;
