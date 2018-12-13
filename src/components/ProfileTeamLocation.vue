@@ -78,6 +78,9 @@ export default {
     .profile__team-location div > strong {
       font-size: .9em;
     }
+    .profile__team-location a:hover {
+      color: var(--blue-60);
+    }
 @media(min-width: 60em) {
   .profile__team {
     padding-bottom: 0;
