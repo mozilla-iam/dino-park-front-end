@@ -12,12 +12,41 @@
         </ul>
       </template>
       <template slot="icon-expanded">
-        <img src="@/assets/images/collapse.svg" alt="" width="16" aria-hidden="true" class="org-node__icon" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
       </template>
       <template slot="icon-collapsed">
-        <img src="@/assets/images/expand.svg" alt="" width="16" aria-hidden="true" class="org-node__icon"/>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <polyline points="9 18 15 12 9 6" />
+        </svg>
       </template>
     </ShowMore>
+    <template v-else>
+      <svg class="org-node__no-children-indicator" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22">
+          <circle cx="2" cy="2" r="2" fill="#B1B1B3" fill-rule="evenodd" transform="translate(9 9.308)"/>
+      </svg>
+    </template>
   </li>
 </template>
 
@@ -124,7 +153,7 @@ export default {
   text-decoration: none;
   color: inherit;
   padding-left: 2em;
-  padding-left: calc(((var(--nodeLevel) + 1) * 1em) + 1.25em);
+  padding-left: calc((var(--nodeLevel) * 2em) + 1.25em);
   border-left: .25em solid transparent;
 }
 .org-node--current > a,
@@ -160,7 +189,7 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  left: calc((var(--nodeLevel) - 1) * 1em + .5em);
+  left: calc((var(--nodeLevel) * 2em) - 1.5em);
   width: 2.5em;
   height: 2.5em;
   margin: .75em 0;
@@ -196,5 +225,10 @@ export default {
 .org-node .user-picture {
   float: left;
   margin-right: .75em;
+}
+.org-node__no-children-indicator {
+  position: absolute;
+  top: 1.125em;
+  left: calc((var(--nodeLevel) * 2em) - 1.125em);
 }
 </style>
