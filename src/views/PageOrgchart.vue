@@ -5,7 +5,7 @@
       <OrgRoot v-if="loose && !loading" :roots="loose" :trace="looseTrace || ''" heading="People who need their manager set" modifier="org-root--loose"></OrgRoot>
       <LoadingSpinner v-else></LoadingSpinner>
     </div>
-    <ApolloQuery v-if="username" :query="previewProfileQuery" :variables="{ username }" :tag="null">
+    <ApolloQuery v-if="username && (desktopView || openedFromOrgNode)" :query="previewProfileQuery" :variables="{ username }" :tag="null">
       <template slot-scope="{ result: { loading, data, error } }">
         <div class="org-chart__preview">
           <template v-if="data">
@@ -46,6 +46,7 @@ export default {
       trace: '',
       looseTrace: '',
       previewProfileQuery: PREVIEW_PROFILE,
+      desktopView: false,
     };
   },
   created() {
@@ -81,6 +82,8 @@ export default {
     username() {
       return this.$route.params.username;
     },
+    openedFromOrgNode() {
+      return this.$route.params.openedFromOrgNode;
     },
   },
   watch: {
