@@ -87,7 +87,7 @@ export default {
     },
   },
   watch: {
-    desktopView: function toggleModal() {
+    desktopView() {
       if (this.modalEl && this.desktopView === true) {
         this.modalEl.isOpen = true;
       }
