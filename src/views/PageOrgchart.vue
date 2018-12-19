@@ -81,8 +81,6 @@ export default {
     username() {
       return this.$route.params.username;
     },
-    desktopView() {
-      return this.$store.state.profilePreview.desktopView;
     },
   },
   watch: {
@@ -113,15 +111,9 @@ export default {
     },
     updateView() {
       if (matchMedia('(min-width: 57.5em)').matches) {
-        if (this.$store.state.profilePreview.desktopView !== true) {
-          this.$store.commit('toggleProfilePreviewDesktopView', {
-            desktopView: true,
-          });
-        }
-      } else if (this.$store.state.profilePreview.desktopView !== false) {
-        this.$store.commit('toggleProfilePreviewDesktopView', {
-          desktopView: false,
-        });
+        this.desktopView = true;
+      } else {
+        this.desktopView = false;
       }
     },
   },
