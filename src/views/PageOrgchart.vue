@@ -5,7 +5,7 @@
       <OrgRoot v-if="loose && !loading" :roots="loose" :trace="looseTrace || ''" heading="People who need their manager set" modifier="org-root--loose"></OrgRoot>
       <LoadingSpinner v-else></LoadingSpinner>
     </div>
-    <ApolloQuery v-if="username" :query="previewProfileQuery" :variables="{ username }" :tag="null">
+    <ApolloQuery v-if="username && (desktopView || openedFromOrgNode)" :query="previewProfileQuery" :variables="{ username }" :tag="null">
       <template slot-scope="{ result: { loading, data, error } }">
         <div class="org-chart__preview">
           <template v-if="data">
@@ -46,6 +46,7 @@ export default {
       trace: '',
       looseTrace: '',
       previewProfileQuery: PREVIEW_PROFILE,
+      desktopView: false,
     };
   },
   created() {
@@ -81,12 +82,12 @@ export default {
     username() {
       return this.$route.params.username;
     },
-    desktopView() {
-      return this.$store.state.profilePreview.desktopView;
+    openedFromOrgNode() {
+      return this.$route.params.openedFromOrgNode;
     },
   },
   watch: {
-    desktopView: function toggleModal() {
+    desktopView() {
       if (this.modalEl && this.desktopView === true) {
         this.modalEl.isOpen = true;
       }
@@ -113,15 +114,9 @@ export default {
     },
     updateView() {
       if (matchMedia('(min-width: 57.5em)').matches) {
-        if (this.$store.state.profilePreview.desktopView !== true) {
-          this.$store.commit('toggleProfilePreviewDesktopView', {
-            desktopView: true,
-          });
-        }
-      } else if (this.$store.state.profilePreview.desktopView !== false) {
-        this.$store.commit('toggleProfilePreviewDesktopView', {
-          desktopView: false,
-        });
+        this.desktopView = true;
+      } else {
+        this.desktopView = false;
       }
     },
   },

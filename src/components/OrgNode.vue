@@ -1,6 +1,6 @@
 <template>
   <li :id="data.username" :class="'org-node' + ( data.username === this.$route.params.username ? ' org-node--current' : '')">
-    <RouterLink :to="{ name: 'OrgchartHighlight', params: { username: data.username } }" :id="`org-node-${prefix}`">
+    <RouterLink :to="{ name: 'Orgchart', params: { username: data.username, openedFromOrgNode: true, } }" :id="`org-node-${prefix}`">
       <UserPicture :picture="data.picture" :username="data.username" :size="40" :isStaff="true"></UserPicture>
       <span class="org-node__name">{{ data.firstName }} {{ data.lastName }}</span>
       <span class="org-node__title">{{ data.title }}</span>
