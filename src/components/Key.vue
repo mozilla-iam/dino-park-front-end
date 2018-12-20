@@ -1,7 +1,7 @@
 <template>
   <div class="key">
     <h5><strong>{{ type }}</strong>: {{ title }}</h5>
-    <textarea rows="2" v-model="content"></textarea>
+    <textarea rows="2" v-model="content" readonly></textarea>
   </div>
 </template>
 
