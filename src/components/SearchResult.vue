@@ -86,7 +86,7 @@ export default {
     .search-result__orgchart-link {
       margin-left: auto;
       position: relative; /* so that it stacks on top of search result link */
-      line-height: 1; /* avoid extra space underneath image */
+      line-height: .75; /* avoid extra space underneath image */
       border-radius: var(--imageRadius);
       padding: .72em;
       color: var(--black);

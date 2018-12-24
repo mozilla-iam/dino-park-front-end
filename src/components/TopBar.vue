@@ -100,6 +100,7 @@ export default {
   text-decoration: none;
   transition: background-color .2s ease-in-out;
   border-radius: var(--imageRadius);
+  line-height: .75;  /* to not add vertical whitespace */
 }
 .top-bar__link img {
   vertical-align: middle;
