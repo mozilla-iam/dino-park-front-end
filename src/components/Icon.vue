@@ -1,5 +1,5 @@
 <template>
-  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" :width="width" :height="height" :viewport="'0 0 ' + width + ' ' + height" aria-hidden="true" role="presentation">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" :width="width" :height="height" :viewport="'0 0 ' + width + ' ' + height" aria-hidden="true" role="presentation" focusable="false">
     <template v-if="id === 'user'">
       <path fill="currentColor" d="M20.2 18.3v1.8c0 .54-.36.9-.9.9s-.9-.36-.9-.9v-1.8c0-1.53-1.17-2.7-2.7-2.7H8.5c-1.53 0-2.7 1.17-2.7 2.7v1.8c0 .54-.36.9-.9.9s-.9-.36-.9-.9v-1.8c0-2.52 1.98-4.5 4.5-4.5h7.2c2.52 0 4.5 1.98 4.5 4.5zM7.6 7.5C7.6 4.98 9.58 3 12.1 3s4.5 1.98 4.5 4.5-1.98 4.5-4.5 4.5-4.5-1.98-4.5-4.5zm1.8 0c0 1.53 1.17 2.7 2.7 2.7 1.53 0 2.7-1.17 2.7-2.7 0-1.53-1.17-2.7-2.7-2.7-1.53 0-2.7 1.17-2.7 2.7z"/>
     </template>

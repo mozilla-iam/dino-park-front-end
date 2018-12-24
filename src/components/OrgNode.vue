@@ -22,6 +22,9 @@
           stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
+          aria-hidden="true"
+          role="presentation"
+          focusable="false"
         >
           <polyline points="6 9 12 15 18 9" />
         </svg>
@@ -37,13 +40,16 @@
           stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
+          aria-hidden="true"
+          role="presentation"
+          focusable="false"
         >
           <polyline points="9 18 15 12 9 6" />
         </svg>
       </template>
     </ShowMore>
     <template v-else>
-      <svg class="org-node__no-children-indicator" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22">
+      <svg class="org-node__no-children-indicator" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" aria-hidden="true" role="presentation" focusable="false">
           <circle cx="2" cy="2" r="2" fill="#B1B1B3" fill-rule="evenodd" transform="translate(9 9.308)"/>
       </svg>
     </template>
