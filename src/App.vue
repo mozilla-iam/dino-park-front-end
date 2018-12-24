@@ -141,7 +141,8 @@ export default {
   hr {
     border: 0;
     height: 1px;
-    background-color: var(--gray-20);
+    background-color: var(--gray-30);
+    margin: 2em 0;
   }
 
   a {

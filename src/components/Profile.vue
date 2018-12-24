@@ -44,7 +44,7 @@
       <header class="profile__section-header">
         <h2>Colleagues</h2>
         <RouterLink :to="{ name: 'OrgchartHighlight', params: { username } }" class="button button--secondary button--small">
-          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="13" viewBox="0 0 12 13" aria-hidden="true" role="presentation">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="13" viewBox="0 0 12 13" aria-hidden="true" role="presentation" focusable="false">
             <path fill="currentColor" fill-rule="nonzero" d="M6.222 6.889a.667.667 0 1 0 0-1.333.667.667 0 0 0 0 1.333zm-.444 1.055A1.779 1.779 0 1 1 6.222 8h-.444v-.056zm3.555 3.612a1.778 1.778 0 1 1 0-3.556 1.778 1.778 0 0 1 0 3.556zm0-1.112a.667.667 0 1 0 0-1.333.667.667 0 0 0 0 1.333zm-7.11-6a1.778 1.778 0 1 1 0-3.555 1.778 1.778 0 0 1 0 3.555zm0-1.11a.667.667 0 1 0 0-1.334.667.667 0 0 0 0 1.333zm-.445 1.11h.444v.445h-.444v-.445zm0 .89h.444v.444h-.444v-.445zm.444 1.333H2a.222.222 0 0 1-.222-.222v-.223h.444v.445zm.445 0v-.445h.444v.445h-.444zm1.333 0v-.445h.444v.445H4zm1.778 1.777h.444v.445h-.444v-.445zm.444 1.778H6A.222.222 0 0 1 5.778 10v-.222h.444v.444zm.445 0v-.444h.444v.444h-.444z"/>
           </svg>
           Org Chart
@@ -83,6 +83,7 @@
         </IconBlock>
       </IconBlockList>
       <div v-if="pgpPublicKeys || sshPublicKeys">
+        <hr>
         <h3>Keys</h3>
         <template v-if="pgpPublicKeys && Object.keys(pgpPublicKeys).length > 0">
           <h4 class="visually-hidden">PGP</h4>
@@ -102,6 +103,7 @@
         </template>
       </div>
       <template v-if="languagesSorted && languagesSorted.length > 0">
+        <hr>
         <div class="languages">
           <h3>Languages</h3>
           <Tag
@@ -303,7 +305,7 @@ export default {
         },
         {
           id: 'nav-access-groups',
-          iconId: 'crown',
+          iconId: 'lock',
           label: 'Access Groups',
         },
         {

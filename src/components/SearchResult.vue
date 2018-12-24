@@ -6,7 +6,7 @@
       <div class="search-result__title">{{ title || funTitle }}</div>
     </RouterLink>
     <RouterLink v-if="isStaff" :to="{ name: 'OrgchartHighlight', params: { username: username } }" class="search-result__orgchart-link">
-      <svg width="22" height="22" viewport="0 0 22 22" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="presentation">
+      <svg width="22" height="22" viewport="0 0 22 22" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="presentation" focusable="false">
         <path d="M11.5 12a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm0 2a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7zm7 8a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7zm0-2a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM3.5 7a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7zm0-2a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM3 7h1v1H3V7zm0 2h1v1H3V9zm1 3h-.5a.5.5 0 0 1-.5-.5V11h1v1zm1 0v-1h1v1H5zm2 0v-1h1v1H7zm4 2h1v1h-1v-1zm0 2h1v1h-1v-1zm1 3h-.5a.5.5 0 0 1-.5-.5V18h1v1zm1 0v-1h1v1h-1z"  fill="currentColor" fill-rule="nonzero" />
       </svg>
       <span class="visually-hidden">View {{ username }} in org chart</span>
@@ -86,7 +86,7 @@ export default {
     .search-result__orgchart-link {
       margin-left: auto;
       position: relative; /* so that it stacks on top of search result link */
-      line-height: 1; /* avoid extra space underneath image */
+      line-height: .75; /* avoid extra space underneath image */
       border-radius: var(--imageRadius);
       padding: .72em;
       color: var(--black);

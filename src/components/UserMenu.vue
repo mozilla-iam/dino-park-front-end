@@ -18,6 +18,7 @@
           height="24"
           viewBox="0 0 24 24"
           fill="none"
+          focusable="false"
           stroke="currentColor"
           stroke-width="2"
           stroke-linecap="round"
@@ -172,6 +173,7 @@ export default {
       }
       .user-menu__close-avatar {
         margin-right: 1em;
+        font-size: 1em;
       }
       .user-menu__close-button {
         margin-left: auto;
