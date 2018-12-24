@@ -172,6 +172,7 @@ export default {
       }
       .user-menu__close-avatar {
         margin-right: 1em;
+        font-size: 1em;
       }
       .user-menu__close-button {
         margin-left: auto;
