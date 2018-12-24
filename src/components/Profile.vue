@@ -305,7 +305,7 @@ export default {
         },
         {
           id: 'nav-access-groups',
-          iconId: 'crown',
+          iconId: 'lock',
           label: 'Access Groups',
         },
         {
