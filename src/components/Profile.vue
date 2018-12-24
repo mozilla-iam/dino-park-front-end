@@ -83,6 +83,7 @@
         </IconBlock>
       </IconBlockList>
       <div v-if="pgpPublicKeys || sshPublicKeys">
+        <hr>
         <h3>Keys</h3>
         <template v-if="pgpPublicKeys && Object.keys(pgpPublicKeys).length > 0">
           <h4 class="visually-hidden">PGP</h4>
@@ -102,6 +103,7 @@
         </template>
       </div>
       <template v-if="languagesSorted && languagesSorted.length > 0">
+        <hr>
         <div class="languages">
           <h3>Languages</h3>
           <Tag
