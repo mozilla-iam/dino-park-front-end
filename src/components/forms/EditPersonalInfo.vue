@@ -56,14 +56,13 @@ export default {
           username: this.username,
         },
       });
-      const mergedData = { ...data.displayProfile, ...updateProfile };
 
       store.writeQuery({
         query: DISPLAY_PROFILE,
         variables: {
           username: this.username,
         },
-        mergedData,
+        data: { displayProfile: { ...data.displayProfile, ...updateProfile } },
       });
     },
   },
