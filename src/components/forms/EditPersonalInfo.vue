@@ -1,7 +1,7 @@
   <template>
   <div>
-    <ApolloQuery :query="displayProfile" :variables="{ username, firstName, lastName, primaryEmail }" clientId="mutationClient">
-      <template v-if="data" slot-scope="{ result: { loading, data, error } }">
+    <ApolloQuery v-if="!editMode" :query="displayProfile" :variables="{ username, firstName, lastName, primaryEmail }" clientId="mutationClient" ref="examplequery">
+      <template v-if="data" slot-scope="{ result: { loading, data, error, refetch } }">
         <!-- <ViewPersonalInfo v-bind="data.displayProfile" :manager="{ value: 'John' }" /> -->
         <ul>
           <li>username: {{ username }}</li>
@@ -9,9 +9,10 @@
           <li>last name: {{ data.displayProfile.lastName.value }}</li>
           <li>primary email: {{ data.displayProfile.primaryEmail.value }}</li>
         </ul>
-        </template>
+        <button @click="editMode = true">Edit</button>
+      </template>
     </ApolloQuery>
-    <ApolloMutation :mutation="mutateProfile" :variables="{ username, firstName, lastName, primaryEmail }" :update="updateCache" @done="handleSuccess" @error="handleError" clientId="mutationClient">
+    <ApolloMutation v-else :mutation="mutateProfile" :variables="{ username, firstName, lastName, primaryEmail }" :update="updateCache" @done="handleSuccess" @error="handleError" clientId="mutationClient" ref="">
       <template slot-scope="{ mutate, data, error } ">
           <form action="" @submit.prevent="mutate()">
             <fieldset>
@@ -36,7 +37,7 @@ import { MUTATE_PROFILE, DISPLAY_PROFILE } from '@/queries/profile';
 import ViewPersonalInfo from '@/components/ViewPersonalInfo.vue';
 
 export default {
-  name: 'Foo',
+  name: 'EditPersonalInfo',
   props: {
   },
   methods: {
@@ -56,15 +57,16 @@ export default {
           username: this.username,
         },
       });
-      const mergedData = { ...data.displayProfile, ...updateProfile };
 
       store.writeQuery({
         query: DISPLAY_PROFILE,
         variables: {
           username: this.username,
         },
-        mergedData,
+        data: { displayProfile: { ...data.displayProfile, ...updateProfile } },
       });
+
+      this.editMode = false;
     },
   },
   components: {
@@ -78,6 +80,7 @@ export default {
       lastName: '',
       primaryEmail: '',
       username: 'fiji',
+      editMode: false,
     };
   },
 };
