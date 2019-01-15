@@ -1,7 +1,7 @@
 <template>
   <main class="profile container">
-    <div class="profile__section profile__intro">
-<!--       <ViewPersonalInfo v-bind="{ staffInformation, username, primaryEmail, phoneNumbers, timezone, firstName, lastName, manager, pronouns, funTitle, picture, location, description }" /> -->
+    <div class="profile__section">
+    <!-- <ViewPersonalInfo v-bind="{ staffInformation, username, primaryEmail, phoneNumbers, timezone, firstName, lastName, manager, pronouns, funTitle, picture, location, description }" /> -->
       <EditPersonalInfo v-bind="{ username, primaryEmail, firstName, lastName }" />
     </div>
     <ProfileNav :links="profileNav" :onStaffProfile="staffInformation.staff"></ProfileNav>
@@ -327,22 +327,6 @@ export default {
   .profile__section-header > a {
     margin-left: auto;
   }
-
-.profile__intro {
-  position: relative;
-  padding-top: 5em;
-  margin-top: 5em;
-}
-@media(min-width: 57.5em) {
-  .profile__intro {
-    padding: 3em;
-    margin-top: 0;
-    display: grid;
-    grid-gap: 2em;
-    grid-template-columns: 1fr 2fr;
-  }
-}
-
 
 @media (min-width: 57.5em) {
   .profile__external-accounts {

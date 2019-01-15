@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="profile__intro">
     <div class="profile__intro-photo">
       <div class="profile__headshot">
         <UserPicture :picture="picture.value" :username="username.value" :size="230" :isStaff="staffInformation.staff"></UserPicture>
@@ -87,6 +87,21 @@ export default {
 </script>
 
 <style>
+.profile__intro {
+  position: relative;
+  padding-top: 5em;
+  margin-top: 5em;
+}
+@media(min-width: 57.5em) {
+  .profile__intro {
+    padding: 3em;
+    margin-top: 0;
+    display: grid;
+    grid-gap: 2em;
+    grid-template-columns: 1fr 2fr;
+  }
+}
+
 .profile__intro-photo {
   text-align: center;
 }
