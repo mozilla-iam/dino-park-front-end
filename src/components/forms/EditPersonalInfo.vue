@@ -87,9 +87,58 @@ export default {
 </script>
 
 <style>
-  label,
-  input {
-    display: block;
-    font: inherit;
+label,
+input,
+select,
+textarea {
+  display: block;
+  font: inherit;
+}
+.edit-personal-info {
+  display: grid;
+  grid-template-columns: 20em 10em 1fr 4em;
+  border: 0;
+}
+  .edit-personal-info label {
+    grid-column: 2 / 3;
+    color: var(--gray-60);
+    margin: .5em 0;
+    padding: .5em 0;
   }
+  .edit-personal-info input {
+    grid-column: 3 / 4;
+  }
+  .edit-personal-info input,
+  .edit-personal-info textarea,
+  .edit-personal-info select {
+    background-color: var(--gray-20);
+    color: var(--black);
+    border: 1px solid var(--gray-50);
+    margin: .5em 0;
+    padding: .5em;
+  }
+  .edit-personal-info input[disabled] {
+    background-color: transparent;
+    border-color: transparent;
+  }
+  .edit-personal-info__privacy {
+    grid-column: 4 / 5;
+    align-self: center;
+    justify-self: center;
+  }
+  .edit-personal-info__meta {
+    grid-column: 2 / 4;
+  }
+  .button-bar {
+    display: flex;
+    margin: 2em -1.5em -1.5em;
+    padding: 2em;
+    border-top: 2px solid var(--gray-30);
+  }
+    .button-bar button {
+      margin-left: 1em;
+    }
+    .button-bar button:first-child {
+      margin-left: auto;
+    }
 </style>
