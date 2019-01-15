@@ -1,43 +1,9 @@
 <template>
   <main class="profile container">
-    <section class="profile__section profile__intro">
-      <div class="profile__intro-photo">
-        <div class="profile__headshot">
-          <UserPicture :picture="picture" :username="username" :size="230" :isStaff="staffInformation.staff"></UserPicture>
-        </div>
-        <div class="hide-mobile">
-          <ContactMe :primaryEmail="primaryEmail" :phoneNumbers="phoneNumbers"></ContactMe>
-        </div>
-      </div>
-      <div class="profile__intro-main">
-        <ProfileName :firstName="firstName" :lastName="lastName" :username="username" :pronouns="pronouns"></ProfileName>
-        <ProfileTitle :businessTitle="staffInformation.title" :funTitle="funTitle"></ProfileTitle>
-        <div class="hide-desktop">
-          <ContactMe :primaryEmail="primaryEmail" :phoneNumbers="phoneNumbers"></ContactMe>
-        </div>
-        <ProfileTeamLocation :team="staffInformation.team" :teamManager="manager || null" :entity="company(staffInformation, primaryEmail)" :location="location" :officeLocation="staffInformation.officeLocation" :timezone="timezone"></ProfileTeamLocation>
-        <h2 class="visually-hidden">About</h2>
-        <div class="profile__description">
-          <p>{{ description }}</p>
-        </div>
-        <ShowMore v-if="this.staffInformation.staff" buttonText="Show More" alternateButtonText="Show Less" :expanded="false" buttonClass="button button--text-only button--less-padding" :transition="true">
-          <template slot="overflow">
-            <MetaList>
-              <h3 class="visually-hidden">Meta</h3>
-              <Meta metaKey="Worker type" :metaValue="staffInformation.workerType" />
-              <Meta metaKey="Desk number" :metaValue="staffInformation.wprDeskNumber" />
-              <Meta metaKey="Cost centre" :metaValue="staffInformation.costCenter" />
-            </MetaList>
-          </template>
-          <template slot="icon-expanded">
-            <Icon id="chevron-up" :width="24" :height="24" />
-          </template>
-          <template slot="icon-collapsed">
-            <Icon id="chevron-down" :width="24" :height="24" />
-          </template>
-        </ShowMore>
-      </div>
-    </section>
+    <div class="profile__section profile__intro">
+<!--       <ViewPersonalInfo v-bind="{ staffInformation, username, primaryEmail, phoneNumbers, timezone, firstName, lastName, manager, pronouns, funTitle, picture, location, description }" /> -->
+      <EditPersonalInfo v-bind="{ username, primaryEmail, firstName, lastName }" />
+    </div>
     <ProfileNav :links="profileNav" :onStaffProfile="staffInformation.staff"></ProfileNav>
     <section v-if="staffInformation.staff" class="profile__section">
       <a id="nav-relations" class="profile__anchor"></a>
@@ -182,19 +148,12 @@
 <script>
 // components
 import Button from '@/components/Button.vue';
-import ContactMe from '@/components/ContactMe.vue';
 import Icon from '@/components/Icon.vue';
 import IconBlock from '@/components/IconBlock.vue';
 import IconBlockList from '@/components/IconBlockList.vue';
 import Key from '@/components/Key.vue';
-import Meta from '@/components/Meta.vue';
-import MetaList from '@/components/MetaList.vue';
 import Modal from '@/components/functional/Modal.vue';
 import Person from '@/components/Person.vue';
-import UserPicture from '@/components/UserPicture.vue';
-import ProfileName from '@/components/ProfileName.vue';
-import ProfileTitle from '@/components/ProfileTitle.vue';
-import ProfileTeamLocation from '@/components/ProfileTeamLocation.vue';
 import ProfileNav from '@/components/ProfileNav.vue';
 import ReportingStructure from '@/components/ReportingStructure.vue';
 import ShowMore from '@/components/functional/ShowMore.vue';
@@ -202,14 +161,16 @@ import Tag from '@/components/Tag.vue';
 import Vouch from '@/components/Vouch.vue';
 
 // mixins
-import CompanyMixin from '@/components/mixins/CompanyMixin.vue';
 import AccountsMixin from '@/components/mixins/AccountsMixin.vue';
 
 // forms
 import EditPersonalInfo from '@/components/forms/EditPersonalInfo.vue';
 
+// views
+import ViewPersonalInfo from '@/components/ViewPersonalInfo.vue';
+
 export default {
-  mixins: [CompanyMixin, AccountsMixin],
+  mixins: [AccountsMixin],
   name: 'Profile',
   props: {
     staffInformation: Object,
@@ -236,24 +197,18 @@ export default {
   },
   components: {
     Button,
-    ContactMe,
     EditPersonalInfo,
     Icon,
     IconBlock,
     IconBlockList,
     Key,
-    Meta,
-    MetaList,
     Modal,
     Person,
-    UserPicture,
-    ProfileName,
     ProfileNav,
-    ProfileTeamLocation,
-    ProfileTitle,
     ReportingStructure,
     ShowMore,
     Tag,
+    ViewPersonalInfo,
     Vouch,
   },
   methods: {
@@ -388,55 +343,6 @@ export default {
   }
 }
 
-.profile__intro-photo {
-  text-align: center;
-}
-
-.profile__headshot {
-  width: 6.25em;
-  height: 6.25em;
-  position: absolute;
-  top: -3.125em;
-  left: 50%;
-  margin-left: -3.125em;
-  margin-bottom: 1em;
-}
-  .profile__headshot img {
-    width: 100%;
-    border-radius: var(--imageRadius);
-  }
-@supports(object-fit: cover) {
-  .profile__headshot img {
-    object-fit: cover;
-    height: 100%;
-  }
-}
-@media(min-width:57.5em) {
-  .profile__headshot {
-    position: static;
-    width: 15em;
-    height: 15em;
-    margin-left: 0;
-  }
-  .profile__intro-photo .profile__headshot {
-    margin: 0 auto 4em;
-  }
-}
-
-.profile__flag {
-  position: absolute;
-  top: 1.5em;
-  right: 1.5em;
-}
-
-.profile__description {
-  color: var(--gray-50);
-}
-
-.profile__anchor {
-  top: -8.5em;
-  position: relative;
-}
 
 @media (min-width: 57.5em) {
   .profile__external-accounts {

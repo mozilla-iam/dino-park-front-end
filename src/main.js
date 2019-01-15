@@ -9,7 +9,15 @@ const client = new ApolloClient({
   uri: '/api/v3/graphql/',
 });
 
+const mutationClient = new ApolloClient({
+  uri: '/api/v3/graphqlMut',
+});
+
 const apolloProvider = new VueApollo({
+  clients: {
+    default: client,
+    mutationClient,
+  },
   defaultClient: client,
   errorHandler(error) {
     const { networkError } = error;
