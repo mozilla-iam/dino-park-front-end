@@ -87,19 +87,38 @@ const USER_MENU_PROFILE = gql`query {
   }
 }`;
 
-const MUTATE_PROFILE = gql`mutation UpdateProfile($username: String!, $primaryEmail: String!, $firstName: String!, $lastName: String!){ 
+const MUTATE_PROFILE = gql`mutation UpdateProfile($username: String!, $alternativeName: String, $description: String, $firstName: String, $funTitle: String, $lastName: String, $location: String, $pronouns: String, $timezone: String ){ 
   updateProfile(username: $username, update: {
-    primaryEmail: {
-      value: $primaryEmail,
+    alternativeName: {
+      value: $alternativeName,
+    },
+    description: {
+      value: $description,
     },
     firstName: {
       value: $firstName,
     },
+    funTitle: {
+      value: $funTitle,
+    },
     lastName: {
       value: $lastName,
+    },
+    location: {
+      value: $location,
+    },
+    pronouns: {
+      value: $pronouns,
+    },
+    timezone: {
+      value: $timezone,
     }
   }) {
-    primaryEmail {
+    alternativeName {
+      value
+      display
+    },
+    description {
       value
       display
     },
@@ -107,7 +126,23 @@ const MUTATE_PROFILE = gql`mutation UpdateProfile($username: String!, $primaryEm
       value
       display
     },
+    funTitle {
+      value
+      display
+    },
     lastName {
+      value
+      display
+    },
+    location {
+      value
+      display
+    },
+    pronouns {
+      value
+      display
+    },
+    timezone {
       value
       display
     }
