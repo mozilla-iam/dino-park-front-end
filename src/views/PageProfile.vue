@@ -1,11 +1,11 @@
 <template>
-  <ApolloQuery :query="profileQuery" :variables="{ username }">
+  <ApolloQuery :query="displayProfile" :variables="{ username }" clientId="mutationClient">
     <template slot-scope="{ result: { loading, data, error } }">
       <LoadingSpinner v-if="loading"></LoadingSpinner>
-      <template v-else-if="data && data.profile !== null">
-        <Profile v-bind="data.profile"></Profile>
+      <template v-else-if="data && data.displayProfile !== null">
+        <Profile v-bind="data.displayProfile" :manager="{ value: 'John' }"></Profile>
       </template>
-      <template v-else-if="data && data.profile === null">
+      <template v-else-if="data && data.displayProfile === null">
         <main class="container">
           <Error>
             <template slot="image">
@@ -30,7 +30,7 @@
 import Error from '@/components/Error.vue';
 import Profile from '@/components/Profile.vue';
 import LoadingSpinner from '@/components/LoadingSpinner.vue';
-import { PROFILE } from '@/queries/profile';
+import { DISPLAY_PROFILE } from '@/queries/profile';
 
 export default {
   name: 'PageProfile',
@@ -44,7 +44,7 @@ export default {
   },
   data() {
     return {
-      profileQuery: PROFILE,
+      displayProfile: DISPLAY_PROFILE,
     };
   },
 };
