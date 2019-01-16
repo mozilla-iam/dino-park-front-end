@@ -1,6 +1,6 @@
 <template>
   <main class="profile container">
-    <div :class="'profile__section' + this.editMode ? ' profile__section--editing' : ''">
+    <div :class="'profile__section' + ( this.editMode ? ' profile__section--editing' : '' )">
       <ViewPersonalInfo v-if="!editMode" v-bind="{ staffInformation, username, primaryEmail, phoneNumbers, timezone, firstName, lastName, manager, pronouns, funTitle, picture, location, description }" @toggle-edit-mode="toggleEditMode" />
       <EditPersonalInfo v-else v-bind="{ username: username.value, initialValues: { alternativeName, description, firstName, lastName, funTitle, location, pronouns, timezone } }" @toggle-edit-mode="toggleEditMode" />
     </div>
@@ -307,6 +307,9 @@ export default {
   background-color: var(--gray-20);
   color: var(--gray-50);
   border: 2px solid var(--gray-30);
+}
+.profile__section--editing {
+  border-color: var(--blue-60);
 }
 .profile__section:first-child {
   grid-column: 1 / -1;
