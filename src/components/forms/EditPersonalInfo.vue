@@ -72,10 +72,11 @@ export default {
       this.$emit('cancel-edit');
     },
     handleError() {
-      // show toast
+      this.$emit('toast', {
+        content: 'A problem occured, please try again later',
+      });
     },
     handleSuccess() {
-      // show toast
     },
     updateCache(store, { data: { updateProfile } }) {
       const data = store.readQuery({
@@ -94,6 +95,9 @@ export default {
       });
 
       this.$emit('toggle-edit-mode');
+      this.$emit('toast', {
+        content: 'Your changes have been saved. Thank you',
+      });
     },
   },
   data() {
