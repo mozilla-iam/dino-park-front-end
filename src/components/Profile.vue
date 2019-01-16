@@ -1,8 +1,9 @@
 <template>
   <main class="profile container">
     <div :class="'profile__section' + ( this.editMode ? ' profile__section--editing' : '' )">
+      <Toast :content="toastContent"></Toast>
       <ViewPersonalInfo v-if="!editMode" v-bind="{ staffInformation, username, primaryEmail, phoneNumbers, timezone, firstName, lastName, manager, pronouns, funTitle, picture, location, description }" @toggle-edit-mode="toggleEditMode" />
-      <EditPersonalInfo v-else v-bind="{ username: username.value, initialValues: { alternativeName, description, firstName, lastName, funTitle, location, pronouns, timezone } }" @toggle-edit-mode="toggleEditMode" />
+      <EditPersonalInfo v-else v-bind="{ username: username.value, initialValues: { alternativeName, description, firstName, lastName, funTitle, location, pronouns, timezone } }" @toggle-edit-mode="toggleEditMode" @toast="showToast" />
     </div>
     <ProfileNav :links="profileNav" :onStaffProfile="staffInformation.staff.value"></ProfileNav>
     <section v-if="staffInformation.staff.value" class="profile__section">
@@ -158,6 +159,7 @@ import ProfileNav from '@/components/ProfileNav.vue';
 import ReportingStructure from '@/components/ReportingStructure.vue';
 import ShowMore from '@/components/functional/ShowMore.vue';
 import Tag from '@/components/Tag.vue';
+import Toast from '@/components/Toast.vue';
 import Vouch from '@/components/Vouch.vue';
 
 // mixins
@@ -208,6 +210,7 @@ export default {
     ReportingStructure,
     ShowMore,
     Tag,
+    Toast,
     ViewPersonalInfo,
     Vouch,
   },
@@ -217,6 +220,9 @@ export default {
     },
     toggleEditMode() {
       this.editMode = !this.editMode;
+    },
+    showToast(data) {
+      this.toastContent = data.content;
     },
   },
   computed: {
@@ -245,6 +251,7 @@ export default {
   data() {
     return {
       editMode: false,
+      toastContent: '',
       profileNav: [
         {
           id: 'nav-relations',
