@@ -16,7 +16,7 @@ export default {
       if (this.content.length > 0) {
         window.setTimeout(() => {
           this.displayedContent = '';
-        }, 1000);
+        }, 3000);
       }
     },
   },
