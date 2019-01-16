@@ -13,9 +13,11 @@ export default {
   watch: {
     content() {
       this.displayedContent = this.content;
+
       if (this.content.length > 0) {
+
         window.setTimeout(() => {
-          this.displayedContent = '';
+          this.$emit('reset-toast');
         }, 3000);
       }
     },
@@ -42,6 +44,7 @@ export default {
   left: 50%;
   margin-left: -15em;
   z-index: var(--layerModal);
+  text-align: center;
   }
   .toast__content a {
     color: inherit;

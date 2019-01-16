@@ -73,7 +73,7 @@ export default {
     },
     handleError() {
       this.$emit('toast', {
-        content: 'A problem occured, please try again later',
+        content: 'A problem occured, please try again later.',
       });
     },
     handleSuccess() {
@@ -96,7 +96,7 @@ export default {
 
       this.$emit('toggle-edit-mode');
       this.$emit('toast', {
-        content: 'Your changes have been saved. Thank you',
+        content: 'Your changes have been saved. Thank you.',
       });
     },
   },
