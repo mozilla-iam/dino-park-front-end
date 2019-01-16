@@ -1,6 +1,6 @@
 <template>
   <div class="toast" role="alert">
-    <span v-if="content" class="toast__content">{{ content }}</span>
+    <span v-if="displayedContent" class="toast__content">{{ displayedContent }}</span>
   </div>
 </template>
 
@@ -12,12 +12,18 @@ export default {
   },
   watch: {
     content() {
+      this.displayedContent = this.content;
       if (this.content.length > 0) {
         window.setTimeout(() => {
-          this.content = '';
+          this.displayedContent = '';
         }, 1000);
       }
     },
+  },
+  data() {
+    return {
+      displayedContent: '',
+    };
   },
 };
 </script>
