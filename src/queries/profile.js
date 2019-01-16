@@ -151,6 +151,11 @@ const MUTATE_PROFILE = gql`mutation UpdateProfile($username: String!, $alternati
 
 const DISPLAY_PROFILE = gql`query DisplayProfile($username: String!) {
  displayProfile(username: $username) {
+    accessInformation {
+      mozilliansorg {
+        values
+      }
+    },
     alternativeName {
       value 
       display
@@ -233,6 +238,9 @@ const DISPLAY_PROFILE = gql`query DisplayProfile($username: String!) {
         display
       }
     },
+    tags {
+      values
+    }
   }
 }`;
 

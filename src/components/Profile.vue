@@ -1,15 +1,15 @@
 <template>
   <main class="profile container">
-    <div class="profile__section">
-    <!-- <ViewPersonalInfo v-bind="{ staffInformation, username, primaryEmail, phoneNumbers, timezone, firstName, lastName, manager, pronouns, funTitle, picture, location, description }" /> -->
-      <EditPersonalInfo v-bind="{ username, primaryEmail, firstName, lastName }" />
+    <div :class="'profile__section' + this.editMode ? ' profile__section--editing' : ''">
+      <ViewPersonalInfo v-if="!editMode" v-bind="{ staffInformation, username, primaryEmail, phoneNumbers, timezone, firstName, lastName, manager, pronouns, funTitle, picture, location, description }" @toggle-edit-mode="toggleEditMode" />
+      <EditPersonalInfo v-else v-bind="{ username: username.value, initialValues: { alternativeName, description, firstName, lastName, funTitle, location, pronouns, timezone } }" @toggle-edit-mode="toggleEditMode" />
     </div>
     <ProfileNav :links="profileNav" :onStaffProfile="staffInformation.staff"></ProfileNav>
-    <section v-if="staffInformation.staff" class="profile__section">
+    <section v-if="staffInformation.staff.value" class="profile__section">
       <a id="nav-relations" class="profile__anchor"></a>
       <header class="profile__section-header">
         <h2>Colleagues</h2>
-        <RouterLink :to="{ name: 'OrgchartHighlight', params: { username } }" class="button button--secondary button--small">
+        <RouterLink :to="{ name: 'OrgchartHighlight', params: { username: username.value } }" class="button button--secondary button--small">
           <svg xmlns="http://www.w3.org/2000/svg" width="12" height="13" viewBox="0 0 12 13" aria-hidden="true" role="presentation" focusable="false">
             <path fill="currentColor" fill-rule="nonzero" d="M6.222 6.889a.667.667 0 1 0 0-1.333.667.667 0 0 0 0 1.333zm-.444 1.055A1.779 1.779 0 1 1 6.222 8h-.444v-.056zm3.555 3.612a1.778 1.778 0 1 1 0-3.556 1.778 1.778 0 0 1 0 3.556zm0-1.112a.667.667 0 1 0 0-1.333.667.667 0 0 0 0 1.333zm-7.11-6a1.778 1.778 0 1 1 0-3.555 1.778 1.778 0 0 1 0 3.555zm0-1.11a.667.667 0 1 0 0-1.334.667.667 0 0 0 0 1.333zm-.445 1.11h.444v.445h-.444v-.445zm0 .89h.444v.444h-.444v-.445zm.444 1.333H2a.222.222 0 0 1-.222-.222v-.223h.444v.445zm.445 0v-.445h.444v.445h-.444zm1.333 0v-.445h.444v.445H4zm1.778 1.777h.444v.445h-.444v-.445zm.444 1.778H6A.222.222 0 0 1 5.778 10v-.222h.444v.444zm.445 0v-.444h.444v.444h-.444z"/>
           </svg>
@@ -51,17 +51,17 @@
       <div v-if="pgpPublicKeys || sshPublicKeys">
         <hr>
         <h3>Keys</h3>
-        <template v-if="pgpPublicKeys && Object.keys(pgpPublicKeys).length > 0">
+        <template v-if="pgpPublicKeys && Object.keys(pgpPublicKeys.values).length > 0">
           <h4 class="visually-hidden">PGP</h4>
-          <Key v-for="[key, value] in Object.entries(pgpPublicKeys)"
+          <Key v-for="[key, value] in Object.entries(pgpPublicKeys.values)"
                type="PGP"
                :title="key"
                :content="value"
                :key="`pgp-${key}`" />
         </template>
-        <template v-if="sshPublicKeys && Object.keys(sshPublicKeys).length > 0">
+        <template v-if="sshPublicKeys && Object.keys(sshPublicKeys.values).length > 0">
           <h4 class="visually-hidden">SSH</h4>
-          <Key v-for="[key, value] in Object.entries(sshPublicKeys)"
+          <Key v-for="[key, value] in Object.entries(sshPublicKeys.values)"
               type="SSH"
               :title="key"
               :content="value"
@@ -110,13 +110,13 @@
       </header>
       <p>No other accounts have been added</p>
     </section>
-    <section v-if="Object.keys(accessInformation.mozilliansorg || {}).length > 0" class="profile__section">
+    <section v-if="Object.keys(accessInformation.mozilliansorg.values || {}).length > 0" class="profile__section">
       <a id="nav-access-groups" class="profile__anchor"></a>
       <header class="profile__section-header">
         <h2>Access Groups</h2>
       </header>
       <IconBlockList modifier="icon-block-list--multi-col">
-        <IconBlock v-for="[group] in Object.entries(accessInformation.mozilliansorg)" :key="`group-${group}`" icon="dino">
+        <IconBlock v-for="[group] in Object.entries(accessInformation.mozilliansorg.values)" :key="`group-${group}`" icon="dino">
           {{ group }}
         </IconBlock>
       </IconBlockList>
@@ -173,27 +173,26 @@ export default {
   mixins: [AccountsMixin],
   name: 'Profile',
   props: {
-    staffInformation: Object,
-    username: String,
-    primaryEmail: String,
-    phoneNumbers: Object,
-    timezone: String,
-    firstName: String,
-    lastName: String,
-    pronouns: String,
-    funTitle: String,
-    picture: String,
-    location: String,
-    description: String,
-    pgpPublicKeys: Object,
-    sshPublicKeys: Object,
-    tags: Array,
-    languages: Array,
-    userId: String,
-    manager: Object,
-    directs: Array,
     accessInformation: Object,
+    description: Object,
+    directs: Array,
+    firstName: Object,
+    funTitle: Object,
+    languages: Object,
+    lastName: Object,
+    location: Object,
+    manager: Object,
+    pgpPublicKeys: Object,
+    phoneNumbers: Object,
+    picture: Object,
+    primaryEmail: Object,
+    pronouns: Object,
+    sshPublicKeys: Object,
+    staffInformation: Object,
+    tags: Object,
+    timezone: Object,
     uris: Object,
+    username: Object,
   },
   components: {
     Button,
@@ -215,6 +214,9 @@ export default {
     alphabetise(array) {
       return array ? array.sort() : null;
     },
+    toggleEditMode() {
+      this.editMode = !this.editMode;
+    }
   },
   computed: {
     accounts() {
@@ -233,14 +235,15 @@ export default {
       };
     },
     tagsSorted() {
-      return this.alphabetise(this.tags);
+      return this.alphabetise(this.tags.values);
     },
     languagesSorted() {
-      return this.alphabetise(this.languages);
+      return this.alphabetise(['Dutch', 'German', 'Polish']);
     },
   },
   data() {
     return {
+      editMode: false,
       profileNav: [
         {
           id: 'nav-relations',

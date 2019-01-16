@@ -2,11 +2,12 @@
   <div class="profile__intro">
     <div class="profile__intro-photo">
       <div class="profile__headshot">
-        <UserPicture :picture="picture.value" :username="username.value" :size="230" :isStaff="staffInformation.staff"></UserPicture>
+        <UserPicture :picture="picture.value" :username="username.value" :size="230" :isStaff="staffInformation.staff.value"></UserPicture>
       </div>
       <div class="hide-mobile">
         <ContactMe :primaryEmail="primaryEmail.value" :phoneNumbers="phoneNumbers"></ContactMe>
       </div>
+      <button @click="$emit('toggle-edit-mode')">Edit</button>
     </div>
     <div class="profile__intro-main">
       <ProfileName :firstName="firstName.value" :lastName="lastName.value" :username="username.value" :pronouns="pronouns.value"></ProfileName>

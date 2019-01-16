@@ -1,78 +1,71 @@
 <template>
-  <div>
-    <ApolloQuery v-if="!editMode" :query="displayProfile" :variables="{ username, firstName, lastName, alternativeName, primaryEmail, funTitle, pronouns, location, timezone, description }" clientId="mutationClient">
-      <template v-if="data" slot-scope="{ result: { loading, data, error, refetch } }">
-        <ViewPersonalInfo v-bind="data.displayProfile" :manager="{ value: 'John' }" />
-        <button @click="editMode = true">Edit</button>
-      </template>
-    </ApolloQuery>
-    <ApolloMutation v-else :mutation="mutateProfile" :variables="{ username, firstName, lastName, alternativeName, primaryEmail, funTitle, pronouns, location, timezone, description }" :update="updateCache" @done="handleSuccess" @error="handleError" clientId="mutationClient">
-      <template slot-scope="{ mutate, data, error } ">
-        <form action="" @submit.prevent="mutate()">
-          <fieldset class="edit-personal-info">
-            <legend class="visually-hidden">Edit personal info</legend>
+  <ApolloMutation :mutation="mutateProfile" :variables="{ username, firstName, lastName, alternativeName, funTitle, pronouns, location, timezone, description }" :update="updateCache" @done="handleSuccess" @error="handleError" clientId="mutationClient">
+    <template slot-scope="{ mutate, data, error } ">
+      <form action="" @submit.prevent="mutate()">
+        <fieldset class="edit-personal-info">
+          <legend class="visually-hidden">Edit personal info</legend>
 
-            <label for="field-first-name">First name</label>
-            <input type="text" id="field-first-name" v-model="firstName">
-            <div class="edit-personal-info__privacy">PR</div>
+          <label for="field-first-name">First name</label>
+          <input type="text" id="field-first-name" v-model="firstName">
+          <div class="edit-personal-info__privacy">PR</div>
 
-            <label for="field-last-name">Last name</label>
-            <input type="text" id="field-last-name" v-model="lastName">
-            <div class="edit-personal-info__privacy">PR</div>
+          <label for="field-last-name">Last name</label>
+          <input type="text" id="field-last-name" v-model="lastName">
+          <div class="edit-personal-info__privacy">PR</div>
 
-            <label for="field-pronouns">Gender pronouns</label>
-            <select id="field-pronouns">
-              <option>Select pronoun</option>
-              <option value="he-him">He/him</option>
-              <option value="she-her">She/her</option>
-            </select>
-            <div class="edit-personal-info__privacy">PR</div>
+          <label for="field-pronouns">Gender pronouns</label>
+          <select id="field-pronouns">
+            <option>Select pronoun</option>
+            <option value="he-him">He/him</option>
+            <option value="she-her">She/her</option>
+          </select>
+          <div class="edit-personal-info__privacy">PR</div>
 
-            <label for="field-alt-name">Alternative name</label>
-            <input type="text" id="field-alt-name" v-model="alternativeName">
-            <div class="edit-personal-info__privacy">PR</div>
+          <label for="field-alt-name">Alternative name</label>
+          <input type="text" id="field-alt-name" v-model="alternativeName">
+          <div class="edit-personal-info__privacy">PR</div>
 
-            <label for="field-official-job-title">Official job title</label>
-            <input type="text" disabled value="Staff Software Engineer">
+          <label for="field-official-job-title">Official job title</label>
+          <input type="text" disabled value="Staff Software Engineer">
 
-            <label for="field-fun-job-title">Fun job title</label>
-            <input type="text" id="field-fun-job-title" v-model="funTitle">
-            <div class="edit-personal-info__privacy">PR</div>
+          <label for="field-fun-job-title">Fun job title</label>
+          <input type="text" id="field-fun-job-title" v-model="funTitle">
+          <div class="edit-personal-info__privacy">PR</div>
 
-            <label for="field-location">Location</label>
-            <input type="text" id="field-location" v-model="location">
-            <div class="edit-personal-info__privacy">PR</div>
+          <label for="field-location">Location</label>
+          <input type="text" id="field-location" v-model="location">
+          <div class="edit-personal-info__privacy">PR</div>
 
-            <label for="field-timezone">Timezone</label>
-            <input type="text" id="field-timezone" v-model="timezone">
-            <div class="edit-personal-info__privacy">PR</div>
+          <label for="field-timezone">Timezone</label>
+          <input type="text" id="field-timezone" v-model="timezone">
+          <div class="edit-personal-info__privacy">PR</div>
 
-            <div class="edit-personal-info__meta">
-              Worker type, desk number, department, cost centre
-            </div>
-            <div class="edit-personal-info__privacy">PR</div>
-
-            <label for="field-bio">Bio</label>
-            <textarea id="field-bio" v-model="description"></textarea>
-            <div class="edit-personal-info__privacy">PR</div>
-          </fieldset>
-          <div class="button-bar">
-            <button type="button" class="button button--secondary" @click="editMode = false">Cancel</button>
-            <button type="submit" class="button">Save</button>
+          <div class="edit-personal-info__meta">
+            Worker type, desk number, department, cost centre
           </div>
-        </form>
-      </template>
-    </ApolloMutation>
-  </div>
+          <div class="edit-personal-info__privacy">PR</div>
+
+          <label for="field-bio">Bio</label>
+          <textarea id="field-bio" v-model="description"></textarea>
+          <div class="edit-personal-info__privacy">PR</div>
+        </fieldset>
+        <div class="button-bar">
+          <button type="button" class="button button--secondary" @click="$emit('toggle-edit-mode')">Cancel</button>
+          <button type="submit" class="button">Save</button>
+        </div>
+      </form>
+    </template>
+  </ApolloMutation>
 </template>
 
 <script>
 import { MUTATE_PROFILE, DISPLAY_PROFILE } from '@/queries/profile';
-import ViewPersonalInfo from '@/components/ViewPersonalInfo.vue';
 
 export default {
   name: 'EditPersonalInfo',
   props: {
+    username: String,
+    initialValues: Object,
   },
   methods: {
     cancelEdit() {
@@ -100,11 +93,8 @@ export default {
         data: { displayProfile: { ...data.displayProfile, ...updateProfile } },
       });
 
-      this.editMode = false;
+      this.$emit('toggle-edit-mode');
     },
-  },
-  components: {
-    ViewPersonalInfo,
   },
   data() {
     return {
