@@ -15,7 +15,7 @@
       <div class="hide-desktop">
         <ContactMe :primaryEmail="primaryEmail.value" :phoneNumbers="phoneNumbers.value"></ContactMe>
       </div>
-      <ProfileTeamLocation :team="staffInformation.team.value" :teamManager="manager.value || null" :entity="company(staffInformation, primaryEmail.value)" :location="location.value" :officeLocation="staffInformation.officeLocation.value" :timezone="timezone.value"></ProfileTeamLocation>
+      <ProfileTeamLocation :team="staffInformation.team.value" :teamManager="manager || null" :entity="company(staffInformation, primaryEmail.value)" :location="location.value" :officeLocation="staffInformation.officeLocation.value" :timezone="timezone.value"></ProfileTeamLocation>
       <h2 class="visually-hidden">About</h2>
       <div class="profile__description">
         <p>{{ description.value }}</p>

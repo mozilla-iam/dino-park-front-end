@@ -4,7 +4,7 @@
       <ViewPersonalInfo v-if="!editMode" v-bind="{ staffInformation, username, primaryEmail, phoneNumbers, timezone, firstName, lastName, manager, pronouns, funTitle, picture, location, description }" @toggle-edit-mode="toggleEditMode" />
       <EditPersonalInfo v-else v-bind="{ username: username.value, initialValues: { alternativeName, description, firstName, lastName, funTitle, location, pronouns, timezone } }" @toggle-edit-mode="toggleEditMode" />
     </div>
-    <ProfileNav :links="profileNav" :onStaffProfile="staffInformation.staff"></ProfileNav>
+    <ProfileNav :links="profileNav" :onStaffProfile="staffInformation.staff.value"></ProfileNav>
     <section v-if="staffInformation.staff.value" class="profile__section">
       <a id="nav-relations" class="profile__anchor"></a>
       <header class="profile__section-header">
@@ -173,6 +173,7 @@ export default {
   mixins: [AccountsMixin],
   name: 'Profile',
   props: {
+    alternativeName: Object,
     accessInformation: Object,
     description: Object,
     directs: Array,
@@ -216,7 +217,7 @@ export default {
     },
     toggleEditMode() {
       this.editMode = !this.editMode;
-    }
+    },
   },
   computed: {
     accounts() {

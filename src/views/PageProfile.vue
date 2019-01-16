@@ -3,7 +3,7 @@
     <template slot-scope="{ result: { loading, data, error } }">
       <LoadingSpinner v-if="loading"></LoadingSpinner>
       <template v-else-if="data && data.displayProfile !== null">
-        <Profile v-bind="data.displayProfile" :manager="{ value: 'John' }"></Profile>
+        <Profile v-bind="data.displayProfile" :manager="{ value: 'richard58' }" :directs="[]"></Profile>
       </template>
       <template v-else-if="data && data.displayProfile === null">
         <main class="container">

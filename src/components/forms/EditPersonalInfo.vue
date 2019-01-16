@@ -100,15 +100,14 @@ export default {
     return {
       displayProfile: DISPLAY_PROFILE,
       mutateProfile: MUTATE_PROFILE,
-      alternativeName: '',
-      description: '',
+      alternativeName: this.initialValues.alternativeName.value,
       firstName: this.initialValues.firstName.value,
       lastName: this.initialValues.lastName.value,
       funTitle: this.initialValues.funTitle.value,
       location: this.initialValues.location.value,
       pronouns: this.initialValues.pronouns.value,
       timezone: this.initialValues.timezone.value,
-      editMode: false,
+      description: this.initialValues.description.value,
     };
   },
 };
