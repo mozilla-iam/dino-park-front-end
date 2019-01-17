@@ -15,7 +15,6 @@ export default {
       this.displayedContent = this.content;
 
       if (this.content.length > 0) {
-
         window.setTimeout(() => {
           this.$emit('reset-toast');
         }, 3000);
