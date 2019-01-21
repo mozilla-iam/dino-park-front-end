@@ -297,7 +297,7 @@ export default {
 }
 
 .profile__section {
-  border: 1px solid #ccc;
+  border: 3px solid var(--gray-50);
   background: #fff;
   padding: 1.5em;
   margin: 0 0 2em;
@@ -307,7 +307,7 @@ export default {
 }
 @supports (--key: value) {
   .profile__section {
-    border: 0;
+    border-color: transparent;
     box-shadow: var(--shadowCard);
   }
 }
