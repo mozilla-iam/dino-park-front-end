@@ -1,49 +1,16 @@
 <template>
   <main class="profile container">
-    <section class="profile__section profile__intro">
-      <div class="profile__intro-photo">
-        <div class="profile__headshot">
-          <UserPicture :picture="picture" :username="username" :size="230" :isStaff="staffInformation.staff"></UserPicture>
-        </div>
-        <div class="hide-mobile">
-          <ContactMe :primaryEmail="primaryEmail" :phoneNumbers="phoneNumbers"></ContactMe>
-        </div>
-      </div>
-      <div class="profile__intro-main">
-        <ProfileName :firstName="firstName" :lastName="lastName" :username="username" :pronouns="pronouns"></ProfileName>
-        <ProfileTitle :businessTitle="staffInformation.title" :funTitle="funTitle"></ProfileTitle>
-        <div class="hide-desktop">
-          <ContactMe :primaryEmail="primaryEmail" :phoneNumbers="phoneNumbers"></ContactMe>
-        </div>
-        <ProfileTeamLocation :team="staffInformation.team" :teamManager="manager || null" :entity="company(staffInformation, primaryEmail)" :location="location" :officeLocation="staffInformation.officeLocation" :timezone="timezone"></ProfileTeamLocation>
-        <h2 class="visually-hidden">About</h2>
-        <div class="profile__description">
-          <p>{{ description }}</p>
-        </div>
-        <ShowMore v-if="this.staffInformation.staff" buttonText="Show More" alternateButtonText="Show Less" :expanded="false" buttonClass="button button--text-only button--less-padding" :transition="true">
-          <template slot="overflow">
-            <MetaList>
-              <h3 class="visually-hidden">Meta</h3>
-              <Meta metaKey="Worker type" :metaValue="staffInformation.workerType" />
-              <Meta metaKey="Desk number" :metaValue="staffInformation.wprDeskNumber" />
-              <Meta metaKey="Cost centre" :metaValue="staffInformation.costCenter" />
-            </MetaList>
-          </template>
-          <template slot="icon-expanded">
-            <Icon id="chevron-up" :width="24" :height="24" />
-          </template>
-          <template slot="icon-collapsed">
-            <Icon id="chevron-down" :width="24" :height="24" />
-          </template>
-        </ShowMore>
-      </div>
-    </section>
-    <ProfileNav :links="profileNav" :onStaffProfile="staffInformation.staff"></ProfileNav>
-    <section v-if="staffInformation.staff" class="profile__section">
+    <div :class="'profile__section' + ( this.editMode ? ' profile__section--editing' : '' )">
+      <Toast :content="toastContent" @reset-toast="toastContent = ''"></Toast>
+      <ViewPersonalInfo v-if="!editMode" v-bind="{ staffInformation, username, primaryEmail, phoneNumbers, timezone, firstName, lastName, manager, pronouns, funTitle, picture, location, description }" @toggle-edit-mode="toggleEditMode" />
+      <EditPersonalInfo v-else v-bind="{ username: username.value, initialValues: { alternativeName, description, firstName, lastName, funTitle, location, pronouns, timezone } }" @toggle-edit-mode="toggleEditMode" @toast="showToast" />
+    </div>
+    <ProfileNav :links="profileNav" :onStaffProfile="staffInformation.staff.value"></ProfileNav>
+    <section v-if="staffInformation.staff.value" class="profile__section">
       <a id="nav-relations" class="profile__anchor"></a>
       <header class="profile__section-header">
         <h2>Colleagues</h2>
-        <RouterLink :to="{ name: 'OrgchartHighlight', params: { username } }" class="button button--secondary button--small">
+        <RouterLink :to="{ name: 'OrgchartHighlight', params: { username: username.value } }" class="button button--secondary button--small">
           <svg xmlns="http://www.w3.org/2000/svg" width="12" height="13" viewBox="0 0 12 13" aria-hidden="true" role="presentation" focusable="false">
             <path fill="currentColor" fill-rule="nonzero" d="M6.222 6.889a.667.667 0 1 0 0-1.333.667.667 0 0 0 0 1.333zm-.444 1.055A1.779 1.779 0 1 1 6.222 8h-.444v-.056zm3.555 3.612a1.778 1.778 0 1 1 0-3.556 1.778 1.778 0 0 1 0 3.556zm0-1.112a.667.667 0 1 0 0-1.333.667.667 0 0 0 0 1.333zm-7.11-6a1.778 1.778 0 1 1 0-3.555 1.778 1.778 0 0 1 0 3.555zm0-1.11a.667.667 0 1 0 0-1.334.667.667 0 0 0 0 1.333zm-.445 1.11h.444v.445h-.444v-.445zm0 .89h.444v.444h-.444v-.445zm.444 1.333H2a.222.222 0 0 1-.222-.222v-.223h.444v.445zm.445 0v-.445h.444v.445h-.444zm1.333 0v-.445h.444v.445H4zm1.778 1.777h.444v.445h-.444v-.445zm.444 1.778H6A.222.222 0 0 1 5.778 10v-.222h.444v.444zm.445 0v-.444h.444v.444h-.444z"/>
           </svg>
@@ -85,17 +52,17 @@
       <div v-if="pgpPublicKeys || sshPublicKeys">
         <hr>
         <h3>Keys</h3>
-        <template v-if="pgpPublicKeys && Object.keys(pgpPublicKeys).length > 0">
+        <template v-if="pgpPublicKeys && Object.keys(pgpPublicKeys.values).length > 0">
           <h4 class="visually-hidden">PGP</h4>
-          <Key v-for="[key, value] in Object.entries(pgpPublicKeys)"
+          <Key v-for="[key, value] in Object.entries(pgpPublicKeys.values)"
                type="PGP"
                :title="key"
                :content="value"
                :key="`pgp-${key}`" />
         </template>
-        <template v-if="sshPublicKeys && Object.keys(sshPublicKeys).length > 0">
+        <template v-if="sshPublicKeys && Object.keys(sshPublicKeys.values).length > 0">
           <h4 class="visually-hidden">SSH</h4>
-          <Key v-for="[key, value] in Object.entries(sshPublicKeys)"
+          <Key v-for="[key, value] in Object.entries(sshPublicKeys.values)"
               type="SSH"
               :title="key"
               :content="value"
@@ -144,13 +111,13 @@
       </header>
       <p>No other accounts have been added</p>
     </section>
-    <section v-if="Object.keys(accessInformation.mozilliansorg || {}).length > 0" class="profile__section">
+    <section v-if="Object.keys(accessInformation.mozilliansorg.values || {}).length > 0" class="profile__section">
       <a id="nav-access-groups" class="profile__anchor"></a>
       <header class="profile__section-header">
         <h2>Access Groups</h2>
       </header>
       <IconBlockList modifier="icon-block-list--multi-col">
-        <IconBlock v-for="[group] in Object.entries(accessInformation.mozilliansorg)" :key="`group-${group}`" icon="dino">
+        <IconBlock v-for="[group] in Object.entries(accessInformation.mozilliansorg.values)" :key="`group-${group}`" icon="dino">
           {{ group }}
         </IconBlock>
       </IconBlockList>
@@ -182,83 +149,80 @@
 <script>
 // components
 import Button from '@/components/Button.vue';
-import ContactMe from '@/components/ContactMe.vue';
 import Icon from '@/components/Icon.vue';
 import IconBlock from '@/components/IconBlock.vue';
 import IconBlockList from '@/components/IconBlockList.vue';
 import Key from '@/components/Key.vue';
-import Meta from '@/components/Meta.vue';
-import MetaList from '@/components/MetaList.vue';
 import Modal from '@/components/functional/Modal.vue';
 import Person from '@/components/Person.vue';
-import UserPicture from '@/components/UserPicture.vue';
-import ProfileName from '@/components/ProfileName.vue';
-import ProfileTitle from '@/components/ProfileTitle.vue';
-import ProfileTeamLocation from '@/components/ProfileTeamLocation.vue';
 import ProfileNav from '@/components/ProfileNav.vue';
 import ReportingStructure from '@/components/ReportingStructure.vue';
 import ShowMore from '@/components/functional/ShowMore.vue';
 import Tag from '@/components/Tag.vue';
+import Toast from '@/components/Toast.vue';
 import Vouch from '@/components/Vouch.vue';
 
 // mixins
-import CompanyMixin from '@/components/mixins/CompanyMixin.vue';
 import AccountsMixin from '@/components/mixins/AccountsMixin.vue';
 
 // forms
 import EditPersonalInfo from '@/components/forms/EditPersonalInfo.vue';
 
+// views
+import ViewPersonalInfo from '@/components/ViewPersonalInfo.vue';
+
 export default {
-  mixins: [CompanyMixin, AccountsMixin],
+  mixins: [AccountsMixin],
   name: 'Profile',
   props: {
-    staffInformation: Object,
-    username: String,
-    primaryEmail: String,
-    phoneNumbers: Object,
-    timezone: String,
-    firstName: String,
-    lastName: String,
-    pronouns: String,
-    funTitle: String,
-    picture: String,
-    location: String,
-    description: String,
-    pgpPublicKeys: Object,
-    sshPublicKeys: Object,
-    tags: Array,
-    languages: Array,
-    userId: String,
-    manager: Object,
-    directs: Array,
+    alternativeName: Object,
     accessInformation: Object,
+    description: Object,
+    directs: Array,
+    firstName: Object,
+    funTitle: Object,
+    languages: Object,
+    lastName: Object,
+    location: Object,
+    manager: Object,
+    pgpPublicKeys: Object,
+    phoneNumbers: Object,
+    picture: Object,
+    primaryEmail: Object,
+    pronouns: Object,
+    sshPublicKeys: Object,
+    staffInformation: Object,
+    tags: Object,
+    timezone: Object,
     uris: Object,
+    username: Object,
   },
   components: {
     Button,
-    ContactMe,
     EditPersonalInfo,
     Icon,
     IconBlock,
     IconBlockList,
     Key,
-    Meta,
-    MetaList,
     Modal,
     Person,
-    UserPicture,
-    ProfileName,
     ProfileNav,
-    ProfileTeamLocation,
-    ProfileTitle,
     ReportingStructure,
     ShowMore,
     Tag,
+    Toast,
+    ViewPersonalInfo,
     Vouch,
   },
   methods: {
     alphabetise(array) {
       return array ? array.sort() : null;
+    },
+    toggleEditMode() {
+      this.editMode = !this.editMode;
+    },
+    showToast(data) {
+      this.toastContent = data.content;
     },
   },
   computed: {
@@ -278,14 +242,16 @@ export default {
       };
     },
     tagsSorted() {
-      return this.alphabetise(this.tags);
+      return this.alphabetise(this.tags.values);
     },
     languagesSorted() {
-      return this.alphabetise(this.languages);
+      return this.alphabetise(['Dutch', 'German', 'Polish']);
     },
   },
   data() {
     return {
+      editMode: false,
+      toastContent: '',
       profileNav: [
         {
           id: 'nav-relations',
@@ -331,7 +297,7 @@ export default {
 }
 
 .profile__section {
-  border: 1px solid #ccc;
+  border: 3px solid var(--gray-50);
   background: #fff;
   padding: 1.5em;
   margin: 0 0 2em;
@@ -341,7 +307,7 @@ export default {
 }
 @supports (--key: value) {
   .profile__section {
-    border: 0;
+    border-color: transparent;
     box-shadow: var(--shadowCard);
   }
 }
@@ -349,6 +315,9 @@ export default {
   background-color: var(--gray-20);
   color: var(--gray-50);
   border: 2px solid var(--gray-30);
+}
+.profile__section--editing {
+  border-color: var(--blue-60);
 }
 .profile__section:first-child {
   grid-column: 1 / -1;
@@ -372,71 +341,6 @@ export default {
   .profile__section-header > a {
     margin-left: auto;
   }
-
-.profile__intro {
-  position: relative;
-  padding-top: 5em;
-  margin-top: 5em;
-}
-@media(min-width: 57.5em) {
-  .profile__intro {
-    padding: 3em;
-    margin-top: 0;
-    display: grid;
-    grid-gap: 2em;
-    grid-template-columns: 1fr 2fr;
-  }
-}
-
-.profile__intro-photo {
-  text-align: center;
-}
-
-.profile__headshot {
-  width: 6.25em;
-  height: 6.25em;
-  position: absolute;
-  top: -3.125em;
-  left: 50%;
-  margin-left: -3.125em;
-  margin-bottom: 1em;
-}
-  .profile__headshot img {
-    width: 100%;
-    border-radius: var(--imageRadius);
-  }
-@supports(object-fit: cover) {
-  .profile__headshot img {
-    object-fit: cover;
-    height: 100%;
-  }
-}
-@media(min-width:57.5em) {
-  .profile__headshot {
-    position: static;
-    width: 15em;
-    height: 15em;
-    margin-left: 0;
-  }
-  .profile__intro-photo .profile__headshot {
-    margin: 0 auto 4em;
-  }
-}
-
-.profile__flag {
-  position: absolute;
-  top: 1.5em;
-  right: 1.5em;
-}
-
-.profile__description {
-  color: var(--gray-50);
-}
-
-.profile__anchor {
-  top: -8.5em;
-  position: relative;
-}
 
 @media (min-width: 57.5em) {
   .profile__external-accounts {
