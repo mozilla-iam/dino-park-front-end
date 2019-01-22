@@ -1,8 +1,23 @@
 <template>
   <main class="profile container">
+    <Options label="Select pronoun" value="select-pronoun" :defaultToFirst="true" :options="[
+      {
+        label: 'Select pronoun',
+        value: '',
+      },
+      {
+        label: 'He/him',
+        value: 'hehim',
+      },
+      {
+        label: 'She/her',
+        value: 'sheher',
+      }
+    ]">
+    </Options>
     <div :class="'profile__section' + ( this.editMode ? ' profile__section--editing' : '' )">
       <Toast :content="toastContent" @reset-toast="toastContent = ''"></Toast>
-      <ViewPersonalInfo v-if="!editMode" v-bind="{ staffInformation, username, primaryEmail, phoneNumbers, timezone, firstName, lastName, manager, pronouns, funTitle, picture, location, description }" @toggle-edit-mode="toggleEditMode" />
+      <ViewPersonalInfo v-if="editMode" v-bind="{ staffInformation, username, primaryEmail, phoneNumbers, timezone, firstName, lastName, manager, pronouns, funTitle, picture, location, description }" @toggle-edit-mode="toggleEditMode" />
       <EditPersonalInfo v-else v-bind="{ username: username.value, initialValues: { alternativeName, description, firstName, lastName, funTitle, location, pronouns, timezone } }" @toggle-edit-mode="toggleEditMode" @toast="showToast" />
     </div>
     <ProfileNav :links="profileNav" :onStaffProfile="staffInformation.staff.value"></ProfileNav>
@@ -157,6 +172,7 @@ import Modal from '@/components/functional/Modal.vue';
 import Person from '@/components/Person.vue';
 import ProfileNav from '@/components/ProfileNav.vue';
 import ReportingStructure from '@/components/ReportingStructure.vue';
+import Options from '@/components/Options.vue';
 import ShowMore from '@/components/functional/ShowMore.vue';
 import Tag from '@/components/Tag.vue';
 import Toast from '@/components/Toast.vue';
@@ -208,6 +224,7 @@ export default {
     Person,
     ProfileNav,
     ReportingStructure,
+    Options,
     ShowMore,
     Tag,
     Toast,
