@@ -1,6 +1,6 @@
 <template>
-  <li>
-    <input type="radio" :name="groupId" :value="value" :id="id" v-model="currentValue" @change="emitChoice">
+  <li class="contact-me__item">
+    <input type="radio" :name="groupId" :value="value" :id="id" v-model="currentValue" @change="emitChoice" @keydown.enter="emitCloseRequest">
     <label :for="id">{{ label }}</label>
   </li>
 </template>
@@ -20,6 +20,9 @@ export default {
         label: this.label,
         value: this.currentValue,
       });
+    },
+    emitCloseRequest() {
+      this.$emit('close-list');
     },
   },
   data() {

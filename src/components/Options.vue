@@ -1,13 +1,13 @@
 <template>
-  <div class="select">
-    <button @click="toggleOptions" type="button">
-      <span class="visually-hidden">{{ label }}</span>
+  <div class="options">
+    <button @click="toggleOptions" type="button" ref="optionToggle">
+      <span class="visually-hidden">Open {{ label }}</span>
       {{ this.currentLabel }}
     </button>
     <fieldset>
       <legend class="visually-hidden">{{ label }}</legend>
-      <ul v-if="this.open">
-        <Option v-for="(option, index) in options" :key="index" :groupId="label" :label="option.label" :value="option.value" :id="`option-${option.value}-${index}`" @option-picked="honourChoice" />
+      <ul class="contact-me" v-show="this.open">
+        <Option v-for="(option, index) in options" :key="index" :groupId="id" :label="option.label" :value="option.value" :id="`option-${option.value}-${index}`" @option-picked="honourChoice" @close-list="closeList" />
       </ul>
     </fieldset>
   </div>
@@ -20,6 +20,7 @@ export default {
   name: 'Options',
   props: {
     label: String,
+    id: String,
     options: Array,
     defaultToFirst: {
       type: Boolean,
@@ -37,6 +38,9 @@ export default {
       this.currentValue = data.value;
       this.currentLabel = data.label;
     },
+    closeList() {
+      this.$refs.optionToggle.focus();
+    },
   },
   data() {
     return {
@@ -53,4 +57,23 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.options {
+  position: relative;
+}
+  .options fieldset {
+    padding: 0;
+    border: 0;
+  }
+  .options input {
+    position: absolute;
+    opacity: 0;
+  }
+  .options label {
+    padding: .5em 1em;
+  }
+  .options input:checked + label::before {
+    content: '✔️';
+    float: right;
+  }
+</style>

@@ -1,6 +1,6 @@
 <template>
   <main class="profile container">
-    <Options label="Select pronoun" value="select-pronoun" :defaultToFirst="true" :options="[
+    <Options label="Select pronoun" id="select-pronoun" :defaultToFirst="true" :options="[
       {
         label: 'Select pronoun',
         value: '',
