@@ -2,21 +2,20 @@
   <div class="select">
     <button @click="toggleOptions" type="button">
       <span class="visually-hidden">{{ label }}</span>
-      <span aria-hidden="true">{{ this.currentLabel }}</span>
+      {{ this.currentLabel }}
     </button>
     <fieldset>
       <legend class="visually-hidden">{{ label }}</legend>
       <ul v-if="this.open">
-        <li v-for="(option, index) in options" :key="index" :bind="label">
-          <input type="radio" :name="label" :value="option.value" :id="`option-${option.value}-${index}`" v-model="currentValue" @change="updateCurrentLabel">
-          <label :for="`option-${option.name}-${index}`">{{ option.label }}</label>
-        </li>
+        <Option v-for="(option, index) in options" :key="index" :groupId="label" :label="option.label" :value="option.value" :id="`option-${option.value}-${index}`" @option-picked="honourChoice" />
       </ul>
     </fieldset>
   </div>
 </template>
 
 <script>
+import Option from '@/components/Option.vue';
+
 export default {
   name: 'Options',
   props: {
@@ -27,28 +26,28 @@ export default {
       default: false,
     },
   },
+  components: {
+    Option,
+  },
   methods: {
     toggleOptions() {
       this.open = !this.open;
     },
-    updateCurrentLabel(foo) {
-      console.log(foo);
+    honourChoice(data) {
+      this.currentValue = data.value;
+      this.currentLabel = data.label;
     },
-  },
-  watch: {
-    currentValue() {
-      this.currentValue = this.currentLabel;
-    }
   },
   data() {
     return {
       currentValue: '',
+      currentLabel: '',
       open: false,
     };
   },
   created() {
     if (this.defaultToFirst) {
-      this.currentValue = this.options[0].value;
+      this.currentLabel = this.options[0].label;
     }
   },
 };
