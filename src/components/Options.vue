@@ -1,13 +1,25 @@
 <template>
   <div class="options">
-    <button @click="toggleOptions" type="button" ref="optionToggle">
+    <button 
+      @click="toggleOptions" 
+      @keydown.up.down.prevent="toggleOptions" 
+      type="button" 
+      ref="optionToggle">
       <span class="visually-hidden">Open {{ label }}</span>
       {{ this.currentLabel }}
     </button>
     <fieldset>
       <legend class="visually-hidden">{{ label }}</legend>
-      <ul class="contact-me" v-show="this.open">
-        <Option v-for="(option, index) in options" :key="index" :groupId="id" :label="option.label" :value="option.value" :id="`option-${option.value}-${index}`" @option-picked="honourChoice" @close-list="closeList" />
+      <ul class="contact-me" v-show="this.open" ref="optionList">
+        <Option 
+          v-for="(option, index) in options" 
+          :key="index" 
+          :groupId="id" 
+          :label="option.label" 
+          :value="option.value" 
+          :id="`option-${option.value}-${index}`" 
+          @option-picked="honourChoice" 
+          @close-list="closeList" />
       </ul>
     </fieldset>
   </div>
@@ -32,7 +44,16 @@ export default {
   },
   methods: {
     toggleOptions() {
-      this.open = !this.open;
+      if (this.open) {
+        this.open = false;
+      } else {
+        const firstOption = this.$refs.optionList.querySelector('label, input');
+
+        this.open = true;
+        this.$nextTick(() => {
+          firstOption.focus();
+        });
+      }
     },
     honourChoice(data) {
       this.currentValue = data.value;
@@ -75,5 +96,8 @@ export default {
   .options input:checked + label::before {
     content: '✔️';
     float: right;
+  }
+  .options input:focus + label {
+    background-color: #f60;
   }
 </style>
