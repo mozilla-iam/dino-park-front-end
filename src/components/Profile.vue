@@ -1,23 +1,8 @@
 <template>
   <main class="profile container">
-    <Options label="Select pronoun" id="select-pronoun" :defaultToFirst="true" :options="[
-      {
-        label: 'Select pronoun',
-        value: '',
-      },
-      {
-        label: 'He/him',
-        value: 'hehim',
-      },
-      {
-        label: 'She/her',
-        value: 'sheher',
-      }
-    ]">
-    </Options>
     <div :class="'profile__section' + ( this.editMode ? ' profile__section--editing' : '' )">
       <Toast :content="toastContent" @reset-toast="toastContent = ''"></Toast>
-      <ViewPersonalInfo v-if="!editMode" v-bind="{ staffInformation, username, primaryEmail, phoneNumbers, timezone, firstName, lastName, manager, pronouns, funTitle, picture, location, description }" @toggle-edit-mode="toggleEditMode" />
+      <ViewPersonalInfo v-if="editMode" v-bind="{ staffInformation, username, primaryEmail, phoneNumbers, timezone, firstName, lastName, manager, pronouns, funTitle, picture, location, description }" @toggle-edit-mode="toggleEditMode" />
       <EditPersonalInfo v-else v-bind="{ username: username.value, initialValues: { alternativeName, description, firstName, lastName, funTitle, location, pronouns, timezone } }" @toggle-edit-mode="toggleEditMode" @toast="showToast" />
     </div>
     <ProfileNav :links="profileNav" :onStaffProfile="staffInformation.staff.value"></ProfileNav>

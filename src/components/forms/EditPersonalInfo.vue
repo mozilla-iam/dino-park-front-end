@@ -5,7 +5,43 @@
         <div class="edit-personal-info">
           <label for="field-first-name">First name</label>
           <input type="text" id="field-first-name" v-model="firstName">
-          <div class="edit-personal-info__privacy">PR</div>
+          <div class="edit-personal-info__privacy">
+          <Options
+            label="PR"
+            id="field-pronouns"
+            :defaultToFirst="true"
+            :collapsedShowIcon="true"
+            :collapsedShowLabel="false"
+            :expandedShowIcon="true"
+            :expandedShowLabel="true"
+            :options="[
+            {
+              label: 'Public',
+              value: 'public',
+              icon: 'world',
+            },
+            {
+              label: 'Registered',
+              value: 'registered',
+              icon: 'person-registered',
+            },
+            {
+              label: 'Vouched',
+              value: 'vouched',
+              icon: 'person-vouched',
+            },
+            {
+              label: 'Staff & NDA\'d',
+              value: 'staffndaed',
+              icon: 'person-staffndaed',
+            },
+            {
+              label: 'Staff',
+              value: 'staff',
+              icon: 'person-staff',
+            },
+          ]" />
+          </div>
 
           <hr role="presentation">
 
@@ -15,12 +51,30 @@
 
           <hr role="presentation">
 
-          <label for="field-pronouns">Gender pronouns</label>
-          <select id="field-pronouns">
-            <option>Select pronoun</option>
-            <option value="he-him">He/him</option>
-            <option value="she-her">She/her</option>
-          </select>
+          <div class="edit-personal-info__label">Gender pronouns</div>
+          <Options label="Select pronoun" id="field-pronouns" :defaultToFirst="true" :options="[
+            {
+              label: 'Select pronoun',
+              value: '',
+            },
+            {
+              label: 'He/Him',
+              value: 'hehim',
+            },
+            {
+              label: 'She/Her',
+              value: 'sheher',
+            },
+            {
+              label: 'They/Them',
+              value: 'theythem',
+            },
+            {
+              label: 'Ze/Hir',
+              value: 'zehir',
+            },
+          ]">
+          </Options>
           <div class="edit-personal-info__privacy">PR</div>
 
           <hr role="presentation">
@@ -76,12 +130,16 @@
 
 <script>
 import { MUTATE_PROFILE, DISPLAY_PROFILE } from '@/queries/profile';
+import Options from '@/components/Options.vue';
 
 export default {
   name: 'EditPersonalInfo',
   props: {
     username: String,
     initialValues: Object,
+  },
+  components: {
+    Options,
   },
   methods: {
     cancelEdit() {
@@ -144,7 +202,8 @@ textarea {
 .edit-personal-info fieldset {
   border: 0;
 }
-  .edit-personal-info label {
+  .edit-personal-info label,
+  .edit-personal-info__label {
     color: var(--gray-50);
     margin: .5em 0 0;
   }
@@ -170,9 +229,6 @@ textarea {
     color: var(--gray-50);
     padding-left: 0;
   }
-  .edit-personal-info__privacy {
-    display: none;
-  }
   .button-bar {
     display: flex;
     margin: 2em -1.5em -1.5em;
@@ -195,7 +251,8 @@ textarea {
       grid-column: 2 / end;
       margin: .5em 0;
     }
-    .edit-personal-info label {
+    .edit-personal-info label,
+    .edit-personal-info__label {
       grid-column: 2 / 3;
     }
     @supports (display:grid) {

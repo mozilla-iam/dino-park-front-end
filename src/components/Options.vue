@@ -1,24 +1,28 @@
 <template>
   <div class="options">
-    <button 
-      @click="toggleOptions" 
-      @keydown.up.down.prevent="toggleOptions" 
-      type="button" 
+    <button
+      @click="toggleOptions"
+      @keydown.up.down.prevent="toggleOptions"
+      type="button"
       ref="optionToggle">
       <span class="visually-hidden">Open {{ label }}</span>
-      {{ this.currentLabel }}
+      <template v-if="collapsedShowLabel">{{ this.currentLabel }}</template>
+      <span v-else class="visually-hidden">{{ this.currentLabel }}</span>
+      <template v-if="collapsedShowIcon">{{ this.currentIcon }}</template>
     </button>
     <fieldset>
       <legend class="visually-hidden">{{ label }}</legend>
       <ul class="contact-me" v-show="this.open" ref="optionList">
-        <Option 
-          v-for="(option, index) in options" 
-          :key="index" 
-          :groupId="id" 
-          :label="option.label" 
-          :value="option.value" 
-          :id="`option-${option.value}-${index}`" 
-          @option-picked="honourChoice" 
+        <Option
+          v-for="(option, index) in options"
+          :key="index"
+          :groupId="id"
+          :label="option.label"
+          :value="option.value"
+          :icon="option.icon"
+          :id="`option-${option.value}-${index}`"
+          :bind="{ expandedShowIcon, expandedShowLabel }"
+          @option-picked="honourChoice"
           @close-list="closeList" />
       </ul>
     </fieldset>
@@ -38,6 +42,22 @@ export default {
       type: Boolean,
       default: false,
     },
+    collapsedShowIcon: {
+      type: Boolean,
+      default: true,
+    },
+    collapsedShowLabel: {
+      type: Boolean,
+      default: true,
+    },
+    expandedShowIcon: {
+      type: Boolean,
+      default: true,
+    },
+    expandedShowLabel: {
+      type: Boolean,
+      default: true,
+    },
   },
   components: {
     Option,
@@ -50,12 +70,16 @@ export default {
         const firstOption = this.$refs.optionList.querySelector('label, input');
 
         this.open = true;
-        this.$nextTick(() => {
-          firstOption.focus();
-        });
+
+        if (firstOption) {
+          this.$nextTick(() => {
+            firstOption.focus();
+          });
+        }
       }
     },
     honourChoice(data) {
+      this.currentIcon = data.icon;
       this.currentValue = data.value;
       this.currentLabel = data.label;
     },
@@ -67,6 +91,7 @@ export default {
     return {
       currentValue: '',
       currentLabel: '',
+      currentIcon: '',
       open: false,
     };
   },
