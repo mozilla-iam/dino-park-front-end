@@ -72,7 +72,7 @@ export default {
     box-shadow: 0 .125em .25em .125em rgba(210, 210, 210, .5);
     text-align: left;
     padding-left: 0;
-    z-index: calc(var(--modalLayer) - 1);
+    z-index: calc(var(--layerModal) - 1);
     position: absolute;
     top: 3.5em;
     left: 0;
