@@ -6,48 +6,24 @@
           <label for="field-first-name">First name</label>
           <input type="text" id="field-first-name" v-model="firstName">
           <div class="edit-personal-info__privacy">
-          <Options
-            label="PR"
-            id="field-pronouns"
-            :defaultToFirst="true"
-            :collapsedShowIcon="true"
-            :collapsedShowLabel="false"
-            :expandedShowIcon="true"
-            :expandedShowLabel="true"
-            :options="[
-            {
-              label: 'Public',
-              value: 'public',
-              icon: 'world',
-            },
-            {
-              label: 'Registered',
-              value: 'registered',
-              icon: 'person-registered',
-            },
-            {
-              label: 'Vouched',
-              value: 'vouched',
-              icon: 'person-vouched',
-            },
-            {
-              label: 'Staff & NDA\'d',
-              value: 'staffndaed',
-              icon: 'person-staffndaed',
-            },
-            {
-              label: 'Staff',
-              value: 'staff',
-              icon: 'person-staff',
-            },
-          ]" />
+            <Options
+              label="First name privacy levels"
+              id="field-first-name-privacy"
+              v-bind="privacySettings"
+              :options="displayLevelsFor(firstName)" />
           </div>
 
           <hr role="presentation">
 
           <label for="field-last-name">Last name</label>
           <input type="text" id="field-last-name" v-model="lastName">
-          <div class="edit-personal-info__privacy">PR</div>
+          <div class="edit-personal-info__privacy">
+            <Options
+              label="Last name privacy levels"
+              id="field-last-name-privacy"
+              v-bind="privacySettings"
+              :options="displayLevelsFor(lastName)" />
+          </div>
 
           <hr role="presentation">
 
@@ -75,13 +51,25 @@
             },
           ]">
           </Options>
-          <div class="edit-personal-info__privacy">PR</div>
+          <div class="edit-personal-info__privacy">
+            <Options
+              label="Pronoun privacy levels"
+              id="field-pronoun-privacy"
+              v-bind="privacySettings"
+              :options="displayLevelsFor(pronouns)" />
+          </div>
 
           <hr role="presentation">
 
           <label for="field-alt-name">Alternative name</label>
           <input type="text" id="field-alt-name" v-model="alternativeName">
-          <div class="edit-personal-info__privacy">PR</div>
+          <div class="edit-personal-info__privacy">
+            <Options
+              label="Alternative name privacy levels"
+              id="field-alt-name-privacy"
+              v-bind="privacySettings"
+              :options="displayLevelsFor(alternativeName)" />
+          </div>
 
           <hr role="presentation">
 
@@ -92,32 +80,52 @@
 
           <label for="field-fun-job-title">Fun job title</label>
           <input type="text" id="field-fun-job-title" v-model="funTitle">
-          <div class="edit-personal-info__privacy">PR</div>
-
+          <div class="edit-personal-info__privacy">
+            <Options
+              label="Fun title privacy levels"
+              id="field-fun-title-privacy"
+              v-bind="privacySettings"
+              :options="displayLevelsFor(funTitle)" />
+          </div>
           <hr role="presentation">
 
           <label for="field-location">Location</label>
           <input type="text" id="field-location" v-model="location">
-          <div class="edit-personal-info__privacy">PR</div>
-
+          <div class="edit-personal-info__privacy">
+            <Options
+              label="Location privacy levels"
+              id="field-location-privacy"
+              v-bind="privacySettings"
+              :options="displayLevelsFor(location)" />
+          </div>
           <hr role="presentation">
 
           <label for="field-timezone">Timezone</label>
           <input type="text" id="field-timezone" v-model="timezone">
-          <div class="edit-personal-info__privacy">PR</div>
-
+          <div class="edit-personal-info__privacy">
+            <Options
+              label="Timezone privacy levels"
+              id="field-timezone-privacy"
+              v-bind="privacySettings"
+              :options="displayLevelsFor(timezone)" />
+          </div>
           <hr role="presentation">
 
           <div class="edit-personal-info__meta">
             Worker type, desk number, department, cost centre
           </div>
-          <div class="edit-personal-info__privacy">PR</div>
 
           <hr role="presentation">
 
           <label for="field-bio">Bio</label>
           <textarea id="field-bio" v-model="description"></textarea>
-          <div class="edit-personal-info__privacy">PR</div>
+          <div class="edit-personal-info__privacy">
+            <Options
+              label="Bio privacy levels"
+              id="field-bio-privacy"
+              v-bind="privacySettings"
+              :options="displayLevelsFor(description)" />
+          </div>
         </div>
         <div class="button-bar">
           <button type="button" class="button button--secondary" @click="$emit('toggle-edit-mode')">Cancel</button>
@@ -129,8 +137,10 @@
 </template>
 
 <script>
-import { MUTATE_PROFILE, DISPLAY_PROFILE } from '@/queries/profile';
 import Options from '@/components/Options.vue';
+
+import { MUTATE_PROFILE, DISPLAY_PROFILE } from '@/queries/profile';
+import DisplayLevelsMixin from '@/components/mixins/DisplayLevelsMixin.vue';
 
 export default {
   name: 'EditPersonalInfo',
@@ -141,6 +151,7 @@ export default {
   components: {
     Options,
   },
+  mixins: [DisplayLevelsMixin],
   methods: {
     cancelEdit() {
       this.$emit('cancel-edit');
@@ -186,6 +197,14 @@ export default {
       pronouns: this.initialValues.pronouns.value,
       timezone: this.initialValues.timezone.value,
       description: this.initialValues.description.value,
+      privacySettings: {
+        defaultToFirst: true,
+        collapsedShowIcon: true,
+        collapsedShowLabel: false,
+        expandedShowIcon: true,
+        expandedShowLabel: true,
+        class: 'options--zebra',
+      },
     };
   },
 };
