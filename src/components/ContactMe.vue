@@ -2,8 +2,8 @@
   <ShowMore buttonText="Contact Me" alternateButtonText="Contact Me" :expanded="false" buttonClass="button button--icon-end contact-me__button" :transition="true" :closeWhenClickedOutside="true" :moveFocus="false" :overflowBefore="false">
     <template slot="overflow">
       <ul class="contact-me">
-        <li class="contact-me__item">
-          <a :href="`mailto:${primaryEmail}`" class="contact-me__pair">
+        <li class="contact-me__item-container">
+          <a :href="`mailto:${primaryEmail}`" class="contact-me__item">
             <Icon id="at-sign" :width="24" :height="24" />
             <span class="contact-me__key">Email Me</span>
             <span class="contact-me__value">{{ primaryEmail }}</span>
@@ -99,16 +99,13 @@ export default {
       transform: rotate(-45deg);
       box-shadow: 0 0 .25em 0 var(--gray-30);
     }
-    .contact-me__item {
+    .contact-me__item-container {
       list-style: none;
       padding-left: 0;
+    }
+    .contact-me__item {
       background-color: var(--white);
       position: relative;
-    }
-    .contact-me__item:nth-child(even) {
-      background-color: var(--gray-10);
-    }
-    .contact-me__pair {
       display: flex;
       text-decoration: none;
       color: inherit;
@@ -118,10 +115,13 @@ export default {
       font-size: 1.125em;
       position: relative;
     }
-    .contact-me__pair:hover {
+    .contact-me__item:nth-child(even) {
+      background-color: var(--gray-10);
+    }
+    .contact-me__item:hover {
       background-color: var(--gray-20);
     }
-    .contact-me__pair:focus {
+    .contact-me__item:focus {
       z-index: 1;
     }
     .contact-me__key {
