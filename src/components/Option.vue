@@ -39,6 +39,8 @@ export default {
   components: {
     Icon,
   },
+  mounted() {
+    this.emitChoice();
   },
   data() {
     return {
