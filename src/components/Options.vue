@@ -5,6 +5,7 @@
       @keydown.up.down.prevent="toggleOptions"
       type="button"
       :ref="`optionToggle-${id}`"
+      :title="this.currentLabel"
       <span class="visually-hidden">Open {{ label }}</span>
       <template v-if="collapsedShowLabel">{{ this.currentLabel }}</template>
       <span v-else class="visually-hidden">{{ this.currentLabel }}</span>
