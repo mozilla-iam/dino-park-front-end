@@ -4,7 +4,7 @@
       @click="toggleOptions"
       @keydown.up.down.prevent="toggleOptions"
       type="button"
-      ref="optionToggle">
+      :ref="`optionToggle-${id}`"
       <span class="visually-hidden">Open {{ label }}</span>
       <template v-if="collapsedShowLabel">{{ this.currentLabel }}</template>
       <span v-else class="visually-hidden">{{ this.currentLabel }}</span>
@@ -12,7 +12,7 @@
     </button>
     <fieldset>
       <legend class="visually-hidden">{{ label }}</legend>
-      <ul class="contact-me" v-show="this.open" ref="optionList">
+      <ul class="options__list" v-show="this.open" :ref="`optionList-${id}`">
         <Option
           v-for="(option, index) in options"
           :key="index"
@@ -69,7 +69,7 @@ export default {
       if (this.open) {
         this.open = false;
       } else {
-        const firstOption = this.$refs.optionList.querySelector('label, input');
+        const firstOption = this.$refs[`optionList-${this.id}`].querySelector('input');
 
         this.open = true;
 
@@ -86,7 +86,15 @@ export default {
       this.currentLabel = data.label;
     },
     closeList() {
-      this.$refs.optionToggle.focus();
+      const optionToggle = this.$refs[`optionToggle-${this.id}`];
+
+      this.open = false;
+
+      if (optionToggle) {
+        this.$nextTick(() => {
+          optionToggle.focus();
+        });
+      }
     },
   },
   data() {
