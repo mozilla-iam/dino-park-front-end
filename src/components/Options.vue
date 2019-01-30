@@ -11,7 +11,7 @@
       <span v-else class="visually-hidden">{{ this.currentLabel }}</span>
       <Icon v-if="collapsedShowIcon" :id="this.currentIcon" :width="24" :height="24" aria-hidden="true" role="presentation"></Icon>
     </button>
-    <fieldset>
+    <fieldset @keydown.enter.prevent="closeList">
       <legend class="visually-hidden">{{ label }}</legend>
       <ul class="options__list" v-show="this.open" :ref="`optionList-${id}`">
         <Option
