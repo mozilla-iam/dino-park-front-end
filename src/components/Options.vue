@@ -6,6 +6,7 @@
       type="button"
       :ref="`optionToggle-${id}`"
       :title="this.currentLabel"
+      class="options__toggle">
       <span class="visually-hidden">Open {{ label }}</span>
       <template v-if="collapsedShowLabel">{{ this.currentLabel }}</template>
       <span v-else class="visually-hidden">{{ this.currentLabel }}</span>

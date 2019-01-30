@@ -221,20 +221,20 @@ textarea {
 .edit-personal-info fieldset {
   border: 0;
 }
-  .edit-personal-info label,
+  .edit-personal-info > label,
   .edit-personal-info__label {
     color: var(--gray-50);
     margin: .5em 0 0;
   }
-  .edit-personal-info label::after {
+  .edit-personal-info > label::after {
     content: ':';
   }
-  .edit-personal-info hr {
+  .edit-personal-info > hr {
     margin: 1em -2.4em;
   }
-  .edit-personal-info input,
-  .edit-personal-info textarea,
-  .edit-personal-info select {
+  .edit-personal-info > input,
+  .edit-personal-info > textarea,
+  .edit-personal-info > select {
     background-color: var(--gray-20);
     color: var(--black);
     border: 1px solid var(--gray-50);
@@ -242,7 +242,7 @@ textarea {
     padding: .5em;
     width: 100%;
   }
-  .edit-personal-info input[disabled] {
+  .edit-personal-info > input[disabled] {
     background-color: transparent;
     border-color: transparent;
     color: var(--gray-50);
@@ -266,27 +266,27 @@ textarea {
     grid-template-columns: 20em 10em 1fr 4em;
     grid-column-gap: 1em;
   }
-    .edit-personal-info hr {
+    .edit-personal-info > hr {
       grid-column: 2 / end;
       margin: .5em 0;
     }
-    .edit-personal-info label,
+    .edit-personal-info > label,
     .edit-personal-info__label {
       grid-column: 2 / 3;
     }
     @supports (display:grid) {
-      .edit-personal-info label {
+      .edit-personal-info > label {
         padding: .5em 0;
         margin: .5em 0;
       }
-      .edit-personal-info input[disabled] {
+      .edit-personal-info > input[disabled] {
         padding-left: .25em;
       }
     }
-    .edit-personal-info input {
+    .edit-personal-info > input {
       grid-column: 3 / 4;
     }
-    .edit-personal-info textarea {
+    .edit-personal-info > textarea {
       grid-column: 2 / 4;
     }
     .edit-personal-info__privacy {

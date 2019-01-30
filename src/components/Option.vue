@@ -1,13 +1,15 @@
 <template>
-  <li class="contact-me__item">
-    <input type="radio" :name="groupId" :value="value" :id="id" v-model="currentValue" @change="emitChoice" @keydown.enter="emitCloseRequest">
-    <label :for="id">
-      <span v-if="expandedShowIcon" aria-hidden="true" role="presentation">{{ icon }}</span>
+  <li class="options__option">
+    <input type="radio" :name="groupId" :value="value" :id="id" v-model="currentValue" @change="emitChoice">
+    <label :for="id" @click="$emit('close-list')">
+      <Icon :id="icon" :width="24" :height="24" v-if="expandedShowIcon" aria-hidden="true" role="presentation"></Icon>
       <span v-if="expandedShowLabel">{{ label }}</span></label>
   </li>
 </template>
 
 <script>
+import Icon from '@/components/Icon.vue';
+
 export default {
   name: 'Option',
   props: {
@@ -33,9 +35,10 @@ export default {
         icon: this.icon,
       });
     },
-    emitCloseRequest() {
-      this.$emit('close-list');
-    },
+  },
+  components: {
+    Icon,
+  },
   },
   data() {
     return {
