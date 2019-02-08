@@ -1,5 +1,5 @@
 <template>
-  <button type="button" :class="'button' + ( modifier ? ' ' + modifier : '')">
+  <button type="button" :class="'button' + (modifier ? ' ' + modifier : '')">
     <slot></slot>
   </button>
 </template>
@@ -20,13 +20,13 @@ export default {
   padding: 1em 2em;
   display: block;
   font-family: inherit;
-  font-size: .9em;
+  font-size: 0.9em;
   letter-spacing: 0.05em;
   border-radius: 2.5em;
   background-color: var(--blue-60);
   color: var(--white);
   border: 1px solid transparent;
-  transition: background-color .1s ease-in-out;
+  transition: background-color 0.1s ease-in-out;
   -webkit-appearance: none;
   appearance: none;
 }
@@ -36,10 +36,10 @@ export default {
   color: var(--blue-60);
   text-decoration: none;
 }
-  .button img,
-  .button svg {
-    vertical-align: middle;
-  }
+.button img,
+.button svg {
+  vertical-align: middle;
+}
 
 .button--secondary {
   border-color: var(--gray-50);
@@ -74,8 +74,8 @@ export default {
 }
 
 .button--small {
-  padding: .5em 1.5em;
-  font-size: .9em;
+  padding: 0.5em 1.5em;
+  font-size: 0.9em;
 }
 
 .button--full-width {
@@ -83,30 +83,29 @@ export default {
 }
 
 .button--less-padding {
-  padding: .5em 1em;
+  padding: 0.5em 1em;
 }
 
 .button--icon-only {
-  padding: .5em;
+  padding: 0.5em;
   border-color: var(--gray-30);
   border-radius: var(--cardRadius);
 }
 .button--icon-only:hover {
   background-color: var(--gray-20);
 }
-  .button--icon-only img {
-    vertical-align: middle;
-    margin-right: 0;
-  }
+.button--icon-only img {
+  vertical-align: middle;
+  margin-right: 0;
+}
 
 .button--icon-end {
   display: flex;
 }
-  .button--icon-end img,
-  .button--icon-end svg {
-    order: 10;
-    margin-left: .75em;
-    margin-right: 0;
-  }
-
+.button--icon-end img,
+.button--icon-end svg {
+  order: 10;
+  margin-left: 0.75em;
+  margin-right: 0;
+}
 </style>

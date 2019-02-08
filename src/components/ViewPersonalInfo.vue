@@ -2,31 +2,73 @@
   <div class="profile__intro">
     <div class="profile__intro-photo">
       <div class="profile__headshot">
-        <UserPicture :picture="picture.value" :username="username.value" :size="230" :isStaff="staffInformation.staff.value"></UserPicture>
+        <UserPicture
+          :picture="picture.value"
+          :username="username.value"
+          :size="230"
+          :isStaff="staffInformation.staff.value"
+        ></UserPicture>
       </div>
       <div class="hide-mobile">
-        <ContactMe :primaryEmail="primaryEmail.value" :phoneNumbers="phoneNumbers"></ContactMe>
+        <ContactMe
+          :primaryEmail="primaryEmail.value"
+          :phoneNumbers="phoneNumbers"
+        ></ContactMe>
       </div>
       <button @click="$emit('toggle-edit-mode')">Edit</button>
     </div>
     <div class="profile__intro-main">
-      <ProfileName :firstName="firstName.value" :lastName="lastName.value" :username="username.value" :pronouns="pronouns.value"></ProfileName>
-      <ProfileTitle :businessTitle="staffInformation.title.value" :funTitle="funTitle.value"></ProfileTitle>
+      <ProfileName
+        :firstName="firstName.value"
+        :lastName="lastName.value"
+        :username="username.value"
+        :pronouns="pronouns.value"
+      ></ProfileName>
+      <ProfileTitle
+        :businessTitle="staffInformation.title.value"
+        :funTitle="funTitle.value"
+      ></ProfileTitle>
       <div class="hide-desktop">
-        <ContactMe :primaryEmail="primaryEmail.value" :phoneNumbers="phoneNumbers.value"></ContactMe>
+        <ContactMe
+          :primaryEmail="primaryEmail.value"
+          :phoneNumbers="phoneNumbers.value"
+        ></ContactMe>
       </div>
-      <ProfileTeamLocation :team="staffInformation.team.value" :teamManager="manager || null" :entity="company(staffInformation, primaryEmail.value)" :location="location.value" :officeLocation="staffInformation.officeLocation.value" :timezone="timezone.value"></ProfileTeamLocation>
+      <ProfileTeamLocation
+        :team="staffInformation.team.value"
+        :teamManager="manager || null"
+        :entity="company(staffInformation, primaryEmail.value)"
+        :location="location.value"
+        :officeLocation="staffInformation.officeLocation.value"
+        :timezone="timezone.value"
+      ></ProfileTeamLocation>
       <h2 class="visually-hidden">About</h2>
       <div class="profile__description">
         <p>{{ description.value }}</p>
       </div>
-      <ShowMore v-if="this.staffInformation.staff.value" buttonText="Show More" alternateButtonText="Show Less" :expanded="false" buttonClass="button button--text-only button--less-padding" :transition="true">
+      <ShowMore
+        v-if="this.staffInformation.staff.value"
+        buttonText="Show More"
+        alternateButtonText="Show Less"
+        :expanded="false"
+        buttonClass="button button--text-only button--less-padding"
+        :transition="true"
+      >
         <template slot="overflow">
           <MetaList>
             <h3 class="visually-hidden">Meta</h3>
-            <Meta metaKey="Worker type" :metaValue="staffInformation.workerType.value" />
-            <Meta metaKey="Desk number" :metaValue="staffInformation.wprDeskNumber.value" />
-            <Meta metaKey="Cost centre" :metaValue="staffInformation.costCenter.value" />
+            <Meta
+              metaKey="Worker type"
+              :metaValue="staffInformation.workerType.value"
+            />
+            <Meta
+              metaKey="Desk number"
+              :metaValue="staffInformation.wprDeskNumber.value"
+            />
+            <Meta
+              metaKey="Cost centre"
+              :metaValue="staffInformation.costCenter.value"
+            />
           </MetaList>
         </template>
         <template slot="icon-expanded">
@@ -93,7 +135,7 @@ export default {
   padding-top: 5em;
   margin-top: 5em;
 }
-@media(min-width: 57.5em) {
+@media (min-width: 57.5em) {
   .profile__intro {
     padding: 3em;
     margin-top: 0;
@@ -116,17 +158,17 @@ export default {
   margin-left: -3.125em;
   margin-bottom: 1em;
 }
-  .profile__headshot img {
-    width: 100%;
-    border-radius: var(--imageRadius);
-  }
-@supports(object-fit: cover) {
+.profile__headshot img {
+  width: 100%;
+  border-radius: var(--imageRadius);
+}
+@supports (object-fit: cover) {
   .profile__headshot img {
     object-fit: cover;
     height: 100%;
   }
 }
-@media(min-width:57.5em) {
+@media (min-width: 57.5em) {
   .profile__headshot {
     position: static;
     width: 15em;

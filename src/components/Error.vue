@@ -20,27 +20,27 @@ export default {
   margin: 2em 0;
   text-align: center;
 }
-  .error__image img {
-    max-width: 80%;
-  }
-  .error__message > .button {
-    margin: 4em 0;
-    display: inline-block;
-  }
+.error__image img {
+  max-width: 80%;
+}
+.error__message > .button {
+  margin: 4em 0;
+  display: inline-block;
+}
 @media (min-width: 57.5em) {
   .error {
     display: flex;
     margin: 4em;
   }
-    .error__image {
-      margin: 0;
-    }
-      .error__image img {
-        max-width: none;
-      }
-    .error__image,
-    .error__message {
-      flex: 1;
-    }
+  .error__image {
+    margin: 0;
+  }
+  .error__image img {
+    max-width: none;
+  }
+  .error__image,
+  .error__message {
+    flex: 1;
+  }
 }
 </style>

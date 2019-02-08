@@ -1,6 +1,9 @@
 <template>
   <div class="key">
-    <h5><strong>{{ type }}</strong>: {{ title }}</h5>
+    <h5>
+      <strong>{{ type }}</strong
+      >: {{ title }}
+    </h5>
     <textarea rows="2" v-model="content" readonly></textarea>
   </div>
 </template>
@@ -19,7 +22,7 @@ export default {
 <style>
 .key {
   border: 1px solid var(--gray-30);
-  padding: .5em;
+  padding: 0.5em;
 }
 
 .key + .key,
@@ -29,14 +32,14 @@ export default {
 
 .key h5 {
   color: var(--gray-50);
-  letter-spacing: .05em;
+  letter-spacing: 0.05em;
   font-weight: 400;
-  margin-bottom: .25em;
+  margin-bottom: 0.25em;
 }
-  .key h5 strong {
-    text-transform: uppercase;
-    font-weight: 400;
-  }
+.key h5 strong {
+  text-transform: uppercase;
+  font-weight: 400;
+}
 
 .key textarea {
   font: inherit;

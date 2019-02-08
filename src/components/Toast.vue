@@ -1,6 +1,8 @@
 <template>
   <div class="toast" role="alert">
-    <span v-if="displayedContent" class="toast__content">{{ displayedContent }}</span>
+    <span v-if="displayedContent" class="toast__content">{{
+      displayedContent
+    }}</span>
   </div>
 </template>
 
@@ -44,8 +46,8 @@ export default {
   margin-left: -15em;
   z-index: var(--layerModal);
   text-align: center;
-  }
-  .toast__content a {
-    color: inherit;
-  }
+}
+.toast__content a {
+  color: inherit;
+}
 </style>
