@@ -1,18 +1,78 @@
 <template>
   <main class="profile container">
-    <div :class="'profile__section' + ( this.editMode ? ' profile__section--editing' : '' )">
+    <div
+      :class="
+        'profile__section' + (this.editMode ? ' profile__section--editing' : '')
+      "
+    >
       <Toast :content="toastContent" @reset-toast="toastContent = ''"></Toast>
-      <ViewPersonalInfo v-if="!editMode" v-bind="{ staffInformation, username, primaryEmail, phoneNumbers, timezone, firstName, lastName, manager, pronouns, funTitle, picture, location, description }" @toggle-edit-mode="toggleEditMode" />
-      <EditPersonalInfo v-else v-bind="{ username: username.value, initialValues: { alternativeName, description, firstName, lastName, funTitle, location, pronouns, timezone } }" @toggle-edit-mode="toggleEditMode" @toast="showToast" />
+      <ViewPersonalInfo
+        v-if="!editMode"
+        v-bind="{
+          staffInformation,
+          username,
+          primaryEmail,
+          phoneNumbers,
+          timezone,
+          firstName,
+          lastName,
+          manager,
+          pronouns,
+          funTitle,
+          picture,
+          location,
+          description,
+        }"
+        @toggle-edit-mode="toggleEditMode"
+      />
+      <EditPersonalInfo
+        v-else
+        v-bind="{
+          username: username.value,
+          initialValues: {
+            alternativeName,
+            description,
+            firstName,
+            lastName,
+            funTitle,
+            location,
+            pronouns,
+            timezone,
+          },
+        }"
+        @toggle-edit-mode="toggleEditMode"
+        @toast="showToast"
+      />
     </div>
-    <ProfileNav :links="profileNav" :onStaffProfile="staffInformation.staff.value"></ProfileNav>
+    <ProfileNav
+      :links="profileNav"
+      :onStaffProfile="staffInformation.staff.value"
+    ></ProfileNav>
     <section v-if="staffInformation.staff.value" class="profile__section">
       <a id="nav-relations" class="profile__anchor"></a>
       <header class="profile__section-header">
         <h2>Colleagues</h2>
-        <RouterLink :to="{ name: 'OrgchartHighlight', params: { username: username.value } }" class="button button--secondary button--small">
-          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="13" viewBox="0 0 12 13" aria-hidden="true" role="presentation" focusable="false">
-            <path fill="currentColor" fill-rule="nonzero" d="M6.222 6.889a.667.667 0 1 0 0-1.333.667.667 0 0 0 0 1.333zm-.444 1.055A1.779 1.779 0 1 1 6.222 8h-.444v-.056zm3.555 3.612a1.778 1.778 0 1 1 0-3.556 1.778 1.778 0 0 1 0 3.556zm0-1.112a.667.667 0 1 0 0-1.333.667.667 0 0 0 0 1.333zm-7.11-6a1.778 1.778 0 1 1 0-3.555 1.778 1.778 0 0 1 0 3.555zm0-1.11a.667.667 0 1 0 0-1.334.667.667 0 0 0 0 1.333zm-.445 1.11h.444v.445h-.444v-.445zm0 .89h.444v.444h-.444v-.445zm.444 1.333H2a.222.222 0 0 1-.222-.222v-.223h.444v.445zm.445 0v-.445h.444v.445h-.444zm1.333 0v-.445h.444v.445H4zm1.778 1.777h.444v.445h-.444v-.445zm.444 1.778H6A.222.222 0 0 1 5.778 10v-.222h.444v.444zm.445 0v-.444h.444v.444h-.444z"/>
+        <RouterLink
+          :to="{
+            name: 'OrgchartHighlight',
+            params: { username: username.value },
+          }"
+          class="button button--secondary button--small"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="12"
+            height="13"
+            viewBox="0 0 12 13"
+            aria-hidden="true"
+            role="presentation"
+            focusable="false"
+          >
+            <path
+              fill="currentColor"
+              fill-rule="nonzero"
+              d="M6.222 6.889a.667.667 0 1 0 0-1.333.667.667 0 0 0 0 1.333zm-.444 1.055A1.779 1.779 0 1 1 6.222 8h-.444v-.056zm3.555 3.612a1.778 1.778 0 1 1 0-3.556 1.778 1.778 0 0 1 0 3.556zm0-1.112a.667.667 0 1 0 0-1.333.667.667 0 0 0 0 1.333zm-7.11-6a1.778 1.778 0 1 1 0-3.555 1.778 1.778 0 0 1 0 3.555zm0-1.11a.667.667 0 1 0 0-1.334.667.667 0 0 0 0 1.333zm-.445 1.11h.444v.445h-.444v-.445zm0 .89h.444v.444h-.444v-.445zm.444 1.333H2a.222.222 0 0 1-.222-.222v-.223h.444v.445zm.445 0v-.445h.444v.445h-.444zm1.333 0v-.445h.444v.445H4zm1.778 1.777h.444v.445h-.444v-.445zm.444 1.778H6A.222.222 0 0 1 5.778 10v-.222h.444v.444zm.445 0v-.444h.444v.444h-.444z"
+            />
           </svg>
           Org Chart
           <svg
@@ -32,7 +92,11 @@
           </svg>
         </RouterLink>
       </header>
-      <ReportingStructure v-if="manager || directs.length > 0" :manager="manager" :directs="directs">
+      <ReportingStructure
+        v-if="manager || directs.length > 0"
+        :manager="manager"
+        :directs="directs"
+      >
       </ReportingStructure>
     </section>
     <section class="profile__section">
@@ -45,37 +109,53 @@
         <IconBlock heading="Email" subHeading="primary" icon="email">
           <a :href="`mailto:${primaryEmail}`">{{ primaryEmail }}</a>
         </IconBlock>
-        <IconBlock v-for="[key, value] in Object.entries(phoneNumbers || {})" :key="`phoneNumber-${key}`" heading="Phone" :subHeading="key" icon="phone">
+        <IconBlock
+          v-for="[key, value] in Object.entries(phoneNumbers || {})"
+          :key="`phoneNumber-${key}`"
+          heading="Phone"
+          :subHeading="key"
+          icon="phone"
+        >
           <a :href="`tel:${value}`">{{ value }}</a>
         </IconBlock>
       </IconBlockList>
       <div v-if="pgpPublicKeys || sshPublicKeys">
-        <hr>
+        <hr />
         <h3>Keys</h3>
-        <template v-if="pgpPublicKeys && Object.keys(pgpPublicKeys.values).length > 0">
+        <template
+          v-if="pgpPublicKeys && Object.keys(pgpPublicKeys.values).length > 0"
+        >
           <h4 class="visually-hidden">PGP</h4>
-          <Key v-for="[key, value] in Object.entries(pgpPublicKeys.values)"
-               type="PGP"
-               :title="key"
-               :content="value"
-               :key="`pgp-${key}`" />
+          <Key
+            v-for="[key, value] in Object.entries(pgpPublicKeys.values)"
+            type="PGP"
+            :title="key"
+            :content="value"
+            :key="`pgp-${key}`"
+          />
         </template>
-        <template v-if="sshPublicKeys && Object.keys(sshPublicKeys.values).length > 0">
+        <template
+          v-if="sshPublicKeys && Object.keys(sshPublicKeys.values).length > 0"
+        >
           <h4 class="visually-hidden">SSH</h4>
-          <Key v-for="[key, value] in Object.entries(sshPublicKeys.values)"
-              type="SSH"
-              :title="key"
-              :content="value"
-              :key="`ssh-${key}`" />
+          <Key
+            v-for="[key, value] in Object.entries(sshPublicKeys.values)"
+            type="SSH"
+            :title="key"
+            :content="value"
+            :key="`ssh-${key}`"
+          />
         </template>
       </div>
       <template v-if="languagesSorted && languagesSorted.length > 0">
-        <hr>
+        <hr />
         <div class="languages">
           <h3>Languages</h3>
           <Tag
             v-for="(language, index) in languagesSorted"
-            :tag="language" :key="`language-${index}`" >
+            :tag="language"
+            :key="`language-${index}`"
+          >
           </Tag>
         </div>
       </template>
@@ -89,16 +169,30 @@
         <div v-if="accounts.mozilla.length">
           <h3>Mozilla</h3>
           <IconBlockList>
-            <IconBlock v-for="(acc, index) in accounts.mozilla" :key="`acc-moz-${index}`" :heading="acc.text" :icon="acc.icon">
-              <a :href="acc.value" target="_blank" rel="noreferrer noopener">{{ acc.value }}</a>
+            <IconBlock
+              v-for="(acc, index) in accounts.mozilla"
+              :key="`acc-moz-${index}`"
+              :heading="acc.text"
+              :icon="acc.icon"
+            >
+              <a :href="acc.value" target="_blank" rel="noreferrer noopener">{{
+                acc.value
+              }}</a>
             </IconBlock>
           </IconBlockList>
         </div>
         <div v-if="accounts.other.length">
           <h3>Elsewhere</h3>
           <IconBlockList>
-            <IconBlock v-for="(acc, index) in accounts.other" :key="`acc-other-${index}`" :heading="acc.text" :icon="acc.icon">
-              <a :href="acc.value" target="_blank" rel="noreferrer noopener">{{ acc.value }}</a>
+            <IconBlock
+              v-for="(acc, index) in accounts.other"
+              :key="`acc-other-${index}`"
+              :heading="acc.text"
+              :icon="acc.icon"
+            >
+              <a :href="acc.value" target="_blank" rel="noreferrer noopener">{{
+                acc.value
+              }}</a>
             </IconBlock>
           </IconBlockList>
         </div>
@@ -111,13 +205,24 @@
       </header>
       <p>No other accounts have been added</p>
     </section>
-    <section v-if="Object.keys(accessInformation.mozilliansorg.values || {}).length > 0" class="profile__section">
+    <section
+      v-if="
+        Object.keys(accessInformation.mozilliansorg.values || {}).length > 0
+      "
+      class="profile__section"
+    >
       <a id="nav-access-groups" class="profile__anchor"></a>
       <header class="profile__section-header">
         <h2>Access Groups</h2>
       </header>
       <IconBlockList modifier="icon-block-list--multi-col">
-        <IconBlock v-for="[group] in Object.entries(accessInformation.mozilliansorg.values)" :key="`group-${group}`" icon="dino">
+        <IconBlock
+          v-for="[group] in Object.entries(
+            accessInformation.mozilliansorg.values,
+          )"
+          :key="`group-${group}`"
+          icon="dino"
+        >
           {{ group }}
         </IconBlock>
       </IconBlockList>
@@ -134,7 +239,11 @@
       <header class="profile__section-header">
         <h2>Tags</h2>
       </header>
-      <Tag v-for="(tag, index) in tagsSorted" :tag="tag" :key="`tag-${index}`" />
+      <Tag
+        v-for="(tag, index) in tagsSorted"
+        :tag="tag"
+        :key="`tag-${index}`"
+      />
     </section>
     <section v-else class="profile__section profile__section--disabled">
       <a id="nav-tags" class="profile__anchor"></a>
@@ -228,8 +337,8 @@ export default {
   computed: {
     accounts() {
       const wellKnown = Object.entries(this.uris || {})
-        .map(kv => this.account(kv))
-        .filter(a => a !== null && typeof a !== 'undefined');
+        .map((kv) => this.account(kv))
+        .filter((a) => a !== null && typeof a !== 'undefined');
       const mozilla = wellKnown.filter(({ moz }) => moz);
       const other = wellKnown.filter(({ moz }) => !moz);
       return { mozilla, other };
@@ -322,12 +431,12 @@ export default {
 .profile__section:first-child {
   grid-column: 1 / -1;
 }
-  .profile__section h3 {
-    margin: 1.5em 0 1em;
-  }
-  .profile__section .reporting-structure h3 {
-    margin-top: 0;
-  }
+.profile__section h3 {
+  margin: 1.5em 0 1em;
+}
+.profile__section .reporting-structure h3 {
+  margin-top: 0;
+}
 
 .profile__section-header {
   padding: 1.5em;
@@ -335,12 +444,12 @@ export default {
   border-bottom: 1px solid var(--gray-30);
   display: flex;
 }
-  .profile__section-header h2 {
-    margin: 0;
-  }
-  .profile__section-header > a {
-    margin-left: auto;
-  }
+.profile__section-header h2 {
+  margin: 0;
+}
+.profile__section-header > a {
+  margin-left: auto;
+}
 
 @media (min-width: 57.5em) {
   .profile__external-accounts {
@@ -348,8 +457,8 @@ export default {
     grid-template-columns: 1fr 1fr;
     grid-gap: 2em;
   }
-    .profile__external-accounts h3 {
-      margin-top: 0; /* because grid item margins don't collapse */
-    }
+  .profile__external-accounts h3 {
+    margin-top: 0; /* because grid item margins don't collapse */
+  }
 }
 </style>

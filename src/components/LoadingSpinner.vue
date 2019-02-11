@@ -1,12 +1,19 @@
 <template>
   <div class="loading">
-    <svg aria-labelledby="loading__spinner__title" class="loading__spinner" width="38" height="38" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg" stroke="#000">
+    <svg
+      aria-labelledby="loading__spinner__title"
+      class="loading__spinner"
+      width="38"
+      height="38"
+      viewBox="0 0 38 38"
+      xmlns="http://www.w3.org/2000/svg"
+      stroke="#000"
+    >
       <title id="loading__spinner__title">Loading...</title>
       <g fill="none" fill-rule="evenodd">
         <g transform="translate(1 1)" stroke-width="2">
           <circle stroke-opacity=".5" cx="18" cy="18" r="18" />
-          <path d="M36 18c0-9.94-8.06-18-18-18">
-          </path>
+          <path d="M36 18c0-9.94-8.06-18-18-18"></path>
         </g>
       </g>
     </svg>

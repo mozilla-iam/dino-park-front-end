@@ -1,5 +1,5 @@
 <template>
-  <ul :class="'icon-block-list ' + ( modifier ? ' ' + modifier : '')">
+  <ul :class="'icon-block-list ' + (modifier ? ' ' + modifier : '')">
     <slot></slot>
   </ul>
 </template>

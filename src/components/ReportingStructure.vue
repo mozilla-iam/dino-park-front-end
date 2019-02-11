@@ -4,10 +4,7 @@
     <div v-if="manager" class="reporting-structure__reports-to">
       <h3>Reports to:</h3>
       <div>
-        <Person
-          modifier="person--borderless"
-          v-bind="manager"
-        />
+        <Person modifier="person--borderless" v-bind="manager" />
       </div>
     </div>
     <div v-if="directs.length > 0" class="reporting-structure__manages">
@@ -18,7 +15,7 @@
           :modifier="directsView"
           :key="`direct-${index}`"
           v-bind="direct"
-          />
+        />
       </div>
     </div>
   </div>
@@ -41,7 +38,9 @@ export default {
   },
   computed: {
     directsView() {
-      return this.directs.length > 1 ? 'person--borderless person--avatar-only' : 'person--borderless';
+      return this.directs.length > 1
+        ? 'person--borderless person--avatar-only'
+        : 'person--borderless';
     },
   },
 };
