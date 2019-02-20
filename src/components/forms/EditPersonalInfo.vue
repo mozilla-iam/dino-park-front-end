@@ -235,9 +235,10 @@ textarea {
   .edit-personal-info > input,
   .edit-personal-info > textarea,
   .edit-personal-info > select {
+    border: 0;
     background-color: var(--gray-20);
+    border-radius: var(--formElementRadius);
     color: var(--black);
-    border: 1px solid var(--gray-50);
     margin: .5em 0;
     padding: .5em;
     width: 100%;
