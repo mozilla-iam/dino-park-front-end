@@ -10,7 +10,7 @@
       <span class="visually-hidden">Open {{ label }}</span>
       <template v-if="collapsedShowLabel">{{ this.currentLabel }}</template>
       <span v-else class="visually-hidden">{{ this.currentLabel }}</span>
-      <Icon v-if="collapsedShowIcon" :id="this.currentIcon" :width="24" :height="24" aria-hidden="true" role="presentation"></Icon>
+      <Icon v-if="collapsedShowIcon && this.currentIcon" :id="this.currentIcon" :width="24" :height="24" aria-hidden="true" role="presentation"></Icon>
     </button>
     <fieldset @keydown.enter.prevent="closeList">
       <legend class="visually-hidden">{{ label }}</legend>
@@ -119,10 +119,17 @@ export default {
 .options {
   position: relative;
 }
+.options--chevron .options__toggle {
+  background-image: url('../assets/images/chevron-down.svg');
+  background-repeat: no-repeat;
+  background-position: center right .75em;
+  background-size: 1.25em;
+  padding-right: 3em;
+}
   .options__toggle {
-    background-color: transparent;
     font-size: inherit;
     border: 0;
+    padding: .5em;
   }
   .options__list {
     padding-left: 0;

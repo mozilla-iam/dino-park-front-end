@@ -28,7 +28,7 @@
           <hr role="presentation">
 
           <div class="edit-personal-info__label">Gender pronouns</div>
-          <Options label="Select pronoun" id="field-pronouns" :defaultToFirst="true" :options="[
+          <Options label="Select pronoun" id="field-pronouns" :defaultToFirst="true" class="options--chevron" :options="[
             {
               label: 'Select pronoun',
               value: '',
