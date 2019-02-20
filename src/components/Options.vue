@@ -183,10 +183,13 @@ export default {
     margin: 0;
     display: flex;
     align-items: center;
+    padding-right: 3em;
   }
-  .options input:checked + label::after {
-    content: '✔️';
-    float: right;
+  .options input:checked + label {
+    background-image: url('../assets/images/check.svg');
+    background-repeat: no-repeat;
+    background-position: center right .75em;
+    background-size: 1.5em;
   }
   .options input:focus + label {
     position: relative;
