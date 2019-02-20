@@ -103,7 +103,7 @@ export default {
     return {
       currentValue: '',
       currentLabel: '',
-      currentIcon: '',
+      currentIcon: null,
       open: false,
     };
   },
