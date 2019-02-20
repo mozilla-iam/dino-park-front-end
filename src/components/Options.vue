@@ -71,13 +71,13 @@ export default {
       if (this.open) {
         this.open = false;
       } else {
-        const firstOption = this.$refs[`optionList-${this.id}`].querySelector('input');
+        const optionToFocus = this.$refs[`optionList-${this.id}`].querySelector('input:checked') || this.$refs[`optionList-${this.id}`].querySelector('input');
 
         this.open = true;
 
-        if (firstOption) {
+        if (optionToFocus) {
           this.$nextTick(() => {
-            firstOption.focus();
+            optionToFocus.focus();
           });
         }
       }
