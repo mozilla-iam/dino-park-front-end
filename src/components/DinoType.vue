@@ -4,7 +4,9 @@
       <span aria-hidden="true">S</span>
       <span class="visually-hidden">Staff</span>
     </template>
-    <template v-else>Staff</template>
+    <template v-else
+      >Staff</template
+    >
   </span>
 </template>
 

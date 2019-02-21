@@ -1,7 +1,11 @@
+const fs = require('fs');
+
 const DINOPARK_URL = process.env.DP_K8S || 'http://localhost:8081';
 const BASE_URL = process.env.DP_BASE_URL || '/beta/';
+const SSL_KEY = process.env.DP_SSL_KEY;
+const SSL_CERT = process.env.DP_SSL_CERT;
 
-module.exports = {
+const config = {
   filenameHashing: false,
   baseUrl: BASE_URL,
   configureWebpack: {
@@ -28,3 +32,12 @@ module.exports = {
     },
   },
 };
+
+if (SSL_CERT && SSL_KEY) {
+  config.devServer.https = {
+    key: fs.readFileSync(SSL_KEY),
+    cert: fs.readFileSync(SSL_CERT),
+  };
+}
+
+module.exports = config;
