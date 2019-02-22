@@ -38,7 +38,6 @@ export default {
   },
   data() {
     return {
-      isOpen: false,
       lastFocusedElement: null,
     };
   },
