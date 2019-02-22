@@ -30,8 +30,7 @@
             ></ProfilePreview>
             <Modal
               v-else
-              :initiallyOpen="true"
-              :closeButton="false"
+              v-on:close="$router.push({ name: 'Orgchart' })"
               ref="modalEl"
             >
               <ProfilePreview v-bind="data.profile"></ProfilePreview>
@@ -109,13 +108,6 @@ export default {
     },
     openedFromOrgNode() {
       return this.$route.params.openedFromOrgNode;
-    },
-  },
-  watch: {
-    desktopView() {
-      if (this.modalEl && this.desktopView === true) {
-        this.modalEl.isOpen = true;
-      }
     },
   },
   methods: {
