@@ -5,11 +5,11 @@ const MIN_SCALE = 50;
 
 class Cropper {
   constructor(img) {
-    const container = document.createElement('div');
-    copyNodeStyle(img, container);
+    this.container = document.createElement('div');
+    this.container.style.setProperty('overflow', 'hidden');
 
     this.img = img;
-    img.parentElement.insertBefore(container, img);
+    img.parentElement.insertBefore(this.container, img);
     img.remove();
 
     const inner = document.createElement('div');
@@ -19,7 +19,7 @@ class Cropper {
       '-moz-user-select': 'none',
       '-webkit-user-select': 'none',
     });
-    container.appendChild(inner);
+    this.container.appendChild(inner);
     inner.appendChild(img);
 
     this.croppedImg = img.cloneNode();
@@ -31,32 +31,41 @@ class Cropper {
     });
     inner.appendChild(this.croppedImg);
 
-    setStyles(img, { position: 'initial', filter: 'brightness(0.4) ' });
-
-    this.cropperContainer = createCropperContainer(container, {
+    this.cropperContainer = createCropperContainer(this.container, {
       onMove: this.handleMove.bind(this),
       onResize: this.handleResize.bind(this),
     });
     inner.appendChild(this.cropperContainer);
 
-    if (img.complete) {
+    this.init();
+
+    new MutationObserver(() => {
       this.init();
-    } else {
-      img.addEventListener('load', () => this.init());
-    }
+    }).observe(img, { attributeFilter: ['src'] });
   }
 
   get left() {
     const { scale, center, width } = this;
-    return (center[0] * width) - (scale / 2);
+    return center[0] * width - scale / 2;
   }
 
   get top() {
     const { scale, center, height } = this;
-    return (center[1] * height) - (scale / 2);
+    return center[1] * height - scale / 2;
   }
 
-  init() {
+  async init() {
+    if (!this.img.complete) {
+      await new Promise((resolve) =>
+        this.img.addEventListener('load', resolve),
+      );
+    }
+
+    this.container.style = '';
+    copyNodeStyle(this.img, this.container, ['filter']);
+    setStyles(this.img, { position: 'initial', filter: 'brightness(0.4) ' });
+    this.croppedImg.src = this.img.src;
+
     const { width, height } = this.img.getBoundingClientRect();
     this.width = width;
     this.height = height;
@@ -75,8 +84,8 @@ class Cropper {
     const halfWidth = scale / 2 / width;
     const halfHeight = scale / 2 / height;
     this.center = [
-      clamp(halfWidth, x + (offsetX / width), 1 - halfWidth),
-      clamp(halfHeight, y + (offsetY / height), 1 - halfHeight),
+      clamp(halfWidth, x + offsetX / width, 1 - halfWidth),
+      clamp(halfHeight, y + offsetY / height, 1 - halfHeight),
     ];
     this.render();
   }
@@ -87,7 +96,7 @@ class Cropper {
     const isYFlip = key.includes('n');
     const diff =
       (isXResize ? (isXFlip ? -1 : 1) * x : (isYFlip ? -1 : 1) * y) * 2;
-    const newScale = Math.max(this.scale + (diff * 0.5), MIN_SCALE);
+    const newScale = Math.max(this.scale + diff * 0.5, MIN_SCALE);
     if (this.scale !== newScale) {
       this.scale = newScale;
       this.handleMove(
@@ -98,9 +107,7 @@ class Cropper {
   }
 
   render() {
-    const {
-      cropperContainer, croppedImg, scale, left, top,
-    } = this;
+    const { cropperContainer, croppedImg, scale, left, top } = this;
 
     setStyles(cropperContainer, {
       top: `${top}px`,
@@ -118,9 +125,7 @@ class Cropper {
     const cropper = this;
     return {
       toDataURL(...args) {
-        const {
-          img, scale, left, top, width,
-        } = cropper;
+        const { img, scale, left, top, width } = cropper;
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
         const factor = img.naturalWidth / width;
