@@ -1,14 +1,51 @@
 <template>
-  <li :id="data.username" :class="'org-node' + ( data.username === this.$route.params.username ? ' org-node--current' : '')">
-    <RouterLink :to="{ name: 'Orgchart', params: { username: data.username, openedFromOrgNode: true, } }" :id="`org-node-${prefix}`">
-      <UserPicture :picture="data.picture" :username="data.username" :size="40" :isStaff="true"></UserPicture>
-      <span class="org-node__name">{{ data.firstName }} {{ data.lastName }}</span>
+  <li
+    :id="data.username"
+    :class="
+      'org-node' +
+        (data.username === this.$route.params.username
+          ? ' org-node--current'
+          : '')
+    "
+  >
+    <RouterLink
+      :to="{
+        name: 'Orgchart',
+        params: { username: data.username, openedFromOrgNode: true },
+      }"
+      :id="`org-node-${prefix}`"
+    >
+      <UserPicture
+        :picture="data.picture"
+        :username="data.username"
+        :size="40"
+        :isStaff="true"
+      ></UserPicture>
+      <span class="org-node__name"
+        >{{ data.firstName }} {{ data.lastName }}</span
+      >
       <span class="org-node__title">{{ data.title }}</span>
     </RouterLink>
-    <ShowMore v-if="children.length > 0" :buttonText="`Expand ${data.firstName} ${data.lastName}`" :alternateButtonText="`Collapse ${data.firstName} ${data.lastName}`" buttonClass="org-node__toggle" :transition="false" :moveFocus="false" :overflowBefore="false" :expanded="expandAllChildren || orgNodeExpanded" @expand-all="handleExpandAll">
+    <ShowMore
+      v-if="children.length > 0"
+      :buttonText="`Expand ${data.firstName} ${data.lastName}`"
+      :alternateButtonText="`Collapse ${data.firstName} ${data.lastName}`"
+      buttonClass="org-node__toggle"
+      :transition="false"
+      :moveFocus="false"
+      :overflowBefore="false"
+      :expanded="expandAllChildren || orgNodeExpanded"
+      @expand-all="handleExpandAll"
+    >
       <template slot="overflow">
         <ul v-for="(child, index) in children" :key="index">
-          <OrgNode :children="child.children" :data="child.data" :prefix="`${prefix}-${index}`" :trace="trace" :expandAllChildren="shouldExpandAllChildren"></OrgNode>
+          <OrgNode
+            :children="child.children"
+            :data="child.data"
+            :prefix="`${prefix}-${index}`"
+            :trace="trace"
+            :expandAllChildren="shouldExpandAllChildren"
+          ></OrgNode>
         </ul>
       </template>
       <template slot="icon-expanded">
@@ -49,8 +86,24 @@
       </template>
     </ShowMore>
     <template v-else>
-      <svg class="org-node__no-children-indicator" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" aria-hidden="true" role="presentation" focusable="false">
-          <circle cx="2" cy="2" r="2" fill="#B1B1B3" fill-rule="evenodd" transform="translate(9 9.308)"/>
+      <svg
+        class="org-node__no-children-indicator"
+        xmlns="http://www.w3.org/2000/svg"
+        width="22"
+        height="22"
+        viewBox="0 0 22 22"
+        aria-hidden="true"
+        role="presentation"
+        focusable="false"
+      >
+        <circle
+          cx="2"
+          cy="2"
+          r="2"
+          fill="#B1B1B3"
+          fill-rule="evenodd"
+          transform="translate(9 9.308)"
+        />
       </svg>
     </template>
   </li>
@@ -79,7 +132,8 @@ export default {
   watch: {
     trace() {
       if (this.trace || this.prefix) {
-        this.orgNodeExpanded = this.trace.startsWith(`${this.prefix}-`) || this.orgNodeExpanded;
+        this.orgNodeExpanded =
+          this.trace.startsWith(`${this.prefix}-`) || this.orgNodeExpanded;
       }
       return this.orgNodeExpanded;
     },
@@ -108,7 +162,7 @@ export default {
     }
   },
   data() {
-    const state = (this.trace && this.trace.startsWith(`${this.prefix}-`));
+    const state = this.trace && this.trace.startsWith(`${this.prefix}-`);
 
     return {
       orgNodeExpanded: state || (this.prefix && !this.prefix.includes('-')),
@@ -160,11 +214,11 @@ export default {
   color: inherit;
   padding-left: 2em;
   padding-left: calc((var(--nodeLevel) * 2em) + 1.25em);
-  border-left: .25em solid transparent;
+  border-left: 0.25em solid transparent;
 }
 .org-node--current > a,
 .org-node:target > a {
-  border-left: .25em solid var(--blue-60);
+  border-left: 0.25em solid var(--blue-60);
   background-color: var(--lightBlue);
 }
 .org-node a:hover,
@@ -198,8 +252,8 @@ export default {
   left: calc((var(--nodeLevel) * 2em) - 1.5em);
   width: 2.5em;
   height: 2.5em;
-  margin: .75em 0;
-  padding: .65em;
+  margin: 0.75em 0;
+  padding: 0.65em;
   z-index: 1;
   border: 0;
   background-color: transparent;
@@ -210,10 +264,10 @@ export default {
 .org-node__toggle:hover {
   background-color: var(--gray-20);
 }
-  .org-node__toggle img {
-    margin-right: 0;
-    margin-bottom: -2px;
-  }
+.org-node__toggle img {
+  margin-right: 0;
+  margin-bottom: -2px;
+}
 .org-node .show-more {
   position: static; /* so that it is explicitly not a positioning context */
 }
@@ -230,7 +284,7 @@ export default {
 }
 .org-node .user-picture {
   float: left;
-  margin-right: .75em;
+  margin-right: 0.75em;
 }
 .org-node__no-children-indicator {
   position: absolute;

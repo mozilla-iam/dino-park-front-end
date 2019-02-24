@@ -1,9 +1,24 @@
 <template>
   <li class="options__option">
-    <input type="radio" :name="groupId" :value="value" :id="id" v-model="currentValue" @change="emitChoice">
+    <input
+      type="radio"
+      :name="groupId"
+      :value="value"
+      :id="id"
+      v-model="currentValue"
+      @change="emitChoice"
+    />
     <label :for="id" @click="$emit('close-list')">
-      <Icon :id="icon" :width="24" :height="24" v-if="expandedShowIcon" aria-hidden="true" role="presentation"></Icon>
-      <span v-if="expandedShowLabel">{{ label }}</span></label>
+      <Icon
+        :id="icon"
+        :width="24"
+        :height="24"
+        v-if="expandedShowIcon"
+        aria-hidden="true"
+        role="presentation"
+      ></Icon>
+      <span v-if="expandedShowLabel">{{ label }}</span></label
+    >
   </li>
 </template>
 

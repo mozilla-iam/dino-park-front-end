@@ -1,5 +1,14 @@
 <template>
-  <ShowMore buttonText="Contact Me" alternateButtonText="Contact Me" :expanded="false" buttonClass="button button--icon-end contact-me__button" :transition="true" :closeWhenClickedOutside="true" :moveFocus="false" :overflowBefore="false">
+  <ShowMore
+    buttonText="Contact Me"
+    alternateButtonText="Contact Me"
+    :expanded="false"
+    buttonClass="button button--icon-end contact-me__button"
+    :transition="true"
+    :closeWhenClickedOutside="true"
+    :moveFocus="false"
+    :overflowBefore="false"
+  >
     <template slot="overflow">
       <ul class="contact-me">
         <li class="contact-me__item-container">
@@ -67,82 +76,82 @@ export default {
 </script>
 
 <style>
+.contact-me {
+  background-color: var(--white);
+  box-shadow: 0 0.125em 0.25em 0.125em rgba(210, 210, 210, 0.5);
+  text-align: left;
+  padding-left: 0;
+  z-index: calc(var(--layerModal) - 1);
+  position: absolute;
+  top: 3.5em;
+  left: 0;
+  width: calc(100% + 4.5em);
+  margin: 0 -2.25em;
+  color: var(--gray-60);
+}
+@media (min-width: 57.5em) {
   .contact-me {
-    background-color: var(--white);
-    box-shadow: 0 .125em .25em .125em rgba(210, 210, 210, .5);
-    text-align: left;
-    padding-left: 0;
-    z-index: calc(var(--layerModal) - 1);
-    position: absolute;
-    top: 3.5em;
-    left: 0;
-    width: calc(100% + 4.5em);
-    margin: 0 -2.25em;
-    color: var(--gray-60);
+    left: 50%;
+    width: 24em;
+    margin: 0 0.5em 0 -12em;
   }
-  @media(min-width:57.5em) {
-    .contact-me {
-      left: 50%;
-      width: 24em;
-      margin: 0 .5em 0 -12em;
-    }
-  }
-    .contact-me::before {
-      content: '';
-      width: 1em;
-      height: 1em;
-      background-color: var(--white);
-      position: absolute;
-      left: 50%;
-      margin-left: -.5em;
-      margin-top: -.5em;
-      transform: rotate(-45deg);
-      box-shadow: 0 0 .25em 0 var(--gray-30);
-    }
-    .contact-me__item-container {
-      list-style: none;
-      padding-left: 0;
-    }
-    .contact-me__item {
-      background-color: var(--white);
-      position: relative;
-      display: flex;
-      text-decoration: none;
-      color: inherit;
-      padding: .5em;
-      min-width: 20em;
-      align-items: center;
-      font-size: 1.125em;
-      position: relative;
-    }
-    .contact-me__item:nth-child(even) {
-      background-color: var(--gray-10);
-    }
-    .contact-me__item:hover {
-      background-color: var(--gray-20);
-    }
-    .contact-me__item:focus {
-      z-index: 1;
-    }
-    .contact-me__key {
-      flex: none;
-      width: 30%;
-      padding-right: 1em;
-      font-family: "Zilla Slab", sans-serif;
-    }
-    .contact-me__value {
-      flex: 1;
-      color: var(--blue-60);
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .contact-me__button {
-      margin: 0 auto;
-      margin-bottom: 2em;
-    }
-    .contact-me svg {
-      color: var(--gray-60);
-      transform: scale(0.75);
-      margin-right: .5em;
-    }
+}
+.contact-me::before {
+  content: '';
+  width: 1em;
+  height: 1em;
+  background-color: var(--white);
+  position: absolute;
+  left: 50%;
+  margin-left: -0.5em;
+  margin-top: -0.5em;
+  transform: rotate(-45deg);
+  box-shadow: 0 0 0.25em 0 var(--gray-30);
+}
+.contact-me__item-container {
+  list-style: none;
+  padding-left: 0;
+}
+.contact-me__item {
+  background-color: var(--white);
+  position: relative;
+  display: flex;
+  text-decoration: none;
+  color: inherit;
+  padding: 0.5em;
+  min-width: 20em;
+  align-items: center;
+  font-size: 1.125em;
+  position: relative;
+}
+.contact-me__item:nth-child(even) {
+  background-color: var(--gray-10);
+}
+.contact-me__item:hover {
+  background-color: var(--gray-20);
+}
+.contact-me__item:focus {
+  z-index: 1;
+}
+.contact-me__key {
+  flex: none;
+  width: 30%;
+  padding-right: 1em;
+  font-family: 'Zilla Slab', sans-serif;
+}
+.contact-me__value {
+  flex: 1;
+  color: var(--blue-60);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.contact-me__button {
+  margin: 0 auto;
+  margin-bottom: 2em;
+}
+.contact-me svg {
+  color: var(--gray-60);
+  transform: scale(0.75);
+  margin-right: 0.5em;
+}
 </style>

@@ -12,13 +12,25 @@ const EXTERNAL_ACCOUNTS = {
   'EA#AMO': { moz: true, text: 'Mozilla Add-ons', icon: 'amo' },
   'EA#DISCOURSE': { moz: true, text: 'Mozilla Discourse', icon: 'discourse' },
   'EA#MOZPHAB': { moz: true, text: 'Mozilla Phabricator', icon: 'mozphab' },
-  'EA#MOZILLAPONTOON': { moz: true, text: 'Mozilla Pontoon', icon: 'mozillapontoon' },
+  'EA#MOZILLAPONTOON': {
+    moz: true,
+    text: 'Mozilla Pontoon',
+    icon: 'mozillapontoon',
+  },
   'EA#REMO': { moz: true, text: 'Mozilla Reps', icon: 'remo' },
   'EA#SUMO': { moz: true, text: 'Mozilla Support', icon: 'sumo' },
   'EA#WEBMAKER': { moz: true, text: 'Mozilla Webmaker', icon: 'webmaker' },
   'EA#MOZILLAWIKI': { moz: true, text: 'Mozilla Wiki', icon: 'mozillawiki' },
-  'EA#Phone (Landline)': { moz: false, text: 'Phone (Landline)', icon: 'phone (landline)' },
-  'EA#Phone (Mobile)': { moz: false, text: 'Phone (Mobile)', icon: 'phone (mobile)' },
+  'EA#Phone (Landline)': {
+    moz: false,
+    text: 'Phone (Landline)',
+    icon: 'phone (landline)',
+  },
+  'EA#Phone (Mobile)': {
+    moz: false,
+    text: 'Phone (Mobile)',
+    icon: 'phone (mobile)',
+  },
   'EA#SKYPE': { moz: false, text: 'Skype', icon: 'skype' },
   'EA#SLIDESHARE': { moz: false, text: 'SlideShare', icon: 'slideshare' },
   'EA#TELEGRAM': { moz: false, text: 'Telegram', icon: 'telegram' },
@@ -35,7 +47,10 @@ export default {
       const { moz, text, icon } = EXTERNAL_ACCOUNTS[key] || {};
       if (text && icon && typeof moz === 'boolean') {
         return {
-          moz, text, icon, value,
+          moz,
+          text,
+          icon,
+          value,
         };
       }
       return null;

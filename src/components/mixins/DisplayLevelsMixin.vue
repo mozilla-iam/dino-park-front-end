@@ -16,7 +16,7 @@ const DISPLAY_LEVELS = {
     icon: 'activity',
   },
   ndaed: {
-    label: 'NDA\'d + Staff',
+    label: "NDA'd + Staff",
     value: 'ndaed',
     icon: 'triangle',
   },

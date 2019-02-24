@@ -1,6 +1,10 @@
 <template>
   <ul class="search-result-list">
-    <SearchResult v-for="(result, index) in results.dinos" :key="index" v-bind="result"></SearchResult>
+    <SearchResult
+      v-for="(result, index) in results.dinos"
+      :key="index"
+      v-bind="result"
+    ></SearchResult>
   </ul>
 </template>
 
@@ -19,16 +23,16 @@ export default {
 </script>
 
 <style>
+.search-result-list {
+  padding: 0;
+  margin: 0 -1em;
+}
+@media (min-width: 57.5em) {
   .search-result-list {
-    padding: 0;
-    margin: 0 -1em;
+    margin: 0;
   }
-  @media(min-width:57.5em) {
-    .search-result-list {
-      margin: 0;
-    }
-  }
-    .search-result-list li {
-      list-style: none;
-    }
+}
+.search-result-list li {
+  list-style: none;
+}
 </style>

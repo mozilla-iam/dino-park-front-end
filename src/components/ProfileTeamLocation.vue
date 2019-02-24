@@ -3,7 +3,10 @@
     <div class="profile__team">
       <h3 class="visually-hidden">Team</h3>
       <strong>
-        <RouterLink v-if="teamManager" :to="{ name: 'Profile', params: { username: teamManager.username } }">
+        <RouterLink
+          v-if="teamManager"
+          :to="{ name: 'Profile', params: { username: teamManager.username } }"
+        >
           {{ team }}
         </RouterLink>
         <template v-else>
@@ -16,16 +19,23 @@
       <h3 class="visually-hidden">Location</h3>
       <div>
         <template v-if="officeLocation">
-          <RouterLink :to="{
-          name: 'Search',
-          query: {
-            query: locationSearchString,
-          }}">{{ location || officeLocation }} {{ location && officeLocation && `(${officeLocation})` }}
+          <RouterLink
+            :to="{
+              name: 'Search',
+              query: {
+                query: locationSearchString,
+              },
+            }"
+            >{{ location || officeLocation }}
+            {{ location && officeLocation && `(${officeLocation})` }}
           </RouterLink>
           {{ timezone }}
         </template>
         <template v-else>
-          <strong>{{ location || officeLocation }} {{ location && officeLocation && `(${officeLocation})` }}</strong>
+          <strong
+            >{{ location || officeLocation }}
+            {{ location && officeLocation && `(${officeLocation})` }}</strong
+          >
           {{ timezone }}
         </template>
       </div>
@@ -46,7 +56,7 @@ export default {
   },
   computed: {
     locationSearchString() {
-      return 'officeLocation:"' + this.officeLocation + '"'; // eslint-disable-line 
+      return 'officeLocation:"' + this.officeLocation + '"'; // eslint-disable-line
     },
   },
 };
@@ -67,21 +77,21 @@ export default {
   margin-bottom: 1em;
   border-bottom: 1px solid var(--gray-30);
 }
-    .profile__team-location a,
-    .profile__team-location strong {
-      display: block;
-      font-weight: 700;
-      color: var(--gray-50);
-      text-transform: uppercase;
-    }
-    .profile__team-location div > a,
-    .profile__team-location div > strong {
-      font-size: .9em;
-    }
-    .profile__team-location a:hover {
-      color: var(--blue-60);
-    }
-@media(min-width: 60em) {
+.profile__team-location a,
+.profile__team-location strong {
+  display: block;
+  font-weight: 700;
+  color: var(--gray-50);
+  text-transform: uppercase;
+}
+.profile__team-location div > a,
+.profile__team-location div > strong {
+  font-size: 0.9em;
+}
+.profile__team-location a:hover {
+  color: var(--blue-60);
+}
+@media (min-width: 60em) {
   .profile__team {
     padding-bottom: 0;
     margin-bottom: 0;
@@ -91,14 +101,14 @@ export default {
     display: flex;
     margin: 2em 0;
   }
-    .profile__team-location div {
-      padding-left: 0;
-    }
-    .profile__team-location div:first-child {
-      border-right: 1px solid var(--gray-30);
-      margin-right: 1em;
-      padding-right: 1em;
-      padding-left: 0;
-    }
+  .profile__team-location div {
+    padding-left: 0;
+  }
+  .profile__team-location div:first-child {
+    border-right: 1px solid var(--gray-30);
+    margin-right: 1em;
+    padding-right: 1em;
+    padding-left: 0;
+  }
 }
 </style>

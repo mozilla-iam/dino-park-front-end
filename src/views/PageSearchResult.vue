@@ -1,30 +1,54 @@
 <template>
-  <main class="container search-results" ref="searchResultsContainer" tabindex="-1">
+  <main
+    class="container search-results"
+    ref="searchResultsContainer"
+    tabindex="-1"
+  >
     <h1 class="visually-hidden">Search results</h1>
-    <SearchScope/>
+    <SearchScope />
     <template v-if="!this.$route.query.query">
       <p>You have not searched.</p>
     </template>
     <LoadingSpinner v-else-if="loading"></LoadingSpinner>
     <Error v-else-if="error">
       <template slot="image">
-        <img src="@/assets/images/dino-1.png" srcset="@/assets/images/dino-1@2x.png 2x, @/assets/images/dino-1@3x.png 3x" />
+        <img
+          src="@/assets/images/dino-1.png"
+          srcset="
+            @/assets/images/dino-1@2x.png 2x,
+            @/assets/images/dino-1@3x.png 3x
+          "
+        />
       </template>
       <template slot="message">
         <h1 class="visually-hidden">Error</h1>
         <h2>This page isn't available</h2>
         <p>An error occured while trying to load the search results</p>
-        <p><small>Please submit all bugs or issues to the team’s Discourse.</small></p>
+        <p>
+          <small
+            >Please submit all bugs or issues to the team’s Discourse.</small
+          >
+        </p>
       </template>
     </Error>
-    <template v-else-if="this.$route.query.query && results && results.total === 0">
+    <template
+      v-else-if="this.$route.query.query && results && results.total === 0"
+    >
       <Error>
         <template slot="image">
-          <img src="@/assets/images/dino-1.png" srcset="@/assets/images/dino-1@2x.png 2x, @/assets/images/dino-1@3x.png 3x" />
+          <img
+            src="@/assets/images/dino-1.png"
+            srcset="
+              @/assets/images/dino-1@2x.png 2x,
+              @/assets/images/dino-1@3x.png 3x
+            "
+          />
         </template>
         <template slot="message">
           <h1 class="visually-hidden">Error</h1>
-          <h2>No results found for <strong>{{ this.$route.query.query }}</strong></h2>
+          <h2>
+            No results found for <strong>{{ this.$route.query.query }}</strong>
+          </h2>
           <p>Some suggestions include:</p>
           <ul>
             <li>Make sure that all words are spelled correctly.</li>
@@ -35,7 +59,10 @@
       </Error>
     </template>
     <template v-else-if="this.$route.query.query && results">
-      <p>{{ results.total }} results for <strong>{{ this.$route.query.query }}</strong></p>
+      <p>
+        {{ results.total }} results for
+        <strong>{{ this.$route.query.query }}</strong>
+      </p>
       <SearchResultList :results="results"></SearchResultList>
     </template>
   </main>

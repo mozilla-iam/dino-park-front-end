@@ -1,31 +1,80 @@
 <template>
   <header class="top-bar">
     <div class="top-bar__bar">
-      <RouterLink :to="{ name: 'Home' }" class="top-bar__link top-bar__link--logo"><img src="@/assets/images/mozilla.svg" alt="Mozilla logo" /></RouterLink>
+      <RouterLink
+        :to="{ name: 'Home' }"
+        class="top-bar__link top-bar__link--logo"
+        ><img src="@/assets/images/mozilla.svg" alt="Mozilla logo"
+      /></RouterLink>
       <SearchForm class="hide-mobile"></SearchForm>
-      <ShowMore buttonText="Open search" alternateButtonText="Close search" buttonClass="hide-desktop top-bar__search-toggle" :expanded="false" :closeWhenClickedOutside="true" ref="showMoreSearch">
+      <ShowMore
+        buttonText="Open search"
+        alternateButtonText="Close search"
+        buttonClass="hide-desktop top-bar__search-toggle"
+        :expanded="false"
+        :closeWhenClickedOutside="true"
+        ref="showMoreSearch"
+      >
         <template slot="overflow">
-          <SearchForm modifier="search-form--small hide-desktop" id="mobile-search" v-on:close-search-form="closeMobileSearchForm()"></SearchForm>
+          <SearchForm
+            modifier="search-form--small hide-desktop"
+            id="mobile-search"
+            v-on:close-search-form="closeMobileSearchForm()"
+          ></SearchForm>
         </template>
         <template slot="button-content">
-          <img src="@/assets/images/search.svg" alt="" role="presentation" aria-hidden="true" width="20" />
+          <img
+            src="@/assets/images/search.svg"
+            alt=""
+            role="presentation"
+            aria-hidden="true"
+            width="20"
+          />
         </template>
       </ShowMore>
-      <RouterLink :to="{ name: 'Orgchart' }" class="top-bar__link" exact-active-class="top-bar__link--current">
-        <svg width="22" height="22" viewport="0 0 22 22" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-labelledby="org=chart-link-icon-title">
+      <RouterLink
+        :to="{ name: 'Orgchart' }"
+        class="top-bar__link"
+        exact-active-class="top-bar__link--current"
+      >
+        <svg
+          width="22"
+          height="22"
+          viewport="0 0 22 22"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          aria-labelledby="org=chart-link-icon-title"
+        >
           <title id="org-chart-link-icon-title">Org chart</title>
-          <path d="M11.5 12a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm0 2a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7zm7 8a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7zm0-2a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM3.5 7a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7zm0-2a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM3 7h1v1H3V7zm0 2h1v1H3V9zm1 3h-.5a.5.5 0 0 1-.5-.5V11h1v1zm1 0v-1h1v1H5zm2 0v-1h1v1H7zm4 2h1v1h-1v-1zm0 2h1v1h-1v-1zm1 3h-.5a.5.5 0 0 1-.5-.5V18h1v1zm1 0v-1h1v1h-1z"  fill="currentColor" fill-rule="nonzero" />
+          <path
+            d="M11.5 12a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm0 2a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7zm7 8a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7zm0-2a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM3.5 7a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7zm0-2a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM3 7h1v1H3V7zm0 2h1v1H3V9zm1 3h-.5a.5.5 0 0 1-.5-.5V11h1v1zm1 0v-1h1v1H5zm2 0v-1h1v1H7zm4 2h1v1h-1v-1zm0 2h1v1h-1v-1zm1 3h-.5a.5.5 0 0 1-.5-.5V18h1v1zm1 0v-1h1v1h-1z"
+            fill="currentColor"
+            fill-rule="nonzero"
+          />
         </svg>
       </RouterLink>
       <ApolloQuery :query="profileQuery">
         <template slot-scope="{ result: { loading, data, error } }">
           <template v-if="data">
-              <ShowMore buttonText="Open user menu" alternateButtonText="Close user menu" buttonClass="top-bar__user-menu-toggle" :expanded="false" @close-user-menu="closeUserMenu" ref="showMoreUserMenu" :closeWhenClickedOutside="true">
+            <ShowMore
+              buttonText="Open user menu"
+              alternateButtonText="Close user menu"
+              buttonClass="top-bar__user-menu-toggle"
+              :expanded="false"
+              @close-user-menu="closeUserMenu"
+              ref="showMoreUserMenu"
+              :closeWhenClickedOutside="true"
+            >
               <template slot="overflow">
                 <UserMenu v-bind="data.userMenu"></UserMenu>
               </template>
               <template slot="button-content">
-                <UserPicture :picture="data.userMenu.picture" :username="data.userMenu.username" :size="40" dinoType="Staff"></UserPicture>
+                <UserPicture
+                  :picture="data.userMenu.picture"
+                  :username="data.userMenu.username"
+                  :size="40"
+                  dinoType="Staff"
+                ></UserPicture>
               </template>
             </ShowMore>
           </template>
@@ -35,7 +84,12 @@
         </template>
       </ApolloQuery>
     </div>
-    <SearchForm modifier="search-form--small hide-desktop" v-if="mobileSearchOpen" id="mobile-search" v-on:close-search-form="closeMobileSearchForm()"></SearchForm>
+    <SearchForm
+      modifier="search-form--small hide-desktop"
+      v-if="mobileSearchOpen"
+      id="mobile-search"
+      v-on:close-search-form="closeMobileSearchForm()"
+    ></SearchForm>
   </header>
 </template>
 
@@ -86,21 +140,21 @@ export default {
 .top-bar__search-toggle {
   border: 0;
   background-color: transparent;
-  padding: .75em;
+  padding: 0.75em;
   line-height: 0;
 }
-.top-bar__search-toggle[aria-expanded="true"] {
+.top-bar__search-toggle[aria-expanded='true'] {
   background-color: var(--gray-20);
 }
 .top-bar__link {
-  padding: .75em;
+  padding: 0.75em;
   text-transform: uppercase;
   color: var(--black);
   font-weight: 700;
   text-decoration: none;
-  transition: background-color .2s ease-in-out;
+  transition: background-color 0.2s ease-in-out;
   border-radius: var(--imageRadius);
-  line-height: .75;  /* to not add vertical whitespace */
+  line-height: 0.75; /* to not add vertical whitespace */
 }
 .top-bar__link img {
   vertical-align: middle;
@@ -126,13 +180,13 @@ export default {
 .show-more--expanded + .top-bar__link--current {
   background-color: transparent;
 }
-@media (min-width: 50em ) {
+@media (min-width: 50em) {
   .top-bar__link--current {
     background-color: transparent;
   }
   .top-bar__link--current::after {
-    content: "";
-    height: .1428em;
+    content: '';
+    height: 0.1428em;
     background: black;
     width: 100%;
     position: absolute;

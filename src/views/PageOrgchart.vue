@@ -1,16 +1,39 @@
 <template>
   <main class="container org-chart">
     <div class="org-chart__chart">
-      <OrgRoot v-if="tree && !loading" :roots="tree" :trace="trace || ''"></OrgRoot>
-      <OrgRoot v-if="loose && !loading" :roots="loose" :trace="looseTrace || ''" heading="People who need their manager set" modifier="org-root--loose"></OrgRoot>
+      <OrgRoot
+        v-if="tree && !loading"
+        :roots="tree"
+        :trace="trace || ''"
+      ></OrgRoot>
+      <OrgRoot
+        v-if="loose && !loading"
+        :roots="loose"
+        :trace="looseTrace || ''"
+        heading="People who need their manager set"
+        modifier="org-root--loose"
+      ></OrgRoot>
       <LoadingSpinner v-else></LoadingSpinner>
     </div>
-    <ApolloQuery v-if="username && (desktopView || openedFromOrgNode)" :query="previewProfileQuery" :variables="{ username }" :tag="null">
+    <ApolloQuery
+      v-if="username && (desktopView || openedFromOrgNode)"
+      :query="previewProfileQuery"
+      :variables="{ username }"
+      :tag="null"
+    >
       <template slot-scope="{ result: { loading, data, error } }">
         <div class="org-chart__preview">
           <template v-if="data">
-            <ProfilePreview v-if="desktopView" v-bind="data.profile"></ProfilePreview>
-            <Modal v-else :initiallyOpen="true" :closeButton="false" ref="modalEl">
+            <ProfilePreview
+              v-if="desktopView"
+              v-bind="data.profile"
+            ></ProfilePreview>
+            <Modal
+              v-else
+              :initiallyOpen="true"
+              :closeButton="false"
+              ref="modalEl"
+            >
               <ProfilePreview v-bind="data.profile"></ProfilePreview>
             </Modal>
           </template>
@@ -58,7 +81,9 @@ export default {
     const { username } = this.$route.params;
     if (username && this.$route.name === 'OrgchartHighlight') {
       try {
-        const data = await fetch(`/api/v3/orgchart/trace/${encodeURIComponent(username)}`);
+        const data = await fetch(
+          `/api/v3/orgchart/trace/${encodeURIComponent(username)}`,
+        );
         const { trace } = await data.json();
         if (trace && trace.startsWith('-1-')) {
           this.looseTrace = trace.substr(3);
@@ -146,7 +171,7 @@ export default {
     width: auto;
   }
   .org-chart::after /* so that there is space taken up underneath the preview, that is as much as the org chart column takes up in total. This lets us use position:sticky on the profile preview */ {
-    content: "";
+    content: '';
     grid-column: 2 / 3;
     grid-row: 2 / 3;
   }

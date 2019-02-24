@@ -11,8 +11,8 @@ export default {
 </script>
 
 <style>
-  .person-list {
-    max-width: 30em;
-    margin: 0 auto;
-  }
+.person-list {
+  max-width: 30em;
+  margin: 0 auto;
+}
 </style>
