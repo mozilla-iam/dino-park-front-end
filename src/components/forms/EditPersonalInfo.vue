@@ -4,50 +4,52 @@
       <form action="" @submit.prevent="mutate()" aria-label="Edit personal information">
         <div class="edit-personal-info">
           <label for="field-first-name">First name</label>
-          <input type="text" id="field-first-name" v-model="firstName">
+          <input type="text" id="field-first-name" v-model="firstName.value">
           <div class="edit-personal-info__privacy">
             <Options
               label="First name privacy levels"
               id="field-first-name-privacy"
               v-bind="privacySettings"
-              :options="displayLevelsFor(firstName)" />
+              v-model="firstName.display"
+              :options="displayLevelsFor(firstName.value)" />
           </div>
 
           <hr role="presentation">
 
           <label for="field-last-name">Last name</label>
-          <input type="text" id="field-last-name" v-model="lastName">
+          <input type="text" id="field-last-name" v-model="lastName.value">
           <div class="edit-personal-info__privacy">
             <Options
               label="Last name privacy levels"
               id="field-last-name-privacy"
               v-bind="privacySettings"
-              :options="displayLevelsFor(lastName)" />
+              v-model="lastName.display"
+              :options="displayLevelsFor(lastName.value)" />
           </div>
 
           <hr role="presentation">
 
           <div class="edit-personal-info__label">Gender pronouns</div>
-          <Options label="Select pronoun" id="field-pronouns" :defaultToFirst="true" class="options--chevron" :options="[
+          <Options label="Select pronoun" id="field-pronouns" :defaultToFirst="true" class="options--chevron" v-model="pronouns.value" :options="[
             {
               label: 'Select pronoun',
               value: '',
             },
             {
               label: 'He/Him',
-              value: 'hehim',
+              value: 'He/him',
             },
             {
               label: 'She/Her',
-              value: 'sheher',
+              value: 'She/her',
             },
             {
               label: 'They/Them',
-              value: 'theythem',
+              value: 'They/Them',
             },
             {
               label: 'Ze/Hir',
-              value: 'zehir',
+              value: 'Ze/Hir',
             },
           ]">
           </Options>
@@ -56,19 +58,21 @@
               label="Pronoun privacy levels"
               id="field-pronoun-privacy"
               v-bind="privacySettings"
-              :options="displayLevelsFor(pronouns)" />
+              v-model="pronouns.display"
+              :options="displayLevelsFor(pronouns.value)" />
           </div>
 
           <hr role="presentation">
 
           <label for="field-alt-name">Alternative name</label>
-          <input type="text" id="field-alt-name" v-model="alternativeName">
+          <input type="text" id="field-alt-name" v-model="alternativeName.value">
           <div class="edit-personal-info__privacy">
             <Options
               label="Alternative name privacy levels"
               id="field-alt-name-privacy"
               v-bind="privacySettings"
-              :options="displayLevelsFor(alternativeName)" />
+              v-model="alternativeName.display"
+              :options="displayLevelsFor(alternativeName.value)" />
           </div>
 
           <hr role="presentation">
@@ -79,35 +83,38 @@
           <hr role="presentation">
 
           <label for="field-fun-job-title">Fun job title</label>
-          <input type="text" id="field-fun-job-title" v-model="funTitle">
+          <input type="text" id="field-fun-job-title" v-model="funTitle.value">
           <div class="edit-personal-info__privacy">
             <Options
               label="Fun title privacy levels"
               id="field-fun-title-privacy"
               v-bind="privacySettings"
-              :options="displayLevelsFor(funTitle)" />
+              v-model="funTitle.display"
+              :options="displayLevelsFor(funTitle.value)" />
           </div>
           <hr role="presentation">
 
           <label for="field-location">Location</label>
-          <input type="text" id="field-location" v-model="location">
+          <input type="text" id="field-location" v-model="location.value">
           <div class="edit-personal-info__privacy">
             <Options
               label="Location privacy levels"
               id="field-location-privacy"
               v-bind="privacySettings"
-              :options="displayLevelsFor(location)" />
+              v-model="location.display"
+              :options="displayLevelsFor(location.value)" />
           </div>
           <hr role="presentation">
 
           <label for="field-timezone">Timezone</label>
-          <input type="text" id="field-timezone" v-model="timezone">
+          <input type="text" id="field-timezone" v-model="timezone.value">
           <div class="edit-personal-info__privacy">
             <Options
               label="Timezone privacy levels"
               id="field-timezone-privacy"
               v-bind="privacySettings"
-              :options="displayLevelsFor(timezone)" />
+              v-model="timezone.display"
+              :options="displayLevelsFor(timezone.value)" />
           </div>
           <hr role="presentation">
 
@@ -118,13 +125,14 @@
           <hr role="presentation">
 
           <label for="field-bio">Bio</label>
-          <textarea id="field-bio" v-model="description"></textarea>
+          <textarea id="field-bio" v-model="description.value"></textarea>
           <div class="edit-personal-info__privacy">
             <Options
               label="Bio privacy levels"
               id="field-bio-privacy"
               v-bind="privacySettings"
-              :options="displayLevelsFor(description)" />
+              v-model="description.display"
+              :options="displayLevelsFor(description.value)" />
           </div>
         </div>
         <div class="button-bar">
@@ -189,14 +197,38 @@ export default {
     return {
       displayProfile: DISPLAY_PROFILE,
       mutateProfile: MUTATE_PROFILE,
-      alternativeName: this.initialValues.alternativeName.value,
-      firstName: this.initialValues.firstName.value,
-      lastName: this.initialValues.lastName.value,
-      funTitle: this.initialValues.funTitle.value,
-      location: this.initialValues.location.value,
-      pronouns: this.initialValues.pronouns.value,
-      timezone: this.initialValues.timezone.value,
-      description: this.initialValues.description.value,
+      alternativeName: {
+        value: this.initialValues.alternativeName.value,
+        display: this.initialValues.alternativeName.display,
+      },
+      firstName: {
+        value: this.initialValues.firstName.value,
+        display: this.initialValues.firstName.display,
+      },
+      lastName: {
+        value: this.initialValues.lastName.value,
+        display: this.initialValues.lastName.display,
+      },
+      funTitle: {
+        value: this.initialValues.funTitle.value,
+        display: this.initialValues.funTitle.value,
+      },
+      location: {
+        value: this.initialValues.location.value,
+        display: this.initialValues.location.display,
+      },
+      pronouns: {
+        value: this.initialValues.pronouns.value,
+        display: this.initialValues.pronouns.display,
+      },
+      timezone: {
+        value: this.initialValues.timezone.value,
+        display: this.initialValues.timezone.display,
+      },
+      description: {
+        value: this.initialValues.description.value,
+        display: this.initialValues.description.display,
+      },
       privacySettings: {
         defaultToFirst: true,
         collapsedShowIcon: true,
