@@ -40,6 +40,7 @@ export default {
   props: {
     label: String,
     id: String,
+    value: String,
     options: Array,
     defaultToFirst: {
       type: Boolean,
@@ -86,6 +87,7 @@ export default {
       this.currentIcon = data.icon;
       this.currentValue = data.value;
       this.currentLabel = data.label;
+      this.$emit('input', data.value);
     },
     closeList() {
       this.open = false;
