@@ -8,17 +8,17 @@ const DISPLAY_LEVELS = {
   authenticated: {
     label: 'Registered',
     value: 'authenticated',
-    icon: 'registered',
+    icon: 'lock',
   },
   vouched: {
-    label: 'Vouched',
+    label: 'Active',
     value: 'vouched',
-    icon: 'vouched',
+    icon: 'activity',
   },
   ndaed: {
-    label: 'Staff & NDA\'d',
+    label: 'NDA\'d + Staff',
     value: 'ndaed',
-    icon: 'staffndaed',
+    icon: 'triangle',
   },
   staff: {
     label: 'Staff',
@@ -28,7 +28,7 @@ const DISPLAY_LEVELS = {
   private: {
     label: 'Private',
     value: 'private',
-    icon: 'lock',
+    icon: 'private',
   },
 };
 
