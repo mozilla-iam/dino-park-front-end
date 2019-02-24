@@ -11,8 +11,8 @@
   >
     <template slot="overflow">
       <ul class="contact-me">
-        <li class="contact-me__item-container">
-          <a :href="`mailto:${primaryEmail}`" class="contact-me__item">
+        <li class="contact-me__item">
+          <a :href="`mailto:${primaryEmail}`" class="contact-me__pair">
             <Icon id="at-sign" :width="24" :height="24" />
             <span class="contact-me__key">Email Me</span>
             <span class="contact-me__value">{{ primaryEmail }}</span>
@@ -81,7 +81,7 @@ export default {
   box-shadow: 0 0.125em 0.25em 0.125em rgba(210, 210, 210, 0.5);
   text-align: left;
   padding-left: 0;
-  z-index: calc(var(--layerModal) - 1);
+  z-index: calc(var(--modalLayer) - 1);
   position: absolute;
   top: 3.5em;
   left: 0;
@@ -108,13 +108,16 @@ export default {
   transform: rotate(-45deg);
   box-shadow: 0 0 0.25em 0 var(--gray-30);
 }
-.contact-me__item-container {
+.contact-me__item {
   list-style: none;
   padding-left: 0;
-}
-.contact-me__item {
   background-color: var(--white);
   position: relative;
+}
+.contact-me__item:nth-child(even) {
+  background-color: var(--gray-10);
+}
+.contact-me__pair {
   display: flex;
   text-decoration: none;
   color: inherit;
@@ -124,13 +127,10 @@ export default {
   font-size: 1.125em;
   position: relative;
 }
-.contact-me__item:nth-child(even) {
-  background-color: var(--gray-10);
-}
-.contact-me__item:hover {
+.contact-me__pair:hover {
   background-color: var(--gray-20);
 }
-.contact-me__item:focus {
+.contact-me__pair:focus {
   z-index: 1;
 }
 .contact-me__key {
