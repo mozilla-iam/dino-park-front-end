@@ -88,10 +88,12 @@ export default {
       this.currentLabel = data.label;
     },
     closeList() {
-      const optionToggle = this.$refs[`optionToggle-${this.id}`];
-
       this.open = false;
-
+      this.focusToggle();
+    },
+    focusToggle() {
+      const optionToggle = this.$refs[`optionToggle-${this.id}`];
+     
       if (optionToggle) {
         this.$nextTick(() => {
           optionToggle.focus();
