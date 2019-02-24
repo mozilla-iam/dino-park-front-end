@@ -22,7 +22,7 @@
           :label="option.label"
           :value="option.value"
           :icon="option.icon"
-          :id="`option-${option.value}-${index}`"
+          :id="`option-${id}-${index}`"
           :bind="{ expandedShowIcon, expandedShowLabel }"
           @option-picked="honourChoice"
           @close-list="closeList" />
