@@ -266,7 +266,6 @@ import Modal from '@/components/functional/Modal.vue';
 import Person from '@/components/Person.vue';
 import ProfileNav from '@/components/ProfileNav.vue';
 import ReportingStructure from '@/components/ReportingStructure.vue';
-import Options from '@/components/Options.vue';
 import ShowMore from '@/components/functional/ShowMore.vue';
 import Tag from '@/components/Tag.vue';
 import Toast from '@/components/Toast.vue';
@@ -318,7 +317,6 @@ export default {
     Person,
     ProfileNav,
     ReportingStructure,
-    Options,
     ShowMore,
     Tag,
     Toast,
