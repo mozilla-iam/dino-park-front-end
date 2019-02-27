@@ -2,12 +2,12 @@
   <svg
     xmlns="http://www.w3.org/2000/svg"
     xmlns:xlink="http://www.w3.org/1999/xlink"
-    :width="width"
-    :height="height"
-    :viewport="'0 0 ' + width + ' ' + height"
+    viewBox="0 0 24 24"
     aria-hidden="true"
     role="presentation"
     focusable="false"
+    :width="width"
+    :height="height"
   >
     <template v-if="id === 'user'">
       <path

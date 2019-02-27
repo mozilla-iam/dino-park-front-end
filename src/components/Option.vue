@@ -11,8 +11,8 @@
     <label :for="id" @click="$emit('close-list')">
       <Icon
         :id="icon"
-        :width="24"
-        :height="24"
+        :width="17"
+        :height="17"
         v-if="expandedShowIcon"
         aria-hidden="true"
         role="presentation"

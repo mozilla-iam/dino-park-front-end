@@ -14,8 +14,8 @@
       <Icon
         v-if="collapsedShowIcon && this.currentIcon"
         :id="this.currentIcon"
-        :width="24"
-        :height="24"
+        :width="17"
+        :height="17"
         aria-hidden="true"
         role="presentation"
       ></Icon>
