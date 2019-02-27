@@ -15,7 +15,12 @@
           :phoneNumbers="phoneNumbers"
         ></ContactMe>
       </div>
-      <button @click="$emit('toggle-edit-mode')">Edit</button>
+      <button
+        v-if="currentUser.primaryEmail == primaryEmail.value"
+        @click="$emit('toggle-edit-mode')"
+      >
+        Edit
+      </button>
     </div>
     <div class="profile__intro-main">
       <ProfileName
@@ -125,6 +130,11 @@ export default {
     ProfileTitle,
     ShowMore,
     UserPicture,
+  },
+  computed: {
+    currentUser() {
+      return this.$store.state.user;
+    },
   },
 };
 </script>
