@@ -21,7 +21,10 @@ const apolloProvider = new VueApollo({
   defaultClient: client,
   errorHandler(error) {
     const { networkError } = error;
-    if (networkError instanceof TypeError && networkError.message.startsWith('NetworkError')) {
+    if (
+      networkError instanceof TypeError &&
+      networkError.message.startsWith('NetworkError')
+    ) {
       window.location.reload();
     }
   },
@@ -33,5 +36,5 @@ Vue.use(AsyncComputed);
 new Vue({
   router,
   provide: apolloProvider.provide(),
-  render: h => h(App),
+  render: (h) => h(App),
 }).$mount('#app');
