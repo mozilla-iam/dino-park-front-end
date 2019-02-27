@@ -19,7 +19,7 @@
   >
     <template slot-scope="{ mutate, data, error }">
       <EditPictureModal
-        v-if="true || showPictureModal"
+        v-if="showPictureModal"
         v-bind="{ picture, username, staffInformation }"
       />
       <form
