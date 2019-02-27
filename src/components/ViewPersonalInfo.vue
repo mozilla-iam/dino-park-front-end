@@ -17,9 +17,10 @@
       </div>
       <button
         v-if="currentUser.primaryEmail == primaryEmail.value"
+        class="profile__edit-button"
         @click="$emit('toggle-edit-mode')"
       >
-        Edit
+        <img src="@/assets/images/icon-pencil.svg" alt="Edit" />
       </button>
     </div>
     <div class="profile__intro-main">
@@ -153,6 +154,15 @@ export default {
     grid-gap: 2em;
     grid-template-columns: 1fr 2fr;
   }
+}
+
+.profile__edit-button {
+  border: none;
+  background: none;
+}
+
+.profile__edit-button img {
+  width: 18px;
 }
 
 .profile__intro-photo {
