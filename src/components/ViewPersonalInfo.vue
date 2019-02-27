@@ -1,5 +1,12 @@
 <template>
   <div class="profile__intro">
+    <button
+      v-if="currentUser.primaryEmail == primaryEmail.value"
+      class="profile__edit-button"
+      @click="$emit('toggle-edit-mode')"
+    >
+      <img src="@/assets/images/icon-pencil.svg" alt="Edit" />
+    </button>
     <div class="profile__intro-photo">
       <div class="profile__headshot">
         <UserPicture
@@ -15,13 +22,6 @@
           :phoneNumbers="phoneNumbers"
         ></ContactMe>
       </div>
-      <button
-        v-if="currentUser.primaryEmail == primaryEmail.value"
-        class="profile__edit-button"
-        @click="$emit('toggle-edit-mode')"
-      >
-        <img src="@/assets/images/icon-pencil.svg" alt="Edit" />
-      </button>
     </div>
     <div class="profile__intro-main">
       <ProfileName
@@ -157,6 +157,9 @@ export default {
 }
 
 .profile__edit-button {
+  position: absolute;
+  top: 32px;
+  right: 32px;
   border: none;
   background: none;
 }
