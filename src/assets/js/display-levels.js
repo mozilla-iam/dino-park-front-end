@@ -1,5 +1,4 @@
-<script>
-const DISPLAY_LEVELS = {
+export const DISPLAY_LEVELS = {
   public: {
     label: 'Public',
     value: 'public',
@@ -46,11 +45,6 @@ const VALID_DISPLAY_LEVELS = {
   username: DISPLAY_PUBLIC_ONLY,
 };
 
-export default {
-  methods: {
-    displayLevelsFor(field) {
-      return VALID_DISPLAY_LEVELS[field] || DISPLAY_ANY;
-    },
-  },
-};
-</script>
+export function displayLevelsFor(field) {
+  return VALID_DISPLAY_LEVELS[field] || DISPLAY_ANY;
+}

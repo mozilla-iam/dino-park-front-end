@@ -5,8 +5,8 @@
       :name="groupId"
       :value="value"
       :id="id"
-      v-model="currentValue"
-      @change="emitChoice"
+      :checked="checked"
+      @input="$emit('input', $event.target.value)"
     />
     <label :for="id" @click="$emit('close-list')">
       <Icon
@@ -32,6 +32,7 @@ export default {
     label: String,
     groupId: String,
     value: String,
+    checked: Boolean,
     id: String,
     expandedShowIcon: {
       type: Boolean,
@@ -42,25 +43,8 @@ export default {
       default: true,
     },
   },
-  methods: {
-    emitChoice() {
-      this.$emit('option-picked', {
-        label: this.label,
-        value: this.currentValue,
-        icon: this.icon,
-      });
-    },
-  },
   components: {
     Icon,
-  },
-  mounted() {
-    this.emitChoice();
-  },
-  data() {
-    return {
-      currentValue: '',
-    };
   },
 };
 </script>

@@ -56,7 +56,6 @@
           <Options
             label="Select pronoun"
             id="field-pronouns"
-            :defaultToFirst="true"
             class="options--chevron"
             v-model="pronouns.value"
             :options="[
@@ -198,7 +197,7 @@
 import Options from '@/components/Options.vue';
 
 import { MUTATE_PROFILE, DISPLAY_PROFILE } from '@/queries/profile';
-import DisplayLevelsMixin from '@/components/mixins/DisplayLevelsMixin.vue';
+import { displayLevelsFor, DISPLAY_LEVELS } from '@/assets/js/display-levels';
 
 export default {
   name: 'EditPersonalInfo',
@@ -209,8 +208,8 @@ export default {
   components: {
     Options,
   },
-  mixins: [DisplayLevelsMixin],
   methods: {
+    displayLevelsFor,
     cancelEdit() {
       this.$emit('cancel-edit');
     },
@@ -251,38 +250,16 @@ export default {
     return {
       displayProfile: DISPLAY_PROFILE,
       mutateProfile: MUTATE_PROFILE,
-      alternativeName: {
-        value: this.initialValues.alternativeName.value,
-        display: this.initialValues.alternativeName.display,
-      },
-      firstName: {
-        value: this.initialValues.firstName.value,
-        display: this.initialValues.firstName.display,
-      },
-      lastName: {
-        value: this.initialValues.lastName.value,
-        display: this.initialValues.lastName.display,
-      },
-      funTitle: {
-        value: this.initialValues.funTitle.value,
-        display: this.initialValues.funTitle.value,
-      },
-      location: {
-        value: this.initialValues.location.value,
-        display: this.initialValues.location.display,
-      },
-      pronouns: {
-        value: this.initialValues.pronouns.value,
-        display: this.initialValues.pronouns.display,
-      },
-      timezone: {
-        value: this.initialValues.timezone.value,
-        display: this.initialValues.timezone.display,
-      },
-      description: {
-        value: this.initialValues.description.value,
-        display: this.initialValues.description.display,
-      },
+      ...Object.entries(this.initialValues).reduce(
+        (obj, [key, { value, display }]) => {
+          obj[key] = {
+            value,
+            display: display || DISPLAY_LEVELS.public.value,
+          };
+          return obj;
+        },
+        {},
+      ),
       privacySettings: {
         defaultToFirst: true,
         collapsedShowIcon: true,
