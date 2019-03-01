@@ -27,7 +27,7 @@
           <label for="field-first-name">First name</label>
           <input type="text" id="field-first-name" v-model="firstName.value" />
           <div class="edit-personal-info__privacy">
-            <Options
+            <Select
               label="First name privacy levels"
               id="field-first-name-privacy"
               v-bind="privacySettings"
@@ -41,7 +41,7 @@
           <label for="field-last-name">Last name</label>
           <input type="text" id="field-last-name" v-model="lastName.value" />
           <div class="edit-personal-info__privacy">
-            <Options
+            <Select
               label="Last name privacy levels"
               id="field-last-name-privacy"
               v-bind="privacySettings"
@@ -53,7 +53,7 @@
           <hr role="presentation" />
 
           <div class="edit-personal-info__label">Gender pronouns</div>
-          <Options
+          <Select
             label="Select pronoun"
             id="field-pronouns"
             class="options--chevron"
@@ -81,9 +81,9 @@
               },
             ]"
           >
-          </Options>
+          </Select>
           <div class="edit-personal-info__privacy">
-            <Options
+            <Select
               label="Pronoun privacy levels"
               id="field-pronoun-privacy"
               v-bind="privacySettings"
@@ -101,7 +101,7 @@
             v-model="alternativeName.value"
           />
           <div class="edit-personal-info__privacy">
-            <Options
+            <Select
               label="Alternative name privacy levels"
               id="field-alt-name-privacy"
               v-bind="privacySettings"
@@ -124,7 +124,7 @@
             v-model="funTitle.value"
           />
           <div class="edit-personal-info__privacy">
-            <Options
+            <Select
               label="Fun title privacy levels"
               id="field-fun-title-privacy"
               v-bind="privacySettings"
@@ -137,7 +137,7 @@
           <label for="field-location">Location</label>
           <input type="text" id="field-location" v-model="location.value" />
           <div class="edit-personal-info__privacy">
-            <Options
+            <Select
               label="Location privacy levels"
               id="field-location-privacy"
               v-bind="privacySettings"
@@ -150,7 +150,7 @@
           <label for="field-timezone">Timezone</label>
           <input type="text" id="field-timezone" v-model="timezone.value" />
           <div class="edit-personal-info__privacy">
-            <Options
+            <Select
               label="Timezone privacy levels"
               id="field-timezone-privacy"
               v-bind="privacySettings"
@@ -169,7 +169,7 @@
           <label for="field-bio">Bio</label>
           <textarea id="field-bio" v-model="description.value"></textarea>
           <div class="edit-personal-info__privacy">
-            <Options
+            <Select
               label="Bio privacy levels"
               id="field-bio-privacy"
               v-bind="privacySettings"
@@ -194,7 +194,7 @@
 </template>
 
 <script>
-import Options from '@/components/Options.vue';
+import Select from '@/components/Select.vue';
 
 import { MUTATE_PROFILE, DISPLAY_PROFILE } from '@/queries/profile';
 import { displayLevelsFor, DISPLAY_LEVELS } from '@/assets/js/display-levels';
@@ -206,7 +206,7 @@ export default {
     initialValues: Object,
   },
   components: {
-    Options,
+    Select,
   },
   methods: {
     displayLevelsFor,
@@ -261,7 +261,6 @@ export default {
         {},
       ),
       privacySettings: {
-        defaultToFirst: true,
         collapsedShowIcon: true,
         collapsedShowLabel: false,
         expandedShowIcon: true,

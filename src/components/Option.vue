@@ -6,7 +6,7 @@
       :value="value"
       :id="id"
       :checked="checked"
-      @input="$emit('input', $event.target.value)"
+      @input="$event.target.checked && $emit('input', $event.target.value)"
     />
     <label :for="id" @click="$emit('close-list')">
       <Icon

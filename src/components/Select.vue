@@ -33,7 +33,7 @@
           :icon="option.icon"
           :id="`option-${id}-${index}`"
           :bind="{ expandedShowIcon, expandedShowLabel }"
-          @input="$emit('input', value)"
+          @input="$emit('input', $event)"
           @close-list="closeList"
         />
       </ul>
@@ -46,16 +46,12 @@ import Icon from '@/components/Icon.vue';
 import Option from '@/components/Option.vue';
 
 export default {
-  name: 'Options',
+  name: 'Select',
   props: {
     label: String,
     id: String,
     value: String,
     options: Array,
-    defaultToFirst: {
-      type: Boolean,
-      default: false,
-    },
     collapsedShowIcon: {
       type: Boolean,
       default: true,
@@ -117,7 +113,7 @@ export default {
   computed: {
     selectedOption() {
       const { options, value } = this.$props;
-      return options.find((o) => o.value === value);
+      return options.find((o) => o.value === value) || options[0];
     },
     selectedLabel() {
       return this.selectedOption ? this.selectedOption.label : null;
@@ -148,7 +144,6 @@ export default {
   background-color: var(--white);
   box-shadow: 0 0.125em 0.25em 0.125em rgba(210, 210, 210, 0.5);
   text-align: left;
-  padding-left: 0;
   z-index: calc(var(--layerModal) - 1);
   position: absolute;
   top: 3.5em;
