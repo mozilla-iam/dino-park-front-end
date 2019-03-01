@@ -53,36 +53,32 @@
           />
         </svg>
       </RouterLink>
-      <ApolloQuery :query="profileQuery">
-        <template slot-scope="{ result: { loading, data, error } }">
-          <template v-if="data">
-            <ShowMore
-              buttonText="Open user menu"
-              alternateButtonText="Close user menu"
-              buttonClass="top-bar__user-menu-toggle"
-              :expanded="false"
-              @close-user-menu="closeUserMenu"
-              ref="showMoreUserMenu"
-              :closeWhenClickedOutside="true"
-            >
-              <template slot="overflow">
-                <UserMenu v-bind="data.userMenu"></UserMenu>
-              </template>
-              <template slot="button-content">
-                <UserPicture
-                  :picture="data.userMenu.picture"
-                  :username="data.userMenu.username"
-                  :size="40"
-                  dinoType="Staff"
-                ></UserPicture>
-              </template>
-            </ShowMore>
+      <template v-if="user">
+        <ShowMore
+          buttonText="Open user menu"
+          alternateButtonText="Close user menu"
+          buttonClass="top-bar__user-menu-toggle"
+          :expanded="false"
+          @close-user-menu="closeUserMenu"
+          ref="showMoreUserMenu"
+          :closeWhenClickedOutside="true"
+        >
+          <template slot="overflow">
+            <UserMenu></UserMenu>
           </template>
-          <template v-else>
-            …
+          <template slot="button-content">
+            <UserPicture
+              :picture="user.picture"
+              :username="user.username"
+              :size="40"
+              dinoType="Staff"
+            ></UserPicture>
           </template>
-        </template>
-      </ApolloQuery>
+        </ShowMore>
+      </template>
+      <template v-else>
+        …
+      </template>
     </div>
     <SearchForm
       modifier="search-form--small hide-desktop"
@@ -98,7 +94,6 @@ import SearchForm from '@/components/SearchForm.vue';
 import ShowMore from '@/components/functional/ShowMore.vue';
 import UserMenu from '@/components/UserMenu.vue';
 import UserPicture from '@/components/UserPicture.vue';
-import { USER_MENU_PROFILE } from '@/queries/profile';
 
 export default {
   name: 'TopBar',
@@ -119,8 +114,12 @@ export default {
   data() {
     return {
       mobileSearchOpen: false,
-      profileQuery: USER_MENU_PROFILE,
     };
+  },
+  computed: {
+    user() {
+      return this.$store.state.user;
+    },
   },
 };
 </script>
