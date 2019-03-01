@@ -27,7 +27,7 @@
           <label for="field-first-name">First name</label>
           <input type="text" id="field-first-name" v-model="firstName.value" />
           <div class="edit-personal-info__privacy">
-            <Options
+            <Select
               label="First name privacy levels"
               id="field-first-name-privacy"
               v-bind="privacySettings"
@@ -41,7 +41,7 @@
           <label for="field-last-name">Last name</label>
           <input type="text" id="field-last-name" v-model="lastName.value" />
           <div class="edit-personal-info__privacy">
-            <Options
+            <Select
               label="Last name privacy levels"
               id="field-last-name-privacy"
               v-bind="privacySettings"
@@ -53,10 +53,9 @@
           <hr role="presentation" />
 
           <div class="edit-personal-info__label">Gender pronouns</div>
-          <Options
+          <Select
             label="Select pronoun"
             id="field-pronouns"
-            :defaultToFirst="true"
             class="options--chevron"
             v-model="pronouns.value"
             :options="[
@@ -82,9 +81,9 @@
               },
             ]"
           >
-          </Options>
+          </Select>
           <div class="edit-personal-info__privacy">
-            <Options
+            <Select
               label="Pronoun privacy levels"
               id="field-pronoun-privacy"
               v-bind="privacySettings"
@@ -102,7 +101,7 @@
             v-model="alternativeName.value"
           />
           <div class="edit-personal-info__privacy">
-            <Options
+            <Select
               label="Alternative name privacy levels"
               id="field-alt-name-privacy"
               v-bind="privacySettings"
@@ -125,7 +124,7 @@
             v-model="funTitle.value"
           />
           <div class="edit-personal-info__privacy">
-            <Options
+            <Select
               label="Fun title privacy levels"
               id="field-fun-title-privacy"
               v-bind="privacySettings"
@@ -138,7 +137,7 @@
           <label for="field-location">Location</label>
           <input type="text" id="field-location" v-model="location.value" />
           <div class="edit-personal-info__privacy">
-            <Options
+            <Select
               label="Location privacy levels"
               id="field-location-privacy"
               v-bind="privacySettings"
@@ -151,7 +150,7 @@
           <label for="field-timezone">Timezone</label>
           <input type="text" id="field-timezone" v-model="timezone.value" />
           <div class="edit-personal-info__privacy">
-            <Options
+            <Select
               label="Timezone privacy levels"
               id="field-timezone-privacy"
               v-bind="privacySettings"
@@ -170,7 +169,7 @@
           <label for="field-bio">Bio</label>
           <textarea id="field-bio" v-model="description.value"></textarea>
           <div class="edit-personal-info__privacy">
-            <Options
+            <Select
               label="Bio privacy levels"
               id="field-bio-privacy"
               v-bind="privacySettings"
@@ -195,10 +194,10 @@
 </template>
 
 <script>
-import Options from '@/components/Options.vue';
+import Select from '@/components/Select.vue';
 
 import { MUTATE_PROFILE, DISPLAY_PROFILE } from '@/queries/profile';
-import DisplayLevelsMixin from '@/components/mixins/DisplayLevelsMixin.vue';
+import { displayLevelsFor, DISPLAY_LEVELS } from '@/assets/js/display-levels';
 
 export default {
   name: 'EditPersonalInfo',
@@ -207,10 +206,10 @@ export default {
     initialValues: Object,
   },
   components: {
-    Options,
+    Select,
   },
-  mixins: [DisplayLevelsMixin],
   methods: {
+    displayLevelsFor,
     cancelEdit() {
       this.$emit('cancel-edit');
     },
@@ -251,40 +250,17 @@ export default {
     return {
       displayProfile: DISPLAY_PROFILE,
       mutateProfile: MUTATE_PROFILE,
-      alternativeName: {
-        value: this.initialValues.alternativeName.value,
-        display: this.initialValues.alternativeName.display,
-      },
-      firstName: {
-        value: this.initialValues.firstName.value,
-        display: this.initialValues.firstName.display,
-      },
-      lastName: {
-        value: this.initialValues.lastName.value,
-        display: this.initialValues.lastName.display,
-      },
-      funTitle: {
-        value: this.initialValues.funTitle.value,
-        display: this.initialValues.funTitle.value,
-      },
-      location: {
-        value: this.initialValues.location.value,
-        display: this.initialValues.location.display,
-      },
-      pronouns: {
-        value: this.initialValues.pronouns.value,
-        display: this.initialValues.pronouns.display,
-      },
-      timezone: {
-        value: this.initialValues.timezone.value,
-        display: this.initialValues.timezone.display,
-      },
-      description: {
-        value: this.initialValues.description.value,
-        display: this.initialValues.description.display,
-      },
+      ...Object.entries(this.initialValues).reduce(
+        (obj, [key, { value, display }]) => {
+          obj[key] = {
+            value,
+            display: display || DISPLAY_LEVELS.public.value,
+          };
+          return obj;
+        },
+        {},
+      ),
       privacySettings: {
-        defaultToFirst: true,
         collapsedShowIcon: true,
         collapsedShowLabel: false,
         expandedShowIcon: true,

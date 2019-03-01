@@ -5,15 +5,15 @@
       @keydown.up.down.prevent="toggleOptions"
       type="button"
       :ref="`optionToggle-${id}`"
-      :title="this.currentLabel"
+      :title="selectedLabel"
       class="options__toggle"
     >
       <span class="visually-hidden">Open {{ label }}</span>
-      <template v-if="collapsedShowLabel">{{ this.currentLabel }}</template>
-      <span v-else class="visually-hidden">{{ this.currentLabel }}</span>
+      <template v-if="collapsedShowLabel">{{ selectedLabel }}</template>
+      <span v-else class="visually-hidden">{{ selectedLabel }}</span>
       <Icon
-        v-if="collapsedShowIcon && this.currentIcon"
-        :id="this.currentIcon"
+        v-if="collapsedShowIcon && selectedOption && selectedOption.icon"
+        :id="selectedOption && selectedOption.icon"
         :width="17"
         :height="17"
         aria-hidden="true"
@@ -22,17 +22,18 @@
     </button>
     <fieldset @keydown.enter.prevent="closeList">
       <legend class="visually-hidden">{{ label }}</legend>
-      <ul class="options__list" v-show="this.open" :ref="`optionList-${id}`">
+      <ul class="options__list" v-show="open" :ref="`optionList-${id}`">
         <Option
           v-for="(option, index) in options"
           :key="index"
           :groupId="id"
           :label="option.label"
           :value="option.value"
+          :checked="option.value === value"
           :icon="option.icon"
           :id="`option-${id}-${index}`"
           :bind="{ expandedShowIcon, expandedShowLabel }"
-          @option-picked="honourChoice"
+          @input="$emit('input', $event)"
           @close-list="closeList"
         />
       </ul>
@@ -45,16 +46,12 @@ import Icon from '@/components/Icon.vue';
 import Option from '@/components/Option.vue';
 
 export default {
-  name: 'Options',
+  name: 'Select',
   props: {
     label: String,
     id: String,
     value: String,
     options: Array,
-    defaultToFirst: {
-      type: Boolean,
-      default: false,
-    },
     collapsedShowIcon: {
       type: Boolean,
       default: true,
@@ -81,9 +78,9 @@ export default {
       if (this.open) {
         this.open = false;
       } else {
+        const list = this.$refs[`optionList-${this.id}`];
         const optionToFocus =
-          this.$refs[`optionList-${this.id}`].querySelector('input:checked') ||
-          this.$refs[`optionList-${this.id}`].querySelector('input');
+          list.querySelector('input:checked') || list.querySelector('input');
 
         this.open = true;
 
@@ -93,12 +90,6 @@ export default {
           });
         }
       }
-    },
-    honourChoice(data) {
-      this.currentIcon = data.icon;
-      this.currentValue = data.value;
-      this.currentLabel = data.label;
-      this.$emit('input', data.value);
     },
     closeList() {
       this.open = false;
@@ -116,16 +107,17 @@ export default {
   },
   data() {
     return {
-      currentValue: '',
-      currentLabel: '',
-      currentIcon: null,
       open: false,
     };
   },
-  created() {
-    if (this.defaultToFirst) {
-      this.currentLabel = this.options[0].label;
-    }
+  computed: {
+    selectedOption() {
+      const { options, value } = this.$props;
+      return options.find((o) => o.value === value) || options[0];
+    },
+    selectedLabel() {
+      return this.selectedOption ? this.selectedOption.label : null;
+    },
   },
 };
 </script>
@@ -152,7 +144,6 @@ export default {
   background-color: var(--white);
   box-shadow: 0 0.125em 0.25em 0.125em rgba(210, 210, 210, 0.5);
   text-align: left;
-  padding-left: 0;
   z-index: calc(var(--layerModal) - 1);
   position: absolute;
   top: 3.5em;
