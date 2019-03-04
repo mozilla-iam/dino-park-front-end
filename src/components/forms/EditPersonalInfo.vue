@@ -305,6 +305,9 @@ textarea {
   padding: 0.5em;
   width: 100%;
 }
+.edit-personal-info > textarea {
+  resize: none;
+}
 .edit-personal-info > input[disabled] {
   background-color: transparent;
   border-color: transparent;
