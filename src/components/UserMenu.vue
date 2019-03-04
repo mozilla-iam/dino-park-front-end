@@ -8,17 +8,19 @@
       >
         <span class="visually-hidden">Close user menu</span>
         <UserPicture
-          :picture="picture"
-          :username="username"
+          :picture="user.picture"
+          :username="user.username"
           :size="40"
         ></UserPicture>
       </button>
       <div class="user-menu__name">
-        <RouterLink :to="{ name: 'Profile', params: { username: username } }">
+        <RouterLink
+          :to="{ name: 'Profile', params: { username: user.username } }"
+        >
           <span class="user-menu__header-name"
-            >{{ firstName }} {{ lastName }}</span
+            >{{ user.firstName }} {{ user.lastName }}</span
           >
-          <span class="user-menu__header-email">{{ primaryEmail }}</span>
+          <span class="user-menu__header-email">{{ user.primaryEmail }}</span>
         </RouterLink>
       </div>
       <button
@@ -47,7 +49,9 @@
     </div>
     <ul class="user-menu__items" @click="closeOnLinkClick">
       <li>
-        <RouterLink :to="{ name: 'Profile', params: { username: username } }">
+        <RouterLink
+          :to="{ name: 'Profile', params: { username: user.username } }"
+        >
           <span>My Profile</span>
           <Icon id="user" :width="24" :height="24" />
         </RouterLink>
@@ -85,13 +89,6 @@ import Modal from '@/components/functional/Modal.vue';
 
 export default {
   name: 'UserMenu',
-  props: {
-    firstName: String,
-    lastName: String,
-    picture: String,
-    username: String,
-    primaryEmail: String,
-  },
   methods: {
     sendCloseEvent() {
       this.$parent.$emit('close-user-menu');
@@ -115,6 +112,11 @@ export default {
   components: {
     Icon,
     UserPicture,
+  },
+  computed: {
+    user() {
+      return this.$store.state.user;
+    },
   },
 };
 </script>

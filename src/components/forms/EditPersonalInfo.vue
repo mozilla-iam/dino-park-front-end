@@ -18,10 +18,6 @@
     clientId="mutationClient"
   >
     <template slot-scope="{ mutate, data, error }">
-      <EditPictureModal
-        v-if="showPictureModal"
-        v-bind="{ picture, username, staffInformation }"
-      />
       <form
         action=""
         @submit.prevent="mutate()"
@@ -42,30 +38,90 @@
           </button>
 
           <label for="field-first-name">First name</label>
-          <input type="text" id="field-first-name" v-model="firstName" />
-          <div class="edit-personal-info__privacy">PR</div>
+          <input type="text" id="field-first-name" v-model="firstName.value" />
+          <div class="edit-personal-info__privacy">
+            <Select
+              label="First name privacy levels"
+              id="field-first-name-privacy"
+              v-bind="privacySettings"
+              v-model="firstName.display"
+              :options="displayLevelsFor(firstName.value)"
+            />
+          </div>
 
           <hr role="presentation" />
 
           <label for="field-last-name">Last name</label>
-          <input type="text" id="field-last-name" v-model="lastName" />
-          <div class="edit-personal-info__privacy">PR</div>
+          <input type="text" id="field-last-name" v-model="lastName.value" />
+          <div class="edit-personal-info__privacy">
+            <Select
+              label="Last name privacy levels"
+              id="field-last-name-privacy"
+              v-bind="privacySettings"
+              v-model="lastName.display"
+              :options="displayLevelsFor(lastName.value)"
+            />
+          </div>
 
           <hr role="presentation" />
 
-          <label for="field-pronouns">Gender pronouns</label>
-          <select id="field-pronouns">
-            <option>Select pronoun</option>
-            <option value="he-him">He/him</option>
-            <option value="she-her">She/her</option>
-          </select>
-          <div class="edit-personal-info__privacy">PR</div>
+          <div class="edit-personal-info__label">Gender pronouns</div>
+          <Select
+            label="Select pronoun"
+            id="field-pronouns"
+            class="options--chevron"
+            v-model="pronouns.value"
+            :options="[
+              {
+                label: 'Select pronoun',
+                value: '',
+              },
+              {
+                label: 'He/Him',
+                value: 'He/him',
+              },
+              {
+                label: 'She/Her',
+                value: 'She/her',
+              },
+              {
+                label: 'They/Them',
+                value: 'They/Them',
+              },
+              {
+                label: 'Ze/Hir',
+                value: 'Ze/Hir',
+              },
+            ]"
+          >
+          </Select>
+          <div class="edit-personal-info__privacy">
+            <Select
+              label="Pronoun privacy levels"
+              id="field-pronoun-privacy"
+              v-bind="privacySettings"
+              v-model="pronouns.display"
+              :options="displayLevelsFor(pronouns.value)"
+            />
+          </div>
 
           <hr role="presentation" />
 
           <label for="field-alt-name">Alternative name</label>
-          <input type="text" id="field-alt-name" v-model="alternativeName" />
-          <div class="edit-personal-info__privacy">PR</div>
+          <input
+            type="text"
+            id="field-alt-name"
+            v-model="alternativeName.value"
+          />
+          <div class="edit-personal-info__privacy">
+            <Select
+              label="Alternative name privacy levels"
+              id="field-alt-name-privacy"
+              v-bind="privacySettings"
+              v-model="alternativeName.display"
+              :options="displayLevelsFor(alternativeName.value)"
+            />
+          </div>
 
           <hr role="presentation" />
 
@@ -75,33 +131,65 @@
           <hr role="presentation" />
 
           <label for="field-fun-job-title">Fun job title</label>
-          <input type="text" id="field-fun-job-title" v-model="funTitle" />
-          <div class="edit-personal-info__privacy">PR</div>
-
+          <input
+            type="text"
+            id="field-fun-job-title"
+            v-model="funTitle.value"
+          />
+          <div class="edit-personal-info__privacy">
+            <Select
+              label="Fun title privacy levels"
+              id="field-fun-title-privacy"
+              v-bind="privacySettings"
+              v-model="funTitle.display"
+              :options="displayLevelsFor(funTitle.value)"
+            />
+          </div>
           <hr role="presentation" />
 
           <label for="field-location">Location</label>
-          <input type="text" id="field-location" v-model="location" />
-          <div class="edit-personal-info__privacy">PR</div>
-
+          <input type="text" id="field-location" v-model="location.value" />
+          <div class="edit-personal-info__privacy">
+            <Select
+              label="Location privacy levels"
+              id="field-location-privacy"
+              v-bind="privacySettings"
+              v-model="location.display"
+              :options="displayLevelsFor(location.value)"
+            />
+          </div>
           <hr role="presentation" />
 
           <label for="field-timezone">Timezone</label>
-          <input type="text" id="field-timezone" v-model="timezone" />
-          <div class="edit-personal-info__privacy">PR</div>
-
+          <input type="text" id="field-timezone" v-model="timezone.value" />
+          <div class="edit-personal-info__privacy">
+            <Select
+              label="Timezone privacy levels"
+              id="field-timezone-privacy"
+              v-bind="privacySettings"
+              v-model="timezone.display"
+              :options="displayLevelsFor(timezone.value)"
+            />
+          </div>
           <hr role="presentation" />
 
           <div class="edit-personal-info__meta">
             Worker type, desk number, department, cost centre
           </div>
-          <div class="edit-personal-info__privacy">PR</div>
 
           <hr role="presentation" />
 
           <label for="field-bio">Bio</label>
-          <textarea id="field-bio" v-model="description"></textarea>
-          <div class="edit-personal-info__privacy">PR</div>
+          <textarea id="field-bio" v-model="description.value"></textarea>
+          <div class="edit-personal-info__privacy">
+            <Select
+              label="Bio privacy levels"
+              id="field-bio-privacy"
+              v-bind="privacySettings"
+              v-model="description.display"
+              :options="displayLevelsFor(description.value)"
+            />
+          </div>
         </div>
         <div class="button-bar">
           <button
@@ -119,9 +207,11 @@
 </template>
 
 <script>
+import Select from '@/components/Select.vue';
 import UserPicture from '@/components/UserPicture.vue';
 import EditPictureModal from '@/components/forms/EditPictureModal.vue';
 import { MUTATE_PROFILE, DISPLAY_PROFILE } from '@/queries/profile';
+import { displayLevelsFor, DISPLAY_LEVELS } from '@/assets/js/display-levels';
 
 export default {
   name: 'EditPersonalInfo',
@@ -133,9 +223,11 @@ export default {
   },
   components: {
     EditPictureModal,
+    Select,
     UserPicture,
   },
   methods: {
+    displayLevelsFor,
     cancelEdit() {
       this.$emit('cancel-edit');
     },
@@ -176,14 +268,23 @@ export default {
     return {
       displayProfile: DISPLAY_PROFILE,
       mutateProfile: MUTATE_PROFILE,
-      alternativeName: this.initialValues.alternativeName.value,
-      firstName: this.initialValues.firstName.value,
-      lastName: this.initialValues.lastName.value,
-      funTitle: this.initialValues.funTitle.value,
-      location: this.initialValues.location.value,
-      pronouns: this.initialValues.pronouns.value,
-      timezone: this.initialValues.timezone.value,
-      description: this.initialValues.description.value,
+      ...Object.entries(this.initialValues).reduce(
+        (obj, [key, { value, display }]) => {
+          obj[key] = {
+            value,
+            display: display || DISPLAY_LEVELS.public.value,
+          };
+          return obj;
+        },
+        {},
+      ),
+      privacySettings: {
+        collapsedShowIcon: true,
+        collapsedShowLabel: false,
+        expandedShowIcon: true,
+        expandedShowLabel: true,
+        class: 'options--zebra',
+      },
       showPictureModal: false,
     };
   },
@@ -201,34 +302,36 @@ textarea {
 .edit-personal-info fieldset {
   border: 0;
 }
-.edit-personal-info label {
+.edit-personal-info > label,
+.edit-personal-info__label {
   color: var(--gray-50);
   margin: 0.5em 0 0;
 }
-.edit-personal-info label::after {
+.edit-personal-info > label::after {
   content: ':';
 }
-.edit-personal-info hr {
+.edit-personal-info > hr {
   margin: 1em -2.4em;
 }
-.edit-personal-info input,
-.edit-personal-info textarea,
-.edit-personal-info select {
+.edit-personal-info > input,
+.edit-personal-info > textarea,
+.edit-personal-info > select {
+  border: 0;
   background-color: var(--gray-20);
+  border-radius: var(--formElementRadius);
   color: var(--black);
-  border: 1px solid var(--gray-50);
   margin: 0.5em 0;
   padding: 0.5em;
   width: 100%;
 }
-.edit-personal-info input[disabled] {
+.edit-personal-info > textarea {
+  resize: none;
+}
+.edit-personal-info > input[disabled] {
   background-color: transparent;
   border-color: transparent;
   color: var(--gray-50);
   padding-left: 0;
-}
-.edit-personal-info__privacy {
-  display: none;
 }
 .button-bar {
   display: flex;
@@ -252,26 +355,27 @@ textarea {
     grid-template-columns: 20em 10em 1fr 4em;
     grid-column-gap: 1em;
   }
-  .edit-personal-info hr {
+  .edit-personal-info > hr {
     grid-column: 2 / end;
     margin: 0.5em 0;
   }
-  .edit-personal-info label {
+  .edit-personal-info > label,
+  .edit-personal-info__label {
     grid-column: 2 / 3;
   }
   @supports (display: grid) {
-    .edit-personal-info label {
+    .edit-personal-info > label {
       padding: 0.5em 0;
       margin: 0.5em 0;
     }
-    .edit-personal-info input[disabled] {
+    .edit-personal-info > input[disabled] {
       padding-left: 0.25em;
     }
   }
-  .edit-personal-info input {
+  .edit-personal-info > input {
     grid-column: 3 / 4;
   }
-  .edit-personal-info textarea {
+  .edit-personal-info > textarea {
     grid-column: 2 / 4;
   }
   .edit-personal-info__picture {

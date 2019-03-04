@@ -96,26 +96,26 @@ const USER_MENU_PROFILE = gql`
 const MUTATE_PROFILE = gql`
   mutation UpdateProfile(
     $username: String!
-    $alternativeName: String
-    $description: String
-    $firstName: String
-    $funTitle: String
-    $lastName: String
-    $location: String
-    $pronouns: String
-    $timezone: String
+    $alternativeName: DisplayStringInput
+    $description: DisplayStringInput
+    $firstName: DisplayStringInput
+    $funTitle: DisplayStringInput
+    $lastName: DisplayStringInput
+    $location: DisplayStringInput
+    $pronouns: DisplayStringInput
+    $timezone: DisplayStringInput
   ) {
     updateProfile(
       username: $username
       update: {
-        alternativeName: { value: $alternativeName }
-        description: { value: $description }
-        firstName: { value: $firstName }
-        funTitle: { value: $funTitle }
-        lastName: { value: $lastName }
-        location: { value: $location }
-        pronouns: { value: $pronouns }
-        timezone: { value: $timezone }
+        alternativeName: $alternativeName
+        description: $description
+        firstName: $firstName
+        funTitle: $funTitle
+        lastName: $lastName
+        location: $location
+        pronouns: $pronouns
+        timezone: $timezone
       }
     ) {
       alternativeName {
