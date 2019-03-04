@@ -3,7 +3,7 @@
     ref="modalEl"
     heading="Edit Profile Picture"
     :initiallyOpen="true"
-    v-on:close="$emit('close')"
+    @close="$emit('close')"
   >
     <div class="edit-picture-modal__picture-buttons">
       <label
@@ -14,7 +14,7 @@
           type="file"
           accept="image/*"
           class="edit-picture-modal__file"
-          v-on:change="handleChangeFile"
+          @change="handleChangeFile"
         />
       </label>
       <button type="button" class="button button--secondary button--small">
@@ -55,7 +55,7 @@
       <button
         type="button"
         class="edit-picture-modal__cancel-button button button--secondary button--small"
-        v-on:click="$emit('close')"
+        @click="$emit('close')"
       >
         Cancel
       </button>

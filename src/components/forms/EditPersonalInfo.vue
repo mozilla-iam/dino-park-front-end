@@ -18,6 +18,11 @@
     clientId="mutationClient"
   >
     <template slot-scope="{ mutate, data, error }">
+      <EditPictureModal
+        v-if="showPictureModal"
+        v-bind="{ picture, username, staffInformation }"
+        @close="showPictureModal = false"
+      />
       <form
         action=""
         @submit.prevent="mutate()"
@@ -27,7 +32,7 @@
           <button
             class="edit-personal-info__picture"
             type="button"
-            v-on:click="showPictureModal = true"
+            @click="showPictureModal = true"
           >
             <UserPicture
               :picture="picture.value"
