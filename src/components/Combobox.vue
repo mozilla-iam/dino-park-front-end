@@ -6,6 +6,7 @@
       class="combobox__input"
       ref="comboboxInput"
       :value="value"
+      :placeholder="placeholder"
       @keydown="checkInput"
       @input="$emit('input', $event.target.value)"
       autocomplete="off"
@@ -35,6 +36,7 @@ export default {
       type: Boolean,
       default: true,
     },
+    placeholder: String,
   },
   methods: {
     init() {
