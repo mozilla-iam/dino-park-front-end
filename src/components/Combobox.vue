@@ -6,6 +6,7 @@
       class="combobox__input"
       ref="comboboxInput"
       :value="value"
+      @keydown="checkInput"
       @input="$emit('input', $event.target.value)"
     />
     <ul v-if="source" class="combobox__options" ref="comboboxList">
@@ -30,6 +31,10 @@ export default {
     source: Array,
     value: String,
     initialValue: String,
+    allowCustomInput: {
+      type: Boolean,
+      default: true,
+    },
   },
   methods: {
     init() {
@@ -47,6 +52,17 @@ export default {
           this.$emit('input', this.$refs.comboboxInput.value);
         });
       });
+    },
+    checkInput(e) {
+      const alwaysAllowed = [9, 13, 27, 16, 8]; // ignore tab, enter, escape, shift, backspace
+
+      if (alwaysAllowed.indexOf(e.which) >= 0) {
+        return;
+      }
+
+      if (!this.allowCustomInput) {
+        e.preventDefault();
+      }
     },
   },
   mounted() {

@@ -58,6 +58,7 @@
           <Combobox
             id="field-pronouns"
             v-model="pronouns.value"
+            :allowCustomInput="false"
             :source="['He/Him', 'She/Her', 'They/Them']"
           >
           </Combobox>
