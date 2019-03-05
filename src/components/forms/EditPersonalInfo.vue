@@ -58,7 +58,6 @@
           <Combobox
             id="field-pronouns"
             v-model="pronouns.value"
-            :allowCustomInput="false"
             :source="['He/Him', 'She/Her', 'They/Them']"
           >
           </Combobox>
@@ -118,6 +117,7 @@
           <Combobox
             id="field-location"
             v-model="location.value"
+            :allowCustomInput="false"
             :source="[
               'Berlin',
               'Rotterdam',
