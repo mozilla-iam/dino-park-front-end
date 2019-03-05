@@ -8,6 +8,7 @@
       :value="value"
       @keydown="checkInput"
       @input="$emit('input', $event.target.value)"
+      autocomplete="off"
     />
     <ul v-if="source" class="combobox__options" ref="comboboxList">
       <li
