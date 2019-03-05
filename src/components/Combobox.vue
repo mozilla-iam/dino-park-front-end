@@ -25,12 +25,11 @@
 import Combobo from 'combobo';
 
 export default {
-  name: 'Autocomplete',
+  name: 'Combobox',
   props: {
     id: String,
     source: Array,
     value: String,
-    initialValue: String,
     allowCustomInput: {
       type: Boolean,
       default: true,
