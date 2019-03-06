@@ -39,22 +39,6 @@ export default {
     placeholder: String,
   },
   methods: {
-    init() {
-      const { comboboxInput, comboboxList } = this.$refs;
-
-      this.combobo = new Combobo({
-        input: comboboxInput,
-        list: comboboxList,
-        options: this.optionEls,
-        activeClass: 'combobox__option--selected',
-      });
-
-      this.combobo.addEventListener('selection', () => {
-        this.$nextTick(() => {
-          this.$emit('input', this.$refs.comboboxInput.value);
-        });
-      });
-    },
     checkInput(e) {
       const alwaysAllowed = ['Tab', 'Enter', 'Escape', 'Shift', 'Backspace'];
 
@@ -68,7 +52,20 @@ export default {
     },
   },
   mounted() {
-    this.init();
+    const { comboboxInput, comboboxList } = this.$refs;
+
+    this.combobo = new Combobo({
+      input: comboboxInput,
+      list: comboboxList,
+      options: this.optionEls,
+      activeClass: 'combobox__option--selected',
+    });
+
+    this.combobo.addEventListener('selection', () => {
+      this.$nextTick(() => {
+        this.$emit('input', this.$refs.comboboxInput.value);
+      });
+    });
   },
   data() {
     return {
