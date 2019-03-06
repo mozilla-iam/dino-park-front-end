@@ -176,7 +176,7 @@
             type="button"
             class="button button--secondary"
             @click="
-              this.$router.push({
+              $router.push({
                 name: 'Profile',
               })
             "
