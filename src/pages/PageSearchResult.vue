@@ -69,10 +69,10 @@
 </template>
 
 <script>
-import Error from '@/components/Error.vue';
-import LoadingSpinner from '@/components/LoadingSpinner.vue';
-import SearchResultList from '@/components/SearchResultList.vue';
-import SearchScope from '@/components/SearchScope.vue';
+import Error from '@/components/ui/Error.vue';
+import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
+import SearchResultList from '@/components/search/SearchResultList.vue';
+import SearchScope from '@/components/search/SearchScope.vue';
 
 export default {
   name: 'PageSearchResult',

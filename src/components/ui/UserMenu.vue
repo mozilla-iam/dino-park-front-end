@@ -83,9 +83,10 @@
 </template>
 
 <script>
-import Icon from '@/components/Icon.vue';
-import UserPicture from '@/components/UserPicture.vue';
-import Modal from '@/components/functional/Modal.vue';
+import Modal from '@/components/_functional/Modal.vue';
+
+import Icon from './Icon.vue';
+import UserPicture from './UserPicture.vue';
 
 export default {
   name: 'UserMenu',

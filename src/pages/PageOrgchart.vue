@@ -45,10 +45,10 @@
 </template>
 
 <script>
-import LoadingSpinner from '@/components/LoadingSpinner.vue';
-import OrgRoot from '@/components/OrgRoot.vue';
-import Modal from '@/components/functional/Modal.vue';
-import ProfilePreview from '@/components/ProfilePreview.vue';
+import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
+import OrgRoot from '@/components/org-chart/OrgRoot.vue';
+import Modal from '@/components/_functional/Modal.vue';
+import ProfilePreview from '@/components/profile/ProfilePreview.vue';
 import { PREVIEW_PROFILE } from '@/queries/profile';
 
 export default {

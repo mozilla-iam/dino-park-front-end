@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import Error from '@/components/Error.vue';
+import Error from '@/components/ui/Error.vue';
 
 export default {
   name: 'Page404',

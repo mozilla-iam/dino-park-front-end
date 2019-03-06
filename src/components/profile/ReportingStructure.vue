@@ -22,8 +22,8 @@
 </template>
 
 <script>
-import LoadingSpinner from '@/components/LoadingSpinner.vue';
-import Person from '@/components/Person.vue';
+import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
+import Person from '@/components/ui/Person.vue';
 
 export default {
   name: 'ReportingStructure',
