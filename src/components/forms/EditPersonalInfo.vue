@@ -52,36 +52,16 @@
 
           <hr role="presentation" />
 
-          <div class="edit-personal-info__label">Gender pronouns</div>
-          <Select
-            label="Select pronoun"
-            id="field-pronouns"
-            class="options--chevron"
-            v-model="pronouns.value"
-            :options="[
-              {
-                label: 'Select pronoun',
-                value: '',
-              },
-              {
-                label: 'He/Him',
-                value: 'He/him',
-              },
-              {
-                label: 'She/Her',
-                value: 'She/her',
-              },
-              {
-                label: 'They/Them',
-                value: 'They/Them',
-              },
-              {
-                label: 'Ze/Hir',
-                value: 'Ze/Hir',
-              },
-            ]"
+          <label for="field-pronouns" class="edit-personal-info__label"
+            >Gender pronouns</label
           >
-          </Select>
+          <Combobox
+            id="field-pronouns"
+            v-model="pronouns.value"
+            placeholder="Choose a pronoun or type your own"
+            :source="['He/Him', 'She/Her', 'They/Them']"
+          >
+          </Combobox>
           <div class="edit-personal-info__privacy">
             <Select
               label="Pronoun privacy levels"
@@ -135,7 +115,20 @@
           <hr role="presentation" />
 
           <label for="field-location">Location</label>
-          <input type="text" id="field-location" v-model="location.value" />
+          <Combobox
+            id="field-location"
+            v-model="location.value"
+            :allowCustomInput="false"
+            :source="[
+              'Berlin',
+              'Rotterdam',
+              'San Francisco',
+              'Cluj-Napoca',
+              'München',
+            ]"
+          >
+          </Combobox>
+
           <div class="edit-personal-info__privacy">
             <Select
               label="Location privacy levels"
@@ -194,6 +187,7 @@
 </template>
 
 <script>
+import Combobox from '@/components/Combobox.vue';
 import Select from '@/components/Select.vue';
 
 import { MUTATE_PROFILE, DISPLAY_PROFILE } from '@/queries/profile';
@@ -206,6 +200,7 @@ export default {
     initialValues: Object,
   },
   components: {
+    Combobox,
     Select,
   },
   methods: {
@@ -295,6 +290,7 @@ textarea {
   margin: 1em -2.4em;
 }
 .edit-personal-info > input,
+.edit-personal-info > div > input,
 .edit-personal-info > textarea,
 .edit-personal-info > select {
   border: 0;

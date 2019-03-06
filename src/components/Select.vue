@@ -16,8 +16,6 @@
         :id="selectedOption && selectedOption.icon"
         :width="17"
         :height="17"
-        aria-hidden="true"
-        role="presentation"
       ></Icon>
     </button>
     <fieldset @keydown.enter.prevent="closeList">
