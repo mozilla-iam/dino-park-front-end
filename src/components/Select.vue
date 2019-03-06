@@ -134,7 +134,7 @@ export default {
 .options__toggle {
   font-size: inherit;
   border: 0;
-  padding: 0.5em;
+  padding: 0.5em 0.9em;
 }
 .options__list {
   padding-left: 0;
