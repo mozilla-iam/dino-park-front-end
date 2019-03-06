@@ -56,9 +56,9 @@ export default {
       });
     },
     checkInput(e) {
-      const alwaysAllowed = [9, 13, 27, 16, 8]; // ignore tab, enter, escape, shift, backspace
+      const alwaysAllowed = ['Tab', 'Enter', 'Escape', 'Shift', 'Backspace'];
 
-      if (alwaysAllowed.indexOf(e.which) >= 0) {
+      if (alwaysAllowed.includes(e.key)) {
         return;
       }
 
