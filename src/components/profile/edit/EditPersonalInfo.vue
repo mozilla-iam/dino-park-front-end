@@ -306,7 +306,7 @@ textarea {
   border-radius: var(--formElementRadius);
   color: var(--black);
   margin: 0.5em 0;
-  padding: 0.5em;
+  padding: 0.5em 0.9em;
   width: 100%;
 }
 .edit-personal-info > textarea {
