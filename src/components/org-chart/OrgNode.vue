@@ -110,8 +110,8 @@
 </template>
 
 <script>
-import ShowMore from '@/components/functional/ShowMore.vue';
-import UserPicture from '@/components/UserPicture.vue';
+import ShowMore from '@/components/_functional/ShowMore.vue';
+import UserPicture from '@/components/ui/UserPicture.vue';
 
 export default {
   name: 'OrgNode',

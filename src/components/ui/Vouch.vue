@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import Person from '@/components/Person.vue';
+import Person from '@/components/ui/Person.vue';
 
 export default {
   name: 'Vouch',

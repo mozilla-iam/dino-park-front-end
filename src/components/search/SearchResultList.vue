@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import SearchResult from '@/components/SearchResult.vue';
+import SearchResult from './SearchResult.vue';
 
 export default {
   name: 'SearchResultList',
