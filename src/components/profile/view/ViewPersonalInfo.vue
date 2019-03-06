@@ -161,6 +161,10 @@ export default {
   }
 }
 
+.profile__section {
+  position: relative;
+}
+
 .profile__edit-button {
   position: absolute;
   top: 32px;
@@ -216,10 +220,5 @@ export default {
 
 .profile__description {
   color: var(--gray-50);
-}
-
-.profile__anchor {
-  top: -8.5em;
-  position: relative;
 }
 </style>
