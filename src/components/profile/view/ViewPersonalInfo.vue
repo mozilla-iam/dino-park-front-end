@@ -96,18 +96,16 @@
 </template>
 
 <script>
-import ContactMe from '@/components/ContactMe.vue';
-import Icon from '@/components/Icon.vue';
-import Meta from '@/components/Meta.vue';
-import MetaList from '@/components/MetaList.vue';
-import ProfileName from '@/components/ProfileName.vue';
-import ProfileTitle from '@/components/ProfileTitle.vue';
-import ProfileTeamLocation from '@/components/ProfileTeamLocation.vue';
-import ShowMore from '@/components/functional/ShowMore.vue';
-import UserPicture from '@/components/UserPicture.vue';
-
-// mixins
-import CompanyMixin from '@/components/mixins/CompanyMixin.vue';
+import CompanyMixin from '@/components/_mixins/CompanyMixin.vue';
+import ContactMe from '@/components/ui/ContactMe.vue';
+import Icon from '@/components/ui/Icon.vue';
+import Meta from '@/components/ui/Meta.vue';
+import MetaList from '@/components/ui/MetaList.vue';
+import ShowMore from '@/components/_functional/ShowMore.vue';
+import UserPicture from '@/components/ui/UserPicture.vue';
+import ProfileName from '../ProfileName.vue';
+import ProfileTitle from '../ProfileTitle.vue';
+import ProfileTeamLocation from '../ProfileTeamLocation.vue';
 
 export default {
   mixins: [CompanyMixin],

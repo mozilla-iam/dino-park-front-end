@@ -1,10 +1,10 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import PageHome from './views/PageHome.vue';
-import PageProfile from './views/PageProfile.vue';
-import PageOrgchart from './views/PageOrgchart.vue';
-import PageSearchResult from './views/PageSearchResult.vue';
-import PageUnknown from './views/PageUnknown.vue';
+import PageHome from './pages/PageHome.vue';
+import PageProfile from './pages/PageProfile.vue';
+import PageOrgchart from './pages/PageOrgchart.vue';
+import PageSearchResult from './pages/PageSearchResult.vue';
+import PageUnknown from './pages/PageUnknown.vue';
 
 Vue.use(Router);
 

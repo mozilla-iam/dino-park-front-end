@@ -54,8 +54,8 @@
 </template>
 
 <script>
-import Icon from '@/components/Icon.vue';
-import ShowMore from '@/components/functional/ShowMore.vue';
+import Icon from '@/components/ui/Icon.vue';
+import ShowMore from '@/components/_functional/ShowMore.vue';
 
 export default {
   name: 'ContactMe',

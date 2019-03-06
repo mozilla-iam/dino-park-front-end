@@ -56,9 +56,9 @@
 </template>
 
 <script>
-import Error from '@/components/Error.vue';
-import Profile from '@/components/Profile.vue';
-import LoadingSpinner from '@/components/LoadingSpinner.vue';
+import Error from '@/components/ui/Error.vue';
+import Profile from '@/components/profile/Profile.vue';
+import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 import { DISPLAY_PROFILE } from '@/queries/profile';
 
 export default {
