@@ -4,7 +4,7 @@
       v-if="currentUser.primaryEmail == primaryEmail.value"
       class="profile__edit-button"
       @click="
-        this.$router.push({
+        $router.push({
           name: 'Edit Profile',
           query: {
             section: 'personal-info',
