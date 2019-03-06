@@ -72,26 +72,27 @@
       >
       </ReportingStructure>
     </section>
-    <section class="profile__section">
-      <a id="nav-contact" class="profile__anchor"></a>
-      <header class="profile__section-header">
-        <h2>Contact</h2>
-      </header>
-      <h3 class="visually-hidden">Contact options</h3>
-      <IconBlockList modifier="icon-block-list--multi-col">
-        <IconBlock heading="Email" subHeading="primary" icon="email">
-          <a :href="`mailto:${primaryEmail}`">{{ primaryEmail }}</a>
-        </IconBlock>
-        <IconBlock
-          v-for="[key, value] in Object.entries(phoneNumbers || {})"
-          :key="`phoneNumber-${key}`"
-          heading="Phone"
-          :subHeading="key"
-          icon="phone"
-        >
-          <a :href="`tel:${value}`">{{ value }}</a>
-        </IconBlock>
-      </IconBlockList>
+    <section
+      :class="
+        'profile__section' +
+          (this.editCard && this.editCard === 'contact'
+            ? ' profile__section--editing'
+            : '')
+      "
+    >
+      <EditContact
+        v-if="this.editCard && this.editCard === 'contact'"
+        v-bind="{
+          username: username.value,
+          intitialValues: {
+            phoneNumbers,
+          },
+        }"
+      ></EditContact>
+      <ViewContact
+        v-else
+        v-bind="{ username, phoneNumbers, primaryEmail }"
+      ></ViewContact>
       <div v-if="pgpPublicKeys || sshPublicKeys">
         <hr />
         <h3>Keys</h3>
@@ -241,9 +242,11 @@ import ShowMore from '@/components/_functional/ShowMore.vue';
 import Tag from '@/components/ui/Tag.vue';
 import Toast from '@/components/ui/Toast.vue';
 import Vouch from '@/components/ui/Vouch.vue';
+import EditContact from './edit/EditContact.vue';
 import EditPersonalInfo from './edit/EditPersonalInfo.vue';
 import ProfileNav from './ProfileNav.vue';
 import ReportingStructure from './ReportingStructure.vue';
+import ViewContact from './view/ViewContact.vue';
 import ViewPersonalInfo from './view/ViewPersonalInfo.vue';
 
 export default {
@@ -275,6 +278,7 @@ export default {
   },
   components: {
     Button,
+    EditContact,
     EditPersonalInfo,
     Icon,
     IconBlock,
@@ -287,6 +291,7 @@ export default {
     ShowMore,
     Tag,
     Toast,
+    ViewContact,
     ViewPersonalInfo,
     Vouch,
   },
@@ -424,5 +429,10 @@ export default {
   .profile__external-accounts h3 {
     margin-top: 0; /* because grid item margins don't collapse */
   }
+}
+
+.profile__anchor {
+  top: -8.5em;
+  position: relative;
 }
 </style>
