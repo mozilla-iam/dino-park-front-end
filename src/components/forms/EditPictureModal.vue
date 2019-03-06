@@ -17,7 +17,11 @@
           @change="handleChangeFile"
         />
       </label>
-      <button type="button" class="button button--secondary button--small">
+      <button
+        type="button"
+        class="button button--secondary button--small"
+        @click="imgSrc = null"
+      >
         Delete Photo
       </button>
     </div>
@@ -73,7 +77,7 @@
 <script>
 import Modal from '@/components/functional/Modal.vue';
 import UserPicture from '@/components/UserPicture.vue';
-import Crop from '@/assets/js/cr-op/index.vue';
+import Crop from './Cropper.vue';
 
 export default {
   name: 'EditPictureModal',
