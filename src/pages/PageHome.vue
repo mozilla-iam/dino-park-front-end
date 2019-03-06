@@ -69,10 +69,10 @@
 </template>
 
 <script>
-import Card from '@/components/Card.vue';
-import CardRow from '@/components/CardRow.vue';
-import Icon from '@/components/Icon.vue';
-import LoadingSpinner from '@/components/LoadingSpinner.vue';
+import Card from '@/components/ui/Card.vue';
+import CardRow from '@/components/ui/CardRow.vue';
+import Icon from '@/components/ui/Icon.vue';
+import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 
 export default {
   name: 'PageHome',

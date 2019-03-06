@@ -28,8 +28,8 @@
 </template>
 
 <script>
-import DinoType from '@/components/DinoType.vue';
-import UserPicture from '@/components/UserPicture.vue';
+import DinoType from './DinoType.vue';
+import UserPicture from './UserPicture.vue';
 
 export default {
   name: 'Person',

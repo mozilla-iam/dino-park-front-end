@@ -90,10 +90,10 @@
 </template>
 
 <script>
-import SearchForm from '@/components/SearchForm.vue';
-import ShowMore from '@/components/functional/ShowMore.vue';
-import UserMenu from '@/components/UserMenu.vue';
-import UserPicture from '@/components/UserPicture.vue';
+import ShowMore from '@/components/_functional/ShowMore.vue';
+import SearchForm from './SearchForm.vue';
+import UserMenu from './UserMenu.vue';
+import UserPicture from './UserPicture.vue';
 
 export default {
   name: 'TopBar',

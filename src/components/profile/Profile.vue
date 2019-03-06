@@ -228,29 +228,22 @@
 </template>
 
 <script>
-// components
-import Button from '@/components/Button.vue';
-import Icon from '@/components/Icon.vue';
-import IconBlock from '@/components/IconBlock.vue';
-import IconBlockList from '@/components/IconBlockList.vue';
-import Key from '@/components/Key.vue';
-import Modal from '@/components/functional/Modal.vue';
-import Person from '@/components/Person.vue';
-import ProfileNav from '@/components/ProfileNav.vue';
-import ReportingStructure from '@/components/ReportingStructure.vue';
-import ShowMore from '@/components/functional/ShowMore.vue';
-import Tag from '@/components/Tag.vue';
-import Toast from '@/components/Toast.vue';
-import Vouch from '@/components/Vouch.vue';
-
-// mixins
-import AccountsMixin from '@/components/mixins/AccountsMixin.vue';
-
-// forms
-import EditPersonalInfo from '@/components/forms/EditPersonalInfo.vue';
-
-// views
-import ViewPersonalInfo from '@/components/ViewPersonalInfo.vue';
+import AccountsMixin from '@/components/_mixins/AccountsMixin.vue';
+import Button from '@/components/ui/Button.vue';
+import Icon from '@/components/ui/Icon.vue';
+import IconBlock from '@/components/ui/IconBlock.vue';
+import IconBlockList from '@/components/ui/IconBlockList.vue';
+import Key from '@/components/ui/Key.vue';
+import Modal from '@/components/_functional/Modal.vue';
+import Person from '@/components/ui/Person.vue';
+import ShowMore from '@/components/_functional/ShowMore.vue';
+import Tag from '@/components/ui/Tag.vue';
+import Toast from '@/components/ui/Toast.vue';
+import Vouch from '@/components/ui/Vouch.vue';
+import EditPersonalInfo from './edit/EditPersonalInfo.vue';
+import ProfileNav from './ProfileNav.vue';
+import ReportingStructure from './ReportingStructure.vue';
+import ViewPersonalInfo from './view/ViewPersonalInfo.vue';
 
 export default {
   mixins: [AccountsMixin],

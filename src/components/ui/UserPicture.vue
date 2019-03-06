@@ -13,8 +13,9 @@
 </template>
 
 <script>
-import DinoType from '@/components/DinoType.vue';
 import Identicon from 'identicon.js';
+
+import DinoType from './DinoType.vue';
 
 function hex(buffer) {
   const hexCodes = [];

@@ -187,8 +187,8 @@
 </template>
 
 <script>
-import Combobox from '@/components/Combobox.vue';
-import Select from '@/components/Select.vue';
+import Combobox from '@/components/ui/Combobox.vue';
+import Select from '@/components/ui/Select.vue';
 
 import { MUTATE_PROFILE, DISPLAY_PROFILE } from '@/queries/profile';
 import { displayLevelsFor, DISPLAY_LEVELS } from '@/assets/js/display-levels';

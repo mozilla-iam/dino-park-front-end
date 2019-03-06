@@ -92,13 +92,12 @@
 </template>
 
 <script>
-import ContactMe from '@/components/ContactMe.vue';
-import UserPicture from '@/components/UserPicture.vue';
-import ProfileName from '@/components/ProfileName.vue';
-import ProfileTitle from '@/components/ProfileTitle.vue';
-import ProfileTeamLocation from '@/components/ProfileTeamLocation.vue';
-
-import CompanyMixin from '@/components/mixins/CompanyMixin.vue';
+import CompanyMixin from '@/components/_mixins/CompanyMixin.vue';
+import ContactMe from '@/components/ui/ContactMe.vue';
+import UserPicture from '@/components/ui/UserPicture.vue';
+import ProfileName from './ProfileName.vue';
+import ProfileTitle from './ProfileTitle.vue';
+import ProfileTeamLocation from './ProfileTeamLocation.vue';
 
 export default {
   mixins: [CompanyMixin],

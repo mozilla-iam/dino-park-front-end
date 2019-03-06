@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import OrgNode from '@/components/OrgNode.vue';
+import OrgNode from './OrgNode.vue';
 
 export default {
   name: 'OrgRoot',

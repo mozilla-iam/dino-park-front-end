@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import UserPicture from '@/components/UserPicture.vue';
+import UserPicture from '@/components/ui/UserPicture.vue';
 
 export default {
   name: 'SearchResult',
