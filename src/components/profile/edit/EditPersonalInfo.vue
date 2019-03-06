@@ -175,7 +175,11 @@
           <button
             type="button"
             class="button button--secondary"
-            @click="$emit('toggle-edit-mode')"
+            @click="
+              this.$router.push({
+                name: 'Profile',
+              })
+            "
           >
             Cancel
           </button>
@@ -233,6 +237,10 @@ export default {
           username: this.username,
         },
         data: { displayProfile: { ...data.displayProfile, ...updateProfile } },
+      });
+
+      this.$router.push({
+        name: 'Profile',
       });
 
       this.$emit('toggle-edit-mode');

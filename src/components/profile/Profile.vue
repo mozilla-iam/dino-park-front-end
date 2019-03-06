@@ -2,12 +2,32 @@
   <main class="profile container">
     <div
       :class="
-        'profile__section' + (this.editMode ? ' profile__section--editing' : '')
+        'profile__section' +
+          (this.editCard && this.editCard === 'personal-info'
+            ? ' profile__section--editing'
+            : '')
       "
     >
       <Toast :content="toastContent" @reset-toast="toastContent = ''"></Toast>
+      <EditPersonalInfo
+        v-if="this.editCard && this.editCard === 'personal-info'"
+        v-bind="{
+          username: username.value,
+          initialValues: {
+            alternativeName,
+            description,
+            firstName,
+            lastName,
+            funTitle,
+            location,
+            pronouns,
+            timezone,
+          },
+        }"
+        @toast="showToast"
+      />
       <ViewPersonalInfo
-        v-if="!editMode"
+        v-else
         v-bind="{
           staffInformation,
           username,
@@ -23,25 +43,6 @@
           location,
           description,
         }"
-        @toggle-edit-mode="toggleEditMode"
-      />
-      <EditPersonalInfo
-        v-else
-        v-bind="{
-          username: username.value,
-          initialValues: {
-            alternativeName,
-            description,
-            firstName,
-            lastName,
-            funTitle,
-            location,
-            pronouns,
-            timezone,
-          },
-        }"
-        @toggle-edit-mode="toggleEditMode"
-        @toast="showToast"
       />
     </div>
     <ProfileNav
@@ -253,6 +254,7 @@ export default {
     accessInformation: Object,
     description: Object,
     directs: Array,
+    editCard: String,
     firstName: Object,
     funTitle: Object,
     languages: Object,
@@ -291,9 +293,6 @@ export default {
   methods: {
     alphabetise(array) {
       return array ? array.sort() : null;
-    },
-    toggleEditMode() {
-      this.editMode = !this.editMode;
     },
     showToast(data) {
       this.toastContent = data.content;
