@@ -11,6 +11,11 @@
           v-bind="data.displayProfile"
           :manager="{ value: 'richard58' }"
           :directs="[]"
+          :editCard="
+            $route.name === 'Edit Profile' && $route.query.section
+              ? $route.query.section
+              : null
+          "
         ></Profile>
       </template>
       <template v-else-if="data && data.displayProfile === null">

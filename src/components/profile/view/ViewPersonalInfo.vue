@@ -3,7 +3,14 @@
     <button
       v-if="currentUser.primaryEmail == primaryEmail.value"
       class="profile__edit-button"
-      @click="$emit('toggle-edit-mode')"
+      @click="
+        this.$router.push({
+          name: 'Edit Profile',
+          query: {
+            section: 'personal-info',
+          },
+        })
+      "
     >
       <img src="@/assets/images/icon-pencil.svg" alt="Edit" />
     </button>
