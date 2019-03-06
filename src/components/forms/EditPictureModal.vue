@@ -1,8 +1,8 @@
 <template>
   <Modal
-    ref="modalEl"
     heading="Edit Profile Picture"
     :initiallyOpen="true"
+    :closeButton="true"
     @close="$emit('close')"
   >
     <div class="edit-picture-modal__picture-buttons">
@@ -54,7 +54,6 @@
       </div>
     </label>
 
-    <hr role="presentation" />
     <div class="edit-picture-modal__modal-buttons">
       <button
         type="button"
@@ -123,6 +122,8 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
+  max-width: 32em;
+  margin: 2em auto;
 }
 .edit-picture-modal__privacy-checkbox {
   margin-right: 1em;
@@ -131,6 +132,8 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  padding: 1.5em;
+  border-top: 1px solid var(--gray-30);
 }
 .edit-picture-modal__cancel-button {
   margin-right: 1em;
