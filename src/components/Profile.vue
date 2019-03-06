@@ -406,7 +406,7 @@ export default {
 }
 
 .profile__section {
-  border: 3px solid var(--gray-50);
+  border: 4px solid var(--gray-50);
   background: #fff;
   padding: 1.5em;
   margin: 0 0 2em;
