@@ -8,11 +8,11 @@ import router from './router';
 import { USER_MENU_PROFILE } from './queries/profile';
 
 const client = new ApolloClient({
-  uri: '/api/v3/graphql/',
+  uri: '/graphql',
 });
 
 const mutationClient = new ApolloClient({
-  uri: '/api/v3/graphqlMut',
+  uri: '/graphql',
 });
 
 const apolloProvider = new VueApollo({
@@ -43,7 +43,7 @@ const store = new Vuex.Store({
   actions: {
     async fetchUser({ commit }) {
       const { data } = await client.query({ query: USER_MENU_PROFILE });
-      commit('setUser', data.userMenu);
+      commit('setUser', data.profile);
     },
   },
   mutations: {

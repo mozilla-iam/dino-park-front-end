@@ -1,32 +1,32 @@
 export const DISPLAY_LEVELS = {
   public: {
     label: 'Public',
-    value: 'public',
+    value: 'PUBLIC',
     icon: 'world',
   },
   authenticated: {
     label: 'Registered',
-    value: 'authenticated',
+    value: 'AUTHENTICATED',
     icon: 'lock',
   },
   vouched: {
     label: 'Active',
-    value: 'vouched',
+    value: 'VOUCHED',
     icon: 'activity',
   },
   ndaed: {
     label: "NDA'd + Staff",
-    value: 'ndaed',
+    value: 'NDAED',
     icon: 'triangle',
   },
   staff: {
     label: 'Staff',
-    value: 'staff',
+    value: 'STAFF',
     icon: 'staff',
   },
   private: {
     label: 'Private',
-    value: 'private',
+    value: 'PRIVATE',
     icon: 'private',
   },
 };

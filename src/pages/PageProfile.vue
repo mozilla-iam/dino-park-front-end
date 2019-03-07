@@ -6,9 +6,9 @@
   >
     <template slot-scope="{ result: { loading, data, error } }">
       <LoadingSpinner v-if="loading"></LoadingSpinner>
-      <template v-else-if="data && data.displayProfile !== null">
+      <template v-else-if="data && data.profile !== null">
         <Profile
-          v-bind="data.displayProfile"
+          v-bind="data.profile"
           :manager="{ value: 'richard58' }"
           :directs="[]"
         ></Profile>

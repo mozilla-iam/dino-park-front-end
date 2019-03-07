@@ -10,7 +10,7 @@
         v-if="!editMode"
         v-bind="{
           staffInformation,
-          username,
+          primaryUsername,
           primaryEmail,
           phoneNumbers,
           timezone,
@@ -28,7 +28,7 @@
       <EditPersonalInfo
         v-else
         v-bind="{
-          username: username.value,
+          username: primaryUsername.value,
           initialValues: {
             alternativeName,
             description,
@@ -55,7 +55,7 @@
         <RouterLink
           :to="{
             name: 'OrgchartHighlight',
-            params: { username: username.value },
+            params: { username: primaryUsername.value },
           }"
           class="button button--secondary button--small"
         >
@@ -65,7 +65,7 @@
         </RouterLink>
       </header>
       <ReportingStructure
-        v-if="manager || directs.length > 0"
+        v-if="false && (manager || directs.length > 0)"
         :manager="manager"
         :directs="directs"
       >
@@ -79,10 +79,10 @@
       <h3 class="visually-hidden">Contact options</h3>
       <IconBlockList modifier="icon-block-list--multi-col">
         <IconBlock heading="Email" subHeading="primary" icon="email">
-          <a :href="`mailto:${primaryEmail}`">{{ primaryEmail }}</a>
+          <a :href="`mailto:${primaryEmail.value}`">{{ primaryEmail.value }}</a>
         </IconBlock>
         <IconBlock
-          v-for="[key, value] in Object.entries(phoneNumbers || {})"
+          v-for="[key, value] in Object.entries(phoneNumbers.values || {})"
           :key="`phoneNumber-${key}`"
           heading="Phone"
           :subHeading="key"
@@ -269,7 +269,7 @@ export default {
     tags: Object,
     timezone: Object,
     uris: Object,
-    username: Object,
+    primaryUsername: Object,
   },
   components: {
     Button,
@@ -316,7 +316,7 @@ export default {
       };
     },
     tagsSorted() {
-      return this.alphabetise(this.tags.values);
+      return this.alphabetise(Object.keys(this.tags.values || {}));
     },
     languagesSorted() {
       return this.alphabetise(['Dutch', 'German', 'Polish']);
