@@ -2,11 +2,16 @@ function dntEnabled(dnt, ua) {
   // for old version of IE we need to use the msDoNotTrack property of navigator
   // on newer versions, and newer platforms, this is doNotTrack but, on the window object
   // Safari also exposes the property on the window object.
-  let dntStatus = dnt || navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+  let dntStatus =
+    dnt || navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
   const userAgent = ua || navigator.userAgent;
 
   // List of Windows versions known to not implement DNT according to the standard.
-  const anomalousWinVersions = ['Windows NT 6.1', 'Windows NT 6.2', 'Windows NT 6.3'];
+  const anomalousWinVersions = [
+    'Windows NT 6.1',
+    'Windows NT 6.2',
+    'Windows NT 6.3',
+  ];
 
   const fxMatch = userAgent.match(/Firefox\/(\d+)/);
   const ieRegEx = /MSIE|Trident/i;
@@ -19,10 +24,15 @@ function dntEnabled(dnt, ua) {
   // With old versions of IE, DNT did not exist so we simply return false;
   if (isIE && typeof Array.prototype.indexOf !== 'function') {
     return false;
-  } else if (fxMatch && parseInt(fxMatch[1], 10) < 32) {
+  }
+  if (fxMatch && parseInt(fxMatch[1], 10) < 32) {
     // Can't say for sure if it is 1 or 0, due to Fx bug 887703
     dntStatus = 'Unspecified';
-  } else if (isIE && platform && anomalousWinVersions.indexOf(platform.toString()) !== -1) {
+  } else if (
+    isIE &&
+    platform &&
+    anomalousWinVersions.indexOf(platform.toString()) !== -1
+  ) {
     // default is on, which does not honor the specification
     dntStatus = 'Unspecified';
   } else {

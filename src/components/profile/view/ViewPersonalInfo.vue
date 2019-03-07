@@ -1,7 +1,7 @@
 <template>
   <div class="profile__intro">
     <button
-      v-if="currentUser.primaryEmail == primaryEmail.value"
+      v-if="currentUser && currentUser.primaryEmail.value == primaryEmail.value"
       class="profile__edit-button"
       @click="
         this.$router.push({
@@ -18,7 +18,7 @@
       <div class="profile__headshot">
         <UserPicture
           :picture="picture.value"
-          :username="username.value"
+          :username="primaryUsername.value"
           :size="230"
           :isStaff="staffInformation.staff.value"
         ></UserPicture>
@@ -34,7 +34,7 @@
       <ProfileName
         :firstName="firstName.value"
         :lastName="lastName.value"
-        :username="username.value"
+        :username="primaryUsername.value"
         :pronouns="pronouns.value"
       ></ProfileName>
       <ProfileTitle
@@ -113,7 +113,7 @@ export default {
   props: {
     tag: String,
     staffInformation: Object,
-    username: Object,
+    primaryUsername: Object,
     primaryEmail: Object,
     phoneNumbers: Object,
     timezone: Object,

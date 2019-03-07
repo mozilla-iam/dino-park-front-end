@@ -221,7 +221,7 @@ export default {
     updateCache(
       store,
       {
-        data: { updateProfile },
+        data: { profile },
       },
     ) {
       const data = store.readQuery({
@@ -236,7 +236,7 @@ export default {
         variables: {
           username: this.username,
         },
-        data: { displayProfile: { ...data.displayProfile, ...updateProfile } },
+        data: { profile: { ...data.profile, ...profile } },
       });
 
       this.$router.push({
@@ -254,7 +254,16 @@ export default {
       displayProfile: DISPLAY_PROFILE,
       mutateProfile: MUTATE_PROFILE,
       ...Object.entries(this.initialValues).reduce(
-        (obj, [key, { value, display }]) => {
+        (
+          obj,
+          [
+            key,
+            {
+              value,
+              metadata: { display },
+            },
+          ],
+        ) => {
           obj[key] = {
             value,
             display: display || DISPLAY_LEVELS.public.value,

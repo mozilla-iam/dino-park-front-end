@@ -68,8 +68,8 @@
           </template>
           <template slot="button-content">
             <UserPicture
-              :picture="user.picture"
-              :username="user.username"
+              :picture="user.picture.value"
+              :username="user.primaryUsername.value"
               :size="40"
               dinoType="Staff"
             ></UserPicture>
