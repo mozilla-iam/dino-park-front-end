@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import TopBar from '@/components/TopBar.vue';
-import Footer from '@/components/Footer.vue';
+import TopBar from '@/components/ui/TopBar.vue';
+import Footer from '@/components/ui/Footer.vue';
 
 import isDNTEnabled from '@/assets/js/dnt-enabled';
 
