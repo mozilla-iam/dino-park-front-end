@@ -133,7 +133,7 @@
             : '')
       "
     >
-      <a id="nav-contact" class="profile__anchor"></a>
+      <a id="nav-languages" class="profile__anchor"></a>
       <EditLanguages
         v-if="this.editCard && this.editCard === 'languages'"
         v-bind="{
@@ -149,6 +149,9 @@
         v-bind="{ languages: languagesSorted }"
       ></ViewLanguages>
     </section>
+    <EmptyCard v-else title="Languages" message="No languages have been added">
+      <a id="nav-languages" class="profile__anchor"></a
+    ></EmptyCard>
     <section v-if="sections.accounts" class="profile__section">
       <a id="nav-other-accounts" class="profile__anchor"></a>
       <header class="profile__section-header">
@@ -187,13 +190,12 @@
         </div>
       </div>
     </section>
-    <section v-else class="profile__section profile__section--disabled">
-      <a id="nav-other-accounts" class="profile__anchor"></a>
-      <header class="profile__section-header">
-        <h2>Other Accounts</h2>
-      </header>
-      <p>No other accounts have been added</p>
-    </section>
+    <EmptyCard
+      v-else
+      title="Other Accounts"
+      message="No other accounts have been added"
+      ><a id="nav-other-accounts" class="profile__anchor"></a
+    ></EmptyCard>
     <section
       v-if="
         Object.keys(accessInformation.mozilliansorg.values || {}).length > 0
@@ -216,13 +218,13 @@
         </IconBlock>
       </IconBlockList>
     </section>
-    <section v-else class="profile__section profile__section--disabled">
+    <EmptyCard
+      v-else
+      title="Access Groups"
+      message="No access groups available"
+    >
       <a id="nav-access-groups" class="profile__anchor"></a>
-      <header class="profile__section-header">
-        <h2>Access Groups</h2>
-      </header>
-      <p>No access groups available</p>
-    </section>
+    </EmptyCard>
     <section v-if="(tagsSorted || []).length > 0" class="profile__section">
       <a id="nav-tags" class="profile__anchor"></a>
       <header class="profile__section-header">
@@ -234,13 +236,9 @@
         :key="`tag-${index}`"
       />
     </section>
-    <section v-else class="profile__section profile__section--disabled">
-      <a id="nav-tags" class="profile__anchor"></a>
-      <header class="profile__section-header">
-        <h2>Tags</h2>
-      </header>
-      <p>No tags have been added</p>
-    </section>
+    <EmptyCard v-else title="Tags" message="No tags have been added">
+      <a id="nav-tags" class="profile__anchor"></a
+    ></EmptyCard>
   </main>
 </template>
 
@@ -260,6 +258,7 @@ import Vouch from '@/components/ui/Vouch.vue';
 import EditContact from './edit/EditContact.vue';
 import EditLanguages from './edit/EditLanguages.vue';
 import EditPersonalInfo from '@/components/profile/edit/EditPersonalInfo.vue';
+import EmptyCard from '@/components/profile/view/EmptyCard.vue';
 import ProfileNav from './ProfileNav.vue';
 import ReportingStructure from './ReportingStructure.vue';
 import ViewContact from './view/ViewContact.vue';
@@ -298,6 +297,7 @@ export default {
     EditContact,
     EditLanguages,
     EditPersonalInfo,
+    EmptyCard,
     Icon,
     IconBlock,
     IconBlockList,
@@ -408,11 +408,6 @@ export default {
     border-color: transparent;
     box-shadow: var(--shadowCard);
   }
-}
-.profile__section--disabled {
-  background-color: var(--gray-20);
-  color: var(--gray-50);
-  border: 2px solid var(--gray-30);
 }
 .profile__section--editing {
   border-color: var(--blue-60);
