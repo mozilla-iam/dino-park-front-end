@@ -25,48 +25,48 @@
     </button>
     <div class="profile-preview__image">
       <UserPicture
-        :picture="picture"
-        :username="username"
+        :picture="picture.value"
+        :username="primaryUsername.value"
         :size="100"
         :isStaff="staffInformation.staff"
       />
     </div>
     <ProfileName
-      :firstName="firstName"
-      :lastName="lastName"
-      :pronouns="pronouns"
+      :firstName="firstName.value"
+      :lastName="lastName.value"
+      :pronouns="pronouns.value"
     ></ProfileName>
     <ProfileTitle
-      :businessTitle="staffInformation.title"
-      :funTitle="funTitle"
+      :businessTitle="staffInformation.title.value"
+      :funTitle="funTitle.value"
     ></ProfileTitle>
     <div class="hide-desktop">
       <ContactMe
-        :primaryEmail="primaryEmail"
-        :phoneNumbers="phoneNumbers"
+        :primaryEmail="primaryEmail.value"
+        :phoneNumbers="phoneNumbers.values"
       ></ContactMe>
     </div>
     <ProfileTeamLocation
-      :team="staffInformation.team"
-      :entity="company(staffInformation, primaryEmail)"
-      :location="location"
-      :officeLocation="staffInformation.officeLocation"
-      :timezone="timezone"
+      :team="staffInformation.team.value"
+      :entity="company(staffInformation.value, primaryEmail.value)"
+      :location="location.value"
+      :officeLocation="staffInformation.officeLocation.value"
+      :timezone="timezone.value"
     ></ProfileTeamLocation>
     <h2 class="visually-hidden">About</h2>
     <div class="profile__description">
-      <p>{{ description }}</p>
+      <p>{{ description.value }}</p>
     </div>
     <hr class="profile-preview__divider" />
     <div class="profile-preview__buttons">
       <div class="hide-mobile">
         <ContactMe
-          :primaryEmail="primaryEmail"
-          :phoneNumbers="phoneNumbers"
+          :primaryEmail="primaryEmail.value"
+          :phoneNumbers="phoneNumbers.value"
         ></ContactMe>
       </div>
       <RouterLink
-        :to="{ name: 'Profile', params: { username: username } }"
+        :to="{ name: 'Profile', params: { username: primaryUsername.value } }"
         class="button button--text-only"
       >
         View full profile
@@ -104,18 +104,18 @@ export default {
   name: 'ProfilePreview',
   props: {
     staffInformation: Object,
-    username: String,
-    primaryEmail: String,
+    primaryUsername: Object,
+    primaryEmail: Object,
     phoneNumbers: Object,
-    timezone: String,
-    firstName: String,
-    lastName: String,
-    pronouns: String,
-    funTitle: String,
-    picture: String,
-    location: String,
-    description: String,
-    userId: String,
+    timezone: Object,
+    firstName: Object,
+    lastName: Object,
+    pronouns: Object,
+    funTitle: Object,
+    picture: Object,
+    location: Object,
+    description: Object,
+    userId: Object,
   },
   components: {
     ContactMe,

@@ -1,81 +1,57 @@
 import { gql } from 'apollo-boost';
 
-const PROFILE = gql`
-  query($username: String!) {
-    profile(username: $username) {
-      alternativeName
-      created
-      description
-      firstName
-      funTitle
-      lastModified
-      lastName
-      location
-      pgpPublicKeys
-      picture
-      languages
-      primaryEmail
-      pronouns
-      sshPublicKeys
-      tags
-      timezone
-      uris
-      username
-      phoneNumbers
-      staffInformation {
-        staff
-        team
-        title
-        workerType
-        wprDeskNumber
-        costCenter
-        officeLocation
-      }
-      manager {
-        firstName
-        lastName
-        picture
-        title
-        funTitle
-        location
-        username
-      }
-      directs {
-        firstName
-        lastName
-        picture
-        title
-        funTitle
-        location
-        username
-      }
-      accessInformation {
-        mozilliansorg
-      }
-    }
-  }
-`;
-
 const PREVIEW_PROFILE = gql`
   query($username: String!) {
     profile(username: $username) {
-      alternativeName
-      description
-      firstName
-      funTitle
-      lastName
-      location
-      picture
-      primaryEmail
-      pronouns
-      timezone
-      username
-      phoneNumbers
+      alternativeName {
+        value
+      }
+      description {
+        value
+      }
+      firstName {
+        value
+      }
+      funTitle {
+        value
+      }
+      lastName {
+        value
+      }
+      location {
+        value
+      }
+      picture {
+        value
+      }
+      primaryEmail {
+        value
+      }
+      pronouns {
+        value
+      }
+      timezone {
+        value
+      }
+      primaryUsername {
+        value
+      }
+      phoneNumbers {
+        values
+      }
       staffInformation {
-        staff
-        team
-        title
-        officeLocation
+        staff {
+          value
+        }
+        team {
+          value
+        }
+        title {
+          value
+        }
+        officeLocation {
+          value
+        }
       }
     }
   }
@@ -83,30 +59,38 @@ const PREVIEW_PROFILE = gql`
 
 const USER_MENU_PROFILE = gql`
   query {
-    userMenu {
-      firstName
-      lastName
-      picture
-      username
-      primaryEmail
+    profile {
+      firstName {
+        value
+      }
+      lastName {
+        value
+      }
+      picture {
+        value
+      }
+      primaryUsername {
+        value
+      }
+      primaryEmail {
+        value
+      }
     }
   }
 `;
 
 const MUTATE_PROFILE = gql`
   mutation UpdateProfile(
-    $username: String!
-    $alternativeName: DisplayStringInput
-    $description: DisplayStringInput
-    $firstName: DisplayStringInput
-    $funTitle: DisplayStringInput
-    $lastName: DisplayStringInput
-    $location: DisplayStringInput
-    $pronouns: DisplayStringInput
-    $timezone: DisplayStringInput
+    $alternativeName: StringWithDisplay
+    $description: StringWithDisplay
+    $firstName: StringWithDisplay
+    $funTitle: StringWithDisplay
+    $lastName: StringWithDisplay
+    $location: StringWithDisplay
+    $pronouns: StringWithDisplay
+    $timezone: StringWithDisplay
   ) {
-    updateProfile(
-      username: $username
+    profile(
       update: {
         alternativeName: $alternativeName
         description: $description
@@ -120,35 +104,51 @@ const MUTATE_PROFILE = gql`
     ) {
       alternativeName {
         value
-        display
+        metadata {
+          display
+        }
       }
       description {
         value
-        display
+        metadata {
+          display
+        }
       }
       firstName {
         value
-        display
+        metadata {
+          display
+        }
       }
       funTitle {
         value
-        display
+        metadata {
+          display
+        }
       }
       lastName {
         value
-        display
+        metadata {
+          display
+        }
       }
       location {
         value
-        display
+        metadata {
+          display
+        }
       }
       pronouns {
         value
-        display
+        metadata {
+          display
+        }
       }
       timezone {
         value
-        display
+        metadata {
+          display
+        }
       }
     }
   }
@@ -156,7 +156,7 @@ const MUTATE_PROFILE = gql`
 
 const DISPLAY_PROFILE = gql`
   query DisplayProfile($username: String!) {
-    displayProfile(username: $username) {
+    profile(username: $username) {
       accessInformation {
         mozilliansorg {
           values
@@ -164,84 +164,124 @@ const DISPLAY_PROFILE = gql`
       }
       alternativeName {
         value
-        display
+        metadata {
+          display
+        }
       }
       description {
         value
-        display
+        metadata {
+          display
+        }
       }
-      dinoId {
+      uuid {
         value
-        display
+        metadata {
+          display
+        }
       }
       firstName {
         value
-        display
+        metadata {
+          display
+        }
       }
       funTitle {
         value
-        display
+        metadata {
+          display
+        }
       }
       lastName {
         value
-        display
+        metadata {
+          display
+        }
       }
       location {
         value
-        display
+        metadata {
+          display
+        }
       }
       picture {
         value
-        display
+        metadata {
+          display
+        }
       }
       primaryEmail {
         value
-        display
+        metadata {
+          display
+        }
       }
       pronouns {
         value
-        display
+        metadata {
+          display
+        }
       }
       timezone {
         value
-        display
+        metadata {
+          display
+        }
       }
-      username {
+      primaryUsername {
         value
-        display
+        metadata {
+          display
+        }
       }
       phoneNumbers {
         values
-        display
+        metadata {
+          display
+        }
       }
       staffInformation {
         staff {
           value
-          display
+          metadata {
+            display
+          }
         }
         team {
           value
-          display
+          metadata {
+            display
+          }
         }
         title {
           value
-          display
+          metadata {
+            display
+          }
         }
         officeLocation {
           value
-          display
+          metadata {
+            display
+          }
         }
         workerType {
           value
-          display
+          metadata {
+            display
+          }
         }
         wprDeskNumber {
           value
-          display
+          metadata {
+            display
+          }
         }
         costCenter {
           value
-          display
+          metadata {
+            display
+          }
         }
       }
       tags {
@@ -251,10 +291,4 @@ const DISPLAY_PROFILE = gql`
   }
 `;
 
-export {
-  PROFILE,
-  DISPLAY_PROFILE,
-  MUTATE_PROFILE,
-  PREVIEW_PROFILE,
-  USER_MENU_PROFILE,
-};
+export { DISPLAY_PROFILE, MUTATE_PROFILE, PREVIEW_PROFILE, USER_MENU_PROFILE };
