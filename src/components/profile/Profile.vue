@@ -94,35 +94,32 @@
       ></EditContact>
       <ViewContact v-else v-bind="{ primaryEmail, phoneNumbers }"></ViewContact>
     </section>
-    <section class="profile__section">
-      <div v-if="pgpPublicKeys || sshPublicKeys">
-        <hr />
-        <h3>Keys</h3>
-        <template
-          v-if="pgpPublicKeys && Object.keys(pgpPublicKeys.values).length > 0"
-        >
-          <h4 class="visually-hidden">PGP</h4>
-          <Key
-            v-for="[key, value] in Object.entries(pgpPublicKeys.values)"
-            type="PGP"
-            :title="key"
-            :content="value"
-            :key="`pgp-${key}`"
-          />
-        </template>
-        <template
-          v-if="sshPublicKeys && Object.keys(sshPublicKeys.values).length > 0"
-        >
-          <h4 class="visually-hidden">SSH</h4>
-          <Key
-            v-for="[key, value] in Object.entries(sshPublicKeys.values)"
-            type="SSH"
-            :title="key"
-            :content="value"
-            :key="`ssh-${key}`"
-          />
-        </template>
-      </div>
+    <section class="profile__section" v-if="pgpPublicKeys || sshPublicKeys">
+      <h3>Keys</h3>
+      <template
+        v-if="pgpPublicKeys && Object.keys(pgpPublicKeys.values).length > 0"
+      >
+        <h4 class="visually-hidden">PGP</h4>
+        <Key
+          v-for="[key, value] in Object.entries(pgpPublicKeys.values)"
+          type="PGP"
+          :title="key"
+          :content="value"
+          :key="`pgp-${key}`"
+        />
+      </template>
+      <template
+        v-if="sshPublicKeys && Object.keys(sshPublicKeys.values).length > 0"
+      >
+        <h4 class="visually-hidden">SSH</h4>
+        <Key
+          v-for="[key, value] in Object.entries(sshPublicKeys.values)"
+          type="SSH"
+          :title="key"
+          :content="value"
+          :key="`ssh-${key}`"
+        />
+      </template>
     </section>
     <section
       v-if="languagesSorted && languagesSorted.length > 0"
@@ -342,7 +339,7 @@ export default {
       return this.alphabetise(Object.keys(this.tags.values || {}));
     },
     languagesSorted() {
-      return this.alphabetise(['Dutch', 'German', 'Polish']);
+      return this.languages ? this.alphabetise(this.languages) : null;
     },
   },
   data() {
