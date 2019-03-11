@@ -11,7 +11,7 @@
           v-bind="data.profile"
           :manager="{ value: 'richard58' }"
           :directs="[]"
-          :editCard="
+          :editing="
             $route.name === 'Edit Profile' && $route.query.section
               ? $route.query.section
               : null
