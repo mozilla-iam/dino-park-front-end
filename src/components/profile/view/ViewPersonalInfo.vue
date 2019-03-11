@@ -1,7 +1,9 @@
 <template>
   <div class="profile__intro">
     <button
-      v-if="currentUser && currentUser.primaryEmail.value == primaryEmail.value"
+      v-if="
+        currentUser && currentUser.primaryEmail.value === primaryEmail.value
+      "
       class="profile__edit-button"
       @click="
         $router.push({

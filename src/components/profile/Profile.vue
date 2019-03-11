@@ -123,18 +123,31 @@
           />
         </template>
       </div>
-      <template v-if="languagesSorted && languagesSorted.length > 0">
-        <hr />
-        <div class="languages">
-          <h3>Languages</h3>
-          <Tag
-            v-for="(language, index) in languagesSorted"
-            :tag="language"
-            :key="`language-${index}`"
-          >
-          </Tag>
-        </div>
-      </template>
+    </section>
+    <section
+      v-if="languagesSorted && languagesSorted.length > 0"
+      :class="
+        'profile__section' +
+          (this.editCard && this.editCard === 'languages'
+            ? ' profile__section--editing'
+            : '')
+      "
+    >
+      <a id="nav-contact" class="profile__anchor"></a>
+      <EditLanguages
+        v-if="this.editCard && this.editCard === 'languages'"
+        v-bind="{
+          username: primaryUsername.value,
+          initialValues: {
+            languages: languagesSorted,
+          },
+        }"
+        @toast="showToast"
+      ></EditLanguages>
+      <ViewLanguages
+        v-else
+        v-bind="{ languages: languagesSorted }"
+      ></ViewLanguages>
     </section>
     <section v-if="sections.accounts" class="profile__section">
       <a id="nav-other-accounts" class="profile__anchor"></a>
@@ -245,10 +258,12 @@ import Tag from '@/components/ui/Tag.vue';
 import Toast from '@/components/ui/Toast.vue';
 import Vouch from '@/components/ui/Vouch.vue';
 import EditContact from './edit/EditContact.vue';
+import EditLanguages from './edit/EditLanguages.vue';
 import EditPersonalInfo from '@/components/profile/edit/EditPersonalInfo.vue';
 import ProfileNav from './ProfileNav.vue';
 import ReportingStructure from './ReportingStructure.vue';
 import ViewContact from './view/ViewContact.vue';
+import ViewLanguages from './view/ViewLanguages.vue';
 import ViewPersonalInfo from './view/ViewPersonalInfo.vue';
 
 export default {
@@ -281,6 +296,7 @@ export default {
   components: {
     Button,
     EditContact,
+    EditLanguages,
     EditPersonalInfo,
     Icon,
     IconBlock,
@@ -294,6 +310,7 @@ export default {
     Tag,
     Toast,
     ViewContact,
+    ViewLanguages,
     ViewPersonalInfo,
     Vouch,
   },
