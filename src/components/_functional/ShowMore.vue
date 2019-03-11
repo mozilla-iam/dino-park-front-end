@@ -70,6 +70,7 @@ export default {
       if (event.altKey) {
         this.$emit('expand-all');
       }
+      event.stopPropagation();
     },
     handleDocumentClick(event) {
       const expandedEl = this.$refs.overflowContentElement.firstElementChild;
@@ -78,7 +79,8 @@ export default {
       // overflowing content itself
       if (
         event.target !== expandedEl &&
-        expandedEl.contains(event.target) === false
+        expandedEl.contains(event.target) === false &&
+        this.isExpanded === true
       ) {
         this.isExpanded = false;
       }

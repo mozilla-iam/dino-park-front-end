@@ -8,19 +8,24 @@
       >
         <span class="visually-hidden">Close user menu</span>
         <UserPicture
-          :picture="user.picture"
-          :username="user.username"
+          :picture="user.picture.value"
+          :username="user.primaryUsername.value"
           :size="40"
         ></UserPicture>
       </button>
       <div class="user-menu__name">
         <RouterLink
-          :to="{ name: 'Profile', params: { username: user.username } }"
+          :to="{
+            name: 'Profile',
+            params: { username: user.primaryUsername.value },
+          }"
         >
           <span class="user-menu__header-name"
-            >{{ user.firstName }} {{ user.lastName }}</span
+            >{{ user.firstName.value }} {{ user.lastName.value }}</span
           >
-          <span class="user-menu__header-email">{{ user.primaryEmail }}</span>
+          <span class="user-menu__header-email">{{
+            user.primaryEmail.value
+          }}</span>
         </RouterLink>
       </div>
       <button
@@ -50,7 +55,10 @@
     <ul class="user-menu__items" @click="closeOnLinkClick">
       <li>
         <RouterLink
-          :to="{ name: 'Profile', params: { username: user.username } }"
+          :to="{
+            name: 'Profile',
+            params: { username: user.primaryUsername.value },
+          }"
         >
           <span>My Profile</span>
           <Icon id="user" :width="24" :height="24" />
