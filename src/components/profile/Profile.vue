@@ -12,7 +12,7 @@
       <EditPersonalInfo
         v-if="this.editCard && this.editCard === 'personal-info'"
         v-bind="{
-          username: username.value,
+          username: primaryUsername.value,
           initialValues: {
             alternativeName,
             description,
