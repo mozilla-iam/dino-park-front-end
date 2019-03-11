@@ -8,7 +8,6 @@
             : '')
       "
     >
-      <Toast :content="toastContent" @reset-toast="toastContent = ''"></Toast>
       <EditPersonalInfo
         v-if="this.editCard && this.editCard === 'personal-info'"
         v-bind="{
@@ -44,6 +43,7 @@
           description,
         }"
       />
+      <Toast :content="toastContent" @reset-toast="toastContent = ''"></Toast>
     </div>
     <ProfileNav
       :links="profileNav"
@@ -72,26 +72,29 @@
       >
       </ReportingStructure>
     </section>
-    <section class="profile__section">
+    <section
+      :class="
+        'profile__section' +
+          (this.editCard && this.editCard === 'contact'
+            ? ' profile__section--editing'
+            : '')
+      "
+    >
       <a id="nav-contact" class="profile__anchor"></a>
-      <header class="profile__section-header">
-        <h2>Contact</h2>
-      </header>
-      <h3 class="visually-hidden">Contact options</h3>
-      <IconBlockList modifier="icon-block-list--multi-col">
-        <IconBlock heading="Email" subHeading="primary" icon="email">
-          <a :href="`mailto:${primaryEmail.value}`">{{ primaryEmail.value }}</a>
-        </IconBlock>
-        <IconBlock
-          v-for="[key, value] in Object.entries(phoneNumbers.values || {})"
-          :key="`phoneNumber-${key}`"
-          heading="Phone"
-          :subHeading="key"
-          icon="phone"
-        >
-          <a :href="`tel:${value}`">{{ value }}</a>
-        </IconBlock>
-      </IconBlockList>
+      <EditContact
+        v-if="this.editCard && this.editCard === 'contact'"
+        v-bind="{
+          username: primaryUsername.value,
+          initialValues: {
+            primaryEmail,
+            phoneNumbers,
+          },
+        }"
+        @toast="showToast"
+      ></EditContact>
+      <ViewContact v-else v-bind="{ primaryEmail, phoneNumbers }"></ViewContact>
+    </section>
+    <section class="profile__section">
       <div v-if="pgpPublicKeys || sshPublicKeys">
         <hr />
         <h3>Keys</h3>
@@ -241,9 +244,11 @@ import ShowMore from '@/components/_functional/ShowMore.vue';
 import Tag from '@/components/ui/Tag.vue';
 import Toast from '@/components/ui/Toast.vue';
 import Vouch from '@/components/ui/Vouch.vue';
-import EditPersonalInfo from './edit/EditPersonalInfo.vue';
+import EditContact from './edit/EditContact.vue';
+import EditPersonalInfo from '@/components/profile/edit/EditPersonalInfo.vue';
 import ProfileNav from './ProfileNav.vue';
 import ReportingStructure from './ReportingStructure.vue';
+import ViewContact from './view/ViewContact.vue';
 import ViewPersonalInfo from './view/ViewPersonalInfo.vue';
 
 export default {
@@ -275,6 +280,7 @@ export default {
   },
   components: {
     Button,
+    EditContact,
     EditPersonalInfo,
     Icon,
     IconBlock,
@@ -287,6 +293,7 @@ export default {
     ShowMore,
     Tag,
     Toast,
+    ViewContact,
     ViewPersonalInfo,
     Vouch,
   },
@@ -377,6 +384,7 @@ export default {
   grid-column: 2 / -1;
   overflow: visible;
   border-radius: var(--cardRadius);
+  position: relative;
 }
 @supports (--key: value) {
   .profile__section {
