@@ -29,6 +29,8 @@
         v-else
         v-bind="{
           username: primaryUsername.value,
+          picture,
+          staffInformation,
           initialValues: {
             alternativeName,
             description,

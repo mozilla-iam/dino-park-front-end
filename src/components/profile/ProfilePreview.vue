@@ -199,8 +199,11 @@ export default {
 }
 
 .modal .profile-preview {
-  padding: 2em 0 0;
+  padding: 2em 1em 0;
   box-shadow: none;
+}
+.org-chart__preview .modal__header {
+  border-bottom: 0;
 }
 .modal .profile-preview__image {
   margin: 0 auto 1em;

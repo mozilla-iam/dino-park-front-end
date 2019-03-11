@@ -18,12 +18,30 @@
     clientId="mutationClient"
   >
     <template slot-scope="{ mutate, data, error }">
+      <EditPictureModal
+        v-if="showPictureModal"
+        v-bind="{ picture, username, staffInformation }"
+        @close="showPictureModal = false"
+      />
       <form
         action=""
         @submit.prevent="mutate()"
         aria-label="Edit personal information"
       >
         <div class="edit-personal-info">
+          <button
+            class="edit-personal-info__picture"
+            type="button"
+            @click="showPictureModal = true"
+          >
+            <UserPicture
+              :picture="picture.value"
+              :username="username.value"
+              :size="230"
+              :isStaff="staffInformation.staff.value"
+            ></UserPicture>
+          </button>
+
           <label for="field-first-name">First name</label>
           <input type="text" id="field-first-name" v-model="firstName.value" />
           <div class="edit-personal-info__privacy">
@@ -189,19 +207,24 @@
 <script>
 import Combobox from '@/components/ui/Combobox.vue';
 import Select from '@/components/ui/Select.vue';
-
+import UserPicture from '@/components/ui/UserPicture.vue';
 import { MUTATE_PROFILE, DISPLAY_PROFILE } from '@/queries/profile';
 import { displayLevelsFor, DISPLAY_LEVELS } from '@/assets/js/display-levels';
+import EditPictureModal from './EditPictureModal.vue';
 
 export default {
   name: 'EditPersonalInfo',
   props: {
     username: String,
+    picture: Object,
+    staffInformation: Object,
     initialValues: Object,
   },
   components: {
     Combobox,
+    EditPictureModal,
     Select,
+    UserPicture,
   },
   methods: {
     displayLevelsFor,
@@ -271,6 +294,7 @@ export default {
         expandedShowLabel: true,
         class: 'options--zebra',
       },
+      showPictureModal: false,
     };
   },
 };
@@ -331,6 +355,10 @@ textarea {
 .button-bar button:first-child {
   margin-left: auto;
 }
+.edit-personal-info__picture {
+  border: none;
+  background: none;
+}
 @media (min-width: 57.5em) {
   .edit-personal-info {
     display: grid;
@@ -359,6 +387,10 @@ textarea {
   }
   .edit-personal-info > textarea {
     grid-column: 2 / 4;
+  }
+  .edit-personal-info__picture {
+    grid-column: 1 / 2;
+    grid-row: 1 / 8;
   }
   .edit-personal-info__privacy {
     grid-column: 4 / 5;
