@@ -36,7 +36,6 @@ import { DISPLAY_LEVELS } from '@/assets/js/display-levels';
 export default {
   name: 'EditMutationWrapper',
   props: {
-    username: String,
     initialValues: Object,
     formName: String,
     editVariables: Object,
@@ -80,6 +79,11 @@ export default {
       this.$emit('toast', {
         content: 'Your changes have been saved. Thank you.',
       });
+    },
+  },
+  computed: {
+    username() {
+      return this.$route.params.username;
     },
   },
   data() {
