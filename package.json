@@ -9,8 +9,9 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
-    "combobo": "^2.0.1",
     "apollo-boost": "^0.3.1",
+    "combobo": "^2.0.1",
+    "cropd": "^1.0.0",
     "graphql": "^14.1.1",
     "graphql-tag": "^2.10.1",
     "identicon.js": "^2.3.3",

@@ -271,7 +271,6 @@ export default {
     accessInformation: Object,
     description: Object,
     directs: Array,
-    editing: String,
     firstName: Object,
     funTitle: Object,
     languages: Object,
@@ -406,6 +405,11 @@ export default {
     border-color: transparent;
     box-shadow: var(--shadowCard);
   }
+}
+.profile__section--disabled {
+  background-color: var(--gray-20);
+  color: var(--gray-50);
+  border: 2px solid var(--gray-30);
 }
 .profile__section--editing {
   border-color: var(--blue-60);

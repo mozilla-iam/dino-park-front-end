@@ -14,7 +14,36 @@
     :initialValues="initialValues"
     formName="Edit personal information"
   >
+    <EditPictureModal
+      v-if="showPictureModal"
+      v-bind="{ picture, username, staffInformation }"
+      @close="showPictureModal = false"
+    />
     <div class="edit-personal-info">
+      <button
+        class="edit-personal-info__picture"
+        type="button"
+        @click="showPictureModal = true"
+      >
+        <UserPicture
+          :picture="picture.value"
+          :username="username.value"
+          :size="230"
+          :isStaff="staffInformation.staff.value"
+        ></UserPicture>
+      </button>
+      <button
+        class="edit-personal-info__picture"
+        type="button"
+        @click="showPictureModal = true"
+      >
+        <UserPicture
+          :picture="picture.value"
+          :username="username.value"
+          :size="230"
+          :isStaff="staffInformation.staff.value"
+        ></UserPicture>
+      </button>
       <label for="field-first-name">First name</label>
       <input type="text" id="field-first-name" v-model="firstName.value" />
       <div class="edit-personal-info__privacy">
@@ -161,19 +190,24 @@
 import Combobox from '@/components/ui/Combobox.vue';
 import EditMutationWrapper from '@/components/profile/edit/EditMutationWrapper.vue';
 import Select from '@/components/ui/Select.vue';
-
+import UserPicture from '@/components/ui/UserPicture.vue';
 import { displayLevelsFor, DISPLAY_LEVELS } from '@/assets/js/display-levels';
+import EditPictureModal from './EditPictureModal.vue';
 
 export default {
   name: 'EditPersonalInfo',
   props: {
     username: String,
+    picture: Object,
+    staffInformation: Object,
     initialValues: Object,
   },
   components: {
     Combobox,
+    EditPictureModal,
     EditMutationWrapper,
     Select,
+    UserPicture,
   },
   methods: {
     displayLevelsFor,
@@ -206,6 +240,7 @@ export default {
         },
         {},
       ),
+      showPictureModal: false,
     };
   },
 };

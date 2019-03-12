@@ -9,32 +9,24 @@
     >
       <div class="modal__content">
         <div class="modal__header">
-          <div class="modal__container">
-            <button
-              v-if="closeButton"
-              @click="isOpen = false"
-              class="button button--text-only button--secondary"
-            >
-              Close
-              <img
-                src="@/assets/images/x.svg"
-                alt=""
-                width="20"
-                aria-hidden="true"
-              />
-            </button>
-            <h1 v-if="heading">{{ heading }}</h1>
-          </div>
+          <button
+            v-if="closeButton"
+            @click="isOpen = false"
+            class="modal__close"
+          >
+            <span class="visually-hidden">Close</span>
+            <Icon id="x" :width="30" :height="30"></Icon>
+          </button>
+          <h1 v-if="heading">{{ heading }}</h1>
         </div>
-        <div class="modal__container">
-          <slot></slot>
-        </div>
+        <slot></slot>
       </div>
     </div>
   </transition>
 </template>
 
 <script>
+import Icon from '@/components/ui/Icon.vue';
 import { bindFocusTrap, unbindFocusTrap } from '@/assets/js/trap-focus';
 
 export default {
@@ -43,6 +35,9 @@ export default {
     heading: String,
     initiallyOpen: Boolean,
     closeButton: Boolean,
+  },
+  components: {
+    Icon,
   },
   updated() {
     this.init();
@@ -130,10 +125,16 @@ export default {
 }
 .modal__content {
   width: 100%;
+  height: 100%;
   background: var(--white);
-  padding: 1.5em;
   margin: auto;
+  max-width: 50em;
   position: relative;
+}
+@media (min-width: 57.5em) {
+  .modal__content {
+    height: auto;
+  }
 }
 .org-chart__preview .modal__content {
   min-height: calc(100% + 1em);
@@ -144,23 +145,30 @@ export default {
   margin: 0 auto;
 }
 .modal__header {
-  padding: 1em;
-  margin: -1.5em -1.5em 0;
-  border: 1px solid var(--midGrey);
+  padding: 1.5em;
+  margin-bottom: 2em;
+  border-bottom: 1px solid var(--gray-30);
   position: relative;
 }
 @media (min-width: 57.5em) {
   .modal__header {
-    padding: 3em 1em 1em;
+    padding: 1.15em;
   }
 }
 .modal__header h1 {
-  font-size: 2.25em;
+  font-size: 1.5em;
+  font-family: 'Open Sans', sans-serif;
   margin-bottom: 0;
+  text-align: center;
 }
-.modal__header button {
+.modal__close {
   position: absolute;
-  top: 1em;
-  right: 1em;
+  top: 1.5em;
+  right: 1.5em;
+  border: 0;
+  background-color: transparent;
+}
+.modal__close:hover {
+  color: var(--blue-60);
 }
 </style>
