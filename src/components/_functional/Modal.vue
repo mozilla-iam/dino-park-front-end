@@ -72,9 +72,7 @@ export default {
       }
     },
     lockFocus() {
-      console.log('locking ocus');
       this.lastFocusedElement = document.activeElement;
-      console.log(this.$refs.modalEl);
       bindFocusTrap(this.$refs.modalEl);
       this.$refs.modalEl.focus();
       this.focusLocked = true;

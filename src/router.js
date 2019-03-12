@@ -29,6 +29,15 @@ const router = new Router({
       props: true,
     },
     {
+      path: '/p/:username/e',
+      name: 'Edit Profile',
+      component: PageProfile,
+      query: {
+        section: ':section?',
+      },
+      props: true,
+    },
+    {
       path: '/o/highlight/:username/',
       name: 'OrgchartHighlight',
       component: PageOrgchart,

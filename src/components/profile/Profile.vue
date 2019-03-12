@@ -2,31 +2,12 @@
   <main class="profile container">
     <div
       :class="
-        'profile__section' + (this.editMode ? ' profile__section--editing' : '')
+        'profile__section' +
+          (this.editing === 'personal-info' ? ' profile__section--editing' : '')
       "
     >
-      <Toast :content="toastContent" @reset-toast="toastContent = ''"></Toast>
-      <ViewPersonalInfo
-        v-if="!editMode"
-        v-bind="{
-          staffInformation,
-          primaryUsername,
-          primaryEmail,
-          phoneNumbers,
-          timezone,
-          firstName,
-          lastName,
-          manager,
-          pronouns,
-          funTitle,
-          picture,
-          location,
-          description,
-        }"
-        @toggle-edit-mode="toggleEditMode"
-      />
       <EditPersonalInfo
-        v-else
+        v-if="this.editing === 'personal-info'"
         v-bind="{
           username: primaryUsername.value,
           picture,
@@ -42,9 +23,27 @@
             timezone,
           },
         }"
-        @toggle-edit-mode="toggleEditMode"
         @toast="showToast"
       />
+      <ViewPersonalInfo
+        v-else
+        v-bind="{
+          staffInformation,
+          primaryUsername,
+          primaryEmail,
+          phoneNumbers,
+          timezone,
+          firstName,
+          lastName,
+          manager,
+          pronouns,
+          funTitle,
+          picture,
+          location,
+          description,
+        }"
+      />
+      <Toast :content="toastContent" @reset-toast="toastContent = ''"></Toast>
     </div>
     <ProfileNav
       :links="profileNav"
@@ -73,67 +72,79 @@
       >
       </ReportingStructure>
     </section>
-    <section class="profile__section">
+    <section
+      :class="
+        'profile__section' +
+          (this.editing === 'contact' ? ' profile__section--editing' : '')
+      "
+    >
       <a id="nav-contact" class="profile__anchor"></a>
-      <header class="profile__section-header">
-        <h2>Contact</h2>
-      </header>
-      <h3 class="visually-hidden">Contact options</h3>
-      <IconBlockList modifier="icon-block-list--multi-col">
-        <IconBlock heading="Email" subHeading="primary" icon="email">
-          <a :href="`mailto:${primaryEmail.value}`">{{ primaryEmail.value }}</a>
-        </IconBlock>
-        <IconBlock
-          v-for="[key, value] in Object.entries(phoneNumbers.values || {})"
-          :key="`phoneNumber-${key}`"
-          heading="Phone"
-          :subHeading="key"
-          icon="phone"
-        >
-          <a :href="`tel:${value}`">{{ value }}</a>
-        </IconBlock>
-      </IconBlockList>
-      <div v-if="pgpPublicKeys || sshPublicKeys">
-        <hr />
-        <h3>Keys</h3>
-        <template
-          v-if="pgpPublicKeys && Object.keys(pgpPublicKeys.values).length > 0"
-        >
-          <h4 class="visually-hidden">PGP</h4>
-          <Key
-            v-for="[key, value] in Object.entries(pgpPublicKeys.values)"
-            type="PGP"
-            :title="key"
-            :content="value"
-            :key="`pgp-${key}`"
-          />
-        </template>
-        <template
-          v-if="sshPublicKeys && Object.keys(sshPublicKeys.values).length > 0"
-        >
-          <h4 class="visually-hidden">SSH</h4>
-          <Key
-            v-for="[key, value] in Object.entries(sshPublicKeys.values)"
-            type="SSH"
-            :title="key"
-            :content="value"
-            :key="`ssh-${key}`"
-          />
-        </template>
-      </div>
-      <template v-if="languagesSorted && languagesSorted.length > 0">
-        <hr />
-        <div class="languages">
-          <h3>Languages</h3>
-          <Tag
-            v-for="(language, index) in languagesSorted"
-            :tag="language"
-            :key="`language-${index}`"
-          >
-          </Tag>
-        </div>
+      <EditContact
+        v-if="this.editing === 'contact'"
+        v-bind="{
+          username: primaryUsername.value,
+          initialValues: {
+            primaryEmail,
+            phoneNumbers,
+          },
+        }"
+        @toast="showToast"
+      ></EditContact>
+      <ViewContact v-else v-bind="{ primaryEmail, phoneNumbers }"></ViewContact>
+    </section>
+    <section class="profile__section" v-if="pgpPublicKeys || sshPublicKeys">
+      <h3>Keys</h3>
+      <template
+        v-if="pgpPublicKeys && Object.keys(pgpPublicKeys.values).length > 0"
+      >
+        <h4 class="visually-hidden">PGP</h4>
+        <Key
+          v-for="[key, value] in Object.entries(pgpPublicKeys.values)"
+          type="PGP"
+          :title="key"
+          :content="value"
+          :key="`pgp-${key}`"
+        />
+      </template>
+      <template
+        v-if="sshPublicKeys && Object.keys(sshPublicKeys.values).length > 0"
+      >
+        <h4 class="visually-hidden">SSH</h4>
+        <Key
+          v-for="[key, value] in Object.entries(sshPublicKeys.values)"
+          type="SSH"
+          :title="key"
+          :content="value"
+          :key="`ssh-${key}`"
+        />
       </template>
     </section>
+    <section
+      v-if="languagesSorted && languagesSorted.length > 0"
+      :class="
+        'profile__section' +
+          (this.editing === 'languages' ? ' profile__section--editing' : '')
+      "
+    >
+      <a id="nav-languages" class="profile__anchor"></a>
+      <EditLanguages
+        v-if="this.editing === 'languages'"
+        v-bind="{
+          username: primaryUsername.value,
+          initialValues: {
+            languages: languagesSorted,
+          },
+        }"
+        @toast="showToast"
+      ></EditLanguages>
+      <ViewLanguages
+        v-else
+        v-bind="{ languages: languagesSorted }"
+      ></ViewLanguages>
+    </section>
+    <EmptyCard v-else title="Languages" message="No languages have been added">
+      <a id="nav-languages" class="profile__anchor"></a
+    ></EmptyCard>
     <section v-if="sections.accounts" class="profile__section">
       <a id="nav-other-accounts" class="profile__anchor"></a>
       <header class="profile__section-header">
@@ -172,13 +183,12 @@
         </div>
       </div>
     </section>
-    <section v-else class="profile__section profile__section--disabled">
-      <a id="nav-other-accounts" class="profile__anchor"></a>
-      <header class="profile__section-header">
-        <h2>Other Accounts</h2>
-      </header>
-      <p>No other accounts have been added</p>
-    </section>
+    <EmptyCard
+      v-else
+      title="Other Accounts"
+      message="No other accounts have been added"
+      ><a id="nav-other-accounts" class="profile__anchor"></a
+    ></EmptyCard>
     <section
       v-if="
         Object.keys(accessInformation.mozilliansorg.values || {}).length > 0
@@ -201,13 +211,13 @@
         </IconBlock>
       </IconBlockList>
     </section>
-    <section v-else class="profile__section profile__section--disabled">
+    <EmptyCard
+      v-else
+      title="Access Groups"
+      message="No access groups available"
+    >
       <a id="nav-access-groups" class="profile__anchor"></a>
-      <header class="profile__section-header">
-        <h2>Access Groups</h2>
-      </header>
-      <p>No access groups available</p>
-    </section>
+    </EmptyCard>
     <section v-if="(tagsSorted || []).length > 0" class="profile__section">
       <a id="nav-tags" class="profile__anchor"></a>
       <header class="profile__section-header">
@@ -219,13 +229,9 @@
         :key="`tag-${index}`"
       />
     </section>
-    <section v-else class="profile__section profile__section--disabled">
-      <a id="nav-tags" class="profile__anchor"></a>
-      <header class="profile__section-header">
-        <h2>Tags</h2>
-      </header>
-      <p>No tags have been added</p>
-    </section>
+    <EmptyCard v-else title="Tags" message="No tags have been added">
+      <a id="nav-tags" class="profile__anchor"></a
+    ></EmptyCard>
   </main>
 </template>
 
@@ -242,9 +248,14 @@ import ShowMore from '@/components/_functional/ShowMore.vue';
 import Tag from '@/components/ui/Tag.vue';
 import Toast from '@/components/ui/Toast.vue';
 import Vouch from '@/components/ui/Vouch.vue';
-import EditPersonalInfo from './edit/EditPersonalInfo.vue';
+import EditContact from './edit/EditContact.vue';
+import EditLanguages from './edit/EditLanguages.vue';
+import EditPersonalInfo from '@/components/profile/edit/EditPersonalInfo.vue';
+import EmptyCard from '@/components/profile/view/EmptyCard.vue';
 import ProfileNav from './ProfileNav.vue';
 import ReportingStructure from './ReportingStructure.vue';
+import ViewContact from './view/ViewContact.vue';
+import ViewLanguages from './view/ViewLanguages.vue';
 import ViewPersonalInfo from './view/ViewPersonalInfo.vue';
 
 export default {
@@ -255,6 +266,7 @@ export default {
     accessInformation: Object,
     description: Object,
     directs: Array,
+    editing: String,
     firstName: Object,
     funTitle: Object,
     languages: Object,
@@ -275,7 +287,10 @@ export default {
   },
   components: {
     Button,
+    EditContact,
+    EditLanguages,
     EditPersonalInfo,
+    EmptyCard,
     Icon,
     IconBlock,
     IconBlockList,
@@ -287,15 +302,14 @@ export default {
     ShowMore,
     Tag,
     Toast,
+    ViewContact,
+    ViewLanguages,
     ViewPersonalInfo,
     Vouch,
   },
   methods: {
     alphabetise(array) {
       return array ? array.sort() : null;
-    },
-    toggleEditMode() {
-      this.editMode = !this.editMode;
     },
     showToast(data) {
       this.toastContent = data.content;
@@ -321,7 +335,7 @@ export default {
       return this.alphabetise(Object.keys(this.tags.values || {}));
     },
     languagesSorted() {
-      return this.alphabetise(['Dutch', 'German', 'Polish']);
+      return this.languages ? this.alphabetise(this.languages) : null;
     },
   },
   data() {
@@ -380,6 +394,7 @@ export default {
   grid-column: 2 / -1;
   overflow: visible;
   border-radius: var(--cardRadius);
+  position: relative;
 }
 @supports (--key: value) {
   .profile__section {

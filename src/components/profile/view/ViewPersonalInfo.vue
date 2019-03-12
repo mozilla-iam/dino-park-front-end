@@ -1,9 +1,18 @@
 <template>
   <div class="profile__intro">
     <button
-      v-if="currentUser && currentUser.primaryEmail.value == primaryEmail.value"
+      v-if="
+        currentUser && currentUser.primaryEmail.value === primaryEmail.value
+      "
       class="profile__edit-button"
-      @click="$emit('toggle-edit-mode')"
+      @click="
+        $router.push({
+          name: 'Edit Profile',
+          query: {
+            section: 'personal-info',
+          },
+        })
+      "
     >
       <img src="@/assets/images/icon-pencil.svg" alt="Edit" />
     </button>
