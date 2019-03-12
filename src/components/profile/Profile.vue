@@ -3,13 +3,11 @@
     <div
       :class="
         'profile__section' +
-          (this.editing && this.editing === 'personal-info'
-            ? ' profile__section--editing'
-            : '')
+          (this.editing === 'personal-info' ? ' profile__section--editing' : '')
       "
     >
       <EditPersonalInfo
-        v-if="this.editing && this.editing === 'personal-info'"
+        v-if="this.editing === 'personal-info'"
         v-bind="{
           username: primaryUsername.value,
           picture,
@@ -77,14 +75,12 @@
     <section
       :class="
         'profile__section' +
-          (this.editing && this.editing === 'contact'
-            ? ' profile__section--editing'
-            : '')
+          (this.editing === 'contact' ? ' profile__section--editing' : '')
       "
     >
       <a id="nav-contact" class="profile__anchor"></a>
       <EditContact
-        v-if="this.editing && this.editing === 'contact'"
+        v-if="this.editing === 'contact'"
         v-bind="{
           username: primaryUsername.value,
           initialValues: {
@@ -127,14 +123,12 @@
       v-if="languagesSorted && languagesSorted.length > 0"
       :class="
         'profile__section' +
-          (this.editing && this.editing === 'languages'
-            ? ' profile__section--editing'
-            : '')
+          (this.editing === 'languages' ? ' profile__section--editing' : '')
       "
     >
       <a id="nav-languages" class="profile__anchor"></a>
       <EditLanguages
-        v-if="this.editing && this.editing === 'languages'"
+        v-if="this.editing === 'languages'"
         v-bind="{
           username: primaryUsername.value,
           initialValues: {
