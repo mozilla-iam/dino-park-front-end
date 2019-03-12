@@ -32,18 +32,6 @@
           :isStaff="staffInformation.staff.value"
         ></UserPicture>
       </button>
-      <button
-        class="edit-personal-info__picture"
-        type="button"
-        @click="showPictureModal = true"
-      >
-        <UserPicture
-          :picture="picture.value"
-          :username="username.value"
-          :size="230"
-          :isStaff="staffInformation.staff.value"
-        ></UserPicture>
-      </button>
       <label for="field-first-name">First name</label>
       <input type="text" id="field-first-name" v-model="firstName.value" />
       <div class="edit-personal-info__privacy">

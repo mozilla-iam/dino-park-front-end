@@ -1,6 +1,5 @@
 <template>
   <main class="profile container">
-    <ProfileSection v-bind="editing"> </ProfileSection>
     <div
       :class="
         'profile__section' +
@@ -13,6 +12,8 @@
         v-if="this.editing && this.editing === 'personal-info'"
         v-bind="{
           username: primaryUsername.value,
+          picture,
+          staffInformation,
           initialValues: {
             alternativeName,
             description,
@@ -271,6 +272,7 @@ export default {
     accessInformation: Object,
     description: Object,
     directs: Array,
+    editing: String,
     firstName: Object,
     funTitle: Object,
     languages: Object,

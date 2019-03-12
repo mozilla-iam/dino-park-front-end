@@ -157,6 +157,10 @@ textarea {
   color: var(--gray-50);
   padding-left: 0;
 }
+.edit-personal-info__picture {
+  border: none;
+  background: none;
+}
 .button-bar {
   display: flex;
   margin: 2em -1.5em -1.5em;
@@ -197,6 +201,10 @@ textarea {
   }
   .edit-personal-info > textarea {
     grid-column: 2 / 4;
+  }
+  .edit-personal-info__picture {
+    grid-column: 1 / 2;
+    grid-row: 1 / 8;
   }
   .edit-personal-info__privacy {
     grid-column: 4 / 5;
