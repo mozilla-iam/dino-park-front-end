@@ -41,9 +41,6 @@ export default {
     editVariables: Object,
   },
   methods: {
-    cancelEdit() {
-      this.$emit('cancel-edit');
-    },
     handleError() {
       this.$emit('toast', {
         content: 'A problem occured, please try again later.',
