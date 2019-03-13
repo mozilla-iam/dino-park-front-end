@@ -89,6 +89,7 @@ const MUTATE_PROFILE = gql`
     $location: StringWithDisplay
     $pronouns: StringWithDisplay
     $timezone: StringWithDisplay
+    $languages: KeyValuesWithDisplay
   ) {
     profile(
       update: {
@@ -100,6 +101,7 @@ const MUTATE_PROFILE = gql`
         location: $location
         pronouns: $pronouns
         timezone: $timezone
+        languages: $languages
       }
     ) {
       alternativeName {
@@ -146,6 +148,12 @@ const MUTATE_PROFILE = gql`
       }
       timezone {
         value
+        metadata {
+          display
+        }
+      }
+      languages {
+        values
         metadata {
           display
         }
@@ -286,6 +294,12 @@ const DISPLAY_PROFILE = gql`
       }
       tags {
         values
+      }
+      languages {
+        values
+        metadata {
+          display
+        }
       }
     }
   }

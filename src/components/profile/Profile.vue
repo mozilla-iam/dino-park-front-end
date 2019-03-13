@@ -120,7 +120,7 @@
       </template>
     </section>
     <section
-      v-if="languagesSorted && languagesSorted.length > 0"
+      v-if="languagesSorted.length > 0"
       :class="
         'profile__section' +
           (this.editing === 'languages' ? ' profile__section--editing' : '')
@@ -132,7 +132,7 @@
         v-bind="{
           username: primaryUsername.value,
           initialValues: {
-            languages: languagesSorted,
+            languages,
           },
         }"
         @toast="showToast"
@@ -335,7 +335,7 @@ export default {
       return this.alphabetise(Object.keys(this.tags.values || {}));
     },
     languagesSorted() {
-      return this.languages ? this.alphabetise(this.languages) : null;
+      return this.alphabetise(Object.values(this.languages.values));
     },
   },
   data() {
