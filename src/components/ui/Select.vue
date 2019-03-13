@@ -52,7 +52,7 @@ export default {
     options: Array,
     collapsedShowIcon: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     collapsedShowLabel: {
       type: Boolean,
@@ -60,7 +60,7 @@ export default {
     },
     expandedShowIcon: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     expandedShowLabel: {
       type: Boolean,
@@ -123,6 +123,7 @@ export default {
 <style>
 .options {
   position: relative;
+  display: inline-block;
 }
 .options--chevron .options__toggle {
   background-image: url('../../assets/images/chevron-down.svg');
