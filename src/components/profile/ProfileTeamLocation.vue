@@ -4,7 +4,7 @@
       <h3 class="visually-hidden">Team</h3>
       <strong>
         <RouterLink
-          v-if="teamManager"
+          v-if="team && teamManager"
           :to="{ name: 'Profile', params: { username: teamManager.username } }"
         >
           {{ team }}
