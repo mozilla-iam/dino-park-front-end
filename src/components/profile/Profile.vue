@@ -340,7 +340,6 @@ export default {
   },
   data() {
     return {
-      editMode: false,
       toastContent: '',
       profileNav: [
         {
