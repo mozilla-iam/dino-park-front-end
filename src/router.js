@@ -73,6 +73,8 @@ router.beforeEach((to, from, next) => {
     case 'Profile':
       document.title = `${to.params.username} - Profile - Mozilla Directory`;
       break;
+    case 'Edit Profile':
+      document.title = `Edit - Profile - Mozilla Directory`;
     default:
       document.title = `${to.name} - Mozilla Directory`;
   }
