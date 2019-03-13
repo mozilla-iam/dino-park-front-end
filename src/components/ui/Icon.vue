@@ -309,6 +309,12 @@
         stroke-width="2"
       />
     </template>
+    <template v-else-if="id === 'plus'">
+      <path
+        fill="currentColor"
+        d="M20 12c0 .6-.4 1-1 1h-6v6c0 .6-.4 1-1 1s-1-.4-1-1v-6H5c-.6 0-1-.4-1-1s.4-1 1-1h6V5c0-.6.4-1 1-1s1 .4 1 1v6h6c.6 0 1 .4 1 1z"
+      />
+    </template>
   </svg>
 </template>
 
