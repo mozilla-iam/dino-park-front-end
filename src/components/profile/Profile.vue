@@ -36,7 +36,6 @@
           timezone,
           firstName,
           lastName,
-          manager,
           pronouns,
           funTitle,
           picture,
@@ -66,11 +65,7 @@
           <Icon id="chevron-right" :width="18" :height="18" />
         </RouterLink>
       </header>
-      <ReportingStructure
-        v-if="false && (manager || directs.length > 0)"
-        :manager="manager"
-        :directs="directs"
-      >
+      <ReportingStructure :username="primaryUsername.value">
       </ReportingStructure>
     </section>
     <EmptyCard
@@ -272,14 +267,12 @@ export default {
     alternativeName: Object,
     accessInformation: Object,
     description: Object,
-    directs: Array,
     editing: String,
     firstName: Object,
     funTitle: Object,
     languages: Object,
     lastName: Object,
     location: Object,
-    manager: Object,
     pgpPublicKeys: Object,
     phoneNumbers: Object,
     picture: Object,
