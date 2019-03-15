@@ -1,6 +1,5 @@
 const fs = require('fs');
 
-const DINOPARK_URL = process.env.DP_K8S || 'http://localhost:8081';
 const BASE_URL = process.env.DP_BASE_URL || '/beta/';
 const HTTPS_KEY = process.env.DP_HTTPS_KEY || false;
 const HTTPS_CERT = process.env.DP_HTTPS_CERT || false;
@@ -30,12 +29,6 @@ module.exports = {
     },
   },
   devServer: {
-    proxy: {
-      '/api/v3/': {
-        target: DINOPARK_URL,
-        changeOrigin: true,
-      },
-    },
     https: HTTPS,
   },
 };
