@@ -8,11 +8,11 @@ import router from './router';
 import { USER_MENU_PROFILE } from './queries/profile';
 
 const client = new ApolloClient({
-  uri: '/graphql',
+  uri: '/api/v4/graphql',
 });
 
 const mutationClient = new ApolloClient({
-  uri: '/graphql',
+  uri: '/api/v4/graphql',
 });
 
 const apolloProvider = new VueApollo({

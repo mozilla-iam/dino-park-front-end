@@ -82,7 +82,7 @@ export default {
     if (username && this.$route.name === 'OrgchartHighlight') {
       try {
         const data = await fetch(
-          `/api/v3/orgchart/trace/${encodeURIComponent(username)}`,
+          `/api/v4/orgchart/trace/${encodeURIComponent(username)}`,
         );
         const { trace } = await data.json();
         if (trace && trace.startsWith('-1-')) {
@@ -124,7 +124,7 @@ export default {
       this.post = null;
       this.loading = true;
       try {
-        const data = await fetch('/api/v3/orgchart/');
+        const data = await fetch('/api/v4/orgchart');
         const orgchart = await data.json();
         this.tree = orgchart.forrest;
         this.loose = orgchart.loose;

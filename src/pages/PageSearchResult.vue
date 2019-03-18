@@ -105,7 +105,7 @@ export default {
           ['q', this.$route.query.query],
           ['w', this.$route.query.who],
         ]);
-        const data = await fetch(`/api/v3/search/simple/?${params.toString()}`);
+        const data = await fetch(`/api/v4/search/simple/?${params.toString()}`);
         const results = await data.json();
         this.results = results;
       } catch (e) {

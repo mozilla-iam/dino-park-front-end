@@ -9,8 +9,8 @@
       <template v-else-if="data && data.profile !== null">
         <Profile
           v-bind="data.profile"
-          :manager="{ value: 'richard58' }"
-          :directs="[]"
+          :manager="related.manager"
+          :directs="related.directs"
           :editing="
             $route.name === 'Edit Profile' && $route.query.section
               ? $route.query.section
@@ -60,6 +60,7 @@ import Error from '@/components/ui/Error.vue';
 import Profile from '@/components/profile/Profile.vue';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 import { DISPLAY_PROFILE } from '@/queries/profile';
+import Related from '@/assets/js/related';
 
 export default {
   name: 'PageProfile',
@@ -76,6 +77,7 @@ export default {
   data() {
     return {
       displayProfile: DISPLAY_PROFILE,
+      related: new Related(),
     };
   },
 };

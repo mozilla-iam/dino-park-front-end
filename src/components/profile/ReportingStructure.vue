@@ -1,17 +1,20 @@
 <template>
-  <div class="reporting-structure">
+  <div v-if="this.related.show" class="reporting-structure">
     <LoadingSpinner v-if="loading"></LoadingSpinner>
-    <div v-if="manager" class="reporting-structure__reports-to">
+    <div v-if="this.related.manager" class="reporting-structure__reports-to">
       <h3>Reports to:</h3>
       <div>
-        <Person modifier="person--borderless" v-bind="manager" />
+        <Person modifier="person--borderless" v-bind="this.related.manager" />
       </div>
     </div>
-    <div v-if="directs.length > 0" class="reporting-structure__manages">
+    <div
+      v-if="this.related.directs.length > 0"
+      class="reporting-structure__manages"
+    >
       <h3>Manages:</h3>
       <div>
         <Person
-          v-for="(direct, index) in directs"
+          v-for="(direct, index) in this.related.directs"
           :modifier="directsView"
           :key="`direct-${index}`"
           v-bind="direct"
@@ -24,12 +27,12 @@
 <script>
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 import Person from '@/components/ui/Person.vue';
+import Related from '@/assets/js/related';
 
 export default {
   name: 'ReportingStructure',
   props: {
-    manager: Object,
-    directs: Array,
+    username: String,
     loading: false,
   },
   components: {
@@ -38,10 +41,28 @@ export default {
   },
   computed: {
     directsView() {
-      return this.directs.length > 1
+      return this.related.directs.length > 1
         ? 'person--borderless person--avatar-only'
         : 'person--borderless';
     },
+  },
+  watch: {
+    username(u) {
+      this.update_user(u);
+    },
+  },
+  methods: {
+    update_user(u = this.username) {
+      this.related.update(u);
+    },
+  },
+  created() {
+    this.update_user();
+  },
+  data() {
+    return {
+      related: new Related(),
+    };
   },
 };
 </script>
