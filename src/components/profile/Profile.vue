@@ -9,7 +9,6 @@
       <EditPersonalInfo
         v-if="this.editing === 'personal-info'"
         v-bind="{
-          username: primaryUsername.value,
           picture,
           staffInformation,
           initialValues: {
