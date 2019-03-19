@@ -17,6 +17,9 @@
             @click="
               $router.push({
                 name: 'Profile',
+                params: {
+                  username: this.loggedInUser,
+                },
               })
             "
           >
@@ -67,6 +70,9 @@ export default {
 
       this.$router.push({
         name: 'Profile',
+        params: {
+          username: this.loggedInUser,
+        },
       });
 
       this.$emit('toggle-edit-mode');
