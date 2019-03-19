@@ -168,7 +168,7 @@ import EditMutationWrapper from '@/components/profile/edit/EditMutationWrapper.v
 import PrivacySetting from '@/components/profile/PrivacySetting.vue';
 import Select from '@/components/ui/Select.vue';
 import UserPicture from '@/components/ui/UserPicture.vue';
-import { displayLevelsFor, DISPLAY_LEVELS } from '@/assets/js/display-levels';
+import { DISPLAY_LEVELS } from '@/assets/js/display-levels';
 import EditPictureModal from './EditPictureModal.vue';
 
 export default {
@@ -185,9 +185,6 @@ export default {
     PrivacySetting,
     Select,
     UserPicture,
-  },
-  methods: {
-    displayLevelsFor,
   },
   computed: {
     loggedInUser() {
