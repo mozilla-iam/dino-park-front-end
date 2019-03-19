@@ -32,6 +32,19 @@
           :isStaff="staffInformation.staff.value"
         ></UserPicture>
       </button>
+
+      <label for="field-username">Username</label>
+      <input type="text" id="field-username" v-model="primaryUsername.value" />
+      <div class="edit-personal-info__privacy">
+        <Select
+          label="Username privacy levels"
+          id="field-username-privacy"
+          v-bind="privacySettings"
+          v-model="primaryUsername.display"
+          :options="displayLevelsFor(primaryUsername.value)"
+        />
+      </div>
+
       <label for="field-first-name">First name</label>
       <input type="text" id="field-first-name" v-model="firstName.value" />
       <div class="edit-personal-info__privacy">
