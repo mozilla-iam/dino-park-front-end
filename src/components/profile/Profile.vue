@@ -120,7 +120,7 @@
       </template>
     </section>
     <section
-      v-if="languagesSorted.length > 0"
+      v-if="languagesSorted && languagesSorted.length > 0"
       :class="
         'profile__section' +
           (this.editing === 'languages' ? ' profile__section--editing' : '')
@@ -335,7 +335,10 @@ export default {
       return this.alphabetise(Object.keys(this.tags.values || {}));
     },
     languagesSorted() {
-      return this.alphabetise(Object.values(this.languages.values));
+      return (
+        this.languages.values &&
+        this.alphabetise(Object.values(this.languages.values))
+      );
     },
   },
   data() {
