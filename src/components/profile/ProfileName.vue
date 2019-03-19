@@ -1,6 +1,11 @@
 <template>
   <div class="profile__name">
-    <h1>{{ firstName }} {{ lastName }}</h1>
+    <h1>
+      {{ firstName }} {{ lastName }}
+      <span class="profile__alternative-name" v-if="alternativeName">
+        {{ alternativeName }}</span
+      >
+    </h1>
     <span class="profile__user-name" v-if="prettierUsername"
       >@{{ prettierUsername }}</span
     >
@@ -14,6 +19,7 @@ export default {
   props: {
     firstName: String,
     lastName: String,
+    alternativeName: String,
     username: String,
     pronouns: String,
   },
@@ -46,6 +52,13 @@ export default {
 .profile__pronoun {
   font-size: 1.25em;
   color: var(--gray-50);
+}
+.profile__alternative-name {
+  display: block;
+  font-family: 'Open Sans', sans-serif;
+  color: var(--gray-50);
+  font-size: 0.5em;
+  margin: 0.25em 0;
 }
 @media (min-width: 57.5em) {
   .profile__name {

@@ -28,6 +28,7 @@
       <ViewPersonalInfo
         v-else
         v-bind="{
+          alternativeName,
           staffInformation,
           primaryUsername,
           primaryEmail,

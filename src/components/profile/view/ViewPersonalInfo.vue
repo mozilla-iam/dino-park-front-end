@@ -37,6 +37,7 @@
         :firstName="firstName.value"
         :lastName="lastName.value"
         :username="primaryUsername.value"
+        :alternativeName="alternativeName.value"
         :pronouns="pronouns.value"
       ></ProfileName>
       <ProfileTitle
@@ -113,6 +114,7 @@ export default {
   mixins: [CompanyMixin],
   name: 'ViewPersonalInfo',
   props: {
+    alternativeName: Object,
     tag: String,
     staffInformation: Object,
     primaryUsername: Object,
