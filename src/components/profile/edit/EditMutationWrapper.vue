@@ -18,7 +18,7 @@
               $router.push({
                 name: 'Profile',
                 params: {
-                  username: this.loggedInUser,
+                  username: loggedInUser,
                 },
               })
             "
