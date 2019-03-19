@@ -1,7 +1,7 @@
 <template>
   <EditMutationWrapper
     :editVariables="{
-      username,
+      primaryUsername,
       firstName,
       lastName,
       alternativeName,
@@ -16,7 +16,7 @@
   >
     <EditPictureModal
       v-if="showPictureModal"
-      v-bind="{ picture, username, staffInformation }"
+      v-bind="{ picture, username: loggedInUser, staffInformation }"
       @close="showPictureModal = false"
     />
     <div class="edit-personal-info">
@@ -27,7 +27,7 @@
       >
         <UserPicture
           :picture="picture.value"
-          :username="username.value"
+          :username="loggedInUser.value"
           :size="230"
           :isStaff="staffInformation.staff.value"
         ></UserPicture>
@@ -185,7 +185,6 @@ import EditPictureModal from './EditPictureModal.vue';
 export default {
   name: 'EditPersonalInfo',
   props: {
-    username: String,
     picture: Object,
     staffInformation: Object,
     initialValues: Object,
@@ -199,6 +198,11 @@ export default {
   },
   methods: {
     displayLevelsFor,
+  },
+  computed: {
+    loggedInUser() {
+      return this.$store.state.user;
+    },
   },
   data() {
     return {

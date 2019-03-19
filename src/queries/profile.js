@@ -163,7 +163,7 @@ const MUTATE_PROFILE = gql`
 `;
 
 const DISPLAY_PROFILE = gql`
-  query DisplayProfile($username: String!) {
+  query DisplayProfile($username: String) {
     profile(username: $username) {
       accessInformation {
         mozilliansorg {

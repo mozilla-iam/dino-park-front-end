@@ -55,15 +55,12 @@ export default {
     ) {
       const data = store.readQuery({
         query: DISPLAY_PROFILE,
-        variables: {
-          username: this.username,
-        },
       });
 
       store.writeQuery({
         query: DISPLAY_PROFILE,
         variables: {
-          username: this.username,
+          username: this.loggedInUser,
         },
         data: { profile: { ...data.profile, ...profile } },
       });
@@ -79,8 +76,8 @@ export default {
     },
   },
   computed: {
-    username() {
-      return this.$route.params.username;
+    loggedInUser() {
+      return this.$store.state.user.primaryUsername.value;
     },
   },
   data() {

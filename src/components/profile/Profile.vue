@@ -19,6 +19,7 @@
             lastName,
             funTitle,
             location,
+            primaryUsername,
             pronouns,
             timezone,
           },
