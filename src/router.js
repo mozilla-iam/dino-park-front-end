@@ -29,7 +29,7 @@ const router = new Router({
       props: true,
     },
     {
-      path: '/p/:username/e',
+      path: '/e',
       name: 'Edit Profile',
       component: PageProfile,
       query: {
