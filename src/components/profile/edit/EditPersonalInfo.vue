@@ -35,41 +35,32 @@
 
       <label for="field-username">Username</label>
       <input type="text" id="field-username" v-model="primaryUsername.value" />
-      <div class="edit-personal-info__privacy">
-        <Select
-          label="Username privacy levels"
-          id="field-username-privacy"
-          v-bind="privacySettings"
-          v-model="primaryUsername.display"
-          :options="displayLevelsFor(primaryUsername.value)"
-        />
-      </div>
+      <PrivacySetting
+        label="Username privacy levels"
+        id="field-username-privacy"
+        :profileField="primaryUsername"
+        v-model="primaryUsername.display"
+      />
 
       <label for="field-first-name">First name</label>
       <input type="text" id="field-first-name" v-model="firstName.value" />
-      <div class="edit-personal-info__privacy">
-        <Select
-          label="First name privacy levels"
-          id="field-first-name-privacy"
-          v-bind="privacySettings"
-          v-model="firstName.display"
-          :options="displayLevelsFor(firstName.value)"
-        />
-      </div>
+      <PrivacySetting
+        label="First name privacy levels"
+        id="field-first-name-privacy"
+        :profileField="firstName"
+        v-model="firstName.display"
+      />
 
       <hr role="presentation" />
 
       <label for="field-last-name">Last name</label>
       <input type="text" id="field-last-name" v-model="lastName.value" />
-      <div class="edit-personal-info__privacy">
-        <Select
-          label="Last name privacy levels"
-          id="field-last-name-privacy"
-          v-bind="privacySettings"
-          v-model="lastName.display"
-          :options="displayLevelsFor(lastName.value)"
-        />
-      </div>
+      <PrivacySetting
+        label="Last name privacy levels"
+        id="field-last-name-privacy"
+        :profileField="lastName"
+        v-model="lastName.display"
+      />
 
       <hr role="presentation" />
 
@@ -80,32 +71,26 @@
         id="field-pronouns"
         v-model="pronouns.value"
         placeholder="Choose a pronoun or type your own"
-        :source="['He/Him', 'She/Her', 'They/Them']"
+        :source="['he/Him', 'she/Her', 'they/Them']"
       >
       </Combobox>
-      <div class="edit-personal-info__privacy">
-        <Select
-          label="Pronoun privacy levels"
-          id="field-pronoun-privacy"
-          v-bind="privacySettings"
-          v-model="pronouns.display"
-          :options="displayLevelsFor(pronouns.value)"
-        />
-      </div>
+      <PrivacySetting
+        label="Pronoun privacy levels"
+        id="field-pronoun-privacy"
+        :profileField="pronouns"
+        v-model="pronouns.display"
+      />
 
       <hr role="presentation" />
 
       <label for="field-alt-name">Alternative name</label>
       <input type="text" id="field-alt-name" v-model="alternativeName.value" />
-      <div class="edit-personal-info__privacy">
-        <Select
-          label="Alternative name privacy levels"
-          id="field-alt-name-privacy"
-          v-bind="privacySettings"
-          v-model="alternativeName.display"
-          :options="displayLevelsFor(alternativeName.value)"
-        />
-      </div>
+      <PrivacySetting
+        label="Alternative name privacy levels"
+        id="field-alt-name-privacy"
+        :profileField="alternativeName"
+        v-model="alternativeName.display"
+      />
 
       <hr role="presentation" />
 
@@ -116,15 +101,13 @@
 
       <label for="field-fun-job-title">Fun job title</label>
       <input type="text" id="field-fun-job-title" v-model="funTitle.value" />
-      <div class="edit-personal-info__privacy">
-        <Select
-          label="Fun title privacy levels"
-          id="field-fun-title-privacy"
-          v-bind="privacySettings"
-          v-model="funTitle.display"
-          :options="displayLevelsFor(funTitle.value)"
-        />
-      </div>
+      <PrivacySetting
+        label="Fun title privacy levels"
+        id="field-fun-title-privacy"
+        :profileField="funTitle"
+        v-model="funTitle.display"
+      />
+
       <hr role="presentation" />
 
       <label for="field-location">Location</label>
@@ -141,29 +124,24 @@
         ]"
       >
       </Combobox>
+      <PrivacySetting
+        label="Location privacy levels"
+        id="field-location-privacy"
+        :profileField="location"
+        v-model="location.display"
+      />
 
-      <div class="edit-personal-info__privacy">
-        <Select
-          label="Location privacy levels"
-          id="field-location-privacy"
-          v-bind="privacySettings"
-          v-model="location.display"
-          :options="displayLevelsFor(location.value)"
-        />
-      </div>
       <hr role="presentation" />
 
       <label for="field-timezone">Timezone</label>
       <input type="text" id="field-timezone" v-model="timezone.value" />
-      <div class="edit-personal-info__privacy">
-        <Select
-          label="Timezone privacy levels"
-          id="field-timezone-privacy"
-          v-bind="privacySettings"
-          v-model="timezone.display"
-          :options="displayLevelsFor(timezone.value)"
-        />
-      </div>
+      <PrivacySetting
+        label="Timezone privacy levels"
+        id="field-timezone-privacy"
+        :profileField="timezone"
+        v-model="timezone.display"
+      />
+
       <hr role="presentation" />
 
       <div class="edit-personal-info__meta">
@@ -174,15 +152,12 @@
 
       <label for="field-bio">Bio</label>
       <textarea id="field-bio" v-model="description.value"></textarea>
-      <div class="edit-personal-info__privacy">
-        <Select
-          label="Bio privacy levels"
-          id="field-bio-privacy"
-          v-bind="privacySettings"
-          v-model="description.display"
-          :options="displayLevelsFor(description.value)"
-        />
-      </div>
+      <PrivacySetting
+        label="Bio privacy levels"
+        id="field-bio-privacy"
+        :profileField="description"
+        v-model="description.display"
+      />
     </div>
   </EditMutationWrapper>
 </template>
@@ -190,6 +165,7 @@
 <script>
 import Combobox from '@/components/ui/Combobox.vue';
 import EditMutationWrapper from '@/components/profile/edit/EditMutationWrapper.vue';
+import PrivacySetting from '@/components/profile/PrivacySetting.vue';
 import Select from '@/components/ui/Select.vue';
 import UserPicture from '@/components/ui/UserPicture.vue';
 import { displayLevelsFor, DISPLAY_LEVELS } from '@/assets/js/display-levels';
@@ -206,6 +182,7 @@ export default {
     Combobox,
     EditPictureModal,
     EditMutationWrapper,
+    PrivacySetting,
     Select,
     UserPicture,
   },
@@ -219,13 +196,6 @@ export default {
   },
   data() {
     return {
-      privacySettings: {
-        collapsedShowIcon: true,
-        collapsedShowLabel: false,
-        expandedShowIcon: true,
-        expandedShowLabel: true,
-        class: 'options--zebra',
-      },
       ...Object.entries(this.initialValues).reduce(
         (
           obj,

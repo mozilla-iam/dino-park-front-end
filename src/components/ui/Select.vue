@@ -20,14 +20,15 @@
         :height="17"
       ></Icon>
     </button>
-    <fieldset @keydown.enter.prevent="closeList">
+    <fieldset
+      @keydown.enter.prevent="closeList"
+      v-show="open"
+      :id="`option-list-${id}`"
+      :ref="`optionList-${id}`"
+      class="options__list"
+    >
       <legend class="visually-hidden">{{ label }}</legend>
-      <ul
-        class="options__list"
-        :id="`option-list-${id}`"
-        v-show="open"
-        :ref="`optionList-${id}`"
-      >
+      <ul>
         <Option
           v-for="(option, index) in options"
           :key="index"
@@ -133,6 +134,13 @@ export default {
   position: relative;
   display: inline-block;
 }
+.options__toggle {
+  font-size: inherit;
+  border: 0;
+  padding: 0.5em 0.9em;
+  border-radius: var(--imageRadius);
+  background-color: var(--gray-20);
+}
 .options--chevron .options__toggle {
   background-image: url('../../assets/images/chevron-down.svg');
   background-repeat: no-repeat;
@@ -140,17 +148,10 @@ export default {
   background-size: 1.25em;
   padding-right: 3em;
 }
-.options__toggle {
-  font-size: inherit;
-  border: 0;
-  padding: 0.5em 0.9em;
-  border-radius: var(--imageRadius);
-}
 .options__toggle[aria-expanded='true'] {
   border: 1px solid var(--blue-60);
 }
 .options__list {
-  padding-left: 0;
   max-height: 25em;
   background-color: var(--white);
   box-shadow: 0 0.125em 0.25em 0.125em rgba(210, 210, 210, 0.5);
@@ -185,6 +186,9 @@ export default {
   box-shadow: 0 0 0.25em 0 var(--gray-30);
   border: inherit;
   border-radius: inherit;
+}
+.options__list ul {
+  padding-left: 0;
 }
 .options__option {
   list-style: none;

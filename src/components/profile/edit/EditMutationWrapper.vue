@@ -176,7 +176,7 @@ textarea {
 @media (min-width: 57.5em) {
   .edit-personal-info {
     display: grid;
-    grid-template-columns: 20em 10em 1fr 4em;
+    grid-template-columns: 20em 10em 1fr auto;
     grid-column-gap: 1em;
   }
   .edit-personal-info > hr {
@@ -206,7 +206,8 @@ textarea {
     grid-column: 1 / 2;
     grid-row: 1 / 8;
   }
-  .edit-personal-info__privacy {
+  .edit-personal-info__privacy,
+  .privacy-setting {
     grid-column: 4 / 5;
     align-self: center;
     justify-self: center;
