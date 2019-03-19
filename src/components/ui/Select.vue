@@ -7,6 +7,8 @@
       :ref="`optionToggle-${id}`"
       :title="selectedLabel"
       class="options__toggle"
+      :aria-expanded="open ? 'true' : 'false'"
+      :aria-controls="`option-list-${id}`"
     >
       <span class="visually-hidden">Open {{ label }}</span>
       <template v-if="collapsedShowLabel">{{ selectedLabel }}</template>
@@ -22,7 +24,7 @@
       <legend class="visually-hidden">{{ label }}</legend>
       <ul
         class="options__list"
-        id="`option-list-${id}`"
+        :id="`option-list-${id}`"
         v-show="open"
         :ref="`optionList-${id}`"
       >
@@ -40,6 +42,7 @@
           @close-list="closeList"
         />
       </ul>
+      <slot name="extra-content"></slot>
     </fieldset>
   </div>
 </template>
@@ -141,6 +144,10 @@ export default {
   font-size: inherit;
   border: 0;
   padding: 0.5em 0.9em;
+  border-radius: var(--imageRadius);
+}
+.options__toggle[aria-expanded='true'] {
+  border: 1px solid var(--blue-60);
 }
 .options__list {
   padding-left: 0;
@@ -150,17 +157,19 @@ export default {
   text-align: left;
   z-index: calc(var(--layerModal) - 1);
   position: absolute;
-  top: 3.5em;
+  top: 3em;
   left: 0;
   width: calc(100% + 4.5em);
   margin: 0 -2.25em;
   color: var(--gray-60);
+  border-radius: var(--imageRadius);
+  border: 2px solid var(--gray-30);
 }
 @media (min-width: 57.5em) {
   .options__list {
-    left: 50%;
-    width: 24em;
-    margin: 0 0.5em 0 -12em;
+    width: 20em;
+    margin: 0 0.5em;
+    transform: translateX(calc(-50% + 1em));
   }
 }
 .options__list::before {
@@ -174,6 +183,8 @@ export default {
   margin-top: -0.5em;
   transform: rotate(-45deg);
   box-shadow: 0 0 0.25em 0 var(--gray-30);
+  border: inherit;
+  border-radius: inherit;
 }
 .options__option {
   list-style: none;
@@ -181,7 +192,6 @@ export default {
   position: relative;
   text-decoration: none;
   color: inherit;
-  min-width: 20em;
 }
 .options__option svg {
   width: 2em;
@@ -202,13 +212,16 @@ export default {
   align-items: center;
   padding-right: 3em;
 }
+.options label:hover {
+  background-color: var(--lightBlue);
+}
 .options input:checked + label {
-  background-image: url('../../assets/images/check.svg');
+  background-image: url('../../assets/images/check-blue.svg');
   background-repeat: no-repeat;
   background-position: center right 0.75em;
   background-size: 1.5em;
 }
-.options input:focus + label {
+.focus-styles .options input:focus + label {
   position: relative;
   z-index: calc(var(--layerModal) - 1);
   box-shadow: 0px 0 0 1px var(--blue-60), 0 0 0 3px var(--transparentBlue);
