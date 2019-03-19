@@ -139,6 +139,7 @@ export default {
   border: 0;
   padding: 0.5em 0.9em;
   border-radius: var(--imageRadius);
+  border: 1px solid transparent; /* so that it doesn't grow when it gets a color on expanded */
   background-color: var(--gray-20);
 }
 .options--chevron .options__toggle {
@@ -151,7 +152,7 @@ export default {
 .options__toggle[aria-expanded='true'] {
   border: 1px solid var(--blue-60);
 }
-.options__list {
+.options .options__list {
   max-height: 25em;
   padding: 0;
   background-color: var(--white);
@@ -168,10 +169,10 @@ export default {
   border: 2px solid var(--gray-30);
 }
 @media (min-width: 57.5em) {
-  .options__list {
+  .options .options__list {
     min-width: 18em;
     margin: 0 0.5em;
-    transform: translateX(calc(-50% + 1em));
+    transform: translateX(calc(-50% + 0.5em));
   }
 }
 .options__list::before {
