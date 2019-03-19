@@ -30,6 +30,7 @@
       </div>
       <button
         class="user-menu__close-button"
+        id="user-menu-close-button"
         type="button"
         @click="sendCloseEvent()"
       >
@@ -55,6 +56,7 @@
     <ul class="user-menu__items" @click="closeOnLinkClick">
       <li>
         <RouterLink
+          id="link-usermenu-my-profile"
           :to="{
             name: 'Profile',
             params: { username: user.primaryUsername.value },
@@ -65,13 +67,16 @@
         </RouterLink>
       </li>
       <li>
-        <a href="https://sso.mozilla.com">
+        <a href="https://sso.mozilla.com" id="link-usermenu-sso-dashboard">
           <span>Dashboard</span>
           <Icon id="dashboard" :width="24" :height="24" />
         </a>
       </li>
       <li>
-        <a href="https://sso.mozilla.com/notifications">
+        <a
+          href="https://sso.mozilla.com/notifications"
+          id="link-usermenu-sso-dashboard"
+        >
           <span>Notifications</span>
           <Icon id="bell" :width="24" :height="24" />
         </a>

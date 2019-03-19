@@ -20,7 +20,12 @@
     </button>
     <fieldset @keydown.enter.prevent="closeList">
       <legend class="visually-hidden">{{ label }}</legend>
-      <ul class="options__list" v-show="open" :ref="`optionList-${id}`">
+      <ul
+        class="options__list"
+        id="`option-list-${id}`"
+        v-show="open"
+        :ref="`optionList-${id}`"
+      >
         <Option
           v-for="(option, index) in options"
           :key="index"
