@@ -18,7 +18,7 @@
           v-model="searchQuery"
           class="search-form__input"
           ref="searchQueryField"
-          placeholder="Search for people"
+          placeholder="Search People by Name"
         />
         <button
           type="button"
