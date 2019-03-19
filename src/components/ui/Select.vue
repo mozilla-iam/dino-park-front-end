@@ -153,6 +153,7 @@ export default {
 }
 .options__list {
   max-height: 25em;
+  padding: 0;
   background-color: var(--white);
   box-shadow: 0 0.125em 0.25em 0.125em rgba(210, 210, 210, 0.5);
   text-align: left;
@@ -168,7 +169,7 @@ export default {
 }
 @media (min-width: 57.5em) {
   .options__list {
-    width: 20em;
+    min-width: 18em;
     margin: 0 0.5em;
     transform: translateX(calc(-50% + 1em));
   }
@@ -188,7 +189,15 @@ export default {
   border-radius: inherit;
 }
 .options__list ul {
+  margin: 0;
   padding-left: 0;
+}
+.options__list > a {
+  padding: 1em;
+  display: block;
+  color: var(--gray-50);
+  position: relative;
+  z-index: var(--layerTopbar);
 }
 .options__option {
   list-style: none;
@@ -201,16 +210,12 @@ export default {
   width: 2em;
   margin-right: 0.75em;
 }
-.options fieldset {
-  padding: 0;
-  border: 0;
-}
 .options input {
   position: absolute;
   opacity: 0;
 }
 .options label {
-  padding: 0.5em 1em;
+  padding: 0.75em 1em;
   margin: 0;
   display: flex;
   align-items: center;
