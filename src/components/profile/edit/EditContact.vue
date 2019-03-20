@@ -17,7 +17,6 @@
           class="options--chevron"
           label="Email adddress 1 type"
           id="field-email-1-type"
-          v-model="foo"
           :options="[
             { label: 'Primary', value: 'Primary' },
             { label: 'Personal', value: 'Personal' },
@@ -29,8 +28,7 @@
         <PrivacySetting
           label="Email address 1 privacy settings"
           id="field-email-1-privacy"
-          profileField="email"
-          v-model="foo2"
+          :profileField="primaryEmail"
         />
         <label class="edit-contact__set-as-contact"
           ><input type="checkbox" /> Show in Contact Me button</label
@@ -42,7 +40,6 @@
           class="options--chevron"
           label="Email adddress 2 type"
           id="field-email-2-type"
-          v-model="foo3"
           :options="[
             { label: 'Primary', value: 'Primary' },
             { label: 'Personal', value: 'Personal' },
@@ -52,10 +49,9 @@
         />
         <input type="text" />
         <PrivacySetting
-          label="Email address 1 privacy settings"
-          id="field-email-1-privacy"
-          profileField="email"
-          v-model="foo2"
+          label="Email address 2 privacy settings"
+          id="field-email-2-privacy"
+          :profileField="primaryEmail"
         />
         <label class="edit-contact__set-as-contact"
           ><input type="checkbox" /> Show in Contact Me button</label
@@ -69,7 +65,6 @@
           class="options--chevron"
           label="Phone number 1 type"
           id="field-phone-1-type"
-          v-model="foo4"
           :options="[
             { label: 'Primary', value: 'Primary' },
             { label: 'Personal', value: 'Personal' },
@@ -79,10 +74,9 @@
         />
         <input type="text" />
         <PrivacySetting
-          label="Email address 1 privacy settings"
-          id="field-email-1-privacy"
-          profileField="email"
-          v-model="foo2"
+          label="Phone number 1 privacy settings"
+          id="field-phone-number-1-privacy"
+          :profileField="phoneNumbers"
         />
         <label class="edit-contact__set-as-contact"
           ><input type="checkbox" /> Show in Contact Me button</label
@@ -98,7 +92,6 @@
           class="options--chevron"
           label="Phone number 2 type"
           id="field-phone-2-type"
-          v-model="foo5"
           :options="[
             { label: 'Primary', value: 'Primary' },
             { label: 'Personal', value: 'Personal' },
@@ -108,10 +101,9 @@
         />
         <input type="text" />
         <PrivacySetting
-          label="Email address 1 privacy settings"
-          id="field-email-1-privacy"
-          profileField="email"
-          v-model="foo2"
+          label="Phone nmber 2 privacy settings"
+          id="field-phone number-2-privacy"
+          :profileField="phoneNumbers"
         />
         <label class="edit-contact__set-as-contact"
           ><input type="checkbox" /> Show in Contact Me button</label
@@ -131,13 +123,11 @@ import EditMutationWrapper from './EditMutationWrapper.vue';
 import PrivacySetting from '@/components/profile/PrivacySetting.vue';
 import Icon from '@/components/ui/Icon.vue';
 import Select from '@/components/ui/Select.vue';
-import { displayLevelsFor } from '@/assets/js/display-levels';
+import { DISPLAY_LEVELS } from '@/assets/js/display-levels';
 
 export default {
   name: 'EditContact',
   props: {
-    primaryEmail: Object,
-    phoneNumbers: Object,
     initialValues: Object,
     editVariables: Object,
   },
@@ -148,24 +138,27 @@ export default {
     PrivacySetting,
     Select,
   },
-  methods: {
-    displayLevelsFor,
-  },
   data() {
     return {
-      privacySettings: {
-        collapsedShowIcon: true,
-        collapsedShowLabel: false,
-        expandedShowIcon: true,
-        expandedShowLabel: true,
-        class: 'options--zebra',
-      },
-      foo: '',
-      foo2: '',
-      foo3: '',
-      foo4: '',
-      foo5: '',
-      foo6: '',
+      ...Object.entries(this.initialValues).reduce(
+        (
+          obj,
+          [
+            key,
+            {
+              value,
+              metadata: { display },
+            },
+          ],
+        ) => {
+          obj[key] = {
+            value,
+            display: display || DISPLAY_LEVELS.public.value,
+          };
+          return obj;
+        },
+        {},
+      ),
     };
   },
 };
@@ -210,6 +203,7 @@ export default {
   margin-right: 1em;
 }
 .edit-contact__add-more {
-  grid-column: 4 / 5;
+  grid-column: 1 / 5;
+  justify-self: end;
 }
 </style>
