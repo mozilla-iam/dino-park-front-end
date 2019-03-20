@@ -14,7 +14,7 @@
       <h3>Email</h3>
       <div class="edit-contact__item">
         <Select
-          class="options--chrevron"
+          class="options--chevron"
           label="Email adddress 1 type"
           id="field-email-1-type"
           v-model="foo"
@@ -26,13 +26,11 @@
           ]"
         />
         <input type="text" />
-        <Select
-          class="options--chrevron"
+        <PrivacySetting
           label="Email address 1 privacy settings"
           id="field-email-1-privacy"
+          profileField="email"
           v-model="foo2"
-          v-bind="privacySettings"
-          :options="displayLevelsFor('email')"
         />
         <label class="edit-contact__set-as-contact"
           ><input type="checkbox" /> Show in Contact Me button</label
@@ -41,6 +39,7 @@
       </div>
       <div class="edit-contact__item">
         <Select
+          class="options--chevron"
           label="Email adddress 2 type"
           id="field-email-2-type"
           v-model="foo3"
@@ -52,12 +51,11 @@
           ]"
         />
         <input type="text" />
-        <Select
-          label="Email address 2 privacy settings"
-          id="field-email-2-privacy"
-          v-model="foo4"
-          v-bind="privacySettings"
-          :options="displayLevelsFor('email')"
+        <PrivacySetting
+          label="Email address 1 privacy settings"
+          id="field-email-1-privacy"
+          profileField="email"
+          v-model="foo2"
         />
         <label class="edit-contact__set-as-contact"
           ><input type="checkbox" /> Show in Contact Me button</label
@@ -68,6 +66,7 @@
       <h3>Phone</h3>
       <div class="edit-contact__item">
         <Select
+          class="options--chevron"
           label="Phone number 1 type"
           id="field-phone-1-type"
           v-model="foo4"
@@ -79,12 +78,11 @@
           ]"
         />
         <input type="text" />
-        <Select
-          label="Phone number 1 privacy settings"
-          id="field-phone-1-privacy"
-          v-model="foo4"
-          v-bind="privacySettings"
-          :options="displayLevelsFor('email')"
+        <PrivacySetting
+          label="Email address 1 privacy settings"
+          id="field-email-1-privacy"
+          profileField="email"
+          v-model="foo2"
         />
         <label class="edit-contact__set-as-contact"
           ><input type="checkbox" /> Show in Contact Me button</label
@@ -97,6 +95,7 @@
           <span class="visually-hidden">Remove phone number</span>
         </Button>
         <Select
+          class="options--chevron"
           label="Phone number 2 type"
           id="field-phone-2-type"
           v-model="foo5"
@@ -108,12 +107,11 @@
           ]"
         />
         <input type="text" />
-        <Select
-          label="Phone number 2 privacy settings"
-          id="field-phone-2-privacy"
-          v-model="foo6"
-          v-bind="privacySettings"
-          :options="displayLevelsFor('email')"
+        <PrivacySetting
+          label="Email address 1 privacy settings"
+          id="field-email-1-privacy"
+          profileField="email"
+          v-model="foo2"
         />
         <label class="edit-contact__set-as-contact"
           ><input type="checkbox" /> Show in Contact Me button</label
@@ -130,6 +128,7 @@
 <script>
 import Button from '@/components/ui/Button.vue';
 import EditMutationWrapper from './EditMutationWrapper.vue';
+import PrivacySetting from '@/components/profile/PrivacySetting.vue';
 import Icon from '@/components/ui/Icon.vue';
 import Select from '@/components/ui/Select.vue';
 import { displayLevelsFor } from '@/assets/js/display-levels';
@@ -146,6 +145,7 @@ export default {
     Button,
     EditMutationWrapper,
     Icon,
+    PrivacySetting,
     Select,
   },
   methods: {
