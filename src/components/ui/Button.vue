@@ -1,5 +1,9 @@
 <template>
-  <button type="button" :class="'button' + (modifier ? ' ' + modifier : '')">
+  <button
+    type="button"
+    :class="'button' + (modifier ? ' ' + modifier : '')"
+    @click="$emit('click', $event)"
+  >
     <slot></slot>
   </button>
 </template>

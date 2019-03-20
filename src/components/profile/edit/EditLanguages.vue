@@ -14,7 +14,7 @@
       :tag="language"
       :key="`language-${index}`"
       :removable="true"
-      @remove="removeLanguage(language)"
+      @removeTag="removeLanguage(index)"
     >
     </Tag>
     <input type="text" v-model="newLanguage" ref="inputLanguage" />

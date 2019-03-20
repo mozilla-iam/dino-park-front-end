@@ -3,7 +3,7 @@
     <Button
       class="button--icon-only button--text-only"
       v-if="removable"
-      @click="this.$emit('remove')"
+      @click="$emit('removeTag')"
     >
       <Icon id="x" :width="16" :height="16"></Icon
       ><span class="visually-hidden">Remove {{ tag }}</span></Button
