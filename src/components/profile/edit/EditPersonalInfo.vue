@@ -68,13 +68,13 @@
       <hr role="presentation" />
 
       <label for="field-pronouns" class="edit-personal-info__label"
-        >Gender pronouns</label
+        >Pronouns</label
       >
       <Combobox
         id="field-pronouns"
         v-model="pronouns.value"
         placeholder="Choose a pronoun or type your own"
-        :source="['he/Him', 'she/Her', 'they/Them']"
+        :source="['he/him', 'she/her', 'they/them']"
       >
       </Combobox>
       <PrivacySetting
