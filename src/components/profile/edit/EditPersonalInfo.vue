@@ -19,6 +19,9 @@
       v-bind="{ picture, username: loggedInUser, staffInformation }"
       @close="showPictureModal = false"
     />
+    <header class="profile__section-header">
+      <h2>Primary info</h2>
+    </header>
     <div class="edit-personal-info">
       <button
         class="edit-personal-info__picture"
