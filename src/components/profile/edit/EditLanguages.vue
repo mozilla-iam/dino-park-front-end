@@ -57,8 +57,8 @@ export default {
       this.newLanguage = '';
     },
     removeLanguage(index) {
-      delete this.languages[index];
-      this.$forceUpdate();
+      const { [index]: deleted, ...remainingLanguages } = this.languages;
+      this.languages = remainingLanguages;
     },
   },
   data() {
