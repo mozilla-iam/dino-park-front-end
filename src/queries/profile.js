@@ -89,6 +89,7 @@ const MUTATE_PROFILE = gql`
     $location: StringWithDisplay
     $pronouns: StringWithDisplay
     $timezone: StringWithDisplay
+    $languages: KeyValuesWithDisplay
   ) {
     profile(
       update: {
@@ -100,6 +101,7 @@ const MUTATE_PROFILE = gql`
         location: $location
         pronouns: $pronouns
         timezone: $timezone
+        languages: $languages
       }
     ) {
       alternativeName {
@@ -150,12 +152,18 @@ const MUTATE_PROFILE = gql`
           display
         }
       }
+      languages {
+        values
+        metadata {
+          display
+        }
+      }
     }
   }
 `;
 
 const DISPLAY_PROFILE = gql`
-  query DisplayProfile($username: String!) {
+  query DisplayProfile($username: String) {
     profile(username: $username) {
       accessInformation {
         mozilliansorg {
@@ -286,6 +294,12 @@ const DISPLAY_PROFILE = gql`
       }
       tags {
         values
+      }
+      languages {
+        values
+        metadata {
+          display
+        }
       }
     }
   }

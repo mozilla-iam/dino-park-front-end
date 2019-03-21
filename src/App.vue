@@ -91,6 +91,7 @@ body {
   margin: 0;
   padding-top: 5.5em; /* allow for top bar */
   font-size: 87.5%;
+  letter-spacing: 0.04em;
 }
 
 h1,

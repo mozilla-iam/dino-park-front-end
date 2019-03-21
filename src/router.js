@@ -29,7 +29,7 @@ const router = new Router({
       props: true,
     },
     {
-      path: '/p/:username/e',
+      path: '/e',
       name: 'Edit Profile',
       component: PageProfile,
       query: {
@@ -72,6 +72,9 @@ router.beforeEach((to, from, next) => {
       break;
     case 'Profile':
       document.title = `${to.params.username} - Profile - Mozilla Directory`;
+      break;
+    case 'Edit Profile':
+      document.title = `Edit - Profile - Mozilla Directory`;
       break;
     default:
       document.title = `${to.name} - Mozilla Directory`;

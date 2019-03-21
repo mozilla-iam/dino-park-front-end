@@ -37,6 +37,7 @@
         :firstName="firstName.value"
         :lastName="lastName.value"
         :username="primaryUsername.value"
+        :alternativeName="alternativeName.value"
         :pronouns="pronouns.value"
       ></ProfileName>
       <ProfileTitle
@@ -113,6 +114,7 @@ export default {
   mixins: [CompanyMixin],
   name: 'ViewPersonalInfo',
   props: {
+    alternativeName: Object,
     tag: String,
     staffInformation: Object,
     primaryUsername: Object,
@@ -155,7 +157,7 @@ export default {
 }
 @media (min-width: 57.5em) {
   .profile__intro {
-    padding: 3em;
+    padding: 1em;
     margin-top: 0;
     display: grid;
     grid-gap: 2em;
@@ -165,8 +167,8 @@ export default {
 
 .profile__edit-button {
   position: absolute;
-  top: 32px;
-  right: 32px;
+  top: 2em;
+  right: 2em;
   border: none;
   background: none;
 }

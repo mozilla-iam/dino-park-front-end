@@ -9,7 +9,6 @@
       <EditPersonalInfo
         v-if="this.editing === 'personal-info'"
         v-bind="{
-          username: primaryUsername.value,
           picture,
           staffInformation,
           initialValues: {
@@ -19,6 +18,7 @@
             lastName,
             funTitle,
             location,
+            primaryUsername,
             pronouns,
             timezone,
           },
@@ -28,6 +28,7 @@
       <ViewPersonalInfo
         v-else
         v-bind="{
+          alternativeName,
           staffInformation,
           primaryUsername,
           primaryEmail,
@@ -67,6 +68,12 @@
       <ReportingStructure :username="primaryUsername.value">
       </ReportingStructure>
     </section>
+    <EmptyCard
+      title="Identities"
+      message="Soon you can edit identities in DinoPark"
+    >
+      <a id="nav-identities" class="profile__anchor"></a
+    ></EmptyCard>
     <section
       :class="
         'profile__section' +
@@ -87,63 +94,10 @@
       ></EditContact>
       <ViewContact v-else v-bind="{ primaryEmail, phoneNumbers }"></ViewContact>
     </section>
-    <section class="profile__section" v-if="pgpPublicKeys || sshPublicKeys">
-      <h3>Keys</h3>
-      <template
-        v-if="pgpPublicKeys && Object.keys(pgpPublicKeys.values).length > 0"
-      >
-        <h4 class="visually-hidden">PGP</h4>
-        <Key
-          v-for="[key, value] in Object.entries(pgpPublicKeys.values)"
-          type="PGP"
-          :title="key"
-          :content="value"
-          :key="`pgp-${key}`"
-        />
-      </template>
-      <template
-        v-if="sshPublicKeys && Object.keys(sshPublicKeys.values).length > 0"
-      >
-        <h4 class="visually-hidden">SSH</h4>
-        <Key
-          v-for="[key, value] in Object.entries(sshPublicKeys.values)"
-          type="SSH"
-          :title="key"
-          :content="value"
-          :key="`ssh-${key}`"
-        />
-      </template>
-    </section>
-    <section
-      v-if="languagesSorted && languagesSorted.length > 0"
-      :class="
-        'profile__section' +
-          (this.editing === 'languages' ? ' profile__section--editing' : '')
-      "
-    >
-      <a id="nav-languages" class="profile__anchor"></a>
-      <EditLanguages
-        v-if="this.editing === 'languages'"
-        v-bind="{
-          username: primaryUsername.value,
-          initialValues: {
-            languages: languagesSorted,
-          },
-        }"
-        @toast="showToast"
-      ></EditLanguages>
-      <ViewLanguages
-        v-else
-        v-bind="{ languages: languagesSorted }"
-      ></ViewLanguages>
-    </section>
-    <EmptyCard v-else title="Languages" message="No languages have been added">
-      <a id="nav-languages" class="profile__anchor"></a
-    ></EmptyCard>
     <section v-if="sections.accounts" class="profile__section">
-      <a id="nav-other-accounts" class="profile__anchor"></a>
+      <a id="nav-accounts" class="profile__anchor"></a>
       <header class="profile__section-header">
-        <h2>Other accounts</h2>
+        <h2>Accounts</h2>
       </header>
       <div class="profile__external-accounts">
         <div v-if="accounts.mozilla.length">
@@ -178,11 +132,78 @@
         </div>
       </div>
     </section>
-    <EmptyCard
-      v-else
-      title="Other Accounts"
-      message="No other accounts have been added"
-      ><a id="nav-other-accounts" class="profile__anchor"></a
+    <EmptyCard v-else title="Accounts" message="No accounts have been added"
+      ><a id="nav-accounts" class="profile__anchor"></a
+    ></EmptyCard>
+    <section
+      v-if="languagesSorted && languagesSorted.length > 0"
+      :class="
+        'profile__section' +
+          (this.editing === 'languages' ? ' profile__section--editing' : '')
+      "
+    >
+      <a id="nav-languages" class="profile__anchor"></a>
+      <EditLanguages
+        v-if="this.editing === 'languages'"
+        v-bind="{
+          username: primaryUsername.value,
+          initialValues: {
+            languages,
+          },
+        }"
+        @toast="showToast"
+      ></EditLanguages>
+      <ViewLanguages
+        v-else
+        v-bind="{ languages: languagesSorted }"
+      ></ViewLanguages>
+    </section>
+    <EmptyCard v-else title="Languages" message="No languages have been added">
+      <a id="nav-languages" class="profile__anchor"></a
+    ></EmptyCard>
+    <section v-if="(tagsSorted || []).length > 0" class="profile__section">
+      <a id="nav-tags" class="profile__anchor"></a>
+      <header class="profile__section-header">
+        <h2>Tags</h2>
+      </header>
+      <Tag
+        v-for="(tag, index) in tagsSorted"
+        :tag="tag"
+        :key="`tag-${index}`"
+      />
+    </section>
+    <EmptyCard v-else title="Tags" message="No tags have been added">
+      <a id="nav-tags" class="profile__anchor"></a
+    ></EmptyCard>
+    <section class="profile__section" v-if="pgpPublicKeys || sshPublicKeys">
+      <h3>Keys</h3>
+      <template
+        v-if="pgpPublicKeys && Object.keys(pgpPublicKeys.values).length > 0"
+      >
+        <h4 class="visually-hidden">PGP</h4>
+        <Key
+          v-for="[key, value] in Object.entries(pgpPublicKeys.values)"
+          type="PGP"
+          :title="key"
+          :content="value"
+          :key="`pgp-${key}`"
+        />
+      </template>
+      <template
+        v-if="sshPublicKeys && Object.keys(sshPublicKeys.values).length > 0"
+      >
+        <h4 class="visually-hidden">SSH</h4>
+        <Key
+          v-for="[key, value] in Object.entries(sshPublicKeys.values)"
+          type="SSH"
+          :title="key"
+          :content="value"
+          :key="`ssh-${key}`"
+        />
+      </template>
+    </section>
+    <EmptyCard v-else title="Keys" message="No keys have been added">
+      <a id="nav-keys" class="profile__anchor"></a
     ></EmptyCard>
     <section
       v-if="
@@ -213,20 +234,6 @@
     >
       <a id="nav-access-groups" class="profile__anchor"></a>
     </EmptyCard>
-    <section v-if="(tagsSorted || []).length > 0" class="profile__section">
-      <a id="nav-tags" class="profile__anchor"></a>
-      <header class="profile__section-header">
-        <h2>Tags</h2>
-      </header>
-      <Tag
-        v-for="(tag, index) in tagsSorted"
-        :tag="tag"
-        :key="`tag-${index}`"
-      />
-    </section>
-    <EmptyCard v-else title="Tags" message="No tags have been added">
-      <a id="nav-tags" class="profile__anchor"></a
-    ></EmptyCard>
   </main>
 </template>
 
@@ -328,12 +335,14 @@ export default {
       return this.alphabetise(Object.keys(this.tags.values || {}));
     },
     languagesSorted() {
-      return this.languages ? this.alphabetise(this.languages) : null;
+      return (
+        this.languages.values &&
+        this.alphabetise(Object.values(this.languages.values))
+      );
     },
   },
   data() {
     return {
-      editMode: false,
       toastContent: '',
       profileNav: [
         {
@@ -343,24 +352,39 @@ export default {
           staffOnly: true,
         },
         {
+          id: 'nav-identities',
+          iconId: 'chain',
+          label: 'Identities',
+        },
+        {
           id: 'nav-contact',
-          iconId: 'book',
+          iconId: 'envelope',
           label: 'Contact',
         },
         {
-          id: 'nav-other-accounts',
+          id: 'nav-accounts',
           iconId: 'at-sign',
-          label: 'Other Accounts',
+          label: 'Accounts',
         },
         {
-          id: 'nav-access-groups',
-          iconId: 'lock',
-          label: 'Access Groups',
+          id: 'nav-languages',
+          iconId: 'world',
+          label: 'Languages',
         },
         {
           id: 'nav-tags',
           iconId: 'bookmark',
           label: 'Tags',
+        },
+        {
+          id: 'nav-keys',
+          iconId: 'keys',
+          label: 'Keys',
+        },
+        {
+          id: 'nav-access-groups',
+          iconId: 'lock',
+          label: 'Access Groups',
         },
       ],
     };

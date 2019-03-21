@@ -83,7 +83,7 @@ export default {
   .profile__nav {
     border-radius: var(--imageRadius);
     grid-column: 1 / 2;
-    grid-row: 2 / 4;
+    grid-row: 2 / 6;
     top: 8em;
     margin-left: 0;
     margin-right: 0;

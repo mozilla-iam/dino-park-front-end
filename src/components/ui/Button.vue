@@ -1,5 +1,9 @@
 <template>
-  <button type="button" :class="'button' + (modifier ? ' ' + modifier : '')">
+  <button
+    type="button"
+    :class="'button' + (modifier ? ' ' + modifier : '')"
+    @click="$emit('click', $event)"
+  >
     <slot></slot>
   </button>
 </template>
@@ -17,7 +21,7 @@ export default {
 .button {
   text-align: center;
   text-decoration: none;
-  padding: 1em 2em;
+  padding: 1.1em 2em;
   display: block;
   font-family: inherit;
   font-size: 0.9em;
@@ -39,6 +43,7 @@ export default {
 .button img,
 .button svg {
   vertical-align: middle;
+  margin-right: 0.5em;
 }
 
 .button--secondary {
@@ -59,6 +64,15 @@ export default {
 .button--secondary:active {
   background-color: transparent;
   color: var(--black);
+}
+
+.button--action {
+  color: var(--blue-60);
+  border-color: var(--blue-60);
+}
+.button--action:hover {
+  color: var(--white);
+  background-color: var(--blue-60);
 }
 
 .button--text-only {

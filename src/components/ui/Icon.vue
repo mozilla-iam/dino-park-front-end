@@ -309,6 +309,30 @@
         stroke-width="2"
       />
     </template>
+    <template v-else-if="id === 'plus'">
+      <path
+        fill="currentColor"
+        d="M20 12c0 .6-.4 1-1 1h-6v6c0 .6-.4 1-1 1s-1-.4-1-1v-6H5c-.6 0-1-.4-1-1s.4-1 1-1h6V5c0-.6.4-1 1-1s1 .4 1 1v6h6c.6 0 1 .4 1 1z"
+      />
+    </template>
+    <template v-else-if="id === 'envelope'">
+      <path
+        fill="currentColor"
+        d="M20 3H4C2.3 3 1 4.3 1 6v12c0 1.7 1.3 3 3 3h16c1.7 0 3-1.3 3-3V6c0-1.7-1.3-3-3-3zM4 5h16c.4 0 .7.2.9.6L12 11.8 3.1 5.6c.2-.4.5-.6.9-.6zm16 14H4c-.6 0-1-.4-1-1V7.9l8.4 5.9c.2.1.4.2.6.2.2 0 .4-.1.6-.2L21 7.9V18c0 .6-.4 1-1 1z"
+      />
+    </template>
+    <template v-else-if="id === 'keys'">
+      <path
+        fill="currentColor"
+        d="M2 20h20V5H2v15zm1.667-1.666h16.667V6.667H3.667v11.667zM16.167 10h2.5V8.333h-2.5V10zm-3.334 0h2.084V8.333h-2.084V10zm-3.75 0h2.5V8.333h-2.5V10zm-3.75 0h2.5V8.333h-2.5V10zm11.25 3.333h2.084v-1.666h-2.084v1.666zm-3.333 0h2.083v-1.666H13.25v1.666zm-3.333 0H12v-1.666H9.917v1.666zm-4.584 0h3.334v-1.666H5.333v1.666zm0 3.334h13.334V15H5.333v1.667z"
+      />
+    </template>
+    <template v-else-if="id === 'chain'">
+      <path
+        fill="currentColor"
+        d="M10 17c0 .6-.4 1-1 1H6c-3.3 0-6-2.7-6-6s2.7-6 6-6h3c.6 0 1 .4 1 1s-.4 1-1 1H6c-2.2 0-4 1.8-4 4s1.8 4 4 4h3c.6 0 1 .4 1 1zm8-11h-3c-.6 0-1 .4-1 1s.4 1 1 1h3c2.2 0 4 1.8 4 4s-1.8 4-4 4h-3c-.6 0-1 .4-1 1s.4 1 1 1h3c3.3 0 6-2.7 6-6s-2.7-6-6-6zM7 12c0 .6.4 1 1 1h8c.6 0 1-.4 1-1s-.4-1-1-1H8c-.6 0-1 .4-1 1z"
+      />
+    </template>
   </svg>
 </template>
 

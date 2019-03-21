@@ -13,9 +13,7 @@
         :id="icon"
         :width="17"
         :height="17"
-        v-if="expandedShowIcon"
-        aria-hidden="true"
-        role="presentation"
+        v-if="icon && expandedShowIcon"
       ></Icon>
       <span v-if="expandedShowLabel">{{ label }}</span></label
     >

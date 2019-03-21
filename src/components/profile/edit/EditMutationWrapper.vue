@@ -17,6 +17,9 @@
             @click="
               $router.push({
                 name: 'Profile',
+                params: {
+                  username: loggedInUser,
+                },
               })
             "
           >
@@ -55,21 +58,21 @@ export default {
     ) {
       const data = store.readQuery({
         query: DISPLAY_PROFILE,
-        variables: {
-          username: this.username,
-        },
       });
 
       store.writeQuery({
         query: DISPLAY_PROFILE,
         variables: {
-          username: this.username,
+          username: this.loggedInUser,
         },
         data: { profile: { ...data.profile, ...profile } },
       });
 
       this.$router.push({
         name: 'Profile',
+        params: {
+          username: this.loggedInUser,
+        },
       });
 
       this.$emit('toggle-edit-mode');
@@ -79,8 +82,8 @@ export default {
     },
   },
   computed: {
-    username() {
-      return this.$route.params.username;
+    loggedInUser() {
+      return this.$store.state.user.primaryUsername.value;
     },
   },
   data() {
@@ -173,7 +176,7 @@ textarea {
 @media (min-width: 57.5em) {
   .edit-personal-info {
     display: grid;
-    grid-template-columns: 20em 10em 1fr 4em;
+    grid-template-columns: 20em 10em 1fr auto;
     grid-column-gap: 1em;
   }
   .edit-personal-info > hr {
@@ -203,7 +206,8 @@ textarea {
     grid-column: 1 / 2;
     grid-row: 1 / 8;
   }
-  .edit-personal-info__privacy {
+  .edit-personal-info__privacy,
+  .privacy-setting {
     grid-column: 4 / 5;
     align-self: center;
     justify-self: center;
