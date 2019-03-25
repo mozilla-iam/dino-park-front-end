@@ -332,7 +332,7 @@ export default {
       };
     },
     tagsSorted() {
-      return this.alphabetise(Object.keys(this.tags.values || {}));
+      return this.alphabetise(Object.values(this.tags.values || {}));
     },
     languagesSorted() {
       return (

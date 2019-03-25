@@ -73,8 +73,8 @@ export default {
       const [k, v] = item;
 
       return {
-        k: k,
-        v: v,
+        k,
+        v,
       };
     },
   },
