@@ -1,13 +1,20 @@
 <template>
   <EditMutationWrapper
     :editVariables="{
-      languages,
+      languages: languagesUpdated,
     }"
     :initialValues="initialValues"
     formName="Edit languages"
   >
     <header class="profile__section-header">
       <h2>Languages</h2>
+      <PrivacySetting
+        label="Languages privacy levels"
+        id="section-languages-privacy"
+        :profileField="languagesUpdated"
+        :collapsedShowLabel="true"
+        v-model="languagesUpdated.metadata.display"
+      />
     </header>
     <Tag
       v-for="(language, index) in languages"
@@ -34,8 +41,9 @@
 </template>
 
 <script>
+import PrivacySetting from '@/components/profile/PrivacySetting.vue';
 import Tag from '@/components/ui/Tag.vue';
-import { displayLevelsFor } from '@/assets/js/display-levels';
+import { displayLevelsFor, DISPLAY_LEVELS } from '@/assets/js/display-levels';
 import EditMutationWrapper from './EditMutationWrapper.vue';
 
 export default {
@@ -46,6 +54,7 @@ export default {
   },
   components: {
     EditMutationWrapper,
+    PrivacySetting,
     Tag,
   },
   methods: {
@@ -60,11 +69,35 @@ export default {
       const { [index]: deleted, ...remainingLanguages } = this.languages;
       this.languages = remainingLanguages;
     },
+    formatAsKeyValues(item) {
+      const [k, v] = item;
+
+      return {
+        k: k,
+        v: v,
+      };
+    },
+  },
+  watch: {
+    languages() {
+      this.languagesUpdated.values = Object.entries(this.languages).map(
+        this.formatAsKeyValues,
+      );
+    },
   },
   data() {
     return {
       newLanguage: '',
       languages: this.initialValues.languages.values,
+      languagesUpdated: {
+        values: Object.entries(this.initialValues.languages.values).map(
+          this.formatAsKeyValues,
+        ),
+        metadata: {
+          display:
+            this.initialValues.languages.display || DISPLAY_LEVELS.public.value,
+        },
+      },
     };
   },
 };
