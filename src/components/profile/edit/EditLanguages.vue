@@ -13,7 +13,7 @@
         id="section-languages-privacy"
         :profileField="languagesUpdated"
         :collapsedShowLabel="true"
-        v-model="languagesUpdated.metadata.display"
+        v-model="languagesUpdated.display"
       />
     </header>
     <Tag
@@ -93,10 +93,8 @@ export default {
         values: Object.entries(this.initialValues.languages.values).map(
           this.formatAsKeyValues,
         ),
-        metadata: {
-          display:
-            this.initialValues.languages.display || DISPLAY_LEVELS.public.value,
-        },
+        display:
+          this.initialValues.languages.display || DISPLAY_LEVELS.public.value,
       },
     };
   },
