@@ -85,7 +85,7 @@ export default {
         this.slot = 100;
       } else {
         this.dinoTypeSize = 'large';
-        this.slot = 230;
+        this.slot = 264;
       }
       this.modifier = `user-picture--${this.dinoTypeSize}`;
     },
@@ -148,8 +148,8 @@ export default {
 }
 @media (min-width: 57.5em) {
   .user-picture--large {
-    width: 15em;
-    height: 15em;
+    width: 18.75em;
+    height: 18.75em;
   }
   .user-picture--large .dino-type {
     left: 50%;

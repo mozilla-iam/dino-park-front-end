@@ -31,8 +31,8 @@
         <UserPicture
           :picture="picture.value"
           :username="loggedInUser.value"
-          :size="230"
           :isStaff="staffInformation.staff.value"
+          :size="264"
         ></UserPicture>
       </button>
 
