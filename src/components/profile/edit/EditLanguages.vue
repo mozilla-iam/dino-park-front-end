@@ -6,7 +6,7 @@
     :initialValues="initialValues"
     formName="Edit languages"
   >
-    <header class="profile__section-header">
+    <header class="profile__section-header" ref="header" tabindex="-1">
       <h2>Languages</h2>
       <PrivacySetting
         label="Languages privacy levels"
@@ -84,6 +84,9 @@ export default {
         this.formatAsKeyValues,
       );
     },
+  },
+  mounted() {
+    this.$refs.header.focus();
   },
   data() {
     return {

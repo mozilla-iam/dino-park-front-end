@@ -19,7 +19,7 @@
       v-bind="{ picture, username: loggedInUser, staffInformation }"
       @close="showPictureModal = false"
     />
-    <header class="profile__section-header">
+    <header class="profile__section-header" ref="header" tabindex="-1">
       <h2>Primary info</h2>
     </header>
     <div class="edit-personal-info">
@@ -195,6 +195,9 @@ export default {
     loggedInUser() {
       return this.$store.state.user;
     },
+  },
+  mounted() {
+    this.$refs.header.focus();
   },
   data() {
     return {

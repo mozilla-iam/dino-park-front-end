@@ -7,7 +7,7 @@
     :initialValues="initialValues"
     formName="Edit contact information"
   >
-    <header class="profile__section-header">
+    <header class="profile__section-header" ref="header" tabindex="-1">
       <h2>Contact</h2>
     </header>
     <div class="edit-contact">
@@ -137,6 +137,9 @@ export default {
     Icon,
     PrivacySetting,
     Select,
+  },
+  mounted() {
+    this.$refs.header.focus();
   },
   data() {
     return {
