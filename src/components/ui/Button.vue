@@ -122,4 +122,10 @@ export default {
   margin-left: 0.75em;
   margin-right: 0;
 }
+
+.button[disabled] {
+  color: var(--gray-50);
+  background-color: var(--gray-20);
+  border-color: transparent;
+}
 </style>
