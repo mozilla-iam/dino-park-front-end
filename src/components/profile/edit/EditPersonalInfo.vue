@@ -45,6 +45,8 @@
         v-model="primaryUsername.display"
       />
 
+      <hr role="presentation" />
+
       <label for="field-first-name">First name</label>
       <input type="text" id="field-first-name" v-model="firstName.value" />
       <PrivacySetting
