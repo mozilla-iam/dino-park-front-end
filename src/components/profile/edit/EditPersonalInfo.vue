@@ -23,18 +23,29 @@
       <h2>Primary info</h2>
     </header>
     <div class="edit-personal-info">
-      <button
-        class="edit-personal-info__picture"
-        type="button"
-        @click="showPictureModal = true"
-      >
+      <div class="edit-personal-info__picture">
         <UserPicture
           :picture="picture.value"
           :username="loggedInUser.value"
-          :isStaff="staffInformation.staff.value"
           :size="264"
+          :isStaff="true"
         ></UserPicture>
-      </button>
+        <button
+          class="button button--icon-only edit-personal-info__picture-edit-button"
+          type="button"
+          @click="showPictureModal = true"
+        >
+          <Icon :id="pencil" :width="17" :height="17"></Icon>
+          <span class="visually-hidden">Edit picture</span>
+        </button>
+        <PrivacySetting
+          label="Profile picture privacy levels"
+          id="field-picture-privacy"
+          :profileField="picture"
+          class="edit-personal-info__picture-privacy"
+          v-model="picture.display"
+        />
+      </div>
 
       <label for="field-username">Username</label>
       <input type="text" id="field-username" v-model="primaryUsername.value" />
@@ -170,6 +181,7 @@
 <script>
 import Combobox from '@/components/ui/Combobox.vue';
 import EditMutationWrapper from '@/components/profile/edit/EditMutationWrapper.vue';
+import Icon from '@/components/ui/Icon.vue';
 import PrivacySetting from '@/components/profile/PrivacySetting.vue';
 import Select from '@/components/ui/Select.vue';
 import UserPicture from '@/components/ui/UserPicture.vue';
@@ -187,6 +199,7 @@ export default {
     Combobox,
     EditPictureModal,
     EditMutationWrapper,
+    Icon,
     PrivacySetting,
     Select,
     UserPicture,
