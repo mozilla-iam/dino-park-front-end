@@ -28,6 +28,10 @@ export default {
     id: String,
     profileField: Object,
     value: String,
+    collapsedShowLabel: {
+      type: Boolean,
+      default: false,
+    },
   },
   methods: {
     displayLevelsFor,
@@ -36,7 +40,7 @@ export default {
     return {
       privacySettings: {
         collapsedShowIcon: true,
-        collapsedShowLabel: false,
+        collapsedShowLabel: this.collapsedShowLabel,
         expandedShowIcon: true,
         expandedShowLabel: true,
       },
