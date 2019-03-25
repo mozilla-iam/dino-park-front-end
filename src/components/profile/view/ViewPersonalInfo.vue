@@ -1,9 +1,7 @@
 <template>
   <div class="profile__intro">
     <button
-      v-if="
-        currentUser && currentUser.primaryEmail.value === primaryEmail.value
-      "
+      v-if="userOnOwnProfile"
       class="profile__edit-button"
       @click="
         $router.push({
@@ -129,6 +127,7 @@ export default {
     picture: Object,
     location: Object,
     description: Object,
+    userOnOwnProfile: Boolean,
   },
   components: {
     ContactMe,

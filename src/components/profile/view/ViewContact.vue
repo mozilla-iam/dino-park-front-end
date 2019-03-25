@@ -3,7 +3,7 @@
     <header class="profile__section-header">
       <h2>Contact</h2>
       <button
-        v-if="currentUser"
+        v-if="userOnOwnProfile"
         class="profile__edit-button"
         @click="
           $router.push({
@@ -44,6 +44,7 @@ export default {
   props: {
     primaryEmail: Object,
     phoneNumbers: Object,
+    userOnOwnProfile: Boolean,
   },
   components: {
     IconBlock,

@@ -41,6 +41,7 @@
           picture,
           location,
           description,
+          userOnOwnProfile,
         }"
       />
       <Toast :content="toastContent" @reset-toast="toastContent = ''"></Toast>
@@ -92,7 +93,10 @@
         }"
         @toast="showToast"
       />
-      <ViewContact v-else v-bind="{ primaryEmail, phoneNumbers }"></ViewContact>
+      <ViewContact
+        v-else
+        v-bind="{ primaryEmail, phoneNumbers, userOnOwnProfile }"
+      ></ViewContact>
     </section>
     <section v-if="sections.accounts" class="profile__section">
       <a id="nav-accounts" class="profile__anchor"></a>
@@ -155,7 +159,7 @@
       ></EditLanguages>
       <ViewLanguages
         v-else
-        v-bind="{ languages: languagesSorted }"
+        v-bind="{ languages: languagesSorted, userOnOwnProfile }"
       ></ViewLanguages>
     </section>
     <EmptyCard v-else title="Languages" message="No languages have been added">
@@ -338,6 +342,12 @@ export default {
       return (
         this.languages.values &&
         this.alphabetise(Object.values(this.languages.values))
+      );
+    },
+    userOnOwnProfile() {
+      return (
+        this.$store.state.user.primaryUsername.value ===
+        this.primaryUsername.value
       );
     },
   },
