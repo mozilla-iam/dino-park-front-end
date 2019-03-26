@@ -27,12 +27,12 @@
     </div>
 
     <div class="edit-picture-modal__picture">
-      <Crop v-if="imgSrc" :src="imgSrc" />
+      <Crop v-if="imgSrc" :src="imgSrc" ref="crop" />
       <UserPicture
         v-else
         :picture="picture.value"
         :username="username.value"
-        :size="230"
+        :size="264"
         :isStaff="staffInformation.staff.value"
       ></UserPicture>
     </div>
@@ -66,8 +66,9 @@
         type="button"
         class="button button--primary button--small"
         :disabled="!privacyAgreed"
+        @click="selectCrop()"
       >
-        Save
+        Select
       </button>
     </div>
   </Modal>
@@ -94,6 +95,10 @@ export default {
         this.imgSrc = fr.result;
       };
       fr.readAsDataURL(event.target.files[0]);
+    },
+    selectCrop() {
+      this.picture.value = this.$refs.crop.cropper.toDataURL();
+      this.$emit('close');
     },
   },
 };
