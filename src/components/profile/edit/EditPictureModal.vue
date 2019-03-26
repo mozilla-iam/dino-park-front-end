@@ -13,7 +13,7 @@
         <input
           type="file"
           accept="image/*"
-          class="edit-picture-modal__file"
+          class="edit-picture-modal__file visually-hidden"
           @change="handleChangeFile"
         />
       </label>
@@ -110,13 +110,13 @@ export default {
   margin-right: 1em;
   cursor: pointer;
 }
-.edit-picture-modal__file {
-  display: none;
-}
 .edit-picture-modal__picture {
   margin-bottom: 1.5em;
   display: flex;
   justify-content: center;
+}
+.focus-styles .edit-picture-modal__add-picture-button:focus-within {
+  box-shadow: 0px 0 0 1px var(--blue-60), 0 0 0 3px var(--transparentBlue);
 }
 .edit-picture-modal__privacy {
   display: flex;
