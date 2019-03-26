@@ -1,17 +1,11 @@
 <template>
   <transition name="modal-">
-    <div
-      class="modal"
-      v-show="isOpen"
-      tabindex="-1"
-      @keyup.esc="isOpen = false"
-      ref="modalEl"
-    >
+    <div class="modal" tabindex="-1" @keyup.esc="$emit('close')" ref="modalEl">
       <div class="modal__content">
         <div class="modal__header">
           <button
             v-if="closeButton"
-            @click="isOpen = false"
+            @click="$emit('close')"
             class="modal__close"
           >
             <span class="visually-hidden">Close</span>
@@ -33,69 +27,47 @@ export default {
   name: 'Modal',
   props: {
     heading: String,
-    initiallyOpen: Boolean,
     closeButton: Boolean,
   },
   components: {
     Icon,
   },
-  updated() {
-    this.init();
-  },
   data() {
     return {
-      isOpen: false,
-      focusLocked: false,
       lastFocusedElement: null,
     };
   },
   mounted() {
-    if (this.initiallyOpen) {
-      this.isOpen = true;
-      this.init();
-    }
+    this.lockFocus();
+    this.preventBackgroundScrolling();
   },
   beforeDestroy() {
-    if (this.focusLocked) {
-      this.undoLockFocus();
-      this.enableBackgroundScrolling();
-    }
+    this.undoLockFocus();
+    this.enableBackgroundScrolling();
   },
   methods: {
-    init() {
-      if (this.isOpen) {
-        this.lockFocus();
-        this.preventBackgroundScrolling();
-      } else {
-        this.undoLockFocus();
-        this.enableBackgroundScrolling();
-      }
-    },
     lockFocus() {
       this.lastFocusedElement = document.activeElement;
       bindFocusTrap(this.$refs.modalEl);
       this.$refs.modalEl.focus();
-      this.focusLocked = true;
     },
     undoLockFocus() {
       unbindFocusTrap(this.$refs.modalEl);
       if (this.lastFocusedElement) {
         this.lastFocusedElement.focus();
       }
-      this.focusLocked = false;
     },
     preventBackgroundScrolling() {
       document.body.style.overflow = 'hidden';
       document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
       document.documentElement.style.position = 'fixed';
     },
     enableBackgroundScrolling() {
       document.body.style.overflow = 'visible';
       document.body.style.position = 'static';
+      document.body.style.width = 'auto';
       document.documentElement.style.position = 'static';
-    },
-    preventDefault(e) {
-      e.preventDefault();
     },
   },
 };
