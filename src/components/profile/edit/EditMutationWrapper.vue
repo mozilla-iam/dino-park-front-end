@@ -122,6 +122,11 @@ textarea {
   display: block;
   font: inherit;
 }
+.edit-personal-info {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-gap: 0.5em;
+}
 .edit-personal-info fieldset {
   border: 0;
 }
@@ -129,12 +134,14 @@ textarea {
 .edit-personal-info__label {
   color: var(--gray-50);
   margin: 0.5em 0 0;
+  grid-column: 1 / -1;
 }
 .edit-personal-info > label::after {
   content: ':';
 }
 .edit-personal-info > hr {
-  margin: 1em -2.4em;
+  margin: 1em -1.5em;
+  grid-column: 1 / -1;
 }
 .edit-personal-info > input,
 .edit-personal-info > div > input,
@@ -144,7 +151,7 @@ textarea {
   background-color: var(--gray-20);
   border-radius: var(--formElementRadius);
   color: var(--black);
-  margin: 0.5em 0;
+  margin: 0;
   padding: 0.5em 0.9em;
   width: 100%;
 }
@@ -161,6 +168,9 @@ textarea {
   border: none;
   background: none;
 }
+.edit-personal-info__meta {
+  grid-column: 1 / -1;
+}
 .button-bar {
   display: flex;
   margin: 2em -1.5em -1.5em;
@@ -173,11 +183,12 @@ textarea {
 .button-bar button:first-child {
   margin-left: auto;
 }
+
 @media (min-width: 57.5em) {
   .edit-personal-info {
-    display: grid;
     grid-template-columns: 20em 10em 1fr auto;
     grid-column-gap: 1em;
+    margin: 2em 1em;
   }
   .edit-personal-info > hr {
     grid-column: 2 / end;
@@ -196,6 +207,12 @@ textarea {
       padding-left: 0.25em;
     }
   }
+  .edit-personal-info > input,
+  .edit-personal-info > div > input,
+  .edit-personal-info > textarea,
+  .edit-personal-info > select {
+    margin: 0.5em 0;
+  }
   .edit-personal-info > input {
     grid-column: 3 / 4;
   }
@@ -205,6 +222,22 @@ textarea {
   .edit-personal-info__picture {
     grid-column: 1 / 2;
     grid-row: 1 / 8;
+    position: relative;
+  }
+  .edit-personal-info__picture .edit-personal-info__picture-privacy,
+  .edit-personal-info__picture-edit-button {
+    position: absolute;
+    top: 15.5em;
+  }
+  .edit-personal-info__picture-edit-button {
+    left: 1.1em;
+  }
+  .edit-personal-info__picture-privacy {
+    right: 2.1em;
+  }
+  .edit-personal-info__picture button {
+    background-color: var(--gray-20);
+    font-size: inherit;
   }
   .edit-personal-info__privacy,
   .privacy-setting {

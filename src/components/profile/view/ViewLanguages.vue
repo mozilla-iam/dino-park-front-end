@@ -4,6 +4,7 @@
       <h2>Languages</h2>
       <button
         class="profile__edit-button"
+        v-if="userOnOwnProfile"
         @click="
           $router.push({
             name: 'Edit Profile',
@@ -32,6 +33,7 @@ export default {
   name: 'ViewLanguages',
   props: {
     languages: Array,
+    userOnOwnProfile: Boolean,
   },
   components: {
     Tag,

@@ -41,6 +41,7 @@
           picture,
           location,
           description,
+          userOnOwnProfile,
         }"
       />
       <Toast :content="toastContent" @reset-toast="toastContent = ''"></Toast>
@@ -91,8 +92,11 @@
           },
         }"
         @toast="showToast"
-      ></EditContact>
-      <ViewContact v-else v-bind="{ primaryEmail, phoneNumbers }"></ViewContact>
+      />
+      <ViewContact
+        v-else
+        v-bind="{ primaryEmail, phoneNumbers, userOnOwnProfile }"
+      ></ViewContact>
     </section>
     <section v-if="sections.accounts" class="profile__section">
       <a id="nav-accounts" class="profile__anchor"></a>
@@ -155,7 +159,7 @@
       ></EditLanguages>
       <ViewLanguages
         v-else
-        v-bind="{ languages: languagesSorted }"
+        v-bind="{ languages: languagesSorted, userOnOwnProfile }"
       ></ViewLanguages>
     </section>
     <EmptyCard v-else title="Languages" message="No languages have been added">
@@ -332,12 +336,18 @@ export default {
       };
     },
     tagsSorted() {
-      return this.alphabetise(Object.keys(this.tags.values || {}));
+      return this.alphabetise(Object.values(this.tags.values || {}));
     },
     languagesSorted() {
       return (
         this.languages.values &&
         this.alphabetise(Object.values(this.languages.values))
+      );
+    },
+    userOnOwnProfile() {
+      return (
+        this.$store.state.user.primaryUsername.value ===
+        this.primaryUsername.value
       );
     },
   },
@@ -442,12 +452,32 @@ export default {
   margin: -1.5em -1.5em 1.5em -1.5em;
   border-bottom: 1px solid var(--gray-30);
   display: flex;
+  align-items: center;
 }
 .profile__section-header h2 {
   margin: 0;
 }
 .profile__section-header > a {
   margin-left: auto;
+}
+.profile__section-header > .privacy-setting {
+  margin-left: auto;
+}
+.profile__section-header > .privacy-setting button {
+  background-color: white;
+  border-color: var(--gray-50);
+  padding: 1.1em 2em;
+  color: var(--black);
+  border-radius: 2.5em;
+}
+.profile__section-header > .privacy-setting button:hover {
+  background-color: var(--black);
+  color: var(--white);
+  border-color: transparent;
+}
+.profile__section-header > .privacy-setting button svg {
+  order: -1;
+  margin: 0 0.5em 0 0;
 }
 
 @media (min-width: 57.5em) {

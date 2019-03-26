@@ -1,9 +1,7 @@
 <template>
   <div class="profile__intro">
     <button
-      v-if="
-        currentUser && currentUser.primaryEmail.value === primaryEmail.value
-      "
+      v-if="userOnOwnProfile"
       class="profile__edit-button"
       @click="
         $router.push({
@@ -21,7 +19,7 @@
         <UserPicture
           :picture="picture.value"
           :username="primaryUsername.value"
-          :size="230"
+          :size="264"
           :isStaff="staffInformation.staff.value"
         ></UserPicture>
       </div>
@@ -129,6 +127,7 @@ export default {
     picture: Object,
     location: Object,
     description: Object,
+    userOnOwnProfile: Boolean,
   },
   components: {
     ContactMe,
@@ -203,12 +202,12 @@ export default {
 @media (min-width: 57.5em) {
   .profile__headshot {
     position: static;
-    width: 15em;
-    height: 15em;
+    width: 18.75em;
+    height: 18.75em;
     margin-left: 0;
   }
   .profile__intro-photo .profile__headshot {
-    margin: 0 auto 4em;
+    margin: 0 0 4em;
   }
 }
 
