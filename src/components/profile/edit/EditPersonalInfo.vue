@@ -35,7 +35,7 @@
           type="button"
           @click="showPictureModal = true"
         >
-          <Icon :id="pencil" :width="17" :height="17"></Icon>
+          <Icon id="pencil" :width="17" :height="17"></Icon>
           <span class="visually-hidden">Edit picture</span>
         </button>
         <PrivacySetting

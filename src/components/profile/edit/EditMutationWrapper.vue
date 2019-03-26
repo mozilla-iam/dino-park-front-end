@@ -225,19 +225,24 @@ textarea {
     position: relative;
   }
   .edit-personal-info__picture .edit-personal-info__picture-privacy,
-  .edit-personal-info__picture-edit-button {
+  .edit-personal-info__picture .edit-personal-info__picture-edit-button {
     position: absolute;
     top: 15.5em;
+    background-color: var(--gray-20);
+    font-size: inherit;
+    display: flex;
+    border-radius: var(--imageRadius);
+    color: var(--black);
+    border-color: transparent;
   }
   .edit-personal-info__picture-edit-button {
     left: 1.1em;
   }
-  .edit-personal-info__picture-privacy {
-    right: 2.1em;
+  .edit-personal-info__picture-edit-button svg {
+    margin: 0;
   }
-  .edit-personal-info__picture button {
-    background-color: var(--gray-20);
-    font-size: inherit;
+  .edit-personal-info__picture-privacy {
+    right: 2.3em;
   }
   .edit-personal-info__privacy,
   .privacy-setting {

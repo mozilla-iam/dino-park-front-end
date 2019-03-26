@@ -7,7 +7,7 @@
   >
     <div class="edit-picture-modal__picture-buttons">
       <label
-        class="edit-picture-modal__add-picture-button button button--secondary button--small"
+        class="edit-picture-modal__add-picture-button button button--secondary"
       >
         Add New Photo
         <input
@@ -19,7 +19,7 @@
       </label>
       <button
         type="button"
-        class="button button--secondary button--small"
+        class="button button--secondary"
         @click="imgSrc = null"
       >
         Delete Photo
@@ -57,14 +57,14 @@
     <div class="edit-picture-modal__modal-buttons">
       <button
         type="button"
-        class="edit-picture-modal__cancel-button button button--secondary button--small"
+        class="edit-picture-modal__cancel-button button button--secondary"
         @click="$emit('close')"
       >
         Cancel
       </button>
       <button
         type="button"
-        class="button button--primary button--small"
+        class="button button--primary"
         :disabled="!privacyAgreed"
       >
         Save
