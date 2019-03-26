@@ -87,6 +87,7 @@ const MUTATE_PROFILE = gql`
     $funTitle: StringWithDisplay
     $lastName: StringWithDisplay
     $location: StringWithDisplay
+    $picture: StringWithDisplay
     $pronouns: StringWithDisplay
     $timezone: StringWithDisplay
     $languages: KeyValuesWithDisplay
@@ -100,6 +101,7 @@ const MUTATE_PROFILE = gql`
         lastName: $lastName
         location: $location
         pronouns: $pronouns
+        picture: $picture
         timezone: $timezone
         languages: $languages
       }
@@ -135,6 +137,12 @@ const MUTATE_PROFILE = gql`
         }
       }
       location {
+        value
+        metadata {
+          display
+        }
+      }
+      picture {
         value
         metadata {
           display

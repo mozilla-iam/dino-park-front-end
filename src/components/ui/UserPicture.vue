@@ -60,6 +60,9 @@ export default {
   },
   methods: {
     async updateUserPicture() {
+      if (this.picture.startsWith('data:')) {
+        return this.picture;
+      }
       if (this.picture === null || this.picture === '/beta/img/user-demo.png') {
         let hash;
         if (window.crypto && window.crypto.subtle) {
@@ -74,7 +77,7 @@ export default {
         });
         return `data:image/svg+xml;base64,${identicon.toString()}`;
       }
-      return `/beta/avatar/${this.slot}/${this.picture}`;
+      return `${this.picture}?size=${this.slot}`;
     },
     decidePictureCategory(size) {
       if (size <= 40) {

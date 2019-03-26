@@ -9,7 +9,6 @@
       <EditPersonalInfo
         v-if="this.editing === 'personal-info'"
         v-bind="{
-          picture,
           staffInformation,
           initialValues: {
             alternativeName,
@@ -19,6 +18,7 @@
             funTitle,
             location,
             primaryUsername,
+            picture,
             pronouns,
             timezone,
           },

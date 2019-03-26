@@ -1,6 +1,7 @@
 <template>
   <EditMutationWrapper
     :editVariables="{
+      picture,
       primaryUsername,
       firstName,
       lastName,
@@ -191,7 +192,6 @@ import EditPictureModal from './EditPictureModal.vue';
 export default {
   name: 'EditPersonalInfo',
   props: {
-    picture: Object,
     staffInformation: Object,
     initialValues: Object,
   },
