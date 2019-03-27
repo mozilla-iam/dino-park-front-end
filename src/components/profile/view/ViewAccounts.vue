@@ -2,6 +2,20 @@
   <div>
     <header class="profile__section-header">
       <h2>Accounts</h2>
+      <button
+        class="profile__edit-button"
+        v-if="userOnOwnProfile"
+        @click="
+          $router.push({
+            name: 'Edit Profile',
+            query: {
+              section: 'accounts',
+            },
+          })
+        "
+      >
+        <img src="@/assets/images/icon-pencil.svg" alt="Edit accounts" />
+      </button>
     </header>
     <div class="profile__external-accounts">
       <div v-if="accounts.mozilla.length">
@@ -47,6 +61,7 @@ export default {
   name: 'ViewAccounts',
   props: {
     uris: Object,
+    userOnOwnProfile: Boolean,
   },
   mixins: [AccountsMixin],
   components: {

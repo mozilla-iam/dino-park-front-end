@@ -97,7 +97,8 @@ export default {
           this.formatAsKeyValues,
         ),
         display:
-          this.initialValues.languages.display || DISPLAY_LEVELS.public.value,
+          this.initialValues.languages.metadata.display ||
+          DISPLAY_LEVELS.public.value,
       },
     };
   },

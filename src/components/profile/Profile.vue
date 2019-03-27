@@ -83,10 +83,19 @@
         v-bind="{ primaryEmail, phoneNumbers, userOnOwnProfile }"
       ></ViewContact>
     </section>
-    <section v-if="sections.accounts" class="profile__section">
+    <section
+      v-if="sections.accounts"
+      :class="
+        'profile__section' +
+          (this.editing === 'accounts' ? ' profile__section--editing' : '')
+      "
+    >
       <a id="nav-accounts" class="profile__anchor"></a>
-      <EditAccounts v-if="this.editing === 'accounts'"></EditAccounts>
-      <ViewAccounts v-else v-bind="{ uris }"></ViewAccounts>
+      <EditAccounts
+        v-if="this.editing === 'accounts'"
+        v-bind="{ username: primaryUsername.value, initialValues: { uris } }"
+      ></EditAccounts>
+      <ViewAccounts v-else v-bind="{ uris, userOnOwnProfile }"></ViewAccounts>
     </section>
     <EmptyCard v-else title="Accounts" message="No accounts have been added"
       ><a id="nav-accounts" class="profile__anchor"></a
@@ -102,7 +111,6 @@
       <EditLanguages
         v-if="this.editing === 'languages'"
         v-bind="{
-          username: primaryUsername.value,
           initialValues: {
             languages,
           },
