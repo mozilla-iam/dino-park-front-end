@@ -309,6 +309,12 @@ const DISPLAY_PROFILE = gql`
           display
         }
       }
+      uris {
+        values
+        metadata {
+          display
+        }
+      }
     }
   }
 `;
