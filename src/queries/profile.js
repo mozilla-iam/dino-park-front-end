@@ -160,6 +160,12 @@ const MUTATE_PROFILE = gql`
           display
         }
       }
+      uris {
+        values
+        metadata {
+          display
+        }
+      }
       languages {
         values
         metadata {

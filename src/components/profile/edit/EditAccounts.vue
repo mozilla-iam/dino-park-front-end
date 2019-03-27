@@ -16,40 +16,55 @@
         v-model="urisUpdated.display"
       />
     </header>
-    <div v-for="(username, type) in uris">
-      <select>
-        <option :value="type" :selected="type === 'EA#DISCOURSE'"
-          >Discourse</option
-        >
-        <option :value="type" :selected="type === 'EA#TWITTER'">Twitter</option>
-        >
-      </select>
-      <input type="username" v-bind="username" :value="username" />
+    <div
+      class="edit-contact__item"
+      v-for="(username, type, id) in uris"
+      :key="`account-item-${id}`"
+    >
+      <Select
+        class="options--chevron"
+        :label="`Account ${id} type`"
+        :id="`field-account-${id}-type`"
+        :options="selectableAccounts"
+        :value="type"
+      />
+      <input type="text" :value="username" />
+      <label class="edit-contact__set-as-contact"
+        ><input type="checkbox" /> Show in Contact Me button</label
+      >
+      <hr role="presentation" />
     </div>
     <br /><br />
-    <select v-model="newAccountType">
-      <option value="EA#DISCOURSE">Discourse</option>
-      <option value="EA#SLACK">Slack</option>
-      <option value="EA#IRC">IRC</option>
-    </select>
-    <input type="text" v-model="newAccountUsername" ref="inputUsername" />
-    <button
-      type="button"
-      @click="
-        if (newAccountUsername.length > 0) {
-          addAccount({ [newAccountType]: newAccountUsername });
-        } else {
-          $refs.inputUsername.focus();
-        }
-      "
-    >
-      Add account
-    </button>
+    <div class="edit-contact__item">
+      <Select
+        class="options--chevron"
+        label="New account type"
+        id="field-new-account-type"
+        :options="selectableAccounts"
+        v-model="newAccountType"
+      />
+      <input type="text" v-model="newAccountUsername" ref="inputUsername" />
+      <Button
+        class="edit-contact__add-more button--secondary button button--action"
+        type="button"
+        @click="
+          if (newAccountUsername.length > 0) {
+            addAccount({ [newAccountType]: newAccountUsername });
+          } else {
+            $refs.inputUsername.focus();
+          }
+        "
+        ><Icon id="plus" :width="16" :height="16" />Add Account</Button
+      >
+    </div>
   </EditMutationWrapper>
 </template>
 
 <script>
+import AccountsMixin from '@/components/_mixins/AccountsMixin.vue';
+import Icon from '@/components/ui/Icon.vue';
 import PrivacySetting from '@/components/profile/PrivacySetting.vue';
+import Select from '@/components/ui/Select.vue';
 import { displayLevelsFor, DISPLAY_LEVELS } from '@/assets/js/display-levels';
 import EditMutationWrapper from './EditMutationWrapper.vue';
 
@@ -59,14 +74,17 @@ export default {
     initialValues: Object,
     editVariables: Object,
   },
+  mixins: [AccountsMixin],
   components: {
     EditMutationWrapper,
+    Icon,
     PrivacySetting,
+    Select,
   },
   methods: {
     displayLevelsFor,
     addAccount(uri) {
-      this.uris = { ...this.uris, uri };
+      this.uris = { ...this.uris, ...uri };
       this.newAccountUsername = '';
     },
     formatAsKeyValues(item) {
@@ -90,7 +108,8 @@ export default {
   },
   data() {
     return {
-      newAccount: '',
+      newAccountUsername: '',
+      newAccountType: '',
       uris: this.initialValues.uris.values,
       urisUpdated: {
         values: Object.entries(this.initialValues.uris.values).map(
