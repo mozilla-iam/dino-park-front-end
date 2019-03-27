@@ -7,19 +7,19 @@
   >
     <div class="edit-picture-modal__picture-buttons">
       <label
-        class="edit-picture-modal__add-picture-button button button--secondary button--small"
+        class="edit-picture-modal__add-picture-button button button--secondary"
       >
         Add New Photo
         <input
           type="file"
           accept="image/*"
-          class="edit-picture-modal__file"
+          class="edit-picture-modal__file visually-hidden"
           @change="handleChangeFile"
         />
       </label>
       <button
         type="button"
-        class="button button--secondary button--small"
+        class="button button--secondary"
         @click="imgSrc = null"
       >
         Delete Photo
@@ -57,14 +57,14 @@
     <div class="edit-picture-modal__modal-buttons">
       <button
         type="button"
-        class="edit-picture-modal__cancel-button button button--secondary button--small"
+        class="edit-picture-modal__cancel-button button button--secondary"
         @click="$emit('close')"
       >
         Cancel
       </button>
       <button
         type="button"
-        class="button button--primary button--small"
+        class="button button--primary"
         :disabled="!privacyAgreed"
         @click="selectCrop()"
       >
@@ -115,13 +115,13 @@ export default {
   margin-right: 1em;
   cursor: pointer;
 }
-.edit-picture-modal__file {
-  display: none;
-}
 .edit-picture-modal__picture {
   margin-bottom: 1.5em;
   display: flex;
   justify-content: center;
+}
+.focus-styles .edit-picture-modal__add-picture-button:focus-within {
+  box-shadow: 0px 0 0 1px var(--blue-60), 0 0 0 3px var(--transparentBlue);
 }
 .edit-picture-modal__privacy {
   display: flex;
