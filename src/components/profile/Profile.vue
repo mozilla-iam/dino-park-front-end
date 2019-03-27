@@ -6,6 +6,7 @@
           (this.editing === 'personal-info' ? ' profile__section--editing' : '')
       "
     >
+      <Toast :content="toastContent" @reset-toast="toastContent = ''"></Toast>
       <EditPersonalInfo
         v-if="this.editing === 'personal-info'"
         v-bind="{
@@ -44,7 +45,6 @@
           userOnOwnProfile,
         }"
       />
-      <Toast :content="toastContent" @reset-toast="toastContent = ''"></Toast>
     </div>
     <ProfileNav
       :links="profileNav"
