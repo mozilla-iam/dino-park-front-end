@@ -56,5 +56,17 @@ export default {
       return null;
     },
   },
+  computed: {
+    selectableAccounts() {
+      const selectables = Object.entries(EXTERNAL_ACCOUNTS).map(([k, v]) => {
+        return {
+          label: v.text,
+          value: k,
+        };
+      });
+
+      return selectables;
+    },
+  },
 };
 </script>

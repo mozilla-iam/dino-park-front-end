@@ -153,7 +153,6 @@ export default {
   border: 1px solid var(--blue-60);
 }
 .options .options__list {
-  max-height: 25em;
   padding: 0;
   background-color: var(--white);
   box-shadow: 0 0.125em 0.25em 0.125em rgba(210, 210, 210, 0.5);
@@ -192,6 +191,8 @@ export default {
 .options__list ul {
   margin: 0;
   padding-left: 0;
+  max-height: 25em;
+  overflow: auto;
 }
 .options__list > a {
   padding: 1em;

@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     handleError() {
-      this.$emit('toast', {
+      this.$parent.$emit('toast', {
         content: 'A problem occured, please try again later.',
       });
     },
@@ -76,7 +76,7 @@ export default {
       });
 
       this.$emit('toggle-edit-mode');
-      this.$emit('toast', {
+      this.$parent.$emit('toast', {
         content: 'Your changes have been saved. Thank you.',
       });
     },

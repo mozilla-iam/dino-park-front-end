@@ -6,6 +6,7 @@
           (this.editing === 'personal-info' ? ' profile__section--editing' : '')
       "
     >
+      <Toast :content="toastContent" @reset-toast="toastContent = ''"></Toast>
       <EditPersonalInfo
         v-if="this.editing === 'personal-info'"
         v-bind="{
@@ -44,7 +45,6 @@
           userOnOwnProfile,
         }"
       />
-      <Toast :content="toastContent" @reset-toast="toastContent = ''"></Toast>
     </div>
     <ProfileNav
       :links="profileNav"
@@ -52,22 +52,7 @@
     ></ProfileNav>
     <section v-if="staffInformation.staff.value" class="profile__section">
       <a id="nav-relations" class="profile__anchor"></a>
-      <header class="profile__section-header">
-        <h2>Colleagues</h2>
-        <RouterLink
-          :to="{
-            name: 'OrgchartHighlight',
-            params: { username: primaryUsername.value },
-          }"
-          class="button button--secondary button--small"
-        >
-          <Icon id="org-chart" :width="16" :height="16" />
-          Org Chart
-          <Icon id="chevron-right" :width="18" :height="18" />
-        </RouterLink>
-      </header>
-      <ReportingStructure :username="primaryUsername.value">
-      </ReportingStructure>
+      <ViewRelations v-bind="primaryUsername"></ViewRelations>
     </section>
     <EmptyCard
       title="Identities"
@@ -98,49 +83,25 @@
         v-bind="{ primaryEmail, phoneNumbers, userOnOwnProfile }"
       ></ViewContact>
     </section>
-    <section v-if="sections.accounts" class="profile__section">
+    <section
+      v-if="sections.accounts"
+      :class="
+        'profile__section' +
+          (this.editing === 'accounts' ? ' profile__section--editing' : '')
+      "
+    >
       <a id="nav-accounts" class="profile__anchor"></a>
-      <header class="profile__section-header">
-        <h2>Accounts</h2>
-      </header>
-      <div class="profile__external-accounts">
-        <div v-if="accounts.mozilla.length">
-          <h3>Mozilla</h3>
-          <IconBlockList>
-            <IconBlock
-              v-for="(acc, index) in accounts.mozilla"
-              :key="`acc-moz-${index}`"
-              :heading="acc.text"
-              :icon="acc.icon"
-            >
-              <a :href="acc.value" target="_blank" rel="noreferrer noopener">{{
-                acc.value
-              }}</a>
-            </IconBlock>
-          </IconBlockList>
-        </div>
-        <div v-if="accounts.other.length">
-          <h3>Elsewhere</h3>
-          <IconBlockList>
-            <IconBlock
-              v-for="(acc, index) in accounts.other"
-              :key="`acc-other-${index}`"
-              :heading="acc.text"
-              :icon="acc.icon"
-            >
-              <a :href="acc.value" target="_blank" rel="noreferrer noopener">{{
-                acc.value
-              }}</a>
-            </IconBlock>
-          </IconBlockList>
-        </div>
-      </div>
+      <EditAccounts
+        v-if="this.editing === 'accounts'"
+        v-bind="{ username: primaryUsername.value, initialValues: { uris } }"
+      ></EditAccounts>
+      <ViewAccounts v-else v-bind="{ uris, userOnOwnProfile }"></ViewAccounts>
     </section>
     <EmptyCard v-else title="Accounts" message="No accounts have been added"
       ><a id="nav-accounts" class="profile__anchor"></a
     ></EmptyCard>
     <section
-      v-if="languagesSorted && languagesSorted.length > 0"
+      v-if="sections.languages"
       :class="
         'profile__section' +
           (this.editing === 'languages' ? ' profile__section--editing' : '')
@@ -150,7 +111,6 @@
       <EditLanguages
         v-if="this.editing === 'languages'"
         v-bind="{
-          username: primaryUsername.value,
           initialValues: {
             languages,
           },
@@ -159,52 +119,31 @@
       ></EditLanguages>
       <ViewLanguages
         v-else
-        v-bind="{ languages: languagesSorted, userOnOwnProfile }"
+        v-bind="{ languages, userOnOwnProfile }"
       ></ViewLanguages>
     </section>
     <EmptyCard v-else title="Languages" message="No languages have been added">
       <a id="nav-languages" class="profile__anchor"></a
     ></EmptyCard>
-    <section v-if="(tagsSorted || []).length > 0" class="profile__section">
+    <section
+      v-if="sections.tags"
+      :class="
+        'profile__section' +
+          (this.editing === 'tags' ? ' profile__section--editing' : '')
+      "
+    >
       <a id="nav-tags" class="profile__anchor"></a>
-      <header class="profile__section-header">
-        <h2>Tags</h2>
-      </header>
-      <Tag
-        v-for="(tag, index) in tagsSorted"
-        :tag="tag"
-        :key="`tag-${index}`"
-      />
+      <EditTags v-if="this.editing === 'tags'"></EditTags>
+      <ViewTags v-else v-bind="{ tags, userOnOwnProfile }"></ViewTags>
     </section>
     <EmptyCard v-else title="Tags" message="No tags have been added">
       <a id="nav-tags" class="profile__anchor"></a
     ></EmptyCard>
     <section class="profile__section" v-if="pgpPublicKeys || sshPublicKeys">
-      <h3>Keys</h3>
-      <template
-        v-if="pgpPublicKeys && Object.keys(pgpPublicKeys.values).length > 0"
-      >
-        <h4 class="visually-hidden">PGP</h4>
-        <Key
-          v-for="[key, value] in Object.entries(pgpPublicKeys.values)"
-          type="PGP"
-          :title="key"
-          :content="value"
-          :key="`pgp-${key}`"
-        />
-      </template>
-      <template
-        v-if="sshPublicKeys && Object.keys(sshPublicKeys.values).length > 0"
-      >
-        <h4 class="visually-hidden">SSH</h4>
-        <Key
-          v-for="[key, value] in Object.entries(sshPublicKeys.values)"
-          type="SSH"
-          :title="key"
-          :content="value"
-          :key="`ssh-${key}`"
-        />
-      </template>
+      <EditKeys v-if="this.editing === 'keys'"> </EditKeys>
+      <ViewKeys
+        v-bind="{ pgpPublicKeys, sshPublicKeys, userOnOwnProfile }"
+      ></ViewKeys>
     </section>
     <EmptyCard v-else title="Keys" message="No keys have been added">
       <a id="nav-keys" class="profile__anchor"></a
@@ -215,21 +154,9 @@
       "
       class="profile__section"
     >
-      <a id="nav-access-groups" class="profile__anchor"></a>
-      <header class="profile__section-header">
-        <h2>Access Groups</h2>
-      </header>
-      <IconBlockList modifier="icon-block-list--multi-col">
-        <IconBlock
-          v-for="[group] in Object.entries(
-            accessInformation.mozilliansorg.values,
-          )"
-          :key="`group-${group}`"
-          icon="dino"
-        >
-          {{ group }}
-        </IconBlock>
-      </IconBlockList>
+      <ViewAccessGroups
+        v-bind="(accessInformation, userOnOwnProfile)"
+      ></ViewAccessGroups>
     </section>
     <EmptyCard
       v-else
@@ -242,30 +169,24 @@
 </template>
 
 <script>
-import AccountsMixin from '@/components/_mixins/AccountsMixin.vue';
-import Button from '@/components/ui/Button.vue';
-import Icon from '@/components/ui/Icon.vue';
-import IconBlock from '@/components/ui/IconBlock.vue';
-import IconBlockList from '@/components/ui/IconBlockList.vue';
-import Key from '@/components/ui/Key.vue';
-import Modal from '@/components/_functional/Modal.vue';
-import Person from '@/components/ui/Person.vue';
-import ShowMore from '@/components/_functional/ShowMore.vue';
-import Tag from '@/components/ui/Tag.vue';
 import Toast from '@/components/ui/Toast.vue';
-import Vouch from '@/components/ui/Vouch.vue';
+import EditAccounts from './edit/EditAccounts.vue';
 import EditContact from './edit/EditContact.vue';
+import EditKeys from './edit/EditKeys.vue';
 import EditLanguages from './edit/EditLanguages.vue';
 import EditPersonalInfo from '@/components/profile/edit/EditPersonalInfo.vue';
+import EditTags from './edit/EditTags.vue';
 import EmptyCard from '@/components/profile/view/EmptyCard.vue';
 import ProfileNav from './ProfileNav.vue';
-import ReportingStructure from './ReportingStructure.vue';
+import ViewAccounts from './view/ViewAccounts.vue';
 import ViewContact from './view/ViewContact.vue';
+import ViewKeys from './view/ViewKeys.vue';
 import ViewLanguages from './view/ViewLanguages.vue';
 import ViewPersonalInfo from './view/ViewPersonalInfo.vue';
+import ViewRelations from './view/ViewRelations.vue';
+import ViewTags from './view/ViewTags.vue';
 
 export default {
-  mixins: [AccountsMixin],
   name: 'Profile',
   props: {
     alternativeName: Object,
@@ -290,26 +211,22 @@ export default {
     primaryUsername: Object,
   },
   components: {
-    Button,
+    EditAccounts,
     EditContact,
+    EditKeys,
     EditLanguages,
     EditPersonalInfo,
+    EditTags,
     EmptyCard,
-    Icon,
-    IconBlock,
-    IconBlockList,
-    Key,
-    Modal,
-    Person,
     ProfileNav,
-    ReportingStructure,
-    ShowMore,
-    Tag,
     Toast,
+    ViewAccounts,
     ViewContact,
+    ViewKeys,
     ViewLanguages,
     ViewPersonalInfo,
-    Vouch,
+    ViewRelations,
+    ViewTags,
   },
   methods: {
     alphabetise(array) {
@@ -320,29 +237,14 @@ export default {
     },
   },
   computed: {
-    accounts() {
-      const wellKnown = Object.entries(this.uris || {})
-        .map((kv) => this.account(kv))
-        .filter((a) => a !== null && typeof a !== 'undefined');
-      const mozilla = wellKnown.filter(({ moz }) => moz);
-      const other = wellKnown.filter(({ moz }) => !moz);
-      return { mozilla, other };
-    },
     sections() {
       return {
         relations: this.staffInformation.staff,
         contact: true,
-        accounts: this.accounts.mozilla.length + this.accounts.other.length > 0,
+        accounts: this.uris.values !== undefined,
+        languages: this.languages.values !== undefined,
+        tags: this.tags.values !== undefined,
       };
-    },
-    tagsSorted() {
-      return this.alphabetise(Object.values(this.tags.values || {}));
-    },
-    languagesSorted() {
-      return (
-        this.languages.values &&
-        this.alphabetise(Object.values(this.languages.values))
-      );
     },
     userOnOwnProfile() {
       return (
@@ -478,16 +380,5 @@ export default {
 .profile__section-header > .privacy-setting button svg {
   order: -1;
   margin: 0 0.5em 0 0;
-}
-
-@media (min-width: 57.5em) {
-  .profile__external-accounts {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 2em;
-  }
-  .profile__external-accounts h3 {
-    margin-top: 0; /* because grid item margins don't collapse */
-  }
 }
 </style>
