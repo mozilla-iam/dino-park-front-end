@@ -1,7 +1,7 @@
 <template>
   <div>
     <header class="profile__section-header">
-      <h2>Languages</h2>
+      <h2>Tags</h2>
       <button
         class="profile__edit-button"
         v-if="userOnOwnProfile"
@@ -9,20 +9,15 @@
           $router.push({
             name: 'Edit Profile',
             query: {
-              section: 'languages',
+              section: 'tags',
             },
           })
         "
       >
-        <img src="@/assets/images/icon-pencil.svg" alt="Edit languages" />
+        <img src="@/assets/images/icon-pencil.svg" alt="Edit tags" />
       </button>
     </header>
-    <Tag
-      v-for="(language, index) in languages.values"
-      :tag="language"
-      :key="`language-${index}`"
-    >
-    </Tag>
+    <Tag v-for="(tag, index) in tags.values" :tag="tag" :key="`tag-${index}`" />
   </div>
 </template>
 
@@ -30,9 +25,9 @@
 import Tag from '@/components/ui/Tag.vue';
 
 export default {
-  name: 'ViewLanguages',
+  name: 'ViewTags',
   props: {
-    languages: Object,
+    tags: Object,
     userOnOwnProfile: Boolean,
   },
   components: {
