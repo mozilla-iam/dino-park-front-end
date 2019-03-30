@@ -54,7 +54,7 @@
         :entity="company(staffInformation, primaryEmail.value)"
         :location="location.value"
         :officeLocation="staffInformation.officeLocation.value"
-        :timezone="timezone.value"
+        :timezone="`${timezone.value} (${localtime})`"
       ></ProfileTeamLocation>
       <h2 class="visually-hidden">About</h2>
       <div class="profile__description">
@@ -144,6 +144,25 @@ export default {
     currentUser() {
       return this.$store.state.user;
     },
+  },
+  watch: {
+    timezone(tz) {
+      fetch(`/api/v4/timezone/offset/${encodeURIComponent(tz)}`)
+        .then((res) => res.json())
+        .then((json) => {
+          this.localtime = `${json.offset_to_utc / 60}`;
+        });
+    },
+  },
+  data() {
+    fetch(`/api/v4/timezone/offset/${encodeURIComponent(this.timezone.value)}`)
+      .then((res) => res.json())
+      .then((json) => {
+        this.localtime = `${json.offset_to_utc / 60}`;
+      });
+    return {
+      localtime: null,
+    };
   },
 };
 </script>

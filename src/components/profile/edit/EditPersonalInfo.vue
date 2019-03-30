@@ -112,7 +112,7 @@
       <hr role="presentation" />
 
       <label for="field-official-job-title">Official job title</label>
-      <input type="text" disabled value="Staff Software Engineer" />
+      <input type="text" disabled :value="staffInformation.title.value" />
 
       <hr role="presentation" />
 
@@ -151,7 +151,14 @@
       <hr role="presentation" />
 
       <label for="field-timezone">Timezone</label>
-      <input type="text" id="field-timezone" v-model="timezone.value" />
+      <Combobox
+        v-if="timezones.length > 0"
+        id="field-timezone"
+        v-model="timezone.value"
+        :allowCustomInput="true"
+        :source="timezones"
+      >
+      </Combobox>
       <PrivacySetting
         label="Timezone privacy levels"
         id="field-timezone-privacy"
@@ -211,6 +218,11 @@ export default {
   },
   mounted() {
     this.$refs.header.focus();
+    fetch('/api/v4/timezone/list/')
+      .then((res) => res.json())
+      .then((timezones) => {
+        this.timezones = timezones;
+      });
   },
   data() {
     return {
@@ -234,6 +246,7 @@ export default {
         {},
       ),
       showPictureModal: false,
+      timezones: [],
     };
   },
 };

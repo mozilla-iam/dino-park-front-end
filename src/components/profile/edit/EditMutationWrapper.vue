@@ -7,7 +7,7 @@
     @error="handleError"
     clientId="mutationClient"
   >
-    <template slot-scope="{ mutate, data, error }">
+    <template slot-scope="{ mutate, data, loading, error }">
       <form action="" @submit.prevent="mutate()" :aria-label="formName">
         <slot></slot>
         <div class="button-bar">
@@ -28,6 +28,7 @@
           <button type="submit" class="button">Save</button>
         </div>
       </form>
+      <LoadingSpinner v-if="loading"></LoadingSpinner>
     </template>
   </ApolloMutation>
 </template>
@@ -35,9 +36,13 @@
 <script>
 import { MUTATE_PROFILE, DISPLAY_PROFILE } from '@/queries/profile';
 import { DISPLAY_LEVELS } from '@/assets/js/display-levels';
+import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 
 export default {
   name: 'EditMutationWrapper',
+  components: {
+    LoadingSpinner,
+  },
   props: {
     initialValues: Object,
     formName: String,
