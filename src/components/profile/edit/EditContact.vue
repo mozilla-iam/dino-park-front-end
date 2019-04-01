@@ -170,8 +170,13 @@ export default {
 <style>
 .edit-contact__item {
   display: grid;
-  grid-template-columns: 3em auto 1fr auto;
+  grid-template-columns: auto 1fr 3fr auto;
   grid-gap: 1em;
+}
+@media (min-width: 57.5em) {
+  .edit-contact__item {
+    grid-template-columns: 3em 1fr 3fr auto;
+  }
 }
 .edit-contact__item .button--icon-only {
   border-color: transparent;
@@ -188,6 +193,13 @@ export default {
 }
 .edit-contact__item .options:first-child {
   grid-column-start: 2;
+}
+.edit-contact__item .options button {
+  width: 100%;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .edit-contact__item input[type='text'] {
   border: 0;
