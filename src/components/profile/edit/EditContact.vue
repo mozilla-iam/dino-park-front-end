@@ -189,6 +189,20 @@ export default {
 .edit-contact__item .options:first-child {
   grid-column-start: 2;
 }
+.edit-contact__item input[type='text'] {
+  border: 0;
+  background-color: var(--gray-20);
+  border-radius: var(--formElementRadius);
+  color: var(--black);
+  margin: 0;
+  padding: 0.5em 0.9em;
+}
+.edit-contact__item input[type='text'][disabled] {
+  color: inherit;
+  background-color: var(--white);
+  border: 2px solid var(--gray-20);
+  cursor: not-allowed;
+}
 .edit-contact__set-as-contact,
 .edit-contact__item hr {
   grid-column: 2 / 5;

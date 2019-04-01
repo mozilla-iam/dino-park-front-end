@@ -27,8 +27,9 @@
         :id="`field-account-${id}-type`"
         :options="selectableAccounts"
         :value="type"
+        :disabled="true"
       />
-      <input type="text" :value="username" />
+      <input type="text" :value="username" disabled />
       <label class="edit-contact__set-as-contact"
         ><input type="checkbox" /> Show in Contact Me button</label
       >
