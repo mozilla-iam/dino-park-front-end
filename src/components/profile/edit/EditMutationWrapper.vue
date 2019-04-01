@@ -238,11 +238,15 @@ textarea {
   .edit-personal-info__picture-edit-button {
     left: 1.1em;
   }
-  .edit-personal-info__picture-edit-button svg {
+  .edit-personal-info .edit-personal-info__picture-edit-button svg {
     margin: 0;
   }
   .edit-personal-info__picture-privacy {
-    right: 2.3em;
+    right: 2.1em;
+  }
+  .edit-personal-info__picture button {
+    background-color: var(--gray-20);
+    font-size: inherit;
   }
   .edit-personal-info__privacy,
   .privacy-setting {
