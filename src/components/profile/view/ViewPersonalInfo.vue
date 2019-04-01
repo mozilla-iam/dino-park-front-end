@@ -54,7 +54,7 @@
         :entity="company(staffInformation, primaryEmail.value)"
         :location="location.value"
         :officeLocation="staffInformation.officeLocation.value"
-        :timezone="timezone.value"
+        :timezone="`${(timezone.value || '').replace('_', ' ')} (${localtime})`"
       ></ProfileTeamLocation>
       <h2 class="visually-hidden">About</h2>
       <div class="profile__description">
@@ -144,6 +144,25 @@ export default {
     currentUser() {
       return this.$store.state.user;
     },
+  },
+  mounted() {
+    this.interval = window.setInterval(() => {
+      this.localtime = this.getLocaltime();
+    }, 1000);
+  },
+  beforeDestroy() {
+    window.clearInterval(this.interval);
+  },
+  methods: {
+    getLocaltime() {
+      const options = { timeZone: this.timezone.value };
+      return new Date().toLocaleTimeString(navigator.language, options);
+    },
+  },
+  data() {
+    return {
+      localtime: this.getLocaltime(),
+    };
   },
 };
 </script>

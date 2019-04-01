@@ -81,6 +81,7 @@ const USER_MENU_PROFILE = gql`
 
 const MUTATE_PROFILE = gql`
   mutation UpdateProfile(
+    $primaryUsername: StringWithDisplay
     $alternativeName: StringWithDisplay
     $description: StringWithDisplay
     $firstName: StringWithDisplay
@@ -94,6 +95,7 @@ const MUTATE_PROFILE = gql`
   ) {
     profile(
       update: {
+        primaryUsername: $primaryUsername
         alternativeName: $alternativeName
         description: $description
         firstName: $firstName
@@ -106,6 +108,12 @@ const MUTATE_PROFILE = gql`
         languages: $languages
       }
     ) {
+      primaryUsername {
+        value
+        metadata {
+          display
+        }
+      }
       alternativeName {
         value
         metadata {

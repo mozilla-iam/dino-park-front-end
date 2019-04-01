@@ -59,6 +59,7 @@ export default {
       list: comboboxList,
       options: this.optionEls,
       activeClass: 'combobox__option--selected',
+      filter: 'starts-with',
     });
 
     this.combobo.addEventListener('selection', () => {
@@ -100,6 +101,9 @@ export default {
   margin: 0;
   background-color: var(--white);
   box-shadow: 0 0 0.25em 0 var(--gray-30);
+  max-height: 20em;
+  overflow: scroll;
+  z-index: 1;
 }
 .combobox__option {
   list-style: none;
