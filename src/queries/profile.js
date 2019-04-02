@@ -92,6 +92,7 @@ const MUTATE_PROFILE = gql`
     $pronouns: StringWithDisplay
     $timezone: StringWithDisplay
     $languages: KeyValuesWithDisplay
+    $uris: KeyValuesWithDisplay
   ) {
     profile(
       update: {
@@ -106,6 +107,7 @@ const MUTATE_PROFILE = gql`
         picture: $picture
         timezone: $timezone
         languages: $languages
+        uris: $uris
       }
     ) {
       primaryUsername {

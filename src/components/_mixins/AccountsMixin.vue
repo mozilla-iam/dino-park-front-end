@@ -10,7 +10,12 @@ const EXTERNAL_ACCOUNTS = {
   'EA#MDN': { moz: true, text: 'MDN', icon: 'mdn' },
   'EA#MASTODON': { moz: false, text: 'Mastodon', icon: 'mastodon' },
   'EA#AMO': { moz: true, text: 'Mozilla Add-ons', icon: 'amo' },
-  'EA#DISCOURSE': { moz: true, text: 'Mozilla Discourse', icon: 'discourse' },
+  'EA#DISCOURSE': {
+    moz: true,
+    text: 'Mozilla Discourse',
+    icon: 'discourse',
+    uri: 'https://discourse.mozilla.org/u/@@@',
+  },
   'EA#MOZPHAB': { moz: true, text: 'Mozilla Phabricator', icon: 'mozphab' },
   'EA#MOZILLAPONTOON': {
     moz: true,
@@ -35,22 +40,36 @@ const EXTERNAL_ACCOUNTS = {
   'EA#SLIDESHARE': { moz: false, text: 'SlideShare', icon: 'slideshare' },
   'EA#TELEGRAM': { moz: false, text: 'Telegram', icon: 'telegram' },
   'EA#TRANSIFEX': { moz: false, text: 'Transifex', icon: 'transifex' },
-  'EA#TWITTER': { moz: false, text: 'Twitter', icon: 'twitter' },
+  'EA#TWITTER': {
+    moz: false,
+    text: 'Twitter',
+    icon: 'twitter',
+    uri: 'https://twitter.com/@@@',
+  },
   'EA#WEBSITE': { moz: false, text: 'Website URL', icon: 'website' },
   'EA#JABBER': { moz: false, text: 'XMPP/Jabber', icon: 'jabber' },
   'EA#YAHOO': { moz: false, text: 'Yahoo! Messenger', icon: 'yahoo' },
+  'EA#IRC': { moz: false, text: 'IRC', icon: 'dino' },
+  'EA#SLACK': { moz: false, text: 'Slack', icon: 'dino' },
 };
 
 export default {
   methods: {
     account([key, value]) {
       const { moz, text, icon } = EXTERNAL_ACCOUNTS[key] || {};
+      let { uri } = EXTERNAL_ACCOUNTS[key] || null;
+
+      if (uri) {
+        uri = uri.replace(/@@@/g, value);
+      }
+
       if (text && icon && typeof moz === 'boolean') {
         return {
           moz,
           text,
           icon,
           value,
+          uri,
         };
       }
       return null;
