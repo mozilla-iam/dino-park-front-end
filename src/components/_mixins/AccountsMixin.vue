@@ -39,6 +39,8 @@ const EXTERNAL_ACCOUNTS = {
   'EA#WEBSITE': { moz: false, text: 'Website URL', icon: 'website' },
   'EA#JABBER': { moz: false, text: 'XMPP/Jabber', icon: 'jabber' },
   'EA#YAHOO': { moz: false, text: 'Yahoo! Messenger', icon: 'yahoo' },
+  'EA#IRC': { moz: false, text: 'IRC', icon: 'dino' },
+  'EA#SLACK': { moz: false, text: 'Slack', icon: 'dino' },
 };
 
 export default {
