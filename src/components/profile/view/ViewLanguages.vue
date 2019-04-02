@@ -4,7 +4,7 @@
       <h2>Languages</h2>
       <button
         class="profile__edit-button"
-        v-if="userOnOwnProfile"
+        v-if="userOnOwnProfile && true === false"
         @click="
           $router.push({
             name: 'Edit Profile',
