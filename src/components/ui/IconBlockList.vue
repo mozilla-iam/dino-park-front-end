@@ -15,7 +15,7 @@ export default {
 
 <style>
 .icon-block-list {
-  padding-left: 1em;
+  padding-left: 0em;
 }
 @media (min-width: 50em) {
   .icon-block-list--multi-col {
