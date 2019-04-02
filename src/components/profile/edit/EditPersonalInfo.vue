@@ -113,6 +113,12 @@
 
       <label for="field-official-job-title">Official job title</label>
       <input type="text" disabled :value="staffInformation.title.value" />
+      <PrivacySetting
+        label="Title privacy levels"
+        id="field-title-privacy"
+        profileField="staffInformation.title"
+        v-model="staffInformation.title.display"
+      />
 
       <hr role="presentation" />
 
