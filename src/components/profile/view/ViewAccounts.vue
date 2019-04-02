@@ -27,9 +27,14 @@
             :heading="acc.text"
             :icon="acc.icon"
           >
-            <a :href="acc.value" target="_blank" rel="noreferrer noopener">{{
-              acc.value
-            }}</a>
+            <a
+              v-if="acc.uri"
+              :href="acc.uri"
+              target="_blank"
+              rel="noreferrer noopener"
+              >{{ acc.value }}</a
+            >
+            <template v-else>{{ acc.value }}</template>
           </IconBlock>
         </IconBlockList>
       </div>
@@ -42,9 +47,14 @@
             :heading="acc.text"
             :icon="acc.icon"
           >
-            <a :href="acc.value" target="_blank" rel="noreferrer noopener">{{
-              acc.value
-            }}</a>
+            <a
+              v-if="acc.uri"
+              :href="acc.uri"
+              target="_blank"
+              rel="noreferrer noopener"
+              >{{ acc.value }}</a
+            >
+            <template v-else>{{ acc.value }}</template>
           </IconBlock>
         </IconBlockList>
       </div>
