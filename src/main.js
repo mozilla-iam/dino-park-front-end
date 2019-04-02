@@ -1,18 +1,34 @@
 import Vue from 'vue';
 import ApolloClient from 'apollo-boost';
 import VueApollo from 'vue-apollo';
+import { InMemoryCache, defaultDataIdFromObject } from 'apollo-cache-inmemory';
 import Vuex from 'vuex';
 import AsyncComputed from 'vue-async-computed';
 import App from './App.vue';
 import router from './router';
 import { USER_MENU_PROFILE } from './queries/profile';
 
+const cache = new InMemoryCache({
+  dataIdFromObject: (object) => {
+    console.log(JSON.stringify(object));
+    // eslint-disable-next-line no-underscore-dangle
+    switch (object.__typename) {
+      case 'Profile':
+        return object.uuid.value;
+      default:
+        return defaultDataIdFromObject(object);
+    }
+  },
+});
+
 const client = new ApolloClient({
   uri: '/api/v4/graphql',
+  cache,
 });
 
 const mutationClient = new ApolloClient({
   uri: '/api/v4/graphql',
+  cache,
 });
 
 const apolloProvider = new VueApollo({
