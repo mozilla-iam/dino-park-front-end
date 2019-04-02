@@ -9,6 +9,7 @@
       class="options__toggle"
       :aria-expanded="open ? 'true' : 'false'"
       :aria-controls="`option-list-${id}`"
+      :disabled="disabled"
     >
       <span class="visually-hidden">Open {{ label }}</span>
       <template v-if="collapsedShowLabel">{{ selectedLabel }}</template>
@@ -59,6 +60,7 @@ export default {
     id: String,
     value: String,
     options: Array,
+    disabled: Boolean,
     collapsedShowIcon: {
       type: Boolean,
       default: false,
@@ -148,6 +150,12 @@ export default {
   background-position: center right 0.75em;
   background-size: 1.25em;
   padding-right: 3em;
+}
+.options .options__toggle[disabled] {
+  padding-right: 0.9em;
+  background-image: none;
+  cursor: not-allowed;
+  color: var(--black);
 }
 .options__toggle[aria-expanded='true'] {
   border: 1px solid var(--blue-60);
