@@ -8,7 +8,12 @@
     clientId="mutationClient"
   >
     <template slot-scope="{ mutate, data, loading, error }">
-      <form action="" @submit.prevent="mutate()" :aria-label="formName">
+      <form
+        class="mutation-form"
+        action=""
+        @submit.prevent="mutate()"
+        :aria-label="formName"
+      >
         <slot></slot>
         <div class="button-bar">
           <button
@@ -120,6 +125,18 @@ export default {
 </script>
 
 <style>
+.mutation-form + .loading {
+  position: absolute;
+  z-index: 1;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background: rgba(0.5, 0.5, 0.5, 0.5);
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
 label,
 input,
 select,
