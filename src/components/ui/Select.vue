@@ -1,5 +1,8 @@
 <template>
-  <div :class="'options' + (position ? ' ' + `options--${position}` : '')">
+  <div
+    :class="'options' + (position ? ' ' + `options--${position}` : '')"
+    ref="options"
+  >
     <button
       @click="toggleOptions"
       @keydown.up.down.prevent="toggleOptions"
@@ -103,6 +106,9 @@ export default {
     closeList() {
       this.open = false;
       this.focusToggle();
+
+      // document.removeEventListener('click', this.handleDocumentClick);
+      // document.removeEventListener('touchstart', this.handleDocumentClick);
     },
     focusToggle() {
       const optionToggle = this.$refs[`optionToggle-${this.id}`];
@@ -111,6 +117,30 @@ export default {
         this.$nextTick(() => {
           optionToggle.focus();
         });
+      }
+    },
+    handleDocumentClick(event) {
+      const expandedEl = this.$refs.options;
+
+      // closes overflow content if clicked anywhere, except the
+      // overflowing content itself
+      if (
+        event.target !== expandedEl &&
+        expandedEl.contains(event.target) === false &&
+        this.open === true
+      ) {
+        this.toggleOptions();
+      }
+    },
+  },
+  watch: {
+    open() {
+      if (this.open) {
+        document.addEventListener('click', this.handleDocumentClick);
+        document.addEventListener('touchstart', this.handleDocumentClick);
+      } else {
+        document.removeEventListener('click', this.handleDocumentClick);
+        document.removeEventListener('touchstart', this.handleDocumentClick);
       }
     },
   },
