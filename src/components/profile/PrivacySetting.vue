@@ -26,7 +26,7 @@ export default {
   props: {
     label: String,
     id: String,
-    profileField: Object,
+    profileField: String,
     value: String,
     collapsedShowLabel: {
       type: Boolean,
