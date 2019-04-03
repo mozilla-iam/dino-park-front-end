@@ -109,6 +109,7 @@ import ProfileName from '../ProfileName.vue';
 import ProfileTitle from '../ProfileTitle.vue';
 import ProfileTeamLocation from '../ProfileTeamLocation.vue';
 import marked from 'marked';
+import insane from 'insane';
 
 export default {
   mixins: [CompanyMixin],
@@ -161,7 +162,7 @@ export default {
       return new Date().toLocaleTimeString(navigator.language, options);
     },
     marked(...args) {
-      return marked(...args);
+      return insane(marked(...args));
     },
   },
   data() {
