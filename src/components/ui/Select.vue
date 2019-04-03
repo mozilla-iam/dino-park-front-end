@@ -1,5 +1,8 @@
 <template>
-  <div class="options">
+  <div
+    :class="'options' + (position ? ' ' + `options--${position}` : '')"
+    ref="options"
+  >
     <button
       @click="toggleOptions"
       @keydown.up.down.prevent="toggleOptions"
@@ -113,11 +116,50 @@ export default {
         });
       }
     },
+    handleDocumentClick(event) {
+      const expandedEl = this.$refs.options;
+
+      // closes overflow content if clicked anywhere, except the
+      // overflowing content itself
+      if (
+        event.target !== expandedEl &&
+        expandedEl.contains(event.target) === false &&
+        this.open === true
+      ) {
+        this.toggleOptions();
+      }
+    },
+  },
+  watch: {
+    open() {
+      if (this.open) {
+        document.addEventListener('click', this.handleDocumentClick);
+        document.addEventListener('touchstart', this.handleDocumentClick);
+      } else {
+        document.removeEventListener('click', this.handleDocumentClick);
+        document.removeEventListener('touchstart', this.handleDocumentClick);
+      }
+    },
   },
   data() {
     return {
       open: false,
+      position: '',
     };
+  },
+  mounted() {
+    const optionToggle = this.$refs[`optionToggle-${this.id}`];
+    const { left: spaceOnLeft, right } = optionToggle.getBoundingClientRect();
+    const spaceOnRight =
+      document.scrollingElement.getBoundingClientRect().width - right;
+
+    if (spaceOnRight > 300) {
+      this.position = 'right';
+    } else if (spaceOnLeft > 300) {
+      this.position = 'left';
+    } else {
+      this.position = '';
+    }
   },
   computed: {
     selectedOption() {
@@ -152,10 +194,12 @@ export default {
   padding-right: 3em;
 }
 .options .options__toggle[disabled] {
-  padding-right: 0.9em;
   background-image: none;
   cursor: not-allowed;
   color: var(--black);
+}
+.options--chevron .options__toggle[disabled] {
+  padding-right: 0.9em;
 }
 .options__toggle[aria-expanded='true'] {
   border: 1px solid var(--blue-60);
@@ -195,6 +239,24 @@ export default {
   box-shadow: 0 0 0.25em 0 var(--gray-30);
   border: inherit;
   border-radius: inherit;
+}
+.options--left .options__list {
+  transform: translateX(calc(-100% + 5em));
+}
+.options--left .options__list::before {
+  left: auto;
+  right: 1em;
+}
+.options--right .options__list {
+  transform: translateX(calc(-1.5em));
+}
+.options--right .options__list::before {
+  left: 2em;
+}
+@media (min-width: 57.5em) {
+  .options--left .options__list {
+    transform: translateX(calc(-100% + 2.5em));
+  }
 }
 .options__list ul {
   margin: 0;

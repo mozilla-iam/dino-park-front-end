@@ -57,6 +57,7 @@
         profileFieldName="primaryUsername"
         :profileFieldObject="primaryUsername"
         v-model="primaryUsername.display"
+        :disabled="true"
       />
 
       <hr role="presentation" />
