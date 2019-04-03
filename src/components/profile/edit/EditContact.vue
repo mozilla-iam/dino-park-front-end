@@ -166,7 +166,7 @@ export default {
   background-color: transparent;
 }
 .edit-contact__item .options:first-child {
-  grid-column-start: 2;
+  grid-column: 2 / 3;
 }
 .edit-contact__item .options button {
   width: 100%;
@@ -182,6 +182,12 @@ export default {
   color: var(--black);
   margin: 0;
   padding: 0.5em 0.9em;
+  grid-column: 2 / 4;
+}
+@media (min-width: 57.5em) {
+  .edit-contact__item input[type='text'] {
+    grid-column: 3 / 4;
+  }
 }
 .edit-contact__item input[type='text'][disabled] {
   color: inherit;

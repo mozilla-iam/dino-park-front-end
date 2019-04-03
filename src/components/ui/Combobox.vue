@@ -102,7 +102,7 @@ export default {
   background-color: var(--white);
   box-shadow: 0 0 0.25em 0 var(--gray-30);
   max-height: 20em;
-  overflow: scroll;
+  overflow: auto;
   z-index: 1;
 }
 .combobox__option {
