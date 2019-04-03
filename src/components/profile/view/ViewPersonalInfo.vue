@@ -57,9 +57,10 @@
         :timezone="`${(timezone.value || '').replace('_', ' ')} (${localtime})`"
       ></ProfileTeamLocation>
       <h2 class="visually-hidden">About</h2>
-      <div class="profile__description">
-        <p>{{ description.value }}</p>
-      </div>
+      <div
+        class="profile__description"
+        v-html="marked(description.value)"
+      ></div>
       <ShowMore
         v-if="this.staffInformation.staff.value"
         buttonText="Show More"
@@ -107,6 +108,7 @@ import UserPicture from '@/components/ui/UserPicture.vue';
 import ProfileName from '../ProfileName.vue';
 import ProfileTitle from '../ProfileTitle.vue';
 import ProfileTeamLocation from '../ProfileTeamLocation.vue';
+import marked from 'marked';
 
 export default {
   mixins: [CompanyMixin],
@@ -157,6 +159,9 @@ export default {
     getLocaltime() {
       const options = { timeZone: this.timezone.value };
       return new Date().toLocaleTimeString(navigator.language, options);
+    },
+    marked(...args) {
+      return marked(...args);
     },
   },
   data() {
