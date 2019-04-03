@@ -3,6 +3,9 @@ import { gql } from 'apollo-boost';
 const PREVIEW_PROFILE = gql`
   query($username: String!) {
     profile(username: $username) {
+      uuid {
+        value
+      }
       alternativeName {
         value
       }
@@ -60,6 +63,9 @@ const PREVIEW_PROFILE = gql`
 const USER_MENU_PROFILE = gql`
   query {
     profile {
+      uuid {
+        value
+      }
       firstName {
         value
       }
@@ -110,6 +116,9 @@ const MUTATE_PROFILE = gql`
         uris: $uris
       }
     ) {
+      uuid {
+        value
+      }
       primaryUsername {
         value
         metadata {
@@ -189,6 +198,9 @@ const MUTATE_PROFILE = gql`
 const DISPLAY_PROFILE = gql`
   query DisplayProfile($username: String) {
     profile(username: $username) {
+      uuid {
+        value
+      }
       accessInformation {
         mozilliansorg {
           values

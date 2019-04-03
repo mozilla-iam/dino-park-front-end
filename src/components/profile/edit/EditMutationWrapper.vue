@@ -69,7 +69,6 @@ export default {
       const data = store.readQuery({
         query: DISPLAY_PROFILE,
       });
-
       store.writeQuery({
         query: DISPLAY_PROFILE,
         variables: {
@@ -77,7 +76,8 @@ export default {
         },
         data: { profile: { ...data.profile, ...profile } },
       });
-
+      // update the logged in user
+      this.$store.commit('setUser', { ...data.profile, ...profile });
       this.$router.push({
         name: 'Profile',
         params: {
