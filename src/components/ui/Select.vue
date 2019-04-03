@@ -1,5 +1,5 @@
 <template>
-  <div class="options">
+  <div :class="'options' + (position ? ' ' + `options--${position}` : '')">
     <button
       @click="toggleOptions"
       @keydown.up.down.prevent="toggleOptions"
@@ -117,7 +117,22 @@ export default {
   data() {
     return {
       open: false,
+      position: '',
     };
+  },
+  mounted() {
+    const optionToggle = this.$refs[`optionToggle-${this.id}`];
+    const { left: spaceOnLeft, right } = optionToggle.getBoundingClientRect();
+    const spaceOnRight =
+      document.scrollingElement.getBoundingClientRect().width - right;
+
+    if (spaceOnRight > 300) {
+      this.position = 'right';
+    } else if (spaceOnLeft > 300) {
+      this.position = 'left';
+    } else {
+      this.position = '';
+    }
   },
   computed: {
     selectedOption() {
@@ -197,6 +212,24 @@ export default {
   box-shadow: 0 0 0.25em 0 var(--gray-30);
   border: inherit;
   border-radius: inherit;
+}
+.options--left .options__list {
+  transform: translateX(calc(-100% + 5em));
+}
+.options--left .options__list::before {
+  left: auto;
+  right: 1em;
+}
+.options--right .options__list {
+  transform: translateX(calc(-1.5em));
+}
+.options--right .options__list::before {
+  left: 2em;
+}
+@media (min-width: 57.5em) {
+  .options--left .options__list {
+    transform: translateX(calc(-100% + 2.5em));
+  }
 }
 .options__list ul {
   margin: 0;
