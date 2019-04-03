@@ -59,7 +59,7 @@ export default {
       list: comboboxList,
       options: this.optionEls,
       activeClass: 'combobox__option--selected',
-      filter: 'starts-with',
+      filter: 'contains',
     });
 
     this.combobo.addEventListener('selection', () => {
