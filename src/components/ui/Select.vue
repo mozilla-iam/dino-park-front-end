@@ -152,10 +152,12 @@ export default {
   padding-right: 3em;
 }
 .options .options__toggle[disabled] {
-  padding-right: 0.9em;
   background-image: none;
   cursor: not-allowed;
   color: var(--black);
+}
+.options--chevron .options__toggle[disabled] {
+  padding-right: 0.9em;
 }
 .options__toggle[aria-expanded='true'] {
   border: 1px solid var(--blue-60);

@@ -6,6 +6,7 @@
     v-bind="privacySettings"
     v-model="profileFieldObject.display"
     :options="displayLevelsFor(profileFieldName)"
+    :disabled="disabled"
     @input="$emit('input', $event)"
   >
     <template v-slot:extra-content
@@ -33,6 +34,7 @@ export default {
       type: Boolean,
       default: false,
     },
+    disabled: Boolean,
   },
   methods: {
     displayLevelsFor,
