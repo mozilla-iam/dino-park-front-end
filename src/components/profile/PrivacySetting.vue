@@ -4,8 +4,8 @@
     :label="label"
     :id="id"
     v-bind="privacySettings"
-    v-model="value"
-    :options="displayLevelsFor(profileField)"
+    v-model="profileFieldObject.display"
+    :options="displayLevelsFor(profileFieldName)"
     @input="$emit('input', $event)"
   >
     <template v-slot:extra-content
@@ -26,7 +26,8 @@ export default {
   props: {
     label: String,
     id: String,
-    profileField: String,
+    profileFieldName: String,
+    profileFieldObject: Object,
     value: String,
     collapsedShowLabel: {
       type: Boolean,
