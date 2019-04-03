@@ -17,41 +17,15 @@
           class="options--chevron"
           label="Email adddress 1 type"
           id="field-email-1-type"
-          :options="[
-            { label: 'Primary', value: 'Primary' },
-            { label: 'Personal', value: 'Personal' },
-            { label: 'Work', value: 'Work' },
-            { label: 'Home', value: 'Home' },
-          ]"
+          :options="[{ label: 'Primary', value: 'Primary' }]"
         />
-        <input type="text" />
+        <input type="text" disabled />
         <PrivacySetting
           label="Email address 1 privacy settings"
           id="field-email-1-privacy"
-          :profileField="primaryEmail"
-        />
-        <label class="edit-contact__set-as-contact"
-          ><input type="checkbox" /> Show in Contact Me button</label
-        >
-        <hr role="presentation" />
-      </div>
-      <div class="edit-contact__item">
-        <Select
-          class="options--chevron"
-          label="Email adddress 2 type"
-          id="field-email-2-type"
-          :options="[
-            { label: 'Primary', value: 'Primary' },
-            { label: 'Personal', value: 'Personal' },
-            { label: 'Work', value: 'Work' },
-            { label: 'Home', value: 'Home' },
-          ]"
-        />
-        <input type="text" />
-        <PrivacySetting
-          label="Email address 2 privacy settings"
-          id="field-email-2-privacy"
-          :profileField="primaryEmail"
+          profileFieldName="primaryEmail"
+          :profileFieldObject="primaryEmail"
+          v-model="primaryEmail.display"
         />
         <label class="edit-contact__set-as-contact"
           ><input type="checkbox" /> Show in Contact Me button</label
@@ -59,7 +33,17 @@
         <hr role="presentation" />
       </div>
       <div class="edit-contact__info">Add / Remove Email via Identities</div>
-      <h3>Phone</h3>
+      <header class="profile__section-header" ref="header" tabindex="-1">
+        <h3>Phone</h3>
+        <PrivacySetting
+          label="Phone number 1 privacy settings"
+          id="field-phone-number-1-privacy"
+          profileFieldName="phoneNumbers"
+          :profileFieldObject="phoneNumbers"
+          :collapsedShowLabel="true"
+          v-model="phoneNumbers.display"
+        />
+      </header>
       <div class="edit-contact__item">
         <Select
           class="options--chevron"
@@ -73,11 +57,6 @@
           ]"
         />
         <input type="text" />
-        <PrivacySetting
-          label="Phone number 1 privacy settings"
-          id="field-phone-number-1-privacy"
-          :profileField="phoneNumbers"
-        />
         <label class="edit-contact__set-as-contact"
           ><input type="checkbox" /> Show in Contact Me button</label
         >
@@ -100,11 +79,6 @@
           ]"
         />
         <input type="text" />
-        <PrivacySetting
-          label="Phone nmber 2 privacy settings"
-          id="field-phone number-2-privacy"
-          :profileField="phoneNumbers"
-        />
         <label class="edit-contact__set-as-contact"
           ><input type="checkbox" /> Show in Contact Me button</label
         >

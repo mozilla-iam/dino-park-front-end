@@ -42,7 +42,8 @@
         <PrivacySetting
           label="Profile picture privacy levels"
           id="field-picture-privacy"
-          profileField="picture"
+          profileFieldName="picture"
+          :profileFieldObject="picture"
           class="edit-personal-info__picture-privacy"
           v-model="picture.display"
         />
@@ -53,7 +54,8 @@
       <PrivacySetting
         label="Username privacy levels"
         id="field-username-privacy"
-        profileField="primaryUsername"
+        profileFieldName="primaryUsername"
+        :profileFieldObject="primaryUsername"
         v-model="primaryUsername.display"
       />
 
@@ -64,7 +66,8 @@
       <PrivacySetting
         label="First name privacy levels"
         id="field-first-name-privacy"
-        profileField="firstName"
+        profileFieldName="firstName"
+        :profileFieldObject="firstName"
         v-model="firstName.display"
       />
 
@@ -75,7 +78,8 @@
       <PrivacySetting
         label="Last name privacy levels"
         id="field-last-name-privacy"
-        profileField="lastName"
+        profileFieldName="lastName"
+        :profileFieldObject="lastName"
         v-model="lastName.display"
       />
 
@@ -94,7 +98,8 @@
       <PrivacySetting
         label="Pronoun privacy levels"
         id="field-pronoun-privacy"
-        profileField="pronouns"
+        profileFieldName="pronouns"
+        :profileFieldObject="pronouns"
         v-model="pronouns.display"
       />
 
@@ -105,7 +110,8 @@
       <PrivacySetting
         label="Alternative name privacy levels"
         id="field-alt-name-privacy"
-        profileField="alternativeName"
+        profileFieldName="alternativeName"
+        :profileFieldObject="alternativeName"
         v-model="alternativeName.display"
       />
 
@@ -116,7 +122,8 @@
       <PrivacySetting
         label="Title privacy levels"
         id="field-title-privacy"
-        profileField="staffInformation.title"
+        profileFieldName="staffInformation.title"
+        :profileFieldObject="staffInformation.title"
         v-model="staffInformation.title.display"
       />
 
@@ -127,7 +134,8 @@
       <PrivacySetting
         label="Fun title privacy levels"
         id="field-fun-title-privacy"
-        profileField="funTitle"
+        profileFieldName="funTitle"
+        :profileFieldObject="funTitle"
         v-model="funTitle.display"
       />
 
@@ -150,7 +158,8 @@
       <PrivacySetting
         label="Location privacy levels"
         id="field-location-privacy"
-        profileField="location"
+        profileFieldName="location"
+        :profileFieldObject="location"
         v-model="location.display"
       />
 
@@ -168,7 +177,8 @@
       <PrivacySetting
         label="Timezone privacy levels"
         id="field-timezone-privacy"
-        profileField="timezone"
+        profileFieldName="timezone"
+        :profileFieldObject="timezone"
         v-model="timezone.display"
       />
 
@@ -185,7 +195,8 @@
       <PrivacySetting
         label="Bio privacy levels"
         id="field-bio-privacy"
-        profileField="description"
+        profileFieldName="description"
+        :profileFieldObject="description"
         v-model="description.display"
       />
     </div>

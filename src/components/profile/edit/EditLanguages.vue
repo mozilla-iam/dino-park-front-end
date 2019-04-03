@@ -11,7 +11,8 @@
       <PrivacySetting
         label="Languages privacy levels"
         id="section-languages-privacy"
-        :profileField="languagesUpdated"
+        profileFieldName="languages"
+        :profileFieldObject="languagesUpdated"
         :collapsedShowLabel="true"
         v-model="languagesUpdated.display"
       />

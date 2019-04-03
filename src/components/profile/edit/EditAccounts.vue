@@ -11,7 +11,8 @@
       <PrivacySetting
         label="Accounts privacy levels"
         id="section-accounts-privacy"
-        :profileField="urisUpdated"
+        profileFieldName="uris"
+        :profileFieldObject="urisUpdated"
         :collapsedShowLabel="true"
         v-model="urisUpdated.display"
       />
