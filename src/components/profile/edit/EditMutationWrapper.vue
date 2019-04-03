@@ -190,6 +190,15 @@ textarea {
   border: none;
   background: none;
 }
+.edit-personal-info__picture .user-picture,
+.edit-personal-info__picture
+  .user-picture
+  ~ .edit-personal-info__picture-edit-button,
+.edit-personal-info__picture .user-picture ~ .privacy-setting {
+  display: inline-block;
+  vertical-align: bottom;
+  margin-right: 0.5em;
+}
 .edit-personal-info__meta {
   grid-column: 1 / -1;
 }
