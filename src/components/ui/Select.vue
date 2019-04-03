@@ -1,8 +1,5 @@
 <template>
-  <div
-    :class="'options' + (position ? ' ' + `options--${position}` : '')"
-    ref="options"
-  >
+  <div :class="'options' + (position && ` options--${position}`)" ref="options">
     <button
       @click="toggleOptions"
       @keydown.up.down.prevent="toggleOptions"
