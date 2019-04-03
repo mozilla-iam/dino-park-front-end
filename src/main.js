@@ -10,12 +10,12 @@ import { USER_MENU_PROFILE } from './queries/profile';
 
 const cache = new InMemoryCache({
   dataIdFromObject: (object) => {
-    console.log(JSON.stringify(object));
     // eslint-disable-next-line no-underscore-dangle
     switch (object.__typename) {
       case 'Profile':
         return object.uuid.value;
       default:
+        // TODO: do we neet to pass here?
         return defaultDataIdFromObject(object);
     }
   },
