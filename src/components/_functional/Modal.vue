@@ -102,6 +102,7 @@ export default {
   margin: auto;
   max-width: 50em;
   position: relative;
+  overflow: auto;
 }
 @media (min-width: 57.5em) {
   .modal__content {
