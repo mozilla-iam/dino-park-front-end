@@ -106,9 +106,6 @@ export default {
     closeList() {
       this.open = false;
       this.focusToggle();
-
-      // document.removeEventListener('click', this.handleDocumentClick);
-      // document.removeEventListener('touchstart', this.handleDocumentClick);
     },
     focusToggle() {
       const optionToggle = this.$refs[`optionToggle-${this.id}`];
