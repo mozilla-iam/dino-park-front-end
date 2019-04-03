@@ -32,6 +32,8 @@ export const DISPLAY_LEVELS = {
 };
 
 const DISPLAY_PUBLIC_ONLY = [DISPLAY_LEVELS.public];
+const DISPLAY_STAFF_NDAED_ONLY = [DISPLAY_LEVELS.ndaed, DISPLAY_LEVELS.staff];
+const DISPLAY_STAFF_ONLY = [DISPLAY_LEVELS.staff];
 const DISPLAY_ANY = [
   DISPLAY_LEVELS.private,
   DISPLAY_LEVELS.staff,
@@ -42,7 +44,16 @@ const DISPLAY_ANY = [
 ];
 
 const VALID_DISPLAY_LEVELS = {
-  username: DISPLAY_PUBLIC_ONLY,
+  primaryUsername: DISPLAY_PUBLIC_ONLY,
+  'staffInformation.manager': DISPLAY_STAFF_NDAED_ONLY,
+  'staffInformation.director': DISPLAY_STAFF_NDAED_ONLY,
+  'staffInformation.staff': DISPLAY_STAFF_NDAED_ONLY,
+  'staffInformation.title': DISPLAY_STAFF_NDAED_ONLY,
+  'staffInformation.team': DISPLAY_STAFF_NDAED_ONLY,
+  'staffInformation.cost_center': DISPLAY_STAFF_ONLY,
+  'staffInformation.worker_type': DISPLAY_STAFF_ONLY,
+  'staffInformation.wpr_desk_number': DISPLAY_STAFF_NDAED_ONLY,
+  'staffInformation.office_location': DISPLAY_STAFF_NDAED_ONLY,
 };
 
 export function displayLevelsFor(field) {

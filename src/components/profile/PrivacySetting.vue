@@ -4,8 +4,8 @@
     :label="label"
     :id="id"
     v-bind="privacySettings"
-    v-model="profileField.display"
-    :options="displayLevelsFor(profileField.value)"
+    v-model="value"
+    :options="displayLevelsFor(profileField)"
     @input="$emit('input', $event)"
   >
     <template v-slot:extra-content
