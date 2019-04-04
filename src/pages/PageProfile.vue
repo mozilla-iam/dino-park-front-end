@@ -1,7 +1,7 @@
 <template>
   <ApolloQuery
     :query="displayProfile"
-    :variables="{ username }"
+    :variables="variables"
     clientId="mutationClient"
   >
     <template slot-scope="{ result: { loading, data, error } }">
@@ -18,38 +18,7 @@
           "
         ></Profile>
       </template>
-      <template v-else-if="data && data.displayProfile === null">
-        <main class="container">
-          <Error>
-            <template slot="image">
-              <img
-                src="@/assets/images/dino-1.png"
-                srcset="
-                  @/assets/images/dino-1@2x.png 2x,
-                  @/assets/images/dino-1@3x.png 3x
-                "
-              />
-            </template>
-            <template slot="message">
-              <h1 class="visually-hidden">Error</h1>
-              <h2>This page isn't available</h2>
-              <p>
-                Sorry, the link you followed may be broken or the page may have
-                been removed.
-              </p>
-              <RouterLink :to="{ name: 'Home' }" class="button"
-                >Go to homepage</RouterLink
-              >
-              <p>
-                <small
-                  >Please submit all bugs or issues to the team’s
-                  Discourse.</small
-                >
-              </p>
-            </template>
-          </Error>
-        </main>
-      </template>
+      <Page404 v-else-if="error || (data && data.profile === null)"></Page404>
       <LoadingSpinner v-else></LoadingSpinner>
     </template>
   </ApolloQuery>
@@ -61,17 +30,25 @@ import Profile from '@/components/profile/Profile.vue';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 import { DISPLAY_PROFILE } from '@/queries/profile';
 import Related from '@/assets/js/related';
+import Page404 from './PageUnknown.vue';
 
 export default {
   name: 'PageProfile',
   components: {
     Error,
     Profile,
+    Page404,
     LoadingSpinner,
   },
   computed: {
-    username() {
-      return this.$route.params.username;
+    variables() {
+      if (
+        this.$route.params.username ===
+        this.$store.state.user.primaryUsername.value
+      ) {
+        return { username: null };
+      }
+      return { username: this.$route.params.username };
     },
   },
   data() {
