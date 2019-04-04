@@ -54,7 +54,7 @@
         :entity="company(staffInformation, primaryEmail.value)"
         :location="location.value"
         :officeLocation="staffInformation.officeLocation.value"
-        :timezone="`${(timezone.value || '').replace('_', ' ')} (${localtime})`"
+        :timezone="timezoneWithTime"
       ></ProfileTeamLocation>
       <h2 class="visually-hidden">About</h2>
       <div
@@ -147,6 +147,14 @@ export default {
     currentUser() {
       return this.$store.state.user;
     },
+    timezoneWithTime() {
+      if (this.timezone.value) {
+        return `${(this.timezone.value || '').replace('_', ' ')} (${
+          this.localtime
+        })`;
+      }
+      return null;
+    },
   },
   mounted() {
     this.interval = window.setInterval(() => {
@@ -154,15 +162,23 @@ export default {
     }, 1000);
   },
   beforeDestroy() {
-    window.clearInterval(this.interval);
+    if (this.interval) {
+      window.clearInterval(this.interval);
+    }
   },
   methods: {
     getLocaltime() {
-      const options = { timeZone: this.timezone.value };
-      return new Date().toLocaleTimeString(navigator.language, options);
+      if (this.timezone.value) {
+        const options = { timeZone: this.timezone.value };
+        return new Date().toLocaleTimeString(navigator.language, options);
+      }
+      return '';
     },
-    marked(...args) {
-      return insane(marked(...args));
+    marked(value) {
+      if (value) {
+        return insane(marked(value));
+      }
+      return '';
     },
   },
   data() {
