@@ -208,6 +208,7 @@ export default {
     tags: Object,
     timezone: Object,
     uris: Object,
+    uuid: Object,
     primaryUsername: Object,
   },
   components: {
@@ -247,10 +248,7 @@ export default {
       };
     },
     userOnOwnProfile() {
-      return (
-        this.$store.state.user.primaryUsername.value ===
-        this.primaryUsername.value
-      );
+      return this.$store.state.user.uuid.value === this.uuid.value;
     },
   },
   data() {

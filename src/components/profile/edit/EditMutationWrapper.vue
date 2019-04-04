@@ -54,9 +54,21 @@ export default {
     editVariables: Object,
   },
   methods: {
-    handleError() {
+    handleError(e) {
+      let msg = '';
+      switch (e.message) {
+        case 'GraphQL error: username_exists':
+          msg = 'Username already exists. Please choose another one.';
+          break;
+        case 'GraphQL error: username_length':
+          msg =
+            'Username must contain between 2 and 64 symbols. Please choose another one.';
+          break;
+        default:
+          msg = 'A problem occured, please try again later.';
+      }
       this.$parent.$emit('toast', {
-        content: 'A problem occured, please try again later.',
+        content: msg,
       });
     },
     handleSuccess() {},
