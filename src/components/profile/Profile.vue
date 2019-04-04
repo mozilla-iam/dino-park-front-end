@@ -52,7 +52,7 @@
     ></ProfileNav>
     <section v-if="staffInformation.staff.value" class="profile__section">
       <a id="nav-relations" class="profile__anchor"></a>
-      <ViewRelations v-bind="primaryUsername"></ViewRelations>
+      <ViewRelations :username="primaryUsername.value"></ViewRelations>
     </section>
     <EmptyCard
       title="Identities"
