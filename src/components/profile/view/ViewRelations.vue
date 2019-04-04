@@ -5,7 +5,7 @@
       <RouterLink
         :to="{
           name: 'OrgchartHighlight',
-          params: { username: primaryUsername.value },
+          params: { username },
         }"
         class="button button--secondary button--small"
       >
@@ -14,7 +14,7 @@
         <Icon id="chevron-right" :width="18" :height="18" />
       </RouterLink>
     </header>
-    <ReportingStructure :username="primaryUsername.value"> </ReportingStructure>
+    <ReportingStructure :username="username"> </ReportingStructure>
   </div>
 </template>
 
@@ -23,10 +23,9 @@ import Icon from '@/components/ui/Icon.vue';
 import ReportingStructure from '@/components/profile/ReportingStructure.vue';
 
 export default {
-  name: 'ViewLanguages',
+  name: 'ViewRelations',
   props: {
-    primaryUsername: Object,
-    userOnOwnProfile: Boolean,
+    username: String,
   },
   components: {
     Icon,
