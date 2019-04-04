@@ -140,9 +140,9 @@ export default {
     return {
       newAccountUsername: '',
       newAccountType: '',
-      uris: this.initialValues.uris.values,
+      uris: this.initialValues.uris.values || {},
       urisUpdated: {
-        values: Object.entries(this.initialValues.uris.values).map(
+        values: Object.entries(this.initialValues.uris.values || {}).map(
           this.formatAsKeyValues,
         ),
         display:
