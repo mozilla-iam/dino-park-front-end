@@ -96,9 +96,35 @@ export default {
       };
       fr.readAsDataURL(event.target.files[0]);
     },
-    selectCrop() {
-      this.picture.value = this.$refs.crop.cropper.toDataURL();
+    resize(img) {
+      const bigCanvas = document.createElement('canvas');
+      const bigCtx = bigCanvas.getContext('2d');
+      bigCanvas.width = img.naturalWidth * 0.5;
+      bigCanvas.height = img.naturalHeight * 0.5;
+      bigCtx.drawImage(img, 0, 0, bigCanvas.width, bigCanvas.height);
+      const smallCanvas = document.createElement('canvas');
+      const smallCtx = smallCanvas.getContext('2d');
+      smallCanvas.width = 512;
+      smallCanvas.height = 512;
+      smallCtx.drawImage(
+        bigCanvas,
+        0,
+        0,
+        bigCanvas.width,
+        bigCanvas.height,
+        0,
+        0,
+        smallCanvas.width,
+        smallCanvas.height,
+      );
+      this.picture.value = smallCanvas.toDataURL();
       this.$emit('close');
+    },
+    selectCrop() {
+      const data = this.$refs.crop.cropper.toDataURL();
+      const image = new Image();
+      image.onload = () => this.resize(image);
+      image.src = data;
     },
   },
 };
