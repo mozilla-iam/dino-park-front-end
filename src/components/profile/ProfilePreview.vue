@@ -34,6 +34,7 @@
     <ProfileName
       :firstName="firstName.value"
       :lastName="lastName.value"
+      :username="primaryUsername.value"
       :pronouns="pronouns.value"
     ></ProfileName>
     <ProfileTitle
@@ -53,10 +54,7 @@
       :officeLocation="staffInformation.officeLocation.value"
       :timezone="timezone.value"
     ></ProfileTeamLocation>
-    <h2 class="visually-hidden">About</h2>
-    <div class="profile__description">
-      <p>{{ description.value }}</p>
-    </div>
+    <ProfileDescription :description="description.value"></ProfileDescription>
     <hr class="profile-preview__divider" />
     <div class="profile-preview__buttons">
       <div class="hide-mobile">
@@ -95,6 +93,7 @@
 import CompanyMixin from '@/components/_mixins/CompanyMixin.vue';
 import ContactMe from '@/components/ui/ContactMe.vue';
 import UserPicture from '@/components/ui/UserPicture.vue';
+import ProfileDescription from './ProfileDescription.vue';
 import ProfileName from './ProfileName.vue';
 import ProfileTitle from './ProfileTitle.vue';
 import ProfileTeamLocation from './ProfileTeamLocation.vue';
@@ -120,6 +119,7 @@ export default {
   components: {
     ContactMe,
     UserPicture,
+    ProfileDescription,
     ProfileName,
     ProfileTitle,
     ProfileTeamLocation,

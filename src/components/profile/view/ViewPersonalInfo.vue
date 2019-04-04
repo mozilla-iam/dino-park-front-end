@@ -54,13 +54,9 @@
         :entity="company(staffInformation, primaryEmail.value)"
         :location="location.value"
         :officeLocation="staffInformation.officeLocation.value"
-        :timezone="timezoneWithTime"
+        :timezone="timezone.value"
       ></ProfileTeamLocation>
-      <h2 class="visually-hidden">About</h2>
-      <div
-        class="profile__description"
-        v-html="marked(description.value)"
-      ></div>
+      <ProfileDescription :description="description.value"></ProfileDescription>
       <ShowMore
         v-if="this.staffInformation.staff.value"
         buttonText="Show More"
@@ -105,11 +101,10 @@ import Meta from '@/components/ui/Meta.vue';
 import MetaList from '@/components/ui/MetaList.vue';
 import ShowMore from '@/components/_functional/ShowMore.vue';
 import UserPicture from '@/components/ui/UserPicture.vue';
+import ProfileDescription from '../ProfileDescription.vue';
 import ProfileName from '../ProfileName.vue';
 import ProfileTitle from '../ProfileTitle.vue';
 import ProfileTeamLocation from '../ProfileTeamLocation.vue';
-import marked from 'marked';
-import insane from 'insane';
 
 export default {
   mixins: [CompanyMixin],
@@ -137,6 +132,7 @@ export default {
     Icon,
     Meta,
     MetaList,
+    ProfileDescription,
     ProfileName,
     ProfileTeamLocation,
     ProfileTitle,
@@ -147,44 +143,6 @@ export default {
     currentUser() {
       return this.$store.state.user;
     },
-    timezoneWithTime() {
-      if (this.timezone.value) {
-        return `${(this.timezone.value || '').replace('_', ' ')} (${
-          this.localtime
-        })`;
-      }
-      return null;
-    },
-  },
-  mounted() {
-    this.interval = window.setInterval(() => {
-      this.localtime = this.getLocaltime();
-    }, 1000);
-  },
-  beforeDestroy() {
-    if (this.interval) {
-      window.clearInterval(this.interval);
-    }
-  },
-  methods: {
-    getLocaltime() {
-      if (this.timezone.value) {
-        const options = { timeZone: this.timezone.value };
-        return new Date().toLocaleTimeString(navigator.language, options);
-      }
-      return '';
-    },
-    marked(value) {
-      if (value) {
-        return insane(marked(value));
-      }
-      return '';
-    },
-  },
-  data() {
-    return {
-      localtime: this.getLocaltime(),
-    };
   },
 };
 </script>
@@ -256,10 +214,6 @@ export default {
   position: absolute;
   top: 1.5em;
   right: 1.5em;
-}
-
-.profile__description {
-  color: var(--gray-50);
 }
 
 .profile__anchor {
