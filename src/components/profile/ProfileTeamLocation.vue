@@ -36,7 +36,7 @@
             >{{ location || officeLocation }}
             {{ location && officeLocation && `(${officeLocation})` }}</strong
           >
-          {{ timezone }}
+          {{ timezoneWithTime }}
         </template>
       </div>
     </div>
@@ -58,6 +58,39 @@ export default {
     locationSearchString() {
       return 'officeLocation:"' + this.officeLocation + '"'; // eslint-disable-line
     },
+    timezoneWithTime() {
+      if (this.timezone) {
+        return `${this.localtime} local time in ${(this.timezone || '').replace(
+          '_',
+          ' ',
+        )}`;
+      }
+      return null;
+    },
+  },
+  mounted() {
+    this.interval = window.setInterval(() => {
+      this.localtime = this.getLocaltime();
+    }, 1000);
+  },
+  beforeDestroy() {
+    if (this.interval) {
+      window.clearInterval(this.interval);
+    }
+  },
+  methods: {
+    getLocaltime() {
+      if (this.timezone) {
+        const options = { timeZone: this.timezone };
+        return new Date().toLocaleTimeString(navigator.language, options);
+      }
+      return '';
+    },
+  },
+  data() {
+    return {
+      localtime: this.getLocaltime(),
+    };
   },
 };
 </script>
