@@ -121,9 +121,9 @@ h2 {
 }
 
 h3 {
-  font-weight: 400;
-  font-size: 1.125em;
-  color: var(--gray-50);
+  font-weight: 700;
+  font-size: 1em;
+  color: var(--black);
 }
 
 h4,
