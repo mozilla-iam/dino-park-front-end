@@ -36,6 +36,7 @@
       <header class="profile__section-header" ref="header" tabindex="-1">
         <h3>Phone</h3>
         <PrivacySetting
+          class="privacy-setting--large"
           label="Phone number 1 privacy settings"
           id="field-phone-number-1-privacy"
           profileFieldName="phoneNumbers"
