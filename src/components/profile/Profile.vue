@@ -391,20 +391,4 @@ export default {
 .profile__section-header > .privacy-setting {
   margin-left: auto;
 }
-.profile__section-header > .privacy-setting button {
-  background-color: white;
-  border-color: var(--gray-50);
-  padding: 1.1em 2em;
-  color: var(--black);
-  border-radius: 2.5em;
-}
-.profile__section-header > .privacy-setting button:hover {
-  background-color: var(--black);
-  color: var(--white);
-  border-color: transparent;
-}
-.profile__section-header > .privacy-setting button svg {
-  order: -1;
-  margin: 0 0.5em 0 0;
-}
 </style>

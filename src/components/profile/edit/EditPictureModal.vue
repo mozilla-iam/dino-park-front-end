@@ -81,7 +81,7 @@ import Crop from './Cropper.vue';
 
 export default {
   name: 'EditPictureModal',
-  props: { picture: Object, username: String, staffInformation: Object },
+  props: { picture: Object, username: Object, staffInformation: Object },
   components: {
     Crop,
     Modal,

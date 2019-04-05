@@ -11,7 +11,9 @@
       <h2>Contact</h2>
     </header>
     <div class="edit-contact">
-      <h3>Email</h3>
+      <div class="edit-contact__header">
+        <h3>Email</h3>
+      </div>
       <div class="edit-contact__item">
         <Select
           class="options--chevron"
@@ -33,9 +35,10 @@
         <hr role="presentation" />
       </div>
       <div class="edit-contact__info">Add / Remove Email via Identities</div>
-      <header class="profile__section-header" ref="header" tabindex="-1">
+      <div class="edit-contact__header">
         <h3>Phone</h3>
         <PrivacySetting
+          class="privacy-setting--large"
           label="Phone number 1 privacy settings"
           id="field-phone-number-1-privacy"
           profileFieldName="phoneNumbers"
@@ -43,7 +46,7 @@
           :collapsedShowLabel="true"
           v-model="phoneNumbers.display"
         />
-      </header>
+      </div>
       <div class="edit-contact__item">
         <Select
           class="options--chevron"
@@ -214,5 +217,14 @@ export default {
 .edit-contact__add-more {
   grid-column: 1 / 5;
   justify-self: end;
+}
+.edit-contact__header {
+  display: flex;
+}
+.edit-contact__header .privacy-setting {
+  margin-left: auto;
+}
+.edit-contact__header ~ .edit-contact__header {
+  margin: 3em 0 1em;
 }
 </style>

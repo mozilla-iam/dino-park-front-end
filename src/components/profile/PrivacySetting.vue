@@ -61,4 +61,25 @@ export default {
   display: flex;
   align-content: center;
 }
+.privacy-setting--large .options__toggle {
+  background-color: white;
+  border-color: var(--gray-50);
+  padding: 1.1em 3em 1.1em 2em;
+  color: var(--black);
+  border-radius: 2.5em;
+  background-image: url('../../assets/images/chevron-down.svg');
+  background-repeat: no-repeat;
+  background-position: center right 1em;
+  background-size: 1.25em;
+}
+.privacy-setting--large .options__toggle:hover {
+  background-color: var(--black);
+  color: var(--white);
+  border-color: transparent;
+  background-image: url('../../assets/images/chevron-down-white.svg');
+}
+.privacy-setting--large .options__toggle svg {
+  order: -1;
+  margin: 0 0.5em 0 0;
+}
 </style>
