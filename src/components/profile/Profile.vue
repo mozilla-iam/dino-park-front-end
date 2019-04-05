@@ -97,9 +97,16 @@
       ></EditAccounts>
       <ViewAccounts v-else v-bind="{ uris, userOnOwnProfile }"></ViewAccounts>
     </section>
-    <EmptyCard v-else title="Accounts" message="No accounts have been added"
-      ><a id="nav-accounts" class="profile__anchor"></a
-    ></EmptyCard>
+    <EmptyCard v-else title="Accounts" message="No accounts have been added">
+      <a id="nav-accounts" class="profile__anchor"></a>
+      <template v-slot:header>
+        <EditButton
+          v-if="userOnOwnProfile"
+          section="accounts"
+          sectionId="accounts"
+        ></EditButton>
+      </template>
+    </EmptyCard>
     <section
       v-if="sections.languages"
       :class="
@@ -123,8 +130,15 @@
       ></ViewLanguages>
     </section>
     <EmptyCard v-else title="Languages" message="No languages have been added">
-      <a id="nav-languages" class="profile__anchor"></a
-    ></EmptyCard>
+      <a id="nav-languages" class="profile__anchor"></a>
+      <template v-slot:header>
+        <EditButton
+          v-if="userOnOwnProfile"
+          section="languages"
+          sectionId="languages"
+        ></EditButton>
+      </template>
+    </EmptyCard>
     <section
       v-if="sections.tags"
       :class="
@@ -137,8 +151,8 @@
       <ViewTags v-else v-bind="{ tags, userOnOwnProfile }"></ViewTags>
     </section>
     <EmptyCard v-else title="Tags" message="No tags have been added">
-      <a id="nav-tags" class="profile__anchor"></a
-    ></EmptyCard>
+      <a id="nav-tags" class="profile__anchor"></a>
+    </EmptyCard>
     <section class="profile__section" v-if="pgpPublicKeys || sshPublicKeys">
       <EditKeys v-if="this.editing === 'keys'"> </EditKeys>
       <ViewKeys
@@ -170,6 +184,7 @@
 
 <script>
 import Toast from '@/components/ui/Toast.vue';
+import EditButton from '@/components/profile/edit/EditButton.vue';
 import EditAccounts from './edit/EditAccounts.vue';
 import EditContact from './edit/EditContact.vue';
 import EditKeys from './edit/EditKeys.vue';
@@ -213,6 +228,7 @@ export default {
   },
   components: {
     EditAccounts,
+    EditButton,
     EditContact,
     EditKeys,
     EditLanguages,
@@ -242,9 +258,21 @@ export default {
       return {
         relations: this.staffInformation.staff,
         contact: true,
-        accounts: this.uris.values !== undefined,
-        languages: this.languages.values !== undefined,
-        tags: this.tags.values !== undefined,
+        accounts:
+          (this.uris.values &&
+            Object.entries(this.uris.values).length > 0 &&
+            true) ||
+          false,
+        languages:
+          (this.languages.values &&
+            Object.entries(this.languages.values).length > 0 &&
+            true) ||
+          false,
+        tags:
+          (this.tags.values &&
+            Object.entries(this.tags.values).length > 0 &&
+            true) ||
+          false,
       };
     },
     userOnOwnProfile() {

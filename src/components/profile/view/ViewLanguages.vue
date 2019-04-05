@@ -2,20 +2,11 @@
   <div>
     <header class="profile__section-header">
       <h2>Languages</h2>
-      <button
-        class="profile__edit-button"
-        v-if="userOnOwnProfile && true === false"
-        @click="
-          $router.push({
-            name: 'Edit Profile',
-            query: {
-              section: 'languages',
-            },
-          })
-        "
-      >
-        <img src="@/assets/images/icon-pencil.svg" alt="Edit languages" />
-      </button>
+      <EditButton
+        v-if="userOnOwnProfile"
+        section="languages"
+        sectionId="languages"
+      ></EditButton>
     </header>
     <Tag
       v-for="(language, index) in languages.values"
@@ -27,6 +18,7 @@
 </template>
 
 <script>
+import EditButton from '@/components/profile/edit/EditButton.vue';
 import Tag from '@/components/ui/Tag.vue';
 
 export default {
@@ -36,6 +28,7 @@ export default {
     userOnOwnProfile: Boolean,
   },
   components: {
+    EditButton,
     Tag,
   },
 };

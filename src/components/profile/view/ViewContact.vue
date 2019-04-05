@@ -2,20 +2,11 @@
   <div>
     <header class="profile__section-header">
       <h2>Contact</h2>
-      <button
+      <EditButton
         v-if="userOnOwnProfile"
-        class="profile__edit-button"
-        @click="
-          $router.push({
-            name: 'Edit Profile',
-            query: {
-              section: 'contact',
-            },
-          })
-        "
-      >
-        <img src="@/assets/images/icon-pencil.svg" alt="Edit" />
-      </button>
+        section="contact"
+        sectionId="contact"
+      ></EditButton>
     </header>
     <h3 class="visually-hidden">Contact options</h3>
     <IconBlockList modifier="icon-block-list--multi-col">
@@ -36,6 +27,7 @@
 </template>
 
 <script>
+import EditButton from '@/components/profile/edit/EditButton.vue';
 import IconBlock from '@/components/ui/IconBlock.vue';
 import IconBlockList from '@/components/ui/IconBlockList.vue';
 
@@ -47,6 +39,7 @@ export default {
     userOnOwnProfile: Boolean,
   },
   components: {
+    EditButton,
     IconBlock,
     IconBlockList,
   },
