@@ -1,90 +1,350 @@
 import { gql } from 'apollo-boost';
 
-const PROFILE = gql`query ($username: String!) {
- profile (username:$username) {
-    alternativeName,
-    created,
-    description,
-    firstName,
-    funTitle,
-    lastModified,
-    lastName,
-    location,
-    pgpPublicKeys,
-    picture,
-    languages,
-    primaryEmail
-    pronouns,
-    sshPublicKeys,
-    tags,
-    timezone,
-    uris,
-    username,
-    phoneNumbers,
-    staffInformation {
-      staff,
-      team,
-      title,
-      workerType,
-      wprDeskNumber,
-      costCenter,
-      officeLocation,
-    },
-    manager {
-      firstName
-      lastName
-      picture
-      title
-      funTitle
-      location
-      username
-    },
-    directs {
-      firstName
-      lastName
-      picture
-      title
-      funTitle
-      location
-      username
-    },
-    accessInformation {
-      mozilliansorg,
-    },
+const PREVIEW_PROFILE = gql`
+  query($username: String!) {
+    profile(username: $username) {
+      uuid {
+        value
+      }
+      alternativeName {
+        value
+      }
+      description {
+        value
+      }
+      firstName {
+        value
+      }
+      funTitle {
+        value
+      }
+      lastName {
+        value
+      }
+      location {
+        value
+      }
+      picture {
+        value
+      }
+      primaryEmail {
+        value
+      }
+      pronouns {
+        value
+      }
+      timezone {
+        value
+      }
+      primaryUsername {
+        value
+      }
+      phoneNumbers {
+        values
+      }
+      staffInformation {
+        staff {
+          value
+        }
+        team {
+          value
+        }
+        title {
+          value
+        }
+        officeLocation {
+          value
+        }
+      }
+    }
   }
-}`;
+`;
 
-const PREVIEW_PROFILE = gql`query ($username: String!) {
- profile (username:$username) {
-    alternativeName,
-    description,
-    firstName,
-    funTitle,
-    lastName,
-    location,
-    picture,
-    primaryEmail
-    pronouns,
-    timezone,
-    username,
-    phoneNumbers,
-    staffInformation {
-      staff,
-      team,
-      title,
-      officeLocation,
-    },
+const USER_MENU_PROFILE = gql`
+  query {
+    profile {
+      uuid {
+        value
+      }
+      firstName {
+        value
+      }
+      lastName {
+        value
+      }
+      picture {
+        value
+      }
+      primaryUsername {
+        value
+      }
+      primaryEmail {
+        value
+      }
+    }
   }
-}`;
+`;
 
-const USER_MENU_PROFILE = gql`query {
- userMenu {
-    firstName,
-    lastName,
-    picture,
-    username,
-    primaryEmail,
+const MUTATE_PROFILE = gql`
+  mutation UpdateProfile(
+    $primaryUsername: StringWithDisplay
+    $alternativeName: StringWithDisplay
+    $description: StringWithDisplay
+    $firstName: StringWithDisplay
+    $funTitle: StringWithDisplay
+    $lastName: StringWithDisplay
+    $location: StringWithDisplay
+    $picture: StringWithDisplay
+    $pronouns: StringWithDisplay
+    $timezone: StringWithDisplay
+    $languages: KeyValuesWithDisplay
+    $uris: KeyValuesWithDisplay
+  ) {
+    profile(
+      update: {
+        primaryUsername: $primaryUsername
+        alternativeName: $alternativeName
+        description: $description
+        firstName: $firstName
+        funTitle: $funTitle
+        lastName: $lastName
+        location: $location
+        pronouns: $pronouns
+        picture: $picture
+        timezone: $timezone
+        languages: $languages
+        uris: $uris
+      }
+    ) {
+      uuid {
+        value
+      }
+      primaryUsername {
+        value
+        metadata {
+          display
+        }
+      }
+      alternativeName {
+        value
+        metadata {
+          display
+        }
+      }
+      description {
+        value
+        metadata {
+          display
+        }
+      }
+      firstName {
+        value
+        metadata {
+          display
+        }
+      }
+      funTitle {
+        value
+        metadata {
+          display
+        }
+      }
+      lastName {
+        value
+        metadata {
+          display
+        }
+      }
+      location {
+        value
+        metadata {
+          display
+        }
+      }
+      picture {
+        value
+        metadata {
+          display
+        }
+      }
+      pronouns {
+        value
+        metadata {
+          display
+        }
+      }
+      timezone {
+        value
+        metadata {
+          display
+        }
+      }
+      uris {
+        values
+        metadata {
+          display
+        }
+      }
+      languages {
+        values
+        metadata {
+          display
+        }
+      }
+    }
   }
-}`;
+`;
 
-export { PROFILE, PREVIEW_PROFILE, USER_MENU_PROFILE };
+const DISPLAY_PROFILE = gql`
+  query DisplayProfile($username: String) {
+    profile(username: $username) {
+      uuid {
+        value
+      }
+      accessInformation {
+        mozilliansorg {
+          values
+        }
+      }
+      alternativeName {
+        value
+        metadata {
+          display
+        }
+      }
+      description {
+        value
+        metadata {
+          display
+        }
+      }
+      uuid {
+        value
+        metadata {
+          display
+        }
+      }
+      firstName {
+        value
+        metadata {
+          display
+        }
+      }
+      funTitle {
+        value
+        metadata {
+          display
+        }
+      }
+      lastName {
+        value
+        metadata {
+          display
+        }
+      }
+      location {
+        value
+        metadata {
+          display
+        }
+      }
+      picture {
+        value
+        metadata {
+          display
+        }
+      }
+      primaryEmail {
+        value
+        metadata {
+          display
+        }
+      }
+      pronouns {
+        value
+        metadata {
+          display
+        }
+      }
+      timezone {
+        value
+        metadata {
+          display
+        }
+      }
+      primaryUsername {
+        value
+        metadata {
+          display
+        }
+      }
+      phoneNumbers {
+        values
+        metadata {
+          display
+        }
+      }
+      staffInformation {
+        staff {
+          value
+          metadata {
+            display
+          }
+        }
+        team {
+          value
+          metadata {
+            display
+          }
+        }
+        title {
+          value
+          metadata {
+            display
+          }
+        }
+        officeLocation {
+          value
+          metadata {
+            display
+          }
+        }
+        workerType {
+          value
+          metadata {
+            display
+          }
+        }
+        wprDeskNumber {
+          value
+          metadata {
+            display
+          }
+        }
+        costCenter {
+          value
+          metadata {
+            display
+          }
+        }
+      }
+      tags {
+        values
+      }
+      languages {
+        values
+        metadata {
+          display
+        }
+      }
+      uris {
+        values
+        metadata {
+          display
+        }
+      }
+    }
+  }
+`;
+
+export { DISPLAY_PROFILE, MUTATE_PROFILE, PREVIEW_PROFILE, USER_MENU_PROFILE };
