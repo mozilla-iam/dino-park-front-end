@@ -18,12 +18,6 @@
         </div>
       </div>
     </RouterLink>
-    <div v-if="officeLocation" class="person__location">
-      <div v-if="modifier === 'person--wide'" class="person__location-label">
-        Location
-      </div>
-      {{ officeLocation }}
-    </div>
   </div>
 </template>
 
