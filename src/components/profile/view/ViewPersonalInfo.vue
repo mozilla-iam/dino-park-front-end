@@ -1,19 +1,10 @@
 <template>
   <div class="profile__intro">
-    <button
+    <EditButton
       v-if="userOnOwnProfile"
-      class="profile__edit-button"
-      @click="
-        $router.push({
-          name: 'Edit Profile',
-          query: {
-            section: 'personal-info',
-          },
-        })
-      "
-    >
-      <img src="@/assets/images/icon-pencil.svg" alt="Edit" />
-    </button>
+      section="personal info"
+      sectionId="personal-info"
+    ></EditButton>
     <div class="profile__intro-photo">
       <div class="profile__headshot">
         <UserPicture

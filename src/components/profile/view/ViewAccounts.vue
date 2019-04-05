@@ -2,20 +2,11 @@
   <div>
     <header class="profile__section-header">
       <h2>Accounts</h2>
-      <button
-        class="profile__edit-button"
+      <EditButton
         v-if="userOnOwnProfile"
-        @click="
-          $router.push({
-            name: 'Edit Profile',
-            query: {
-              section: 'accounts',
-            },
-          })
-        "
-      >
-        <img src="@/assets/images/icon-pencil.svg" alt="Edit accounts" />
-      </button>
+        section="accounts"
+        sectionId="accounts"
+      ></EditButton>
     </header>
     <div class="profile__external-accounts">
       <div v-if="accounts.mozilla.length">
@@ -64,6 +55,7 @@
 
 <script>
 import AccountsMixin from '@/components/_mixins/AccountsMixin.vue';
+import EditButton from '@/components/profile/edit/EditButton.vue';
 import IconBlock from '@/components/ui/IconBlock.vue';
 import IconBlockList from '@/components/ui/IconBlockList.vue';
 
@@ -75,6 +67,7 @@ export default {
   },
   mixins: [AccountsMixin],
   components: {
+    EditButton,
     IconBlock,
     IconBlockList,
   },

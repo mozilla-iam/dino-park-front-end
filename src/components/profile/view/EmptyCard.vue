@@ -2,6 +2,7 @@
   <section class="profile__section profile__section--disabled">
     <header class="profile__section-header">
       <h2>{{ title }}</h2>
+      <slot name="header"></slot>
     </header>
     <slot></slot>
     <p>{{ message }}</p>
