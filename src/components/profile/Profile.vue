@@ -265,9 +265,22 @@ export default {
       return {
         relations: this.staffInformation.staff,
         contact: true,
-        accounts: this.uris.values !== null,
-        languages: this.languages.values !== null,
-        tags: this.tags.values !== null,
+        accounts:
+          this.userOnOwnProfile ||
+          (this.uris.values &&
+            Object.entries(this.uris.values).length > 0 &&
+            true) ||
+          false,
+        languages:
+          (this.languages.values &&
+            Object.entries(this.languages.values).length > 0 &&
+            true) ||
+          false,
+        tags:
+          (this.tags.values &&
+            Object.entries(this.tags.values).length > 0 &&
+            true) ||
+          false,
       };
     },
     userOnOwnProfile() {
