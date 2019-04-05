@@ -99,7 +99,7 @@
     </section>
     <EmptyCard v-else title="Accounts" message="No accounts have been added">
       <a id="nav-accounts" class="profile__anchor"></a>
-      <template v-slot="header">
+      <template v-slot:header>
         <EditButton
           v-if="userOnOwnProfile"
           section="accounts"
@@ -131,7 +131,7 @@
     </section>
     <EmptyCard v-else title="Languages" message="No languages have been added">
       <a id="nav-languages" class="profile__anchor"></a>
-      <template v-slot="header">
+      <template v-slot:header>
         <EditButton
           v-if="userOnOwnProfile"
           section="languages"
@@ -152,7 +152,7 @@
     </section>
     <EmptyCard v-else title="Tags" message="No tags have been added">
       <a id="nav-tags" class="profile__anchor"></a>
-      <template v-slot="header">
+      <template v-slot:header>
         <EditButton
           v-if="userOnOwnProfile"
           section="tags"
