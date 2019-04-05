@@ -1,17 +1,15 @@
 <template>
-  <button
+  <RouterLink
     class="profile__edit-button"
-    @click="
-      $router.push({
-        name: 'Edit Profile',
-        query: {
-          section: sectionId,
-        },
-      })
-    "
+    :to="{
+      name: 'Edit Profile',
+      query: {
+        section: sectionId,
+      },
+    }"
   >
     <img src="@/assets/images/icon-pencil.svg" :alt="`Edit ${section}`" />
-  </button>
+  </RouterLink>
 </template>
 
 <script>
