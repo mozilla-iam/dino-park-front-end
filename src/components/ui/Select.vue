@@ -246,17 +246,23 @@ export default {
   left: auto;
   right: 1em;
 }
-.options--right .options__list {
-  transform: translateX(calc(-1.5em));
-}
-.options--right .options__list::before {
-  left: 2em;
-}
 @media (min-width: 57.5em) {
   .options--left .options__list {
     transform: translateX(calc(-100% + 2.5em));
   }
 }
+.options--right .options__list {
+  transform: translateX(1em);
+}
+.options--right .options__list::before {
+  left: 2em;
+}
+@media (min-width: 57.5em) {
+  .options--right .options__list {
+    transform: translateX(-1.5em);
+  }
+}
+
 .options__list ul {
   margin: 0;
   padding-left: 0;
