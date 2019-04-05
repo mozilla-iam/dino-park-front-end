@@ -131,13 +131,6 @@
     </section>
     <EmptyCard v-else title="Languages" message="No languages have been added">
       <a id="nav-languages" class="profile__anchor"></a>
-      <template v-slot:header>
-        <EditButton
-          v-if="userOnOwnProfile"
-          section="languages"
-          sectionId="languages"
-        ></EditButton>
-      </template>
     </EmptyCard>
     <section
       v-if="sections.tags"
