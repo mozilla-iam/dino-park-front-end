@@ -242,9 +242,9 @@ export default {
       return {
         relations: this.staffInformation.staff,
         contact: true,
-        accounts: this.uris.values !== undefined,
-        languages: this.languages.values !== undefined,
-        tags: this.tags.values !== undefined,
+        accounts: this.uris.values !== null,
+        languages: this.languages.values !== null,
+        tags: this.tags.values !== null,
       };
     },
     userOnOwnProfile() {
