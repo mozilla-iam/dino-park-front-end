@@ -152,7 +152,6 @@
     </section>
     <EmptyCard v-else title="Tags" message="No tags have been added">
       <a id="nav-tags" class="profile__anchor"></a>
-      <template v-slot:header> </template>
     </EmptyCard>
     <section class="profile__section" v-if="pgpPublicKeys || sshPublicKeys">
       <EditKeys v-if="this.editing === 'keys'"> </EditKeys>
