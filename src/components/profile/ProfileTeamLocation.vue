@@ -29,7 +29,7 @@
             >{{ location || officeLocation }}
             {{ location && officeLocation && `(${officeLocation})` }}
           </RouterLink>
-          {{ timezone }}
+          {{ timezoneWithTime }}
         </template>
         <template v-else>
           <strong
