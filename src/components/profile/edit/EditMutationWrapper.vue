@@ -212,7 +212,7 @@ textarea {
   margin-right: 0.5em;
 }
 .edit-personal-info__meta {
-  grid-column: 1 / -1;
+  grid-column: 1 / 2;
 }
 .button-bar {
   display: flex;

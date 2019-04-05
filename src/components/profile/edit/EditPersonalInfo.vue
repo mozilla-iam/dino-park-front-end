@@ -186,8 +186,31 @@
       <hr role="presentation" />
 
       <div class="edit-personal-info__meta">
-        Worker type, desk number, department, cost centre
+        <MetaList>
+          <h3 class="visually-hidden">Meta</h3>
+          <Meta
+            metaKey="Worker type"
+            :metaValue="staffInformation.workerType.value"
+          />
+          <Meta metaKey="Department" :metaValue="staffInformation.team.value" />
+          <Meta
+            metaKey="Desk number"
+            :metaValue="staffInformation.wprDeskNumber.value"
+          />
+          <Meta
+            metaKey="Cost centre"
+            :metaValue="staffInformation.costCenter.value"
+          />
+        </MetaList>
       </div>
+      <PrivacySetting
+        label="Staff information levels"
+        id="field-staff-info-privacy"
+        profileFieldName="staffInformation"
+        :profileFieldObject="staffInformation"
+        v-model="staffInformation.display"
+        :disabled="true"
+      />
 
       <hr role="presentation" />
 
@@ -208,6 +231,8 @@
 import Combobox from '@/components/ui/Combobox.vue';
 import EditMutationWrapper from '@/components/profile/edit/EditMutationWrapper.vue';
 import Icon from '@/components/ui/Icon.vue';
+import Meta from '@/components/ui/Meta.vue';
+import MetaList from '@/components/ui/MetaList.vue';
 import PrivacySetting from '@/components/profile/PrivacySetting.vue';
 import Select from '@/components/ui/Select.vue';
 import UserPicture from '@/components/ui/UserPicture.vue';
@@ -225,6 +250,8 @@ export default {
     EditPictureModal,
     EditMutationWrapper,
     Icon,
+    Meta,
+    MetaList,
     PrivacySetting,
     Select,
     UserPicture,
