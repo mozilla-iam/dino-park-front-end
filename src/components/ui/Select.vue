@@ -126,10 +126,23 @@ export default {
         this.toggleOptions();
       }
     },
+    reposition() {
+      const optionToggle = this.$refs[`optionToggle-${this.id}`];
+      const { left: spaceOnLeft, right } = optionToggle.getBoundingClientRect();
+      const spaceOnRight =
+        document.scrollingElement.getBoundingClientRect().width - right;
+
+      if (spaceOnRight > spaceOnLeft) {
+        this.position = 'right';
+      } else {
+        this.position = 'left';
+      }
+    },
   },
   watch: {
     open() {
       if (this.open) {
+        this.reposition();
         document.addEventListener('click', this.handleDocumentClick);
         document.addEventListener('touchstart', this.handleDocumentClick);
       } else {
@@ -145,18 +158,7 @@ export default {
     };
   },
   mounted() {
-    const optionToggle = this.$refs[`optionToggle-${this.id}`];
-    const { left: spaceOnLeft, right } = optionToggle.getBoundingClientRect();
-    const spaceOnRight =
-      document.scrollingElement.getBoundingClientRect().width - right;
-
-    if (spaceOnRight > 300) {
-      this.position = 'right';
-    } else if (spaceOnLeft > 300) {
-      this.position = 'left';
-    } else {
-      this.position = '';
-    }
+    this.reposition();
   },
   computed: {
     selectedOption() {
