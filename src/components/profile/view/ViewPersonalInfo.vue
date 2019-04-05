@@ -87,6 +87,7 @@
 <script>
 import CompanyMixin from '@/components/_mixins/CompanyMixin.vue';
 import ContactMe from '@/components/ui/ContactMe.vue';
+import EditButton from '@/components/profile/edit/EditButton.vue';
 import Icon from '@/components/ui/Icon.vue';
 import Meta from '@/components/ui/Meta.vue';
 import MetaList from '@/components/ui/MetaList.vue';
@@ -120,6 +121,7 @@ export default {
   },
   components: {
     ContactMe,
+    EditButton,
     Icon,
     Meta,
     MetaList,
@@ -153,19 +155,6 @@ export default {
     grid-template-columns: 1fr 2fr;
   }
 }
-
-.profile__edit-button {
-  position: absolute;
-  top: 2em;
-  right: 2em;
-  border: none;
-  background: none;
-}
-
-.profile__edit-button img {
-  width: 18px;
-}
-
 .profile__intro-photo {
   text-align: center;
 }

@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import EditButton from '@/components/profile/edit/EditButton.vue';
 import IconBlock from '@/components/ui/IconBlock.vue';
 import IconBlockList from '@/components/ui/IconBlockList.vue';
 
@@ -38,6 +39,7 @@ export default {
     userOnOwnProfile: Boolean,
   },
   components: {
+    EditButton,
     IconBlock,
     IconBlockList,
   },
