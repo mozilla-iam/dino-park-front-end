@@ -17,7 +17,7 @@
         v-for="[key, value] in Object.entries(phoneNumbers.values || {})"
         :key="`phoneNumber-${key}`"
         heading="Phone"
-        :subHeading="destructKey(key).view"
+        :subHeading="destructPhoneKey(key).view"
         icon="phone"
       >
         <a :href="`tel:${value}`">{{ value }}</a>

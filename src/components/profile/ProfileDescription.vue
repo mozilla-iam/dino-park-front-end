@@ -27,6 +27,7 @@ export default {
 
 <style>
 .profile__description {
+  max-width: 100%;
   color: var(--gray-50);
 }
 </style>

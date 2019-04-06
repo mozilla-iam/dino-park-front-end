@@ -42,6 +42,7 @@
           picture,
           location,
           description,
+          uris,
           userOnOwnProfile,
         }"
       />
@@ -95,7 +96,11 @@
       <a id="nav-accounts" class="profile__anchor"></a>
       <EditAccounts
         v-if="this.editing === 'accounts'"
-        v-bind="{ username: primaryUsername.value, initialValues: { uris } }"
+        v-bind="{
+          username: primaryUsername.value,
+          initialValues: { uris },
+          initialUris: uris,
+        }"
       ></EditAccounts>
       <ViewAccounts v-else v-bind="{ uris, userOnOwnProfile }"></ViewAccounts>
     </section>

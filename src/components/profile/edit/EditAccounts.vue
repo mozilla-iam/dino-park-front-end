@@ -17,73 +17,43 @@
         :collapsedShowLabel="true"
       />
     </header>
-    <div class="edit-contact__item">
+    <div
+      v-for="({ k, v }, index) in urisUpdated.values"
+      :key="index"
+      class="edit-contact__item"
+    >
+      <Button class="button--icon-only" v-on:click="() => deleteUri(index)">
+        <Icon id="x" :width="17" :height="17"></Icon>
+        <span class="visually-hidden">Remove Account</span>
+      </Button>
       <Select
         class="options--chevron"
-        :label="`Account 1 type`"
-        :id="`field-account-1-type`"
-        :options="selectableAccounts"
-        value="EA#SLACK"
-        :disabled="true"
+        :label="`Account ${index} type`"
+        :id="`field-account-${index}-type`"
+        :options="[
+          { label: EXTERNAL_ACCOUNTS[destructUriKey(k).name].text, value: k },
+          ...remainingAccounts,
+        ]"
+        v-model="urisUpdated.values[index].k"
       />
-      <input type="text" v-model="uris['EA#SLACK']" />
+      <input type="text" v-model="urisUpdated.values[index].v" />
       <label class="edit-contact__set-as-contact"
-        ><input type="checkbox" /> Show in Contact Me button</label
+        ><input
+          type="checkbox"
+          v-on:change="(e) => toggleUriContactMe(e, index)"
+          :checked="destructUriKey(k).contact"
+        />
+        Show in Contact Me button</label
       >
       <hr role="presentation" />
     </div>
-    <div class="edit-contact__item">
-      <Select
-        class="options--chevron"
-        :label="`Account 2 type`"
-        :id="`field-account-2-type`"
-        :options="selectableAccounts"
-        value="EA#IRC"
-        :disabled="true"
-      />
-      <input type="text" v-model="uris['EA#IRC']" />
-      <label class="edit-contact__set-as-contact"
-        ><input type="checkbox" /> Show in Contact Me button</label
-      >
-      <hr role="presentation" />
-    </div>
-    <div class="edit-contact__item">
-      <Select
-        class="options--chevron"
-        :label="`Account 3 type`"
-        :id="`field-account-3-type`"
-        :options="selectableAccounts"
-        value="EA#DISCOURSE"
-        :disabled="true"
-      />
-      <input type="text" v-model="uris['EA#DISCOURSE']" />
-      <label class="edit-contact__set-as-contact"
-        ><input type="checkbox" /> Show in Contact Me button</label
-      >
-      <hr role="presentation" />
-    </div>
-    <div class="edit-contact__item" v-show="false">
-      <Select
-        class="options--chevron"
-        label="New account type"
-        id="field-new-account-type"
-        :options="selectableAccounts"
-        v-model="newAccountType"
-      />
-      <input type="text" v-model="newAccountUsername" ref="inputUsername" />
-      <Button
-        class="edit-contact__add-more button--secondary button button--action"
-        type="button"
-        @click="
-          if (newAccountUsername.length > 0) {
-            addAccount({ [newAccountType]: newAccountUsername });
-          } else {
-            $refs.inputUsername.focus();
-          }
-        "
-        ><Icon id="plus" :width="16" :height="16" />Add Account</Button
-      >
-    </div>
+    <Button
+      class="edit-contact__add-more button--secondary button button--action"
+      type="button"
+      :disabled="noAccountsLeft"
+      v-on:click="addUri"
+      ><Icon id="plus" :width="16" :height="16" />Add Account</Button
+    >
   </EditMutationWrapper>
 </template>
 
@@ -98,6 +68,12 @@ import EditMutationWrapper from './EditMutationWrapper.vue';
 export default {
   name: 'EditAccounts',
   props: {
+    initialUris: {
+      type: Object,
+      default: () => {
+        return {};
+      },
+    },
     initialValues: Object,
     editVariables: Object,
   },
@@ -110,45 +86,64 @@ export default {
   },
   methods: {
     displayLevelsFor,
-    addAccount(uri) {
-      this.uris = { ...this.uris, ...uri };
-      this.newAccountUsername = '';
-    },
-    formatAsKeyValues(item) {
-      const [k, v] = item;
-
+    formatAsKeyValues([k, v]) {
       return {
         k,
         v,
       };
     },
-  },
-  watch: {
-    uris: {
-      handler() {
-        this.urisUpdated.values = Object.entries(this.uris).map(
-          this.formatAsKeyValues,
-        );
-      },
-      deep: true,
+    addUri() {
+      if (this.remainingAccounts.length > 0) {
+        this.urisUpdated.values.push({
+          k: this.constructUriKey({ name: this.availableAccounts[0] }),
+          v: '',
+        });
+      }
+    },
+    deleteUri(index) {
+      if (this.urisUpdated.values.length > index) {
+        this.urisUpdated.values.splice(index, 1);
+      }
+    },
+    toggleUriContactMe(e, index) {
+      const account = this.destructUriKey(
+        this.urisUpdated.values[index].k,
+        index,
+      );
+      account.contact = e.target.checked;
+      this.urisUpdated.values[index].k = this.constructUriKey(account);
     },
   },
   mounted() {
     this.$refs.header.focus();
   },
+  computed: {
+    remainingAccounts() {
+      const selectedUris = this.urisUpdated.values.map(
+        ({ k }) => this.destructUriKey(k).name,
+      );
+      return this.availableAccounts
+        .filter((account) => !selectedUris.includes(account))
+        .map((account) => {
+          const label = this.EXTERNAL_ACCOUNTS[account].text;
+          return { label, value: this.constructUriKey({ name: account }) };
+        });
+    },
+    noAccountsLeft() {
+      return this.remainingAccounts.length <= 0;
+    },
+  },
   data() {
+    const {
+      values: initialUris = {},
+      metadata: { display = DISPLAY_LEVELS.private.value },
+    } = this.initialUris;
+    const urisUpdated = {
+      values: Object.entries(initialUris).map(this.formatAsKeyValues),
+      display,
+    };
     return {
-      newAccountUsername: '',
-      newAccountType: '',
-      uris: this.initialValues.uris.values || {},
-      urisUpdated: {
-        values: Object.entries(this.initialValues.uris.values || {}).map(
-          this.formatAsKeyValues,
-        ),
-        display:
-          this.initialValues.uris.metadata.display ||
-          DISPLAY_LEVELS.private.value,
-      },
+      urisUpdated,
     };
   },
 };

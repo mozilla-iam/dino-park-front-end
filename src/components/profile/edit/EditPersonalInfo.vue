@@ -221,7 +221,12 @@
       <hr role="presentation" />
 
       <label for="field-bio">Bio</label>
-      <textarea id="field-bio" v-model="description.value"></textarea>
+      <textarea
+        id="field-bio"
+        v-model="description.value"
+        maxlength="5000"
+        rows="10"
+      ></textarea>
       <PrivacySetting
         label="Bio privacy levels"
         id="field-bio-privacy"

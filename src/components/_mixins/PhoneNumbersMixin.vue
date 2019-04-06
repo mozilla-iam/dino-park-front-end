@@ -1,11 +1,11 @@
 <script>
 export default {
   methods: {
-    destructKey(key, index) {
+    destructPhoneKey(key, index) {
       const [view = 'Mobile', num = index, contact = 'n'] = key.split('#');
       return { view, num, contact: contact === 'y' };
     },
-    constructKey({ view, num, contact = false }) {
+    constructPhoneKey({ view, num, contact = false }) {
       return `${view}#${num}#${contact ? 'y' : 'n'}`;
     },
   },

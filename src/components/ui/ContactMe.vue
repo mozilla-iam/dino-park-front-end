@@ -20,7 +20,7 @@
         </li>
         <li
           v-for="(number, index) in displayedPhoneNumbers"
-          :key="index"
+          :key="`p-${index}`"
           class="contact-me__item"
         >
           <a :href="`tel:${number.value}`" class="contact-me__pair">
@@ -28,6 +28,22 @@
             <span class="contact-me__key">Call Me</span>
             <span class="contact-me__value">{{ number.value }}</span>
           </a>
+        </li>
+        <li
+          v-for="(uri, index) in displayedUris"
+          :key="`u-${index}`"
+          class="contact-me__item"
+        >
+          <a v-if="uri.url !== null" :href="uri.url" class="contact-me__pair">
+            <Icon :id="uri.icon" :width="24" :height="24" />
+            <span class="contact-me__key">Ping Me</span>
+            <span class="contact-me__value">{{ uri.value }}</span>
+          </a>
+          <span v-else class="contact-me__pair">
+            <Icon :id="uri.icon" :width="24" :height="24" />
+            <span class="contact-me__key">Ping Me</span>
+            <span class="contact-me__value">{{ uri.value }}</span>
+          </span>
         </li>
       </ul>
     </template>
@@ -65,6 +81,7 @@
 </template>
 
 <script>
+import AccountsMixin from '@/components/_mixins/AccountsMixin.vue';
 import PhoneNumbersMixin from '@/components/_mixins/PhoneNumbersMixin.vue';
 import Icon from '@/components/ui/Icon.vue';
 import ShowMore from '@/components/_functional/ShowMore.vue';
@@ -74,8 +91,9 @@ export default {
   props: {
     primaryEmail: String,
     phoneNumbers: Object,
+    uris: Object,
   },
-  mixins: [PhoneNumbersMixin],
+  mixins: [PhoneNumbersMixin, AccountsMixin],
   components: {
     Icon,
     ShowMore,
@@ -85,11 +103,22 @@ export default {
       const { values: numbers = {} } = this.phoneNumbers || {};
       const dispalyedNumbers = Object.entries(numbers)
         .map(([key, value]) => {
-          const { view, contact } = this.destructKey(key);
+          const { view, contact } = this.destructPhoneKey(key);
           return { view, contact, value };
         })
         .filter(({ contact }) => contact);
       return dispalyedNumbers;
+    },
+    displayedUris() {
+      const { values: uris = {} } = this.uris || {};
+      const dispalyedUris = Object.entries(uris)
+        .map(([key, value]) => {
+          const { name, contact } = this.destructUriKey(key);
+          const account = this.account([name, value]);
+          return { contact, ...account };
+        })
+        .filter(({ contact }) => contact);
+      return dispalyedUris;
     },
   },
 };

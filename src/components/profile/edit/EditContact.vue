@@ -63,20 +63,15 @@
           class="options--chevron"
           :label="`Phone number ${index} type`"
           :id="`field-phone-${index}-type`"
-          :options="[
-            { label: destructKey(k).view, value: k },
-            { label: 'Primary', value: 'Primary' },
-            { label: 'Personal', value: 'Personal' },
-            { label: 'Work', value: 'Work' },
-            { label: 'Home', value: 'Home' },
-          ]"
+          :options="phoneNumberLabels(k, index)"
+          v-model="phoneNumbers.values[index].k"
         />
         <input type="text" v-model="phoneNumbers.values[index].v" />
         <label class="edit-contact__set-as-contact"
           ><input
             type="checkbox"
             v-on:change="(e) => togglePhoneNumberContactMe(e, index)"
-            :checked="destructKey(k).contact"
+            :checked="destructPhoneKey(k).contact"
           />
           Show in Contact Me button</label
         >
@@ -125,7 +120,7 @@ export default {
     addPhoneNumber() {
       const count = this.phoneNumbers.values.length;
       this.phoneNumbers.values.push({
-        k: this.constructKey({ view: 'Mobile', num: count }),
+        k: this.constructPhoneKey({ view: 'Mobile', num: count }),
         v: '',
       });
     },
@@ -135,19 +130,36 @@ export default {
       }
     },
     togglePhoneNumberContactMe(e, index) {
-      const number = this.destructKey(this.phoneNumbers.values[index].k, index);
+      const number = this.destructPhoneKey(
+        this.phoneNumbers.values[index].k,
+        index,
+      );
       number.contact = e.target.checked;
-      this.phoneNumbers.values[index].k = this.constructKey(number);
+      this.phoneNumbers.values[index].k = this.constructPhoneKey(number);
+    },
+    phoneNumberLabels(k, index) {
+      const current = this.destructPhoneKey(k).view;
+      const names = ['Primary', 'Personal', 'Work', 'Home'].filter(
+        (name) => name !== current,
+      );
+      const options = names.map((label) => {
+        return {
+          label,
+          value: this.constructPhoneKey({ view: label, num: index }),
+        };
+      });
+      options.push({ label: current, value: k });
+      return options;
     },
   },
   data() {
     const {
       values: numbers = {},
-      metadata: { display: numbersDisplay = DISPLAY_LEVELS.private },
+      metadata: { display: numbersDisplay = DISPLAY_LEVELS.private.value },
     } = this.initialPhoneNumbers;
     const {
       value: email = {},
-      metadata: { display: emailDisplay = DISPLAY_LEVELS.private },
+      metadata: { display: emailDisplay = DISPLAY_LEVELS.private.value },
     } = this.initialPrimaryEmail;
     return {
       MAX_NUMBERS: 5,

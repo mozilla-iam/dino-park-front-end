@@ -1,56 +1,57 @@
 <script>
+const ENABLED_ACCOUNTS = ['DISCOURSE', 'IRC', 'SLACK'];
 const EXTERNAL_ACCOUNTS = {
-  'EA#AIM': { moz: false, text: 'AIM', icon: 'aim' },
-  'EA#BITBUCKET': { moz: false, text: 'Bitbucket', icon: 'bitbucket' },
-  'EA#BMO': { moz: true, text: 'Bugzilla (BMO)', icon: 'bmo' },
-  'EA#DISCORD': { moz: false, text: 'Discord', icon: 'discord' },
-  'EA#FACEBOOK': { moz: false, text: 'Facebook', icon: 'facebook' },
-  'EA#LANYRD': { moz: false, text: 'Lanyrd', icon: 'lanyrd' },
-  'EA#LINKEDIN': { moz: false, text: 'LinkedIn', icon: 'linkedin' },
-  'EA#MDN': { moz: true, text: 'MDN', icon: 'mdn' },
-  'EA#MASTODON': { moz: false, text: 'Mastodon', icon: 'mastodon' },
-  'EA#AMO': { moz: true, text: 'Mozilla Add-ons', icon: 'amo' },
-  'EA#DISCOURSE': {
+  AIM: { moz: false, text: 'AIM', icon: 'aim' },
+  BITBUCKET: { moz: false, text: 'Bitbucket', icon: 'bitbucket' },
+  BMO: { moz: true, text: 'Bugzilla (BMO)', icon: 'bmo' },
+  DISCORD: { moz: false, text: 'Discord', icon: 'discord' },
+  FACEBOOK: { moz: false, text: 'Facebook', icon: 'facebook' },
+  LANYRD: { moz: false, text: 'Lanyrd', icon: 'lanyrd' },
+  LINKEDIN: { moz: false, text: 'LinkedIn', icon: 'linkedin' },
+  MDN: { moz: true, text: 'MDN', icon: 'mdn' },
+  MASTODON: { moz: false, text: 'Mastodon', icon: 'mastodon' },
+  AMO: { moz: true, text: 'Mozilla Add-ons', icon: 'amo' },
+  DISCOURSE: {
     moz: true,
     text: 'Mozilla Discourse',
     icon: 'discourse',
     uri: 'https://discourse.mozilla.org/u/@@@',
   },
-  'EA#MOZPHAB': { moz: true, text: 'Mozilla Phabricator', icon: 'mozphab' },
-  'EA#MOZILLAPONTOON': {
+  MOZPHAB: { moz: true, text: 'Mozilla Phabricator', icon: 'mozphab' },
+  MOZILLAPONTOON: {
     moz: true,
     text: 'Mozilla Pontoon',
     icon: 'mozillapontoon',
   },
-  'EA#REMO': { moz: true, text: 'Mozilla Reps', icon: 'remo' },
-  'EA#SUMO': { moz: true, text: 'Mozilla Support', icon: 'sumo' },
-  'EA#WEBMAKER': { moz: true, text: 'Mozilla Webmaker', icon: 'webmaker' },
-  'EA#MOZILLAWIKI': { moz: true, text: 'Mozilla Wiki', icon: 'mozillawiki' },
-  'EA#Phone (Landline)': {
+  REMO: { moz: true, text: 'Mozilla Reps', icon: 'remo' },
+  SUMO: { moz: true, text: 'Mozilla Support', icon: 'sumo' },
+  WEBMAKER: { moz: true, text: 'Mozilla Webmaker', icon: 'webmaker' },
+  MOZILLAWIKI: { moz: true, text: 'Mozilla Wiki', icon: 'mozillawiki' },
+  'Phone (Landline)': {
     moz: false,
     text: 'Phone (Landline)',
     icon: 'phone (landline)',
   },
-  'EA#Phone (Mobile)': {
+  'Phone (Mobile)': {
     moz: false,
     text: 'Phone (Mobile)',
     icon: 'phone (mobile)',
   },
-  'EA#SKYPE': { moz: false, text: 'Skype', icon: 'skype' },
-  'EA#SLIDESHARE': { moz: false, text: 'SlideShare', icon: 'slideshare' },
-  'EA#TELEGRAM': { moz: false, text: 'Telegram', icon: 'telegram' },
-  'EA#TRANSIFEX': { moz: false, text: 'Transifex', icon: 'transifex' },
-  'EA#TWITTER': {
+  SKYPE: { moz: false, text: 'Skype', icon: 'skype' },
+  SLIDESHARE: { moz: false, text: 'SlideShare', icon: 'slideshare' },
+  TELEGRAM: { moz: false, text: 'Telegram', icon: 'telegram' },
+  TRANSIFEX: { moz: false, text: 'Transifex', icon: 'transifex' },
+  TWITTER: {
     moz: false,
     text: 'Twitter',
     icon: 'twitter',
     uri: 'https://twitter.com/@@@',
   },
-  'EA#WEBSITE': { moz: false, text: 'Website URL', icon: 'website' },
-  'EA#JABBER': { moz: false, text: 'XMPP/Jabber', icon: 'jabber' },
-  'EA#YAHOO': { moz: false, text: 'Yahoo! Messenger', icon: 'yahoo' },
-  'EA#IRC': { moz: false, text: 'IRC', icon: 'dino' },
-  'EA#SLACK': { moz: false, text: 'Slack', icon: 'dino' },
+  WEBSITE: { moz: false, text: 'Website URL', icon: 'website' },
+  JABBER: { moz: false, text: 'XMPP/Jabber', icon: 'jabber' },
+  YAHOO: { moz: false, text: 'Yahoo! Messenger', icon: 'yahoo' },
+  IRC: { moz: false, text: 'IRC', icon: 'dino' },
+  SLACK: { moz: false, text: 'Slack', icon: 'dino' },
 };
 
 export default {
@@ -74,18 +75,21 @@ export default {
       }
       return null;
     },
-  },
-  computed: {
-    selectableAccounts() {
-      const selectables = Object.entries(EXTERNAL_ACCOUNTS).map(([k, v]) => {
-        return {
-          label: v.text,
-          value: k,
-        };
-      });
-
-      return selectables;
+    destructUriKey(key) {
+      const [typ, name, contact = 'n'] = key.split('#');
+      return { typ, name, contact: contact === 'y' };
     },
+    constructUriKey({ typ = 'EA', name, contact = false }) {
+      return `${typ}#${name}#${contact ? 'y' : 'n'}`;
+    },
+  },
+  data() {
+    return {
+      availableAccounts: [...Object.keys(EXTERNAL_ACCOUNTS)].filter((account) =>
+        ENABLED_ACCOUNTS.includes(account),
+      ),
+      EXTERNAL_ACCOUNTS,
+    };
   },
 };
 </script>
