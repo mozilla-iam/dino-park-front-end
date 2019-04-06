@@ -71,6 +71,8 @@
         v-if="this.editing === 'contact'"
         v-bind="{
           username: primaryUsername.value,
+          initialPrimaryEmail: primaryEmail,
+          initialPhoneNumbers: phoneNumbers,
           initialValues: {
             primaryEmail,
             phoneNumbers,

@@ -17,7 +17,7 @@
         v-for="[key, value] in Object.entries(phoneNumbers.values || {})"
         :key="`phoneNumber-${key}`"
         heading="Phone"
-        :subHeading="key"
+        :subHeading="destructKey(key).view"
         icon="phone"
       >
         <a :href="`tel:${value}`">{{ value }}</a>
@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import PhoneNumbersMixin from '@/components/_mixins/PhoneNumbersMixin.vue';
 import EditButton from '@/components/profile/edit/EditButton.vue';
 import IconBlock from '@/components/ui/IconBlock.vue';
 import IconBlockList from '@/components/ui/IconBlockList.vue';
@@ -38,6 +39,7 @@ export default {
     phoneNumbers: Object,
     userOnOwnProfile: Boolean,
   },
+  mixins: [PhoneNumbersMixin],
   components: {
     EditButton,
     IconBlock,

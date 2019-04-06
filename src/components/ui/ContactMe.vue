@@ -18,6 +18,17 @@
             <span class="contact-me__value">{{ primaryEmail }}</span>
           </a>
         </li>
+        <li
+          v-for="(number, index) in displayedPhoneNumbers"
+          :key="index"
+          class="contact-me__item"
+        >
+          <a :href="`tel:${number.value}`" class="contact-me__pair">
+            <Icon id="phone-forwarded" :width="24" :height="24" />
+            <span class="contact-me__key">Call Me</span>
+            <span class="contact-me__value">{{ number.value }}</span>
+          </a>
+        </li>
       </ul>
     </template>
     <template slot="icon-expanded">
@@ -54,6 +65,7 @@
 </template>
 
 <script>
+import PhoneNumbersMixin from '@/components/_mixins/PhoneNumbersMixin.vue';
 import Icon from '@/components/ui/Icon.vue';
 import ShowMore from '@/components/_functional/ShowMore.vue';
 
@@ -63,13 +75,21 @@ export default {
     primaryEmail: String,
     phoneNumbers: Object,
   },
+  mixins: [PhoneNumbersMixin],
   components: {
     Icon,
     ShowMore,
   },
   computed: {
-    phoneNumber() {
-      return this.phoneNumbers && this.phoneNumbers['LDAP-1'];
+    displayedPhoneNumbers() {
+      const { values: numbers = {} } = this.phoneNumbers || {};
+      const dispalyedNumbers = Object.entries(numbers)
+        .map(([key, value]) => {
+          const { view, contact } = this.destructKey(key);
+          return { view, contact, value };
+        })
+        .filter(({ contact }) => contact);
+      return dispalyedNumbers;
     },
   },
 };
