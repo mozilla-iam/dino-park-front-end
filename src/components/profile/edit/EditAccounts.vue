@@ -15,7 +15,6 @@
         profileFieldName="uris"
         :profileFieldObject="urisUpdated"
         :collapsedShowLabel="true"
-        v-model="urisUpdated.display"
       />
     </header>
     <div class="edit-contact__item">

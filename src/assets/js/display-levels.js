@@ -59,10 +59,10 @@ const VALID_DISPLAY_LEVELS = {
   'staffInformation.staff': DISPLAY_STAFF_NDAED_ONLY,
   'staffInformation.title': DISPLAY_STAFF_NDAED_ONLY,
   'staffInformation.team': DISPLAY_STAFF_NDAED_ONLY,
-  'staffInformation.cost_center': DISPLAY_STAFF_ONLY,
-  'staffInformation.worker_type': DISPLAY_STAFF_ONLY,
-  'staffInformation.wpr_desk_number': DISPLAY_STAFF_NDAED_ONLY,
-  'staffInformation.office_location': DISPLAY_STAFF_NDAED_ONLY,
+  'staffInformation.costCenter': DISPLAY_STAFF_ONLY,
+  'staffInformation.workerType': DISPLAY_STAFF_ONLY,
+  'staffInformation.wprDeskNumber': DISPLAY_STAFF_NDAED_ONLY,
+  'staffInformation.officeLocation': DISPLAY_STAFF_NDAED_ONLY,
 };
 
 export function displayLevelsFor(field) {

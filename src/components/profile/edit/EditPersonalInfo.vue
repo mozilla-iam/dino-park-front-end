@@ -21,7 +21,7 @@
       @close="showPictureModal = false"
     />
     <header class="profile__section-header" ref="header" tabindex="-1">
-      <h2>Primary info</h2>
+      <h2>Primary Info</h2>
     </header>
     <div class="edit-personal-info">
       <div class="edit-personal-info__picture">
@@ -37,7 +37,7 @@
           @click="showPictureModal = true"
         >
           <Icon id="pencil" :width="17" :height="17"></Icon>
-          <span class="visually-hidden">Edit picture</span>
+          <span class="visually-hidden">Edit Picture</span>
         </button>
         <PrivacySetting
           label="Profile picture privacy levels"
@@ -45,7 +45,6 @@
           profileFieldName="picture"
           :profileFieldObject="picture"
           class="edit-personal-info__picture-privacy"
-          v-model="picture.display"
         />
       </div>
 
@@ -56,32 +55,29 @@
         id="field-username-privacy"
         profileFieldName="primaryUsername"
         :profileFieldObject="primaryUsername"
-        v-model="primaryUsername.display"
         :disabled="true"
       />
 
       <hr role="presentation" />
 
-      <label for="field-first-name">First name</label>
+      <label for="field-first-name">First Name</label>
       <input type="text" id="field-first-name" v-model="firstName.value" />
       <PrivacySetting
         label="First name privacy levels"
         id="field-first-name-privacy"
         profileFieldName="firstName"
         :profileFieldObject="firstName"
-        v-model="firstName.display"
       />
 
       <hr role="presentation" />
 
-      <label for="field-last-name">Last name</label>
+      <label for="field-last-name">Last Name</label>
       <input type="text" id="field-last-name" v-model="lastName.value" />
       <PrivacySetting
         label="Last name privacy levels"
         id="field-last-name-privacy"
         profileFieldName="lastName"
         :profileFieldObject="lastName"
-        v-model="lastName.display"
       />
 
       <hr role="presentation" />
@@ -101,43 +97,40 @@
         id="field-pronoun-privacy"
         profileFieldName="pronouns"
         :profileFieldObject="pronouns"
-        v-model="pronouns.display"
       />
 
       <hr role="presentation" />
 
-      <label for="field-alt-name">Alternative name</label>
+      <label for="field-alt-name">Alternative Name</label>
       <input type="text" id="field-alt-name" v-model="alternativeName.value" />
       <PrivacySetting
         label="Alternative name privacy levels"
         id="field-alt-name-privacy"
         profileFieldName="alternativeName"
         :profileFieldObject="alternativeName"
-        v-model="alternativeName.display"
       />
 
       <hr role="presentation" />
 
-      <label for="field-official-job-title">Official job title</label>
+      <label for="field-official-job-title">Official Job Title</label>
       <input type="text" disabled :value="staffInformation.title.value" />
       <PrivacySetting
         label="Title privacy levels"
         id="field-title-privacy"
         profileFieldName="staffInformation.title"
         :profileFieldObject="staffInformation.title"
-        v-model="staffInformation.title.display"
+        :disabled="true"
       />
 
       <hr role="presentation" />
 
-      <label for="field-fun-job-title">Fun job title</label>
+      <label for="field-fun-job-title">Fun Job Title</label>
       <input type="text" id="field-fun-job-title" v-model="funTitle.value" />
       <PrivacySetting
         label="Fun title privacy levels"
         id="field-fun-title-privacy"
         profileFieldName="funTitle"
         :profileFieldObject="funTitle"
-        v-model="funTitle.display"
       />
 
       <hr role="presentation" />
@@ -161,7 +154,22 @@
         id="field-location-privacy"
         profileFieldName="location"
         :profileFieldObject="location"
-        v-model="location.display"
+      />
+
+      <hr role="presentation" />
+
+      <label for="field-office-location">Office Location</label>
+      <input
+        type="text"
+        disabled
+        :value="staffInformation.officeLocation.value"
+      />
+      <PrivacySetting
+        label="Office location privacy levels"
+        id="field-office-location-privacy"
+        profileFieldName="staffInformation.officeLocation"
+        :profileFieldObject="staffInformation.officeLocation"
+        :disabled="true"
       />
 
       <hr role="presentation" />
@@ -180,7 +188,6 @@
         id="field-timezone-privacy"
         profileFieldName="timezone"
         :profileFieldObject="timezone"
-        v-model="timezone.display"
       />
 
       <hr role="presentation" />
@@ -192,7 +199,7 @@
             metaKey="Worker type"
             :metaValue="staffInformation.workerType.value"
           />
-          <Meta metaKey="Department" :metaValue="staffInformation.team.value" />
+          <Meta metaKey="Team" :metaValue="staffInformation.team.value" />
           <Meta
             metaKey="Desk number"
             :metaValue="staffInformation.wprDeskNumber.value"
@@ -206,9 +213,8 @@
       <PrivacySetting
         label="Staff information levels"
         id="field-staff-info-privacy"
-        profileFieldName="staffInformation"
-        :profileFieldObject="staffInformation"
-        v-model="staffInformation.display"
+        profileFieldName="staffInformation.team"
+        :profileFieldObject="staffInformation.team"
         :disabled="true"
       />
 
@@ -221,7 +227,6 @@
         id="field-bio-privacy"
         profileFieldName="description"
         :profileFieldObject="description"
-        v-model="description.display"
       />
     </div>
   </EditMutationWrapper>

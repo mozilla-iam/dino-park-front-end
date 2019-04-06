@@ -29,7 +29,6 @@ export default {
     id: String,
     profileFieldName: String,
     profileFieldObject: Object,
-    value: String,
     collapsedShowLabel: {
       type: Boolean,
       default: false,
@@ -60,6 +59,14 @@ export default {
   padding: 0.5em;
   display: flex;
   align-content: center;
+}
+.privacy-setting .options__toggle[disabled] {
+  background-image: none;
+  cursor: not-allowed;
+  color: var(--gray-40);
+  background-color: transparent;
+  border-color: var(--gray-40);
+  border-style: solid;
 }
 .privacy-setting--large .options__toggle {
   background-color: white;
