@@ -67,9 +67,7 @@ export default {
         this.picture === null ||
         this.picture === '' ||
         this.picture === '/beta/img/user-demo.png' ||
-        this.picture.startsWith(
-          'https://s3.amazonaws.com/cis-ldap2s3-publisher-data/',
-        )
+        this.picture.startsWith('https://s3.amazonaws.com/')
       ) {
         let hash;
         if (window.crypto && window.crypto.subtle) {

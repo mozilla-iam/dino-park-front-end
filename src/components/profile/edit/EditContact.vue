@@ -27,7 +27,6 @@
           id="field-email-1-privacy"
           profileFieldName="primaryEmail"
           :profileFieldObject="primaryEmail"
-          v-model="primaryEmail.display"
         />
         <label class="edit-contact__set-as-contact"
           ><input type="checkbox" /> Show in Contact Me button</label
@@ -44,7 +43,6 @@
           profileFieldName="phoneNumbers"
           :profileFieldObject="phoneNumbers"
           :collapsedShowLabel="true"
-          v-model="phoneNumbers.display"
         />
       </div>
       <div class="edit-contact__item">
