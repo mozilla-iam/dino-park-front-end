@@ -81,7 +81,7 @@ export default {
   box-shadow: 0 0.125em 0.25em 0.125em rgba(210, 210, 210, 0.5);
   text-align: left;
   padding-left: 0;
-  z-index: calc(var(--modalLayer) - 1);
+  z-index: var(--modalTwo);
   position: absolute;
   top: 3.5em;
   left: 0;
@@ -131,7 +131,7 @@ export default {
   background-color: var(--gray-20);
 }
 .contact-me__pair:focus {
-  z-index: 1;
+  z-index: var(--layerOne);
 }
 .contact-me__key {
   flex: none;

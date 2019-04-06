@@ -75,7 +75,7 @@ export default {
 }
 .search-result .user-picture {
   margin-right: 1em;
-  z-index: 1;
+  z-index: var(--layerOne);
 }
 .search-result__profile-link {
   text-decoration: none;

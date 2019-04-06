@@ -103,7 +103,7 @@ export default {
   box-shadow: 0 0 0.25em 0 var(--gray-30);
   max-height: 20em;
   overflow: auto;
-  z-index: 1;
+  z-index: var(--layerOne);
 }
 .combobox__option {
   list-style: none;
