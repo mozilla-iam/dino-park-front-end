@@ -81,7 +81,7 @@ export default {
   box-shadow: 0 0.125em 0.25em 0.125em rgba(210, 210, 210, 0.5);
   text-align: left;
   padding-left: 0;
-  z-index: var(--modalAboveNav);
+  z-index: var(--layerAboveNav);
   position: absolute;
   top: 3.5em;
   left: 0;
