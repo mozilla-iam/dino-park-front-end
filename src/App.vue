@@ -74,8 +74,9 @@ export default {
   --layerTwo: 2;
   --layerThree: 3;
   --layerTopBar: 4;
-  --layerUserMenu: 5;
-  --layerModal: 6;
+  --layerAboveNav: 5;
+  --layerUserMenu: 6;
+  --layerModal: 7;
 
   --shadowCard: 0 0.25em 0.25em 0 rgba(210, 210, 210, 0.5);
 
