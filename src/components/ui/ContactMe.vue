@@ -34,15 +34,19 @@
           :key="`u-${index}`"
           class="contact-me__item"
         >
-          <a v-if="uri.url !== null" :href="uri.url" class="contact-me__pair">
+          <a v-if="uri.uri" :href="uri.uri" class="contact-me__pair">
             <Icon :id="uri.icon" :width="24" :height="24" />
             <span class="contact-me__key">Ping Me</span>
-            <span class="contact-me__value">{{ uri.value }}</span>
+            <span class="contact-me__value"
+              >{{ uri.value }} on {{ uri.text }}</span
+            >
           </a>
           <span v-else class="contact-me__pair">
             <Icon :id="uri.icon" :width="24" :height="24" />
             <span class="contact-me__key">Ping Me</span>
-            <span class="contact-me__value">{{ uri.value }}</span>
+            <span class="contact-me__value"
+              >{{ uri.value }} on {{ uri.text }}</span
+            >
           </span>
         </li>
       </ul>
@@ -190,9 +194,11 @@ export default {
 }
 .contact-me__value {
   flex: 1;
-  color: var(--blue-60);
   overflow: hidden;
   text-overflow: ellipsis;
+}
+a > .contact-me__value {
+  color: var(--blue-60);
 }
 .contact-me__button {
   margin: 0 auto;

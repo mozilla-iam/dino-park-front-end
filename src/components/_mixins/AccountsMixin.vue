@@ -50,15 +50,15 @@ const EXTERNAL_ACCOUNTS = {
   WEBSITE: { moz: false, text: 'Website URL', icon: 'website' },
   JABBER: { moz: false, text: 'XMPP/Jabber', icon: 'jabber' },
   YAHOO: { moz: false, text: 'Yahoo! Messenger', icon: 'yahoo' },
-  IRC: { moz: false, text: 'IRC', icon: 'dino' },
-  SLACK: { moz: false, text: 'Slack', icon: 'dino' },
+  IRC: { moz: false, text: 'IRC', icon: 'message' },
+  SLACK: { moz: false, text: 'Slack', icon: 'message' },
 };
 
 export default {
   methods: {
     account([key, value]) {
       const { moz, text, icon } = EXTERNAL_ACCOUNTS[key] || {};
-      let { uri } = EXTERNAL_ACCOUNTS[key] || null;
+      let { uri } = EXTERNAL_ACCOUNTS[key] || { uri: null };
 
       if (uri) {
         uri = uri.replace(/@@@/g, value);
