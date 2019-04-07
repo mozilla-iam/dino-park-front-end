@@ -1,41 +1,23 @@
 version: 0.2
 
-env:
-  variables:
-    IMAGE_NAME: dino-park-front-end
-    DOCKER_REGISTRY: 320464205386.dkr.ecr.us-west-2.amazonaws.com
-
 phases:
   install:
     commands:
-      - apt update && apt install -y apt-transport-https curl
-      - curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
-      - echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | tee -a /etc/apt/sources.list.d/kubernetes.list
-      - apt update && apt install -y kubectl
-      - curl -O https://storage.googleapis.com/kubernetes-helm/helm-v2.11.0-linux-amd64.tar.gz
-      - tar zxf helm-v2.11.0-linux-amd64.tar.gz
-      - mv linux-amd64/helm /usr/local/bin/
-      - curl -O https://amazon-eks.s3-us-west-2.amazonaws.com/1.10.3/2018-07-26/bin/linux/amd64/aws-iam-authenticator
-      - chmod +x aws-iam-authenticator
-      - mv aws-iam-authenticator /usr/local/bin/
-      - apt update && apt install -y python3-pip
-      - pip3 install awscli
-      - echo "Configuring kubectl"
+      - '. ci/install_deps.sh'
   pre_build:
     commands:
       - export COMMIT_SHA=$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - export CODEBUILD_WEBHOOK_TRIGGER=${CODEBUILD_WEBHOOK_TRIGGER:-branch/master}
       - export DEPLOY_ENV=$(echo $CODEBUILD_WEBHOOK_TRIGGER | sed -e 's/tag\/.*-\(.*\)/\1/' | sed -e 's/branch\/master/dev/')
       - export MASTER=$(if [ "$CODEBUILD_WEBHOOK_TRIGGER" = "branch/master" ]; then echo 1; fi)
+      - export CLUSTER=$(if [ "$DEPLOY_ENV" = "dev" ]; then echo "kubernetes-stage-us-west-2"; else echo "kubernetes-prod-us-west-2"; fi)
       - echo "running for ${COMMIT_SHA} in ${DEPLOY_ENV}"
-      - aws eks update-kubeconfig --name $CLUSTER_NAME
+      - aws eks update-kubeconfig --name $CLUSTER
       - aws ecr get-login --region us-west-2 --no-include-email | bash
   build:
     commands:
-      - '[ -n "$MASTER" ] && docker build -t $IMAGE_NAME:$COMMIT_SHA .'
-      - '[ -n "$MASTER" ] && docker tag $IMAGE_NAME:$COMMIT_SHA $DOCKER_REGISTRY/$IMAGE_NAME:$COMMIT_SHA'
-      - '[ -n "$MASTER" ] && docker push $DOCKER_REGISTRY/$IMAGE_NAME:$COMMIT_SHA'
+      - '[ -n "$MASTER" ] && myke docker --rev=$COMMIT_SHA push-image --rev=$COMMIT_SHA'
   post_build:
     commands:
-      - echo "Finding appropriate deployment environment"
       - echo "Environment is ${DEPLOY_ENV}"
-      - helm template -f k8s/values.yaml -f k8s/values/$DEPLOY_ENV.yaml --set docker_registry=$DOCKER_REGISTRY,namespace=dinopark-$DEPLOY_ENV,rev=$COMMIT_SHA k8s/ | kubectl --token $DEPLOY_TOKEN apply -f -
+      - myke deploy --deploy_env=$DEPLOY_ENV --rev=$COMMIT_SHA
