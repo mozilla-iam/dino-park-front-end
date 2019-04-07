@@ -104,8 +104,8 @@ export default {
   },
   computed: {
     displayedPhoneNumbers() {
-      const { values: numbers = {} } = this.phoneNumbers || {};
-      const dispalyedNumbers = Object.entries(numbers)
+      const { values: numbers } = this.phoneNumbers || {};
+      const dispalyedNumbers = Object.entries(numbers || {})
         .map(([key, value]) => {
           const { view, contact } = this.destructPhoneKey(key);
           return { view, contact, value };
@@ -114,8 +114,8 @@ export default {
       return dispalyedNumbers;
     },
     displayedUris() {
-      const { values: uris = {} } = this.uris || {};
-      const dispalyedUris = Object.entries(uris)
+      const { values: uris } = this.uris || {};
+      const dispalyedUris = Object.entries(uris || {})
         .map(([key, value]) => {
           const { name, contact } = this.destructUriKey(key);
           const account = this.account([name, value]);

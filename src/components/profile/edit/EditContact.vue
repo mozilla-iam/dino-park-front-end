@@ -154,21 +154,24 @@ export default {
   },
   data() {
     const {
-      values: numbers = {},
-      metadata: { display: numbersDisplay = DISPLAY_LEVELS.private.value },
+      values: numbers,
+      metadata: { display: numbersDisplay },
     } = this.initialPhoneNumbers;
     const {
-      value: email = {},
-      metadata: { display: emailDisplay = DISPLAY_LEVELS.private.value },
+      value: email,
+      metadata: { display: emailDisplay },
     } = this.initialPrimaryEmail;
     return {
       MAX_NUMBERS: 5,
-      primaryEmail: { value: email, display: emailDisplay },
+      primaryEmail: {
+        value: email,
+        display: emailDisplay || DISPLAY_LEVELS.private.value,
+      },
       phoneNumbers: {
-        values: Object.entries(numbers).map(([k, v]) => {
+        values: Object.entries(numbers || {}).map(([k, v]) => {
           return { k, v };
         }),
-        display: numbersDisplay,
+        display: numbersDisplay || DISPLAY_LEVELS.private.value,
       },
     };
   },

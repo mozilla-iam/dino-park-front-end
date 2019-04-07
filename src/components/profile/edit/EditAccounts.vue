@@ -135,11 +135,11 @@ export default {
   },
   data() {
     const {
-      values: initialUris = {},
+      values: initialUris,
       metadata: { display = DISPLAY_LEVELS.private.value },
     } = this.initialUris;
     const urisUpdated = {
-      values: Object.entries(initialUris).map(this.formatAsKeyValues),
+      values: Object.entries(initialUris || {}).map(this.formatAsKeyValues),
       display,
     };
     return {
