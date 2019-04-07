@@ -136,19 +136,7 @@
       <hr role="presentation" />
 
       <label for="field-location">Location</label>
-      <Combobox
-        id="field-location"
-        v-model="location.value"
-        :allowCustomInput="false"
-        :source="[
-          'Berlin',
-          'Rotterdam',
-          'San Francisco',
-          'Cluj-Napoca',
-          'München',
-        ]"
-      >
-      </Combobox>
+      <input type="text" id="field-location" v-model="location.value" />
       <PrivacySetting
         label="Location privacy levels"
         id="field-location-privacy"
