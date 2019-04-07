@@ -137,7 +137,7 @@ li:first-child .profile__nav-link {
 }
 .profile__nav-link:focus {
   position: relative;
-  z-index: 1;
+  z-index: var(--layerOne);
 }
 @media (min-width: 57.5em) {
   .profile__nav-link {

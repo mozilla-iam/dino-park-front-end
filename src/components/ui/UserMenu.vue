@@ -143,7 +143,7 @@ export default {
   right: 0;
   background: var(--black);
   color: var(--white);
-  z-index: calc(var(--layerModal) - 1);
+  z-index: var(--layerUserMenu);
   height: 100vh;
   display: flex;
   flex-direction: column;

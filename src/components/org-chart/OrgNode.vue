@@ -228,7 +228,7 @@ export default {
 .org-node a:focus,
 .org-node:target > a {
   position: relative;
-  z-index: calc(var(--layerTopBar) - 1);
+  z-index: var(--layerTwo);
 }
 .org-node__name,
 .org-node__title {
@@ -254,7 +254,7 @@ export default {
   height: 2.5em;
   margin: 0.75em 0;
   padding: 0.65em;
-  z-index: 1;
+  z-index: var(--layerOne);
   border: 0;
   background-color: transparent;
   -webkit-appearance: none;

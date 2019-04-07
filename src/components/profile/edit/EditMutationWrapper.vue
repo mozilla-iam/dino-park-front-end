@@ -139,7 +139,7 @@ export default {
 <style>
 .mutation-form + .loading {
   position: absolute;
-  z-index: 1;
+  z-index: var(--layerOne);
   top: 0px;
   left: 0px;
   width: 100%;

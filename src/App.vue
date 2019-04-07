@@ -70,8 +70,13 @@ export default {
   --transparentBlue: rgba(69, 161, 255, 0.54);
   --transparentWhite: rgba(255, 255, 255, 0.54);
 
-  --layerTopBar: 2;
-  --layerModal: 3;
+  --layerOne: 1;
+  --layerTwo: 2;
+  --layerThree: 3;
+  --layerTopBar: 4;
+  --layerAboveNav: 5;
+  --layerUserMenu: 6;
+  --layerModal: 7;
 
   --shadowCard: 0 0.25em 0.25em 0 rgba(210, 210, 210, 0.5);
 

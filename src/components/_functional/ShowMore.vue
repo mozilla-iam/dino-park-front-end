@@ -125,7 +125,7 @@ export default {
 .show-more--transition .show-more__overflow--enter,
 .show-more--transition .show-more__overflow--leave-to {
   opacity: 0;
-  z-index: 1;
+  z-index: var(--layerOne);
 }
 .show-more__button {
   font: inherit;

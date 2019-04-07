@@ -208,7 +208,7 @@ export default {
   background-color: var(--white);
   box-shadow: 0 0.125em 0.25em 0.125em rgba(210, 210, 210, 0.5);
   text-align: left;
-  z-index: calc(var(--layerModal) - 1);
+  z-index: var(--layerTwo);
   position: absolute;
   top: 3em;
   left: 0;
@@ -274,7 +274,7 @@ export default {
   display: block;
   color: var(--gray-50);
   position: relative;
-  z-index: var(--layerTopbar);
+  z-index: var(--layerTwo);
 }
 .options__option {
   list-style: none;
@@ -309,7 +309,7 @@ export default {
 }
 .focus-styles .options input:focus + label {
   position: relative;
-  z-index: calc(var(--layerModal) - 1);
+  z-index: var(--layerTwo);
   box-shadow: 0px 0 0 1px var(--blue-60), 0 0 0 3px var(--transparentBlue);
 }
 </style>
