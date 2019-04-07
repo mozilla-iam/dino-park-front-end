@@ -69,7 +69,10 @@
             />
             <Meta
               metaKey="Cost centre"
-              :metaValue="staffInformation.costCenter.value"
+              :metaValue="
+                staffInformation.costCenter.value &&
+                  staffInformation.costCenter.value.replace(/\.0$/, '')
+              "
             />
           </MetaList>
         </template>
