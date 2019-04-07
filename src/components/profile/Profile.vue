@@ -252,6 +252,7 @@ export default {
         relations: this.staffInformation.staff,
         contact: true,
         accounts:
+          this.editing === 'accounts' ||
           (this.uris.values &&
             Object.entries(this.uris.values).length > 0 &&
             true) ||
