@@ -54,13 +54,13 @@ export default {
   },
   asyncComputed: {
     async src() {
-      this.decidePictureCategory(this.size);
+      this.decidePictureCategory();
       return this.updateUserPicture();
     },
   },
   methods: {
     async updateUserPicture() {
-      if (this.picture.startsWith('data:')) {
+      if (this.picture && this.picture.startsWith('data:')) {
         return this.picture;
       }
       if (
@@ -84,11 +84,11 @@ export default {
       }
       return `${this.picture}?size=${this.slot}`;
     },
-    decidePictureCategory(size) {
-      if (size <= 40) {
+    decidePictureCategory() {
+      if (this.size <= 40) {
         this.dinoTypeSize = 'small';
         this.slot = 40;
-      } else if (size <= 100) {
+      } else if (this.size <= 100) {
         this.dinoTypeSize = 'medium';
         this.slot = 100;
       } else {
@@ -97,6 +97,13 @@ export default {
       }
       this.modifier = `user-picture--${this.dinoTypeSize}`;
     },
+  },
+  data() {
+    return {
+      dinoTypeSize: 'small',
+      slot: 40,
+      modifier: 'user-picture--40',
+    };
   },
 };
 </script>

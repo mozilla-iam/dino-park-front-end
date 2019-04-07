@@ -27,7 +27,7 @@
       <div class="edit-personal-info__picture">
         <UserPicture
           :picture="picture.value"
-          :username="loggedInUser.value"
+          :username="loggedInUser.primaryUsername.value"
           :size="264"
           :isStaff="true"
         ></UserPicture>
