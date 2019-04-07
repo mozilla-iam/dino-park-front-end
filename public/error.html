@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <link rel="icon" href="/favicon.ico" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Zilla+Slab"
+      rel="stylesheet"
+    />
+    <link
+      href="https://dinopark.k8s.dev.sso.allizom.org/beta/css/app.css"
+      rel="stylesheet"
+    />
+    <title>Mozilla Directory</title>
+  </head>
+  <body>
+    <div id="app" class="app-container">
+      <header class="top-bar">
+        <div class="top-bar__bar">
+          <a
+            href="/beta/"
+            class="top-bar__link top-bar__link--logo router-link-active"
+          >
+            <img src="/beta/img/mozilla.svg" alt="Mozilla logo" />
+          </a>
+        </div>
+      </header>
+      <main class="container">
+        <div class="error">
+          <div class="error__image">
+            <img
+              src="/beta/img/dino-1.png"
+              srcset="/beta/img/dino-1@2x.png 2x, /beta/img/dino-1@3x.png 3x"
+            />
+          </div>
+          <div class="error__message">
+            <h1 class="visually-hidden">Error</h1>
+            <h2>This page isn't available</h2>
+            <p>
+              Sorry, the link you followed may be broken or the page may have
+              been removed.
+            </p>
+            <a href="/beta/" class="button router-link-active"
+              >Go to homepage</a
+            >
+            <p>
+              <small
+                >Please submit all bugs or issues to the team’s
+                Discourse.</small
+              >
+            </p>
+          </div>
+        </div>
+      </main>
+      <footer class="footer">
+        <a
+          href="https://discourse.mozilla.org/c/iam/dinopark"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="footer__link"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            role="presentation"
+            focusable="false"
+            width="18"
+            height="18"
+          >
+            <path
+              d="M13.903 10.55c-.503.633-1.191 1.133-2.062 1.5-.87.367-1.818.55-2.842.55-.461 0-.931-.042-1.414-.128A6.749 6.749 0 0 1 5.35 13.5a6.958 6.958 0 0 1-.69.13h-.025a.252.252 0 0 1-.165-.065.262.262 0 0 1-.092-.169.162.162 0 0 1-.009-.051c0-.02.003-.038.005-.053a.16.16 0 0 1 .016-.048l.02-.04.028-.045a.818.818 0 0 1 .03-.043s.017-.007.038-.037l.032-.042.186-.195c.096-.103.166-.181.209-.238l.18-.233c.078-.098.145-.203.2-.309a4.38 4.38 0 0 0 .166-.353c-.664-.386-1.187-.86-1.568-1.423-.38-.564-.57-1.164-.57-1.801 0-.745.253-1.433.755-2.065.504-.633 1.191-1.133 2.063-1.5.87-.367 1.818-.55 2.84-.55 1.024 0 1.972.183 2.842.55.87.367 1.559.867 2.062 1.5.503.632.756 1.32.756 2.065 0 .746-.253 1.434-.756 2.066M9 .667a8.334 8.334 0 1 0-.183 16.667A8.334 8.334 0 0 0 9 .667"
+              fill="currentColor"
+              fill-rule="evenodd"
+            ></path>
+          </svg>
+          Feedback
+        </a>
+        <a
+          href="https://www.mozilla.org/en-US/legal"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="footer__link"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            role="presentation"
+            focusable="false"
+            width="18"
+            height="18"
+          >
+            <path
+              d="M13.982 6.425l-5.745 6.719a.136.136 0 0 1-.189.015l-3.825-3.15a.128.128 0 0 1-.017-.182l1.183-1.383a.134.134 0 0 1 .186-.015l2.317 1.907 4.479-5.237a.134.134 0 0 1 .186-.016l1.41 1.16a.126.126 0 0 1 .015.182M9 .667a8.334 8.334 0 1 0 0 16.667A8.334 8.334 0 0 0 9 .667"
+              fill="currentColor"
+              fill-rule="evenodd"
+            ></path>
+          </svg>
+          Legal
+        </a>
+        <a
+          href="https://www.mozilla.org/en-US/privacy/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="footer__link"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            role="presentation"
+            focusable="false"
+            width="18"
+            height="18"
+          >
+            <path
+              d="M9 .667a8.333 8.333 0 1 1 0 16.667A8.333 8.333 0 0 1 9 .667zm3.509 12.34V7.744h-.906v-.968c0-1.433-1.168-2.6-2.603-2.6a2.605 2.605 0 0 0-2.602 2.6v.968h-.907v5.263h7.018zM9 5.317c.806 0 1.461.654 1.461 1.46v.967H7.54v-.967c0-.806.656-1.46 1.461-1.46z"
+              fill="currentColor"
+              fill-rule="evenodd"
+            ></path>
+          </svg>
+          Privacy
+        </a>
+        <a
+          href="https://github.com/mozilla-iam/dino-park-issues"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="footer__link"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            role="presentation"
+            focusable="false"
+            width="18"
+            height="18"
+          >
+            <path
+              d="M10.845 11.645c.09.277.137.566.138.857v1.714c0 .27-.184.45-.46.45-.278 0-.463-.18-.463-.45v-1.76c.046-.36-.092-.63-.323-.855-.138-.136-.185-.316-.092-.451.046-.181.23-.271.369-.316 1.338-.135 2.584-.586 2.584-2.705a2.07 2.07 0 0 0-.553-1.398.423.423 0 0 1-.093-.451c.139-.36.139-.721.046-1.082-.23.045-.6.18-1.2.586-.092.09-.23.09-.369.045a5.646 5.646 0 0 0-3 0 .457.457 0 0 1-.415-.045c-.554-.406-.969-.54-1.2-.586A1.74 1.74 0 0 0 5.86 6.28c.046.18.046.36-.092.451a2.071 2.071 0 0 0-.554 1.398c0 2.119 1.246 2.57 2.585 2.705.184 0 .323.135.369.316.046.18 0 .36-.092.45-.231.226-.323.497-.323.812v1.759c0 .27-.185.45-.462.45s-.462-.18-.462-.45v-.767c-1.384.225-1.984-.541-2.4-1.037-.184-.226-.322-.406-.507-.45-.23-.046-.415-.316-.323-.542.046-.225.323-.406.554-.316.461.136.738.451 1.015.767.37.496.692.857 1.661.676v-.045c0-.27.047-.586.139-.812-1.292-.27-2.677-1.082-2.677-3.471 0-.677.23-1.308.646-1.804a2.44 2.44 0 0 1 .139-1.803.411.411 0 0 1 .277-.271c.184-.045.784-.135 2.03.632a6.94 6.94 0 0 1 3.046 0c1.2-.767 1.846-.677 2.03-.632.14.045.231.136.278.27.23.587.277 1.173.138 1.76.422.505.65 1.144.647 1.803 0 2.57-1.57 3.291-2.677 3.516zM9 .667a8.334 8.334 0 1 0-.183 16.667A8.334 8.334 0 0 0 9 .667"
+              fill="currentColor"
+              fill-rule="evenodd"
+            ></path>
+          </svg>
+          GitHub
+        </a>
+        <div>
+          <a
+            href="https://www.mozilla.org/en-US/about/governance/policies/participation/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="footer__link footer__link--cpg"
+            >Community Participation Guidelines</a
+          >
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
