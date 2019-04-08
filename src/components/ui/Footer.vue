@@ -5,7 +5,7 @@
       class="footer__link"
       target="_blank"
       rel="noopener noreferrer"
-      ><Icon id="discourse" :width="18" :height="18" /> Feedback</a
+      ><Icon id="discourse-bg" :width="18" :height="18" /> Feedback</a
     >
     <a
       href="https://www.mozilla.org/en-US/legal"
