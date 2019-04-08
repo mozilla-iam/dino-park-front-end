@@ -98,6 +98,9 @@ export default {
 .icon-block__icon--linkedin {
   background-image: url('../../assets/images/icon-blocks/linkedin.svg');
 }
+.icon-block__icon--irc {
+  background-image: url('../../assets/images/icon-blocks/message.svg');
+}
 .icon-block__icon--mozilla {
   background-image: url('../../assets/images/icon-blocks/m.svg');
 }
