@@ -10,7 +10,10 @@
     @input="$emit('input', $event)"
   >
     <template v-slot:extra-content
-      ><a href="#">What do these mean?</a></template
+      ><a
+        href="https://discourse.mozilla.org/t/profile-privacy-display-levels-explained/37906"
+        >What do these mean?</a
+      ></template
     >
   </Select>
 </template>
