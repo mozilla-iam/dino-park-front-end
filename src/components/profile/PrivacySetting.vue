@@ -10,7 +10,12 @@
     @input="$emit('input', $event)"
   >
     <template v-slot:extra-content
-      ><a href="#">What do these mean?</a></template
+      ><a
+        href="https://discourse.mozilla.org/t/profile-privacy-display-levels-explained/37906"
+        target="_blank"
+        rel="noopener noreferrer"
+        >What do these mean?</a
+      ></template
     >
   </Select>
 </template>
@@ -88,5 +93,9 @@ export default {
 .privacy-setting--large .options__toggle svg {
   order: -1;
   margin: 0 0.5em 0 0;
+}
+.privacy-setting a:hover {
+  color: var(--blue-60);
+  background-color: var(--lightBlue);
 }
 </style>
