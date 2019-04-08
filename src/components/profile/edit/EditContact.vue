@@ -246,6 +246,8 @@ export default {
   background-color: var(--white);
   border: 2px solid var(--gray-20);
   cursor: not-allowed;
+  opacity: 1;
+  color: var(--gray-60);
 }
 .edit-contact__set-as-contact,
 .edit-contact__item hr {
