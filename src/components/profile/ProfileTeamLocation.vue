@@ -81,8 +81,12 @@ export default {
   methods: {
     getLocaltime() {
       if (this.timezone) {
-        const options = { timeZone: this.timezone };
-        return new Date().toLocaleTimeString(navigator.language, options);
+        try {
+          const options = { timeZone: this.timezone };
+          return new Date().toLocaleTimeString(navigator.language, options);
+        } catch (e) {
+          return 'unknown';
+        }
       }
       return '';
     },
