@@ -36,7 +36,15 @@
         ]"
         v-model="urisUpdated.values[index].k"
       />
-      <input type="text" v-model="urisUpdated.values[index].v" />
+      <label :for="`field-account-${index}-username`" class="visually-hidden"
+        >Username on
+        {{
+          `${
+            EXTERNAL_ACCOUNTS[destructUriKey(urisUpdated.values[index].k).name]
+              .text
+          }`
+        }}</label
+      >
       <input
         :id="`field-account-${index}-username`"
         type="text"
