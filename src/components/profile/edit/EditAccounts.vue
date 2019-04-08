@@ -38,22 +38,14 @@
       />
       <label :for="`field-account-${index}-username`" class="visually-hidden"
         >Username on
-        {{
-          `${
-            EXTERNAL_ACCOUNTS[destructUriKey(urisUpdated.values[index].k).name]
-              .text
-          }`
-        }}</label
+        {{ `${EXTERNAL_ACCOUNTS[destructUriKey(k).name].text}` }}</label
       >
       <input
         :id="`field-account-${index}-username`"
         type="text"
         v-model="urisUpdated.values[index].v"
         :placeholder="
-          `Your username on ${
-            EXTERNAL_ACCOUNTS[destructUriKey(urisUpdated.values[index].k).name]
-              .text
-          }`
+          `Your username on ${EXTERNAL_ACCOUNTS[destructUriKey(k).name].text}`
         "
       />
       <label class="edit-contact__set-as-contact"
