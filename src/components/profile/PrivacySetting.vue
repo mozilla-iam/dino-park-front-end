@@ -12,6 +12,8 @@
     <template v-slot:extra-content
       ><a
         href="https://discourse.mozilla.org/t/profile-privacy-display-levels-explained/37906"
+        target="_blank"
+        rel="noopener noreferrer"
         >What do these mean?</a
       ></template
     >
