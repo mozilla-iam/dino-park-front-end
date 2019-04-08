@@ -17,11 +17,7 @@
           @change="handleChangeFile"
         />
       </label>
-      <button
-        type="button"
-        class="button button--secondary"
-        @click="imgSrc = null"
-      >
+      <button type="button" class="button button--secondary" @click="deleteImg">
         Delete Photo
       </button>
     </div>
@@ -89,6 +85,10 @@ export default {
   },
   data: () => ({ imgSrc: null, privacyAgreed: false }),
   methods: {
+    async deleteImg() {
+      this.picture.value = '';
+      this.$emit('close');
+    },
     handleChangeFile(event) {
       const fr = new FileReader();
       fr.onload = () => {
@@ -104,8 +104,8 @@ export default {
       bigCtx.drawImage(img, 0, 0, bigCanvas.width, bigCanvas.height);
       const smallCanvas = document.createElement('canvas');
       const smallCtx = smallCanvas.getContext('2d');
-      smallCanvas.width = 512;
-      smallCanvas.height = 512;
+      smallCanvas.width = 264;
+      smallCanvas.height = 264;
       smallCtx.drawImage(
         bigCanvas,
         0,
