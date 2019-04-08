@@ -13,27 +13,8 @@
 </template>
 
 <script>
-import Identicon from 'identicon.js';
-
+import generateIdenticon from '@/assets/js/identicon-avatar';
 import DinoType from './DinoType.vue';
-
-function hex(buffer) {
-  const hexCodes = [];
-  const view = new DataView(buffer);
-  for (let i = 0; i < view.byteLength; i += 4) {
-    const value = view.getUint32(i);
-    const stringValue = value.toString(16);
-    const padding = '00000000';
-    const paddedValue = (padding + stringValue).slice(-padding.length);
-    hexCodes.push(paddedValue);
-  }
-  return hexCodes.join('');
-}
-
-function sha256(str) {
-  const buffer = new TextEncoder('utf-8').encode(str);
-  return crypto.subtle.digest('SHA-256', buffer).then(hex);
-}
 
 export default {
   name: 'UserPicture',
@@ -69,18 +50,7 @@ export default {
         this.picture === '/beta/img/user-demo.png' ||
         this.picture.startsWith('https://s3.amazonaws.com/')
       ) {
-        let hash;
-        if (window.crypto && window.crypto.subtle) {
-          hash = await sha256(this.username);
-        } else {
-          hash =
-            '04f8996da763b7a969b1028ee3007569eaf3a635486ddab211d512c85b9df8fb'; // 'user'
-        }
-        const identicon = new Identicon(hash, {
-          size: this.size,
-          format: 'svg',
-        });
-        return `data:image/svg+xml;base64,${identicon.toString()}`;
+        return generateIdenticon(this.username, this.size);
       }
       return `${this.picture}?size=${this.slot}`;
     },
