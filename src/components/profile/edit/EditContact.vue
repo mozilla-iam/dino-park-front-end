@@ -248,6 +248,7 @@ export default {
   cursor: not-allowed;
   opacity: 1;
   color: var(--gray-60);
+  height: calc(100% - 4px); /* account for border */
 }
 .edit-contact__set-as-contact,
 .edit-contact__item hr {
