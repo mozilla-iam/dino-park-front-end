@@ -4,7 +4,7 @@
     alternateButtonText="Contact Me"
     :expanded="false"
     buttonClass="button button--icon-end contact-me__button"
-    :transition="true"
+    :transition="false"
     :closeWhenClickedOutside="true"
     :moveFocus="false"
     :overflowBefore="false"
