@@ -74,7 +74,7 @@ export default {
   computed: {
     accounts() {
       const wellKnown = Object.entries(this.uris.values || {})
-        .map((kv) => this.account(kv))
+        .map(([k, v]) => this.account([this.destructUriKey(k).name, v]))
         .filter((a) => a !== null && typeof a !== 'undefined' && a.value);
       const mozilla = wellKnown.filter(({ moz }) => moz);
       const other = wellKnown.filter(({ moz }) => !moz);

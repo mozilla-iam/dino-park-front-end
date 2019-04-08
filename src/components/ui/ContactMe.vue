@@ -18,6 +18,37 @@
             <span class="contact-me__value">{{ primaryEmail }}</span>
           </a>
         </li>
+        <li
+          v-for="(number, index) in displayedPhoneNumbers"
+          :key="`p-${index}`"
+          class="contact-me__item"
+        >
+          <a :href="`tel:${number.value}`" class="contact-me__pair">
+            <Icon id="phone-forwarded" :width="24" :height="24" />
+            <span class="contact-me__key">Call Me</span>
+            <span class="contact-me__value">{{ number.value }}</span>
+          </a>
+        </li>
+        <li
+          v-for="(uri, index) in displayedUris"
+          :key="`u-${index}`"
+          class="contact-me__item"
+        >
+          <a v-if="uri.uri" :href="uri.uri" class="contact-me__pair">
+            <Icon :id="uri.icon" :width="24" :height="24" />
+            <span class="contact-me__key">Ping Me</span>
+            <span class="contact-me__value"
+              >{{ uri.value }} on {{ uri.text }}</span
+            >
+          </a>
+          <span v-else class="contact-me__pair">
+            <Icon :id="uri.icon" :width="24" :height="24" />
+            <span class="contact-me__key">Ping Me</span>
+            <span class="contact-me__value"
+              >{{ uri.value }} on {{ uri.text }}</span
+            >
+          </span>
+        </li>
       </ul>
     </template>
     <template slot="icon-expanded">
@@ -54,6 +85,8 @@
 </template>
 
 <script>
+import AccountsMixin from '@/components/_mixins/AccountsMixin.vue';
+import PhoneNumbersMixin from '@/components/_mixins/PhoneNumbersMixin.vue';
 import Icon from '@/components/ui/Icon.vue';
 import ShowMore from '@/components/_functional/ShowMore.vue';
 
@@ -62,14 +95,34 @@ export default {
   props: {
     primaryEmail: String,
     phoneNumbers: Object,
+    uris: Object,
   },
+  mixins: [PhoneNumbersMixin, AccountsMixin],
   components: {
     Icon,
     ShowMore,
   },
   computed: {
-    phoneNumber() {
-      return this.phoneNumbers && this.phoneNumbers['LDAP-1'];
+    displayedPhoneNumbers() {
+      const { values: numbers } = this.phoneNumbers || {};
+      const dispalyedNumbers = Object.entries(numbers || {})
+        .map(([key, value]) => {
+          const { view, contact } = this.destructPhoneKey(key);
+          return { view, contact, value };
+        })
+        .filter(({ contact }) => contact);
+      return dispalyedNumbers;
+    },
+    displayedUris() {
+      const { values: uris } = this.uris || {};
+      const dispalyedUris = Object.entries(uris || {})
+        .map(([key, value]) => {
+          const { name, contact } = this.destructUriKey(key);
+          const account = this.account([name, value]);
+          return { contact, ...account };
+        })
+        .filter(({ contact }) => contact);
+      return dispalyedUris;
     },
   },
 };
@@ -141,9 +194,11 @@ export default {
 }
 .contact-me__value {
   flex: 1;
-  color: var(--blue-60);
   overflow: hidden;
   text-overflow: ellipsis;
+}
+a > .contact-me__value {
+  color: var(--blue-60);
 }
 .contact-me__button {
   margin: 0 auto;

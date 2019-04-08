@@ -1,7 +1,6 @@
 <template>
   <EditMutationWrapper
     :editVariables="{
-      primaryEmail,
       phoneNumbers,
     }"
     :initialValues="initialValues"
@@ -20,16 +19,19 @@
           label="Email adddress 1 type"
           id="field-email-1-type"
           :options="[{ label: 'Primary', value: 'Primary' }]"
+          :disabled="true"
         />
-        <input type="text" disabled />
+        <input type="text" :value="primaryEmail.value" disabled />
         <PrivacySetting
           label="Email address 1 privacy settings"
           id="field-email-1-privacy"
           profileFieldName="primaryEmail"
           :profileFieldObject="primaryEmail"
+          :disabled="true"
         />
         <label class="edit-contact__set-as-contact"
-          ><input type="checkbox" /> Show in Contact Me button</label
+          ><input type="checkbox" checked disabled /> Show in Contact Me
+          button</label
         >
         <hr role="presentation" />
       </div>
@@ -45,54 +47,49 @@
           :collapsedShowLabel="true"
         />
       </div>
-      <div class="edit-contact__item">
-        <Select
-          class="options--chevron"
-          label="Phone number 1 type"
-          id="field-phone-1-type"
-          :options="[
-            { label: 'Primary', value: 'Primary' },
-            { label: 'Personal', value: 'Personal' },
-            { label: 'Work', value: 'Work' },
-            { label: 'Home', value: 'Home' },
-          ]"
-        />
-        <input type="text" />
-        <label class="edit-contact__set-as-contact"
-          ><input type="checkbox" /> Show in Contact Me button</label
+      <div
+        v-for="({ k, v: number }, index) in phoneNumbers.values"
+        :key="index"
+        class="edit-contact__item"
+      >
+        <Button
+          class="button--icon-only"
+          v-on:click="() => deletePhoneNumber(index)"
         >
-        <hr role="presentation" />
-      </div>
-      <div class="edit-contact__item">
-        <Button class="button--icon-only">
           <Icon id="x" :width="17" :height="17"></Icon>
           <span class="visually-hidden">Remove phone number</span>
         </Button>
         <Select
           class="options--chevron"
-          label="Phone number 2 type"
-          id="field-phone-2-type"
-          :options="[
-            { label: 'Primary', value: 'Primary' },
-            { label: 'Personal', value: 'Personal' },
-            { label: 'Work', value: 'Work' },
-            { label: 'Home', value: 'Home' },
-          ]"
+          :label="`Phone number ${index} type`"
+          :id="`field-phone-${index}-type`"
+          :options="phoneNumberLabels(k, index)"
+          v-model="phoneNumbers.values[index].k"
         />
-        <input type="text" />
+        <input type="text" v-model="phoneNumbers.values[index].v" />
         <label class="edit-contact__set-as-contact"
-          ><input type="checkbox" /> Show in Contact Me button</label
+          ><input
+            type="checkbox"
+            v-on:change="(e) => togglePhoneNumberContactMe(e, index)"
+            :checked="destructPhoneKey(k).contact"
+          />
+          Show in Contact Me button</label
         >
         <hr role="presentation" />
-        <Button class="edit-contact__add-more button--secondary button--action"
-          ><Icon id="plus" :width="16" :height="16" />Add Phone</Button
-        >
       </div>
+      <hr role="presentation" />
+      <Button
+        class="edit-contact__add-more button--secondary button--action"
+        :disabled="phoneNumbers.values.length >= MAX_NUMBERS"
+        v-on:click="addPhoneNumber"
+        ><Icon id="plus" :width="16" :height="16" />Add Phone</Button
+      >
     </div>
   </EditMutationWrapper>
 </template>
 
 <script>
+import PhoneNumbersMixin from '@/components/_mixins/PhoneNumbersMixin.vue';
 import Button from '@/components/ui/Button.vue';
 import EditMutationWrapper from './EditMutationWrapper.vue';
 import PrivacySetting from '@/components/profile/PrivacySetting.vue';
@@ -103,9 +100,12 @@ import { DISPLAY_LEVELS } from '@/assets/js/display-levels';
 export default {
   name: 'EditContact',
   props: {
+    initialPrimaryEmail: Object,
+    initialPhoneNumbers: Object,
     initialValues: Object,
     editVariables: Object,
   },
+  mixins: [PhoneNumbersMixin],
   components: {
     Button,
     EditMutationWrapper,
@@ -116,27 +116,63 @@ export default {
   mounted() {
     this.$refs.header.focus();
   },
+  methods: {
+    addPhoneNumber() {
+      const count = this.phoneNumbers.values.length;
+      this.phoneNumbers.values.push({
+        k: this.constructPhoneKey({ view: 'Mobile', num: count }),
+        v: '',
+      });
+    },
+    deletePhoneNumber(index) {
+      if (this.phoneNumbers.values.length > index) {
+        this.phoneNumbers.values.splice(index, 1);
+      }
+    },
+    togglePhoneNumberContactMe(e, index) {
+      const number = this.destructPhoneKey(
+        this.phoneNumbers.values[index].k,
+        index,
+      );
+      number.contact = e.target.checked;
+      this.phoneNumbers.values[index].k = this.constructPhoneKey(number);
+    },
+    phoneNumberLabels(k, index) {
+      const current = this.destructPhoneKey(k).view;
+      const names = ['Primary', 'Personal', 'Work', 'Home'].filter(
+        (name) => name !== current,
+      );
+      const options = names.map((label) => {
+        return {
+          label,
+          value: this.constructPhoneKey({ view: label, num: index }),
+        };
+      });
+      options.push({ label: current, value: k });
+      return options;
+    },
+  },
   data() {
+    const {
+      values: numbers,
+      metadata: { display: numbersDisplay },
+    } = this.initialPhoneNumbers;
+    const {
+      value: email,
+      metadata: { display: emailDisplay },
+    } = this.initialPrimaryEmail;
     return {
-      ...Object.entries(this.initialValues).reduce(
-        (
-          obj,
-          [
-            key,
-            {
-              value,
-              metadata: { display },
-            },
-          ],
-        ) => {
-          obj[key] = {
-            value,
-            display: display || DISPLAY_LEVELS.public.value,
-          };
-          return obj;
-        },
-        {},
-      ),
+      MAX_NUMBERS: 5,
+      primaryEmail: {
+        value: email,
+        display: emailDisplay || DISPLAY_LEVELS.private.value,
+      },
+      phoneNumbers: {
+        values: Object.entries(numbers || {}).map(([k, v]) => {
+          return { k, v };
+        }),
+        display: numbersDisplay || DISPLAY_LEVELS.private.value,
+      },
     };
   },
 };

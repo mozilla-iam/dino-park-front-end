@@ -18,6 +18,7 @@
         <ContactMe
           :primaryEmail="primaryEmail.value"
           :phoneNumbers="phoneNumbers"
+          :uris="uris"
         ></ContactMe>
       </div>
     </div>
@@ -36,7 +37,8 @@
       <div class="hide-desktop">
         <ContactMe
           :primaryEmail="primaryEmail.value"
-          :phoneNumbers="phoneNumbers.value"
+          :phoneNumbers="phoneNumbers"
+          :uris="uris"
         ></ContactMe>
       </div>
       <ProfileTeamLocation
@@ -120,6 +122,7 @@ export default {
     picture: Object,
     location: Object,
     description: Object,
+    uris: Object,
     userOnOwnProfile: Boolean,
   },
   components: {
