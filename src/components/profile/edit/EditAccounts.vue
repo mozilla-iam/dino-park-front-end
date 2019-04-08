@@ -37,6 +37,17 @@
         v-model="urisUpdated.values[index].k"
       />
       <input type="text" v-model="urisUpdated.values[index].v" />
+      <input
+        :id="`field-account-${index}-username`"
+        type="text"
+        v-model="urisUpdated.values[index].v"
+        :placeholder="
+          `Your username on ${
+            EXTERNAL_ACCOUNTS[destructUriKey(urisUpdated.values[index].k).name]
+              .text
+          }`
+        "
+      />
       <label class="edit-contact__set-as-contact"
         ><input
           type="checkbox"
