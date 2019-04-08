@@ -23,7 +23,7 @@
         />
         <label for="field-email-1-value" class="visually-hidden">Email 1</label>
         <input
-          type="text"
+          type="email"
           id="field-email-1-value"
           :value="primaryEmail.value"
           placeholder="Email address"
@@ -78,7 +78,7 @@
         >
         <input
           :id="`field-phone-${index}-value`"
-          type="text"
+          type="tel"
           placeholder="Phone number"
           v-model="phoneNumbers.values[index].v"
         />
