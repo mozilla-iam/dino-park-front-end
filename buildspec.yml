@@ -22,4 +22,4 @@ phases:
   post_build:
     commands:
       - echo "Environment is ${DEPLOY_ENV}"
-      - if [ "$PR = "" ]; then myke deploy --deploy_env=$DEPLOY_ENV --rev=$COMMIT_SHA; fi
+      - if [ "$PR" = "" ]; then myke deploy --deploy_env=$DEPLOY_ENV --rev=$COMMIT_SHA; fi
