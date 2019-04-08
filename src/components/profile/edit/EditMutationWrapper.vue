@@ -294,7 +294,7 @@ textarea {
   .edit-personal-info__privacy,
   .privacy-setting {
     grid-column: 4 / 5;
-    align-self: start;
+    align-self: center;
     justify-self: center;
   }
   .edit-personal-info__meta {
