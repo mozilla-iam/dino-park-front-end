@@ -94,8 +94,9 @@ export default {
     },
     addUri() {
       if (this.remainingAccounts.length > 0) {
+        const k = this.remainingAccounts[0].value;
         this.urisUpdated.values.push({
-          k: this.constructUriKey({ name: this.availableAccounts[0] }),
+          k,
           v: '',
         });
       }

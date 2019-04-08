@@ -9,6 +9,7 @@ phases:
       - export COMMIT_SHA=$CODEBUILD_RESOLVED_SOURCE_VERSION
       - export CODEBUILD_WEBHOOK_TRIGGER=${CODEBUILD_WEBHOOK_TRIGGER:-branch/master}
       - export DEPLOY_ENV=$(echo $CODEBUILD_WEBHOOK_TRIGGER | sed -e 's/tag\/.*-\(.*\)/\1/' | sed -e 's/branch\/master/dev/')
+      - export PR=$(if case $CODEBUILD_WEBHOOK_TRIGGER in pr/*) ;; *) false;; esac; then echo 1; fi)
       - export MASTER=$(if [ "$CODEBUILD_WEBHOOK_TRIGGER" = "branch/master" ]; then echo 1; fi)
       - export CLUSTER=$(if [ "$DEPLOY_ENV" = "dev" ]; then echo "kubernetes-stage-us-west-2"; else echo "kubernetes-prod-us-west-2"; fi)
       - echo "running for ${COMMIT_SHA} in ${DEPLOY_ENV}"
@@ -16,8 +17,9 @@ phases:
       - aws ecr get-login --region us-west-2 --no-include-email | bash
   build:
     commands:
-      - '[ -n "$MASTER" ] && myke docker --rev=$COMMIT_SHA push-image --rev=$COMMIT_SHA'
+      - if [ "$PR" = 1 ]; then myke docker; fi
+      - if [ "$MASTER" = 1 ]; then myke docker --rev=$COMMIT_SHA push-image --rev=$COMMIT_SHA; fi
   post_build:
     commands:
       - echo "Environment is ${DEPLOY_ENV}"
-      - myke deploy --deploy_env=$DEPLOY_ENV --rev=$COMMIT_SHA
+      - if [ "$PR = "" ]; then myke deploy --deploy_env=$DEPLOY_ENV --rev=$COMMIT_SHA; fi
