@@ -21,7 +21,14 @@
           :options="[{ label: 'Primary', value: 'Primary' }]"
           :disabled="true"
         />
-        <input type="text" :value="primaryEmail.value" disabled />
+        <label for="field-email-1-value" class="visually-hidden">Email 1</label>
+        <input
+          type="text"
+          id="field-email-1-value"
+          :value="primaryEmail.value"
+          placeholder="Email address"
+          disabled
+        />
         <PrivacySetting
           label="Email address 1 privacy settings"
           id="field-email-1-privacy"
@@ -66,7 +73,15 @@
           :options="phoneNumberLabels(k, index)"
           v-model="phoneNumbers.values[index].k"
         />
-        <input type="text" v-model="phoneNumbers.values[index].v" />
+        <label :for="`field-phone-${index}-value`" class="visually-hidden"
+          >Phone number {{ `${index + 1}` }}</label
+        >
+        <input
+          :id="`field-phone-${index}-value`"
+          type="text"
+          placeholder="Phone number"
+          v-model="phoneNumbers.values[index].v"
+        />
         <label class="edit-contact__set-as-contact"
           ><input
             type="checkbox"
