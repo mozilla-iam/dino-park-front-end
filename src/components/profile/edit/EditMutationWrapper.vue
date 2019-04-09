@@ -65,7 +65,7 @@ export default {
             'Username must contain between 2 and 64 symbols. Please choose another one.';
           break;
         default:
-          msg = 'A problem occured, please try again later.';
+          msg = 'A problem occurred, please try again later.';
       }
       this.$parent.$emit('toast', {
         content: msg,

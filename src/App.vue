@@ -1,6 +1,14 @@
 <template>
   <div id="app" class="app-container">
     <TopBar></TopBar>
+    <Banner>
+      <p>
+        This is a beta version,
+        <a href="https://github.com/mozilla-iam/dino-park-issues/issues"
+          >let us know what you think</a
+        >.
+      </p>
+    </Banner>
     <RouterView />
     <Footer></Footer>
   </div>
@@ -8,6 +16,7 @@
 
 <script>
 import TopBar from '@/components/ui/TopBar.vue';
+import Banner from '@/components/ui/Banner.vue';
 import Footer from '@/components/ui/Footer.vue';
 
 import isDNTEnabled from '@/assets/js/dnt-enabled';
@@ -16,6 +25,7 @@ export default {
   name: 'PageHome',
   components: {
     TopBar,
+    Banner,
     Footer,
   },
   methods: {
@@ -176,7 +186,7 @@ button {
 
 .app-container {
   display: grid;
-  grid-template-rows: auto 1fr auto; /* this assumes an app container with 3 things:; header, content, footer; it makes header and footer as tall as they need to be, then gives remaining whitespace to content.  */
+  grid-template-rows: auto auto 1fr auto; /* this assumes an app container with:; header, optionally a header, content, footer; it makes header and footer as tall as they need to be, then gives remaining whitespace to content.  */
   min-height: calc(100vh - 5.5em);
   align-items: center; /* if there is not enough content, that content will center in the available space */
 }
@@ -184,11 +194,8 @@ button {
   min-width: 0; /* ‘auto’ is default for grid children,
       but that would break our responsiveness in this case */
 }
-.app-container > main {
-  grid-row: 2 / 3;
-}
 .app-container > footer {
-  grid-row: 3 / 4;
+  grid-row: 4 / 5;
 }
 
 .visually-hidden {
