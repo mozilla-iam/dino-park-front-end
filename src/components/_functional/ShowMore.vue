@@ -7,7 +7,7 @@
     "
   >
     <slot name="base"> </slot>
-    <transition v-if="overflowBefore" name="show-more__overflow-">
+    <transition v-show="overflowBefore" name="show-more__overflow-">
       <div
         class="show-more__overflow"
         v-if="isExpanded"
@@ -99,8 +99,10 @@ export default {
   updated() {
     const overflowContent = this.$refs.overflowContentElement;
 
-    if (this.isExpanded && this.moveFocus) {
-      overflowContent.focus();
+    if (this.isExpanded) {
+      if (this.moveFocus) {
+        overflowContent.focus();
+      }
 
       if (this.closeWhenClickedOutside) {
         document.addEventListener('click', this.handleDocumentClick);
