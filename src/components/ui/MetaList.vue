@@ -29,7 +29,6 @@ export default {
   color: var(--gray-50);
 }
 .edit-personal-info__meta .meta-list dt {
-  font-weight: 400;
   margin: 0.125em 0;
 }
 @media (min-width: 32em) {
