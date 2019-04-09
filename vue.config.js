@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const BASE_URL = process.env.DP_BASE_URL || '/beta/';
+const BASE_URL = process.env.DP_BASE_URL || '/';
 const HTTPS_KEY = process.env.DP_HTTPS_KEY || false;
 const HTTPS_CERT = process.env.DP_HTTPS_CERT || false;
 const HTTPS = HTTPS_CERT &&

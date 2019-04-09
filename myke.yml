@@ -4,7 +4,7 @@ env:
   docker_registry: 320464205386.dkr.ecr.us-west-2.amazonaws.com
   name: dino-park-front-end
   rev: latest
-  default_base: /beta/
+  default_base: /
 tasks:
   run-local:
     cmd: npm run serve
