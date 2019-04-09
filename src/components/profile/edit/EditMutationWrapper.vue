@@ -197,6 +197,7 @@ textarea {
   border-color: transparent;
   color: var(--gray-50);
   padding-left: 0;
+  opacity: 1;
 }
 .edit-personal-info__picture {
   border: none;
