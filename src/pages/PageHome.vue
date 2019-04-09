@@ -62,7 +62,7 @@
         <h2>Recent Additions</h2>
         <p>
           <ul><li><strong>Edit your profile</strong></li> 
-          <li>Field-level <strong>privacy controlsi</strong></li>
+          <li>Field-level <strong>privacy controls</strong></li>
           <li><strong>Contributor LDAP</strong> accounts are searchable</li>
           </ul>
         </p>
