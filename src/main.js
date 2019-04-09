@@ -8,6 +8,16 @@ import App from './App.vue';
 import router from './router';
 import { USER_MENU_PROFILE } from './queries/profile';
 
+function errorHandler(error) {
+  const { networkError } = error;
+  if (
+    networkError instanceof TypeError &&
+    networkError.message.startsWith('NetworkError')
+  ) {
+    window.location.reload();
+  }
+}
+
 const cache = new InMemoryCache({
   dataIdFromObject: (object) => {
     // eslint-disable-next-line no-underscore-dangle
@@ -37,15 +47,7 @@ const apolloProvider = new VueApollo({
     mutationClient,
   },
   defaultClient: client,
-  errorHandler(error) {
-    const { networkError } = error;
-    if (
-      networkError instanceof TypeError &&
-      networkError.message.startsWith('NetworkError')
-    ) {
-      window.location.reload();
-    }
-  },
+  errorHandler,
 });
 
 Vue.use(VueApollo);

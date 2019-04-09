@@ -113,7 +113,12 @@
       <hr role="presentation" />
 
       <label for="field-official-job-title">Official Job Title</label>
-      <input type="text" disabled :value="staffInformation.title.value" />
+      <input
+        type="text"
+        id="field-official-job-title"
+        disabled
+        :value="staffInformation.title.value"
+      />
       <PrivacySetting
         label="Title privacy levels"
         id="field-title-privacy"
@@ -149,14 +154,15 @@
       <label for="field-office-location">Office Location</label>
       <input
         type="text"
+        id="field-office-location"
         disabled
-        :value="staffInformation.officeLocation.value"
+        :value="staffInformation.costCenter.value"
       />
       <PrivacySetting
         label="Office location privacy levels"
         id="field-office-location-privacy"
-        profileFieldName="staffInformation.officeLocation"
-        :profileFieldObject="staffInformation.officeLocation"
+        profileFieldName="staffInformation.costCenter"
+        :profileFieldObject="staffInformation.costCenter"
         :disabled="true"
       />
 
@@ -180,27 +186,67 @@
 
       <hr role="presentation" />
 
-      <div class="edit-personal-info__meta">
-        <MetaList>
-          <h3 class="visually-hidden">Meta</h3>
-          <Meta
-            metaKey="Worker type"
-            :metaValue="staffInformation.workerType.value"
-          />
-          <Meta metaKey="Team" :metaValue="staffInformation.team.value" />
-          <Meta
-            metaKey="Desk number"
-            :metaValue="staffInformation.wprDeskNumber.value"
-          />
-          <Meta
-            metaKey="Cost centre"
-            :metaValue="staffInformation.costCenter.value"
-          />
-        </MetaList>
-      </div>
+      <label for="field-worker-type">Worker Type</label>
+      <input
+        type="text"
+        id="field-worker-type"
+        disabled
+        :value="staffInformation.workerType.value"
+      />
       <PrivacySetting
-        label="Staff information levels"
-        id="field-staff-info-privacy"
+        label="Worker type privacy levels"
+        id="field-worker-type-privacy"
+        profileFieldName="staffInformation.workerType"
+        :profileFieldObject="staffInformation.workerType"
+        :disabled="true"
+      />
+
+      <hr role="presentation" />
+
+      <label for="field-cost-center">Cost Center</label>
+      <input
+        type="text"
+        id="field-cost-center"
+        disabled
+        :value="staffInformation.costCenter.value"
+      />
+      <PrivacySetting
+        label="Cost center privacy levels"
+        id="field-cost-center-privacy"
+        profileFieldName="staffInformation.costCenter"
+        :profileFieldObject="staffInformation.costCenter"
+        :disabled="true"
+      />
+
+      <hr role="presentation" />
+
+      <label for="field-desk-number">Desk Number</label>
+      <input
+        type="text"
+        id="field-desk-number"
+        disabled
+        :value="staffInformation.wprDeskNumber.value"
+      />
+      <PrivacySetting
+        label="Desk numnber privacy levels"
+        id="field-desk-number-privacy"
+        profileFieldName="staffInformation.wprDeskNumber"
+        :profileFieldObject="staffInformation.wprDeskNumber"
+        :disabled="true"
+      />
+
+      <hr role="presentation" />
+
+      <label for="field-team">Team</label>
+      <input
+        type="text"
+        id="field-team"
+        disabled
+        :value="staffInformation.team.value"
+      />
+      <PrivacySetting
+        label="Team privacy levels"
+        id="field-team-privacy"
         profileFieldName="staffInformation.team"
         :profileFieldObject="staffInformation.team"
         :disabled="true"
