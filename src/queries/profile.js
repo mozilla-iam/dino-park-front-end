@@ -56,6 +56,9 @@ const PREVIEW_PROFILE = gql`
           value
         }
       }
+      uris {
+        values
+      }
     }
   }
 `;
