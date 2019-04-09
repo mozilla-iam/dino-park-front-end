@@ -57,10 +57,12 @@
       </Card>
       <Card modifier="card--centered-content">
         <img src="@/assets/images/edit-large.svg" alt="" role="presentation" />
-        <h2>Upcoming Additions</h2>
+        <h2>Recent Additions</h2>
         <p>
-          Our next update will introduce profile editing and advanced privacy
-          settings.
+          <ul><li><strong>Edit your profile</strong></li> 
+          <li>Field-level <strong>privacy controlsi</strong></li>
+          <li><strong>Contributor LDAP</strong> accounts are searchable</li>
+          </ul>
         </p>
       </Card>
     </CardRow>
