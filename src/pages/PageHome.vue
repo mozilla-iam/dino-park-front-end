@@ -46,22 +46,27 @@
         </div>
         <h2>
           <a
-            href="https://discourse.mozilla.org/t/dinopark-faq/33564"
+            href="https://discourse.mozilla.org/t/profile-privacy-display-levels-explained/37906"
             target="_blank"
-            >Your privacy is protected</a
+            >Your  privacy is protected</a
           >
         </h2>
         <p>
-          Your profile data is fully hidden from public view. Read our FAQ for
-          details.
+            By default, the following information is visible to Staff and NDA'd people:
+            Team, Manager, Official Job Title, Office Location, Desk Number.
+            Any other fields are visible to Staff only.
+            You can control this via field-level privacy settings. Read our <a 
+            href="https://discourse.mozilla.org/t/profile-privacy-display-levels-explained/37906" 
+            target="_blank">FAQ</a> for details.
         </p>
       </Card>
       <Card modifier="card--centered-content">
         <img src="@/assets/images/edit-large.svg" alt="" role="presentation" />
-        <h2>Upcoming Additions</h2>
+        <h2>Recent Additions</h2>
         <p>
-          Our next update will introduce profile editing and advanced privacy
-          settings.
+          <ul><li><strong>Edit your profile</strong></li>
+              <li>Field-level <strong>privacy controls</strong></li>
+          </ul>
         </p>
       </Card>
     </CardRow>

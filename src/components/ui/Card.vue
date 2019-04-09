@@ -29,6 +29,9 @@ export default {
   border: 1px solid var(--gray-30);
   box-shadow: none;
 }
+.card--centered-content ul {
+  text-align: left;
+}
 .card h2 {
   font-weight: 700;
   font-size: 1.25em;
