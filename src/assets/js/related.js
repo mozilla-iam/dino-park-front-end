@@ -12,7 +12,7 @@ class Related {
       this.manager = manager || null;
       this.directs = directs || [];
     } catch (e) {
-      this.manger = null;
+      this.manager = null;
       this.directs = [];
     }
     this.show = this.manager != null || this.directs.length > 0;
