@@ -106,7 +106,7 @@ export default {
           this.picture.value = pic.toDataURL();
           this.$emit('close');
         },
-        { canvas: true, minWidth: 264, maxWidth: 264, downsamplingRatio: 0.5 },
+        { canvas: true, minWidth: 264, maxWidth: 264, downsamplingRatio: 0.75 },
       );
     },
     selectCrop() {
