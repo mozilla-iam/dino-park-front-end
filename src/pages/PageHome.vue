@@ -66,7 +66,6 @@
         <p>
           <ul><li><strong>Edit your profile</strong></li> 
           <li>Field-level <strong>privacy controls</strong></li>
-          <li><strong>Contributor LDAP</strong> accounts are searchable</li>
           </ul>
         </p>
       </Card>
