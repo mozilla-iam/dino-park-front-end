@@ -141,6 +141,8 @@ export default {
   width: calc(100% + 4.5em);
   margin: 0 -2.25em;
   color: var(--gray-60);
+  border-radius: var(--imageRadius);
+  border: 2px solid var(--gray-30);
 }
 @media (min-width: 57.5em) {
   .contact-me {
@@ -160,6 +162,8 @@ export default {
   margin-top: -0.5em;
   transform: rotate(-45deg);
   box-shadow: 0 0 0.25em 0 var(--gray-30);
+  border-radius: inherit;
+  border: inherit;
 }
 .contact-me__item {
   list-style: none;
