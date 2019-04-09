@@ -4,7 +4,10 @@
     <Banner>
       <p>
         This is a beta version,
-        <a href="https://github.com/mozilla-iam/dino-park-issues/issues"
+        <a
+          href="https://github.com/mozilla-iam/dino-park-issues/issues"
+          target="_blank"
+          rel="noopener noreferrer"
           >let us know what you think</a
         >.
       </p>
