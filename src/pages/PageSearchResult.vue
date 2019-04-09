@@ -26,7 +26,7 @@
         <p>An error occured while trying to load the search results</p>
         <p>
           <small
-            >Please submit all bugs or issues to the team’s Discourse.</small
+            >Please submit all bugs or issues to the project's Github issue repository (link in footer).</small
           >
         </p>
       </template>
