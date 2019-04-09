@@ -3,11 +3,11 @@
   <ShortName>Mozilla Directory</ShortName>
   <Description>Search the Mozilla Directory</Description>
   <Url type="text/html" method="get" 
-       template="http://web-mozillians.dinopark.infra.iam.mozilla.com/beta/s?query={searchTerms}">
+       template="https://people.mozilla.org/s?query={searchTerms}">
   </Url>
   <OutputEncoding>UTF-8</OutputEncoding>
   <InputEncoding>UTF-8</InputEncoding>
-  <moz:SearchForm>http://web-mozillians.dinopark.infra.iam.mozilla.com</moz:SearchForm>
+  <moz:SearchForm>https://people.mozilla.org</moz:SearchForm>
   <Image width="16" height="16" type="image/x-icon">data:image/x-icon;base64,
 AAABAAEAEBAAAAAAAABoBQAAFgAAACgAAAAQAAAAIAAAAAEACAAAAAAAAAEAAAAAAAAAAAAAAAEA
 AAABAAAAAAAAAACAAACAAAAAgIAAgAAAAIAAgACAgAAAwMDAAMDcwADwyqYABAQEAAgICAAMDAwA

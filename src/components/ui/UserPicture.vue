@@ -47,7 +47,6 @@ export default {
       if (
         this.picture === null ||
         this.picture === '' ||
-        this.picture === '/beta/img/user-demo.png' ||
         this.picture.startsWith('https://s3.amazonaws.com/')
       ) {
         return generateIdenticon(this.username, this.size);
