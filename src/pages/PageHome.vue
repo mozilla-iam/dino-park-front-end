@@ -46,14 +46,13 @@
         </div>
         <h2>
           <a
-            href="https://discourse.mozilla.org/t/dinopark-faq/33564"
+            href="https://discourse.mozilla.org/t/profile-privacy-display-levels-explained/37906"
             target="_blank"
             >Your privacy is protected</a
           >
         </h2>
         <p>
-          Your profile data is fully hidden from public view. Read our FAQ for
-          details.
+          Your profile data is set to Staff-only visibility by default. You can control this via field-level privacy settings. Read our FAQ for details.
         </p>
       </Card>
       <Card modifier="card--centered-content">
