@@ -156,13 +156,13 @@
         type="text"
         id="field-office-location"
         disabled
-        :value="staffInformation.costCenter.value"
+        :value="staffInformation.officeLocation.value"
       />
       <PrivacySetting
         label="Office location privacy levels"
         id="field-office-location-privacy"
-        profileFieldName="staffInformation.costCenter"
-        :profileFieldObject="staffInformation.costCenter"
+        profileFieldName="staffInformation.officeLocation"
+        :profileFieldObject="staffInformation.officeLocation"
         :disabled="true"
       />
 
