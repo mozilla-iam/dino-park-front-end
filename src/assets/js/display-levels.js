@@ -37,7 +37,7 @@ const DISPLAY_STAFF_ONLY = [DISPLAY_LEVELS.staff];
 const DISPLAY_NOT_PRIVATE = [
   DISPLAY_LEVELS.staff,
   DISPLAY_LEVELS.ndaed,
-  DISPLAY_LEVELS.vouched,
+  //  DISPLAY_LEVELS.vouched,
   DISPLAY_LEVELS.authenticated,
   DISPLAY_LEVELS.public,
 ];
@@ -45,7 +45,7 @@ const DISPLAY_ANY = [
   DISPLAY_LEVELS.private,
   DISPLAY_LEVELS.staff,
   DISPLAY_LEVELS.ndaed,
-  DISPLAY_LEVELS.vouched,
+  //  DISPLAY_LEVELS.vouched,
   DISPLAY_LEVELS.authenticated,
   DISPLAY_LEVELS.public,
 ];
