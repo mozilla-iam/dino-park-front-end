@@ -52,7 +52,10 @@
           >
         </h2>
         <p>
-          Your profile data is set to Staff-only visibility by default. You can control this via field-level privacy settings. Read our <a
+            By default, the following information is visible to Staff and NDA'd people: 
+            Team, Manager, Official Job Title, Office Location, Desk Number. 
+            Any other fields are visible to Staff only. 
+            You can control this via field-level privacy settings. Read our <a
             href="https://discourse.mozilla.org/t/profile-privacy-display-levels-explained/37906"
             target="_blank">FAQ</a> for details.
         </p>
