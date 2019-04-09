@@ -113,7 +113,12 @@
       <hr role="presentation" />
 
       <label for="field-official-job-title">Official Job Title</label>
-      <input type="text" disabled :value="staffInformation.title.value" />
+      <input
+        type="text"
+        id="field-official-job-title"
+        disabled
+        :value="staffInformation.title.value"
+      />
       <PrivacySetting
         label="Title privacy levels"
         id="field-title-privacy"
@@ -147,7 +152,12 @@
       <hr role="presentation" />
 
       <label for="field-office-location">Office Location</label>
-      <input type="text" disabled :value="staffInformation.costCenter.value" />
+      <input
+        type="text"
+        id="field-office-location"
+        disabled
+        :value="staffInformation.costCenter.value"
+      />
       <PrivacySetting
         label="Office location privacy levels"
         id="field-office-location-privacy"
@@ -177,7 +187,12 @@
       <hr role="presentation" />
 
       <label for="field-worker-type">Worker Type</label>
-      <input type="text" disabled :value="staffInformation.workerType.value" />
+      <input
+        type="text"
+        id="field-worker-type"
+        disabled
+        :value="staffInformation.workerType.value"
+      />
       <PrivacySetting
         label="Worker type privacy levels"
         id="field-worker-type-privacy"
@@ -188,8 +203,13 @@
 
       <hr role="presentation" />
 
-      <label for="field-office-location">Cost Center</label>
-      <input type="text" disabled :value="staffInformation.costCenter.value" />
+      <label for="field-cost-center">Cost Center</label>
+      <input
+        type="text"
+        id="field-cost-center"
+        disabled
+        :value="staffInformation.costCenter.value"
+      />
       <PrivacySetting
         label="Cost center privacy levels"
         id="field-cost-center-privacy"
@@ -200,9 +220,10 @@
 
       <hr role="presentation" />
 
-      <label for="field-office-location">Desk Number</label>
+      <label for="field-desk-number">Desk Number</label>
       <input
         type="text"
+        id="field-desk-number"
         disabled
         :value="staffInformation.wprDeskNumber.value"
       />
@@ -216,8 +237,13 @@
 
       <hr role="presentation" />
 
-      <label for="field-office-location">Team</label>
-      <input type="text" disabled :value="staffInformation.team.value" />
+      <label for="field-team">Team</label>
+      <input
+        type="text"
+        id="field-team"
+        disabled
+        :value="staffInformation.team.value"
+      />
       <PrivacySetting
         label="Team privacy levels"
         id="field-team-privacy"
