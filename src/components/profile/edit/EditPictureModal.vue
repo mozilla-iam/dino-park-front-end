@@ -74,6 +74,7 @@
 import Modal from '@/components/_functional/Modal.vue';
 import UserPicture from '@/components/ui/UserPicture.vue';
 import Crop from './Cropper.vue';
+import loadImage from 'blueimp-load-image';
 
 export default {
   name: 'EditPictureModal',
@@ -90,41 +91,27 @@ export default {
       this.$emit('close');
     },
     handleChangeFile(event) {
-      const fr = new FileReader();
-      fr.onload = () => {
-        this.imgSrc = fr.result;
-      };
-      fr.readAsDataURL(event.target.files[0]);
+      loadImage(
+        event.target.files[0],
+        (img) => {
+          this.imgSrc = img.toDataURL();
+        },
+        { orientation: true },
+      );
     },
     resize(img) {
-      const bigCanvas = document.createElement('canvas');
-      const bigCtx = bigCanvas.getContext('2d');
-      bigCanvas.width = img.naturalWidth * 0.5;
-      bigCanvas.height = img.naturalHeight * 0.5;
-      bigCtx.drawImage(img, 0, 0, bigCanvas.width, bigCanvas.height);
-      const smallCanvas = document.createElement('canvas');
-      const smallCtx = smallCanvas.getContext('2d');
-      smallCanvas.width = 264;
-      smallCanvas.height = 264;
-      smallCtx.drawImage(
-        bigCanvas,
-        0,
-        0,
-        bigCanvas.width,
-        bigCanvas.height,
-        0,
-        0,
-        smallCanvas.width,
-        smallCanvas.height,
+      loadImage(
+        img,
+        (pic) => {
+          this.picture.value = pic.toDataURL();
+          this.$emit('close');
+        },
+        { canvas: true, minWidth: 264, maxWidth: 264, downsamplingRatio: 0.5 },
       );
-      this.picture.value = smallCanvas.toDataURL();
-      this.$emit('close');
     },
     selectCrop() {
       const data = this.$refs.crop.cropper.toDataURL();
-      const image = new Image();
-      image.onload = () => this.resize(image);
-      image.src = data;
+      this.resize(data);
     },
   },
 };
