@@ -227,7 +227,10 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.edit-contact__item input[type='text'] {
+.edit-contact__item input[type='text'],
+.edit-contact__item input[type='email'],
+.edit-contact__item input[type='tel'],
+.edit-contact__item input[type='password'] {
   border: 0;
   background-color: var(--gray-20);
   border-radius: var(--formElementRadius);
@@ -237,11 +240,15 @@ export default {
   grid-column: 2 / 4;
 }
 @media (min-width: 57.5em) {
-  .edit-contact__item input[type='text'] {
+  .edit-contact__item input[type='text'],
+  .edit-contact__item input[type='email'],
+  .edit-contact__item input[type='tel'] {
     grid-column: 3 / 4;
   }
 }
-.edit-contact__item input[type='text'][disabled] {
+.edit-contact__item input[type='text'][disabled],
+.edit-contact__item input[type='email'][disabled],
+.edit-contact__item input[type='tel'][disabled] {
   color: inherit;
   background-color: var(--white);
   border: 2px solid var(--gray-20);
