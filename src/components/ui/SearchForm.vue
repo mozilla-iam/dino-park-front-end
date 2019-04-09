@@ -98,7 +98,7 @@ export default {
       },
     },
     who() {
-      return this.$route.query.who || 'all';
+      return this.$route.query.who || 'staff';
     },
   },
   data() {
