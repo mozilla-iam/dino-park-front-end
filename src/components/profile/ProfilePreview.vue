@@ -44,7 +44,8 @@
     <div class="hide-desktop">
       <ContactMe
         :primaryEmail="primaryEmail.value"
-        :phoneNumbers="phoneNumbers.values"
+        :phoneNumbers="phoneNumbers"
+        :uris="uris"
       ></ContactMe>
     </div>
     <ProfileTeamLocation
@@ -60,7 +61,8 @@
       <div class="hide-mobile">
         <ContactMe
           :primaryEmail="primaryEmail.value"
-          :phoneNumbers="phoneNumbers.value"
+          :phoneNumbers="phoneNumbers"
+          :uris="uris"
         ></ContactMe>
       </div>
       <RouterLink
@@ -114,6 +116,7 @@ export default {
     picture: Object,
     location: Object,
     description: Object,
+    uris: Object,
     userId: Object,
   },
   components: {
