@@ -14,7 +14,7 @@ export default {
 
 <style>
 .banner {
-  background-color: var(--black);
+  background-color: var(--gray-60);
   color: var(--white);
   text-align: center;
 }
