@@ -22,7 +22,7 @@
         >
         <p>
           <small
-            >Please submit all bugs or issues to the team’s Discourse.</small
+            >Please submit all bugs or issues to the project's GitHub issue repository (link in footer).</small
           >
         </p>
       </template>
