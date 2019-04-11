@@ -57,7 +57,7 @@
     </section>
     <EmptyCard
       title="Identities"
-      message="Soon you can edit identities in DinoPark"
+      message="Soon you can edit identities in the People Directory"
     >
       <a id="nav-identities" class="profile__anchor"></a
     ></EmptyCard>
