@@ -35,13 +35,13 @@
         />
         <label for="search-who-staff">Staff</label>
         <input
-          id="search-who-contributors"
+          id="search-who-volunteers"
           type="radio"
-          value="contributors"
+          value="volunteers"
           name="who"
           v-model="who"
         />
-        <label for="search-who-contributors">Contributors</label>
+        <label for="search-who-volunteers">Volunteers</label>
       </div>
     </fieldset>
     <input
