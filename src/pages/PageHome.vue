@@ -5,7 +5,7 @@
         src="@/assets/images/laptop-phone.jpg"
         srcset="@/assets/images/laptop-phone@2x.jpg 2x"
       />
-      <h1>Welcome to the Mozilla Directory</h1>
+      <h1>Welcome to the Mozilla People Directory</h1>
       <p>
         A secure place to quickly find your team members and easily discover new
         ones, now in beta.
@@ -33,7 +33,7 @@
         </h2>
         <p>
           Join us on Discourse and let us know how we can make the Mozilla
-          Directory even better.
+          People Directory even better.
         </p>
       </Card>
       <Card>
