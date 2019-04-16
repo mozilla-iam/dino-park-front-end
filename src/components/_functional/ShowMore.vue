@@ -25,11 +25,23 @@
     >
       <template v-if="isExpanded">
         <slot name="icon-expanded"></slot>
-        <span class="show-more__button-text">{{ alternateButtonText }}</span>
+        <span
+          :class="
+            'show-more__button-text' +
+              (buttonTextVisuallyHidden && ` visually-hidden`)
+          "
+          >{{ alternateButtonText || buttonText }}</span
+        >
       </template>
       <template v-else>
         <slot name="icon-collapsed"></slot>
-        <span class="show-more__button-text">{{ buttonText }}</span>
+        <span
+          :class="
+            'show-more__button-text' +
+              (buttonTextVisuallyHidden && ` visually-hidden`)
+          "
+          >{{ buttonText }}</span
+        >
       </template>
       <slot name="button-content"></slot>
     </button>
@@ -61,6 +73,10 @@ export default {
     overflowBefore: {
       type: Boolean,
       default: true,
+    },
+    buttonTextVisuallyHidden: {
+      type: Boolean,
+      default: false,
     },
   },
   methods: {

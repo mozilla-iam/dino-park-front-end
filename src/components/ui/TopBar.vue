@@ -14,6 +14,7 @@
         :expanded="false"
         :closeWhenClickedOutside="true"
         ref="showMoreSearch"
+        :buttonTextVisuallyHidden="true"
       >
         <template slot="overflow">
           <SearchForm
@@ -62,6 +63,7 @@
           @close-user-menu="closeUserMenu"
           ref="showMoreUserMenu"
           :closeWhenClickedOutside="true"
+          :buttonTextVisuallyHidden="true"
         >
           <template slot="overflow">
             <UserMenu></UserMenu>
@@ -228,11 +230,5 @@ export default {
 .top-bar__user-menu-toggle img,
 .top-bar__search-toggle img {
   margin-right: 0;
-}
-.top-bar__search-toggle .show-more__button-text,
-.top-bar__user-menu-toggle .show-more__button-text {
-  position: absolute;
-  left: -9999em;
-  top: -9999em;
 }
 </style>
