@@ -170,9 +170,6 @@ textarea {
   margin: 0.5em 0 0;
   grid-column: 1 / -1;
 }
-.edit-personal-info > label::after {
-  content: ':';
-}
 .edit-personal-info > hr {
   margin: 1em -1.5em;
   grid-column: 1 / -1;
