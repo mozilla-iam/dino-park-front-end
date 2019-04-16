@@ -4,7 +4,7 @@
       @click="toggleOptions"
       @keydown.up.down.prevent="toggleOptions"
       type="button"
-      :ref="`optionToggle-${id}`"
+      ref="button"
       :title="selectedLabel"
       class="options__toggle"
       :aria-expanded="open ? 'true' : 'false'"
@@ -21,37 +21,39 @@
         :height="17"
       ></Icon>
     </button>
-    <fieldset
-      @keydown.enter.prevent="closeList"
-      v-show="open"
-      :id="`option-list-${id}`"
-      :ref="`optionList-${id}`"
-      class="options__list"
-    >
-      <legend class="visually-hidden">{{ label }}</legend>
-      <ul>
-        <Option
-          v-for="(option, index) in options"
-          :key="index"
-          :groupId="id"
-          :label="option.label"
-          :value="option.value"
-          :checked="option.value === value"
-          :icon="option.icon"
-          :id="`option-${id}-${index}`"
-          :bind="{ expandedShowIcon, expandedShowLabel }"
-          @input="$emit('input', $event)"
-          @close-list="closeList"
-        />
-      </ul>
-      <slot name="extra-content"></slot>
-    </fieldset>
+    <Popover v-show="open">
+      <fieldset
+        @keydown.enter.prevent="closeList"
+        :id="`option-list-${id}`"
+        :ref="`optionList-${id}`"
+        class="options__list"
+      >
+        <legend class="visually-hidden">{{ label }}</legend>
+        <ul>
+          <Option
+            v-for="(option, index) in options"
+            :key="index"
+            :groupId="id"
+            :label="option.label"
+            :value="option.value"
+            :checked="option.value === value"
+            :icon="option.icon"
+            :id="`option-${id}-${index}`"
+            :bind="{ expandedShowIcon, expandedShowLabel }"
+            @input="$emit('input', $event)"
+            @close-list="closeList"
+          />
+        </ul>
+        <slot name="extra-content"></slot>
+      </fieldset>
+    </Popover>
   </div>
 </template>
 
 <script>
 import Icon from './Icon.vue';
 import Option from './Option.vue';
+import Popover from '@/components/ui/Popover.vue';
 
 export default {
   name: 'Select',
@@ -81,6 +83,7 @@ export default {
   components: {
     Icon,
     Option,
+    Popover,
   },
   methods: {
     toggleOptions() {
@@ -105,7 +108,7 @@ export default {
       this.focusToggle();
     },
     focusToggle() {
-      const optionToggle = this.$refs[`optionToggle-${this.id}`];
+      const optionToggle = this.$refs.button;
 
       if (optionToggle) {
         this.$nextTick(() => {
@@ -126,23 +129,10 @@ export default {
         this.toggleOptions();
       }
     },
-    reposition() {
-      const optionToggle = this.$refs[`optionToggle-${this.id}`];
-      const { left: spaceOnLeft, right } = optionToggle.getBoundingClientRect();
-      const spaceOnRight =
-        document.scrollingElement.getBoundingClientRect().width - right;
-
-      if (spaceOnRight > spaceOnLeft) {
-        this.position = 'right';
-      } else {
-        this.position = 'left';
-      }
-    },
   },
   watch: {
     open() {
       if (this.open) {
-        this.reposition();
         document.addEventListener('click', this.handleDocumentClick);
         document.addEventListener('touchstart', this.handleDocumentClick);
       } else {
@@ -156,9 +146,6 @@ export default {
       open: false,
       position: '',
     };
-  },
-  mounted() {
-    this.reposition();
   },
   computed: {
     selectedOption() {
@@ -205,64 +192,8 @@ export default {
 }
 .options .options__list {
   padding: 0;
-  background-color: var(--white);
-  box-shadow: 0 0.125em 0.25em 0.125em rgba(210, 210, 210, 0.5);
-  text-align: left;
-  z-index: var(--layerTwo);
-  position: absolute;
-  top: 3em;
-  left: 0;
-  width: calc(100% + 4.5em);
-  margin: 0 -2.25em;
-  color: var(--gray-60);
-  border-radius: var(--imageRadius);
-  border: 2px solid var(--gray-30);
+  margin: 0;
 }
-@media (min-width: 57.5em) {
-  .options .options__list {
-    min-width: 18em;
-    margin: 0 0.5em;
-    transform: translateX(calc(-50% + 0.5em));
-  }
-}
-.options__list::before {
-  content: '';
-  width: 1em;
-  height: 1em;
-  background-color: var(--white);
-  position: absolute;
-  left: 50%;
-  margin-left: -0.5em;
-  margin-top: -0.5em;
-  transform: rotate(-45deg);
-  box-shadow: 0 0 0.25em 0 var(--gray-30);
-  border: inherit;
-  border-radius: inherit;
-}
-.options--left .options__list {
-  transform: translateX(calc(-100% + 5em));
-}
-.options--left .options__list::before {
-  left: auto;
-  right: 1em;
-}
-@media (min-width: 57.5em) {
-  .options--left .options__list {
-    transform: translateX(calc(-100% + 2.5em));
-  }
-}
-.options--right .options__list {
-  transform: translateX(1em);
-}
-.options--right .options__list::before {
-  left: 2em;
-}
-@media (min-width: 57.5em) {
-  .options--right .options__list {
-    transform: translateX(-1.5em);
-  }
-}
-
 .options__list ul {
   margin: 0;
   padding-left: 0;
