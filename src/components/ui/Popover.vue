@@ -105,14 +105,16 @@ export default {
   }
 }
 .popover--right {
-  transform: translateX(0.5em);
+  transform: translateX(0);
+  left: auto;
+  right: 50%;
 }
 .popover--right::before {
   left: 2em;
 }
 @media (min-width: 57.5em) {
   .popover--right {
-    transform: translateX(-2.5em);
+    transform: translateX(calc(100% - 0.75em));
   }
 }
 </style>
