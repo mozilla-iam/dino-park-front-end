@@ -62,7 +62,16 @@ Notes:
 
 There is a `<ShowMore>` component used anywhere you would show more content using a button.
 
-It has the opened/closed state conveyed to Assistive Technologies (AT) through ARIA and focus is moved to the newly opened content.
+Features:
+
+- opened/closed state is conveyed to Assistive Technologies (AT) through ARIA
+- focus can be moved to the newly opened content (optional)
+- can use icons for expanded and collapsed state
+- can use (visible or visually hidden) text for expanded and collapsed state
+
+### Popover
+
+`<Popover>` is a component that is shared between tooltips, Contact Me and custom selects. In most cases, it is used as the toggled content of a `ShowMore` component.
 
 ## Technical considerations
 

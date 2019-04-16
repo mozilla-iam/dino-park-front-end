@@ -139,7 +139,7 @@
       <label for="field-alt-name"
         >Alternative Name&nbsp;<Tooltip
           buttonText="Open alternative name info"
-          alternateButtonText="Close alternative info"
+          alternateButtonText="Close alternative name info"
           >This field allows you to enter an alternative name.</Tooltip
         ></label
       >
