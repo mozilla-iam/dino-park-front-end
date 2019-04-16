@@ -51,9 +51,11 @@
       <label for="field-username"
         >Username
         <Tooltip
-          buttonText="Open username more info"
-          alternateButtonText="Close username more info"
-          >Username is always public.</Tooltip
+          buttonText="Open username info"
+          alternateButtonText="Close username info"
+          >Your username is part of your profile URL. It is publicly visible.
+          Pro tip: Use the same username across systems for easy discovery (IRC,
+          Slack, Discourse).</Tooltip
         ></label
       >
       <input type="text" id="field-username" v-model="primaryUsername.value" />
@@ -67,7 +69,17 @@
 
       <hr role="presentation" />
 
-      <label for="field-first-name">First Name</label>
+      <label for="field-first-name"
+        >First Name
+        <Tooltip
+          buttonText="Open first name info"
+          alternateButtonText="Close first name info"
+          >This is your first name. For Staff members, data is initially
+          imported from Workday. Changes will not be reflected back into Workday
+          though. Pro tip: If first & last names don’t work for you we got you
+          covered. Please use Alternative name instead.</Tooltip
+        ></label
+      >
       <input type="text" id="field-first-name" v-model="firstName.value" />
       <PrivacySetting
         label="First name privacy levels"
@@ -78,7 +90,17 @@
 
       <hr role="presentation" />
 
-      <label for="field-last-name">Last Name</label>
+      <label for="field-last-name"
+        >Last Name
+        <Tooltip
+          buttonText="Open last name info"
+          alternateButtonText="Close last name info"
+          >This is your last name. For Staff members, data is initially imported
+          from Workday. Changes will not be reflected back into Workday though.
+          Pro tip: If first & last names don’t work for you we got you covered.
+          Please use Alternative name instead.</Tooltip
+        ></label
+      >
       <input type="text" id="field-last-name" v-model="lastName.value" />
       <PrivacySetting
         label="Last name privacy levels"
@@ -90,7 +112,13 @@
       <hr role="presentation" />
 
       <label for="field-pronouns" class="edit-personal-info__label"
-        >Pronouns</label
+        >Pronouns
+        <Tooltip
+          buttonText="Open pronouns info"
+          alternateButtonText="Close pronouns info"
+          >We prepared some pronouns for you to select from. If the list does
+          not match your needs, you can always enter your own pronoun.</Tooltip
+        ></label
       >
       <Combobox
         id="field-pronouns"
@@ -108,7 +136,13 @@
 
       <hr role="presentation" />
 
-      <label for="field-alt-name">Alternative Name</label>
+      <label for="field-alt-name"
+        >Alternative Name&nbsp;<Tooltip
+          buttonText="Open alternative name info"
+          alternateButtonText="Close alternative info"
+          >This field allows you to enter an alternative name.</Tooltip
+        ></label
+      >
       <input type="text" id="field-alt-name" v-model="alternativeName.value" />
       <PrivacySetting
         label="Alternative name privacy levels"
@@ -119,7 +153,18 @@
 
       <hr role="presentation" />
 
-      <label for="field-official-job-title">Official Job Title</label>
+      <label for="field-official-job-title"
+        >Official Job Title
+        <Tooltip
+          buttonText="Open official job title info"
+          alternateButtonText="Close official job title info"
+          >This is your job title as provided by our HR Team (Workday). Staff
+          information is not editable and shared with Staff and NDA’d
+          Mozillians. Please contact
+          <a href="mailto:HROPS@mozilla.com">HROPS@mozilla.com</a> to change
+          your information.</Tooltip
+        ></label
+      >
       <input
         type="text"
         id="field-official-job-title"
