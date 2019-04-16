@@ -13,7 +13,7 @@
 export default {
   name: 'Popover',
   methods: {
-    reposition() {
+    setPosition() {
       const { button } = this.$parent.$refs;
       const { left: spaceOnLeft, right } = button.getBoundingClientRect();
       const spaceOnRight =
@@ -39,7 +39,7 @@ export default {
     };
   },
   mounted() {
-    this.reposition();
+    this.setPosition();
   },
 };
 </script>
@@ -53,9 +53,10 @@ export default {
   z-index: var(--layerThree);
   position: absolute;
   top: calc(100% + 0.5em);
-  left: 0;
+  left: 50%;
   width: min-content;
   margin: 0 -2.25em;
+  transform: translateX(calc(-50% + 2.25em));
   color: var(--gray-60);
   border-radius: var(--imageRadius);
   border: 2px solid var(--gray-30);
@@ -90,7 +91,7 @@ export default {
   left: 0;
 }
 .popover--left {
-  transform: translateX(calc(-100% + 4em));
+  transform: translateX(calc(-100% + 5.25em));
 }
 .popover--left::before {
   left: auto;
