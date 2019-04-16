@@ -22,6 +22,7 @@
       type="button"
       :aria-expanded="isExpanded ? 'true' : 'false'"
       v-on:click="toggleOverflow"
+      ref="button"
     >
       <template v-if="isExpanded">
         <slot name="icon-expanded"></slot>

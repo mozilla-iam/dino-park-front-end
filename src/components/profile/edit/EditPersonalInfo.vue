@@ -48,7 +48,14 @@
         />
       </div>
 
-      <label for="field-username">Username</label>
+      <label for="field-username"
+        >Username
+        <Tooltip
+          buttonText="Open username more info"
+          alternateButtonText="Close username more info"
+          >Username is always public.</Tooltip
+        ></label
+      >
       <input type="text" id="field-username" v-model="primaryUsername.value" />
       <PrivacySetting
         label="Username privacy levels"
@@ -279,6 +286,7 @@ import Meta from '@/components/ui/Meta.vue';
 import MetaList from '@/components/ui/MetaList.vue';
 import PrivacySetting from '@/components/profile/PrivacySetting.vue';
 import Select from '@/components/ui/Select.vue';
+import Tooltip from '@/components/ui/Tooltip.vue';
 import UserPicture from '@/components/ui/UserPicture.vue';
 import { DISPLAY_LEVELS } from '@/assets/js/display-levels';
 import EditPictureModal from './EditPictureModal.vue';
@@ -298,6 +306,7 @@ export default {
     MetaList,
     PrivacySetting,
     Select,
+    Tooltip,
     UserPicture,
   },
   computed: {
