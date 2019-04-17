@@ -28,7 +28,7 @@
         :picture="picture.value"
         :username="primaryUsername.value"
         :size="100"
-        :isStaff="staffInformation.staff"
+        :isStaff="staffInformation.staff.value"
       />
     </div>
     <ProfileName
