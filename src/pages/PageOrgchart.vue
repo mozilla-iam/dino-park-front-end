@@ -8,14 +8,15 @@
       :choices="expandOptions"
     >
     </Scope>
+    <button type="button" @click="expanded = ''">Reset</button>
     <div class="org-chart">
       <div class="org-chart__chart">
         <OrgRoot
           v-if="tree && !loading"
           :roots="tree"
           :trace="trace || ''"
-          :expandAllChildren="expanded === 'expand-all'"
-          :collapseAllChildren="expanded === 'collapse-all'"
+          :expandAllChildren="expandAllChildren"
+          :collapseAllChildren="collapseAllChildren"
         ></OrgRoot>
         <OrgRoot
           v-if="loose && loose.length > 0 && !loading"
@@ -136,6 +137,12 @@ export default {
     },
     openedFromOrgNode() {
       return this.$route.params.openedFromOrgNode;
+    },
+    expandAllChildren() {
+      return this.expanded === 'expand-all';
+    },
+    collapseAllChildren() {
+      return this.expanded === 'collapse-all';
     },
   },
   watch: {

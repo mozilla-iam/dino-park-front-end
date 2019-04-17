@@ -7,6 +7,8 @@
         :data="root.data"
         :prefix="`${index}`"
         :trace="trace"
+        :expandAllChildren="expandAllChildren"
+        :collapseAllChildren="collapseAllChildren"
       ></OrgNode>
     </ul>
   </div>
@@ -25,6 +27,8 @@ export default {
     trace: String,
     heading: String,
     modifier: String,
+    expandAllChildren: Boolean,
+    collapseAllChildren: Boolean,
   },
 };
 </script>

@@ -34,7 +34,7 @@
       :transition="false"
       :moveFocus="false"
       :overflowBefore="false"
-      :expanded="expandAllChildren || orgNodeExpanded"
+      :expanded="orgNodeExpanded"
       @expand-all="handleExpandAll"
     >
       <template slot="overflow">
@@ -124,6 +124,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    collapseAllChildren: {
+      type: Boolean,
+      default: false,
+    },
   },
   components: {
     ShowMore,
@@ -161,13 +165,24 @@ export default {
       this.orgNodeExpanded = true;
     }
   },
-  data() {
-    const state = this.trace && this.trace.startsWith(`${this.prefix}-`);
+  computed: {
+    shouldExpandAllChildren() {
+      return this.expandAllChildren || false;
+    },
+    orgNodeExpanded() {
+      const state = this.trace && this.trace.startsWith(`${this.prefix}-`);
+      let expandedValue;
 
-    return {
-      orgNodeExpanded: state || (this.prefix && !this.prefix.includes('-')),
-      shouldExpandAllChildren: this.expandAllChildren || false,
-    };
+      if (this.expandAllChildren) {
+        expandedValue = true;
+      } else if (this.collapseAllChildren) {
+        expandedValue = false;
+      } else {
+        expandedValue = state || (this.prefix && !this.prefix.includes('-'));
+      }
+
+      return expandedValue;
+    },
   },
 };
 </script>
