@@ -1,3 +1,7 @@
+import Fetcher from '@/assets/js/api';
+
+const fetcher = new Fetcher({ failoverOn: [302] });
+
 class Related {
   constructor() {
     this.manager = null;
@@ -7,7 +11,7 @@ class Related {
 
   async update(username) {
     try {
-      const res = await fetch(
+      const res = await fetcher.fetch(
         `/api/v4/orgchart/related/${encodeURIComponent(username)}`,
       );
       const { manager, directs } = await res.json();
