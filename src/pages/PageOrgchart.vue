@@ -1,46 +1,58 @@
 <template>
-  <main class="container org-chart">
-    <div class="org-chart__chart">
-      <OrgRoot
-        v-if="tree && !loading"
-        :roots="tree"
-        :trace="trace || ''"
-      ></OrgRoot>
-      <OrgRoot
-        v-if="loose && !loading"
-        :roots="loose"
-        :trace="looseTrace || ''"
-        heading="People who need their manager set"
-        modifier="org-root--loose"
-      ></OrgRoot>
-      <LoadingSpinner v-else></LoadingSpinner>
-    </div>
-    <ApolloQuery
-      v-if="username && (desktopView || openedFromOrgNode)"
-      :query="previewProfileQuery"
-      :variables="{ username }"
-      :tag="null"
+  <main class="container">
+    <Scope
+      id="set-org-chart-expanding"
+      label="Org chart expansion"
+      name="expanded"
+      v-model="expanded"
+      :choices="expandOptions"
     >
-      <template slot-scope="{ result: { loading, data, error } }">
-        <div class="org-chart__preview">
-          <template v-if="data">
-            <ProfilePreview
-              v-if="desktopView"
-              v-bind="data.profile"
-            ></ProfilePreview>
-            <Modal
-              v-else
-              :initiallyOpen="true"
-              :closeButton="false"
-              ref="modalEl"
-            >
-              <ProfilePreview v-bind="data.profile"></ProfilePreview>
-            </Modal>
-          </template>
-          <LoadingSpinner v-else></LoadingSpinner>
-        </div>
-      </template>
-    </ApolloQuery>
+    </Scope>
+    <div class="org-chart">
+      <div class="org-chart__chart">
+        <OrgRoot
+          v-if="tree && !loading"
+          :roots="tree"
+          :trace="trace || ''"
+          :expandAllChildren="expanded === 'expand-all'"
+          :collapseAllChildren="expanded === 'collapse-all'"
+        ></OrgRoot>
+        <OrgRoot
+          v-if="loose && loose.length > 0 && !loading"
+          :roots="loose"
+          :trace="looseTrace || ''"
+          heading="People who need their manager set"
+          modifier="org-root--loose"
+        ></OrgRoot>
+        <LoadingSpinner v-else></LoadingSpinner>
+      </div>
+      <ApolloQuery
+        v-if="username && (desktopView || openedFromOrgNode)"
+        :query="previewProfileQuery"
+        :variables="{ username }"
+        :tag="null"
+      >
+        <template slot-scope="{ result: { loading, data, error } }">
+          <div class="org-chart__preview">
+            <template v-if="data">
+              <ProfilePreview
+                v-if="desktopView"
+                v-bind="data.profile"
+              ></ProfilePreview>
+              <Modal
+                v-else
+                :initiallyOpen="true"
+                :closeButton="false"
+                ref="modalEl"
+              >
+                <ProfilePreview v-bind="data.profile"></ProfilePreview>
+              </Modal>
+            </template>
+            <LoadingSpinner v-else></LoadingSpinner>
+          </div>
+        </template>
+      </ApolloQuery>
+    </div>
   </main>
 </template>
 
@@ -49,6 +61,7 @@ import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 import OrgRoot from '@/components/org-chart/OrgRoot.vue';
 import Modal from '@/components/_functional/Modal.vue';
 import ProfilePreview from '@/components/profile/ProfilePreview.vue';
+import Scope from '@/components/ui/Scope.vue';
 import { PREVIEW_PROFILE } from '@/queries/profile';
 
 export default {
@@ -58,6 +71,7 @@ export default {
     Modal,
     OrgRoot,
     ProfilePreview,
+    Scope,
   },
   data() {
     return {
@@ -70,6 +84,19 @@ export default {
       looseTrace: '',
       previewProfileQuery: PREVIEW_PROFILE,
       desktopView: false,
+      expanded: '',
+      expandOptions: [
+        {
+          id: 'expand-all',
+          label: 'Expand all',
+          value: 'expand-all',
+        },
+        {
+          id: 'search-who-staff',
+          label: 'Collapse all',
+          value: 'collapse-all',
+        },
+      ],
     };
   },
   created() {
