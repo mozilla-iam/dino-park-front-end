@@ -64,6 +64,10 @@ export default {
           msg =
             'Username must contain between 2 and 64 symbols. Please choose another one.';
           break;
+        case 'GraphQL error: username_invalid_chars':
+          msg =
+            'Username must only contain letters from a-z, digits from 0-9, underscores or hyphens.';
+          break;
         default:
           msg = 'A problem occurred, please try again later.';
       }
