@@ -62,16 +62,27 @@ const router = new Router({
   ],
 });
 
+function usernamePrefix(username) {
+  if (username && !username.startsWith('r--')) {
+    return `${username} - `;
+  }
+  return '';
+}
+
 router.beforeEach((to, from, next) => {
   switch (to.name) {
     case 'OrgchartHighlight':
-      document.title = `${to.params.username} - Org chart - Mozilla People Directory`;
+      document.title = `${usernamePrefix(
+        to.params.username,
+      )}Org chart - Mozilla People Directory`;
       break;
     case 'Orgchart':
       document.title = 'Org chart - Mozilla People Directory';
       break;
     case 'Profile':
-      document.title = `${to.params.username} - Profile - Mozilla People Directory`;
+      document.title = `${usernamePrefix(
+        to.params.username,
+      )}Profile - Mozilla People Directory`;
       break;
     case 'Edit Profile':
       document.title = `Edit - Profile - Mozilla People Directory`;
