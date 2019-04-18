@@ -50,6 +50,9 @@ import OrgRoot from '@/components/org-chart/OrgRoot.vue';
 import Modal from '@/components/_functional/Modal.vue';
 import ProfilePreview from '@/components/profile/ProfilePreview.vue';
 import { PREVIEW_PROFILE } from '@/queries/profile';
+import Fetcher from '@/assets/js/fetcher';
+
+const fetcher = new Fetcher({ failoverOn: [302] });
 
 export default {
   name: 'PageOrgchart',
@@ -81,7 +84,7 @@ export default {
     const { username } = this.$route.params;
     if (username && this.$route.name === 'OrgchartHighlight') {
       try {
-        const data = await fetch(
+        const data = await fetcher.fetch(
           `/api/v4/orgchart/trace/${encodeURIComponent(username)}`,
         );
         const { trace } = await data.json();
@@ -124,7 +127,7 @@ export default {
       this.post = null;
       this.loading = true;
       try {
-        const data = await fetch('/api/v4/orgchart');
+        const data = await fetcher.fetch('/api/v4/orgchart');
         const orgchart = await data.json();
         this.tree = orgchart.forrest;
         this.loose = orgchart.loose;

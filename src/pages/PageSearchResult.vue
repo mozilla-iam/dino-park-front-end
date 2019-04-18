@@ -26,7 +26,8 @@
         <p>An error occured while trying to load the search results</p>
         <p>
           <small
-            >Please submit all bugs or issues to the project's GitHub issue repository (link in footer).</small
+            >Please submit all bugs or issues to the project's GitHub issue
+            repository (link in footer).</small
           >
         </p>
       </template>
@@ -73,6 +74,9 @@ import Error from '@/components/ui/Error.vue';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 import SearchResultList from '@/components/search/SearchResultList.vue';
 import SearchScope from '@/components/search/SearchScope.vue';
+import Fetcher from '@/assets/js/fetcher';
+
+const fetcher = new Fetcher({ failoverOn: [302] });
 
 export default {
   name: 'PageSearchResult',
@@ -105,7 +109,9 @@ export default {
           ['q', this.$route.query.query],
           ['w', this.$route.query.who],
         ]);
-        const data = await fetch(`/api/v4/search/simple/?${params.toString()}`);
+        const data = await fetcher.fetch(
+          `/api/v4/search/simple/?${params.toString()}`,
+        );
         const results = await data.json();
         this.results = results;
       } catch (e) {
