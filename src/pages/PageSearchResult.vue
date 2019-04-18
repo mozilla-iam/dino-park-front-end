@@ -74,7 +74,7 @@ import Error from '@/components/ui/Error.vue';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 import SearchResultList from '@/components/search/SearchResultList.vue';
 import SearchScope from '@/components/search/SearchScope.vue';
-import Fetcher from '@/assets/js/api';
+import Fetcher from '@/assets/js/fetcher';
 
 const fetcher = new Fetcher({ failoverOn: [302] });
 

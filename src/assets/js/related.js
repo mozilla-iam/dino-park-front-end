@@ -1,4 +1,4 @@
-import Fetcher from '@/assets/js/api';
+import Fetcher from '@/assets/js/fetcher';
 
 const fetcher = new Fetcher({ failoverOn: [302] });
 

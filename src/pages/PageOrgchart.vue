@@ -50,7 +50,7 @@ import OrgRoot from '@/components/org-chart/OrgRoot.vue';
 import Modal from '@/components/_functional/Modal.vue';
 import ProfilePreview from '@/components/profile/ProfilePreview.vue';
 import { PREVIEW_PROFILE } from '@/queries/profile';
-import Fetcher from '@/assets/js/api';
+import Fetcher from '@/assets/js/fetcher';
 
 const fetcher = new Fetcher({ failoverOn: [302] });
 
