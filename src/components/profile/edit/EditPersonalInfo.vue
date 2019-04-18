@@ -282,6 +282,9 @@ import Select from '@/components/ui/Select.vue';
 import UserPicture from '@/components/ui/UserPicture.vue';
 import { DISPLAY_LEVELS } from '@/assets/js/display-levels';
 import EditPictureModal from './EditPictureModal.vue';
+import Fetcher from '@/assets/js/fetcher';
+
+const fetcher = new Fetcher({ failoverOn: [302] });
 
 export default {
   name: 'EditPersonalInfo',
@@ -307,7 +310,8 @@ export default {
   },
   mounted() {
     this.$refs.header.focus();
-    fetch('/api/v4/timezone/list/')
+    fetcher
+      .fetch('/api/v4/timezone/list/')
       .then((res) => res.json())
       .then((timezones) => {
         this.timezones = timezones;
