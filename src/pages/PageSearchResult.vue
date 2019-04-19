@@ -26,7 +26,8 @@
         <p>An error occured while trying to load the search results</p>
         <p>
           <small
-            >Please submit all bugs or issues to the project's GitHub issue repository (link in footer).</small
+            >Please submit all bugs or issues to the project's GitHub issue
+            repository (link in footer).</small
           >
         </p>
       </template>
@@ -72,7 +73,7 @@
 import Error from '@/components/ui/Error.vue';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 import SearchResultList from '@/components/search/SearchResultList.vue';
-import SearchScope from '@/components/search/SearchScope.vue';
+import SearchToggle from '@/components/search/SearchToggle.vue';
 
 export default {
   name: 'PageSearchResult',
@@ -80,7 +81,7 @@ export default {
     Error,
     LoadingSpinner,
     SearchResultList,
-    SearchScope,
+    SearchToggle,
   },
   data() {
     return {

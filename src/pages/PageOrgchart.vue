@@ -1,14 +1,14 @@
 <template>
   <main class="container">
     <div class="org-chart-buttons">
-      <Scope
+      <Toggle
         id="set-org-chart-expanding"
         label="Org chart expansion"
         name="expanded"
         v-model="expanded"
         :choices="expandOptions"
       >
-      </Scope>
+      </Toggle>
       <button
         type="button"
         @click="expanded = ''"
@@ -73,7 +73,7 @@ import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 import OrgRoot from '@/components/org-chart/OrgRoot.vue';
 import Modal from '@/components/_functional/Modal.vue';
 import ProfilePreview from '@/components/profile/ProfilePreview.vue';
-import Scope from '@/components/ui/Scope.vue';
+import Toggle from '@/components/ui/Toggle.vue';
 import { PREVIEW_PROFILE } from '@/queries/profile';
 
 export default {
@@ -84,7 +84,7 @@ export default {
     Modal,
     OrgRoot,
     ProfilePreview,
-    Scope,
+    Toggle,
   },
   data() {
     return {

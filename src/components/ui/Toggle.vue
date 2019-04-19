@@ -1,11 +1,11 @@
 <template>
-  <form :id="id" class="scope" method="GET" :action="action">
+  <form :id="id" class="toggle" method="GET" :action="action">
     <fieldset>
       <legend class="visually-hidden">{{ label }}</legend>
       <slot></slot>
-      <div class="scope__choices">
+      <div class="toggle__choices">
         <div
-          class="scope__choice"
+          class="toggle__choice"
           v-for="(choice, index) in choices"
           :key="`choice-${index}`"
         >
@@ -38,7 +38,7 @@
 import Icon from '@/components/ui/Icon.vue';
 
 export default {
-  name: 'Scope',
+  name: 'Toggle',
   props: {
     id: String,
     label: String,
@@ -59,26 +59,26 @@ export default {
 </script>
 
 <style>
-.scope fieldset {
+.toggle fieldset {
   border: 0;
   display: block;
   text-align: center;
   padding: 0;
   margin: 0;
 }
-.scope__choices {
+.toggle__choices {
   display: inline-flex;
   justify-content: center;
   margin-right: -1px; /* to mitigate hack to not have double borders */
 }
-.scope__choices:focus-within {
+.toggle__choices:focus-within {
   outline: 1px solid var(--black);
 }
-.scope__choices input {
+.toggle__choices input {
   position: absolute;
   opacity: 0;
 }
-.scope__choices label {
+.toggle__choices label {
   background-color: var(--white);
   padding: 0.5em;
   color: var(--gray-60);
@@ -87,22 +87,22 @@ export default {
   margin-right: -1px;
   transition: background-color 0.1s ease-in-out;
 }
-.scope__choices input:checked + label,
-.scope__choices input:not(:checked) + label:hover {
+.toggle__choices input:checked + label,
+.toggle__choices input:not(:checked) + label:hover {
   background-color: var(--blue-60);
   color: var(--white);
 }
-.scope__choice:first-of-type label {
+.toggle__choice:first-of-type label {
   border-radius: var(--imageRadius) 0 0 var(--imageRadius);
 }
-.scope__choice:last-of-type label {
+.toggle__choice:last-of-type label {
   border-radius: 0 var(--imageRadius) var(--imageRadius) 0;
 }
-.scope__choice span {
+.toggle__choice span {
   padding-left: 1em;
   padding-right: 1em;
 }
-.scope + p {
+.toggle + p {
   text-align: center;
 }
 </style>

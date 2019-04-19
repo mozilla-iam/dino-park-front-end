@@ -1,5 +1,5 @@
 <template>
-  <Scope
+  <Toggle
     id="search-who-form"
     label="Set who to search for"
     :action="
@@ -16,16 +16,16 @@
     v-model="who"
   >
     <input type="hidden" name="query" :value="currentQuery" />
-  </Scope>
+  </Toggle>
 </template>
 
 <script>
-import Scope from '@/components/ui/Scope.vue';
+import Toggle from '@/components/ui/Toggle.vue';
 
 export default {
-  name: 'SearchScope',
+  name: 'SearchToggle',
   components: {
-    Scope,
+    Toggle,
   },
   computed: {
     currentQuery() {
