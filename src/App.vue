@@ -86,10 +86,12 @@ export default {
   --layerOne: 1;
   --layerTwo: 2;
   --layerThree: 3;
-  --layerTopBar: 4;
-  --layerAboveNav: 5;
-  --layerUserMenu: 6;
-  --layerModal: 7;
+  --layerTopBar: 5;
+  --layerProfileNav: 5;
+  --layerContactMe: 6;
+  --layerAboveNav: 6;
+  --layerUserMenu: 7;
+  --layerModal: 8;
 
   --shadowCard: 0 0.25em 0.25em 0 rgba(210, 210, 210, 0.5);
 

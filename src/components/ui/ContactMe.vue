@@ -10,7 +10,7 @@
     :overflowBefore="false"
   >
     <template slot="overflow">
-      <Popover class="contact-me">
+      <Popover class="contact-me" layer="var(--layerContactMe)">
         <div class="contact-me__item">
           <a :href="`mailto:${primaryEmail}`" class="contact-me__pair">
             <Icon id="at-sign" :width="24" :height="24" />
