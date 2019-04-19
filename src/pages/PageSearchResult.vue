@@ -5,7 +5,7 @@
     tabindex="-1"
   >
     <h1 class="visually-hidden">Search results</h1>
-    <SearchScope />
+    <SearchToggle />
     <template v-if="!this.$route.query.query">
       <p>You have not searched.</p>
     </template>
