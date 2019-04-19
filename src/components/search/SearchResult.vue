@@ -3,7 +3,7 @@
     <UserPicture
       :picture="picture"
       :username="username"
-      cls="search-result__image"
+      class="search-result__image"
       :size="40"
       :isStaff="isStaff"
     ></UserPicture>
