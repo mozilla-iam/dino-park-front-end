@@ -17,7 +17,16 @@
             v-model="value"
             @input="$emit('input', $event.target.value)"
           />
-          <label :for="choice.id">{{ choice.label }}</label>
+          <label :for="choice.id">
+            <Icon
+              v-if="choice.icon"
+              :id="choice.icon"
+              :width="16"
+              :height="17"
+            ></Icon>
+            <span v-if="!choice.iconOnly">{{ choice.label }}</span>
+            <span v-else class="visually-hidden">{{ choice.label }}</span>
+          </label>
         </div>
       </div>
     </fieldset>
@@ -26,6 +35,8 @@
 </template>
 
 <script>
+import Icon from '@/components/ui/Icon.vue';
+
 export default {
   name: 'Scope',
   props: {
@@ -35,6 +46,14 @@ export default {
     choices: Array,
     value: String,
     name: String,
+    icon: String,
+    iconOnly: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  components: {
+    Icon,
   },
 };
 </script>
@@ -44,6 +63,8 @@ export default {
   border: 0;
   display: block;
   text-align: center;
+  padding: 0;
+  margin: 0;
 }
 .scope__choices {
   display: inline-flex;
@@ -59,24 +80,27 @@ export default {
 }
 .scope__choices label {
   background-color: var(--white);
-  padding: 0.75em 1em;
+  padding: 0.5em;
   color: var(--gray-60);
-  border: 1px solid var(--gray-40);
+  border: 2px solid var(--gray-30);
   margin-left: -1px; /* hack to not have double borders */
   margin-right: -1px;
+  transition: background-color 0.1s ease-in-out;
 }
-.scope__choices input:checked + label {
+.scope__choices input:checked + label,
+.scope__choices input:not(:checked) + label:hover {
   background-color: var(--blue-60);
   color: var(--white);
-  border-color: var(--blue-60);
 }
 .scope__choice:first-of-type label {
-  border-radius: 2em 0em 0 2em;
-  padding-left: 1.5em;
+  border-radius: var(--imageRadius) 0 0 var(--imageRadius);
 }
 .scope__choice:last-of-type label {
-  border-radius: 0 2em 2em 0;
-  padding-right: 1.5em;
+  border-radius: 0 var(--imageRadius) var(--imageRadius) 0;
+}
+.scope__choice span {
+  padding-left: 1em;
+  padding-right: 1em;
 }
 .scope + p {
   text-align: center;

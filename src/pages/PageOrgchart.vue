@@ -1,14 +1,24 @@
 <template>
   <main class="container">
-    <Scope
-      id="set-org-chart-expanding"
-      label="Org chart expansion"
-      name="expanded"
-      v-model="expanded"
-      :choices="expandOptions"
-    >
-    </Scope>
-    <button type="button" @click="expanded = ''">Reset</button>
+    <div class="org-chart-buttons">
+      <Scope
+        id="set-org-chart-expanding"
+        label="Org chart expansion"
+        name="expanded"
+        v-model="expanded"
+        :choices="expandOptions"
+      >
+      </Scope>
+      <button
+        type="button"
+        @click="expanded = ''"
+        class="button org-chart-buttons__reset button--icon-only"
+        title="Reset to default view"
+      >
+        <Icon id="rotate" :width="18" :height="18" />
+        <span class="visually-hidden">Reset to default view</span>
+      </button>
+    </div>
     <div class="org-chart">
       <div class="org-chart__chart">
         <OrgRoot
@@ -58,6 +68,7 @@
 </template>
 
 <script>
+import Icon from '@/components/ui/Icon.vue';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 import OrgRoot from '@/components/org-chart/OrgRoot.vue';
 import Modal from '@/components/_functional/Modal.vue';
@@ -68,6 +79,7 @@ import { PREVIEW_PROFILE } from '@/queries/profile';
 export default {
   name: 'PageOrgchart',
   components: {
+    Icon,
     LoadingSpinner,
     Modal,
     OrgRoot,
@@ -91,11 +103,15 @@ export default {
           id: 'expand-all',
           label: 'Expand all',
           value: 'expand-all',
+          icon: 'chevron-down',
+          iconOnly: true,
         },
         {
-          id: 'search-who-staff',
+          id: 'collapse-all',
           label: 'Collapse all',
           value: 'collapse-all',
+          icon: 'chevron-up',
+          iconOnly: true,
         },
       ],
     };
@@ -188,6 +204,23 @@ export default {
 </script>
 
 <style>
+.org-chart-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 2em;
+}
+.org-chart-buttons__reset {
+  background-color: var(--white);
+  color: var(--black);
+  padding: 0.5em;
+  margin-left: 2em;
+  border: 2px solid var(--gray-30);
+}
+.org-chart-buttons__reset:hover {
+  background-color: var(--blue-60);
+  border: 2px solid var(--gray-30);
+  color: var(--white);
+}
 .org-chart {
   padding: 0;
   width: 100%;
