@@ -1,7 +1,7 @@
 <template>
   <div
     :class="'popover' + (position && ` popover--${position}`)"
-    :style="`max-width: ${maxWidth}`"
+    :style="`max-width: ${maxWidth}px`"
   >
     <div class="popover__content" ref="content">
       <slot></slot>
@@ -54,7 +54,7 @@ export default {
   position: absolute;
   top: calc(100% + 0.5em);
   left: 50%;
-  width: min-content;
+  width: 90vw;
   margin: 0 -2.25em;
   transform: translateX(calc(-50% + 2.25em));
   color: var(--gray-60);
@@ -106,8 +106,6 @@ export default {
 }
 .popover--right {
   transform: translateX(0);
-  left: auto;
-  right: 50%;
 }
 .popover--right::before {
   left: 2em;
