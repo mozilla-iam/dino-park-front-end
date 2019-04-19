@@ -207,7 +207,12 @@ export default {
 .org-chart-buttons {
   display: flex;
   justify-content: center;
-  margin-top: 2em;
+  margin: 2em 0;
+}
+@media (min-width: 57.5em) {
+  .org-chart-buttons {
+    margin-bottom: 0;
+  }
 }
 .org-chart-buttons__reset {
   background-color: var(--white);

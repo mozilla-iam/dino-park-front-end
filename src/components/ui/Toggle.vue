@@ -86,6 +86,9 @@ export default {
   margin-left: -1px; /* hack to not have double borders */
   margin-right: -1px;
   transition: background-color 0.1s ease-in-out;
+  display: flex;
+  height: 100%;
+  align-items: center;
 }
 .toggle__choices input:checked + label,
 .toggle__choices input:not(:checked) + label:hover {
@@ -101,6 +104,9 @@ export default {
 .toggle__choice span {
   padding-left: 1em;
   padding-right: 1em;
+}
+.toggle__choice svg + span {
+  padding-left: 0.5em;
 }
 .toggle + p {
   text-align: center;
