@@ -1,6 +1,6 @@
 <template>
   <main class="container">
-    <div class="org-chart-buttons">
+    <div class="org-chart-buttons" v-if="!loading">
       <Toggle
         id="set-org-chart-expanding"
         label="Org chart expansion"
