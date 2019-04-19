@@ -1,8 +1,5 @@
 <template>
-  <div
-    :class="'popover' + (position && ` popover--${position}`)"
-    :style="`max-width: ${maxWidth}px`"
-  >
+  <div :class="'popover' + (position && ` popover--${position}`)" ref="popover">
     <div class="popover__content" ref="content">
       <slot></slot>
     </div>
@@ -12,6 +9,9 @@
 <script>
 export default {
   name: 'Popover',
+  props: {
+    layer: String,
+  },
   methods: {
     setPosition() {
       const { button } = this.$parent.$refs;
@@ -35,10 +35,14 @@ export default {
   data() {
     return {
       position: '',
-      maxWidth: 300,
+      maxWidth: 350,
     };
   },
   mounted() {
+    this.$refs.popover.style.maxWidth = `${this.maxWidth}px`;
+    if (this.layer) {
+      this.$refs.popover.style.zIndex = this.layer;
+    }
     this.setPosition();
   },
 };
