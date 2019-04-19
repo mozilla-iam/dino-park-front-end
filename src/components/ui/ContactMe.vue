@@ -136,6 +136,7 @@ export default {
   padding-left: 0;
   background-color: var(--white);
   position: relative;
+  overflow: hidden;
 }
 .contact-me__item:nth-child(even) {
   background-color: var(--gray-10);
@@ -166,6 +167,7 @@ export default {
   flex: 1;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 a > .contact-me__value {
   color: var(--blue-60);
