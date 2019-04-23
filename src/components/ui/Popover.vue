@@ -13,11 +13,12 @@ export default {
     layer: String,
   },
   methods: {
-    setPosition() {
+    positionAndSize() {
       const { button } = this.$parent.$refs;
       const { left: spaceOnLeft, right } = button.getBoundingClientRect();
-      const spaceOnRight =
-        document.scrollingElement.getBoundingClientRect().width - right;
+      const viewportWidth = document.scrollingElement.getBoundingClientRect()
+        .width;
+      const spaceOnRight = viewportWidth - right;
 
       if (
         spaceOnLeft > 0.5 * this.maxWidth &&
@@ -30,6 +31,19 @@ export default {
       } else if (spaceOnLeft > spaceOnRight) {
         this.position = 'left';
       }
+
+      if (
+        this.position === 'right' &&
+        spaceOnLeft + this.maxWidth > viewportWidth
+      ) {
+        this.maxWidth = viewportWidth - spaceOnLeft;
+      }
+      if (
+        this.position === 'left' &&
+        spaceOnRight + this.maxWidth > viewportWidth
+      ) {
+        this.maxWidth = viewportWidth - spaceOnRight;
+      }
     },
   },
   data() {
@@ -39,11 +53,11 @@ export default {
     };
   },
   mounted() {
+    this.positionAndSize();
     this.$refs.popover.style.maxWidth = `${this.maxWidth}px`;
     if (this.layer) {
       this.$refs.popover.style.zIndex = this.layer;
     }
-    this.setPosition();
   },
 };
 </script>
