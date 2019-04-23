@@ -46,7 +46,9 @@ export default {
   color: var(--gray-50);
 }
 .profile__user-name + .profile__pronoun {
-  margin-left: 0.5em;
+  margin-left: 1em;
+  padding-left: 1em;
+  border-left: 1px solid var(--gray-30);
 }
 .profile__user-name,
 .profile__pronoun {
@@ -68,7 +70,8 @@ export default {
     margin-bottom: 0;
   }
   .profile__user-name + .profile__pronoun {
-    margin-left: 1em;
+    margin-left: 1.5em;
+    padding-left: 1.5em;
   }
   .profile__user-name,
   .profile__pronoun {
