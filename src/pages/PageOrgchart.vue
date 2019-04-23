@@ -217,9 +217,12 @@ export default {
 .org-chart-buttons__reset {
   background-color: var(--white);
   color: var(--black);
-  padding: 0.5em;
+  padding: 0.25em 0.4em;
   margin-left: 2em;
+  border-radius: var(--imageRadius);
   border: 2px solid var(--gray-30);
+  font-size: inherit;
+  line-height: 1;
 }
 .org-chart-buttons__reset:hover {
   background-color: var(--blue-60);
