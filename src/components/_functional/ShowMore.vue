@@ -26,28 +26,25 @@
     >
       <template v-if="isExpanded">
         <slot name="icon-expanded"></slot>
-        <span
-          :class="
-            'show-more__button-text' +
-              (buttonTextVisuallyHidden && ` visually-hidden`)
-          "
-          >{{ alternateButtonText || buttonText }}</span
-        >
+        <span :class="`show-more__button-text${buttonTextClass}`">{{
+          alternateButtonText || buttonText
+        }}</span>
       </template>
       <template v-else>
         <slot name="icon-collapsed"></slot>
-        <span
-          :class="
-            'show-more__button-text' +
-              (buttonTextVisuallyHidden && ` visually-hidden`)
-          "
-          >{{ buttonText }}</span
-        >
+        <span :class="`show-more__button-text${buttonTextClass}`">{{
+          buttonText
+        }}</span>
       </template>
       <slot name="button-content"></slot>
     </button>
     <transition v-if="overflowBefore === false" name="show-more__overflow-">
-      <div class="show-more__overflow" v-if="isExpanded" tabindex="-1">
+      <div
+        class="show-more__overflow"
+        v-if="isExpanded"
+        tabindex="-1"
+        ref="overflowContentElement"
+      >
         <slot name="overflow"> </slot>
       </div>
     </transition>
@@ -113,16 +110,27 @@ export default {
       this.isExpanded = this.expanded;
     },
   },
+  computed: {
+    buttonTextClass() {
+      let buttonClass = '';
+
+      if (this.buttonTextVisuallyHidden) {
+        buttonClass = ' visually-hidden';
+      }
+
+      return buttonClass;
+    },
+  },
   updated() {
     const overflowContent = this.$refs.overflowContentElement;
 
     if (this.isExpanded && this.moveFocus) {
       overflowContent.focus();
+    }
 
-      if (this.closeWhenClickedOutside) {
-        document.addEventListener('click', this.handleDocumentClick);
-        document.addEventListener('touchstart', this.handleDocumentClick);
-      }
+    if (this.isExpanded && this.closeWhenClickedOutside) {
+      document.addEventListener('click', this.handleDocumentClick);
+      document.addEventListener('touchstart', this.handleDocumentClick);
     } else if (this.closeWhenClickedOutside) {
       document.removeEventListener('click', this.handleDocumentClick);
       document.removeEventListener('touchstart', this.handleDocumentClick);
