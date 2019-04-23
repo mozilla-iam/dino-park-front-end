@@ -70,7 +70,7 @@
               :metaValue="staffInformation.wprDeskNumber.value"
             />
             <Meta
-              metaKey="Cost centre"
+              metaKey="Cost center"
               :metaValue="
                 staffInformation.costCenter.value &&
                   staffInformation.costCenter.value.replace(/\.0$/, '')
