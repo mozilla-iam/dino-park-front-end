@@ -74,6 +74,9 @@ export default {
 .card h2 + p {
   margin-top: 0;
 }
+.card p {
+  color: var(--gray-50);
+}
 .card img + h2 {
   margin-top: 1em;
 }

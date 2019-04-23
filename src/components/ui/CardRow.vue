@@ -21,6 +21,7 @@ export default {
   padding-left: 0.25em;
   margin-top: -0.25em;
   margin-left: -0.25em;
+  margin-right: -0.25em;
 }
 .card-row .card {
   display: inline-flex;
