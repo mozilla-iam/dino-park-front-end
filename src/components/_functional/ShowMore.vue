@@ -70,9 +70,12 @@ export default {
       if (event.altKey) {
         this.$emit('expand-all');
       }
-      event.stopPropagation();
     },
     handleDocumentClick(event) {
+      if (this.$refs.button.contains(event.target)) {
+        event.stopPropagation();
+        return;
+      }
       const expandedEl = this.$refs.overflowContentElement.firstElementChild;
 
       // closes overflow content if clicked anywhere, except the
