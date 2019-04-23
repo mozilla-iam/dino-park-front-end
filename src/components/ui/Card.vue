@@ -64,6 +64,7 @@ export default {
 .card__icon {
   padding: 4em;
   background-color: var(--lightBlue);
+  color: var(--blue-60);
   display: flex;
   align-content: center;
   justify-content: center;
