@@ -48,16 +48,16 @@
         />
       </div>
 
-      <label for="field-username"
-        >Username
+      <div class="edit-personal-info__label">
+        <label for="field-username">Username </label>
         <Tooltip
           buttonText="Open username info"
           alternateButtonText="Close username info"
           >Your username is part of your profile URL. It is publicly visible.
           Pro tip: Use the same username across systems for easy discovery (IRC,
           Slack, Discourse).</Tooltip
-        ></label
-      >
+        >
+      </div>
       <input type="text" id="field-username" v-model="primaryUsername.value" />
       <PrivacySetting
         label="Username privacy levels"
@@ -69,17 +69,17 @@
 
       <hr role="presentation" />
 
-      <label for="field-first-name"
-        >First Name
-        <Tooltip
+      <div class="edit-personal-info__label">
+        <label for="field-first-name">First Name </label
+        ><Tooltip
           buttonText="Open first name info"
           alternateButtonText="Close first name info"
-          >This is your first name. For Staff members, data is initially
-          imported from Workday. Changes will not be reflected back into Workday
-          though. Pro tip: If first & last names don’t work for you we got you
-          covered. Please use Alternative name instead.</Tooltip
-        ></label
-      >
+          >For Staff members, data is initially imported from Workday. Changes
+          will not be reflected back into Workday though. Pro tip: If first &
+          last names don’t work for you we got you covered. Please use
+          Alternative name instead.</Tooltip
+        >
+      </div>
       <input type="text" id="field-first-name" v-model="firstName.value" />
       <PrivacySetting
         label="First name privacy levels"
@@ -90,17 +90,17 @@
 
       <hr role="presentation" />
 
-      <label for="field-last-name"
-        >Last Name
-        <Tooltip
+      <div class="edit-personal-info__label">
+        <label for="field-last-name">Last Name </label
+        ><Tooltip
           buttonText="Open last name info"
           alternateButtonText="Close last name info"
-          >This is your last name. For Staff members, data is initially imported
-          from Workday. Changes will not be reflected back into Workday though.
-          Pro tip: If first & last names don’t work for you we got you covered.
-          Please use Alternative name instead.</Tooltip
-        ></label
-      >
+          >For Staff members, data is initially imported from Workday. Changes
+          will not be reflected back into Workday though. Pro tip: If first &
+          last names don’t work for you we got you covered. Please use
+          Alternative name instead.</Tooltip
+        >
+      </div>
       <input type="text" id="field-last-name" v-model="lastName.value" />
       <PrivacySetting
         label="Last name privacy levels"
@@ -111,15 +111,17 @@
 
       <hr role="presentation" />
 
-      <label for="field-pronouns" class="edit-personal-info__label"
-        >Pronouns
+      <div class="edit-personal-info__label">
+        <label for="field-pronouns" class="edit-personal-info__label"
+          >Pronouns
+        </label>
         <Tooltip
           buttonText="Open pronouns info"
           alternateButtonText="Close pronouns info"
           >We prepared some pronouns for you to select from. If the list does
           not match your needs, you can always enter your own pronoun.</Tooltip
-        ></label
-      >
+        >
+      </div>
       <Combobox
         id="field-pronouns"
         v-model="pronouns.value"
@@ -136,13 +138,14 @@
 
       <hr role="presentation" />
 
-      <label for="field-alt-name"
-        >Alternative Name&nbsp;<Tooltip
+      <div class="edit-personal-info__label">
+        <label for="field-alt-name">Alternative Name</label
+        ><Tooltip
           buttonText="Open alternative name info"
           alternateButtonText="Close alternative name info"
           >This field allows you to enter an alternative name.</Tooltip
-        ></label
-      >
+        >
+      </div>
       <input type="text" id="field-alt-name" v-model="alternativeName.value" />
       <PrivacySetting
         label="Alternative name privacy levels"
@@ -153,9 +156,9 @@
 
       <hr role="presentation" />
 
-      <label for="field-official-job-title"
-        >Official Job Title
-        <Tooltip
+      <div class="edit-personal-info__label">
+        <label for="field-official-job-title">Official Job Title </label
+        ><Tooltip
           buttonText="Open official job title info"
           alternateButtonText="Close official job title info"
           >This is your job title as provided by our HR Team (Workday). Staff
@@ -163,8 +166,8 @@
           Mozillians. Please contact
           <a href="mailto:HROPS@mozilla.com">HROPS@mozilla.com</a> to change
           your information.</Tooltip
-        ></label
-      >
+        >
+      </div>
       <input
         type="text"
         id="field-official-job-title"
@@ -181,7 +184,16 @@
 
       <hr role="presentation" />
 
-      <label for="field-fun-job-title">Fun Job Title</label>
+      <div class="edit-personal-info__label">
+        <label for="field-fun-job-title">Fun Job Title</label>
+        <Tooltip
+          buttonText="Open Fun Job Title info"
+          alternateButtonText="Close Fun Job Title info"
+          >This is the job title you give yourself. Pro tip: Feel free to copy
+          your Official Job Title and make it publicly visible through this
+          field.</Tooltip
+        >
+      </div>
       <input type="text" id="field-fun-job-title" v-model="funTitle.value" />
       <PrivacySetting
         label="Fun title privacy levels"
@@ -192,7 +204,15 @@
 
       <hr role="presentation" />
 
-      <label for="field-location">Location</label>
+      <div class="edit-personal-info__label">
+        <label for="field-location">Location</label>
+        <Tooltip
+          buttonText="Open Location info"
+          alternateButtonText="Close Location info"
+          >This field is still under construction. For the moment you can enter
+          any value you like.
+        </Tooltip>
+      </div>
       <input type="text" id="field-location" v-model="location.value" />
       <PrivacySetting
         label="Location privacy levels"
@@ -203,7 +223,18 @@
 
       <hr role="presentation" />
 
-      <label for="field-office-location">Office Location</label>
+      <div class="edit-personal-info__label">
+        <label for="field-office-location">Office Location</label>
+        <Tooltip
+          buttonText="Open Office Location info"
+          alternateButtonText="Close Office Location info"
+          >This is your office location as provided by our HR Team (Workday).
+          Staff information is not editable and shared with Staff and NDA’d
+          Mozillians. Please contact
+          <a href="mailto:HROPS@mozilla.com">HROPS@mozilla.com</a> to change
+          your information</Tooltip
+        >
+      </div>
       <input
         type="text"
         id="field-office-location"
@@ -220,7 +251,15 @@
 
       <hr role="presentation" />
 
-      <label for="field-timezone">Timezone</label>
+      <div class="edit-personal-info__label">
+        <label for="field-timezone">Timezone</label>
+        <Tooltip
+          buttonText="Open Timezone info"
+          alternateButtonText="Close Timezone info"
+          >This list allows you to set your timezone. If you provide this
+          information, we will display your local time on your profile.</Tooltip
+        >
+      </div>
       <Combobox
         v-if="timezones.length > 0"
         id="field-timezone"
@@ -238,7 +277,18 @@
 
       <hr role="presentation" />
 
-      <label for="field-worker-type">Worker Type</label>
+      <div class="edit-personal-info__label">
+        <label for="field-worker-type">Worker Type</label>
+        <Tooltip
+          buttonText="Open Worker Type info"
+          alternateButtonText="Close Worker Type info"
+          >This is your worker type as provided by our HR Team (Workday). This
+          particular field is classified as Staff only and can’t be shared
+          beyond this group. Please contact
+          <a href="mailto:HROPS@mozilla.com">HROPS@mozilla.com</a> to change
+          your information.</Tooltip
+        >
+      </div>
       <input
         type="text"
         id="field-worker-type"
@@ -255,7 +305,18 @@
 
       <hr role="presentation" />
 
-      <label for="field-cost-center">Cost Center</label>
+      <div class="edit-personal-info__label">
+        <label for="field-cost-center">Cost Center</label>
+        <Tooltip
+          buttonText="Open Cost Center info"
+          alternateButtonText="Close Cost Center info"
+          >This is your cost center as provided by our HR Team (Workday). This
+          particular field is classified as Staff only and can’t be shared
+          beyond this group. Please contact
+          <a href="mailto:HROPS@mozilla.com">HROPS@mozilla.com</a> to change
+          your information.</Tooltip
+        >
+      </div>
       <input
         type="text"
         id="field-cost-center"
@@ -272,7 +333,18 @@
 
       <hr role="presentation" />
 
-      <label for="field-desk-number">Desk Number</label>
+      <div class="edit-personal-info__label">
+        <label for="field-desk-number">Desk Number</label>
+        <Tooltip
+          buttonText="Open Desk Number info"
+          alternateButtonText="Close Desk Number info"
+          >This is your desk number as provided by our HR Team (Workday). Staff
+          information is not editable and shared with Staff and NDA’d
+          Mozillians. Please contact
+          <a href="mailto:HROPS@mozilla.com">HROPS@mozilla.com</a> to change
+          your information.</Tooltip
+        >
+      </div>
       <input
         type="text"
         id="field-desk-number"
@@ -289,7 +361,18 @@
 
       <hr role="presentation" />
 
-      <label for="field-team">Team</label>
+      <div class="edit-personal-info__label">
+        <label for="field-team">Team</label>
+        <Tooltip
+          buttonText="Open Team info"
+          alternateButtonText="Close Team info"
+          >This is your team name as provided by our HR Team (Workday). Staff
+          information is not editable and shared with Staff and NDA’d
+          Mozillians. Please contact
+          <a href="mailto:HROPS@mozilla.com">HROPS@mozilla.com</a> to change
+          your information.</Tooltip
+        >
+      </div>
       <input
         type="text"
         id="field-team"
@@ -306,7 +389,18 @@
 
       <hr role="presentation" />
 
-      <label for="field-bio">Bio</label>
+      <div class="edit-personal-info__label">
+        <label for="field-bio">Bio</label>
+        <Tooltip buttonText="Open Bio info" alternateButtonText="Close Bio info"
+          >Tell us more about yourself! This field supports
+          <a
+            href="https://github.github.com/gfm/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >GitHub Markdown</a
+          >.</Tooltip
+        >
+      </div>
       <textarea
         id="field-bio"
         v-model="description.value"
