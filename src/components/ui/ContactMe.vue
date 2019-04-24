@@ -10,15 +10,15 @@
     :overflowBefore="false"
   >
     <template slot="overflow">
-      <ul class="contact-me">
-        <li class="contact-me__item">
+      <Popover class="contact-me" layer="var(--layerContactMe)">
+        <div class="contact-me__item">
           <a :href="`mailto:${primaryEmail}`" class="contact-me__pair">
             <Icon id="at-sign" :width="24" :height="24" />
             <span class="contact-me__key">Email Me</span>
             <span class="contact-me__value">{{ primaryEmail }}</span>
           </a>
-        </li>
-        <li
+        </div>
+        <div
           v-for="(number, index) in displayedPhoneNumbers"
           :key="`p-${index}`"
           class="contact-me__item"
@@ -28,8 +28,8 @@
             <span class="contact-me__key">Call Me</span>
             <span class="contact-me__value">{{ number.value }}</span>
           </a>
-        </li>
-        <li
+        </div>
+        <div
           v-for="(uri, index) in displayedUris"
           :key="`u-${index}`"
           class="contact-me__item"
@@ -48,8 +48,8 @@
               >{{ uri.value }} on {{ uri.text }}</span
             >
           </span>
-        </li>
-      </ul>
+        </div>
+      </Popover>
     </template>
     <template slot="icon-expanded">
       <svg
@@ -88,6 +88,7 @@
 import AccountsMixin from '@/components/_mixins/AccountsMixin.vue';
 import PhoneNumbersMixin from '@/components/_mixins/PhoneNumbersMixin.vue';
 import Icon from '@/components/ui/Icon.vue';
+import Popover from '@/components/ui/Popover.vue';
 import ShowMore from '@/components/_functional/ShowMore.vue';
 
 export default {
@@ -100,6 +101,7 @@ export default {
   mixins: [PhoneNumbersMixin, AccountsMixin],
   components: {
     Icon,
+    Popover,
     ShowMore,
   },
   computed: {
@@ -129,47 +131,12 @@ export default {
 </script>
 
 <style>
-.contact-me {
-  background-color: var(--white);
-  box-shadow: 0 0.125em 0.25em 0.125em rgba(210, 210, 210, 0.5);
-  text-align: left;
-  padding-left: 0;
-  z-index: var(--layerAboveNav);
-  position: absolute;
-  top: 3.5em;
-  left: 0;
-  width: calc(100% + 4.5em);
-  margin: 0 -2.25em;
-  color: var(--gray-60);
-  border-radius: var(--imageRadius);
-  border: 2px solid var(--gray-30);
-}
-@media (min-width: 57.5em) {
-  .contact-me {
-    left: 50%;
-    width: 24em;
-    margin: 0 0.5em 0 -12em;
-  }
-}
-.contact-me::before {
-  content: '';
-  width: 1em;
-  height: 1em;
-  background-color: var(--white);
-  position: absolute;
-  left: 50%;
-  margin-left: -0.5em;
-  margin-top: -0.5em;
-  transform: rotate(-45deg);
-  box-shadow: 0 0 0.25em 0 var(--gray-30);
-  border-radius: inherit;
-  border: inherit;
-}
 .contact-me__item {
   list-style: none;
   padding-left: 0;
   background-color: var(--white);
   position: relative;
+  overflow: hidden;
 }
 .contact-me__item:nth-child(even) {
   background-color: var(--gray-10);
@@ -200,6 +167,7 @@ export default {
   flex: 1;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 a > .contact-me__value {
   color: var(--blue-60);

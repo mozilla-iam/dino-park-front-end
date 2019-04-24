@@ -87,15 +87,25 @@ export default {
   --layerTwo: 2;
   --layerThree: 3;
   --layerTopBar: 4;
-  --layerAboveNav: 5;
-  --layerUserMenu: 6;
-  --layerModal: 7;
+  --layerProfileNav: 5;
+  --layerContactMe: 6;
+  --layerAboveNav: 7;
+  --layerUserMenu: 8;
+  --layerModal: 9;
 
   --shadowCard: 0 0.25em 0.25em 0 rgba(210, 210, 210, 0.5);
 
   --imageRadius: 0.25em;
   --formElementRadius: 0.25em;
   --cardRadius: 0.125em;
+}
+
+@media (min-width: 57.5em) {
+  :root {
+    --layerProfileNav: 4;
+    --layerContactMe: 5;
+    --layerTopBar: 6;
+  }
 }
 
 * {
