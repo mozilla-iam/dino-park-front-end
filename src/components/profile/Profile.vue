@@ -106,6 +106,7 @@
           initialValues: { uris },
           initialUris: uris,
         }"
+        @toast="showToast"
       ></EditAccounts>
       <ViewAccounts v-else v-bind="{ uris, userOnOwnProfile }"></ViewAccounts>
     </section>
