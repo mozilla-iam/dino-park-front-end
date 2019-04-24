@@ -64,6 +64,7 @@ export default {
 .card__icon {
   padding: 4em;
   background-color: var(--lightBlue);
+  color: var(--blue-60);
   display: flex;
   align-content: center;
   justify-content: center;
@@ -72,6 +73,9 @@ export default {
 }
 .card h2 + p {
   margin-top: 0;
+}
+.card p {
+  color: var(--gray-50);
 }
 .card img + h2 {
   margin-top: 1em;
