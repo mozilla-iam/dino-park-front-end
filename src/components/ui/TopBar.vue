@@ -72,7 +72,7 @@
             <UserPicture
               :picture="user.picture.value"
               :username="user.primaryUsername.value"
-              :size="40"
+              :size="264"
               dinoType="Staff"
             ></UserPicture>
           </template>
