@@ -260,6 +260,7 @@ export default {
   -webkit-appearance: none;
   appearance: none;
   border-radius: var(--imageRadius);
+  z-index: var(--layerThree);
 }
 .org-node__toggle:hover {
   background-color: var(--gray-20);
