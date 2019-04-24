@@ -62,6 +62,13 @@ const router = new Router({
     },
   ],
   scrollBehavior(to, from) {
+    if (scrolling.toEdit(to)) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve({ selector: `#nav-${to.query.section}` });
+        }, 50);
+      });
+    }
     if (scrolling.fromEditToSelf(to, from, router.app)) {
       return { selector: `#nav-${from.query.section}` };
     }
