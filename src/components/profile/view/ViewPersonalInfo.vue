@@ -201,9 +201,4 @@ export default {
   top: 1.5em;
   right: 1.5em;
 }
-
-.profile__anchor {
-  top: -8.5em;
-  position: relative;
-}
 </style>

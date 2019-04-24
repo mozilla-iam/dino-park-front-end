@@ -5,6 +5,7 @@ import PageProfile from './pages/PageProfile.vue';
 import PageOrgchart from './pages/PageOrgchart.vue';
 import PageSearchResult from './pages/PageSearchResult.vue';
 import PageUnknown from './pages/PageUnknown.vue';
+import scrolling from './assets/js/scrolling';
 
 Vue.use(Router);
 
@@ -60,6 +61,18 @@ const router = new Router({
       props: true,
     },
   ],
+  scrollBehavior(to, from) {
+    if (scrolling.fromEditToSelf(to, from, router.app)) {
+      return { selector: `#nav-${from.query.section}` };
+    }
+    if (scrolling.toProfile(to, from)) {
+      return { x: 0, y: 0 };
+    }
+    if (to.hash) {
+      return { selector: to.hash };
+    }
+    return {};
+  },
 });
 
 function usernamePrefix(username) {
@@ -91,15 +104,6 @@ router.beforeEach((to, from, next) => {
       document.title = `${to.name} - Mozilla People Directory`;
   }
   next();
-});
-
-router.afterEach((to, from) => {
-  // we don't want to do anything if `path` is same (ie when only hash changes)
-  if (to.name === 'Profile' && to.path !== from.path) {
-    Vue.nextTick(() => {
-      window.scrollTo(0, 0);
-    });
-  }
 });
 
 export default router;

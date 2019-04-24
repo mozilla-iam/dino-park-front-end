@@ -11,7 +11,7 @@
       <form
         class="mutation-form"
         action=""
-        @submit.prevent="mutate()"
+        v-on:submit.prevent="mutate"
         :aria-label="formName"
       >
         <slot></slot>

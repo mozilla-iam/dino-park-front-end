@@ -1,7 +1,7 @@
 <template>
   <EditMutationWrapper
     :editVariables="{
-      uris: urisUpdated,
+      uris,
     }"
     :initialValues="initialValues"
     formName="Edit accounts"
@@ -13,12 +13,12 @@
         label="Accounts privacy levels"
         id="section-accounts-privacy"
         profileFieldName="uris"
-        :profileFieldObject="urisUpdated"
+        :profileFieldObject="uris"
         :collapsedShowLabel="true"
       />
     </header>
     <div
-      v-for="({ k, v }, index) in urisUpdated.values"
+      v-for="({ k, v }, index) in uris.values"
       :key="index"
       class="edit-contact__item"
     >
@@ -34,7 +34,7 @@
           { label: EXTERNAL_ACCOUNTS[destructUriKey(k).name].text, value: k },
           ...remainingAccounts,
         ]"
-        v-model="urisUpdated.values[index].k"
+        v-model="uris.values[index].k"
       />
       <label :for="`field-account-${index}-username`" class="visually-hidden"
         >Username on
@@ -43,7 +43,7 @@
       <input
         :id="`field-account-${index}-username`"
         type="text"
-        v-model="urisUpdated.values[index].v"
+        v-model="uris.values[index].v"
         :placeholder="
           `Your username on ${EXTERNAL_ACCOUNTS[destructUriKey(k).name].text}`
         "
@@ -70,6 +70,7 @@
 
 <script>
 import AccountsMixin from '@/components/_mixins/AccountsMixin.vue';
+import Button from '@/components/ui/Button.vue';
 import Icon from '@/components/ui/Icon.vue';
 import PrivacySetting from '@/components/profile/PrivacySetting.vue';
 import Select from '@/components/ui/Select.vue';
@@ -94,6 +95,7 @@ export default {
     Icon,
     PrivacySetting,
     Select,
+    Button,
   },
   methods: {
     displayLevelsFor,
@@ -106,24 +108,21 @@ export default {
     addUri() {
       if (this.remainingAccounts.length > 0) {
         const k = this.remainingAccounts[0].value;
-        this.urisUpdated.values.push({
+        this.uris.values.push({
           k,
           v: '',
         });
       }
     },
     deleteUri(index) {
-      if (this.urisUpdated.values.length > index) {
-        this.urisUpdated.values.splice(index, 1);
+      if (this.uris.values.length > index) {
+        this.uris.values.splice(index, 1);
       }
     },
     toggleUriContactMe(e, index) {
-      const account = this.destructUriKey(
-        this.urisUpdated.values[index].k,
-        index,
-      );
+      const account = this.destructUriKey(this.uris.values[index].k, index);
       account.contact = e.target.checked;
-      this.urisUpdated.values[index].k = this.constructUriKey(account);
+      this.uris.values[index].k = this.constructUriKey(account);
     },
   },
   mounted() {
@@ -131,7 +130,7 @@ export default {
   },
   computed: {
     remainingAccounts() {
-      const selectedUris = this.urisUpdated.values.map(
+      const selectedUris = this.uris.values.map(
         ({ k }) => this.destructUriKey(k).name,
       );
       return this.availableAccounts
@@ -150,12 +149,13 @@ export default {
       values: initialUris,
       metadata: { display = DISPLAY_LEVELS.private.value },
     } = this.initialUris;
-    const urisUpdated = {
-      values: Object.entries(initialUris || {}).map(this.formatAsKeyValues),
-      display,
-    };
     return {
-      urisUpdated,
+      uris: {
+        values: Object.entries(initialUris || {}).map(([k, v]) => {
+          return { k, v };
+        }),
+        display,
+      },
     };
   },
 };
