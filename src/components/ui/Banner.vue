@@ -10,6 +10,7 @@
       >.
     </p>
     <button @click="$emit('close')">
+      <span class="visually-hidden">Close</span>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="20"
@@ -20,6 +21,7 @@
         stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"
+        aria-hidden="true"
       >
         <line x1="18" y1="6" x2="6" y2="18" />
         <line x1="6" y1="6" x2="18" y2="18" />
@@ -53,6 +55,9 @@ export default {
 .banner button {
   border: none;
   background: none;
+}
+.banner button:focus {
+  outline: 1px solid white;
 }
 .focus-styles .banner a:focus {
   box-shadow: 0px 0 0 1px var(--white), 0 0 0 3px var(--transparentWhite);
