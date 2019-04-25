@@ -34,16 +34,18 @@ export default {
 <style>
 .toast {
   position: absolute;
+  width: 100%;
 }
 .toast__content {
   background-color: var(--black);
   color: var(--white);
   padding: 1em 2em;
-  position: fixed;
-  top: 5.5em;
+  position: absolute;
+  top: 5em;
   width: 30em;
-  left: 50%;
-  margin-left: -15em;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
   z-index: var(--layerModal);
   text-align: center;
 }
