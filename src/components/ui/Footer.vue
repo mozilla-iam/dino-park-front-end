@@ -1,6 +1,27 @@
 <template>
   <footer class="footer">
     <a
+      href="https://www.mozilla.org/en-US/about/governance/policies/participation/"
+      class="footer__link"
+      target="_blank"
+      rel="noopener noreferrer"
+      ><Icon id="cpg" :width="18" :height="18" /> CPG</a
+    >
+    <a
+      href="https://discourse.mozilla.org/t/dinopark-faq/33564"
+      class="footer__link"
+      target="_blank"
+      rel="noopener noreferrer"
+      ><Icon id="faq" :width="18" :height="18" /> FAQ</a
+    >
+    <a
+      href="https://github.com/mozilla-iam/dino-park-issues"
+      class="footer__link"
+      target="_blank"
+      rel="noopener noreferrer"
+      ><Icon id="github" :width="18" :height="18" /> GitHub</a
+    >
+    <a
       href="https://discourse.mozilla.org/c/iam/dinopark"
       class="footer__link"
       target="_blank"
@@ -21,22 +42,6 @@
       rel="noopener noreferrer"
       ><Icon id="privacy" :width="18" :height="18" /> Privacy</a
     >
-    <a
-      href="https://github.com/mozilla-iam/dino-park-issues"
-      class="footer__link"
-      target="_blank"
-      rel="noopener noreferrer"
-      ><Icon id="github" :width="18" :height="18" /> GitHub</a
-    >
-    <div>
-      <a
-        href="https://www.mozilla.org/en-US/about/governance/policies/participation/"
-        class="footer__link footer__link--cpg"
-        target="_blank"
-        rel="noopener noreferrer"
-        >Community Participation Guidelines</a
-      >
-    </div>
   </footer>
 </template>
 
