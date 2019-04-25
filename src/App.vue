@@ -1,17 +1,6 @@
 <template>
   <div id="app" class="app-container">
     <TopBar></TopBar>
-    <Banner>
-      <p>
-        This is a beta version,
-        <a
-          href="https://github.com/mozilla-iam/dino-park-issues/issues"
-          target="_blank"
-          rel="noopener noreferrer"
-          >let us know what you think</a
-        >.
-      </p>
-    </Banner>
     <Toast
       ref="toast"
       :content="toastContent"
@@ -24,7 +13,6 @@
 
 <script>
 import TopBar from '@/components/ui/TopBar.vue';
-import Banner from '@/components/ui/Banner.vue';
 import Toast from '@/components/ui/Toast.vue';
 import Footer from '@/components/ui/Footer.vue';
 
@@ -34,7 +22,6 @@ export default {
   name: 'PageHome',
   components: {
     TopBar,
-    Banner,
     Toast,
     Footer,
   },
@@ -133,7 +120,6 @@ body {
   font-family: 'Open Sans', sans-serif;
   scroll-behavior: smooth;
   margin: 0;
-  padding-top: 5.5em; /* allow for top bar */
   font-size: 87.5%;
   letter-spacing: 0.04em;
 }
