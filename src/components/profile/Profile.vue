@@ -176,7 +176,7 @@
     <EmptyCard
       v-else
       title="Keys"
-      message="Key editing capabilities are coming soon."
+      message="Syncing and editing capabilities for SSH / PGP keys are coming soon."
     >
     </EmptyCard>
 
@@ -194,7 +194,7 @@
     <EmptyCard
       v-else
       title="Access Groups"
-      message="Access Group editing capabilities are coming soon."
+      message="Support for Access Group management is coming soon."
     >
     </EmptyCard>
   </main>

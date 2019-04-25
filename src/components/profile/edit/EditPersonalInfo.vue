@@ -91,15 +91,7 @@
       <hr role="presentation" />
 
       <div class="edit-personal-info__label">
-        <label for="field-last-name">Last Name </label
-        ><Tooltip
-          buttonText="Open last name info"
-          alternateButtonText="Close last name info"
-          >For Staff members, name data is initially imported from Workday, but
-          any changes you make to your profile will not be reflected back into
-          Workday. Pro tip: If first and last names don’t work for you we have
-          you covered. Please use alternate name instead.</Tooltip
-        >
+        <label for="field-last-name">Last Name </label>
       </div>
       <input type="text" id="field-last-name" v-model="lastName.value" />
       <PrivacySetting
@@ -226,15 +218,6 @@
 
       <div class="edit-personal-info__label">
         <label for="field-office-location">Office Location</label>
-        <Tooltip
-          buttonText="Open Office Location info"
-          alternateButtonText="Close Office Location info"
-          >This is your office location as provided by our HR Team (Workday).
-          Staff information is not editable and is shared with all Staff and
-          NDA’d Mozillians. Please contact
-          <a href="mailto:HROPS@mozilla.com">HROPS@mozilla.com</a> to request a
-          change to your office location.</Tooltip
-        >
       </div>
       <input
         type="text"
@@ -308,15 +291,6 @@
 
       <div class="edit-personal-info__label">
         <label for="field-cost-center">Cost Center</label>
-        <Tooltip
-          buttonText="Open Cost Center info"
-          alternateButtonText="Close Cost Center info"
-          >This is your cost center as provided by our HR Team (Workday). This
-          particular field is classified as Staff only and can’t be shared
-          beyond this group. Please contact
-          <a href="mailto:HROPS@mozilla.com">HROPS@mozilla.com</a> to change
-          your information.</Tooltip
-        >
       </div>
       <input
         type="text"
@@ -336,15 +310,6 @@
 
       <div class="edit-personal-info__label">
         <label for="field-desk-number">Desk Number</label>
-        <Tooltip
-          buttonText="Open Desk Number info"
-          alternateButtonText="Close Desk Number info"
-          >This is your desk number as provided by our HR Team (Workday). Staff
-          information is not editable and shared with Staff and NDA’d
-          Mozillians. Please contact
-          <a href="mailto:HROPS@mozilla.com">HROPS@mozilla.com</a> to change
-          your information.</Tooltip
-        >
       </div>
       <input
         type="text"
