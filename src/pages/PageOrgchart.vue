@@ -10,7 +10,7 @@
         v-if="loose && !loading"
         :roots="loose"
         :trace="looseTrace || ''"
-        heading="People who need their manager set"
+        heading="People who do not have a manager set"
         modifier="org-root--loose"
       ></OrgRoot>
       <LoadingSpinner v-else></LoadingSpinner>

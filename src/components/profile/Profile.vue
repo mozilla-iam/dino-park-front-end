@@ -59,7 +59,7 @@
     <a id="nav-identities" class="profile__anchor"></a>
     <EmptyCard
       title="Identities"
-      message="Soon you can edit identities in the People Directory"
+      message="Identity editing capabilities are coming soon."
     >
     </EmptyCard>
 
@@ -106,7 +106,11 @@
       ></EditAccounts>
       <ViewAccounts v-else v-bind="{ uris, userOnOwnProfile }"></ViewAccounts>
     </section>
-    <EmptyCard v-else title="Accounts" message="No accounts have been added">
+    <EmptyCard
+      v-else
+      title="Accounts"
+      message="You haven’t added any accounts yet."
+    >
       <template v-slot:header>
         <EditButton
           v-if="userOnOwnProfile"
@@ -137,7 +141,11 @@
         v-bind="{ languages, userOnOwnProfile }"
       ></ViewLanguages>
     </section>
-    <EmptyCard v-else title="Languages" message="No languages have been added">
+    <EmptyCard
+      v-else
+      title="Languages"
+      message="Language editing capabilities are coming soon."
+    >
     </EmptyCard>
 
     <a id="nav-tags" class="profile__anchor"></a>
@@ -151,7 +159,11 @@
       <EditTags v-if="this.editing === 'tags'"></EditTags>
       <ViewTags v-else v-bind="{ tags, userOnOwnProfile }"></ViewTags>
     </section>
-    <EmptyCard v-else title="Tags" message="No tags have been added">
+    <EmptyCard
+      v-else
+      title="Tags"
+      message="Tag editing capabilities are coming soon."
+    >
     </EmptyCard>
 
     <a id="nav-keys" class="profile__anchor"></a>
@@ -161,7 +173,11 @@
         v-bind="{ pgpPublicKeys, sshPublicKeys, userOnOwnProfile }"
       ></ViewKeys>
     </section>
-    <EmptyCard v-else title="Keys" message="No keys have been added">
+    <EmptyCard
+      v-else
+      title="Keys"
+      message="Key editing capabilities are coming soon."
+    >
     </EmptyCard>
 
     <a id="nav-access-groups" class="profile__anchor"></a>
@@ -178,7 +194,7 @@
     <EmptyCard
       v-else
       title="Access Groups"
-      message="No access groups available"
+      message="Access Group editing capabilities are coming soon."
     >
     </EmptyCard>
   </main>
