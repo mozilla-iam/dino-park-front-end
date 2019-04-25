@@ -6,7 +6,6 @@
           (this.editing === 'personal-info' ? ' profile__section--editing' : '')
       "
     >
-      <Toast :content="toastContent" @reset-toast="toastContent = ''"></Toast>
       <a id="nav-personal-info" class="profile__anchor"></a>
       <EditPersonalInfo
         v-if="this.editing === 'personal-info'"
@@ -25,7 +24,6 @@
             timezone,
           },
         }"
-        @toast="showToast"
       />
       <ViewPersonalInfo
         v-else
@@ -83,7 +81,6 @@
             phoneNumbers,
           },
         }"
-        @toast="showToast"
       />
       <ViewContact
         v-else
@@ -106,7 +103,6 @@
           initialValues: { uris },
           initialUris: uris,
         }"
-        @toast="showToast"
       ></EditAccounts>
       <ViewAccounts v-else v-bind="{ uris, userOnOwnProfile }"></ViewAccounts>
     </section>
@@ -135,7 +131,6 @@
             languages,
           },
         }"
-        @toast="showToast"
       ></EditLanguages>
       <ViewLanguages
         v-else
@@ -190,7 +185,6 @@
 </template>
 
 <script>
-import Toast from '@/components/ui/Toast.vue';
 import EditButton from '@/components/profile/edit/EditButton.vue';
 import EditAccounts from './edit/EditAccounts.vue';
 import EditContact from './edit/EditContact.vue';
@@ -243,7 +237,6 @@ export default {
     EditTags,
     EmptyCard,
     ProfileNav,
-    Toast,
     ViewAccounts,
     ViewContact,
     ViewKeys,
@@ -255,9 +248,6 @@ export default {
   methods: {
     alphabetise(array) {
       return array ? array.sort() : null;
-    },
-    showToast(data) {
-      this.toastContent = data.content;
     },
   },
   computed: {
@@ -289,7 +279,6 @@ export default {
   },
   data() {
     return {
-      toastContent: '',
       profileNav: [
         {
           id: 'nav-relations',
