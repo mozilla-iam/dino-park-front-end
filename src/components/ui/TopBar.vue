@@ -82,6 +82,11 @@
       <template v-else>
         …
       </template>
+      <Toast
+        ref="toast"
+        :content="toastContent"
+        @reset-toast="toastContent = ''"
+      ></Toast>
     </div>
     <SearchForm
       modifier="search-form--small hide-desktop"
@@ -95,6 +100,7 @@
 <script>
 import ShowMore from '@/components/_functional/ShowMore.vue';
 import Banner from '@/components/ui/Banner.vue';
+import Toast from '@/components/ui/Toast.vue';
 import SearchForm from './SearchForm.vue';
 import UserMenu from './UserMenu.vue';
 import UserPicture from './UserPicture.vue';
@@ -105,6 +111,7 @@ export default {
     Banner,
     SearchForm,
     ShowMore,
+    Toast,
     UserMenu,
     UserPicture,
   },
@@ -114,6 +121,9 @@ export default {
     },
     closeMobileSearchForm() {
       this.$refs.showMoreSearch.isExpanded = false;
+    },
+    showToast(data) {
+      this.toastContent = data.content;
     },
     updatePadding() {
       console.log(this.showBanner);
@@ -127,6 +137,7 @@ export default {
       mobileSearchOpen: false,
       showBanner: true,
       extraPadding: 0,
+      toastContent: '',
     };
   },
   watch: {
@@ -142,6 +153,8 @@ export default {
   mounted() {
     this.updatePadding();
     window.addEventListener('resize', this.updatePadding);
+
+    this.$root.$on('toast', (data) => this.showToast(data));
   },
 };
 </script>

@@ -1,11 +1,6 @@
 <template>
   <div id="app" class="app-container">
     <TopBar></TopBar>
-    <Toast
-      ref="toast"
-      :content="toastContent"
-      @reset-toast="toastContent = ''"
-    ></Toast>
     <RouterView />
     <Footer></Footer>
   </div>
@@ -13,7 +8,6 @@
 
 <script>
 import TopBar from '@/components/ui/TopBar.vue';
-import Toast from '@/components/ui/Toast.vue';
 import Footer from '@/components/ui/Footer.vue';
 
 import isDNTEnabled from '@/assets/js/dnt-enabled';
@@ -22,13 +16,9 @@ export default {
   name: 'PageHome',
   components: {
     TopBar,
-    Toast,
     Footer,
   },
   methods: {
-    showToast(data) {
-      this.toastContent = data.content;
-    },
     awaitTabbing() {
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Tab') {
@@ -60,12 +50,6 @@ export default {
   mounted() {
     this.awaitTabbing();
     this.loadGA();
-    this.$root.$on('toast', (data) => this.showToast(data));
-  },
-  data() {
-    return {
-      toastContent: '',
-    };
   },
 };
 </script>
