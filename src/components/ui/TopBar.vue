@@ -1,6 +1,7 @@
 <template>
-  <header class="top-bar">
+  <header class="top-bar" :style="{ marginBottom: extraPadding + 'px' }">
     <div class="top-bar__bar">
+      <Banner v-if="showBanner" @close="showBanner = false" ref="banner" />
       <RouterLink
         :to="{ name: 'Home' }"
         class="top-bar__link top-bar__link--logo"
@@ -93,6 +94,7 @@
 
 <script>
 import ShowMore from '@/components/_functional/ShowMore.vue';
+import Banner from '@/components/ui/Banner.vue';
 import SearchForm from './SearchForm.vue';
 import UserMenu from './UserMenu.vue';
 import UserPicture from './UserPicture.vue';
@@ -100,6 +102,7 @@ import UserPicture from './UserPicture.vue';
 export default {
   name: 'TopBar',
   components: {
+    Banner,
     SearchForm,
     ShowMore,
     UserMenu,
@@ -112,25 +115,46 @@ export default {
     closeMobileSearchForm() {
       this.$refs.showMoreSearch.isExpanded = false;
     },
+    updatePadding() {
+      console.log(this.showBanner);
+      this.extraPadding = this.showBanner
+        ? this.$refs.banner.$el.offsetHeight
+        : 0;
+    },
   },
   data() {
     return {
       mobileSearchOpen: false,
+      showBanner: true,
+      extraPadding: 0,
     };
+  },
+  watch: {
+    showBanner() {
+      this.updatePadding();
+    },
   },
   computed: {
     user() {
       return this.$store.state.user;
     },
   },
+  mounted() {
+    this.updatePadding();
+    window.addEventListener('resize', this.updatePadding);
+  },
 };
 </script>
 
 <style>
+.top-bar {
+  height: 5.8em; /* push down content */
+}
 .top-bar__bar {
   background-color: var(--white);
   border-bottom: 1px solid var(--gray-30);
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   margin-bottom: 2em;
   position: fixed;
