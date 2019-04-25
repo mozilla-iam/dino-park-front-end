@@ -48,7 +48,16 @@
         />
       </div>
 
-      <label for="field-username">Username</label>
+      <div class="edit-personal-info__label">
+        <label for="field-username">Username </label>
+        <Tooltip
+          buttonText="Open username info"
+          alternateButtonText="Close username info"
+          >Your username is part of your profile URL. It is publicly visible.
+          Pro tip: Use the same username across systems for easy discovery (IRC,
+          Slack, Discourse).</Tooltip
+        >
+      </div>
       <input type="text" id="field-username" v-model="primaryUsername.value" />
       <PrivacySetting
         label="Username privacy levels"
@@ -60,7 +69,17 @@
 
       <hr role="presentation" />
 
-      <label for="field-first-name">First Name</label>
+      <div class="edit-personal-info__label">
+        <label for="field-first-name">First Name </label
+        ><Tooltip
+          buttonText="Open first name info"
+          alternateButtonText="Close first name info"
+          >For Staff members, data is initially imported from Workday. Changes
+          will not be reflected back into Workday though. Pro tip: If first &
+          last names don’t work for you we got you covered. Please use
+          Alternative name instead.</Tooltip
+        >
+      </div>
       <input type="text" id="field-first-name" v-model="firstName.value" />
       <PrivacySetting
         label="First name privacy levels"
@@ -71,7 +90,17 @@
 
       <hr role="presentation" />
 
-      <label for="field-last-name">Last Name</label>
+      <div class="edit-personal-info__label">
+        <label for="field-last-name">Last Name </label
+        ><Tooltip
+          buttonText="Open last name info"
+          alternateButtonText="Close last name info"
+          >For Staff members, data is initially imported from Workday. Changes
+          will not be reflected back into Workday though. Pro tip: If first &
+          last names don’t work for you we got you covered. Please use
+          Alternative name instead.</Tooltip
+        >
+      </div>
       <input type="text" id="field-last-name" v-model="lastName.value" />
       <PrivacySetting
         label="Last name privacy levels"
@@ -82,9 +111,17 @@
 
       <hr role="presentation" />
 
-      <label for="field-pronouns" class="edit-personal-info__label"
-        >Pronouns</label
-      >
+      <div class="edit-personal-info__label">
+        <label for="field-pronouns" class="edit-personal-info__label"
+          >Pronouns
+        </label>
+        <Tooltip
+          buttonText="Open pronouns info"
+          alternateButtonText="Close pronouns info"
+          >We prepared some pronouns for you to select from. If the list does
+          not match your needs, you can always enter your own pronoun.</Tooltip
+        >
+      </div>
       <Combobox
         id="field-pronouns"
         v-model="pronouns.value"
@@ -101,7 +138,14 @@
 
       <hr role="presentation" />
 
-      <label for="field-alt-name">Alternative Name</label>
+      <div class="edit-personal-info__label">
+        <label for="field-alt-name">Alternative Name</label
+        ><Tooltip
+          buttonText="Open alternative name info"
+          alternateButtonText="Close alternative name info"
+          >This field allows you to enter an alternative name.</Tooltip
+        >
+      </div>
       <input type="text" id="field-alt-name" v-model="alternativeName.value" />
       <PrivacySetting
         label="Alternative name privacy levels"
@@ -112,7 +156,18 @@
 
       <hr role="presentation" />
 
-      <label for="field-official-job-title">Official Job Title</label>
+      <div class="edit-personal-info__label">
+        <label for="field-official-job-title">Official Job Title </label
+        ><Tooltip
+          buttonText="Open official job title info"
+          alternateButtonText="Close official job title info"
+          >This is your job title as provided by our HR Team (Workday). Staff
+          information is not editable and shared with Staff and NDA’d
+          Mozillians. Please contact
+          <a href="mailto:HROPS@mozilla.com">HROPS@mozilla.com</a> to change
+          your information.</Tooltip
+        >
+      </div>
       <input
         type="text"
         id="field-official-job-title"
@@ -129,7 +184,16 @@
 
       <hr role="presentation" />
 
-      <label for="field-fun-job-title">Fun Job Title</label>
+      <div class="edit-personal-info__label">
+        <label for="field-fun-job-title">Fun Job Title</label>
+        <Tooltip
+          buttonText="Open Fun Job Title info"
+          alternateButtonText="Close Fun Job Title info"
+          >This is the job title you give yourself. Pro tip: Feel free to copy
+          your Official Job Title and make it publicly visible through this
+          field.</Tooltip
+        >
+      </div>
       <input type="text" id="field-fun-job-title" v-model="funTitle.value" />
       <PrivacySetting
         label="Fun title privacy levels"
@@ -140,7 +204,15 @@
 
       <hr role="presentation" />
 
-      <label for="field-location">Location</label>
+      <div class="edit-personal-info__label">
+        <label for="field-location">Location</label>
+        <Tooltip
+          buttonText="Open Location info"
+          alternateButtonText="Close Location info"
+          >This field is still under construction. For the moment you can enter
+          any value you like.
+        </Tooltip>
+      </div>
       <input type="text" id="field-location" v-model="location.value" />
       <PrivacySetting
         label="Location privacy levels"
@@ -151,7 +223,18 @@
 
       <hr role="presentation" />
 
-      <label for="field-office-location">Office Location</label>
+      <div class="edit-personal-info__label">
+        <label for="field-office-location">Office Location</label>
+        <Tooltip
+          buttonText="Open Office Location info"
+          alternateButtonText="Close Office Location info"
+          >This is your office location as provided by our HR Team (Workday).
+          Staff information is not editable and shared with Staff and NDA’d
+          Mozillians. Please contact
+          <a href="mailto:HROPS@mozilla.com">HROPS@mozilla.com</a> to change
+          your information</Tooltip
+        >
+      </div>
       <input
         type="text"
         id="field-office-location"
@@ -168,7 +251,15 @@
 
       <hr role="presentation" />
 
-      <label for="field-timezone">Timezone</label>
+      <div class="edit-personal-info__label">
+        <label for="field-timezone">Timezone</label>
+        <Tooltip
+          buttonText="Open Timezone info"
+          alternateButtonText="Close Timezone info"
+          >This list allows you to set your timezone. If you provide this
+          information, we will display your local time on your profile.</Tooltip
+        >
+      </div>
       <Combobox
         v-if="timezones.length > 0"
         id="field-timezone"
@@ -186,7 +277,18 @@
 
       <hr role="presentation" />
 
-      <label for="field-worker-type">Worker Type</label>
+      <div class="edit-personal-info__label">
+        <label for="field-worker-type">Worker Type</label>
+        <Tooltip
+          buttonText="Open Worker Type info"
+          alternateButtonText="Close Worker Type info"
+          >This is your worker type as provided by our HR Team (Workday). This
+          particular field is classified as Staff only and can’t be shared
+          beyond this group. Please contact
+          <a href="mailto:HROPS@mozilla.com">HROPS@mozilla.com</a> to change
+          your information.</Tooltip
+        >
+      </div>
       <input
         type="text"
         id="field-worker-type"
@@ -203,7 +305,18 @@
 
       <hr role="presentation" />
 
-      <label for="field-cost-center">Cost Center</label>
+      <div class="edit-personal-info__label">
+        <label for="field-cost-center">Cost Center</label>
+        <Tooltip
+          buttonText="Open Cost Center info"
+          alternateButtonText="Close Cost Center info"
+          >This is your cost center as provided by our HR Team (Workday). This
+          particular field is classified as Staff only and can’t be shared
+          beyond this group. Please contact
+          <a href="mailto:HROPS@mozilla.com">HROPS@mozilla.com</a> to change
+          your information.</Tooltip
+        >
+      </div>
       <input
         type="text"
         id="field-cost-center"
@@ -220,7 +333,18 @@
 
       <hr role="presentation" />
 
-      <label for="field-desk-number">Desk Number</label>
+      <div class="edit-personal-info__label">
+        <label for="field-desk-number">Desk Number</label>
+        <Tooltip
+          buttonText="Open Desk Number info"
+          alternateButtonText="Close Desk Number info"
+          >This is your desk number as provided by our HR Team (Workday). Staff
+          information is not editable and shared with Staff and NDA’d
+          Mozillians. Please contact
+          <a href="mailto:HROPS@mozilla.com">HROPS@mozilla.com</a> to change
+          your information.</Tooltip
+        >
+      </div>
       <input
         type="text"
         id="field-desk-number"
@@ -237,7 +361,18 @@
 
       <hr role="presentation" />
 
-      <label for="field-team">Team</label>
+      <div class="edit-personal-info__label">
+        <label for="field-team">Team</label>
+        <Tooltip
+          buttonText="Open Team info"
+          alternateButtonText="Close Team info"
+          >This is your team name as provided by our HR Team (Workday). Staff
+          information is not editable and shared with Staff and NDA’d
+          Mozillians. Please contact
+          <a href="mailto:HROPS@mozilla.com">HROPS@mozilla.com</a> to change
+          your information.</Tooltip
+        >
+      </div>
       <input
         type="text"
         id="field-team"
@@ -254,7 +389,18 @@
 
       <hr role="presentation" />
 
-      <label for="field-bio">Bio</label>
+      <div class="edit-personal-info__label">
+        <label for="field-bio">Bio</label>
+        <Tooltip buttonText="Open Bio info" alternateButtonText="Close Bio info"
+          >Tell us more about yourself! This field supports
+          <a
+            href="https://github.github.com/gfm/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >GitHub Markdown</a
+          >.</Tooltip
+        >
+      </div>
       <textarea
         id="field-bio"
         v-model="description.value"
@@ -279,9 +425,13 @@ import Meta from '@/components/ui/Meta.vue';
 import MetaList from '@/components/ui/MetaList.vue';
 import PrivacySetting from '@/components/profile/PrivacySetting.vue';
 import Select from '@/components/ui/Select.vue';
+import Tooltip from '@/components/ui/Tooltip.vue';
 import UserPicture from '@/components/ui/UserPicture.vue';
 import { DISPLAY_LEVELS } from '@/assets/js/display-levels';
 import EditPictureModal from './EditPictureModal.vue';
+import Fetcher from '@/assets/js/fetcher';
+
+const fetcher = new Fetcher({ failoverOn: [302] });
 
 export default {
   name: 'EditPersonalInfo',
@@ -298,6 +448,7 @@ export default {
     MetaList,
     PrivacySetting,
     Select,
+    Tooltip,
     UserPicture,
   },
   computed: {
@@ -307,7 +458,8 @@ export default {
   },
   mounted() {
     this.$refs.header.focus();
-    fetch('/api/v4/timezone/list/')
+    fetcher
+      .fetch('/api/v4/timezone/list/')
       .then((res) => res.json())
       .then((timezones) => {
         this.timezones = timezones;
@@ -340,3 +492,159 @@ export default {
   },
 };
 </script>
+
+<style>
+.edit-personal-info {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-gap: 0.5em;
+}
+.edit-personal-info fieldset {
+  border: 0;
+}
+.edit-personal-info > label,
+.edit-personal-info__label {
+  color: var(--gray-50);
+  margin: 0.5em 0 0;
+  grid-column: 1 / -1;
+}
+.edit-personal-info__label {
+  padding: 0.5em 0;
+}
+.edit-personal-info__label label {
+  display: inline-block;
+  vertical-align: baseline;
+}
+.edit-personal-info__label label + .tooltip {
+  margin-left: 0.5em;
+}
+.edit-personal-info > hr {
+  margin: 1em -1.5em;
+  grid-column: 1 / -1;
+}
+.edit-personal-info > input,
+.edit-personal-info > div > input,
+.edit-personal-info > textarea,
+.edit-personal-info > select {
+  border: 0;
+  background-color: var(--gray-20);
+  border-radius: var(--formElementRadius);
+  color: var(--black);
+  margin: 0;
+  padding: 0.5em 0.9em;
+  width: 100%;
+}
+.edit-personal-info > textarea {
+  resize: none;
+}
+.edit-personal-info > input[disabled] {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--gray-50);
+  padding-left: 0;
+  opacity: 1;
+}
+.edit-personal-info__picture {
+  border: none;
+  background: none;
+}
+.edit-personal-info__picture .user-picture,
+.edit-personal-info__picture
+  .user-picture
+  ~ .edit-personal-info__picture-edit-button,
+.edit-personal-info__picture .user-picture ~ .privacy-setting {
+  display: inline-block;
+  vertical-align: bottom;
+  margin-right: 0.5em;
+}
+.edit-personal-info__meta {
+  grid-column: 1 / 2;
+}
+.button-bar {
+  display: flex;
+  margin: 2em -1.5em -1.5em;
+  padding: 2em;
+  border-top: 2px solid var(--gray-30);
+}
+.button-bar button {
+  margin-left: 1em;
+}
+.button-bar button:first-child {
+  margin-left: auto;
+}
+
+@media (min-width: 57.5em) {
+  .edit-personal-info {
+    grid-template-columns: 20em 11em 1fr auto;
+    grid-column-gap: 1em;
+    margin: 2em 1em;
+  }
+  .edit-personal-info > hr {
+    grid-column: 2 / end;
+    margin: 0.5em 0;
+  }
+  .edit-personal-info > label,
+  .edit-personal-info__label {
+    grid-column: 2 / 3;
+  }
+  @supports (display: grid) {
+    .edit-personal-info > label {
+      padding: 0.5em 0;
+      margin: 0.5em 0;
+    }
+    .edit-personal-info > input[disabled] {
+      padding-left: 0.25em;
+    }
+  }
+  .edit-personal-info > input,
+  .edit-personal-info > div > input,
+  .edit-personal-info > textarea,
+  .edit-personal-info > select {
+    margin: 0.5em 0;
+  }
+  .edit-personal-info > input {
+    grid-column: 3 / 4;
+  }
+  .edit-personal-info > textarea {
+    grid-column: 2 / 4;
+  }
+  .edit-personal-info__picture {
+    grid-column: 1 / 2;
+    grid-row: 1 / 8;
+    position: relative;
+  }
+  .edit-personal-info__picture .edit-personal-info__picture-privacy,
+  .edit-personal-info__picture .edit-personal-info__picture-edit-button {
+    position: absolute;
+    top: 15.5em;
+    background-color: var(--gray-20);
+    font-size: inherit;
+    display: flex;
+    border-radius: var(--imageRadius);
+    color: var(--black);
+    border-color: transparent;
+  }
+  .edit-personal-info__picture-edit-button {
+    left: 1.1em;
+  }
+  .edit-personal-info .edit-personal-info__picture-edit-button svg {
+    margin: 0;
+  }
+  .edit-personal-info__picture-privacy {
+    right: 2.1em;
+  }
+  .edit-personal-info__picture button {
+    background-color: var(--gray-20);
+    font-size: inherit;
+  }
+  .edit-personal-info__privacy,
+  .privacy-setting {
+    grid-column: 4 / 5;
+    align-self: center;
+    justify-self: center;
+  }
+  .edit-personal-info__meta {
+    grid-column: 2 / 4;
+  }
+}
+</style>

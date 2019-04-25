@@ -36,7 +36,7 @@ export default {
 }
 .button:hover {
   background-color: var(--white);
-  border: 1px solid var(--blue-60);
+  border-color: var(--blue-60);
   color: var(--blue-60);
   text-decoration: none;
 }

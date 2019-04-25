@@ -70,7 +70,7 @@
               :metaValue="staffInformation.wprDeskNumber.value"
             />
             <Meta
-              metaKey="Cost centre"
+              metaKey="Cost center"
               :metaValue="
                 staffInformation.costCenter.value &&
                   staffInformation.costCenter.value.replace(/\.0$/, '')
@@ -200,10 +200,5 @@ export default {
   position: absolute;
   top: 1.5em;
   right: 1.5em;
-}
-
-.profile__anchor {
-  top: -8.5em;
-  position: relative;
 }
 </style>

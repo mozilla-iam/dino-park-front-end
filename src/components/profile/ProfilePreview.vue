@@ -55,7 +55,10 @@
       :officeLocation="staffInformation.officeLocation.value"
       :timezone="timezone.value"
     ></ProfileTeamLocation>
-    <ProfileDescription :description="description.value"></ProfileDescription>
+    <ProfileDescription
+      class="profile-description--faded"
+      :description="description.value"
+    ></ProfileDescription>
     <hr class="profile-preview__divider" />
     <div class="profile-preview__buttons">
       <div class="hide-mobile">

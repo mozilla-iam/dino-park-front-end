@@ -5,6 +5,7 @@ import PageProfile from './pages/PageProfile.vue';
 import PageOrgchart from './pages/PageOrgchart.vue';
 import PageSearchResult from './pages/PageSearchResult.vue';
 import PageUnknown from './pages/PageUnknown.vue';
+import scrolling from './assets/js/scrolling';
 
 Vue.use(Router);
 
@@ -60,18 +61,48 @@ const router = new Router({
       props: true,
     },
   ],
+  scrollBehavior(to, from) {
+    if (scrolling.toEdit(to)) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve({ selector: `#nav-${to.query.section}` });
+        }, 50);
+      });
+    }
+    if (scrolling.fromEditToSelf(to, from, router.app)) {
+      return { selector: `#nav-${from.query.section}` };
+    }
+    if (scrolling.toProfile(to, from)) {
+      return { x: 0, y: 0 };
+    }
+    if (to.hash) {
+      return { selector: to.hash };
+    }
+    return {};
+  },
 });
+
+function usernamePrefix(username) {
+  if (username && !username.startsWith('r--')) {
+    return `${username} - `;
+  }
+  return '';
+}
 
 router.beforeEach((to, from, next) => {
   switch (to.name) {
     case 'OrgchartHighlight':
-      document.title = `${to.params.username} - Org chart - Mozilla People Directory`;
+      document.title = `${usernamePrefix(
+        to.params.username,
+      )}Org chart - Mozilla People Directory`;
       break;
     case 'Orgchart':
       document.title = 'Org chart - Mozilla People Directory';
       break;
     case 'Profile':
-      document.title = `${to.params.username} - Profile - Mozilla People Directory`;
+      document.title = `${usernamePrefix(
+        to.params.username,
+      )}Profile - Mozilla People Directory`;
       break;
     case 'Edit Profile':
       document.title = `Edit - Profile - Mozilla People Directory`;
@@ -80,15 +111,6 @@ router.beforeEach((to, from, next) => {
       document.title = `${to.name} - Mozilla People Directory`;
   }
   next();
-});
-
-router.afterEach((to, from) => {
-  // we don't want to do anything if `path` is same (ie when only hash changes)
-  if (to.name === 'Profile' && to.path !== from.path) {
-    Vue.nextTick(() => {
-      window.scrollTo(0, 0);
-    });
-  }
 });
 
 export default router;

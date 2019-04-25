@@ -1,5 +1,5 @@
 <template>
-  <div class="profile__description">
+  <div class="profile-description">
     <h2 class="visually-hidden">About</h2>
     <p v-html="marked(description)"></p>
   </div>
@@ -26,8 +26,22 @@ export default {
 </script>
 
 <style>
-.profile__description {
+.profile-description {
   max-width: 100%;
   color: var(--gray-50);
+}
+.profile-description--faded {
+  max-height: 7em;
+  overflow: hidden;
+  position: relative;
+}
+.profile-description--faded::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: calc(100% - 3em);
+  height: 3em;
+  width: 100%;
+  background: linear-gradient(transparent 0, var(--white) 100%);
 }
 </style>

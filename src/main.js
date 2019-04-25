@@ -9,10 +9,13 @@ import router from './router';
 import { USER_MENU_PROFILE } from './queries/profile';
 
 function errorHandler(error) {
+  const failoverOn = [302];
   const { networkError } = error;
   if (
-    networkError instanceof TypeError &&
-    networkError.message.startsWith('NetworkError')
+    networkError &&
+    ((networkError instanceof TypeError &&
+      networkError.message.startsWith('NetworkError')) ||
+      failoverOn.includes(networkError.statusCode))
   ) {
     window.location.reload();
   }
@@ -34,11 +37,13 @@ const cache = new InMemoryCache({
 const client = new ApolloClient({
   uri: '/api/v4/graphql',
   cache,
+  onError: errorHandler,
 });
 
 const mutationClient = new ApolloClient({
   uri: '/api/v4/graphql',
   cache,
+  onError: errorHandler,
 });
 
 const apolloProvider = new VueApollo({

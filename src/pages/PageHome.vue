@@ -20,53 +20,66 @@
     <CardRow>
       <Card>
         <div class="card__icon">
-          <img
-            src="@/assets/images/message-large.svg"
-            alt=""
-            role="presentation"
-          />
+          <Icon id="irc" :width="64" :height="64"></Icon>
         </div>
         <h2>
-          <a href="https://discourse.mozilla.org/c/iam/dinopark" target="_blank"
-            >Your feedback matters</a
+          <a
+            href="https://discourse.mozilla.org/c/iam/dinopark"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Your Feedback Matters</a
           >
         </h2>
         <p>
           Join us on Discourse and let us know how we can make the Mozilla
-          People Directory even better.
+          Directory even better.
         </p>
       </Card>
       <Card>
         <div class="card__icon">
-          <img
-            src="@/assets/images/lock-large.svg"
-            alt=""
-            role="presentation"
-          />
+          <Icon id="lock" :width="64" :height="64"></Icon>
         </div>
         <h2>
           <a
             href="https://discourse.mozilla.org/t/profile-privacy-display-levels-explained/37906"
             target="_blank"
-            >Your  privacy is protected</a
+            rel="noopener noreferrer"
+            >Your Privacy is Protected</a
           >
         </h2>
         <p>
-            By default, the following information is visible to Staff and NDA'd people:
-            Team, Manager, Official Job Title, Office Location, Desk Number.
-            Any other fields are visible to Staff only.
-            You can control this via field-level privacy settings. Read our <a 
-            href="https://discourse.mozilla.org/t/profile-privacy-display-levels-explained/37906" 
-            target="_blank">FAQ</a> for details.
+          Your Staff profile data is only visible to Staff and NDA’d people by
+          default. You can edit this via your profile privacy settings. Read our
+          <a
+            href="https://discourse.mozilla.org/t/profile-privacy-display-levels-explained/37906"
+            target="_blank"
+            rel="noopener noreferrer"
+            >FAQ</a
+          >
+          for details.
         </p>
       </Card>
-      <Card modifier="card--centered-content">
-        <img src="@/assets/images/edit-large.svg" alt="" role="presentation" />
-        <h2>Recent Additions</h2>
+      <Card>
+        <div class="card__icon">
+          <Icon id="edit" :width="64" :height="64"></Icon>
+        </div>
+        <h2>
+          <a
+            href="https://discourse.mozilla.org/t/edit-mode-announcement/38563"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Recent Additions</a
+          >
+        </h2>
         <p>
-          <ul><li><strong>Edit your profile</strong></li>
-              <li>Field-level <strong>privacy controls</strong></li>
-          </ul>
+          Profile editing is now live with privacy controls and synchronized
+          Workday information. Read more about this and improved people search
+          capabilities in our
+          <a
+            href="https://discourse.mozilla.org/t/edit-mode-announcement/38563"
+            target="_blank"
+            >Discourse post</a
+          >.
         </p>
       </Card>
     </CardRow>

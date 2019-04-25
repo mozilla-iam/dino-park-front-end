@@ -123,6 +123,9 @@ const MUTATE_PROFILE = gql`
     ) {
       uuid {
         value
+        metadata {
+          display
+        }
       }
       primaryUsername {
         value

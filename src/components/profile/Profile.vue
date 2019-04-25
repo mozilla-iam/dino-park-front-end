@@ -7,6 +7,7 @@
       "
     >
       <Toast :content="toastContent" @reset-toast="toastContent = ''"></Toast>
+      <a id="nav-personal-info" class="profile__anchor"></a>
       <EditPersonalInfo
         v-if="this.editing === 'personal-info'"
         v-bind="{
@@ -51,23 +52,26 @@
       :links="profileNav"
       :onStaffProfile="staffInformation.staff.value"
     ></ProfileNav>
+
+    <a id="nav-relations" class="profile__anchor"></a>
     <section v-if="staffInformation.staff.value" class="profile__section">
-      <a id="nav-relations" class="profile__anchor"></a>
       <ViewRelations :username="primaryUsername.value"></ViewRelations>
     </section>
+
+    <a id="nav-identities" class="profile__anchor"></a>
     <EmptyCard
       title="Identities"
       message="Soon you can edit identities in the People Directory"
     >
-      <a id="nav-identities" class="profile__anchor"></a
-    ></EmptyCard>
+    </EmptyCard>
+
+    <a id="nav-contact" class="profile__anchor"></a>
     <section
       :class="
         'profile__section' +
           (this.editing === 'contact' ? ' profile__section--editing' : '')
       "
     >
-      <a id="nav-contact" class="profile__anchor"></a>
       <EditContact
         v-if="this.editing === 'contact'"
         v-bind="{
@@ -86,6 +90,8 @@
         v-bind="{ primaryEmail, phoneNumbers, userOnOwnProfile }"
       ></ViewContact>
     </section>
+
+    <a id="nav-accounts" class="profile__anchor"></a>
     <section
       v-if="sections.accounts"
       :class="
@@ -93,7 +99,6 @@
           (this.editing === 'accounts' ? ' profile__section--editing' : '')
       "
     >
-      <a id="nav-accounts" class="profile__anchor"></a>
       <EditAccounts
         v-if="this.editing === 'accounts'"
         v-bind="{
@@ -101,11 +106,11 @@
           initialValues: { uris },
           initialUris: uris,
         }"
+        @toast="showToast"
       ></EditAccounts>
       <ViewAccounts v-else v-bind="{ uris, userOnOwnProfile }"></ViewAccounts>
     </section>
     <EmptyCard v-else title="Accounts" message="No accounts have been added">
-      <a id="nav-accounts" class="profile__anchor"></a>
       <template v-slot:header>
         <EditButton
           v-if="userOnOwnProfile"
@@ -114,6 +119,8 @@
         ></EditButton>
       </template>
     </EmptyCard>
+
+    <a id="nav-languages" class="profile__anchor"></a>
     <section
       v-if="sections.languages"
       :class="
@@ -121,7 +128,6 @@
           (this.editing === 'languages' ? ' profile__section--editing' : '')
       "
     >
-      <a id="nav-languages" class="profile__anchor"></a>
       <EditLanguages
         v-if="this.editing === 'languages'"
         v-bind="{
@@ -137,8 +143,9 @@
       ></ViewLanguages>
     </section>
     <EmptyCard v-else title="Languages" message="No languages have been added">
-      <a id="nav-languages" class="profile__anchor"></a>
     </EmptyCard>
+
+    <a id="nav-tags" class="profile__anchor"></a>
     <section
       v-if="sections.tags"
       :class="
@@ -146,13 +153,13 @@
           (this.editing === 'tags' ? ' profile__section--editing' : '')
       "
     >
-      <a id="nav-tags" class="profile__anchor"></a>
       <EditTags v-if="this.editing === 'tags'"></EditTags>
       <ViewTags v-else v-bind="{ tags, userOnOwnProfile }"></ViewTags>
     </section>
     <EmptyCard v-else title="Tags" message="No tags have been added">
-      <a id="nav-tags" class="profile__anchor"></a>
     </EmptyCard>
+
+    <a id="nav-keys" class="profile__anchor"></a>
     <section class="profile__section" v-if="pgpPublicKeys || sshPublicKeys">
       <EditKeys v-if="this.editing === 'keys'"> </EditKeys>
       <ViewKeys
@@ -160,8 +167,9 @@
       ></ViewKeys>
     </section>
     <EmptyCard v-else title="Keys" message="No keys have been added">
-      <a id="nav-keys" class="profile__anchor"></a
-    ></EmptyCard>
+    </EmptyCard>
+
+    <a id="nav-access-groups" class="profile__anchor"></a>
     <section
       v-if="
         Object.keys(accessInformation.mozilliansorg.values || {}).length > 0
@@ -177,7 +185,6 @@
       title="Access Groups"
       message="No access groups available"
     >
-      <a id="nav-access-groups" class="profile__anchor"></a>
     </EmptyCard>
   </main>
 </template>
@@ -391,5 +398,10 @@ export default {
 }
 .profile__section-header > .privacy-setting {
   margin-left: auto;
+}
+
+.profile__anchor {
+  top: -7em;
+  position: relative;
 }
 </style>
