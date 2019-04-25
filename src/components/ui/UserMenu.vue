@@ -10,7 +10,7 @@
         <UserPicture
           :picture="user.picture.value"
           :username="user.primaryUsername.value"
-          :size="100"
+          :size="40"
         ></UserPicture>
       </button>
       <div class="user-menu__name">
