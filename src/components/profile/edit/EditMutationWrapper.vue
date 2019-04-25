@@ -71,7 +71,7 @@ export default {
         default:
           msg = 'A problem occurred, please try again later.';
       }
-      this.$parent.$emit('toast', {
+      this.$root.$emit('toast', {
         content: msg,
       });
     },
@@ -102,7 +102,7 @@ export default {
       });
 
       this.$emit('toggle-edit-mode');
-      this.$parent.$emit('toast', {
+      this.$root.$emit('toast', {
         content: 'Your changes have been saved. Thank you.',
       });
     },
