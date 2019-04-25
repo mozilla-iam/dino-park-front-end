@@ -151,6 +151,7 @@ export default {
 }
 @media (min-width: 30em) {
   .user-menu {
+    position: absolute;
     left: auto;
     height: auto;
   }
