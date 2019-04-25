@@ -53,9 +53,9 @@
         <Tooltip
           buttonText="Open username info"
           alternateButtonText="Close username info"
-          >Your username is part of your profile URL. It is publicly visible.
-          Pro tip: Use the same username across systems for easy discovery (IRC,
-          Slack, Discourse).</Tooltip
+          >Your username is publicly visible and included in your profile URL.
+          Pro tip: Use the same username across systems for easy discovery (e.g.
+          IRC, Slack, and Discourse).</Tooltip
         >
       </div>
       <input type="text" id="field-username" v-model="primaryUsername.value" />
@@ -74,10 +74,10 @@
         ><Tooltip
           buttonText="Open first name info"
           alternateButtonText="Close first name info"
-          >For Staff members, data is initially imported from Workday. Changes
-          will not be reflected back into Workday though. Pro tip: If first &
-          last names don’t work for you we got you covered. Please use
-          Alternative name instead.</Tooltip
+          >For Staff members, name data is initially imported from Workday, but
+          any changes you make to your profile will not be reflected back into
+          Workday. Pro tip: If first and last names don’t work for you we have
+          you covered. Please use alternate name instead.</Tooltip
         >
       </div>
       <input type="text" id="field-first-name" v-model="firstName.value" />
@@ -95,10 +95,10 @@
         ><Tooltip
           buttonText="Open last name info"
           alternateButtonText="Close last name info"
-          >For Staff members, data is initially imported from Workday. Changes
-          will not be reflected back into Workday though. Pro tip: If first &
-          last names don’t work for you we got you covered. Please use
-          Alternative name instead.</Tooltip
+          >For Staff members, name data is initially imported from Workday, but
+          any changes you make to your profile will not be reflected back into
+          Workday. Pro tip: If first and last names don’t work for you we have
+          you covered. Please use alternate name instead.</Tooltip
         >
       </div>
       <input type="text" id="field-last-name" v-model="lastName.value" />
@@ -139,16 +139,17 @@
       <hr role="presentation" />
 
       <div class="edit-personal-info__label">
-        <label for="field-alt-name">Alternative Name</label
+        <label for="field-alt-name">Alternate Name</label
         ><Tooltip
-          buttonText="Open alternative name info"
-          alternateButtonText="Close alternative name info"
-          >This field allows you to enter an alternative name.</Tooltip
+          buttonText="Open Alternate Name info"
+          alternateButtonText="Close Alternate Name info"
+          >This field allows you to enter an additional or alternate name to
+          your profile and control its visibility level.</Tooltip
         >
       </div>
       <input type="text" id="field-alt-name" v-model="alternativeName.value" />
       <PrivacySetting
-        label="Alternative name privacy levels"
+        label="Alternate Name privacy levels"
         id="field-alt-name-privacy"
         profileFieldName="alternativeName"
         :profileFieldObject="alternativeName"
@@ -162,10 +163,10 @@
           buttonText="Open official job title info"
           alternateButtonText="Close official job title info"
           >This is your job title as provided by our HR Team (Workday). Staff
-          information is not editable and shared with Staff and NDA’d
+          information is not editable and is shared with all Staff and NDA’d
           Mozillians. Please contact
-          <a href="mailto:HROPS@mozilla.com">HROPS@mozilla.com</a> to change
-          your information.</Tooltip
+          <a href="mailto:HROPS@mozilla.com">HROPS@mozilla.com</a> to request a
+          change to your job title.</Tooltip
         >
       </div>
       <input
@@ -185,18 +186,18 @@
       <hr role="presentation" />
 
       <div class="edit-personal-info__label">
-        <label for="field-fun-job-title">Fun Job Title</label>
+        <label for="field-fun-job-title">Tagline</label>
         <Tooltip
-          buttonText="Open Fun Job Title info"
-          alternateButtonText="Close Fun Job Title info"
-          >This is the job title you give yourself. Pro tip: Feel free to copy
-          your Official Job Title and make it publicly visible through this
-          field.</Tooltip
+          buttonText="Open Tagline info"
+          alternateButtonText="Close Tagline info"
+          >This field describes what you do in your own words. You may also
+          choose to copy your Official Job Title and make it publicly visible
+          through this field.</Tooltip
         >
       </div>
       <input type="text" id="field-fun-job-title" v-model="funTitle.value" />
       <PrivacySetting
-        label="Fun title privacy levels"
+        label="Tagline privacy levels"
         id="field-fun-title-privacy"
         profileFieldName="funTitle"
         :profileFieldObject="funTitle"
@@ -229,10 +230,10 @@
           buttonText="Open Office Location info"
           alternateButtonText="Close Office Location info"
           >This is your office location as provided by our HR Team (Workday).
-          Staff information is not editable and shared with Staff and NDA’d
-          Mozillians. Please contact
-          <a href="mailto:HROPS@mozilla.com">HROPS@mozilla.com</a> to change
-          your information</Tooltip
+          Staff information is not editable and is shared with all Staff and
+          NDA’d Mozillians. Please contact
+          <a href="mailto:HROPS@mozilla.com">HROPS@mozilla.com</a> to request a
+          change to your office location.</Tooltip
         >
       </div>
       <input

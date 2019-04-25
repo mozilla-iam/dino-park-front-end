@@ -15,7 +15,6 @@
           >View the Org Chart<Icon id="chevron-right" :width="24" :height="24"
         /></RouterLink>
       </p>
-      <p><small>This is a beta version, let us know what you think.</small></p>
     </div>
     <CardRow>
       <Card>
