@@ -51,25 +51,25 @@
       :onStaffProfile="staffInformation.staff.value"
     ></ProfileNav>
 
-    <a id="nav-relations" class="profile__anchor"></a>
     <section v-if="staffInformation.staff.value" class="profile__section">
+      <a id="nav-relations" class="profile__anchor"></a>
       <ViewRelations :username="primaryUsername.value"></ViewRelations>
     </section>
 
-    <a id="nav-identities" class="profile__anchor"></a>
     <EmptyCard
+      nav="identities"
       title="Identities"
       message="Identity editing capabilities are coming soon."
     >
     </EmptyCard>
 
-    <a id="nav-contact" class="profile__anchor"></a>
     <section
       :class="
         'profile__section' +
           (this.editing === 'contact' ? ' profile__section--editing' : '')
       "
     >
+      <a id="nav-contact" class="profile__anchor"></a>
       <EditContact
         v-if="this.editing === 'contact'"
         v-bind="{
@@ -88,7 +88,6 @@
       ></ViewContact>
     </section>
 
-    <a id="nav-accounts" class="profile__anchor"></a>
     <section
       v-if="sections.accounts"
       :class="
@@ -96,6 +95,7 @@
           (this.editing === 'accounts' ? ' profile__section--editing' : '')
       "
     >
+      <a id="nav-accounts" class="profile__anchor"></a>
       <EditAccounts
         v-if="this.editing === 'accounts'"
         v-bind="{
@@ -108,6 +108,7 @@
     </section>
     <EmptyCard
       v-else
+      nav="accounts"
       title="Accounts"
       message="You haven’t added any accounts yet."
     >
@@ -120,7 +121,6 @@
       </template>
     </EmptyCard>
 
-    <a id="nav-languages" class="profile__anchor"></a>
     <section
       v-if="sections.languages"
       :class="
@@ -128,6 +128,7 @@
           (this.editing === 'languages' ? ' profile__section--editing' : '')
       "
     >
+      <a id="nav-languages" class="profile__anchor"></a>
       <EditLanguages
         v-if="this.editing === 'languages'"
         v-bind="{
@@ -143,12 +144,12 @@
     </section>
     <EmptyCard
       v-else
+      nav="languages"
       title="Languages"
       message="Language editing capabilities are coming soon."
     >
     </EmptyCard>
 
-    <a id="nav-tags" class="profile__anchor"></a>
     <section
       v-if="sections.tags"
       :class="
@@ -156,18 +157,20 @@
           (this.editing === 'tags' ? ' profile__section--editing' : '')
       "
     >
+      <a id="nav-tags" class="profile__anchor"></a>
       <EditTags v-if="this.editing === 'tags'"></EditTags>
       <ViewTags v-else v-bind="{ tags, userOnOwnProfile }"></ViewTags>
     </section>
     <EmptyCard
       v-else
+      nav="tags"
       title="Tags"
       message="Tag editing capabilities are coming soon."
     >
     </EmptyCard>
 
-    <a id="nav-keys" class="profile__anchor"></a>
     <section class="profile__section" v-if="pgpPublicKeys || sshPublicKeys">
+      <a id="nav-keys" class="profile__anchor"></a>
       <EditKeys v-if="this.editing === 'keys'"> </EditKeys>
       <ViewKeys
         v-bind="{ pgpPublicKeys, sshPublicKeys, userOnOwnProfile }"
@@ -175,24 +178,26 @@
     </section>
     <EmptyCard
       v-else
+      nav="keys"
       title="Keys"
       message="Syncing and editing capabilities for SSH / PGP keys are coming soon."
     >
     </EmptyCard>
 
-    <a id="nav-access-groups" class="profile__anchor"></a>
     <section
       v-if="
         Object.keys(accessInformation.mozilliansorg.values || {}).length > 0
       "
       class="profile__section"
     >
+      <a id="nav-access-groups" class="profile__anchor"></a>
       <ViewAccessGroups
         v-bind="(accessInformation, userOnOwnProfile)"
       ></ViewAccessGroups>
     </section>
     <EmptyCard
       v-else
+      nav="access-groups"
       title="Access Groups"
       message="Support for Access Group management is coming soon."
     >
