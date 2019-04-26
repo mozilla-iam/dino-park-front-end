@@ -16,35 +16,28 @@ export default {
     positionAndSize() {
       // We should take another look at this.
       const { button } = this.$parent.$refs;
-      const {
-        left: spaceOnLeft,
-        right,
-        width,
-      } = button.getBoundingClientRect();
+      const { left: spaceOnLeft, right } = button.getBoundingClientRect();
       const viewportWidth = document.scrollingElement.getBoundingClientRect()
         .width;
       const spaceOnRight = viewportWidth - right;
-      // Account for large buttons. We don't want their witdh in the equation.
-      const centeredSpaceOnLeft = spaceOnLeft + width / 2;
-      const centeredSpaceOnRight = spaceOnRight + width / 2;
 
       if (
-        centeredSpaceOnLeft > 0.5 * this.maxWidth &&
-        centeredSpaceOnRight > 0.5 * this.maxWidth
+        spaceOnLeft > 0.5 * this.maxWidth &&
+        spaceOnRight > 0.5 * this.maxWidth
       ) {
         return;
       }
-      if (centeredSpaceOnRight - centeredSpaceOnLeft > 10) {
+      if (spaceOnRight - spaceOnLeft > 10) {
         this.position = 'right';
-      } else if (centeredSpaceOnLeft - centeredSpaceOnRight > 10) {
+      } else if (spaceOnLeft - spaceOnRight > 10) {
         this.position = 'left';
       }
 
-      if (this.position === 'right' && centeredSpaceOnRight < this.maxWidth) {
-        this.maxWidth = centeredSpaceOnRight;
+      if (this.position === 'right' && spaceOnRight < this.maxWidth) {
+        this.maxWidth = spaceOnRight;
       }
-      if (this.position === 'left' && centeredSpaceOnLeft < this.maxWidth) {
-        this.maxWidth = centeredSpaceOnLeft;
+      if (this.position === 'left' && spaceOnLeft < this.maxWidth) {
+        this.maxWidth = spaceOnLeft;
       }
     },
   },
