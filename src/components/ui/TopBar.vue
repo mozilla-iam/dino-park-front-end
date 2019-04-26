@@ -146,6 +146,7 @@ export default {
 
 <style>
 .top-bar {
+  position: -webkit-sticky;
   position: sticky;
   top: 0px;
   z-index: var(--layerTopBar);
