@@ -32,17 +32,11 @@ export default {
         this.position = 'left';
       }
 
-      if (
-        this.position === 'right' &&
-        spaceOnLeft + this.maxWidth > viewportWidth
-      ) {
-        this.maxWidth = viewportWidth - spaceOnLeft;
+      if (this.position === 'right' && spaceOnRight < this.maxWidth) {
+        this.maxWidth = spaceOnRight;
       }
-      if (
-        this.position === 'left' &&
-        spaceOnRight + this.maxWidth > viewportWidth
-      ) {
-        this.maxWidth = viewportWidth - spaceOnRight;
+      if (this.position === 'left' && spaceOnLeft < this.maxWidth) {
+        this.maxWidth = spaceOnLeft;
       }
     },
   },
@@ -132,5 +126,8 @@ export default {
   .popover--right {
     transform: translateX(calc(100% - 0.75em));
   }
+}
+.popover a {
+  background-color: var(--white);
 }
 </style>
