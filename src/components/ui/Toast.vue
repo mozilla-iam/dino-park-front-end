@@ -41,7 +41,7 @@ export default {
   color: var(--white);
   padding: 1em 2em;
   position: absolute;
-  top: 5em;
+  top: 3em;
   width: 30em;
   max-width: 100%;
   left: 0;
