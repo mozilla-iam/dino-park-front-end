@@ -1,7 +1,6 @@
 <template>
   <header class="top-bar" :style="{ marginBottom: extraPadding + 'px' }">
     <div class="top-bar__bar">
-      <Banner v-if="showBanner" @close="showBanner = false" ref="banner" />
       <RouterLink
         :to="{ name: 'Home' }"
         class="top-bar__link top-bar__link--logo"
@@ -99,7 +98,6 @@
 
 <script>
 import ShowMore from '@/components/_functional/ShowMore.vue';
-import Banner from '@/components/ui/Banner.vue';
 import Toast from '@/components/ui/Toast.vue';
 import SearchForm from './SearchForm.vue';
 import UserMenu from './UserMenu.vue';
@@ -108,7 +106,6 @@ import UserPicture from './UserPicture.vue';
 export default {
   name: 'TopBar',
   components: {
-    Banner,
     SearchForm,
     ShowMore,
     Toast,
@@ -125,12 +122,6 @@ export default {
     showToast(data) {
       this.toastContent = data.content;
     },
-    updatePadding() {
-      console.log(this.showBanner);
-      this.extraPadding = this.showBanner
-        ? this.$refs.banner.$el.offsetHeight
-        : 0;
-    },
   },
   data() {
     return {
@@ -140,18 +131,12 @@ export default {
       toastContent: '',
     };
   },
-  watch: {
-    showBanner() {
-      this.updatePadding();
-    },
-  },
   computed: {
     user() {
       return this.$store.state.user;
     },
   },
   mounted() {
-    this.updatePadding();
     window.addEventListener('resize', this.updatePadding);
 
     this.$root.$on('toast', (data) => this.showToast(data));
@@ -161,7 +146,9 @@ export default {
 
 <style>
 .top-bar {
-  height: 5.8em; /* push down content */
+  position: sticky;
+  top: 0px;
+  z-index: var(--layerTopBar);
 }
 .top-bar__bar {
   background-color: var(--white);
@@ -170,10 +157,7 @@ export default {
   flex-wrap: wrap;
   align-items: center;
   margin-bottom: 2em;
-  position: fixed;
   width: 100%;
-  top: 0;
-  z-index: var(--layerTopBar);
 }
 .top-bar__search-toggle {
   border: 0;
