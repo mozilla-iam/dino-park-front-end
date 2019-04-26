@@ -26,9 +26,9 @@ export default {
       ) {
         return;
       }
-      if (spaceOnRight > spaceOnLeft) {
+      if (spaceOnRight - spaceOnLeft > 10) {
         this.position = 'right';
-      } else if (spaceOnLeft > spaceOnRight) {
+      } else if (spaceOnLeft - spaceOnRight > 10) {
         this.position = 'left';
       }
 
