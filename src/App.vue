@@ -182,6 +182,7 @@ button {
 
 .container {
   padding: 0 1em;
+  flex: 1;
   width: 100%;
 }
 @media (min-width: 57.5em) {
@@ -195,13 +196,7 @@ button {
   display: flex;
   flex-direction: column;
   max-width: 100vw;
-}
-.app-container > * {
-  min-width: 0; /* ‘auto’ is default for grid children,
-      but that would break our responsiveness in this case */
-}
-.app-container > footer {
-  grid-row: 4 / 5;
+  min-height: 100vh;
 }
 
 .visually-hidden {
