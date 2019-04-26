@@ -5,6 +5,7 @@
         <div class="modal__header">
           <button
             v-if="closeButton"
+            type="button"
             @click="$emit('close')"
             class="modal__close"
           >
