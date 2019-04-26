@@ -40,11 +40,11 @@ export default {
         this.position = 'left';
       }
 
-      if (this.position === 'right' && centeredSpaceOnRight < this.maxWidth) {
-        this.maxWidth = centeredSpaceOnRight;
+      if (this.position === 'right' && spaceOnRight < this.maxWidth) {
+        this.maxWidth = spaceOnRight;
       }
-      if (this.position === 'left' && centeredSpaceOnLeft < this.maxWidth) {
-        this.maxWidth = centeredSpaceOnLeft;
+      if (this.position === 'left' && spaceOnLeft < this.maxWidth) {
+        this.maxWidth = spaceOnLeft;
       }
     },
   },

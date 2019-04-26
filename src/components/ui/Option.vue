@@ -6,9 +6,9 @@
       :value="value"
       :id="id"
       :checked="checked"
-      @input="$event.target.checked && $emit('input', $event.target.value)"
+      @input="select"
     />
-    <label :for="id" @click="$emit('close-list')">
+    <label :for="id" @click="wasClicked = true">
       <Icon
         :id="icon"
         :width="17"
@@ -43,6 +43,20 @@ export default {
   },
   components: {
     Icon,
+  },
+  data() {
+    return { wasClicked: false };
+  },
+  methods: {
+    select($event) {
+      if (!$event.target.checked) return;
+      this.$emit('input', $event.target.value);
+
+      if (this.wasClicked) {
+        this.$emit('close-list');
+        this.wasClicked = false;
+      }
+    },
   },
 };
 </script>

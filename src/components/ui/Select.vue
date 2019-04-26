@@ -21,7 +21,7 @@
         :height="17"
       ></Icon>
     </button>
-    <Popover v-show="open">
+    <Popover v-if="open">
       <fieldset
         @keydown.enter.prevent="closeList"
         :id="`option-list-${id}`"
@@ -90,31 +90,21 @@ export default {
       if (this.open) {
         this.open = false;
       } else {
-        const list = this.$refs[`optionList-${this.id}`];
-        const optionToFocus =
-          list.querySelector('input:checked') || list.querySelector('input');
-
         this.open = true;
 
-        if (optionToFocus) {
-          this.$nextTick(() => {
+        this.$nextTick(() => {
+          const list = this.$refs[`optionList-${this.id}`];
+          const optionToFocus =
+            list.querySelector('input:checked') || list.querySelector('input');
+
+          if (optionToFocus) {
             optionToFocus.focus();
-          });
-        }
+          }
+        });
       }
     },
     closeList() {
       this.open = false;
-      this.focusToggle();
-    },
-    focusToggle() {
-      const optionToggle = this.$refs.button;
-
-      if (optionToggle) {
-        this.$nextTick(() => {
-          optionToggle.focus();
-        });
-      }
     },
     handleDocumentClick(event) {
       const expandedEl = this.$refs.options;
@@ -163,6 +153,7 @@ export default {
 .options {
   position: relative;
   display: inline-block;
+  align-self: start;
 }
 .options__toggle {
   font-size: inherit;
