@@ -41,7 +41,6 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  width: 100vw;
   background-color: var(--blue-60);
   color: var(--white);
   text-align: center;

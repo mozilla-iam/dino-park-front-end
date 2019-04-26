@@ -1,11 +1,14 @@
 <template>
   <section class="profile__section profile__section--disabled">
-    <header class="profile__section-header">
-      <h2>{{ title }}</h2>
-      <slot name="header"></slot>
-    </header>
-    <slot></slot>
-    <p>{{ message }}</p>
+    <a :id="`nav-${nav}`" class="profile__anchor"></a>
+    <div>
+      <header class="profile__section-header">
+        <h2>{{ title }}</h2>
+        <slot name="header"></slot>
+      </header>
+      <slot></slot>
+      <p>{{ message }}</p>
+    </div>
   </section>
 </template>
 
@@ -13,6 +16,7 @@
 export default {
   name: 'EmptyCard',
   props: {
+    nav: String,
     title: String,
     message: String,
   },

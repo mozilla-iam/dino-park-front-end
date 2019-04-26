@@ -1,5 +1,6 @@
 <template>
   <div id="app" class="app-container">
+    <Banner v-if="showBanner" @close="showBanner = false" ref="banner" />
     <TopBar></TopBar>
     <RouterView />
     <Footer></Footer>
@@ -7,6 +8,7 @@
 </template>
 
 <script>
+import Banner from '@/components/ui/Banner.vue';
 import TopBar from '@/components/ui/TopBar.vue';
 import Footer from '@/components/ui/Footer.vue';
 
@@ -15,6 +17,7 @@ import isDNTEnabled from '@/assets/js/dnt-enabled';
 export default {
   name: 'PageHome',
   components: {
+    Banner,
     TopBar,
     Footer,
   },
@@ -50,6 +53,11 @@ export default {
   mounted() {
     this.awaitTabbing();
     this.loadGA();
+  },
+  data() {
+    return {
+      showBanner: true,
+    };
   },
 };
 </script>
@@ -174,6 +182,7 @@ button {
 
 .container {
   padding: 0 1em;
+  flex: 1;
   width: 100%;
 }
 @media (min-width: 57.5em) {
@@ -184,17 +193,10 @@ button {
 }
 
 .app-container {
-  display: grid;
-  grid-template-rows: auto 1fr auto; /* this assumes an app container with:; header, content, footer; it makes header and footer as tall as they need to be, then gives remaining whitespace to content.  */
-  min-height: calc(100vh - 5.5em);
-  align-items: center; /* if there is not enough content, that content will center in the available space */
-}
-.app-container > * {
-  min-width: 0; /* ‘auto’ is default for grid children,
-      but that would break our responsiveness in this case */
-}
-.app-container > footer {
-  grid-row: 4 / 5;
+  display: flex;
+  flex-direction: column;
+  max-width: 100vw;
+  min-height: 100vh;
 }
 
 .visually-hidden {
