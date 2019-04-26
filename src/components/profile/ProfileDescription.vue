@@ -17,7 +17,7 @@ export default {
   methods: {
     marked(value) {
       if (value) {
-        return insane(marked(value));
+        return insane(marked(value, { gfm: true }));
       }
       return '';
     },
