@@ -21,7 +21,7 @@
         :height="17"
       ></Icon>
     </button>
-    <Popover v-if="open">
+    <Popover v-show="open">
       <fieldset
         @keydown.enter.prevent="closeList"
         :id="`option-list-${id}`"
@@ -90,17 +90,17 @@ export default {
       if (this.open) {
         this.open = false;
       } else {
+        const list = this.$refs[`optionList-${this.id}`];
+        const optionToFocus =
+          list.querySelector('input:checked') || list.querySelector('input');
+
         this.open = true;
 
-        this.$nextTick(() => {
-          const list = this.$refs[`optionList-${this.id}`];
-          const optionToFocus =
-            list.querySelector('input:checked') || list.querySelector('input');
-
-          if (optionToFocus) {
+        if (optionToFocus) {
+          this.$nextTick(() => {
             optionToFocus.focus();
-          }
-        });
+          });
+        }
       }
     },
     closeList() {
@@ -163,7 +163,6 @@ export default {
 .options {
   position: relative;
   display: inline-block;
-  align-self: start;
 }
 .options__toggle {
   font-size: inherit;
