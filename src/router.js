@@ -62,6 +62,9 @@ const router = new Router({
     },
   ],
   scrollBehavior(to, from) {
+    if (to.hash) {
+      return { selector: to.hash };
+    }
     if (scrolling.toEdit(to)) {
       return new Promise((resolve) => {
         setTimeout(() => {
@@ -74,9 +77,6 @@ const router = new Router({
     }
     if (scrolling.toProfile(to, from)) {
       return { x: 0, y: 0 };
-    }
-    if (to.hash) {
-      return { selector: to.hash };
     }
     return {};
   },
