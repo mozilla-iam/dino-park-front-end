@@ -42,6 +42,6 @@ export default {
   top: calc(100% - 3em);
   height: 3em;
   width: 100%;
-  background: linear-gradient(transparent 0, var(--white) 100%);
+  background: linear-gradient(rgba(255, 255, 255, 0) 0, var(--white) 100%);
 }
 </style>
