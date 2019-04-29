@@ -14,7 +14,7 @@
           :isStaff="staffInformation.staff.value"
         ></UserPicture>
       </div>
-      <div class="hide-mobile">
+      <div class="hide-mobile profile__contact-me-container">
         <ContactMe
           :primaryEmail="primaryEmail.value"
           :phoneNumbers="phoneNumbers"
@@ -190,6 +190,9 @@ export default {
     width: 18.75em;
     height: 18.75em;
     margin-left: 0;
+  }
+  .profile__contact-me-container {
+    width: 18.75em;
   }
   .profile__intro-photo .profile__headshot {
     margin: 0 0 4em;

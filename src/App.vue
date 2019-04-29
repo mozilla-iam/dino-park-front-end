@@ -200,7 +200,7 @@ abbr {
 }
 @media (min-width: 57.5em) {
   .hide-mobile {
-    display: initial;
+    display: block;
   }
   .hide-desktop {
     display: none;
