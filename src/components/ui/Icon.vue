@@ -137,34 +137,6 @@
         stroke-linejoin="round"
       />
     </template>
-    <template v-else-if="id === 'user-check'">
-      <path
-        d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      />
-      <circle
-        cx="8.5"
-        cy="7"
-        r="4"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      />
-      <polyline
-        points="17 11 19 13 23 9"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      />
-    </template>
     <template v-else-if="id === 'mail'">
       <path
         d="m9 17.333a8.333 8.333 0 1 0 0-16.666 8.333 8.333 0 0 0 0 16.666zm4.605-9.505a2.883 2.883 0 0 1 -.49.426 93.757 93.757 0 0 0 -2.437 1.689c-.411.303-.92.675-1.454.675h-.01c-.533 0-1.042-.372-1.453-.675-.798-.583-1.62-1.136-2.433-1.69a2.737 2.737 0 0 1 -.495-.425v3.887c0 .43.353.783.784.783h7.205c.43 0 .783-.352.783-.783zm0-1.743a.789.789 0 0 0 -.783-.783h-7.205c-.524 0-.784.41-.784.89 0 .446.495 1 .842 1.234.759.529 1.528 1.057 2.286 1.59.318.221.857.672 1.253.672h.01c.397 0 .935-.45 1.253-.671.76-.534 1.528-1.062 2.291-1.59.431-.3.837-.794.837-1.342z"
