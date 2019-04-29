@@ -5,7 +5,8 @@
       class="footer__link"
       target="_blank"
       rel="noopener noreferrer"
-      ><Icon id="cpg" :width="18" :height="18" /> CPG</a
+      ><Icon id="cpg" :width="18" :height="18" />
+      <abbr title="Community Participation Guidelines">CPG</abbr></a
     >
     <a
       href="https://discourse.mozilla.org/t/dinopark-faq/33564"

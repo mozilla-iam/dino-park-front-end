@@ -157,6 +157,10 @@ button {
   cursor: pointer; /* as per issue #50 :'( */
 }
 
+abbr {
+  text-decoration: none;
+}
+
 .container {
   padding: 0 1em;
   flex: 1;
