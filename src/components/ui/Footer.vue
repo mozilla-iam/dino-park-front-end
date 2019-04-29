@@ -5,7 +5,7 @@
       class="footer__link"
       target="_blank"
       rel="noopener noreferrer"
-      ><Icon id="cpg" :width="18" :height="18" />
+      ><Icon id="cpg-bg" :width="18" :height="18" />
       <abbr title="Community Participation Guidelines">CPG</abbr></a
     >
     <a
@@ -13,14 +13,14 @@
       class="footer__link"
       target="_blank"
       rel="noopener noreferrer"
-      ><Icon id="faq" :width="18" :height="18" /> FAQ</a
+      ><Icon id="faq-bg" :width="18" :height="18" /> FAQ</a
     >
     <a
       href="https://github.com/mozilla-iam/dino-park-issues"
       class="footer__link"
       target="_blank"
       rel="noopener noreferrer"
-      ><Icon id="github" :width="18" :height="18" /> GitHub</a
+      ><Icon id="github-bg" :width="18" :height="18" /> GitHub</a
     >
     <a
       href="https://discourse.mozilla.org/c/iam/dinopark"
@@ -34,14 +34,14 @@
       class="footer__link"
       target="_blank"
       rel="noopener noreferrer"
-      ><Icon id="legal" :width="18" :height="18" /> Legal</a
+      ><Icon id="legal-bg" :width="18" :height="18" /> Legal</a
     >
     <a
       href="https://www.mozilla.org/en-US/privacy/"
       class="footer__link"
       target="_blank"
       rel="noopener noreferrer"
-      ><Icon id="privacy" :width="18" :height="18" /> Privacy</a
+      ><Icon id="privacy-bg" :width="18" :height="18" /> Privacy</a
     >
   </footer>
 </template>
