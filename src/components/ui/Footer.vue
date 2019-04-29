@@ -5,7 +5,7 @@
       class="footer__link"
       target="_blank"
       rel="noopener noreferrer"
-      ><Icon id="cpg-bg" :width="18" :height="18" />
+      ><Icon id="cpg" :width="12" :height="12" />
       <abbr title="Community Participation Guidelines">CPG</abbr></a
     >
     <a
@@ -13,35 +13,35 @@
       class="footer__link"
       target="_blank"
       rel="noopener noreferrer"
-      ><Icon id="faq-bg" :width="18" :height="18" /> FAQ</a
+      ><Icon id="faq" :width="12" :height="12" /> FAQ</a
     >
     <a
       href="https://github.com/mozilla-iam/dino-park-issues"
       class="footer__link"
       target="_blank"
       rel="noopener noreferrer"
-      ><Icon id="github-bg" :width="18" :height="18" /> GitHub</a
+      ><Icon id="github" :width="12" :height="12" /> GitHub</a
     >
     <a
       href="https://discourse.mozilla.org/c/iam/dinopark"
       class="footer__link"
       target="_blank"
       rel="noopener noreferrer"
-      ><Icon id="discourse-bg" :width="18" :height="18" /> Feedback</a
+      ><Icon id="envelope" :width="12" :height="12" /> Helpdesk</a
     >
     <a
       href="https://www.mozilla.org/en-US/legal"
       class="footer__link"
       target="_blank"
       rel="noopener noreferrer"
-      ><Icon id="legal-bg" :width="18" :height="18" /> Legal</a
+      ><Icon id="check" :width="12" :height="12" /> Legal</a
     >
     <a
       href="https://www.mozilla.org/en-US/privacy/"
       class="footer__link"
       target="_blank"
       rel="noopener noreferrer"
-      ><Icon id="privacy-bg" :width="18" :height="18" /> Privacy</a
+      ><Icon id="lock" :width="12" :height="12" /> Privacy</a
     >
   </footer>
 </template>
@@ -85,12 +85,13 @@ export default {
   margin-right: 0.75em;
   display: inline-block;
   vertical-align: middle;
+  background: var(--gray-40);
+  border-radius: 100%;
+  color: var(--black);
+  padding: 0.25em;
+  box-sizing: content-box;
 }
-.footer__link--cpg {
-  display: inline-block;
-  margin: 0 auto;
-  padding: 0.5em;
-  text-decoration: underline;
-  border-radius: var(--imageRadius);
+.footer__link:hover svg {
+  background-color: var(--white);
 }
 </style>
