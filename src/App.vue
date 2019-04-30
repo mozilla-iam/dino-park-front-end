@@ -178,8 +178,7 @@ abbr {
   max-width: 100vw;
   min-height: 100vh;
 }
-.app-container > .container,
-.app-container > div[username] {
+.app-container > .container {
   flex: 1;
 }
 
