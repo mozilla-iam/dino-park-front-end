@@ -163,7 +163,6 @@ abbr {
 
 .container {
   padding: 0 1em;
-  flex: 1;
   width: 100%;
 }
 @media (min-width: 57.5em) {
@@ -178,6 +177,10 @@ abbr {
   flex-direction: column;
   max-width: 100vw;
   min-height: 100vh;
+}
+.app-container > .container,
+.app-container > div[username] {
+  flex: 1;
 }
 
 .visually-hidden {
