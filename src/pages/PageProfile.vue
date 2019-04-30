@@ -5,7 +5,7 @@
     clientId="mutationClient"
   >
     <template slot-scope="{ result: { loading, data, error } }">
-      <main v-if="loading" class="container"><LoadingSpinner /></main>
+      <LoadingSpinner v-if="loading"></LoadingSpinner>
       <template v-else-if="data && data.profile !== null">
         <Profile
           v-bind="data.profile"
@@ -19,7 +19,7 @@
         ></Profile>
       </template>
       <Page404 v-else-if="error || (data && data.profile === null)"></Page404>
-      <main v-else class="container"><LoadingSpinner /></main>
+      <LoadingSpinner v-else></LoadingSpinner>
     </template>
   </ApolloQuery>
 </template>
