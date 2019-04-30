@@ -104,9 +104,7 @@
       <hr role="presentation" />
 
       <div class="edit-personal-info__label">
-        <label for="field-pronouns" class="edit-personal-info__label"
-          >Pronouns
-        </label>
+        <label for="field-pronouns">Pronouns </label>
         <Tooltip
           buttonText="Open pronouns info"
           alternateButtonText="Close pronouns info"
