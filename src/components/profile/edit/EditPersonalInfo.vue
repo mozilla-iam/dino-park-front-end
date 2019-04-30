@@ -517,9 +517,21 @@ export default {
   .user-picture
   ~ .edit-personal-info__picture-edit-button,
 .edit-personal-info__picture .user-picture ~ .privacy-setting {
-  display: inline-block;
+  display: inline-flex;
   vertical-align: bottom;
   margin-right: 0.5em;
+}
+.edit-personal-info__picture .edit-personal-info__picture-privacy button,
+.edit-personal-info__picture .edit-personal-info__picture-edit-button {
+  background-color: var(--white);
+  font-size: inherit;
+  display: flex;
+  border-radius: var(--imageRadius);
+  color: var(--black);
+  border: 1px solid var(--gray-50);
+}
+.edit-personal-info__picture .edit-personal-info__picture-edit-button svg {
+  margin: 0;
 }
 .edit-personal-info__meta {
   grid-column: 1 / 2;
@@ -581,12 +593,17 @@ export default {
   .edit-personal-info__picture .edit-personal-info__picture-edit-button {
     position: absolute;
     top: 15.5em;
-    background-color: var(--gray-20);
-    font-size: inherit;
-    display: flex;
-    border-radius: var(--imageRadius);
-    color: var(--black);
+  }
+  .edit-personal-info__picture .edit-personal-info__picture-privacy button,
+  .edit-personal-info__picture .edit-personal-info__picture-edit-button {
     border-color: transparent;
+  }
+  .edit-personal-info__picture
+    .edit-personal-info__picture-privacy
+    button:hover,
+  .edit-personal-info__picture .edit-personal-info__picture-edit-button:hover {
+    border-color: var(--blue-60);
+    color: var(--blue-60);
   }
   .edit-personal-info__picture-edit-button {
     left: 1.1em;
