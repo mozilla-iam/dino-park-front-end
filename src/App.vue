@@ -2,7 +2,7 @@
   <div id="app" class="app-container">
     <Banner v-if="showBanner" @close="showBanner = false" ref="banner" />
     <TopBar></TopBar>
-    <RouterView />
+    <RouterView class="container" />
     <Footer></Footer>
   </div>
 </template>
@@ -163,7 +163,6 @@ abbr {
 
 .container {
   padding: 0 1em;
-  flex: 1;
   width: 100%;
 }
 @media (min-width: 57.5em) {
@@ -178,6 +177,9 @@ abbr {
   flex-direction: column;
   max-width: 100vw;
   min-height: 100vh;
+}
+.app-container > .container {
+  flex: 1;
 }
 
 .visually-hidden {

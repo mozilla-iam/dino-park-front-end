@@ -1,5 +1,5 @@
 <template>
-  <main class="container">
+  <main>
     <Error>
       <template slot="image">
         <img
@@ -22,7 +22,8 @@
         >
         <p>
           <small
-            >Please submit all bugs or issues to the project's GitHub issue repository (link in footer).</small
+            >Please submit all bugs or issues to the project's GitHub issue
+            repository (link in footer).</small
           >
         </p>
       </template>
