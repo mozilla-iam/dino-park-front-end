@@ -2,7 +2,7 @@
   <div id="app" class="app-container">
     <Banner v-if="showBanner" @close="showBanner = false" ref="banner" />
     <TopBar></TopBar>
-    <RouterView />
+    <RouterView class="container" />
     <Footer></Footer>
   </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <main class="container home">
+  <main class="home">
     <div class="home__intro">
       <img
         src="@/assets/images/laptop-phone.jpg"

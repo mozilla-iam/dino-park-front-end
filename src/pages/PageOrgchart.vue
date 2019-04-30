@@ -1,5 +1,5 @@
 <template>
-  <main class="container org-chart">
+  <main class="org-chart">
     <div class="org-chart__chart">
       <OrgRoot
         v-if="tree && !loading"

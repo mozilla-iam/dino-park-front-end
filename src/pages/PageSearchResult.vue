@@ -1,9 +1,5 @@
 <template>
-  <main
-    class="container search-results"
-    ref="searchResultsContainer"
-    tabindex="-1"
-  >
+  <main class="search-results" ref="searchResultsContainer" tabindex="-1">
     <h1 class="visually-hidden">Search results</h1>
     <SearchScope />
     <template v-if="!this.$route.query.query">
