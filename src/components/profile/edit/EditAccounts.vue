@@ -48,14 +48,12 @@
           `Your username on ${EXTERNAL_ACCOUNTS[destructUriKey(k).name].text}`
         "
       />
-      <label class="edit-contact__set-as-contact"
-        ><input
-          type="checkbox"
-          v-on:change="(e) => toggleUriContactMe(e, index)"
-          :checked="destructUriKey(k).contact"
-        />
-        Show in Contact Me button</label
-      >
+      <Checkbox
+        @input="(newValue) => toggleUriContactMe(newValue, index)"
+        :checked="destructUriKey(k).contact"
+        label="Show in Contact Me button"
+        class="edit-contact__set-as-contact"
+      />
       <hr role="presentation" />
     </div>
     <Button
@@ -71,6 +69,7 @@
 <script>
 import AccountsMixin from '@/components/_mixins/AccountsMixin.vue';
 import Button from '@/components/ui/Button.vue';
+import Checkbox from '@/components/ui/Checkbox.vue';
 import Icon from '@/components/ui/Icon.vue';
 import PrivacySetting from '@/components/profile/PrivacySetting.vue';
 import Select from '@/components/ui/Select.vue';
@@ -91,11 +90,12 @@ export default {
   },
   mixins: [AccountsMixin],
   components: {
+    Button,
+    Checkbox,
     EditMutationWrapper,
     Icon,
     PrivacySetting,
     Select,
-    Button,
   },
   methods: {
     displayLevelsFor,
@@ -119,9 +119,9 @@ export default {
         this.uris.values.splice(index, 1);
       }
     },
-    toggleUriContactMe(e, index) {
+    toggleUriContactMe(checked, index) {
       const account = this.destructUriKey(this.uris.values[index].k, index);
-      account.contact = e.target.checked;
+      account.contact = checked;
       this.uris.values[index].k = this.constructUriKey(account);
     },
   },
