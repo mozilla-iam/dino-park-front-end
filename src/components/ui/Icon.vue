@@ -374,6 +374,25 @@
         fill-rule="evenodd"
       />
     </template>
+    <template v-else-if="id === 'square'">
+      <rect
+        x="3"
+        y="3"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        rx="2"
+        width="18"
+        height="18"
+        ry="2"
+      />
+    </template>
+    <template v-else-if="id === 'successSquare'">
+      <path
+        fill="currentColor"
+        d="M19 2c1.7 0 3 1.3 3 3v14c0 1.7-1.3 3-3 3H5c-1.7 0-3-1.3-3-3V5c0-1.7 1.3-3 3-3h14zm-2.3 8.7c.4-.4.4-1 0-1.4-.4-.4-1-.4-1.4 0L11 13.6l-2.3-2.3c-.4-.4-1-.4-1.4 0-.4.4-.4 1 0 1.4l3 3c.2.2.4.3.7.3.3 0 .5-.1.7-.3l5-5z"
+      />
+    </template>
   </svg>
 </template>
 
