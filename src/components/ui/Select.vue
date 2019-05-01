@@ -205,29 +205,26 @@ export default {
   text-decoration: none;
   color: inherit;
 }
-.options__option svg {
+.options__option-icon {
   width: 2em;
   margin-right: 0.75em;
+}
+.options__option-checked {
+  margin-left: auto;
+  color: var(--blue-60);
 }
 .options input {
   position: absolute;
   opacity: 0;
 }
 .options label {
-  padding: 0.75em 1em;
+  padding: 0.75em 0.5em 0.75em 1em;
   margin: 0;
   display: flex;
   align-items: center;
-  padding-right: 3em;
 }
 .options label:hover {
   background-color: var(--lightBlue);
-}
-.options input:checked + label {
-  background-image: url('../../assets/images/check-blue.svg');
-  background-repeat: no-repeat;
-  background-position: center right 0.75em;
-  background-size: 1.5em;
 }
 .focus-styles .options input:focus + label {
   position: relative;
