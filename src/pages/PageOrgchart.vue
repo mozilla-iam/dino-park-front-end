@@ -1,10 +1,14 @@
 <template>
   <main class="org-chart">
     <div class="org-chart__chart">
+      <button v-on:click="expand">expand</button>
+      <button v-on:click="collapse">collapse</button>
+      <button v-on:click="reset">reset</button>
       <OrgRoot
         v-if="tree && !loading"
         :roots="tree"
         :trace="trace || ''"
+        :baseState="baseState"
       ></OrgRoot>
       <OrgRoot
         v-if="loose && !loading"
@@ -73,6 +77,7 @@ export default {
       looseTrace: '',
       previewProfileQuery: PREVIEW_PROFILE,
       desktopView: false,
+      baseState: 'normal',
     };
   },
   created() {
@@ -146,6 +151,18 @@ export default {
       } else {
         this.desktopView = false;
       }
+    },
+    expand() {
+      console.log('expanding');
+      this.baseState = 'expanded';
+    },
+    collapse() {
+      console.log('collapsing');
+      this.baseState = 'collapsed';
+    },
+    reset() {
+      console.log('resetting');
+      this.baseState = 'normal';
     },
   },
   mounted() {

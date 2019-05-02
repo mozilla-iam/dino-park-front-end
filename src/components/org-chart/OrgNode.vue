@@ -26,25 +26,22 @@
       >
       <span class="org-node__title">{{ data.title }}</span>
     </RouterLink>
-    <ShowMore
+    <OrgchartExpander
       v-if="children.length > 0"
       :buttonText="`Expand ${data.firstName} ${data.lastName}`"
       :alternateButtonText="`Collapse ${data.firstName} ${data.lastName}`"
+      :expanded="orgNodeExpanded"
       buttonClass="org-node__toggle"
-      :transition="false"
-      :moveFocus="false"
-      :overflowBefore="false"
-      :expanded="expandAllChildren || orgNodeExpanded"
-      @expand-all="handleExpandAll"
     >
       <template slot="overflow">
         <ul v-for="(child, index) in children" :key="index">
           <OrgNode
+            v-if="loadNow || orgNodeExpanded"
             :children="child.children"
             :data="child.data"
             :prefix="`${prefix}-${index}`"
             :trace="trace"
-            :expandAllChildren="shouldExpandAllChildren"
+            :expandAllChildren="propagateExpandAllChildren"
           ></OrgNode>
         </ul>
       </template>
@@ -84,7 +81,7 @@
           <polyline points="9 18 15 12 9 6" />
         </svg>
       </template>
-    </ShowMore>
+    </OrgchartExpander>
     <template v-else>
       <svg
         class="org-node__no-children-indicator"
@@ -110,7 +107,7 @@
 </template>
 
 <script>
-import ShowMore from '@/components/_functional/ShowMore.vue';
+import OrgchartExpander from '@/components/_functional/OrgchartExpander.vue';
 import UserPicture from '@/components/ui/UserPicture.vue';
 
 export default {
@@ -124,9 +121,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    baseState: String,
   },
   components: {
-    ShowMore,
+    OrgchartExpander,
     UserPicture,
   },
   watch: {
@@ -137,10 +135,43 @@ export default {
       }
       return this.orgNodeExpanded;
     },
+    expandAllChildren() {
+      this.propagateExpandAllChildren = this.expandAllChildren;
+      this.orgNodeExpanded = this.shouldBeExpanded();
+      console.log(`expandAll → ${this.expandAllChildren}`);
+    },
+    baseState() {
+      switch (this.baseState) {
+        case 'normal':
+          this.propagateExpandAllChildren = false;
+          this.orgNodeExpanded = this.shouldBeExpanded();
+          break;
+        case 'expanded':
+          this.propagateExpandAllChildren = true;
+          this.orgNodeExpanded = this.shouldBeExpanded();
+          break;
+        case 'collapsed':
+          this.orgNodeExpanded = false;
+          break;
+        default:
+          console.warn('unknown orgchart state');
+      }
+      console.log(
+        `all: ${this.propagateExpandAllChildren} → this: ${
+          this.orgNodeExpanded
+        }`,
+      );
+    },
   },
   methods: {
-    handleExpandAll() {
-      this.shouldExpandAllChildren = !this.shouldExpandAllChildren;
+    shouldBeExpanded() {
+      const state = this.trace && this.trace.startsWith(`${this.prefix}-`);
+      return (
+        state ||
+        (this.prefix && !this.prefix.includes('-')) ||
+        this.expandAllChildren ||
+        this.propagateExpandAllChildren
+      );
     },
   },
   mounted() {
@@ -160,13 +191,16 @@ export default {
       }
       this.orgNodeExpanded = true;
     }
+    setTimeout(() => {
+      this.loadNow = true;
+    }, 100);
   },
   data() {
-    const state = this.trace && this.trace.startsWith(`${this.prefix}-`);
-
+    const orgNodeExpanded = this.shouldBeExpanded();
     return {
-      orgNodeExpanded: state || (this.prefix && !this.prefix.includes('-')),
-      shouldExpandAllChildren: this.expandAllChildren || false,
+      propagateExpandAllChildren: this.expandAllChildren,
+      orgNodeExpanded,
+      loadNow: orgNodeExpanded,
     };
   },
 };
@@ -269,10 +303,10 @@ export default {
   margin-right: 0;
   margin-bottom: -2px;
 }
-.org-node .show-more {
+.org-node .orgchart-expander {
   position: static; /* so that it is explicitly not a positioning context */
 }
-.org-node .show-more__button-text {
+.org-node .orgchart-expander__button-text {
   border: 0;
   clip: rect(0 0 0 0);
   width: 1px;

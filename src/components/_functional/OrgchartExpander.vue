@@ -1,47 +1,33 @@
 <template>
   <div
     :class="
-      'show-more' +
-        (transition ? ' show-more--transition' : '') +
-        (isExpanded ? ' show-more--expanded' : '')
+      'orgchart-expander' + (isExpanded ? ' orgchart-expander--expanded' : '')
     "
   >
-    <slot name="base"> </slot>
-    <transition v-if="overflowBefore" name="show-more__overflow-">
-      <div
-        class="show-more__overflow"
-        v-if="isExpanded"
-        tabindex="-1"
-        ref="overflowContentElement"
-      >
-        <slot name="overflow"> </slot>
-      </div>
-    </transition>
     <button
-      :class="'show-more__button ' + (buttonClass ? ' ' + buttonClass : '')"
+      :class="
+        'orgchart-expander__button ' + (buttonClass ? ' ' + buttonClass : '')
+      "
       type="button"
       :aria-expanded="isExpanded ? 'true' : 'false'"
+      :aria-label="isExpanded ? alternateButtonText || buttonText : buttonText"
       v-on:click="toggleOverflow"
       ref="button"
     >
       <template v-if="isExpanded">
         <slot name="icon-expanded"></slot>
-        <span :class="`show-more__button-text${buttonTextClass}`">{{
-          alternateButtonText || buttonText
-        }}</span>
       </template>
       <template v-else>
         <slot name="icon-collapsed"></slot>
-        <span :class="`show-more__button-text${buttonTextClass}`">{{
-          buttonText
-        }}</span>
       </template>
       <slot name="button-content"></slot>
     </button>
-    <transition v-if="overflowBefore === false" name="show-more__overflow-">
+    <transition name="orgchart-expander__overflow-">
       <div
-        class="show-more__overflow"
-        v-if="isExpanded"
+        :class="
+          'orgchart-expander__overflow' +
+            (isExpanded ? '' : ' orgchart-expander__overflow-hidden')
+        "
         tabindex="-1"
         ref="overflowContentElement"
       >
@@ -53,7 +39,7 @@
 
 <script>
 export default {
-  name: 'ShowMore',
+  name: 'OrgchartExpander',
   props: {
     buttonText: String,
     alternateButtonText: String,
@@ -120,48 +106,24 @@ export default {
       return buttonClass;
     },
   },
-  updated() {
-    const overflowContent = this.$refs.overflowContentElement;
-
-    if (this.isExpanded && this.moveFocus) {
-      overflowContent.focus();
-    }
-
-    if (this.isExpanded && this.closeWhenClickedOutside) {
-      document.addEventListener('click', this.handleDocumentClick);
-      document.addEventListener('touchstart', this.handleDocumentClick);
-    } else if (this.closeWhenClickedOutside) {
-      document.removeEventListener('click', this.handleDocumentClick);
-      document.removeEventListener('touchstart', this.handleDocumentClick);
-    }
-  },
 };
 </script>
 
 <style>
-.show-more {
+.orgchart-expander {
   position: relative;
 }
-.show-more--transition .show-more__overflow--enter-active,
-.show-more--transition .show-more__overflow--leave-active {
-  transition: opacity 0.5s;
-}
-.show-more--transition .show-more__overflow--enter,
-.show-more--transition .show-more__overflow--leave-to {
-  opacity: 0;
-  z-index: var(--layerOne);
-}
-.show-more__button {
+.orgchart-expander__button {
   font: inherit;
 }
-.show-more__button > svg,
-.show-more__button > img {
+.orgchart-expander__button > svg,
+.orgchart-expander__button > img {
   margin-right: 1.5em;
 }
-.show-more__button-text {
+.orgchart-expander__button-text {
   font-size: 0.9em;
 }
-.show-more__button-text.contact-me__button {
-  font-size: 1em;
+.orgchart-expander__overflow-hidden {
+  display: none;
 }
 </style>

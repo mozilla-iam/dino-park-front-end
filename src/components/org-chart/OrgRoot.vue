@@ -7,6 +7,7 @@
         :data="root.data"
         :prefix="`${index}`"
         :trace="trace"
+        :baseState="baseState"
       ></OrgNode>
     </ul>
   </div>
@@ -25,6 +26,7 @@ export default {
     trace: String,
     heading: String,
     modifier: String,
+    baseState: String,
   },
 };
 </script>
