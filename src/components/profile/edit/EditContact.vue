@@ -36,10 +36,12 @@
           :profileFieldObject="primaryEmail"
           :disabled="true"
         />
-        <label class="edit-contact__set-as-contact"
-          ><input type="checkbox" checked disabled /> Show in Contact Me
-          button</label
-        >
+        <Checkbox
+          :checked="true"
+          label="Show in Contact Me button"
+          class="edit-contact__set-as-contact"
+          :disabled="true"
+        />
         <hr role="presentation" />
       </div>
       <div class="edit-contact__info">Add / Remove Email via Identities</div>
@@ -82,14 +84,12 @@
           placeholder="Phone number"
           v-model="phoneNumbers.values[index].v"
         />
-        <label class="edit-contact__set-as-contact"
-          ><input
-            type="checkbox"
-            v-on:change="(e) => togglePhoneNumberContactMe(e, index)"
-            :checked="destructPhoneKey(k).contact"
-          />
-          Show in Contact Me button</label
-        >
+        <Checkbox
+          @input="(newValue) => togglePhoneNumberContactMe(newValue, index)"
+          :checked="destructPhoneKey(k).contact"
+          label="Show in Contact Me button"
+          class="edit-contact__set-as-contact"
+        />
         <hr role="presentation" />
       </div>
       <hr role="presentation" />
@@ -104,6 +104,7 @@
 </template>
 
 <script>
+import Checkbox from '@/components/ui/Checkbox.vue';
 import PhoneNumbersMixin from '@/components/_mixins/PhoneNumbersMixin.vue';
 import Button from '@/components/ui/Button.vue';
 import EditMutationWrapper from './EditMutationWrapper.vue';
@@ -123,6 +124,7 @@ export default {
   mixins: [PhoneNumbersMixin],
   components: {
     Button,
+    Checkbox,
     EditMutationWrapper,
     Icon,
     PrivacySetting,
@@ -144,12 +146,12 @@ export default {
         this.phoneNumbers.values.splice(index, 1);
       }
     },
-    togglePhoneNumberContactMe(e, index) {
+    togglePhoneNumberContactMe(newValue, index) {
       const number = this.destructPhoneKey(
         this.phoneNumbers.values[index].k,
         index,
       );
-      number.contact = e.target.checked;
+      number.contact = newValue;
       this.phoneNumbers.values[index].k = this.constructPhoneKey(number);
     },
     phoneNumberLabels(k, index) {
