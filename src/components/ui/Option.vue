@@ -14,9 +14,17 @@
         :width="17"
         :height="17"
         v-if="icon && expandedShowIcon"
+        class="options__option-icon"
       ></Icon>
-      <span v-if="expandedShowLabel">{{ label }}</span></label
-    >
+      <span v-if="expandedShowLabel">{{ label }}</span>
+      <Icon
+        id="check"
+        :width="24"
+        :height="24"
+        v-if="checked"
+        class="options__option-checked"
+      ></Icon>
+    </label>
   </li>
 </template>
 
