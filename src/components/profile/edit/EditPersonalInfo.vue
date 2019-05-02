@@ -327,15 +327,6 @@
 
       <div class="edit-personal-info__label">
         <label for="field-team">Team</label>
-        <Tooltip
-          buttonText="Open Team info"
-          alternateButtonText="Close Team info"
-          >This is your team name as provided by our HR Team (Workday). Staff
-          information is not editable and shared with Staff and NDA’d
-          Mozillians. Please contact
-          <a href="mailto:HROPS@mozilla.com">HROPS@mozilla.com</a> to change
-          your information.</Tooltip
-        >
       </div>
       <input
         type="text"
