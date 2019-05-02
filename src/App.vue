@@ -194,16 +194,15 @@ abbr {
   white-space: nowrap;
 }
 
-/* best only use these classes on elements that
-     do not have anything else, we don't want it
-     to interfere with other display values */
-.hide-mobile {
-  display: none;
+/* best only use these classes on their own, and use a
+   wrapping container to not interfere with an element's 
+   existing display value */
+@media not screen and (min-width: 57.5em) {
+  .hide-mobile {
+    display: none;
+  }
 }
 @media (min-width: 57.5em) {
-  .hide-mobile {
-    display: initial;
-  }
   .hide-desktop {
     display: none;
   }
