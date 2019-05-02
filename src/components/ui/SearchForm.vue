@@ -103,7 +103,7 @@ export default {
   },
   data() {
     return {
-      searchQuery: this.query,
+      searchQuery: this.$route.query.query || '',
     };
   },
   mounted() {
