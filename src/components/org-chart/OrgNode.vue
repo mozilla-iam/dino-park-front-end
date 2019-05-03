@@ -16,7 +16,7 @@
       :id="`org-node-${prefix}`"
     >
       <UserPicture
-        :picture="visible ? data.picture : 'default:'"
+        :picture="hasBeenLoaded ? data.picture : 'default:'"
         :username="data.username"
         :size="40"
         :isStaff="true"
@@ -157,6 +157,11 @@ export default {
       this.propagateExpandAllChildren = this.expandAllChildren;
       this.orgNodeExpanded = this.shouldBeExpanded();
     },
+    visible() {
+      if (!this.hasBeenLoaded && this.visible) {
+        this.hasBeenLoaded = true;
+      }
+    },
     baseState() {
       switch (this.baseState) {
         case 'normal':
@@ -216,6 +221,7 @@ export default {
       propagateExpandAllChildren: this.expandAllChildren,
       orgNodeExpanded,
       loadNow: orgNodeExpanded,
+      hasBeenLoaded: this.visible,
     };
   },
 };
