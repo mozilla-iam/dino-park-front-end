@@ -4,7 +4,7 @@
       <button
         type="button"
         @click="expand"
-        class="button org-chart-buttons__control button--icon-only"
+        class="org-chart-buttons__row-left org-chart-buttons__control button--icon-only button"
         title="Expand all"
       >
         <Icon id="expand" :width="18" :height="18" />
@@ -13,7 +13,7 @@
       <button
         type="button"
         @click="collapse"
-        class="button org-chart-buttons__control button--icon-only"
+        class="org-chart-buttons__row-right org-chart-buttons__control button--icon-only button"
         title="Collapse all"
       >
         <Icon id="collapse" :width="18" :height="18" />
@@ -22,7 +22,7 @@
       <button
         type="button"
         @click="reset"
-        class="button org-chart-buttons__reset org-chart-buttons__control button--icon-only"
+        class="org-chart-buttons__reset org-chart-buttons__control button--icon-only button"
         title="Reset to default view"
       >
         <Icon id="rotate" :width="18" :height="18" />
@@ -231,12 +231,30 @@ export default {
   border: 2px solid var(--gray-30);
   font-size: inherit;
   line-height: 1;
+  width: 2.5em;
+  height: 2.5em;
 }
 .org-chart-buttons__control:hover {
   background-color: var(--blue-60);
   border: 2px solid var(--gray-30);
   color: var(--white);
 }
+.org-chart-buttons__control > svg {
+  margin: auto;
+}
+
+.org-chart-buttons__row-left {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-right: 1px solid var(--gray-30);
+}
+
+.org-chart-buttons__row-right {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-left: 1px solid var(--gray-30);
+}
+
 .org-chart {
   padding: 0;
   width: 100%;
