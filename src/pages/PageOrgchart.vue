@@ -1,5 +1,5 @@
 <template>
-  <main class="container">
+  <main class="org-chart-main">
     <div class="org-chart-buttons" v-if="!loading">
       <button
         type="button"
@@ -207,6 +207,9 @@ export default {
 </script>
 
 <style>
+.org-chart-main {
+  width: auto;
+}
 .org-chart-buttons {
   display: flex;
   justify-content: center;
