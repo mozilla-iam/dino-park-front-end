@@ -54,20 +54,18 @@
       >
         <template slot-scope="{ result: { loading, data, error } }">
           <div class="org-chart__preview">
-            <template v-if="data">
-              <ProfilePreview
-                v-if="desktopView"
-                v-bind="data.profile"
-              ></ProfilePreview>
-              <Modal
-                v-else
-                :initiallyOpen="true"
-                :closeButton="false"
-                ref="modalEl"
-              >
-                <ProfilePreview v-bind="data.profile"></ProfilePreview>
-              </Modal>
-            </template>
+            <ProfilePreview
+              v-if="data && desktopView"
+              v-bind="data.profile"
+            ></ProfilePreview>
+            <Modal
+              v-else-if="data"
+              :initiallyOpen="true"
+              :closeButton="false"
+              ref="modalEl"
+            >
+              <ProfilePreview v-bind="data.profile"></ProfilePreview>
+            </Modal>
             <LoadingSpinner v-else></LoadingSpinner>
           </div>
         </template>
