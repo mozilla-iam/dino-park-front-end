@@ -138,7 +138,6 @@ export default {
     expandAllChildren() {
       this.propagateExpandAllChildren = this.expandAllChildren;
       this.orgNodeExpanded = this.shouldBeExpanded();
-      console.log(`expandAll → ${this.expandAllChildren}`);
     },
     baseState() {
       switch (this.baseState) {
@@ -156,11 +155,6 @@ export default {
         default:
           console.warn('unknown orgchart state');
       }
-      console.log(
-        `all: ${this.propagateExpandAllChildren} → this: ${
-          this.orgNodeExpanded
-        }`,
-      );
     },
   },
   methods: {

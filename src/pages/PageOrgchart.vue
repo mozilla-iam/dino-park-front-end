@@ -153,15 +153,12 @@ export default {
       }
     },
     expand() {
-      console.log('expanding');
       this.baseState = 'expanded';
     },
     collapse() {
-      console.log('collapsing');
       this.baseState = 'collapsed';
     },
     reset() {
-      console.log('resetting');
       this.baseState = 'normal';
     },
   },
