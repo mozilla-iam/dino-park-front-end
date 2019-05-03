@@ -1,7 +1,7 @@
 <template>
   <main class="search-results" ref="searchResultsContainer" tabindex="-1">
     <h1 class="visually-hidden">Search results</h1>
-    <SearchScope />
+    <SearchToggle />
     <template v-if="!this.$route.query.query">
       <p>You have not searched.</p>
     </template>
@@ -69,7 +69,7 @@
 import Error from '@/components/ui/Error.vue';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 import SearchResultList from '@/components/search/SearchResultList.vue';
-import SearchScope from '@/components/search/SearchScope.vue';
+import SearchToggle from '@/components/search/SearchToggle.vue';
 import Fetcher from '@/assets/js/fetcher';
 
 const fetcher = new Fetcher({ failoverOn: [302] });
@@ -80,7 +80,7 @@ export default {
     Error,
     LoadingSpinner,
     SearchResultList,
-    SearchScope,
+    SearchToggle,
   },
   data() {
     return {
