@@ -16,7 +16,7 @@
       :id="`org-node-${prefix}`"
     >
       <UserPicture
-        :picture="data.picture"
+        :picture="visible ? data.picture : 'default:'"
         :username="data.username"
         :size="40"
         :isStaff="true"
@@ -94,6 +94,7 @@
               :data="child.data"
               :prefix="`${prefix}-${index}`"
               :trace="trace"
+              :visible="orgNodeExpanded"
               :expandAllChildren="propagateExpandAllChildren"
             ></OrgNode>
           </ul>
@@ -139,6 +140,7 @@ export default {
       default: false,
     },
     baseState: String,
+    visible: Boolean,
   },
   components: {
     UserPicture,

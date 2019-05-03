@@ -8,6 +8,7 @@
         :prefix="`${index}`"
         :trace="trace"
         :baseState="baseState"
+        :visible="true"
       ></OrgNode>
     </ul>
   </div>
