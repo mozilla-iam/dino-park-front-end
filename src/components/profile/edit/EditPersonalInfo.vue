@@ -496,6 +496,7 @@ export default {
   background-color: transparent;
   border-color: transparent;
   color: var(--gray-50);
+  -webkit-text-fill-color: var(--gray-50);
   padding-left: 0;
   opacity: 1;
 }
