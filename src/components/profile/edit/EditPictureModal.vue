@@ -110,8 +110,13 @@ export default {
       );
     },
     selectCrop() {
-      const data = this.$refs.crop.cropper.toDataURL();
-      this.resize(data);
+      if (this.$refs.crop && !this.imgSrc) {
+        const data = this.$refs.crop.cropper.toDataURL();
+        this.resize(data);
+      } else {
+        // nothing changed
+        this.$emit('close');
+      }
     },
   },
 };
