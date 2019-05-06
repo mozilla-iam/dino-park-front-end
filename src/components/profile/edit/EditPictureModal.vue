@@ -17,7 +17,12 @@
           @change="handleChangeFile"
         />
       </label>
-      <button type="button" class="button button--secondary" @click="deleteImg">
+      <button
+        type="button"
+        class="button button--secondary"
+        :disabled="imgSrc === null"
+        @click="deleteImg"
+      >
         Delete Photo
       </button>
     </div>
@@ -88,7 +93,7 @@ export default {
   methods: {
     async deleteImg() {
       this.picture.value = '';
-      this.$emit('close');
+      this.imgSrc = null;
     },
     handleChangeFile(event) {
       loadImage(
@@ -110,7 +115,7 @@ export default {
       );
     },
     selectCrop() {
-      if (this.$refs.crop && !this.imgSrc) {
+      if (this.$refs.crop && this.imgSrc !== null) {
         const data = this.$refs.crop.cropper.toDataURL();
         this.resize(data);
       } else {

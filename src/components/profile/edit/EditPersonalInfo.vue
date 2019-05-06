@@ -17,7 +17,11 @@
   >
     <EditPictureModal
       v-if="showPictureModal"
-      v-bind="{ picture, username: loggedInUser, staffInformation }"
+      v-bind="{
+        picture,
+        username: loggedInUser.primaryUsername,
+        staffInformation,
+      }"
       @close="showPictureModal = false"
     />
     <header class="profile__section-header" ref="header" tabindex="-1">
