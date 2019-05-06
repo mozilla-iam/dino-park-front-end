@@ -20,7 +20,7 @@
       <button
         type="button"
         class="button button--secondary"
-        :disabled="imgSrc === null"
+        :disabled="deleteDisabled"
         @click="deleteImg"
       >
         Delete Photo
@@ -122,6 +122,17 @@ export default {
         // nothing changed
         this.$emit('close');
       }
+    },
+  },
+  computed: {
+    deleteDisabled() {
+      const isEmptyPicture =
+        this.picture &&
+        (this.picture.value.startsWith('default:') ||
+          this.picture.value === null ||
+          this.picture.value === '' ||
+          this.picture.value.startsWith('https://s3.amazonaws.com/'));
+      return isEmptyPicture && this.imgSrc === null;
     },
   },
 };
