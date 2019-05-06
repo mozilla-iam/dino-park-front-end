@@ -32,6 +32,9 @@ export default {
     username() {
       this.updateUserPicture();
     },
+    picture() {
+      this.updateUserPicture();
+    },
   },
   asyncComputed: {
     async src() {
@@ -41,6 +44,9 @@ export default {
   },
   methods: {
     async updateUserPicture() {
+      if (this.picture && this.picture.startsWith('default:')) {
+        return '';
+      }
       if (this.picture && this.picture.startsWith('data:')) {
         return this.picture;
       }

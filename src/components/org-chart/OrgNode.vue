@@ -16,7 +16,7 @@
       :id="`org-node-${prefix}`"
     >
       <UserPicture
-        :picture="data.picture"
+        :picture="hasBeenLoaded ? data.picture : 'default:'"
         :username="data.username"
         :size="40"
         :isStaff="true"
@@ -26,30 +26,26 @@
       >
       <span class="org-node__title">{{ data.title }}</span>
     </RouterLink>
-    <ShowMore
+    <div
       v-if="children.length > 0"
-      :buttonText="`Expand ${data.firstName} ${data.lastName}`"
-      :alternateButtonText="`Collapse ${data.firstName} ${data.lastName}`"
-      buttonClass="org-node__toggle"
-      :transition="false"
-      :moveFocus="false"
-      :overflowBefore="false"
-      :expanded="expandAllChildren || orgNodeExpanded"
-      @expand-all="handleExpandAll"
+      :class="
+        'org-node__expander' +
+          (orgNodeExpanded ? ' org-node__expander--expanded' : '')
+      "
     >
-      <template slot="overflow">
-        <ul v-for="(child, index) in children" :key="index">
-          <OrgNode
-            :children="child.children"
-            :data="child.data"
-            :prefix="`${prefix}-${index}`"
-            :trace="trace"
-            :expandAllChildren="shouldExpandAllChildren"
-          ></OrgNode>
-        </ul>
-      </template>
-      <template slot="icon-expanded">
+      <button
+        class="org-node__expander-button org-node__toggle"
+        type="button"
+        :aria-expanded="orgNodeExpanded ? 'true' : 'false'"
+        :aria-label="
+          orgNodeExpanded
+            ? `Collapse ${data.firstName} ${data.lastName}`
+            : `Expand ${data.firstName} ${data.lastName}`
+        "
+        v-on:click="toggleOverflow"
+      >
         <svg
+          v-if="orgNodeExpanded"
           xmlns="http://www.w3.org/2000/svg"
           width="16"
           height="16"
@@ -65,9 +61,8 @@
         >
           <polyline points="6 9 12 15 18 9" />
         </svg>
-      </template>
-      <template slot="icon-collapsed">
         <svg
+          v-else
           xmlns="http://www.w3.org/2000/svg"
           width="16"
           height="16"
@@ -83,8 +78,29 @@
         >
           <polyline points="9 18 15 12 9 6" />
         </svg>
-      </template>
-    </ShowMore>
+      </button>
+      <transition name="org-node__expander-overflow-">
+        <div
+          :class="
+            'org-node__expander-overflow' +
+              (orgNodeExpanded ? '' : ' org-node__expander-overflow-hidden')
+          "
+          tabindex="-1"
+        >
+          <ul v-for="(child, index) in children" :key="index">
+            <OrgNode
+              v-if="loadNow || orgNodeExpanded"
+              :children="child.children"
+              :data="child.data"
+              :prefix="`${prefix}-${index}`"
+              :trace="trace"
+              :visible="orgNodeExpanded"
+              :expandAllChildren="propagateExpandAllChildren"
+            ></OrgNode>
+          </ul>
+        </div>
+      </transition>
+    </div>
     <template v-else>
       <svg
         class="org-node__no-children-indicator"
@@ -110,7 +126,6 @@
 </template>
 
 <script>
-import ShowMore from '@/components/_functional/ShowMore.vue';
 import UserPicture from '@/components/ui/UserPicture.vue';
 
 export default {
@@ -124,9 +139,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    baseState: String,
+    visible: Boolean,
   },
   components: {
-    ShowMore,
     UserPicture,
   },
   watch: {
@@ -137,10 +153,45 @@ export default {
       }
       return this.orgNodeExpanded;
     },
+    expandAllChildren() {
+      this.propagateExpandAllChildren = this.expandAllChildren;
+      this.orgNodeExpanded = this.shouldBeExpanded();
+    },
+    visible() {
+      if (!this.hasBeenLoaded && this.visible) {
+        this.hasBeenLoaded = true;
+      }
+    },
+    baseState() {
+      switch (this.baseState) {
+        case 'normal':
+          this.propagateExpandAllChildren = false;
+          this.orgNodeExpanded = this.shouldBeExpanded();
+          break;
+        case 'expanded':
+          this.propagateExpandAllChildren = true;
+          this.orgNodeExpanded = this.shouldBeExpanded();
+          break;
+        case 'collapsed':
+          this.orgNodeExpanded = false;
+          break;
+        default:
+          console.warn('unknown orgchart state');
+      }
+    },
   },
   methods: {
-    handleExpandAll() {
-      this.shouldExpandAllChildren = !this.shouldExpandAllChildren;
+    shouldBeExpanded() {
+      const state = this.trace && this.trace.startsWith(`${this.prefix}-`);
+      return (
+        state ||
+        (this.prefix && !this.prefix.includes('-')) ||
+        this.expandAllChildren ||
+        this.propagateExpandAllChildren
+      );
+    },
+    toggleOverflow() {
+      this.orgNodeExpanded = !this.orgNodeExpanded;
     },
   },
   mounted() {
@@ -160,13 +211,17 @@ export default {
       }
       this.orgNodeExpanded = true;
     }
+    setTimeout(() => {
+      this.loadNow = true;
+    }, 100);
   },
   data() {
-    const state = this.trace && this.trace.startsWith(`${this.prefix}-`);
-
+    const orgNodeExpanded = this.shouldBeExpanded();
     return {
-      orgNodeExpanded: state || (this.prefix && !this.prefix.includes('-')),
-      shouldExpandAllChildren: this.expandAllChildren || false,
+      propagateExpandAllChildren: this.expandAllChildren,
+      orgNodeExpanded,
+      loadNow: orgNodeExpanded,
+      hasBeenLoaded: this.visible,
     };
   },
 };
@@ -269,10 +324,10 @@ export default {
   margin-right: 0;
   margin-bottom: -2px;
 }
-.org-node .show-more {
+.org-node .org-node__expander {
   position: static; /* so that it is explicitly not a positioning context */
 }
-.org-node .show-more__button-text {
+.org-node .org-node__expander-button-text {
   border: 0;
   clip: rect(0 0 0 0);
   width: 1px;
@@ -291,5 +346,22 @@ export default {
   position: absolute;
   top: 1.125em;
   left: calc((var(--nodeLevel) * 2em) - 1.125em);
+}
+
+.org-node__expander {
+  position: relative;
+}
+.org-node__expander-button {
+  font: inherit;
+}
+.org-node__expander-button > svg,
+.org-node__expander-button > img {
+  margin-right: 1.5em;
+}
+.org-node__expander-button-text {
+  font-size: 0.9em;
+}
+.org-node__expander-overflow-hidden {
+  display: none;
 }
 </style>

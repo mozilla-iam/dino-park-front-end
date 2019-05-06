@@ -1,54 +1,86 @@
 <template>
-  <main class="org-chart">
-    <div class="org-chart__chart">
-      <OrgRoot
-        v-if="tree && !loading"
-        :roots="tree"
-        :trace="trace || ''"
-      ></OrgRoot>
-      <OrgRoot
-        v-if="loose && !loading"
-        :roots="loose"
-        :trace="looseTrace || ''"
-        heading="People who do not have a manager set"
-        modifier="org-root--loose"
-      ></OrgRoot>
-      <LoadingSpinner v-else></LoadingSpinner>
+  <main class="org-chart-main">
+    <div class="org-chart-buttons" v-if="!loading">
+      <button
+        type="button"
+        @click="expand"
+        class="org-chart-buttons__row-left org-chart-buttons__control button--icon-only button"
+        title="Expand all"
+      >
+        <Icon id="expand" :width="18" :height="18" />
+        <span class="visually-hidden">Expand all</span>
+      </button>
+      <button
+        type="button"
+        @click="collapse"
+        class="org-chart-buttons__row-right org-chart-buttons__control button--icon-only button"
+        title="Collapse all"
+      >
+        <Icon id="collapse" :width="18" :height="18" />
+        <span class="visually-hidden">Collapse all</span>
+      </button>
+      <button
+        type="button"
+        @click="reset"
+        class="org-chart-buttons__reset org-chart-buttons__control button--icon-only button"
+        title="Reset to default view"
+      >
+        <Icon id="rotate" :width="18" :height="18" />
+        <span class="visually-hidden">Reset to default view</span>
+      </button>
     </div>
-    <ApolloQuery
-      v-if="username && (desktopView || openedFromOrgNode)"
-      :query="previewProfileQuery"
-      :variables="{ username }"
-      :tag="null"
-    >
-      <template slot-scope="{ result: { loading, data, error } }">
-        <div class="org-chart__preview">
-          <template v-if="data">
+    <div class="org-chart">
+      <div class="org-chart__chart">
+        <OrgRoot
+          v-if="tree && !loading"
+          :roots="tree"
+          :trace="trace || ''"
+          :baseState="baseState"
+        ></OrgRoot>
+        <OrgRoot
+          v-if="loose && loose.length > 0 && !loading"
+          :roots="loose"
+          :trace="looseTrace || ''"
+          heading="People who do not have a manager set"
+          modifier="org-root--loose"
+        ></OrgRoot>
+        <LoadingSpinner v-else></LoadingSpinner>
+      </div>
+      <ApolloQuery
+        v-if="username && (desktopView || openedFromOrgNode)"
+        :query="previewProfileQuery"
+        :variables="{ username }"
+        :tag="null"
+      >
+        <template slot-scope="{ result: { loading, data } }">
+          <div class="org-chart__preview">
             <ProfilePreview
-              v-if="desktopView"
+              v-if="data && desktopView"
               v-bind="data.profile"
             ></ProfilePreview>
             <Modal
-              v-else
+              v-else-if="data"
               :initiallyOpen="true"
               :closeButton="false"
               ref="modalEl"
             >
               <ProfilePreview v-bind="data.profile"></ProfilePreview>
             </Modal>
-          </template>
-          <LoadingSpinner v-else></LoadingSpinner>
-        </div>
-      </template>
-    </ApolloQuery>
+            <LoadingSpinner v-else></LoadingSpinner>
+          </div>
+        </template>
+      </ApolloQuery>
+    </div>
   </main>
 </template>
 
 <script>
+import Icon from '@/components/ui/Icon.vue';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 import OrgRoot from '@/components/org-chart/OrgRoot.vue';
 import Modal from '@/components/_functional/Modal.vue';
 import ProfilePreview from '@/components/profile/ProfilePreview.vue';
+import Toggle from '@/components/ui/Toggle.vue';
 import { PREVIEW_PROFILE } from '@/queries/profile';
 import Fetcher from '@/assets/js/fetcher';
 
@@ -57,10 +89,12 @@ const fetcher = new Fetcher({ failoverOn: [302] });
 export default {
   name: 'PageOrgchart',
   components: {
+    Icon,
     LoadingSpinner,
     Modal,
     OrgRoot,
     ProfilePreview,
+    Toggle,
   },
   data() {
     return {
@@ -73,6 +107,7 @@ export default {
       looseTrace: '',
       previewProfileQuery: PREVIEW_PROFILE,
       desktopView: false,
+      baseState: 'normal',
     };
   },
   created() {
@@ -113,6 +148,12 @@ export default {
     openedFromOrgNode() {
       return this.$route.params.openedFromOrgNode;
     },
+    expandAllChildren() {
+      return this.expanded === 'expand-all';
+    },
+    collapseAllChildren() {
+      return this.expanded === 'collapse-all';
+    },
   },
   watch: {
     desktopView() {
@@ -147,6 +188,15 @@ export default {
         this.desktopView = false;
       }
     },
+    expand() {
+      this.baseState = 'expanded';
+    },
+    collapse() {
+      this.baseState = 'collapsed';
+    },
+    reset() {
+      this.baseState = 'normal';
+    },
   },
   mounted() {
     const searchField = document.getElementById('search-query');
@@ -157,6 +207,54 @@ export default {
 </script>
 
 <style>
+.org-chart-main {
+  width: auto;
+}
+.org-chart-buttons {
+  display: flex;
+  justify-content: center;
+  margin: 2em 0;
+}
+@media (min-width: 57.5em) {
+  .org-chart-buttons {
+    margin-bottom: 0;
+  }
+}
+.org-chart-buttons__reset {
+  margin-left: 2em;
+}
+.org-chart-buttons__control {
+  background-color: var(--white);
+  color: var(--black);
+  padding: 0.25em 0.4em;
+  border-radius: var(--imageRadius);
+  border: 2px solid var(--gray-30);
+  font-size: inherit;
+  line-height: 1;
+  width: 2.5em;
+  height: 2.5em;
+}
+.org-chart-buttons__control:hover {
+  background-color: var(--blue-60);
+  border: 2px solid var(--gray-30);
+  color: var(--white);
+}
+.org-chart-buttons__control > svg {
+  margin: auto;
+}
+
+.org-chart-buttons__row-left {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-right: 1px solid var(--gray-30);
+}
+
+.org-chart-buttons__row-right {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-left: 1px solid var(--gray-30);
+}
+
 .org-chart {
   padding: 0;
   width: 100%;

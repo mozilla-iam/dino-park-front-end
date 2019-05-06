@@ -78,12 +78,8 @@ export default {
     },
   },
   methods: {
-    toggleOverflow(event) {
+    toggleOverflow() {
       this.isExpanded = !this.isExpanded;
-
-      if (event.altKey) {
-        this.$emit('expand-all');
-      }
     },
     handleDocumentClick(event) {
       if (this.$refs.button.contains(event.target)) {

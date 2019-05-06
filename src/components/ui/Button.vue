@@ -108,7 +108,8 @@ export default {
 .button--icon-only:hover {
   background-color: var(--gray-20);
 }
-.button--icon-only img {
+.button--icon-only img,
+.button--icon-only svg {
   vertical-align: middle;
   margin-right: 0;
 }
