@@ -114,7 +114,6 @@ export default {
       this.isExpanded = this.expanded;
     },
     updateIndicator(val, old) {
-      console.log(val, old);
       if (this.closeOnUpdate && old && old !== val) {
         this.isExpanded = false;
       }
@@ -145,12 +144,6 @@ export default {
       document.removeEventListener('click', this.handleDocumentClick);
       document.removeEventListener('touchstart', this.handleDocumentClick);
     }
-  },
-  activated() {
-    console.log('activated');
-  },
-  mounted() {
-    console.log('mounted');
   },
 };
 </script>
