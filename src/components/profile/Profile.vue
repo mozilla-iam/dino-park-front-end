@@ -146,8 +146,15 @@
       v-else
       nav="languages"
       title="Languages"
-      message="Language editing capabilities are coming soon."
+      message="No languages have been added yet."
     >
+      <template v-slot:header>
+        <EditButton
+          v-if="userOnOwnProfile"
+          section="languages"
+          sectionId="languages"
+        ></EditButton>
+      </template>
     </EmptyCard>
 
     <section
@@ -282,7 +289,12 @@ export default {
             Object.entries(this.uris.values).length > 0 &&
             true) ||
           false,
-        languages: true,
+        languages:
+          this.editing === 'languages' ||
+          (this.languages.values &&
+            Object.entries(this.languages.values).length > 0 &&
+            true) ||
+          false,
         tags:
           (this.tags.values &&
             Object.entries(this.tags.values).length > 0 &&
