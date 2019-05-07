@@ -34,6 +34,7 @@
       v-model="newLanguage"
       ref="inputLanguage"
       class="add-languages__input"
+      @keydown.enter="handleAddLanguage"
     />
     <button
       type="button"
