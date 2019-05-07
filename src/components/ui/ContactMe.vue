@@ -6,8 +6,10 @@
     buttonClass="button button--icon-end contact-me__button"
     :transition="false"
     :closeWhenClickedOutside="true"
+    :closeOnUpdate="true"
     :moveFocus="false"
     :overflowBefore="false"
+    :updateIndicator="primaryEmail"
   >
     <template slot="overflow">
       <Popover class="contact-me" layer="var(--layerContactMe)">
