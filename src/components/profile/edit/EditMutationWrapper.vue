@@ -141,6 +141,13 @@ export default {
 </script>
 
 <style>
+.mutation-form label,
+.mutation-form input,
+.mutation-form select,
+.mutation-form textarea {
+  display: block;
+  font: inherit;
+}
 .mutation-form + .loading {
   position: absolute;
   z-index: var(--layerOne);
@@ -153,11 +160,30 @@ export default {
   align-items: center;
   flex-direction: row;
 }
-label,
-input,
-select,
-textarea {
-  display: block;
-  font: inherit;
+.mutation-form > input,
+.mutation-form > div > input,
+.mutation-form > textarea,
+.mutation-form > select {
+  border: 0;
+  background-color: var(--gray-20);
+  border-radius: var(--formElementRadius);
+  color: var(--black);
+  margin: 0;
+  padding: 0.5em 0.9em;
+  width: 100%;
+}
+.mutation-form > input[disabled] {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--gray-50);
+  -webkit-text-fill-color: var(--gray-50);
+  padding-left: 0;
+  opacity: 1;
+}
+.mutation-form > textarea {
+  resize: none;
+}
+.mutation-form > input + button {
+  margin-top: 1em;
 }
 </style>

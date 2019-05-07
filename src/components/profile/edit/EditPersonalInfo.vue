@@ -481,30 +481,7 @@ export default {
   margin: 1em -1.5em;
   grid-column: 1 / -1;
 }
-.edit-personal-info > input,
-.edit-personal-info > div > input,
-.edit-personal-info > textarea,
-.edit-personal-info > select {
-  border: 0;
-  background-color: var(--gray-20);
-  border-radius: var(--formElementRadius);
-  color: var(--black);
-  margin: 0;
-  padding: 0.5em 0.9em;
-  width: 100%;
-}
-.edit-personal-info > textarea {
-  resize: none;
-}
-.edit-personal-info > input[disabled] {
-  background-color: transparent;
-  border-color: transparent;
-  color: var(--gray-50);
-  -webkit-text-fill-color: var(--gray-50);
-  padding-left: 0;
-  opacity: 1;
-}
-.edit-personal-info__picture {
+.edit-personal-info .edit-personal-info .edit-personal-info__picture {
   border: none;
   background: none;
 }
