@@ -9,11 +9,13 @@
       ></EditButton>
     </header>
     <Tag
+      v-if="Object.entries(languages.values).length > 0"
       v-for="(language, index) in languages.values"
       :tag="language"
       :key="`language-${index}`"
     >
     </Tag>
+    <p v-else>You have not added any languages yet.</p>
   </div>
 </template>
 

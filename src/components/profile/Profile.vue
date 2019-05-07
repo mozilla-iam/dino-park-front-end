@@ -132,9 +132,9 @@
       <EditLanguages
         v-if="this.editing === 'languages'"
         v-bind="{
-          initialValues: {
-            languages,
-          },
+          username: primaryUsername.value,
+          initialValues: { languages },
+          initialLanguages: languages,
         }"
       ></EditLanguages>
       <ViewLanguages
@@ -282,11 +282,7 @@ export default {
             Object.entries(this.uris.values).length > 0 &&
             true) ||
           false,
-        languages:
-          (this.languages.values &&
-            Object.entries(this.languages.values).length > 0 &&
-            true) ||
-          false,
+        languages: true,
         tags:
           (this.tags.values &&
             Object.entries(this.tags.values).length > 0 &&
