@@ -64,16 +64,20 @@
       <LoadingSpinner v-if="loading"></LoadingSpinner>
       <Button
         v-else-if="results.dinos.length < results.total"
-        class="search-results__button-more"
+        type="button"
+        class="search-results__button-more button button--text-only button--icon-only"
         @click="fetchMore"
-        >more</Button
       >
+        <Icon id="chevron-down" :width="24" :height="24" />
+        <span>Show More</span>
+      </Button>
     </template>
   </main>
 </template>
 
 <script>
 import Error from '@/components/ui/Error.vue';
+import Icon from '@/components/ui/Icon.vue';
 import Button from '@/components/ui/Button.vue';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 import SearchResultList from '@/components/search/SearchResultList.vue';
@@ -85,6 +89,7 @@ const fetcher = new Fetcher({ failoverOn: [302] });
 export default {
   name: 'PageSearchResult',
   components: {
+    Icon,
     Button,
     Error,
     LoadingSpinner,
@@ -163,5 +168,10 @@ export default {
 }
 .search-results__button-more {
   margin: auto;
+  border: none;
+  font-size: 0.9em;
+}
+.search-results__button-more > svg {
+  margin-right: 0.5em;
 }
 </style>
