@@ -88,7 +88,7 @@ export default {
       }
     },
     addLanguage(language) {
-      const id = Object.keys(this.languages.values).length + 1;
+      const id = this.languages.values[this.languages.values.length] + 1;
       const newLanguage = {
         k: `${id}`,
         v: language,
@@ -101,14 +101,6 @@ export default {
       if (this.languages.values.length > index) {
         this.languages.values.splice(index, 1);
       }
-    },
-    formatAsKeyValues(item) {
-      const [k, v] = item;
-
-      return {
-        k,
-        v,
-      };
     },
   },
   mounted() {
