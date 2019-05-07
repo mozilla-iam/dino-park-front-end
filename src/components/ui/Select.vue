@@ -24,6 +24,7 @@
     <Popover v-if="open">
       <fieldset
         @keydown.enter.prevent="closeList"
+        @keydown.esc="closeList"
         :id="`option-list-${id}`"
         :ref="`optionList-${id}`"
         class="options__list"

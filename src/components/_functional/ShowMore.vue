@@ -44,6 +44,7 @@
         v-if="isExpanded"
         tabindex="-1"
         ref="overflowContentElement"
+        @keyup.esc="toggleOverflow"
       >
         <slot name="overflow"> </slot>
       </div>
