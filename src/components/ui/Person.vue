@@ -78,7 +78,7 @@ export default {
   box-shadow: none;
 }
 .focus-styles .person a:focus::after {
-  box-shadow: 0px 0 0 1px var(--blue-60), 0 0 0 3px var(--transparentBlue);
+  box-shadow: var(--focusOutlineShadow);
 }
 .person__preferred-title {
   color: var(--gray-50);

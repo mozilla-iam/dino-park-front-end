@@ -229,6 +229,6 @@ export default {
 .focus-styles .options input:focus + label {
   position: relative;
   z-index: var(--layerTwo);
-  box-shadow: 0px 0 0 1px var(--blue-60), 0 0 0 3px var(--transparentBlue);
+  box-shadow: var(--focusOutlineShadow);
 }
 </style>

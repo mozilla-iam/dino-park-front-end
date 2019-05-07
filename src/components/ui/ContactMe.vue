@@ -157,6 +157,9 @@ export default {
 .contact-me__pair:focus {
   z-index: var(--layerOne);
 }
+.focus-styles .contact-me__pair:focus .contact-me__value {
+  box-shadow: var(--focusOutlineShadow);
+}
 .contact-me__key {
   flex: none;
   width: 30%;

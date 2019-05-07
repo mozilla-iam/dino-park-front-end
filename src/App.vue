@@ -66,6 +66,8 @@ export default {
   --layerModal: 9;
 
   --shadowCard: 0 0.25em 0.25em 0 rgba(210, 210, 210, 0.5);
+  --focusOutlineShadow: 0px 0 0 1px var(--blue-60),
+    0 0 0 3px var(--transparentBlue);
 
   --imageRadius: 0.25em;
   --formElementRadius: 0.25em;
@@ -216,7 +218,7 @@ abbr {
 }
 .focus-styles :focus {
   outline: none;
-  box-shadow: 0px 0 0 1px var(--blue-60), 0 0 0 3px var(--transparentBlue);
+  box-shadow: var(--focusOutlineShadow);
 }
 .focus-styles ::-moz-focus-inner {
   border: 0;
