@@ -211,13 +211,13 @@ abbr {
 }
 
 :focus {
-  outline: none;
+  outline: 1px solid transparent;
 }
 ::-moz-focus-inner {
   border: 0;
 }
 .focus-styles :focus {
-  outline: none;
+  outline: 1px solid transparent;
   box-shadow: var(--focusOutlineShadow);
 }
 .focus-styles ::-moz-focus-inner {
