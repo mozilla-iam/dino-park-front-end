@@ -1,9 +1,9 @@
 <template>
   <ul class="search-result-list">
     <SearchResult
-      v-for="(result, index) in results.dinos"
+      v-for="(dino, index) in dinos"
       :key="index"
-      v-bind="result"
+      v-bind="dino"
     ></SearchResult>
   </ul>
 </template>
@@ -14,7 +14,7 @@ import SearchResult from './SearchResult.vue';
 export default {
   name: 'SearchResultList',
   props: {
-    results: Object,
+    dinos: Array,
   },
   components: {
     SearchResult,
