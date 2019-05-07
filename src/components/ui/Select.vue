@@ -24,6 +24,7 @@
     <Popover v-if="open">
       <fieldset
         @keydown.enter.prevent="closeList"
+        @keydown.esc="closeList"
         :id="`option-list-${id}`"
         :ref="`optionList-${id}`"
         class="options__list"
@@ -229,6 +230,6 @@ export default {
 .focus-styles .options input:focus + label {
   position: relative;
   z-index: var(--layerTwo);
-  box-shadow: 0px 0 0 1px var(--blue-60), 0 0 0 3px var(--transparentBlue);
+  box-shadow: var(--focusOutlineShadow);
 }
 </style>

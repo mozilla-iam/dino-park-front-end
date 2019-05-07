@@ -50,7 +50,7 @@ export default {
   left: 0;
 }
 .focus-styles .checkbox input:focus + svg {
-  box-shadow: 0px 0 0 1px var(--blue-60), 0 0 0 3px var(--transparentBlue);
+  box-shadow: var(--focusOutlineShadow);
 }
 .checkbox input:checked + svg {
   color: var(--blue-60);

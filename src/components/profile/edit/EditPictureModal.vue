@@ -155,7 +155,7 @@ export default {
   justify-content: center;
 }
 .focus-styles .edit-picture-modal__add-picture-button:focus-within {
-  box-shadow: 0px 0 0 1px var(--blue-60), 0 0 0 3px var(--transparentBlue);
+  box-shadow: var(--focusOutlineShadow);
 }
 .edit-picture-modal__privacy {
   display: flex;

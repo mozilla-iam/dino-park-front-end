@@ -44,6 +44,7 @@
         v-if="isExpanded"
         tabindex="-1"
         ref="overflowContentElement"
+        @keyup.esc="toggleOverflow"
       >
         <slot name="overflow"> </slot>
       </div>
@@ -87,11 +88,13 @@ export default {
       this.isExpanded = !this.isExpanded;
     },
     handleDocumentClick(event) {
-      if (this.$refs.button.contains(event.target)) {
+      if (this.$refs.button && this.$refs.button.contains(event.target)) {
         event.stopPropagation();
         return;
       }
-      const expandedEl = this.$refs.overflowContentElement.firstElementChild;
+      const expandedEl = this.$refs.overflowContentElement
+        ? this.$refs.overflowContentElement.firstElementChild
+        : null;
 
       // closes overflow content if clicked anywhere, except the
       // overflowing content itself
