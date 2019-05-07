@@ -64,6 +64,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    closeOnUpdate: {
+      type: Boolean,
+      default: false,
+    },
     moveFocus: {
       type: Boolean,
       default: true,
@@ -76,6 +80,7 @@ export default {
       type: Boolean,
       default: false,
     },
+    updateIndicator: String,
   },
   methods: {
     toggleOverflow() {
@@ -108,6 +113,12 @@ export default {
     expanded() {
       this.isExpanded = this.expanded;
     },
+    updateIndicator(val, old) {
+      console.log(val, old);
+      if (this.closeOnUpdate && old && old !== val) {
+        this.isExpanded = false;
+      }
+    },
   },
   computed: {
     buttonTextClass() {
@@ -134,6 +145,12 @@ export default {
       document.removeEventListener('click', this.handleDocumentClick);
       document.removeEventListener('touchstart', this.handleDocumentClick);
     }
+  },
+  activated() {
+    console.log('activated');
+  },
+  mounted() {
+    console.log('mounted');
   },
 };
 </script>
