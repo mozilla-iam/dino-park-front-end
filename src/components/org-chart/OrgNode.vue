@@ -136,10 +136,12 @@ export default {
     prefix: String,
     trace: String,
     expandAllChildren: {
-      type: Boolean,
-      default: false,
+      type: Object,
+      default: () => {
+        return { value: false, flip: true };
+      },
     },
-    baseState: String,
+    baseState: Object,
     visible: Boolean,
   },
   components: {
@@ -163,13 +165,14 @@ export default {
       }
     },
     baseState() {
-      switch (this.baseState) {
+      const { state = 'normal', flip = true } = this.baseState;
+      switch (state) {
         case 'normal':
-          this.propagateExpandAllChildren = false;
+          this.propagateExpandAllChildren = { value: false, flip };
           this.orgNodeExpanded = this.shouldBeExpanded();
           break;
         case 'expanded':
-          this.propagateExpandAllChildren = true;
+          this.propagateExpandAllChildren = { value: true, flip };
           this.orgNodeExpanded = this.shouldBeExpanded();
           break;
         case 'collapsed':
@@ -186,8 +189,9 @@ export default {
       return (
         state ||
         (this.prefix && !this.prefix.includes('-')) ||
-        this.expandAllChildren ||
-        this.propagateExpandAllChildren
+        this.expandAllChildren.value ||
+        (this.propagateExpandAllChildren &&
+          this.propagateExpandAllChildren.value)
       );
     },
     toggleOverflow() {
@@ -222,6 +226,7 @@ export default {
       orgNodeExpanded,
       loadNow: orgNodeExpanded,
       hasBeenLoaded: this.visible,
+      state: this.baseState,
     };
   },
 };

@@ -107,7 +107,7 @@ export default {
       looseTrace: '',
       previewProfileQuery: PREVIEW_PROFILE,
       desktopView: false,
-      baseState: 'normal',
+      baseState: { state: 'normal', flip: true },
     };
   },
   created() {
@@ -189,13 +189,13 @@ export default {
       }
     },
     expand() {
-      this.baseState = 'expanded';
+      this.baseState = { state: 'expanded', flip: !this.baseState.flip };
     },
     collapse() {
-      this.baseState = 'collapsed';
+      this.baseState = { state: 'collapsed', flip: !this.baseState.flip };
     },
     reset() {
-      this.baseState = 'normal';
+      this.baseState = { state: 'normal', flip: !this.baseState.flip };
     },
   },
   mounted() {

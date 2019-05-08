@@ -27,7 +27,7 @@ export default {
     trace: String,
     heading: String,
     modifier: String,
-    baseState: String,
+    baseState: Object,
   },
 };
 </script>
