@@ -34,10 +34,10 @@
       <Error>
         <template slot="image">
           <img
-            src="@/assets/images/dino-1.png"
+            src="@/assets/images/target.png"
             srcset="
-              @/assets/images/dino-1@2x.png 2x,
-              @/assets/images/dino-1@3x.png 3x
+              @/assets/images/target@2x.png 2x,
+              @/assets/images/target@3x.png 3x
             "
           />
         </template>
