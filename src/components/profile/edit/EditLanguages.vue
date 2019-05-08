@@ -88,9 +88,12 @@ export default {
       }
     },
     addLanguage(language) {
-      const id = this.languages.values[this.languages.values.length] + 1;
+      const highestId = this.languages.values.reduce(
+        (max, { k }) => (Number(k) > max ? Number(k) : max),
+        0,
+      );
       const newLanguage = {
-        k: `${id}`,
+        k: `${highestId + 1}`,
         v: language,
       };
 
