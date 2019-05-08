@@ -44,7 +44,7 @@
           heading="People who do not have a manager set"
           modifier="org-root--loose"
         ></OrgRoot>
-        <LoadingSpinner v-else></LoadingSpinner>
+        <LoadingSpinner v-else-if="loading"></LoadingSpinner>
       </div>
       <ApolloQuery
         v-if="username && (desktopView || openedFromOrgNode)"
