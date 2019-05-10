@@ -1,30 +1,69 @@
 <template>
-  <div class="combobox">
-    <input
-      type="text"
-      :id="id"
-      class="combobox__input"
-      ref="comboboxInput"
-      :value="value"
-      :placeholder="placeholder"
-      @keydown="checkInput"
-      @input="$emit('input', $event.target.value)"
-      autocomplete="off"
-    />
-    <ul v-if="source" class="combobox__options" ref="comboboxList">
-      <li
-        v-for="(option, index) in source"
-        :key="index"
-        class="combobox__option"
-      >
-        {{ option }}
-      </li>
-    </ul>
-  </div>
+  <div class="combobox"></div>
 </template>
 
 <script>
-import Combobo from 'combobo';
+import pick from 'object.pick';
+import { h, render } from 'preact';
+import Downshift from 'downshift/preact';
+
+const Combobox = ({ id, onChange, placeholder, value, source, ...props }) =>
+  h(
+    Downshift,
+    {
+      inputValue: value,
+      selectedItem: value,
+      onChange,
+      onInputValueChange: onChange,
+      ...props,
+    },
+    ({
+      getInputProps,
+      getItemProps,
+      getMenuProps,
+      highlightedIndex,
+      isOpen,
+
+      openMenu,
+      closeMenu,
+    }) =>
+      h('div', { class: 'combobox__inner' }, [
+        h('input', {
+          id,
+          value,
+          type: 'text',
+          class: 'combobox__input',
+          autocomplete: 'off',
+          onFocus: () => openMenu(),
+          onBlur: () => closeMenu(),
+          placeholder,
+          ...getInputProps(),
+        }),
+        source &&
+          isOpen &&
+          h(
+            'ul',
+            { class: 'combobox__options', ...getMenuProps() },
+            source
+              .filter((o) => o.toLowerCase().includes(value.toLowerCase()))
+              .map((option, i) =>
+                h(
+                  'li',
+                  {
+                    key: option,
+                    class: `combobox__option ${
+                      i === highlightedIndex
+                        ? 'combobox__option--highlighted'
+                        : ''
+                    }`,
+                    ...getItemProps({ item: option }),
+                  },
+                  option,
+                ),
+              ),
+          ),
+      ]),
+  );
 
 export default {
   name: 'Combobox',
@@ -32,53 +71,28 @@ export default {
     id: String,
     source: Array,
     value: String,
-    allowCustomInput: {
-      type: Boolean,
-      default: true,
-    },
     placeholder: String,
   },
   methods: {
-    checkInput(e) {
-      const alwaysAllowed = ['Tab', 'Enter', 'Escape', 'Shift', 'Backspace'];
-
-      if (alwaysAllowed.includes(e.key)) {
-        return;
-      }
-
-      if (!this.allowCustomInput) {
-        e.preventDefault();
-      }
+    renderPreact() {
+      this.node = render(
+        h(Combobox, {
+          ...pick(this, ['id', 'source', 'value', 'placeholder']),
+          onChange: (value) => this.$emit('input', value),
+        }),
+        this.$el,
+        this.node,
+      );
     },
   },
   mounted() {
-    const { comboboxInput, comboboxList } = this.$refs;
-
-    this.combobo = new Combobo({
-      input: comboboxInput,
-      list: comboboxList,
-      options: this.optionEls,
-      activeClass: 'combobox__option--selected',
-      filter: 'contains',
-    });
-
-    this.combobo.addEventListener('selection', () => {
-      this.$nextTick(() => {
-        this.$emit('input', this.$refs.comboboxInput.value);
-      });
-    });
-  },
-  data() {
-    return {
-      combobo: null,
-    };
-  },
-  computed: {
-    optionEls() {
-      return Array.from(
-        this.$refs.comboboxList.querySelectorAll('.combobox__option'),
-      );
-    },
+    this.renderPreact();
+    this.$watch(
+      (instance) => Object.values(instance.$props).join(),
+      () => {
+        this.renderPreact();
+      },
+    );
   },
 };
 </script>
@@ -91,13 +105,18 @@ export default {
   display: block;
 }
 .combobox {
+  display: flex;
+  align-items: center;
+}
+.combobox__inner {
   position: relative;
+  width: 100%;
 }
 .combobox__options {
   padding-left: 0;
   width: 100%;
   position: absolute;
-  top: 3em;
+  top: 2.5em;
   margin: 0;
   background-color: var(--white);
   box-shadow: 0 0 0.25em 0 var(--gray-30);
@@ -109,7 +128,7 @@ export default {
   list-style: none;
   padding: 0.5em 1em;
 }
-.combobox__option--selected {
+.combobox__option--highlighted {
   background-color: var(--blue-60);
   color: var(--white);
 }
