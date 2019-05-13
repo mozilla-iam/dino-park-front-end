@@ -141,7 +141,12 @@
           your profile and control its visibility level.</Tooltip
         >
       </div>
-      <input type="text" id="field-alt-name" v-model="alternativeName.value" />
+      <TextInput
+        type="text"
+        id="field-alt-name="
+        :maxlength="90"
+        v-model="alternativeName.value"
+      />
       <PrivacySetting
         label="Alternate Name privacy levels"
         id="field-alt-name-privacy"
@@ -189,7 +194,12 @@
           through this field.</Tooltip
         >
       </div>
-      <input type="text" id="field-fun-job-title" v-model="funTitle.value" />
+      <TextInput
+        type="text"
+        id="field-fun-job-title"
+        v-model="funTitle.value"
+        :maxlength="90"
+      />
       <PrivacySetting
         label="Tagline privacy levels"
         id="field-fun-title-privacy"
@@ -360,12 +370,13 @@
           >.</Tooltip
         >
       </div>
-      <textarea
+      <TextArea
         id="field-bio"
+        :value="description.value"
         v-model="description.value"
-        maxlength="5000"
-        rows="10"
-      ></textarea>
+        :maxlength="5000"
+        :rows="10"
+      ></TextArea>
       <PrivacySetting
         label="Bio privacy levels"
         id="field-bio-privacy"
@@ -384,6 +395,8 @@ import Meta from '@/components/ui/Meta.vue';
 import MetaList from '@/components/ui/MetaList.vue';
 import PrivacySetting from '@/components/profile/PrivacySetting.vue';
 import Select from '@/components/ui/Select.vue';
+import TextInput from '@/components/ui/TextInput.vue';
+import TextArea from '@/components/ui/TextArea.vue';
 import Tooltip from '@/components/ui/Tooltip.vue';
 import UserPicture from '@/components/ui/UserPicture.vue';
 import { DISPLAY_LEVELS } from '@/assets/js/display-levels';
@@ -407,6 +420,8 @@ export default {
     MetaList,
     PrivacySetting,
     Select,
+    TextInput,
+    TextArea,
     Tooltip,
     UserPicture,
   },
@@ -484,6 +499,7 @@ export default {
 .edit-personal-info > input,
 .edit-personal-info > div > input,
 .edit-personal-info > textarea,
+.edit-personal-info > div > textarea,
 .edit-personal-info > select {
   border: 0;
   background-color: var(--gray-20);
@@ -493,7 +509,8 @@ export default {
   padding: 0.5em 0.9em;
   width: 100%;
 }
-.edit-personal-info > textarea {
+.edit-personal-info > textarea,
+.edit-personal-info > div > textarea {
   resize: none;
 }
 .edit-personal-info > input[disabled] {
@@ -571,13 +588,15 @@ export default {
   .edit-personal-info > input,
   .edit-personal-info > div > input,
   .edit-personal-info > textarea,
+  .edit-personal-info > div > textarea,
   .edit-personal-info > select {
     margin: 0.5em 0;
   }
   .edit-personal-info > input {
     grid-column: 3 / 4;
   }
-  .edit-personal-info > textarea {
+  .edit-personal-info > textarea,
+  .edit-personal-info > .textarea {
     grid-column: 2 / 4;
   }
   .edit-personal-info__picture {

@@ -1,0 +1,46 @@
+<template>
+  <div class="textarea">
+    <textarea
+      :id="id"
+      :maxlength="maxlength"
+      :rows="rows"
+      :cols="cols"
+      :placeholder="placeholder"
+      :value="value"
+      @input="$emit('input', $event.target.value)"
+    ></textarea>
+    <span v-if="maxlength">{{ value.length }}/{{ maxlength }}</span>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'TextArea',
+  props: {
+    id: String,
+    placeholder: String,
+    maxlength: Number,
+    input: String,
+    value: String,
+    cols: Number,
+    rows: Number,
+  },
+};
+</script>
+
+<style>
+.textarea {
+  position: relative;
+}
+.textarea textarea[maxlength] {
+  padding-bottom: 5em;
+}
+.textarea textarea[maxlength] + span {
+  position: absolute;
+  bottom: 1rem;
+  right: 0.5rem;
+  font-size: 0.85em;
+  color: var(--gray-50);
+  letter-spacing: 0.1em;
+}
+</style>
