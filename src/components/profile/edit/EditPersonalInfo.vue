@@ -253,7 +253,6 @@
         >
       </div>
       <Combobox
-        v-if="timezones.length > 0"
         id="field-timezone"
         v-model="timezone.value"
         :source="timezones"
