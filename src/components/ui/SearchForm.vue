@@ -1,6 +1,6 @@
 <template>
   <form
-    :class="'search-form' + (modifier ? ' ' + modifier : '')"
+    class="search-form"
     :action="
       this.$router.resolve({ name: 'Search', query: { query, who } }).href
     "
@@ -66,9 +66,6 @@
 <script>
 export default {
   name: 'SearchForm',
-  props: {
-    modifier: String,
-  },
   methods: {
     handleSubmit(event) {
       event.preventDefault();
