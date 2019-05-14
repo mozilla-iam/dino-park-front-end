@@ -13,8 +13,7 @@ const Combobox = ({ id, onChange, placeholder, value, source, ...props }) =>
     {
       inputValue: value,
       selectedItem: value,
-      onChange,
-      onInputValueChange: onChange,
+      onStateChange: onChange,
       ...props,
     },
     ({
@@ -23,7 +22,6 @@ const Combobox = ({ id, onChange, placeholder, value, source, ...props }) =>
       getMenuProps,
       highlightedIndex,
       isOpen,
-
       openMenu,
       closeMenu,
     }) =>
@@ -78,7 +76,12 @@ export default {
       this.node = render(
         h(Combobox, {
           ...pick(this, ['id', 'source', 'value', 'placeholder']),
-          onChange: (value) => this.$emit('input', value),
+          onChange: (changes) => {
+            if (Object.prototype.hasOwnProperty.call(changes, 'inputValue')) {
+              const value = changes.inputValue;
+              this.$emit('input', value);
+            }
+          },
         }),
         this.$el,
         this.node,

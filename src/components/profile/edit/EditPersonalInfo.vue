@@ -457,11 +457,17 @@ export default {
   },
   methods: {
     async updateLocations(query) {
-      await new Promise((resolve) => setTimeout(resolve, 500));
-
-      this.locations = ['aris', 'erlin', 'ondon', 'ew York'].map(
-        (str) => query[0].toUpperCase() + query.slice(1) + str,
-      );
+      try {
+        const res = await fetcher.fetch(
+          `/world/suggest?s=${encodeURIComponent(query)}`,
+        );
+        const json = await res.json();
+        this.locations = json.map(
+          ({ country, region, city }) => `${city}, ${region}, ${country}`,
+        );
+      } catch (e) {
+        console.error(e);
+      }
     },
   },
 };
