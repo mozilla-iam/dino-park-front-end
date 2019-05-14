@@ -100,7 +100,7 @@ export default {
       // overflowing content itself
       if (
         event.target !== expandedEl &&
-        expandedEl.contains(event.currentTarget) === false &&
+        expandedEl.contains(event.target) === false &&
         this.isExpanded === true
       ) {
         this.isExpanded = false;

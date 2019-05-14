@@ -5,7 +5,7 @@
     <template v-if="!this.$route.query.query">
       <p>You have not searched.</p>
     </template>
-    <LoadingSpinner v-else-if="loading"></LoadingSpinner>
+    <LoadingSpinner v-else-if="loading && !more"></LoadingSpinner>
     <Error v-else-if="error">
       <template slot="image">
         <img
@@ -34,10 +34,10 @@
       <Error>
         <template slot="image">
           <img
-            src="@/assets/images/dino-1.png"
+            src="@/assets/images/target.png"
             srcset="
-              @/assets/images/dino-1@2x.png 2x,
-              @/assets/images/dino-1@3x.png 3x
+              @/assets/images/target@2x.png 2x,
+              @/assets/images/target@3x.png 3x
             "
           />
         </template>
@@ -60,13 +60,25 @@
         {{ results.total }} results for
         <strong>{{ this.$route.query.query }}</strong>
       </p>
-      <SearchResultList :results="results"></SearchResultList>
+      <SearchResultList :dinos="results.dinos"></SearchResultList>
+      <LoadingSpinner v-if="loading"></LoadingSpinner>
+      <Button
+        v-else-if="results.dinos.length < results.total"
+        type="button"
+        class="search-results__button-more button button--text-only button--icon-only"
+        @click="fetchMore"
+      >
+        <Icon id="chevron-down" :width="24" :height="24" />
+        <span>Show More</span>
+      </Button>
     </template>
   </main>
 </template>
 
 <script>
 import Error from '@/components/ui/Error.vue';
+import Icon from '@/components/ui/Icon.vue';
+import Button from '@/components/ui/Button.vue';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 import SearchResultList from '@/components/search/SearchResultList.vue';
 import SearchToggle from '@/components/search/SearchToggle.vue';
@@ -77,6 +89,8 @@ const fetcher = new Fetcher({ failoverOn: [302] });
 export default {
   name: 'PageSearchResult',
   components: {
+    Icon,
+    Button,
     Error,
     LoadingSpinner,
     SearchResultList,
@@ -87,37 +101,54 @@ export default {
       loading: false,
       post: null,
       error: null,
+      more: false,
+      results: { dinos: [], total: 0, next: null },
     };
   },
   created() {
-    this.fetchData();
+    this.fetchNew();
   },
   watch: {
-    $route: 'fetchData',
+    $route: 'fetchNew',
   },
   methods: {
-    async fetchData() {
+    async fetchNew() {
+      this.loading = true;
+      const results = await this.fetchData();
+      this.results = results;
+      this.loading = false;
+    },
+    async fetchMore() {
+      this.loading = true;
+      const results = await this.fetchData(true);
+      this.results.dinos.push(...results.dinos);
+      this.results.next = results.next;
+      this.loading = false;
+    },
+    async fetchData(more = false) {
+      this.more = more;
       this.error = null;
       this.post = null;
-      this.loading = true;
       try {
         const params = new URLSearchParams([
           ['q', this.$route.query.query],
           ['w', this.$route.query.who],
         ]);
+        if (more) {
+          params.append('a', this.results.next);
+        }
         const data = await fetcher.fetch(
           `/api/v4/search/simple/?${params.toString()}`,
         );
         const results = await data.json();
-        this.results = results;
+        return results;
       } catch (e) {
         if (e instanceof TypeError && e.message.startsWith('NetworkError')) {
           window.location.reload();
-          return;
         }
         this.error = e;
       }
-      this.loading = false;
+      return { dinos: [], total: 0, next: null };
     },
   },
   updated() {
@@ -132,5 +163,15 @@ export default {
 .search-results {
   padding-top: 1em;
   align-self: start;
+  display: flex;
+  flex-direction: column;
+}
+.search-results__button-more {
+  margin: auto;
+  border: none;
+  font-size: 0.9em;
+}
+.search-results__button-more > svg {
+  margin-right: 0.5em;
 }
 </style>
