@@ -15,6 +15,7 @@
         :closeWhenClickedOutside="true"
         ref="showMoreSearch"
         :buttonTextVisuallyHidden="true"
+        :moveFocus="false"
       >
         <template slot="overflow">
           <SearchForm
