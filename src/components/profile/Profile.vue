@@ -110,7 +110,7 @@
       v-else
       nav="accounts"
       title="Accounts"
-      message="You haven’t added any accounts yet."
+      message="No accounts have been added yet."
     >
       <template v-slot:header>
         <EditButton
