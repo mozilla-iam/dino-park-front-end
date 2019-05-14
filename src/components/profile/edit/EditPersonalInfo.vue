@@ -218,7 +218,13 @@
           any value you like.
         </Tooltip>
       </div>
-      <input type="text" id="field-location" v-model="location.value" />
+      <Combobox
+        id="field-location"
+        v-model="location.value"
+        @input="updateLocations"
+        :source="locations"
+      >
+      </Combobox>
       <PrivacySetting
         label="Location privacy levels"
         id="field-location-privacy"
@@ -257,10 +263,8 @@
         >
       </div>
       <Combobox
-        v-if="timezones.length > 0"
         id="field-timezone"
         v-model="timezone.value"
-        :allowCustomInput="true"
         :source="timezones"
       >
       </Combobox>
@@ -462,7 +466,23 @@ export default {
       ),
       showPictureModal: false,
       timezones: [],
+      locations: [],
     };
+  },
+  methods: {
+    async updateLocations(query) {
+      try {
+        const res = await fetcher.fetch(
+          `/world/suggest?s=${encodeURIComponent(query)}`,
+        );
+        const json = await res.json();
+        this.locations = json.map(
+          ({ country, region, city }) => `${city}, ${region}, ${country}`,
+        );
+      } catch (e) {
+        console.error(e);
+      }
+    },
   },
 };
 </script>
@@ -498,6 +518,7 @@ export default {
 }
 .edit-personal-info > input,
 .edit-personal-info > div > input,
+.edit-personal-info > div > div > input,
 .edit-personal-info > textarea,
 .edit-personal-info > div > textarea,
 .edit-personal-info > select {
