@@ -15,10 +15,11 @@
         :closeWhenClickedOutside="true"
         ref="showMoreSearch"
         :buttonTextVisuallyHidden="true"
+        :moveFocus="false"
       >
         <template slot="overflow">
           <SearchForm
-            modifier="search-form--small hide-desktop"
+            class="search-form--small hide-desktop"
             id="mobile-search"
             v-on:close-search-form="closeMobileSearchForm()"
           ></SearchForm>
@@ -88,7 +89,7 @@
       ></Toast>
     </div>
     <SearchForm
-      modifier="search-form--small hide-desktop"
+      class="search-form--small hide-desktop"
       v-if="mobileSearchOpen"
       id="mobile-search"
       v-on:close-search-form="closeMobileSearchForm()"
