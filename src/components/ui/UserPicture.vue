@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     async updateUserPicture() {
-      if (this.picture && this.picture.startsWith('default:')) {
+      if (this.picture === 'empty:') {
         return '';
       }
       if (this.picture && this.picture.startsWith('data:')) {
@@ -53,6 +53,7 @@ export default {
       if (
         this.picture === null ||
         this.picture === '' ||
+        this.picture === 'default:' ||
         this.picture.startsWith('https://s3.amazonaws.com/')
       ) {
         return generateIdenticon(this.username, this.size);

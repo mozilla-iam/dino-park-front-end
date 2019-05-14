@@ -31,7 +31,7 @@
       <Crop v-if="imgSrc" :src="imgSrc" ref="crop" />
       <UserPicture
         v-else
-        :picture="picture.value"
+        :picture="editPicture"
         :username="username.value"
         :size="264"
         :isStaff="staffInformation.staff.value"
@@ -67,7 +67,7 @@
         type="button"
         class="button button--primary"
         :disabled="!privacyAgreed"
-        @click="selectCrop()"
+        @click="select()"
       >
         Select
       </button>
@@ -89,10 +89,16 @@ export default {
     Modal,
     UserPicture,
   },
-  data: () => ({ imgSrc: null, privacyAgreed: false }),
+  data() {
+    return {
+      imgSrc: null,
+      editPicture: (this.picture && this.picture.value) || '',
+      privacyAgreed: false,
+    };
+  },
   methods: {
     async deleteImg() {
-      this.picture.value = '';
+      this.editPicture = 'default:';
       this.imgSrc = null;
     },
     handleChangeFile(event) {
@@ -114,12 +120,15 @@ export default {
         { canvas: true, minWidth: 264, maxWidth: 264, downsamplingRatio: 0.75 },
       );
     },
-    selectCrop() {
+    select() {
       if (this.$refs.crop && this.imgSrc !== null) {
         const data = this.$refs.crop.cropper.toDataURL();
         this.resize(data);
       } else {
         // nothing changed
+        if (this.editPicture === 'default:') {
+          this.picture.value = '';
+        }
         this.$emit('close');
       }
     },
@@ -127,11 +136,11 @@ export default {
   computed: {
     deleteDisabled() {
       const isEmptyPicture =
-        this.picture &&
-        (this.picture.value.startsWith('default:') ||
-          this.picture.value === null ||
-          this.picture.value === '' ||
-          this.picture.value.startsWith('https://s3.amazonaws.com/'));
+        this.editPicture === 'default:' ||
+        this.editPicture === 'empty:' ||
+        this.editPicture === null ||
+        this.editPicture === '' ||
+        this.editPicture.startsWith('https://s3.amazonaws.com/');
       return isEmptyPicture && this.imgSrc === null;
     },
   },

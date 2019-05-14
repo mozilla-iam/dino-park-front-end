@@ -16,7 +16,7 @@
       :id="`org-node-${prefix}`"
     >
       <UserPicture
-        :picture="hasBeenLoaded ? data.picture : 'default:'"
+        :picture="hasBeenLoaded ? data.picture : 'empty:'"
         :username="data.username"
         :size="40"
         :isStaff="true"
