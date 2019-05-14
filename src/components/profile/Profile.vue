@@ -110,7 +110,7 @@
       v-else
       nav="accounts"
       title="Accounts"
-      message="You haven’t added any accounts yet."
+      message="No accounts have been added yet."
     >
       <template v-slot:header>
         <EditButton
@@ -132,9 +132,9 @@
       <EditLanguages
         v-if="this.editing === 'languages'"
         v-bind="{
-          initialValues: {
-            languages,
-          },
+          username: primaryUsername.value,
+          initialValues: { languages },
+          initialLanguages: languages,
         }"
       ></EditLanguages>
       <ViewLanguages
@@ -146,8 +146,15 @@
       v-else
       nav="languages"
       title="Languages"
-      message="Language editing capabilities are coming soon."
+      message="No languages have been added yet."
     >
+      <template v-slot:header>
+        <EditButton
+          v-if="userOnOwnProfile"
+          section="languages"
+          sectionId="languages"
+        ></EditButton>
+      </template>
     </EmptyCard>
 
     <section
@@ -283,6 +290,7 @@ export default {
             true) ||
           false,
         languages:
+          this.editing === 'languages' ||
           (this.languages.values &&
             Object.entries(this.languages.values).length > 0 &&
             true) ||

@@ -97,12 +97,13 @@ export default {
         : null;
 
       // closes overflow content if clicked anywhere, except the
-      // overflowing content itself
-      if (
-        event.target !== expandedEl &&
-        expandedEl.contains(event.target) === false &&
-        this.isExpanded === true
-      ) {
+      // overflowing content itself or elements in the overflow content
+      if (event.target !== expandedEl && !expandedEl.contains(event.target)) {
+        this.isExpanded = false;
+      }
+
+      // if clicked on a link or button anywhere, close the overflow content
+      if (event.target.tagName === 'A' || event.target.tagName === 'BUTTON') {
         this.isExpanded = false;
       }
     },
@@ -176,5 +177,9 @@ export default {
 }
 .show-more__button-text.contact-me__button {
   font-size: 1em;
+}
+.show-more a > *,
+.show-more button > * {
+  pointer-events: none;
 }
 </style>

@@ -1,10 +1,11 @@
 <template>
   <EditMutationWrapper
     :editVariables="{
-      languages: languagesUpdated,
+      languages,
     }"
     :initialValues="initialValues"
     formName="Edit languages"
+    class="add-languages"
   >
     <header class="profile__section-header" ref="header" tabindex="-1">
       <h2>Languages</h2>
@@ -13,36 +14,41 @@
         label="Languages privacy levels"
         id="section-languages-privacy"
         profileFieldName="languages"
-        :profileFieldObject="languagesUpdated"
+        :profileFieldObject="languages"
         :collapsedShowLabel="true"
-        v-model="languagesUpdated.display"
       />
     </header>
-    <Tag
-      v-for="(language, index) in languages"
-      :tag="language"
-      :key="`language-${index}`"
-      :removable="true"
-      @removeTag="removeLanguage(index)"
-    >
-    </Tag>
-    <input type="text" v-model="newLanguage" ref="inputLanguage" />
+    <div class="add-languages__list">
+      <Tag
+        v-for="({ k, v }, index) in languages.values"
+        :tag="v"
+        :key="`language-${index}`"
+        :removable="true"
+        @removeTag="removeLanguage(index)"
+      >
+      </Tag>
+    </div>
+    <input
+      v-if="addingLanguage"
+      type="text"
+      v-model="newLanguage"
+      ref="inputLanguage"
+      class="add-languages__input"
+      @keydown.enter="handleAddLanguage"
+    />
     <button
       type="button"
-      @click="
-        if (newLanguage.length > 0) {
-          addLanguage(newLanguage);
-        } else {
-          $refs.inputLanguage.focus();
-        }
-      "
+      class="button button--secondary button--action"
+      @click="handleAddLanguage"
     >
-      Add language
+      <Icon id="plus" :width="18" :height="18" />
+      Add Language
     </button>
   </EditMutationWrapper>
 </template>
 
 <script>
+import Icon from '@/components/ui/Icon.vue';
 import PrivacySetting from '@/components/profile/PrivacySetting.vue';
 import Tag from '@/components/ui/Tag.vue';
 import { displayLevelsFor, DISPLAY_LEVELS } from '@/assets/js/display-levels';
@@ -53,56 +59,81 @@ export default {
   props: {
     initialValues: Object,
     editVariables: Object,
+    initialLanguages: {
+      type: Object,
+      default: () => {
+        return {};
+      },
+    },
   },
   components: {
     EditMutationWrapper,
+    Icon,
     PrivacySetting,
     Tag,
   },
   methods: {
     displayLevelsFor,
+    handleAddLanguage() {
+      if (!this.addingLanguage) {
+        this.addingLanguage = true;
+        this.$nextTick(() => this.$refs.inputLanguage.focus());
+        return;
+      }
+      if (this.newLanguage.length > 0) {
+        this.addLanguage(this.newLanguage);
+        this.addingLanguage = false;
+      } else {
+        this.$refs.inputLanguage.focus();
+      }
+    },
     addLanguage(language) {
-      const id = Object.keys(this.languages).length + 1;
+      const highestId = this.languages.values.reduce(
+        (max, { k }) => (Number(k) > max ? Number(k) : max),
+        0,
+      );
+      const newLanguage = {
+        k: `${highestId + 1}`,
+        v: language,
+      };
 
-      this.languages = { ...this.languages, [id]: language };
+      this.languages.values.push(newLanguage);
       this.newLanguage = '';
     },
     removeLanguage(index) {
-      const { [index]: deleted, ...remainingLanguages } = this.languages;
-      this.languages = remainingLanguages;
-    },
-    formatAsKeyValues(item) {
-      const [k, v] = item;
-
-      return {
-        k,
-        v,
-      };
-    },
-  },
-  watch: {
-    languages() {
-      this.languagesUpdated.values = Object.entries(this.languages).map(
-        this.formatAsKeyValues,
-      );
+      if (this.languages.values.length > index) {
+        this.languages.values.splice(index, 1);
+      }
     },
   },
   mounted() {
     this.$refs.header.focus();
   },
   data() {
+    const {
+      values: initialLanguages,
+      metadata: { display = DISPLAY_LEVELS.private.value },
+    } = this.initialLanguages;
     return {
       newLanguage: '',
-      languages: this.initialValues.languages.values,
-      languagesUpdated: {
-        values: Object.entries(this.initialValues.languages.values).map(
-          this.formatAsKeyValues,
-        ),
-        display:
-          this.initialValues.languages.metadata.display ||
-          DISPLAY_LEVELS.public.value,
+      languages: {
+        values: Object.entries(initialLanguages || {}).map(([k, v]) => {
+          return { k, v };
+        }),
+        display,
       },
+      addingLanguage: false,
     };
   },
 };
 </script>
+
+<style>
+.add-languages__input,
+.add-languages__input {
+  margin-top: 1em;
+}
+.add-languages__list {
+  margin-bottom: 2em;
+}
+</style>

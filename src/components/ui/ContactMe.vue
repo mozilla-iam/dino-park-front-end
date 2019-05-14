@@ -16,7 +16,6 @@
         <div class="contact-me__item">
           <a :href="`mailto:${primaryEmail}`" class="contact-me__pair">
             <Icon id="at-sign" :width="24" :height="24" />
-            <span class="contact-me__key">Email Me</span>
             <span class="contact-me__value">{{ primaryEmail }}</span>
           </a>
         </div>
@@ -27,7 +26,6 @@
         >
           <a :href="`tel:${number.value}`" class="contact-me__pair">
             <Icon id="phone-forwarded" :width="24" :height="24" />
-            <span class="contact-me__key">Call Me</span>
             <span class="contact-me__value">{{ number.value }}</span>
           </a>
         </div>
@@ -36,19 +34,20 @@
           :key="`u-${index}`"
           class="contact-me__item"
         >
-          <a v-if="uri.uri" :href="uri.uri" class="contact-me__pair">
+          <a
+            v-if="uri.uri"
+            :href="uri.uri"
+            class="contact-me__pair"
+            :title="uri.text"
+          >
             <Icon :id="uri.icon" :width="24" :height="24" />
-            <span class="contact-me__key">Ping Me</span>
-            <span class="contact-me__value"
-              >{{ uri.value }} on {{ uri.text }}</span
-            >
+            <span class="contact-me__value">{{ uri.value }}</span>
+            <span class="visually-hidden">on {{ uri.text }}</span>
           </a>
-          <span v-else class="contact-me__pair">
+          <span v-else class="contact-me__pair" :title="uri.text">
             <Icon :id="uri.icon" :width="24" :height="24" />
-            <span class="contact-me__key">Ping Me</span>
-            <span class="contact-me__value"
-              >{{ uri.value }} on {{ uri.text }}</span
-            >
+            <span class="contact-me__value">{{ uri.value }}</span>
+            <span class="visually-hidden">on {{ uri.text }}</span>
           </span>
         </div>
       </Popover>
