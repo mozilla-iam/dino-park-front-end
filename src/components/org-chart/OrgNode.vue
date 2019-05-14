@@ -149,6 +149,8 @@ export default {
     },
   },
   mounted() {
+    this.$el.style.setProperty('--nodeLevel', this.prefix.split('-').length);
+
     if (this.data.username === this.$route.params.username) {
       const e = document.getElementById(`${this.data.username}`);
       if (e) {
@@ -203,35 +205,6 @@ export default {
 .org-node {
   list-style: none;
   position: relative; /* positioning context for a::after */
-  --nodeLevel: 1;
-}
-.org-node .org-node {
-  --nodeLevel: 2;
-}
-.org-node .org-node .org-node {
-  --nodeLevel: 3;
-}
-.org-node .org-node .org-node .org-node {
-  --nodeLevel: 4;
-}
-.org-node .org-node .org-node .org-node .org-node {
-  --nodeLevel: 5;
-}
-.org-node .org-node .org-node .org-node .org-node .org-node {
-  --nodeLevel: 6;
-}
-.org-node .org-node .org-node .org-node .org-node .org-node .org-node {
-  --nodeLevel: 7;
-}
-.org-node
-  .org-node
-  .org-node
-  .org-node
-  .org-node
-  .org-node
-  .org-node
-  .org-node {
-  --nodeLevel: 8;
 }
 .org-node a {
   display: block;
