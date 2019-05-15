@@ -196,6 +196,9 @@ export default {
         const orgchart = await data.json();
         this.tree = orgchart.forrest;
         this.loose = orgchart.loose;
+        if (this.$route.name !== 'OrgchartHighlight') {
+          this.expandFirst();
+        }
       } catch (e) {
         if (e instanceof TypeError && e.message.startsWith('NetworkError')) {
           window.location.reload();
