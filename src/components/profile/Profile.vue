@@ -112,8 +112,8 @@
       title="Accounts"
       :message="
         userOnOwnProfile
-          ? 'You haven\'t added any accounts yet.'
-          : 'No accounts have been added yet.'
+          ? `You haven't added any accounts yet.`
+          : `No accounts have been added yet.`
       "
     >
       <template v-slot:header>
@@ -152,8 +152,8 @@
       title="Languages"
       :message="
         userOnOwnProfile
-          ? 'You haven\'t added any languages yet.'
-          : 'No languages have been added yet.'
+          ? `You haven't added any languages yet.`
+          : `No languages have been added yet.`
       "
     >
       <template v-slot:header>
