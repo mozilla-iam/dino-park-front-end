@@ -110,7 +110,11 @@
       v-else
       nav="accounts"
       title="Accounts"
-      message="No accounts have been added yet."
+      :message="
+        userOnOwnProfile
+          ? 'You haven\'t added any accounts yet.'
+          : 'No accounts have been added yet.'
+      "
     >
       <template v-slot:header>
         <EditButton
@@ -146,7 +150,11 @@
       v-else
       nav="languages"
       title="Languages"
-      message="No languages have been added yet."
+      :message="
+        userOnOwnProfile
+          ? 'You haven\'t added any languages yet.'
+          : 'No languages have been added yet.'
+      "
     >
       <template v-slot:header>
         <EditButton
