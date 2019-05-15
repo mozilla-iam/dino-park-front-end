@@ -30,22 +30,22 @@
       v-if="children.length > 0"
       :class="
         'org-node__expander' +
-          (orgNodeExpanded ? ' org-node__expander--expanded' : '')
+          (isExpanded ? ' org-node__expander--expanded' : '')
       "
     >
       <button
         class="org-node__expander-button org-node__toggle"
         type="button"
-        :aria-expanded="orgNodeExpanded ? 'true' : 'false'"
+        :aria-expanded="isExpanded ? 'true' : 'false'"
         :aria-label="
-          orgNodeExpanded
+          isExpanded
             ? `Collapse ${data.firstName} ${data.lastName}`
             : `Expand ${data.firstName} ${data.lastName}`
         "
-        v-on:click="toggleOverflow"
+        v-on:click="toggle(data.dinoId)"
       >
         <svg
-          v-if="orgNodeExpanded"
+          v-if="isExpanded"
           xmlns="http://www.w3.org/2000/svg"
           width="16"
           height="16"
@@ -83,19 +83,18 @@
         <div
           :class="
             'org-node__expander-overflow' +
-              (orgNodeExpanded ? '' : ' org-node__expander-overflow-hidden')
+              (isExpanded ? '' : ' org-node__expander-overflow-hidden')
           "
           tabindex="-1"
         >
           <ul v-for="(child, index) in children" :key="index">
             <OrgNode
-              v-if="loadNow || orgNodeExpanded"
+              v-if="preload || isExpanded"
               :children="child.children"
               :data="child.data"
               :prefix="`${prefix}-${index}`"
               :trace="trace"
-              :visible="orgNodeExpanded"
-              :expandAllChildren="propagateExpandAllChildren"
+              :visible="isExpanded"
             ></OrgNode>
           </ul>
         </div>
@@ -135,66 +134,23 @@ export default {
     data: Object,
     prefix: String,
     trace: String,
-    expandAllChildren: {
-      type: Boolean,
-      default: false,
-    },
-    baseState: String,
     visible: Boolean,
   },
   components: {
     UserPicture,
   },
+  inject: ['subscribeToExpanded', 'toggle'],
   watch: {
     trace() {
-      if (this.trace || this.prefix) {
-        this.orgNodeExpanded =
-          this.trace.startsWith(`${this.prefix}-`) || this.orgNodeExpanded;
-      }
-      return this.orgNodeExpanded;
-    },
-    expandAllChildren() {
-      this.propagateExpandAllChildren = this.expandAllChildren;
-      this.orgNodeExpanded = this.shouldBeExpanded();
+      this.checkTrace();
     },
     visible() {
-      if (!this.hasBeenLoaded && this.visible) {
-        this.hasBeenLoaded = true;
-      }
-    },
-    baseState() {
-      switch (this.baseState) {
-        case 'normal':
-          this.propagateExpandAllChildren = false;
-          this.orgNodeExpanded = this.shouldBeExpanded();
-          break;
-        case 'expanded':
-          this.propagateExpandAllChildren = true;
-          this.orgNodeExpanded = this.shouldBeExpanded();
-          break;
-        case 'collapsed':
-          this.orgNodeExpanded = false;
-          break;
-        default:
-          console.warn('unknown orgchart state');
-      }
-    },
-  },
-  methods: {
-    shouldBeExpanded() {
-      const state = this.trace && this.trace.startsWith(`${this.prefix}-`);
-      return (
-        state ||
-        (this.prefix && !this.prefix.includes('-')) ||
-        this.expandAllChildren ||
-        this.propagateExpandAllChildren
-      );
-    },
-    toggleOverflow() {
-      this.orgNodeExpanded = !this.orgNodeExpanded;
+      this.hasBeenLoaded = this.hasBeenLoaded || this.visible;
     },
   },
   mounted() {
+    this.$el.style.setProperty('--nodeLevel', this.prefix.split('-').length);
+
     if (this.data.username === this.$route.params.username) {
       const e = document.getElementById(`${this.data.username}`);
       if (e) {
@@ -209,20 +165,38 @@ export default {
           e.scrollIntoView(false);
         }
       }
-      this.orgNodeExpanded = true;
+      this.toggle(this.data.dinoId, true);
     }
+    this.checkTrace();
+
     setTimeout(() => {
-      this.loadNow = true;
+      this.preload = true;
     }, 100);
   },
   data() {
-    const orgNodeExpanded = this.shouldBeExpanded();
     return {
-      propagateExpandAllChildren: this.expandAllChildren,
-      orgNodeExpanded,
-      loadNow: orgNodeExpanded,
       hasBeenLoaded: this.visible,
+      isExpanded:
+        this.children.length === 0
+          ? false
+          : this.subscribeToExpanded(this.data.dinoId, (isExpanded) => {
+              this.preload = this.preload || isExpanded;
+              this.isExpanded = isExpanded;
+            }),
+      preload: false,
     };
+  },
+  methods: {
+    checkTrace() {
+      if (
+        !this.isExpanded &&
+        this.trace &&
+        this.prefix &&
+        this.trace.startsWith(`${this.prefix}-`)
+      ) {
+        this.toggle(this.data.dinoId, true);
+      }
+    },
   },
 };
 </script>
@@ -231,35 +205,6 @@ export default {
 .org-node {
   list-style: none;
   position: relative; /* positioning context for a::after */
-  --nodeLevel: 1;
-}
-.org-node .org-node {
-  --nodeLevel: 2;
-}
-.org-node .org-node .org-node {
-  --nodeLevel: 3;
-}
-.org-node .org-node .org-node .org-node {
-  --nodeLevel: 4;
-}
-.org-node .org-node .org-node .org-node .org-node {
-  --nodeLevel: 5;
-}
-.org-node .org-node .org-node .org-node .org-node .org-node {
-  --nodeLevel: 6;
-}
-.org-node .org-node .org-node .org-node .org-node .org-node .org-node {
-  --nodeLevel: 7;
-}
-.org-node
-  .org-node
-  .org-node
-  .org-node
-  .org-node
-  .org-node
-  .org-node
-  .org-node {
-  --nodeLevel: 8;
 }
 .org-node a {
   display: block;

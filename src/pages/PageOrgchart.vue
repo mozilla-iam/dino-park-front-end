@@ -3,7 +3,7 @@
     <div class="org-chart-buttons" v-if="!loading">
       <button
         type="button"
-        @click="expand"
+        @click="expandAll"
         class="org-chart-buttons__row-left org-chart-buttons__control button--icon-only button"
         title="Expand all"
       >
@@ -12,7 +12,7 @@
       </button>
       <button
         type="button"
-        @click="collapse"
+        @click="collapseAll"
         class="org-chart-buttons__row-right org-chart-buttons__control button--icon-only button"
         title="Collapse all"
       >
@@ -21,7 +21,7 @@
       </button>
       <button
         type="button"
-        @click="reset"
+        @click="expandFirst"
         class="org-chart-buttons__reset org-chart-buttons__control button--icon-only button"
         title="Reset to default view"
       >
@@ -35,7 +35,6 @@
           v-if="tree && !loading"
           :roots="tree"
           :trace="trace || ''"
-          :baseState="baseState"
         ></OrgRoot>
         <OrgRoot
           v-if="loose && loose.length > 0 && !loading"
@@ -107,7 +106,38 @@ export default {
       looseTrace: '',
       previewProfileQuery: PREVIEW_PROFILE,
       desktopView: false,
-      baseState: 'normal',
+
+      expanded: {},
+      collapsed: null,
+      subscribers: {},
+    };
+  },
+  provide() {
+    const orgChartPage = this;
+    return {
+      subscribeToExpanded(id, callback) {
+        orgChartPage.subscribers[id] = () =>
+          callback(orgChartPage.isExpanded(id));
+        return orgChartPage.isExpanded(id);
+      },
+      toggle(id, value = null) {
+        const useCollapsed = orgChartPage.expanded == null;
+        const collection = useCollapsed
+          ? orgChartPage.collapsed
+          : orgChartPage.expanded;
+        if (value != null && orgChartPage.isExpanded(id) === value) {
+          return;
+        }
+        if (collection[id]) {
+          delete collection[id];
+        } else {
+          collection[id] = true;
+        }
+        const subscriber = orgChartPage.subscribers[id];
+        if (subscriber) {
+          subscriber();
+        }
+      },
     };
   },
   created() {
@@ -148,12 +178,6 @@ export default {
     openedFromOrgNode() {
       return this.$route.params.openedFromOrgNode;
     },
-    expandAllChildren() {
-      return this.expanded === 'expand-all';
-    },
-    collapseAllChildren() {
-      return this.expanded === 'collapse-all';
-    },
   },
   watch: {
     desktopView() {
@@ -172,6 +196,9 @@ export default {
         const orgchart = await data.json();
         this.tree = orgchart.forrest;
         this.loose = orgchart.loose;
+        if (this.$route.name !== 'OrgchartHighlight') {
+          this.expandFirst();
+        }
       } catch (e) {
         if (e instanceof TypeError && e.message.startsWith('NetworkError')) {
           window.location.reload();
@@ -188,14 +215,34 @@ export default {
         this.desktopView = false;
       }
     },
-    expand() {
-      this.baseState = 'expanded';
+
+    notifyAll() {
+      Object.values(this.subscribers).forEach((subscriber) => {
+        subscriber();
+      });
     },
-    collapse() {
-      this.baseState = 'collapsed';
+    expandAll() {
+      this.expanded = null;
+      this.collapsed = {};
+      this.notifyAll();
     },
-    reset() {
-      this.baseState = 'normal';
+    collapseAll() {
+      this.expanded = {};
+      this.collapsed = null;
+      this.notifyAll();
+    },
+    expandFirst() {
+      this.expanded = this.tree
+        .map((node) => node.data.dinoId)
+        .reduce((obj, key) => {
+          obj[key] = true;
+          return obj;
+        }, {});
+      this.collapsed = null;
+      this.notifyAll();
+    },
+    isExpanded(id) {
+      return this.expanded ? this.expanded[id] : !this.collapsed[id];
     },
   },
   mounted() {
