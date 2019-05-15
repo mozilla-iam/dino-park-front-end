@@ -113,16 +113,19 @@ export default {
     };
   },
   provide() {
-    const self = this;
+    const orgChartPage = this;
     return {
       subscribeToExpanded(id, callback) {
-        self.subscribers[id] = () => callback(self.isExpanded(id));
-        return self.isExpanded(id);
+        orgChartPage.subscribers[id] = () =>
+          callback(orgChartPage.isExpanded(id));
+        return orgChartPage.isExpanded(id);
       },
       toggle(id, value = null) {
-        const useCollapsed = self.expanded == null;
-        const collection = useCollapsed ? self.collapsed : self.expanded;
-        if (value != null && self.isExpanded(id) === value) {
+        const useCollapsed = orgChartPage.expanded == null;
+        const collection = useCollapsed
+          ? orgChartPage.collapsed
+          : orgChartPage.expanded;
+        if (value != null && orgChartPage.isExpanded(id) === value) {
           return;
         }
         if (collection[id]) {
@@ -130,7 +133,7 @@ export default {
         } else {
           collection[id] = true;
         }
-        const subscriber = self.subscribers[id];
+        const subscriber = orgChartPage.subscribers[id];
         if (subscriber) {
           subscriber();
         }
