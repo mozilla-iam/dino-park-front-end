@@ -7,7 +7,23 @@ import pick from 'object.pick';
 import { h, render } from 'preact';
 import Downshift from 'downshift/preact';
 
-const Combobox = ({ id, onChange, placeholder, value, source, ...props }) =>
+const FILTERS = {
+  includes: (value) => (entry) =>
+    entry.toLowerCase().includes(value.toLowerCase()),
+  startsWith: (value) => (entry) =>
+    entry.toLowerCase().startsWith(value.toLowerCase()),
+  none: () => () => true,
+};
+
+const Combobox = ({
+  id,
+  filter,
+  onChange,
+  placeholder,
+  value,
+  source,
+  ...props
+}) =>
   h(
     Downshift,
     {
@@ -42,23 +58,21 @@ const Combobox = ({ id, onChange, placeholder, value, source, ...props }) =>
           h(
             'ul',
             { class: 'combobox__options', ...getMenuProps() },
-            source
-              .filter((o) => o.toLowerCase().includes(value.toLowerCase()))
-              .map((option, i) =>
-                h(
-                  'li',
-                  {
-                    key: option,
-                    class: `combobox__option ${
-                      i === highlightedIndex
-                        ? 'combobox__option--highlighted'
-                        : ''
-                    }`,
-                    ...getItemProps({ item: option }),
-                  },
-                  option,
-                ),
+            source.filter(filter(value)).map((option, i) =>
+              h(
+                'li',
+                {
+                  key: option,
+                  class: `combobox__option ${
+                    i === highlightedIndex
+                      ? 'combobox__option--highlighted'
+                      : ''
+                  }`,
+                  ...getItemProps({ item: option }),
+                },
+                option,
               ),
+            ),
           ),
       ]),
   );
@@ -70,12 +84,17 @@ export default {
     source: Array,
     value: String,
     placeholder: String,
+    filter: {
+      type: String,
+      default: 'includes',
+    },
   },
   methods: {
     renderPreact() {
       this.node = render(
         h(Combobox, {
           ...pick(this, ['id', 'source', 'value', 'placeholder']),
+          filter: FILTERS[this.filter],
           onChange: (changes) => {
             if (Object.prototype.hasOwnProperty.call(changes, 'inputValue')) {
               const value = changes.inputValue;

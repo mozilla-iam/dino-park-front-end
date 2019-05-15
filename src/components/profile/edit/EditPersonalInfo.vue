@@ -222,6 +222,7 @@
         id="field-location"
         v-model="location.value"
         @input="updateLocations"
+        :filter="'none'"
         :source="locations"
       >
       </Combobox>
