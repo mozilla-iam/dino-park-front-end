@@ -12,7 +12,7 @@
     :updateIndicator="primaryEmail"
   >
     <template slot="overflow">
-      <Popover class="contact-me" layer="var(--layerContactMe)">
+      <Popover class="contact-me" layer="var(--layerContactMe)" maxWidth="310">
         <div class="contact-me__item">
           <a :href="`mailto:${primaryEmail}`" class="contact-me__pair">
             <Icon id="at-sign" :width="24" :height="24" />
