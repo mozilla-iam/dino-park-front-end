@@ -5,7 +5,6 @@
     buttonClass="button button--icon-only"
     :alternateButtonText="alternateButtonText"
     :closeWhenClickedOutside="true"
-    :expanded="false"
     :buttonTextVisuallyHidden="true"
   >
     <template slot="overflow">
