@@ -96,6 +96,7 @@ export default {
     Toggle,
   },
   data() {
+    const { org } = this.$store.state;
     return {
       loading: false,
       post: null,
@@ -107,8 +108,8 @@ export default {
       previewProfileQuery: PREVIEW_PROFILE,
       desktopView: false,
 
-      expanded: {},
-      collapsed: null,
+      orgFromStore: Boolean(org),
+      ...(org || { expanded: {}, collapsed: null }),
       subscribers: {},
     };
   },
@@ -196,7 +197,7 @@ export default {
         const orgchart = await data.json();
         this.tree = orgchart.forrest;
         this.loose = orgchart.loose;
-        if (this.$route.name !== 'OrgchartHighlight') {
+        if (!this.orgFromStore && this.$route.name !== 'OrgchartHighlight') {
           this.expandFirst();
         }
       } catch (e) {
@@ -216,30 +217,30 @@ export default {
       }
     },
 
-    notifyAll() {
+    expandAll() {
+      this.setOrgData({ expanded: null, collapsed: {} });
+    },
+    collapseAll() {
+      this.setOrgData({ expanded: {}, collapsed: null });
+    },
+    expandFirst() {
+      this.setOrgData({
+        expanded: this.tree
+          .map((node) => node.data.dinoId)
+          .reduce((obj, key) => {
+            obj[key] = true;
+            return obj;
+          }, {}),
+        collapsed: null,
+      });
+    },
+    setOrgData(org) {
+      this.expanded = org.expanded;
+      this.collapsed = org.collapsed;
       Object.values(this.subscribers).forEach((subscriber) => {
         subscriber();
       });
-    },
-    expandAll() {
-      this.expanded = null;
-      this.collapsed = {};
-      this.notifyAll();
-    },
-    collapseAll() {
-      this.expanded = {};
-      this.collapsed = null;
-      this.notifyAll();
-    },
-    expandFirst() {
-      this.expanded = this.tree
-        .map((node) => node.data.dinoId)
-        .reduce((obj, key) => {
-          obj[key] = true;
-          return obj;
-        }, {});
-      this.collapsed = null;
-      this.notifyAll();
+      this.$store.commit('setOrg', org);
     },
     isExpanded(id) {
       return this.expanded ? this.expanded[id] : !this.collapsed[id];
