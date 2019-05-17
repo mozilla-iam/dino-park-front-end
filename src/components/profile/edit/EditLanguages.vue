@@ -41,8 +41,14 @@
       class="button button--secondary button--action"
       @click="handleAddLanguage"
     >
-      <Icon id="plus" :width="18" :height="18" />
-      Add Language
+      <template v-if="addingLanguage && newLanguage.length > 0">
+        <Icon id="check" :width="18" :height="18" />
+        Submit
+      </template>
+      <template v-else>
+        <Icon id="plus" :width="18" :height="18" />
+        Add Language
+      </template>
     </button>
   </EditMutationWrapper>
 </template>
