@@ -62,6 +62,7 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     user: null,
+    org: null,
   },
   actions: {
     async fetchUser({ commit }) {
@@ -72,6 +73,9 @@ const store = new Vuex.Store({
   mutations: {
     setUser(state, user) {
       state.user = user;
+    },
+    setOrg(state, org) {
+      state.org = org;
     },
   },
 });
