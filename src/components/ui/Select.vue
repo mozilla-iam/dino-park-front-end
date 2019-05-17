@@ -218,13 +218,13 @@ export default {
   position: absolute;
   opacity: 0;
 }
-.options label {
+.options li > label {
   padding: 0.75em 0.5em 0.75em 1em;
   margin: 0;
   display: flex;
   align-items: center;
 }
-.options label:hover {
+.options li > label:hover {
   background-color: var(--lightBlue);
 }
 .focus-styles .options input:focus + label {
