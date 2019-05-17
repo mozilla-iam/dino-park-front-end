@@ -176,10 +176,19 @@
     >
     </EmptyCard>
 
-    <section class="profile__section" v-if="pgpPublicKeys || sshPublicKeys">
+    <section class="profile__section" v-if="sections.keys">
       <a id="nav-keys" class="profile__anchor"></a>
-      <EditKeys v-if="this.editing === 'keys'"> </EditKeys>
+      <EditKeys
+        v-if="this.editing === 'keys'"
+        v-bind="{
+          username: primaryUsername.value,
+          initialValues: { sshPublicKeys, pgpPublicKeys },
+          sshPublicKeys,
+          pgpPublicKeys,
+        }"
+      />
       <ViewKeys
+        v-else
         v-bind="{ pgpPublicKeys, sshPublicKeys, userOnOwnProfile }"
       ></ViewKeys>
     </section>
@@ -187,8 +196,19 @@
       v-else
       nav="keys"
       title="Keys"
-      message="Syncing and editing capabilities for SSH / PGP keys are coming soon."
+      :message="
+        userOnOwnProfile
+          ? `You haven't added any keys yet.`
+          : `No keys have been added yet.`
+      "
     >
+      <template v-slot:header>
+        <EditButton
+          v-if="userOnOwnProfile"
+          section="keys"
+          sectionId="keys"
+        ></EditButton>
+      </template>
     </EmptyCard>
 
     <section
@@ -299,6 +319,12 @@ export default {
           (this.tags.values &&
             Object.entries(this.tags.values).length > 0 &&
             true) ||
+          false,
+        keys:
+          this.editing === 'keys' ||
+          ((this.pgpPublicKeys.values || this.sshPublicKeys.values) &&
+            (Object.entries(this.pgpPublicKeys.values).length > 0 ||
+              Object.entries(this.pgpPublicKeys.values).length > 0)) ||
           false,
       };
     },

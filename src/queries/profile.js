@@ -357,6 +357,18 @@ const DISPLAY_PROFILE = gql`
           display
         }
       }
+      pgpPublicKeys {
+        values
+        metadata {
+          display
+        }
+      }
+      sshPublicKeys {
+        values
+        metadata {
+          display
+        }
+      }
     }
   }
 `;

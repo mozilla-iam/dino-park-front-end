@@ -570,18 +570,6 @@ export default {
 .edit-personal-info__meta {
   grid-column: 1 / 2;
 }
-.button-bar {
-  display: flex;
-  margin: 2em -1.5em -1.5em;
-  padding: 2em;
-  border-top: 2px solid var(--gray-30);
-}
-.button-bar button {
-  margin-left: 1em;
-}
-.button-bar button:first-child {
-  margin-left: auto;
-}
 
 @media (min-width: 57.5em) {
   .edit-personal-info {

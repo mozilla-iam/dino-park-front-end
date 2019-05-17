@@ -22,12 +22,11 @@ export default {
 <style>
 .key {
   border: 1px solid var(--gray-30);
-  padding: 0.5em;
 }
 
 .key + .key,
 .key + .visually-hidden + .key /* there could be a visually hidden heading between keys, in that case also add space */ {
-  margin-top: 1em;
+  margin: 1em 0;
 }
 
 .key h5 {
