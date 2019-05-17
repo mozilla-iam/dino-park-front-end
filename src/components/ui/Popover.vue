@@ -11,7 +11,7 @@ export default {
   name: 'Popover',
   props: {
     layer: String,
-    maxWidth: {
+    initialMaxWidth: {
       type: Number,
       default: 350,
     },
@@ -55,6 +55,7 @@ export default {
   data() {
     return {
       position: '',
+      maxWidth: this.initialMaxWidth,
     };
   },
   mounted() {
