@@ -51,13 +51,9 @@ export default {
       selection.removeAllRanges();
       selection.addRange(range);
 
-      try {
-        document.execCommand('copy');
-        selection.removeAllRanges();
-        this.toastContent = 'Copied!';
-      } catch (e) {
-        this.toastContent = 'An error occured';
-      }
+      document.execCommand('copy');
+      selection.removeAllRanges();
+      this.toastContent = 'Copied!';
     },
   },
   data() {
