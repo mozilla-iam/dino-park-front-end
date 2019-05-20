@@ -1,6 +1,12 @@
 <template>
   <dl class="key">
     <dt class="key__title">
+      <Toast
+        ref="toast"
+        :content="toastContent"
+        :time="1000"
+        @reset-toast="toastContent = ''"
+      ></Toast>
       <strong>{{ type }}</strong
       >: {{ title }}
       <button
@@ -18,6 +24,7 @@
 
 <script>
 import Icon from '@/components/ui/Icon.vue';
+import Toast from '@/components/ui/Toast.vue';
 
 export default {
   name: 'Key',
@@ -28,6 +35,7 @@ export default {
   },
   components: {
     Icon,
+    Toast,
   },
   methods: {
     copyKey() {
@@ -38,13 +46,18 @@ export default {
       selection.removeAllRanges();
       selection.addRange(range);
 
-      document.execCommand('copy');
-      selection.removeAllRanges();
+      try {
+        document.execCommand('copy');
+        selection.removeAllRanges();
+        this.toastContent = 'Copied!';
+      } catch (e) {
+        this.toastContent = 'An error occured';
+      }
     },
   },
   data() {
     return {
-      copied: false,
+      toastContent: '',
     };
   },
 };
