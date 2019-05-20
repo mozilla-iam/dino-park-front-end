@@ -31,6 +31,7 @@
         :title="key"
         :content="value"
         :key="`pgp-${key}`"
+        :copyable="false"
       />
     </template>
     <template
@@ -53,6 +54,7 @@
         :title="key"
         :content="value"
         :key="`ssh-${key}`"
+        :copyable="false"
       />
     </template>
     <div class="edit-keys__buttons">

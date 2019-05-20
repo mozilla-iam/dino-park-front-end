@@ -10,6 +10,7 @@
       <strong>{{ type }}</strong
       >: {{ title }}
       <button
+        v-if="copyable"
         type="button"
         class="button button--secondary button--small"
         @click="copyKey"
@@ -32,6 +33,10 @@ export default {
     type: String,
     title: String,
     content: String,
+    copyable: {
+      type: Boolean,
+      default: true,
+    },
   },
   components: {
     Icon,
