@@ -10,19 +10,21 @@
   >
     <header class="profile__section-header" ref="header" tabindex="-1">
       <h2>Keys</h2>
-      <PrivacySetting
-        class="privacy-setting--large"
-        label="PGP keys privacy levels"
-        id="section-keys-privacy"
-        profileFieldName="sshPublicKeys"
-        :profileFieldObject="sshPublicKeys"
-        :collapsedShowLabel="true"
-      />
     </header>
     <template
       v-if="pgpPublicKeys && Object.keys(pgpPublicKeys.values).length > 0"
     >
-      <h4 class="visually-hidden">PGP</h4>
+      <div class="edit-keys__header">
+        <h3>PGP keys</h3>
+        <PrivacySetting
+          class="privacy-setting--large"
+          label="PGP keys privacy levels"
+          id="section-pgp-keys-privacy"
+          profileFieldName="pgpPublicKeys"
+          :profileFieldObject="pgpPublicKeys"
+          :collapsedShowLabel="true"
+        />
+      </div>
       <Key
         v-for="[key, value] in Object.entries(pgpPublicKeys.values)"
         type="PGP"
@@ -34,7 +36,17 @@
     <template
       v-if="sshPublicKeys && Object.keys(sshPublicKeys.values).length > 0"
     >
-      <h4 class="visually-hidden">SSH</h4>
+      <div class="edit-keys__header">
+        <h3>SSH keys</h3>
+        <PrivacySetting
+          class="privacy-setting--large"
+          label="SSH keys privacy levels"
+          id="section-ssh-keys-privacy"
+          profileFieldName="sshPublicKeys"
+          :profileFieldObject="sshPublicKeys"
+          :collapsedShowLabel="true"
+        />
+      </div>
       <Key
         v-for="[key, value] in Object.entries(sshPublicKeys.values)"
         type="SSH"
@@ -86,5 +98,16 @@ export default {
   display: flex;
   justify-content: flex-end;
   margin: 2em 0;
+}
+.edit-keys__header {
+  display: flex;
+  align-items: center;
+  margin: 1em 0;
+}
+.edit-keys__header h3 {
+  margin: 0;
+}
+.edit-keys__header .privacy-setting {
+  margin-left: auto;
 }
 </style>
