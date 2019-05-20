@@ -86,6 +86,7 @@ export default {
   padding: 0.5em 1.25em;
   display: flex;
   align-items: center;
+  position: relative;
 }
 .key__title strong {
   text-transform: uppercase;
@@ -94,6 +95,12 @@ export default {
 .key__title button {
   margin-left: auto;
   margin-bottom: 0;
+}
+.key__title .toast {
+  position: absolute;
+}
+.key__title .toast__content {
+  top: 0;
 }
 
 .key__content {

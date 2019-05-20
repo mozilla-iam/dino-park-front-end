@@ -73,7 +73,6 @@
 import Icon from '@/components/ui/Icon.vue';
 import Key from '@/components/ui/Key.vue';
 import PrivacySetting from '@/components/profile/PrivacySetting.vue';
-import { displayLevelsFor, DISPLAY_LEVELS } from '@/assets/js/display-levels';
 import EditMutationWrapper from './EditMutationWrapper.vue';
 
 export default {
@@ -89,9 +88,6 @@ export default {
     Key,
     PrivacySetting,
   },
-  methods: {
-    displayLevelsFor,
-  },
 };
 </script>
 
@@ -106,7 +102,7 @@ export default {
   align-items: center;
   margin: 1em 0;
 }
-.edit-keys__header h3 {
+.edit-keys__header > h3 {
   margin: 0;
 }
 .edit-keys__header .privacy-setting {
