@@ -1,11 +1,7 @@
 <template>
   <div class="user-menu" ref="userMenuEl">
     <div class="user-menu__header">
-      <button
-        class="user-menu__close-avatar"
-        type="button"
-        @click="sendCloseEvent()"
-      >
+      <button class="user-menu__close-avatar" type="button">
         <span class="visually-hidden">Close user menu</span>
         <UserPicture
           :picture="user.picture.value"
@@ -32,7 +28,6 @@
         class="user-menu__close-button"
         id="user-menu-close-button"
         type="button"
-        @click="sendCloseEvent()"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -53,7 +48,7 @@
         </svg>
       </button>
     </div>
-    <ul class="user-menu__items" @click="closeOnLinkClick">
+    <ul class="user-menu__items">
       <li>
         <RouterLink
           id="link-usermenu-my-profile"
@@ -103,16 +98,6 @@ import UserPicture from './UserPicture.vue';
 
 export default {
   name: 'UserMenu',
-  methods: {
-    sendCloseEvent() {
-      this.$parent.$emit('close-user-menu');
-    },
-    closeOnLinkClick(e) {
-      if (e.target.tagName === 'A') {
-        this.$parent.$emit('close-user-menu');
-      }
-    },
-  },
   mounted() {
     if (matchMedia('(min-width: 50em)').matches === false) {
       Modal.methods.preventBackgroundScrolling();

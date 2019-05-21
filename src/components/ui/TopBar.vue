@@ -11,7 +11,6 @@
         buttonText="Open search"
         alternateButtonText="Close search"
         buttonClass="hide-desktop top-bar__search-toggle"
-        :expanded="false"
         :closeWhenClickedOutside="true"
         ref="showMoreSearch"
         :buttonTextVisuallyHidden="true"
@@ -60,9 +59,6 @@
           buttonText="Open user menu"
           alternateButtonText="Close user menu"
           buttonClass="top-bar__user-menu-toggle"
-          :expanded="false"
-          @close-user-menu="closeUserMenu"
-          ref="showMoreUserMenu"
           :closeWhenClickedOutside="true"
           :buttonTextVisuallyHidden="true"
         >
@@ -90,7 +86,7 @@
     </div>
     <SearchForm
       class="search-form--small hide-desktop"
-      v-if="mobileSearchOpen"
+      v-if="showMobileSearch"
       id="mobile-search"
       v-on:close-search-form="closeMobileSearchForm()"
     ></SearchForm>
@@ -114,11 +110,8 @@ export default {
     UserPicture,
   },
   methods: {
-    closeUserMenu() {
-      this.$refs.showMoreUserMenu.isExpanded = false;
-    },
     closeMobileSearchForm() {
-      this.$refs.showMoreSearch.isExpanded = false;
+      this.showMobileSearch = false;
     },
     showToast(data) {
       this.toastContent = data.content;
@@ -126,7 +119,7 @@ export default {
   },
   data() {
     return {
-      mobileSearchOpen: false,
+      showMobileSearch: false,
       showBanner: true,
       extraPadding: 0,
       toastContent: '',

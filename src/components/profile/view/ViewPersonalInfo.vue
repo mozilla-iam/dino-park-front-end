@@ -54,7 +54,6 @@
         v-if="this.staffInformation.staff.value"
         buttonText="Show More"
         alternateButtonText="Show Less"
-        :expanded="false"
         buttonClass="button button--text-only button--less-padding"
         :transition="true"
       >

@@ -60,7 +60,6 @@ export default {
     alternateButtonText: String,
     buttonClass: String,
     transition: Boolean,
-    expanded: Boolean,
     closeWhenClickedOutside: {
       type: Boolean,
       default: false,
@@ -103,20 +102,20 @@ export default {
       }
 
       // if clicked on a link or button anywhere, close the overflow content
+      // a delay is needed since otherwise links aren't followed
       if (event.target.tagName === 'A' || event.target.tagName === 'BUTTON') {
-        this.isExpanded = false;
+        setTimeout(() => {
+          this.isExpanded = false;
+        }, 500);
       }
     },
   },
   data() {
     return {
-      isExpanded: this.expanded,
+      isExpanded: false,
     };
   },
   watch: {
-    expanded() {
-      this.isExpanded = this.expanded;
-    },
     updateIndicator(val, old) {
       if (this.closeOnUpdate && old && old !== val) {
         this.isExpanded = false;
