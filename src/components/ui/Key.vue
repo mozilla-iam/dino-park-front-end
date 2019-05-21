@@ -92,6 +92,10 @@ export default {
   margin-left: auto;
   margin-bottom: 0;
 }
+.key__title button:hover {
+  background-color: var(--gray-20);
+  color: var(--black);
+}
 .key__title .toast {
   position: absolute;
 }
