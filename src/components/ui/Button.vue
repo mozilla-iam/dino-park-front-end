@@ -107,6 +107,7 @@ export default {
 }
 .button--icon-only:hover {
   background-color: var(--gray-20);
+  color: var(--black);
 }
 .button--icon-only img,
 .button--icon-only svg {

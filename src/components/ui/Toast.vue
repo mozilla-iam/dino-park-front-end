@@ -11,6 +11,10 @@ export default {
   name: 'Toast',
   props: {
     content: String,
+    time: {
+      type: Number,
+      default: 3000,
+    },
   },
   watch: {
     content() {
@@ -19,7 +23,7 @@ export default {
       if (this.content.length > 0) {
         window.setTimeout(() => {
           this.$emit('reset-toast');
-        }, 3000);
+        }, this.time);
       }
     },
   },

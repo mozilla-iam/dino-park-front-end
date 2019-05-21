@@ -2,6 +2,11 @@
   <div>
     <header class="profile__section-header">
       <h2>Keys</h2>
+      <EditButton
+        v-if="userOnOwnProfile"
+        section="keys"
+        sectionId="keys"
+      ></EditButton>
     </header>
     <template
       v-if="pgpPublicKeys && Object.keys(pgpPublicKeys.values).length > 0"
@@ -31,6 +36,7 @@
 </template>
 
 <script>
+import EditButton from '@/components/profile/edit/EditButton.vue';
 import Key from '@/components/ui/Key.vue';
 
 export default {
@@ -38,8 +44,10 @@ export default {
   props: {
     pgpPublicKeys: Object,
     sshPublicKeys: Object,
+    userOnOwnProfile: Boolean,
   },
   components: {
+    EditButton,
     Key,
   },
 };

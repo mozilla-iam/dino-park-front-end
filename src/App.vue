@@ -71,6 +71,7 @@ export default {
 
   --imageRadius: 0.25em;
   --formElementRadius: 0.25em;
+  --keyRadius: 0.25em;
   --cardRadius: 0.125em;
 }
 
