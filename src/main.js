@@ -83,7 +83,7 @@ const store = new Vuex.Store({
 store.dispatch('fetchUser').then(() => {
   new Vue({
     router,
-    provide: apolloProvider.provide(),
+    apolloProvider,
     render: (h) => h(App),
     store,
   }).$mount('#app');
