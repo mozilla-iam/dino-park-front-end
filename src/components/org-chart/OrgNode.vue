@@ -232,8 +232,6 @@ export default {
 }
 .org-node__name,
 .org-node__title {
-  overflow: hidden;
-  text-overflow: ellipsis;
   white-space: nowrap;
   display: block;
 }

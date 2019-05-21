@@ -42,6 +42,7 @@ export default {
   background-size: auto 8em;
   border-radius: var(--cardRadius);
   position: relative;
+  overflow-x: auto;
 }
 @media (min-width: 57.5em) {
   .org-root {
