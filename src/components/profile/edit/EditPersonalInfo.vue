@@ -477,9 +477,12 @@ export default {
           `/world/suggest?s=${encodeURIComponent(query)}`,
         );
         const json = await res.json();
-        this.locations = json.map(
-          ({ country, region, city }) => `${city}, ${region}, ${country}`,
+        const locations = new Set(
+          json.map(
+            ({ country, region, city }) => `${city}, ${region}, ${country}`,
+          ),
         );
+        this.locations = [...locations];
       } catch (e) {
         console.error(e);
       }
