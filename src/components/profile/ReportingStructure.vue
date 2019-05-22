@@ -14,20 +14,45 @@
       <h3>Manages:</h3>
       <div>
         <Person
-          v-for="(direct, index) in this.related.directs"
+          v-for="(direct, index) in this.related.directs.slice(0, 10)"
           :modifier="directsView"
           :key="`direct-${index}`"
           v-bind="direct"
         />
+        <ShowMore
+          v-if="this.related.directs.length > 10"
+          buttonText="Show More"
+          alternateButtonText="Show Less"
+          class="reporting-structure__show-more"
+          buttonClass="button button--text-only button--less-padding reporting-structure__show-more-button"
+          :transition="true"
+        >
+          <template slot="overflow">
+            <Person
+              v-for="(direct, index) in this.related.directs.slice(10)"
+              :modifier="directsView"
+              :key="`direct-${index}`"
+              v-bind="direct"
+            />
+          </template>
+          <template slot="icon-expanded">
+            <Icon id="chevron-up" :width="24" :height="24" />
+          </template>
+          <template slot="icon-collapsed">
+            <Icon id="chevron-down" :width="24" :height="24" />
+          </template>
+        </ShowMore>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Icon from '@/components/ui/Icon.vue';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 import Person from '@/components/ui/Person.vue';
 import Related from '@/assets/js/related';
+import ShowMore from '@/components/_functional/ShowMore.vue';
 
 export default {
   name: 'ReportingStructure',
@@ -40,8 +65,10 @@ export default {
     },
   },
   components: {
+    Icon,
     LoadingSpinner,
     Person,
+    ShowMore,
   },
   computed: {
     directsView() {
@@ -78,7 +105,7 @@ export default {
 .reporting-structure__manages {
   margin-left: -1.5em;
   margin-right: -1.5em;
-  padding: 0 1.5em 1.5em;
+  padding: 0 1.5em;
 }
 .reporting-structure__reports-to + .reporting-structure__manages {
   margin-top: 2em;
@@ -90,7 +117,15 @@ export default {
   .reporting-structure__manages {
     display: grid;
     grid-gap: 2em;
-    grid-template-columns: 7em 1fr;
+    grid-template-columns: 6em 1fr;
   }
+}
+.reporting-structure__show-more {
+  max-width: 37.5em;
+}
+.reporting-structure__show-more-button {
+  margin: 0 auto;
+  font-size: 1em;
+  color: var(--gray-50);
 }
 </style>

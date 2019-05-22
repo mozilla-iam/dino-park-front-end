@@ -52,11 +52,9 @@ export default {
   position: relative;
   background-color: var(--white);
 }
-.person + .person {
+.person + .person,
+.show-more__overflow .person:not(.person--avatar-only):first-child {
   margin-top: 1em;
-}
-.person > div {
-  font-size: 0.875em; /* reset font size of all contents */
 }
 .person__name {
   font-weight: 700;
@@ -130,7 +128,7 @@ export default {
 .person--avatar-only {
   display: inline-block;
   vertical-align: top;
-  margin-bottom: 0.5em;
+  margin-bottom: 1em;
   margin-right: 1em;
 }
 .person--avatar-only + .person--avatar-only {
