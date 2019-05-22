@@ -423,6 +423,22 @@
         <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
       </g>
     </template>
+    <template v-else-if="id === 'grid'">
+      <g fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="3" width="7" height="7" />
+        <rect x="14" y="3" width="7" height="7" />
+        <rect x="14" y="14" width="7" height="7" />
+        <rect x="3" y="14" width="7" height="7" />
+      </g>
+    </template>
+    <template v-else-if="id === 'list'">
+      <g fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="21" y1="10" x2="3" y2="10" />
+        <line x1="21" y1="6" x2="3" y2="6" />
+        <line x1="21" y1="14" x2="3" y2="14" />
+        <line x1="21" y1="18" x2="3" y2="18" />
+      </g>
+    </template>
   </svg>
 </template>
 

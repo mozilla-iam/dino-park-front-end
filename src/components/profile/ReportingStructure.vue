@@ -34,6 +34,10 @@ export default {
   props: {
     username: String,
     loading: false,
+    viewAs: {
+      type: String,
+      default: 'grid',
+    },
   },
   components: {
     LoadingSpinner,
@@ -41,7 +45,7 @@ export default {
   },
   computed: {
     directsView() {
-      return this.related.directs.length > 1
+      return this.related.directs.length > 1 && this.viewAs === 'grid'
         ? 'person--borderless person--avatar-only'
         : 'person--borderless';
     },
