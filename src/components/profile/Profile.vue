@@ -441,15 +441,10 @@ export default {
   border-bottom: 1px solid var(--gray-30);
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 .profile__section-header h2 {
   margin: 0;
-}
-.profile__section-header > a {
-  margin-left: auto;
-}
-.profile__section-header > .privacy-setting {
-  margin-left: auto;
 }
 
 .profile__anchor {
