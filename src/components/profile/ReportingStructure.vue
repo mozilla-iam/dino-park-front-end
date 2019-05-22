@@ -72,6 +72,9 @@ export default {
 </script>
 
 <style>
+.reporting-structure h3 {
+  font-weight: 400;
+}
 .reporting-structure__manages {
   margin-left: -1.5em;
   margin-right: -1.5em;
