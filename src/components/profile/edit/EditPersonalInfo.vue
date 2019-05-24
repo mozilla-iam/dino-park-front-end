@@ -408,7 +408,8 @@ import { DISPLAY_LEVELS } from '@/assets/js/display-levels';
 import EditPictureModal from './EditPictureModal.vue';
 import Fetcher from '@/assets/js/fetcher';
 
-const fetcher = new Fetcher({ failoverOn: [302] });
+// TODO: Why do we need failoverOnError here?
+const fetcher = new Fetcher({ failoverOn: [302], failoverOnError: true });
 
 export default {
   name: 'EditPersonalInfo',
