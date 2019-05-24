@@ -2,10 +2,12 @@ class Fetcher {
   constructor({
     failoverOn = [],
     defaultRes = {},
-    failoverFn = window.location.reload,
+    failoverOnError = false,
+    failoverFn = () => window.location.reload(),
   }) {
     this.failoverOn = failoverOn;
     this.failoverFn = failoverFn;
+    this.failoverOnError = failoverOnError;
     this.defaultRes = defaultRes;
   }
 
@@ -22,6 +24,11 @@ class Fetcher {
       }
       return res;
     } catch (e) {
+      if (this.failoverOnError) {
+        console.log(`got error → failing over`);
+        this.failover();
+      }
+      console.error(e);
       console.log(`error requesting ${resource}: ${e}`);
       throw e;
     }
