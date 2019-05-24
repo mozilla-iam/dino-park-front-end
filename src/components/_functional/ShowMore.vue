@@ -106,7 +106,7 @@ export default {
       if (event.target.tagName === 'A' || event.target.tagName === 'BUTTON') {
         setTimeout(() => {
           this.isExpanded = false;
-        }, 500);
+        }, 100);
       }
     },
   },
