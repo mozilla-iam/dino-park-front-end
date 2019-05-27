@@ -50,6 +50,7 @@ export default {
   margin-left: 1em;
   padding: 1em 1.5em;
   position: relative;
+  overflow: hidden;
   background-color: var(--white);
 }
 .person + .person,
