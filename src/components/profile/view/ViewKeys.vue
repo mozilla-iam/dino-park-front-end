@@ -13,12 +13,41 @@
     >
       <h4 class="visually-hidden">PGP</h4>
       <Key
-        v-for="[key, value] in Object.entries(pgpPublicKeys.values)"
+        v-for="[key, value] in Object.entries(pgpPublicKeys.values).slice(
+          0,
+          this.initiallyShown,
+        )"
         type="PGP"
         :title="key"
         :content="value"
         :key="`pgp-${key}`"
       />
+      <ShowMore
+        v-if="Object.entries(pgpPublicKeys.values).length > this.initiallyShown"
+        buttonText="Show More PGP Keys"
+        alternateButtonText="Show Less PGP Keys"
+        class="keys__show-more"
+        buttonClass="button button--text-only button--less-padding keys__show-more-button"
+        :transition="true"
+      >
+        <template slot="overflow">
+          <Key
+            v-for="[key, value] in Object.entries(pgpPublicKeys.values).slice(
+              this.initiallyShown,
+            )"
+            type="PGP"
+            :title="key"
+            :content="value"
+            :key="`pgp-${key}`"
+          />
+        </template>
+        <template slot="icon-expanded">
+          <Icon id="chevron-up" :width="24" :height="24" />
+        </template>
+        <template slot="icon-collapsed">
+          <Icon id="chevron-down" :width="24" :height="24" />
+        </template>
+      </ShowMore>
     </template>
     <template
       v-if="sshPublicKeys && Object.keys(sshPublicKeys.values).length > 0"
