@@ -184,7 +184,13 @@
     >
     </EmptyCard>
 
-    <section class="profile__section" v-if="sections.keys">
+    <section
+      v-if="sections.keys"
+      :class="
+        'profile__section' +
+          (this.editing === 'keys' ? ' profile__section--editing' : '')
+      "
+    >
       <a id="nav-keys" class="profile__anchor"></a>
       <EditKeys
         v-if="this.editing === 'keys'"
