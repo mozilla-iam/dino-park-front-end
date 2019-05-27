@@ -41,7 +41,7 @@
           :roots="loose"
           :trace="looseTrace || ''"
           heading="People who do not have a manager set"
-          modifier="org-root--loose"
+          class="org-root--loose"
         ></OrgRoot>
         <LoadingSpinner v-else></LoadingSpinner>
       </div>

@@ -4,7 +4,7 @@
     <div v-if="this.related.manager" class="reporting-structure__reports-to">
       <h3>Reports to:</h3>
       <div>
-        <Person modifier="person--borderless" v-bind="this.related.manager" />
+        <Person class="person--borderless" v-bind="this.related.manager" />
       </div>
     </div>
     <div
@@ -15,7 +15,7 @@
       <div>
         <Person
           v-for="(direct, index) in this.related.directs"
-          :modifier="directsView"
+          :class="directsView"
           :key="`direct-${index}`"
           v-bind="direct"
         />

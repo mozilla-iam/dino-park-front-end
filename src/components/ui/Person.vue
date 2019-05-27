@@ -1,5 +1,5 @@
 <template>
-  <div :class="'person' + (modifier ? ' ' + modifier : '')">
+  <div class="person">
     <UserPicture
       :picture="picture"
       :username="username"
@@ -29,7 +29,6 @@ export default {
   name: 'Person',
   props: {
     title: String,
-    modifier: String,
     username: String,
     firstName: String,
     lastName: String,

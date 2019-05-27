@@ -4,7 +4,7 @@
       <h2>Access Groups</h2>
     </header>
     <a id="nav-access-groups" class="profile__anchor"></a>
-    <IconBlockList modifier="icon-block-list--multi-col">
+    <IconBlockList class="icon-block-list--multi-col">
       <IconBlock
         v-for="[group] in Object.entries(
           accessInformation.mozilliansorg.values,

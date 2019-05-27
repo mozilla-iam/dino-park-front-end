@@ -1,5 +1,5 @@
 <template>
-  <ul :class="'icon-block-list ' + (modifier ? ' ' + modifier : '')">
+  <ul class="icon-block-list">
     <slot></slot>
   </ul>
 </template>
@@ -7,9 +7,6 @@
 <script>
 export default {
   name: 'IconBlockList',
-  props: {
-    modifier: String,
-  },
 };
 </script>
 
