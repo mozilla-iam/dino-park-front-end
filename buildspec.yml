@@ -11,9 +11,7 @@ phases:
       - export DEPLOY_ENV=$(echo $CODEBUILD_WEBHOOK_TRIGGER | sed -e 's/tag\/.*-\(.*\)/\1/' | sed -e 's/branch\/master/dev/')
       - export PR=$(if case $CODEBUILD_WEBHOOK_TRIGGER in pr/*) ;; *) false;; esac; then echo 1; fi)
       - export MASTER=$(if [ "$CODEBUILD_WEBHOOK_TRIGGER" = "branch/master" ]; then echo 1; fi)
-      - export CLUSTER=$(if [ "$DEPLOY_ENV" = "dev" ]; then echo "kubernetes-stage-us-west-2"; else echo "kubernetes-prod-us-west-2"; fi)
       - echo "running for ${COMMIT_SHA} in ${DEPLOY_ENV}"
-      - aws eks update-kubeconfig --name $CLUSTER
       - aws ecr get-login --region us-west-2 --no-include-email | bash
   build:
     commands:
@@ -21,5 +19,17 @@ phases:
       - if [ "$MASTER" = 1 ]; then myke docker --rev=$COMMIT_SHA push-image --rev=$COMMIT_SHA; fi
   post_build:
     commands:
-      - echo "Environment is ${DEPLOY_ENV}"
-      - if [ "$PR" = "" ]; then myke deploy --deploy_env=$DEPLOY_ENV --rev=$COMMIT_SHA; fi
+      - |
+        if [ "$PR" = "" ] &&  { [ "$DEPLOY_ENV" = "dev" ] || [ "$DEPLOY_ENV" = "test" ] ;}; then
+          echo "Deploying to dev and test envirnoments..."
+          aws eks update-kubeconfig --name kubernetes-stage-us-west-2
+          myke deploy --deploy_env=dev --rev=$COMMIT_SHA
+          aws eks update-kubeconfig --name kubernetes-prod-us-west-2
+          myke deploy --deploy_env=test --rev=$COMMIT_SHA
+        fi
+      - |
+        if [ "$PR" = "" ] && [ "$DEPLOY_ENV" = "prod" ]; then
+          echo "Deploying to prod envirnoment..."
+          aws eks update-kubeconfig --name kubernetes-prod-us-west-2
+          myke deploy --deploy_env=prod --rev=$COMMIT_SHA
+        fi
