@@ -258,6 +258,14 @@ const DISPLAY_PROFILE = gql`
           display
         }
       }
+      identities {
+        githubIdV3 {
+          value
+          metadata {
+            display
+          }
+        }
+      }
       lastName {
         value
         metadata {

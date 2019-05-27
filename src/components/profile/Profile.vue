@@ -56,7 +56,12 @@
       <ViewColleagues :username="primaryUsername.value"></ViewColleagues>
     </section>
 
+    <section v-if="identities.githubIdV3.value" :class="'profile__section'">
+      <a id="nav-identities" class="profile__anchor"></a>
+      <ViewIdentities v-bind="{ identities, userOnOwnProfile }" />
+    </section>
     <EmptyCard
+      v-else
       nav="identities"
       title="Identities"
       message="Identity editing capabilities are coming soon."
@@ -277,6 +282,7 @@ import ProfileNav from './ProfileNav.vue';
 import ViewAccounts from './view/ViewAccounts.vue';
 import ViewContact from './view/ViewContact.vue';
 import ViewKeys from './view/ViewKeys.vue';
+import ViewIdentities from './view/ViewIdentities.vue';
 import ViewLanguages from './view/ViewLanguages.vue';
 import ViewPersonalInfo from './view/ViewPersonalInfo.vue';
 import ViewColleagues from './view/ViewColleagues.vue';
@@ -291,6 +297,7 @@ export default {
     editing: String,
     firstName: Object,
     funTitle: Object,
+    identities: Object,
     languages: Object,
     lastName: Object,
     location: Object,
@@ -320,6 +327,7 @@ export default {
     ViewAccounts,
     ViewContact,
     ViewKeys,
+    ViewIdentities,
     ViewLanguages,
     ViewPersonalInfo,
     ViewColleagues,
