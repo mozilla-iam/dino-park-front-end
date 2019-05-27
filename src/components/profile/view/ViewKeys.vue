@@ -24,8 +24,8 @@
       />
       <ShowMore
         v-if="Object.entries(pgpPublicKeys.values).length > this.initiallyShown"
-        buttonText="Show More PGP Keys"
-        alternateButtonText="Show Less PGP Keys"
+        buttonText="Show More"
+        alternateButtonText="Show Less"
         class="keys__show-more"
         buttonClass="button button--text-only button--less-padding keys__show-more-button"
         :transition="true"
@@ -65,8 +65,8 @@
       />
       <ShowMore
         v-if="Object.entries(sshPublicKeys.values).length > this.initiallyShown"
-        buttonText="Show More SSH Keys"
-        alternateButtonText="Show Less SSH Keys"
+        buttonText="Show More"
+        alternateButtonText="Show Less"
         class="keys__show-more"
         buttonClass="button button--text-only button--less-padding keys__show-more-button"
         :transition="true"
