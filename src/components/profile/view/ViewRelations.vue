@@ -64,13 +64,13 @@ export default {
   },
   methods: {
     setPreference(preference) {
-      this.viewPreference = preference;
+      this.$store.commit('setPersonViewPreference', preference);
     },
   },
-  data() {
-    return {
-      viewPreference: 'grid',
-    };
+  computed: {
+    viewPreference() {
+      return this.$store.state.personViewPreference;
+    },
   },
 };
 </script>
