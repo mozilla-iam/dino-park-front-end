@@ -14,13 +14,16 @@
       <h3>Manages:</h3>
       <div>
         <Person
-          v-for="(direct, index) in this.related.directs.slice(0, 10)"
+          v-for="(direct, index) in this.related.directs.slice(
+            0,
+            this.initiallyShown,
+          )"
           :modifier="directsView"
           :key="`direct-${index}`"
           v-bind="direct"
         />
         <ShowMore
-          v-if="this.related.directs.length > 10"
+          v-if="this.related.directs.length > this.initiallyShown"
           buttonText="Show More"
           alternateButtonText="Show Less"
           class="reporting-structure__show-more"
@@ -29,7 +32,9 @@
         >
           <template slot="overflow">
             <Person
-              v-for="(direct, index) in this.related.directs.slice(10)"
+              v-for="(direct, index) in this.related.directs.slice(
+                this.initiallyShown,
+              )"
               :modifier="directsView"
               :key="`direct-${index}`"
               v-bind="direct"
@@ -93,6 +98,7 @@ export default {
   data() {
     return {
       related: new Related(),
+      initiallyShown: 10,
     };
   },
 };
