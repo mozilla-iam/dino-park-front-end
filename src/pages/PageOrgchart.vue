@@ -30,21 +30,7 @@
       </button>
     </div>
     <div class="org-chart">
-      <div class="org-chart__chart">
-        <OrgRoot
-          v-if="tree && !loading"
-          :roots="tree"
-          :trace="trace || ''"
-        ></OrgRoot>
-        <OrgRoot
-          v-if="loose && loose.length > 0 && !loading"
-          :roots="loose"
-          :trace="looseTrace || ''"
-          heading="People who do not have a manager set"
-          modifier="org-root--loose"
-        ></OrgRoot>
-        <LoadingSpinner v-else></LoadingSpinner>
-      </div>
+      <div id="insert-here" class="org-chart__chart"></div>
       <ApolloQuery
         v-if="username && (desktopView || openedFromOrgNode)"
         :query="previewProfileQuery"
@@ -84,6 +70,46 @@ import { PREVIEW_PROFILE } from '@/queries/profile';
 import Fetcher from '@/assets/js/fetcher';
 
 const fetcher = new Fetcher({ failoverOn: [302] });
+
+function renderNode(node, l = []) {
+  l.push(
+    `<li id="${
+      node.data.username
+    }" class="org-node org-node--current" style="--nodeLevel:1;">
+      <a href="/o/r--hbmUGvzNW1Ou0B6-kzkfcw==" class="router-link-exact-active router-link-active" id="org-node-0">
+        <div class="user-picture user-picture--small">
+          <img alt="" role="presentation" aria-hidden="true" width="40"><span class="dino-type">
+            <span aria-hidden="true">S</span><span class="visually-hidden">Staff</span></span>
+        </div>
+        <span class="org-node__name">${node.data.firstName} ${
+      node.data.lastName
+    }</span>
+        <span class="org-node__title">${node.data.title}</span>
+      </a>
+      <div class="org-node__expander org-node__expander--expanded">
+      <button type="button" aria-expanded="true" aria-label="Collapse ${
+        node.data.firstName
+      } ${
+      node.data.lastName
+    }" class="org-node__expander-button org-node__toggle">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" role="presentation" focusable="false"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </button>
+      <div tabindex="-1" class="org-node__expander-overflow"><ul>`,
+  );
+  node.children.forEach((child) => renderNode(child, l));
+  l.push(`</div></li>`);
+}
+
+function renderOrgchart(orgchart) {
+  const l = [];
+  l.push(`<ul>`);
+  orgchart.forrest.forEach((root) => renderNode(root, l));
+  l.push(`</ul>`);
+  l.push(`<ul>`);
+  orgchart.loose.forEach((root) => renderNode(root, l));
+  l.push(`</ul>`);
+  return l.join();
+}
 
 export default {
   name: 'PageOrgchart',
@@ -197,9 +223,9 @@ export default {
         const orgchart = await data.json();
         this.tree = orgchart.forrest;
         this.loose = orgchart.loose;
-        if (!this.orgFromStore && this.$route.name !== 'OrgchartHighlight') {
-          this.expandFirst();
-        }
+        document.querySelector('#insert-here').innerHTML = renderOrgchart(
+          orgchart,
+        );
       } catch (e) {
         if (e instanceof TypeError && e.message.startsWith('NetworkError')) {
           window.location.reload();
