@@ -71,44 +71,41 @@ import Fetcher from '@/assets/js/fetcher';
 
 const fetcher = new Fetcher({ failoverOn: [302] });
 
-function renderNode(node, l = []) {
-  l.push(
-    `<li id="${
-      node.data.username
-    }" class="org-node org-node--current" style="--nodeLevel:1;">
-      <a href="/o/r--hbmUGvzNW1Ou0B6-kzkfcw==" class="router-link-exact-active router-link-active" id="org-node-0">
+function renderNode(node) {
+  const e = document.createElement('div');
+  e.innerHTML = `
+    <li class="org-node org-node--current" style="--nodeLevel:1;">
+      <a class="router-link-exact-active router-link-active" id="org-node-0">
         <div class="user-picture user-picture--small">
           <img alt="" role="presentation" aria-hidden="true" width="40"><span class="dino-type">
             <span aria-hidden="true">S</span><span class="visually-hidden">Staff</span></span>
         </div>
-        <span class="org-node__name">${node.data.firstName} ${
-      node.data.lastName
-    }</span>
-        <span class="org-node__title">${node.data.title}</span>
+        <span class="org-node__name"></span>
+        <span class="org-node__title"></span>
       </a>
       <div class="org-node__expander org-node__expander--expanded">
-      <button type="button" aria-expanded="true" aria-label="Collapse ${
-        node.data.firstName
-      } ${
-      node.data.lastName
-    }" class="org-node__expander-button org-node__toggle">
+      <button type="button" aria-expanded="true" class="org-node__expander-button org-node__toggle">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" role="presentation" focusable="false"><polyline points="6 9 12 15 18 9"></polyline></svg>
       </button>
-      <div tabindex="-1" class="org-node__expander-overflow"><ul>`,
-  );
-  node.children.forEach((child) => renderNode(child, l));
-  l.push(`</div></li>`);
+      <div tabindex="-1" class="org-node__expander-overflow"><ul></ul>
+      </div></li>`;
+  e.querySelector('li').id = node.data.username;
+  e.querySelector('a').href = `/o/${node.data.username}`;
+  e.querySelector('.org-node__name').textContent = `${node.data.firstName} ${
+    node.data.lastName
+  }`;
+  e.querySelector('.org-node__title').textContent = `${node.data.title}`;
+  const u = e.querySelector('ul');
+  node.children.forEach((child) => u.appendChild(renderNode(child)));
+  return e.firstElementChild;
 }
 
 function renderOrgchart(orgchart) {
-  const l = [];
-  l.push(`<ul>`);
-  orgchart.forrest.forEach((root) => renderNode(root, l));
-  l.push(`</ul>`);
-  l.push(`<ul>`);
-  orgchart.loose.forEach((root) => renderNode(root, l));
-  l.push(`</ul>`);
-  return l.join();
+  const forrest = document.createElement('ul');
+  orgchart.forrest.forEach((root) => forrest.appendChild(renderNode(root)));
+  const loose = document.createElement('ul');
+  orgchart.loose.forEach((root) => forrest.appendChild(renderNode(root)));
+  return [forrest, loose];
 }
 
 export default {
@@ -223,9 +220,10 @@ export default {
         const orgchart = await data.json();
         this.tree = orgchart.forrest;
         this.loose = orgchart.loose;
-        document.querySelector('#insert-here').innerHTML = renderOrgchart(
-          orgchart,
-        );
+        const [f, t] = renderOrgchart(orgchart);
+        console.log(f);
+        document.querySelector('#insert-here').appendChild(f);
+        document.querySelector('#insert-here').appendChild(t);
       } catch (e) {
         if (e instanceof TypeError && e.message.startsWith('NetworkError')) {
           window.location.reload();
