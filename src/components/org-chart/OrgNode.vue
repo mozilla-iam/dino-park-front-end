@@ -87,8 +87,10 @@
           "
           tabindex="-1"
         >
-          <ul v-for="(child, index) in children" :key="index">
+          <ul>
             <OrgNode
+              v-for="(child, index) in children"
+              :key="index"
               v-if="preload || isExpanded"
               :children="child.children"
               :data="child.data"
