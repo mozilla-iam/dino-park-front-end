@@ -30,7 +30,7 @@
       </button>
     </div>
     <div class="org-chart">
-      <div id="insert-here" class="org-chart__chart"></div>
+      <div class="org-chart__chart"><LoadingSpinner></LoadingSpinner></div>
       <ApolloQuery
         v-if="username && (desktopView || openedFromOrgNode)"
         :query="previewProfileQuery"
@@ -62,7 +62,6 @@
 <script>
 import Icon from '@/components/ui/Icon.vue';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
-import OrgRoot from '@/components/org-chart/OrgRoot.vue';
 import Modal from '@/components/_functional/Modal.vue';
 import ProfilePreview from '@/components/profile/ProfilePreview.vue';
 import Toggle from '@/components/ui/Toggle.vue';
@@ -71,41 +70,110 @@ import Fetcher from '@/assets/js/fetcher';
 
 const fetcher = new Fetcher({ failoverOn: [302] });
 
-function renderNode(node) {
+function renderNode(node, level = 1) {
   const e = document.createElement('div');
+  const hasChildren = node.children.length > 0;
   e.innerHTML = `
-    <li class="org-node org-node--current" style="--nodeLevel:1;">
+    <li class="org-node ${
+      hasChildren ? 'org-node--expandable' : ''
+    }" style="--nodeLevel: ${level};">
       <a class="router-link-exact-active router-link-active" id="org-node-0">
         <div class="user-picture user-picture--small">
-          <img alt="" role="presentation" aria-hidden="true" width="40"><span class="dino-type">
-            <span aria-hidden="true">S</span><span class="visually-hidden">Staff</span></span>
+          <img alt="" role="presentation" aria-hidden="true" width="40">
+          <span class="dino-type">
+            <span aria-hidden="true">S</span>
+            <span class="visually-hidden">Staff</span>
+          </span>
         </div>
         <span class="org-node__name"></span>
         <span class="org-node__title"></span>
       </a>
-      <div class="org-node__expander org-node__expander--expanded">
-      <button type="button" aria-expanded="true" class="org-node__expander-button org-node__toggle">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" role="presentation" focusable="false"><polyline points="6 9 12 15 18 9"></polyline></svg>
-      </button>
-      <div tabindex="-1" class="org-node__expander-overflow"><ul></ul>
-      </div></li>`;
-  e.querySelector('li').id = node.data.username;
+
+        ${
+          hasChildren
+            ? `
+              <div class="org-node__expander">
+                <button type="button" aria-expanded="true" class="org-node__expander-button org-node__toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" role="presentation" focusable="false"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+                <div tabindex="-1" class="org-node__expander-overflow"><ul></ul></div>
+              </div>`
+            : `
+              <svg
+                class="org-node__no-children-indicator"
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                viewBox="0 0 22 22"
+                aria-hidden="true"
+                role="presentation"
+                focusable="false"
+              >
+                <circle
+                  cx="2"
+                  cy="2"
+                  r="2"
+                  fill="#B1B1B3"
+                  fill-rule="evenodd"
+                  transform="translate(9 9.308)"
+                />
+              </svg>
+            `
+        }
+    </li>`;
+  const li = e.firstElementChild;
+  li.id = node.data.username;
   e.querySelector('a').href = `/o/${node.data.username}`;
   e.querySelector('.org-node__name').textContent = `${node.data.firstName} ${
     node.data.lastName
   }`;
-  e.querySelector('.org-node__title').textContent = `${node.data.title}`;
-  const u = e.querySelector('ul');
-  node.children.forEach((child) => u.appendChild(renderNode(child)));
-  return e.firstElementChild;
+  e.querySelector('.org-node__title').textContent = node.data.title;
+  const ul = e.querySelector('ul');
+  if (ul) {
+    node.children.forEach((child) =>
+      ul.appendChild(renderNode(child, level + 1)),
+    );
+  }
+  return li;
 }
 
 function renderOrgchart(orgchart) {
-  const forrest = document.createElement('ul');
-  orgchart.forrest.forEach((root) => forrest.appendChild(renderNode(root)));
-  const loose = document.createElement('ul');
-  orgchart.loose.forEach((root) => forrest.appendChild(renderNode(root)));
+  const forrest = document.createElement('div');
+  forrest.className = 'org-root org-root--forrest';
+  const forrestInner = document.createElement('ul');
+  forrest.appendChild(forrestInner);
+  orgchart.forrest.forEach((root) =>
+    forrestInner.appendChild(renderNode(root)),
+  );
+  const loose = document.createElement('div');
+  loose.className = 'org-root org-root--loose';
+  loose.innerHTML =
+    '<h2 class="org-root__heading">People who do not have a manager set</h2>';
+  const looseInner = document.createElement('ul');
+  loose.appendChild(looseInner);
+  orgchart.loose.forEach((root) => looseInner.appendChild(renderNode(root)));
   return [forrest, loose];
+}
+
+function toggle(li, shouldExpand) {
+  const ul = li.querySelector('ul');
+  shouldExpand =
+    shouldExpand === undefined ? ul.style.display === 'none' : shouldExpand;
+
+  ul.style.display = shouldExpand ? 'block' : 'none';
+  const expander = li.querySelector('.org-node__expander');
+  const button = li.querySelector('button');
+  if (shouldExpand) {
+    expander.classList.add('org-node__expander--expanded');
+    button.setAttribute('aria-expanded', 'true');
+    button.setAttribute('aria-label', 'Collapse');
+    button.style.transform = 'rotateZ(-90deg)';
+  } else {
+    expander.classList.remove('org-node__expander--expanded');
+    button.setAttribute('aria-expanded', 'false');
+    button.setAttribute('aria-label', 'Expand');
+    button.style.transform = '';
+  }
 }
 
 export default {
@@ -114,86 +182,20 @@ export default {
     Icon,
     LoadingSpinner,
     Modal,
-    OrgRoot,
     ProfilePreview,
     Toggle,
   },
   data() {
-    const { org } = this.$store.state;
     return {
       loading: false,
-      post: null,
-      error: null,
-      tree: [],
-      loose: [],
-      trace: '',
-      looseTrace: '',
       previewProfileQuery: PREVIEW_PROFILE,
       desktopView: false,
-
-      orgFromStore: Boolean(org),
-      ...(org || { expanded: {}, collapsed: null }),
-      subscribers: {},
-    };
-  },
-  provide() {
-    const orgChartPage = this;
-    return {
-      subscribeToExpanded(id, callback) {
-        orgChartPage.subscribers[id] = () =>
-          callback(orgChartPage.isExpanded(id));
-        return orgChartPage.isExpanded(id);
-      },
-      toggle(id, value = null) {
-        const useCollapsed = orgChartPage.expanded == null;
-        const collection = useCollapsed
-          ? orgChartPage.collapsed
-          : orgChartPage.expanded;
-        if (value != null && orgChartPage.isExpanded(id) === value) {
-          return;
-        }
-        if (collection[id]) {
-          delete collection[id];
-        } else {
-          collection[id] = true;
-        }
-        const subscriber = orgChartPage.subscribers[id];
-        if (subscriber) {
-          subscriber();
-        }
-      },
     };
   },
   created() {
     this.fetchData();
     window.addEventListener('resize', this.updateView);
     this.updateView();
-  },
-  async updated() {
-    const { username } = this.$route.params;
-    if (username && this.$route.name === 'OrgchartHighlight') {
-      try {
-        const data = await fetcher.fetch(
-          `/api/v4/orgchart/trace/${encodeURIComponent(username)}`,
-        );
-        const { trace } = await data.json();
-        if (trace && trace.startsWith('-1-')) {
-          this.looseTrace = trace.substr(3);
-          this.trace = '';
-        } else {
-          this.looseTrace = '';
-          this.trace = trace;
-        }
-      } catch (e) {
-        if (e instanceof TypeError && e.message.startsWith('NetworkError')) {
-          window.location.reload();
-          return;
-        }
-        this.error = e;
-      }
-    } else {
-      this.trace = '';
-    }
   },
   computed: {
     username() {
@@ -209,27 +211,66 @@ export default {
         this.modalEl.isOpen = true;
       }
     },
+    $route() {
+      this.updateCurrentNode();
+    },
   },
   methods: {
     async fetchData() {
-      this.error = null;
-      this.post = null;
       this.loading = true;
       try {
         const data = await fetcher.fetch('/api/v4/orgchart');
         const orgchart = await data.json();
-        this.tree = orgchart.forrest;
-        this.loose = orgchart.loose;
+        this.initiallyExpanded = orgchart.forrest
+          .map((node) => node.data.username)
+          .reduce((obj, key) => {
+            obj[key] = true;
+            return obj;
+          }, {});
+
+        const orgChartRoot = document.querySelector('.org-chart__chart');
         const [f, t] = renderOrgchart(orgchart);
-        console.log(f);
-        document.querySelector('#insert-here').appendChild(f);
-        document.querySelector('#insert-here').appendChild(t);
+        orgChartRoot.innerHTML = '';
+        orgChartRoot.appendChild(f);
+        orgChartRoot.appendChild(t);
+        this.updateCurrentNode();
+
+        this.expandables = Array.from(
+          orgChartRoot.querySelectorAll('.org-node--expandable'),
+        ).reduce((obj, li) => {
+          obj[li.id] = li;
+          return obj;
+        }, {});
+
+        this.expandFirst();
+
+        const { $router } = this;
+        orgChartRoot.addEventListener('click', (event) => {
+          const li = event.target.closest('li');
+
+          if (event.target.closest('button')) {
+            toggle(li);
+            return;
+          }
+
+          const anchor = event.target.closest('a');
+          if (anchor) {
+            $router.push({
+              name: 'Orgchart',
+              params: {
+                username: li.id,
+                openedFromOrgNode: true,
+              },
+            });
+            event.preventDefault();
+          }
+        });
       } catch (e) {
         if (e instanceof TypeError && e.message.startsWith('NetworkError')) {
           window.location.reload();
           return;
         }
-        this.error = e;
+        console.error(e);
       }
       this.loading = false;
     },
@@ -242,38 +283,64 @@ export default {
     },
 
     expandAll() {
-      this.setOrgData({ expanded: null, collapsed: {} });
+      Object.entries(this.expandables).forEach(([, li]) => {
+        toggle(li, true);
+      });
     },
     collapseAll() {
-      this.setOrgData({ expanded: {}, collapsed: null });
+      Object.entries(this.expandables).forEach(([, li]) => {
+        toggle(li, false);
+      });
     },
     expandFirst() {
-      this.setOrgData({
-        expanded: this.tree
-          .map((node) => node.data.dinoId)
-          .reduce((obj, key) => {
-            obj[key] = true;
-            return obj;
-          }, {}),
-        collapsed: null,
+      const ids = Object.keys(this.initiallyExpanded);
+      Object.entries(this.expandables).forEach(([id, li]) => {
+        toggle(li, ids.includes(id));
       });
     },
     setOrgData(org) {
-      this.expanded = org.expanded;
-      this.collapsed = org.collapsed;
-      Object.values(this.subscribers).forEach((subscriber) => {
-        subscriber();
-      });
       this.$store.commit('setOrg', org);
     },
-    isExpanded(id) {
-      return this.expanded ? this.expanded[id] : !this.collapsed[id];
+    updateCurrentNode() {
+      const CURRENT_CLASS = 'org-node--current';
+      const previous = this.$el.querySelector(`.${CURRENT_CLASS}`);
+      if (previous) {
+        previous.classList.remove(CURRENT_CLASS);
+      }
+      document
+        .getElementById(this.$route.params.username)
+        .classList.add(CURRENT_CLASS);
     },
   },
-  mounted() {
-    const searchField = document.getElementById('search-query');
+  async mounted() {
+    document.getElementById('search-query').focus();
 
-    searchField.focus();
+    const { username } = this.$route.params;
+    if (username && this.$route.name === 'OrgchartHighlight') {
+      try {
+        const data = await fetcher.fetch(
+          `/api/v4/orgchart/trace/${encodeURIComponent(username)}`,
+        );
+        const { trace } = await data.json();
+        const isLoose = trace && trace.startsWith('-1-');
+
+        return;
+        // TODO: build CSS selector for all lis that should be expanded, from trace
+        this.$el
+          .querySelectorAll(
+            (isLoose ? trace.substr(3) : trace).reduce(
+              (sth) => sth + `org-root--${isLoose ? 'loose' : 'forrest'}`,
+            ),
+          )
+          .forEach((li) => toggle(li, true));
+      } catch (e) {
+        if (e instanceof TypeError && e.message.startsWith('NetworkError')) {
+          window.location.reload();
+          return;
+        }
+        console.error(e);
+      }
+    }
   },
 };
 </script>
@@ -362,5 +429,137 @@ export default {
     position: sticky;
     top: 7.5em;
   }
+}
+
+.org-root {
+  width: 100%;
+  max-width: 45em;
+  background-image: linear-gradient(
+    var(--gray-10) 0,
+    var(--gray-10) 50%,
+    #fff 50%
+  );
+  background-size: auto 8em;
+  border-radius: var(--cardRadius);
+  position: relative;
+}
+@media (min-width: 57.5em) {
+  .org-root {
+    box-shadow: var(--shadowCard);
+    margin: 0;
+  }
+}
+.org-root ul {
+  padding: 0;
+  margin: 0;
+}
+
+.org-root--loose {
+  margin-top: 5em;
+}
+.org-root--loose > h2 {
+  font-size: 1em;
+  background: var(--white);
+  padding: 0.75em 3em;
+  color: var(--gray-50);
+  position: absolute;
+  top: -2.5em;
+  line-height: 1;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-radius: var(--cardRadius) var(--cardRadius) 0 0;
+}
+
+.org-node {
+  list-style: none;
+  position: relative; /* positioning context for a::after */
+}
+.org-node a {
+  display: block;
+  height: 4em;
+  padding: 0.75em 0;
+  text-decoration: none;
+  color: inherit;
+  padding-left: 2em;
+  padding-left: calc((var(--nodeLevel) * 2em) + 1.25em);
+  border-left: 0.25em solid transparent;
+}
+.org-node--current > a,
+.org-node:target > a {
+  border-left: 0.25em solid var(--blue-60);
+  background-color: var(--lightBlue);
+}
+.org-node a:hover,
+.org-node a:hover::after {
+  background-color: var(--lightBlue);
+}
+.org-node a:focus,
+.org-node:target > a {
+  position: relative;
+  z-index: var(--layerTwo);
+}
+.org-node__name,
+.org-node__title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+}
+.org-node__name {
+  font-weight: 700;
+}
+.org-node__title {
+  color: var(--gray-50);
+  max-width: 90%;
+}
+.org-node__toggle {
+  font-size: inherit;
+  position: absolute;
+  top: 0;
+  left: 0;
+  left: calc((var(--nodeLevel) * 2em) - 1.5em);
+  width: 2.5em;
+  height: 2.5em;
+  margin: 0.75em 0;
+  padding: 0.65em;
+  z-index: var(--layerOne);
+  border: 0;
+  background-color: transparent;
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: var(--imageRadius);
+  z-index: var(--layerThree);
+}
+.org-node__toggle:hover {
+  background-color: var(--gray-20);
+}
+.org-node__toggle img {
+  margin-right: 0;
+  margin-bottom: -2px;
+}
+.org-node .org-node__expander {
+  position: static; /* so that it is explicitly not a positioning context */
+}
+.org-node .user-picture {
+  float: left;
+  margin-right: 0.75em;
+}
+.org-node__no-children-indicator {
+  position: absolute;
+  top: 1.125em;
+  left: calc((var(--nodeLevel) * 2em) - 1.125em);
+}
+
+.org-node__expander {
+  position: relative;
+}
+.org-node__expander-button {
+  font: inherit;
+}
+.org-node__expander-button > svg,
+.org-node__expander-button > img {
+  margin-right: 1.5em;
 }
 </style>
