@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import EditButton from '@/components/profile/edit/EditButton.vue';
 import Tag from '@/components/ui/Tag.vue';
 
 export default {
@@ -22,6 +23,7 @@ export default {
     userOnOwnProfile: Boolean,
   },
   components: {
+    EditButton,
     Tag,
   },
 };

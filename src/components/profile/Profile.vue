@@ -173,15 +173,33 @@
       "
     >
       <a id="nav-tags" class="profile__anchor"></a>
-      <EditTags v-if="this.editing === 'tags'"></EditTags>
+      <EditTags
+        v-if="this.editing === 'tags'"
+        v-bind="{
+          username: primaryUsername.value,
+          initialValues: { tags },
+          initialTags: tags,
+        }"
+      ></EditTags>
       <ViewTags v-else v-bind="{ tags, userOnOwnProfile }"></ViewTags>
     </section>
     <EmptyCard
       v-else
       nav="tags"
       title="Tags"
-      message="Tag editing capabilities are coming soon."
+      :message="
+        userOnOwnProfile
+          ? `You haven't added any tags yet.`
+          : `No tags have been added yet.`
+      "
     >
+      <template v-slot:header>
+        <EditButton
+          v-if="userOnOwnProfile"
+          section="tags"
+          sectionId="tags"
+        ></EditButton>
+      </template>
     </EmptyCard>
 
     <section
@@ -330,6 +348,7 @@ export default {
             true) ||
           false,
         tags:
+          this.editing === 'tags' ||
           (this.tags.values &&
             Object.entries(this.tags.values).length > 0 &&
             true) ||

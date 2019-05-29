@@ -102,6 +102,7 @@ const MUTATE_PROFILE = gql`
     $pronouns: StringWithDisplay
     $timezone: StringWithDisplay
     $languages: KeyValuesWithDisplay
+    $tags: KeyValuesWithDisplay
     $uris: KeyValuesWithDisplay
   ) {
     profile(
@@ -118,6 +119,7 @@ const MUTATE_PROFILE = gql`
         pronouns: $pronouns
         timezone: $timezone
         languages: $languages
+        tags: $tags
         uris: $uris
       }
     ) {
@@ -200,6 +202,12 @@ const MUTATE_PROFILE = gql`
         }
       }
       languages {
+        values
+        metadata {
+          display
+        }
+      }
+      tags {
         values
         metadata {
           display
@@ -344,6 +352,9 @@ const DISPLAY_PROFILE = gql`
       }
       tags {
         values
+        metadata {
+          display
+        }
       }
       languages {
         values
