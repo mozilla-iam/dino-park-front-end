@@ -108,8 +108,8 @@ export default {
   padding: 0.25em;
 }
 .user-picture--small {
-  width: 2.5em;
-  height: 2.5em;
+  width: 2.85em;
+  height: 2.85em;
 }
 .user-picture--small .dino-type {
   font-size: 0.75em;

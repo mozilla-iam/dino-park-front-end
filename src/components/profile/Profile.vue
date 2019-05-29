@@ -53,7 +53,7 @@
 
     <section v-if="staffInformation.staff.value" class="profile__section">
       <a id="nav-relations" class="profile__anchor"></a>
-      <ViewRelations :username="primaryUsername.value"></ViewRelations>
+      <ViewColleagues :username="primaryUsername.value"></ViewColleagues>
     </section>
 
     <EmptyCard
@@ -255,7 +255,7 @@ import ViewContact from './view/ViewContact.vue';
 import ViewKeys from './view/ViewKeys.vue';
 import ViewLanguages from './view/ViewLanguages.vue';
 import ViewPersonalInfo from './view/ViewPersonalInfo.vue';
-import ViewRelations from './view/ViewRelations.vue';
+import ViewColleagues from './view/ViewColleagues.vue';
 import ViewTags from './view/ViewTags.vue';
 
 export default {
@@ -298,7 +298,7 @@ export default {
     ViewKeys,
     ViewLanguages,
     ViewPersonalInfo,
-    ViewRelations,
+    ViewColleagues,
     ViewTags,
   },
   methods: {
@@ -441,15 +441,10 @@ export default {
   border-bottom: 1px solid var(--gray-30);
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 .profile__section-header h2 {
   margin: 0;
-}
-.profile__section-header > a {
-  margin-left: auto;
-}
-.profile__section-header > .privacy-setting {
-  margin-left: auto;
 }
 
 .profile__anchor {
