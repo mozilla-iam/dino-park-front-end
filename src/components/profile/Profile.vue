@@ -53,7 +53,7 @@
 
     <section v-if="staffInformation.staff.value" class="profile__section">
       <a id="nav-relations" class="profile__anchor"></a>
-      <ViewRelations :username="primaryUsername.value"></ViewRelations>
+      <ViewColleagues :username="primaryUsername.value"></ViewColleagues>
     </section>
 
     <EmptyCard
@@ -173,18 +173,42 @@
       "
     >
       <a id="nav-tags" class="profile__anchor"></a>
-      <EditTags v-if="this.editing === 'tags'"></EditTags>
+      <EditTags
+        v-if="this.editing === 'tags'"
+        v-bind="{
+          username: primaryUsername.value,
+          initialValues: { tags },
+          initialTags: tags,
+        }"
+      ></EditTags>
       <ViewTags v-else v-bind="{ tags, userOnOwnProfile }"></ViewTags>
     </section>
     <EmptyCard
       v-else
       nav="tags"
       title="Tags"
-      message="Tag editing capabilities are coming soon."
+      :message="
+        userOnOwnProfile
+          ? `You haven't added any tags yet.`
+          : `No tags have been added yet.`
+      "
     >
+      <template v-slot:header>
+        <EditButton
+          v-if="userOnOwnProfile"
+          section="tags"
+          sectionId="tags"
+        ></EditButton>
+      </template>
     </EmptyCard>
 
-    <section class="profile__section" v-if="sections.keys">
+    <section
+      v-if="sections.keys"
+      :class="
+        'profile__section' +
+          (this.editing === 'keys' ? ' profile__section--editing' : '')
+      "
+    >
       <a id="nav-keys" class="profile__anchor"></a>
       <EditKeys
         v-if="this.editing === 'keys'"
@@ -255,7 +279,7 @@ import ViewContact from './view/ViewContact.vue';
 import ViewKeys from './view/ViewKeys.vue';
 import ViewLanguages from './view/ViewLanguages.vue';
 import ViewPersonalInfo from './view/ViewPersonalInfo.vue';
-import ViewRelations from './view/ViewRelations.vue';
+import ViewColleagues from './view/ViewColleagues.vue';
 import ViewTags from './view/ViewTags.vue';
 
 export default {
@@ -298,7 +322,7 @@ export default {
     ViewKeys,
     ViewLanguages,
     ViewPersonalInfo,
-    ViewRelations,
+    ViewColleagues,
     ViewTags,
   },
   methods: {
@@ -324,6 +348,7 @@ export default {
             true) ||
           false,
         tags:
+          this.editing === 'tags' ||
           (this.tags.values &&
             Object.entries(this.tags.values).length > 0 &&
             true) ||
@@ -441,15 +466,10 @@ export default {
   border-bottom: 1px solid var(--gray-30);
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 .profile__section-header h2 {
   margin: 0;
-}
-.profile__section-header > a {
-  margin-left: auto;
-}
-.profile__section-header > .privacy-setting {
-  margin-left: auto;
 }
 
 .profile__anchor {

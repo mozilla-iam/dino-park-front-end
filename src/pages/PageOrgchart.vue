@@ -20,6 +20,7 @@
         <span class="visually-hidden">Collapse all</span>
       </button>
       <button
+        v-if="showResetButton"
         type="button"
         @click="expandFirst"
         class="org-chart-buttons__reset org-chart-buttons__control button--icon-only button"
@@ -85,6 +86,14 @@ import Fetcher from '@/assets/js/fetcher';
 
 const fetcher = new Fetcher({ failoverOn: [302] });
 
+const toSortedString = (o) =>
+  JSON.stringify(
+    Object.keys(o)
+      .filter((k) => o[k])
+      .sort(),
+  );
+const haveSameKeys = (a, b) => toSortedString(a) === toSortedString(b);
+
 export default {
   name: 'PageOrgchart',
   components: {
@@ -122,18 +131,22 @@ export default {
         return orgChartPage.isExpanded(id);
       },
       toggle(id, value = null) {
-        const useCollapsed = orgChartPage.expanded == null;
-        const collection = useCollapsed
-          ? orgChartPage.collapsed
-          : orgChartPage.expanded;
         if (value != null && orgChartPage.isExpanded(id) === value) {
           return;
         }
-        if (collection[id]) {
-          delete collection[id];
+        const useCollapsed = orgChartPage.expanded == null;
+        let collection = useCollapsed
+          ? orgChartPage.collapsed
+          : orgChartPage.expanded;
+
+        collection = { ...collection, [id]: !collection[id] };
+
+        if (useCollapsed) {
+          orgChartPage.collapsed = collection;
         } else {
-          collection[id] = true;
+          orgChartPage.expanded = collection;
         }
+
         const subscriber = orgChartPage.subscribers[id];
         if (subscriber) {
           subscriber();
@@ -178,6 +191,20 @@ export default {
     },
     openedFromOrgNode() {
       return this.$route.params.openedFromOrgNode;
+    },
+    defaultExpandedState() {
+      return this.tree
+        .map((node) => node.data.dinoId)
+        .reduce((obj, key) => {
+          obj[key] = true;
+          return obj;
+        }, {});
+    },
+    showResetButton() {
+      return (
+        this.collapsed ||
+        !haveSameKeys(this.expanded, this.defaultExpandedState)
+      );
     },
   },
   watch: {
@@ -225,12 +252,7 @@ export default {
     },
     expandFirst() {
       this.setOrgData({
-        expanded: this.tree
-          .map((node) => node.data.dinoId)
-          .reduce((obj, key) => {
-            obj[key] = true;
-            return obj;
-          }, {}),
+        expanded: this.defaultExpandedState,
         collapsed: null,
       });
     },

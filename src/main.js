@@ -63,6 +63,7 @@ const store = new Vuex.Store({
   state: {
     user: null,
     org: null,
+    personViewPreference: 'grid',
   },
   actions: {
     async fetchUser({ commit }) {
@@ -76,6 +77,9 @@ const store = new Vuex.Store({
     },
     setOrg(state, org) {
       state.org = org;
+    },
+    setPersonViewPreference(state, preference) {
+      state.personViewPreference = preference;
     },
   },
 });
