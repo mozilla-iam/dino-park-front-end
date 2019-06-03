@@ -155,27 +155,6 @@ function renderOrgchart(orgchart) {
   return [forrest, loose];
 }
 
-function toggle(li, shouldExpand) {
-  const ul = li.querySelector('ul');
-  shouldExpand =
-    shouldExpand === undefined ? ul.style.display === 'none' : shouldExpand;
-
-  ul.style.display = shouldExpand ? 'block' : 'none';
-  const expander = li.querySelector('.org-node__expander');
-  const button = li.querySelector('button');
-  if (shouldExpand) {
-    expander.classList.add('org-node__expander--expanded');
-    button.setAttribute('aria-expanded', 'true');
-    button.setAttribute('aria-label', 'Collapse');
-    button.style.transform = 'rotateZ(-90deg)';
-  } else {
-    expander.classList.remove('org-node__expander--expanded');
-    button.setAttribute('aria-expanded', 'false');
-    button.setAttribute('aria-label', 'Expand');
-    button.style.transform = '';
-  }
-}
-
 export default {
   name: 'PageOrgchart',
   components: {
@@ -192,10 +171,11 @@ export default {
       desktopView: false,
     };
   },
-  created() {
-    this.fetchData();
+  async created() {
     window.addEventListener('resize', this.updateView);
     this.updateView();
+    await this.fetchData();
+    await this.highlight();
   },
   computed: {
     username() {
@@ -229,7 +209,10 @@ export default {
           }, {});
 
         const orgChartRoot = document.querySelector('.org-chart__chart');
-        const [f, t] = renderOrgchart(orgchart);
+        const chartFromStore = Boolean(this.$store.state.org);
+        const [f, t] = chartFromStore
+          ? this.$store.state.org
+          : renderOrgchart(orgchart);
         orgChartRoot.innerHTML = '';
         orgChartRoot.appendChild(f);
         orgChartRoot.appendChild(t);
@@ -242,20 +225,22 @@ export default {
           return obj;
         }, {});
 
-        this.expandFirst();
+        if (!chartFromStore) {
+          this.expandFirst();
+        }
 
-        const { $router } = this;
         orgChartRoot.addEventListener('click', (event) => {
           const li = event.target.closest('li');
 
           if (event.target.closest('button')) {
-            toggle(li);
+            this.toggle(li);
+            this.saveOrgTree();
             return;
           }
 
           const anchor = event.target.closest('a');
           if (anchor) {
-            $router.push({
+            this.$router.push({
               name: 'Orgchart',
               params: {
                 username: li.id,
@@ -274,6 +259,54 @@ export default {
       }
       this.loading = false;
     },
+    async highlight() {
+      const { username } = this.$route.params;
+      if (!(username && this.$route.name === 'OrgchartHighlight')) {
+        return;
+      }
+
+      try {
+        const data = await fetcher.fetch(
+          `/api/v4/orgchart/trace/${encodeURIComponent(username)}`,
+        );
+        const { trace } = await data.json();
+        const isLoose = trace && trace.startsWith('-1-');
+
+        const root = this.$el.querySelector(
+          `.org-root--${isLoose ? 'loose' : 'forrest'}`,
+        );
+        const indices = (isLoose ? trace.substr(3) : trace)
+          .split('-')
+          .map(Number);
+        const li = this.toggleTrace(root.firstElementChild, indices);
+        // assume browsers with `scrollBehavior` support scrollIntoView
+        // with object as arguments
+        if ('scrollBehavior' in document.documentElement.style) {
+          li.scrollIntoView({
+            block: 'center',
+          });
+        } else {
+          // scrolls into view with element at bottom of viewport (block: 'end')
+          li.scrollIntoView(false);
+        }
+
+        this.saveOrgTree();
+      } catch (e) {
+        if (e instanceof TypeError && e.message.startsWith('NetworkError')) {
+          window.location.reload();
+          return;
+        }
+        console.error(e);
+      }
+    },
+    toggleTrace(ul, indices) {
+      const index = indices.shift();
+      const li = ul.children[index];
+      this.toggle(li, true);
+      return indices.length > 0
+        ? this.toggleTrace(li.querySelector('ul'), indices)
+        : li;
+    },
     updateView() {
       if (matchMedia('(min-width: 57.5em)').matches) {
         this.desktopView = true;
@@ -282,24 +315,53 @@ export default {
       }
     },
 
+    toggle(li, shouldExpand) {
+      const ul = li.querySelector('ul');
+      if (!ul) return;
+      shouldExpand =
+        shouldExpand === undefined ? ul.style.display === 'none' : shouldExpand;
+
+      ul.style.display = shouldExpand ? 'block' : 'none';
+      const expander = li.querySelector('.org-node__expander');
+      const button = li.querySelector('button');
+      if (shouldExpand) {
+        expander.classList.add('org-node__expander--expanded');
+        button.setAttribute('aria-expanded', 'true');
+        button.setAttribute('aria-label', 'Collapse');
+        button.style.transform = 'rotateZ(-90deg)';
+      } else {
+        expander.classList.remove('org-node__expander--expanded');
+        button.setAttribute('aria-expanded', 'false');
+        button.setAttribute('aria-label', 'Expand');
+        button.style.transform = '';
+      }
+    },
+    saveOrgTree() {
+      this.$store.commit(
+        'setOrg',
+        Array.from(document.querySelector('.org-chart__chart').children).map(
+          (n) => n.cloneNode(true),
+        ),
+      );
+    },
     expandAll() {
       Object.entries(this.expandables).forEach(([, li]) => {
-        toggle(li, true);
+        this.toggle(li, true);
       });
+      this.saveOrgTree();
     },
     collapseAll() {
       Object.entries(this.expandables).forEach(([, li]) => {
-        toggle(li, false);
+        this.toggle(li, false);
       });
+      this.saveOrgTree();
     },
     expandFirst() {
       const ids = Object.keys(this.initiallyExpanded);
       Object.entries(this.expandables).forEach(([id, li]) => {
-        toggle(li, ids.includes(id));
+        this.toggle(li, ids.includes(id));
       });
-    },
-    setOrgData(org) {
-      this.$store.commit('setOrg', org);
+      this.saveOrgTree();
     },
     updateCurrentNode() {
       const CURRENT_CLASS = 'org-node--current';
@@ -307,40 +369,14 @@ export default {
       if (previous) {
         previous.classList.remove(CURRENT_CLASS);
       }
-      document
-        .getElementById(this.$route.params.username)
-        .classList.add(CURRENT_CLASS);
+      const { username } = this.$route.params;
+      if (username) {
+        document.getElementById(username).classList.add(CURRENT_CLASS);
+      }
     },
   },
-  async mounted() {
+  mounted() {
     document.getElementById('search-query').focus();
-
-    const { username } = this.$route.params;
-    if (username && this.$route.name === 'OrgchartHighlight') {
-      try {
-        const data = await fetcher.fetch(
-          `/api/v4/orgchart/trace/${encodeURIComponent(username)}`,
-        );
-        const { trace } = await data.json();
-        const isLoose = trace && trace.startsWith('-1-');
-
-        return;
-        // TODO: build CSS selector for all lis that should be expanded, from trace
-        this.$el
-          .querySelectorAll(
-            (isLoose ? trace.substr(3) : trace).reduce(
-              (sth) => sth + `org-root--${isLoose ? 'loose' : 'forrest'}`,
-            ),
-          )
-          .forEach((li) => toggle(li, true));
-      } catch (e) {
-        if (e instanceof TypeError && e.message.startsWith('NetworkError')) {
-          window.location.reload();
-          return;
-        }
-        console.error(e);
-      }
-    }
   },
 };
 </script>
