@@ -67,6 +67,7 @@ import ProfilePreview from '@/components/profile/ProfilePreview.vue';
 import Toggle from '@/components/ui/Toggle.vue';
 import { PREVIEW_PROFILE } from '@/queries/profile';
 import Fetcher from '@/assets/js/fetcher';
+import generateIdenticon from '@/assets/js/identicon-avatar';
 
 const fetcher = new Fetcher({ failoverOn: [302] });
 
@@ -79,7 +80,7 @@ function renderNode(node, level = 1) {
     }" style="--nodeLevel: ${level};">
       <a class="router-link-exact-active router-link-active" id="org-node-0">
         <div class="user-picture user-picture--small">
-          <img alt="" role="presentation" aria-hidden="true" width="40">
+          <img class="user-picture user-picture--small" alt="" role="presentation" aria-hidden="true" width="40">
           <span class="dino-type">
             <span aria-hidden="true">S</span>
             <span class="visually-hidden">Staff</span>
@@ -122,8 +123,22 @@ function renderNode(node, level = 1) {
         }
     </li>`;
   const li = e.firstElementChild;
-  li.id = node.data.username;
-  e.querySelector('a').href = `/o/${node.data.username}`;
+  const { picture, username } = node.data;
+  li.id = username;
+  e.querySelector('a').href = `/o/${username}`;
+  const img = e.querySelector('img');
+  if (
+    picture === null ||
+    picture === '' ||
+    picture === 'default:' ||
+    picture.startsWith('https://s3.amazonaws.com/')
+  ) {
+    generateIdenticon(username, 40).then((src) => {
+      img.src = src;
+    });
+  } else {
+    img.src = `${picture}?size=40`;
+  }
   e.querySelector('.org-node__name').textContent = `${node.data.firstName} ${
     node.data.lastName
   }`;
