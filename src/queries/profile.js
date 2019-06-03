@@ -265,6 +265,18 @@ const DISPLAY_PROFILE = gql`
             display
           }
         }
+        bugzillaMozillaOrgId {
+          value
+          metadata {
+            display
+          }
+        }
+        bugzillaMozillaOrgPrimaryEmail {
+          value
+          metadata {
+            display
+          }
+        }
       }
       lastName {
         value

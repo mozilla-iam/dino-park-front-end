@@ -56,9 +56,22 @@
       <ViewColleagues :username="primaryUsername.value"></ViewColleagues>
     </section>
 
-    <section v-if="identities.githubIdV3.value" :class="'profile__section'">
+    <section
+      v-if="identitiesWrapper.anyIdentity() || this.editing"
+      :class="
+        'profile__section' +
+          (this.editing === 'contact' ? ' profile__section--editing' : '')
+      "
+    >
       <a id="nav-identities" class="profile__anchor"></a>
-      <ViewIdentities v-bind="{ identities, userOnOwnProfile }" />
+      <EditIdentities
+        v-if="this.editing === 'identities'"
+        v-bind="{ identities: identitiesWrapper }"
+      />
+      <ViewIdentities
+        v-else
+        v-bind="{ identities: identitiesWrapper, userOnOwnProfile }"
+      />
     </section>
     <EmptyCard
       v-else
@@ -66,6 +79,13 @@
       title="Identities"
       message="Identity editing capabilities are coming soon."
     >
+      <template v-slot:header>
+        <EditButton
+          v-if="userOnOwnProfile"
+          section="identities"
+          sectionId="identities"
+        ></EditButton>
+      </template>
     </EmptyCard>
 
     <section
@@ -275,9 +295,11 @@ import EditAccounts from './edit/EditAccounts.vue';
 import EditContact from './edit/EditContact.vue';
 import EditKeys from './edit/EditKeys.vue';
 import EditLanguages from './edit/EditLanguages.vue';
+import EditIdentities from './edit/EditIdentities.vue';
 import EditPersonalInfo from '@/components/profile/edit/EditPersonalInfo.vue';
 import EditTags from './edit/EditTags.vue';
 import EmptyCard from '@/components/profile/view/EmptyCard.vue';
+import Identities from '@/assets/js/identities';
 import ProfileNav from './ProfileNav.vue';
 import ViewAccounts from './view/ViewAccounts.vue';
 import ViewContact from './view/ViewContact.vue';
@@ -319,6 +341,7 @@ export default {
     EditButton,
     EditContact,
     EditKeys,
+    EditIdentities,
     EditLanguages,
     EditPersonalInfo,
     EditTags,
@@ -371,6 +394,9 @@ export default {
     },
     userOnOwnProfile() {
       return this.$store.state.user.uuid.value === this.uuid.value;
+    },
+    identitiesWrapper() {
+      return new Identities(this.identities);
     },
   },
   data() {
