@@ -10,7 +10,12 @@
     </header>
     <div class="profile__identities">
       <IconBlockList modifier="icon-block-list--multi-col">
-        <IconBlock v-if="identities.hasGithub()" heading="GitHub" icon="github">
+        <IconBlock
+          v-if="identities.hasGithub()"
+          heading="GitHub"
+          subHeading="Verified"
+          icon="github"
+        >
           <a
             :href="`https://github.com/${githubUsername}`"
             target="_blank"
@@ -21,6 +26,7 @@
         <IconBlock
           v-if="identities.hasBugzilla()"
           heading="Bugzilla"
+          subHeading="Verified"
           icon="dino"
         >
           <a
@@ -71,3 +77,14 @@ export default {
   },
 };
 </script>
+
+<style>
+.profile__identities .icon-block__heading {
+  display: flex;
+}
+.profile__identities .icon-block__heading > span {
+  margin-left: auto;
+  margin-right: 0.5em;
+  color: var(--true-green);
+}
+</style>

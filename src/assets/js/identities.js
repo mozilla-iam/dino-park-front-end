@@ -14,17 +14,6 @@ class Identities {
     this.list = new Map();
     this.list.set('github', this.hasGithub());
     this.list.set('bugzilla', this.hasBugzilla());
-    this.githubIdentityUpdate = {
-      remove: false,
-      display:
-        this.identities.githubIdV3.metadata.display || DISPLAY_LEVELS.private,
-    };
-    this.bugzillaIdentityUpdate = {
-      remove: false,
-      display:
-        this.identities.bugzillaMozillaOrgId.metadata.display ||
-        DISPLAY_LEVELS.private,
-    };
     this.labels = new Map(
       [...this.list.keys()].map((p) => {
         return [p, { label: labels[p], value: p }];
@@ -52,6 +41,19 @@ class Identities {
     return `https://bugzilla.mozilla.org/user_profile?user_id=${
       this.identities.bugzillaMozillaOrgId.value
     }`;
+  }
+
+  bugzillaDisplay() {
+    return (
+      this.identities.bugzillaMozillaOrgId.metadata.display ||
+      DISPLAY_LEVELS.private
+    );
+  }
+
+  githubDisplay() {
+    return (
+      this.identities.githubIdV3.metadata.display || DISPLAY_LEVELS.private
+    );
   }
 
   bugzillaEmail() {
