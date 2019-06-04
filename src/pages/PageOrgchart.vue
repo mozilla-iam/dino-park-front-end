@@ -343,12 +343,12 @@ export default {
         expander.classList.add('org-node__expander--expanded');
         button.setAttribute('aria-expanded', 'true');
         button.setAttribute('aria-label', 'Collapse');
-        button.style.transform = 'rotateZ(-90deg)';
+        button.style.transform = '';
       } else {
         expander.classList.remove('org-node__expander--expanded');
         button.setAttribute('aria-expanded', 'false');
         button.setAttribute('aria-label', 'Expand');
-        button.style.transform = '';
+        button.style.transform = 'rotateZ(-90deg)';
       }
     },
     saveOrgTree() {
