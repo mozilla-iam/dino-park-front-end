@@ -1,5 +1,5 @@
 import Fetcher from '@/assets/js/fetcher';
-import { displayLevelsFor, DISPLAY_LEVELS } from '@/assets/js/display-levels';
+import { DISPLAY_LEVELS } from '@/assets/js/display-levels';
 
 const labels = {
   github: 'GitHub',
