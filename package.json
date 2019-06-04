@@ -49,9 +49,11 @@
     }
   },
   "browserslist": [
-    "last 1 Firefox versions",
-    "last 1 Chrome versions",
-    "last 1 Safari versions"
+    "> 0.5%",
+    "last 2 Firefox versions",
+    "Firefox ESR",
+    "not ie < 12",
+    "not op_mini all"
   ],
   "resolutions": {
     "event-stream": "3.3.4"
