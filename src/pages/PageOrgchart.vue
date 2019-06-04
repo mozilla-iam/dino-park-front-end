@@ -352,12 +352,14 @@ export default {
       }
     },
     saveOrgTree() {
-      this.$store.commit(
-        'setOrg',
-        Array.from(document.querySelector('.org-chart__chart').children).map(
-          (n) => n.cloneNode(true),
-        ),
-      );
+      requestIdleCallback(() => {
+        this.$store.commit(
+          'setOrg',
+          Array.from(document.querySelector('.org-chart__chart').children).map(
+            (n) => n.cloneNode(true),
+          ),
+        );
+      });
     },
     expandAll() {
       Object.entries(this.expandables).forEach(([, li]) => {
