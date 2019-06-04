@@ -95,6 +95,7 @@ const MUTATE_PROFILE = gql`
     $description: StringWithDisplay
     $firstName: StringWithDisplay
     $funTitle: StringWithDisplay
+    $identities: IdentitiesWithDisplay
     $lastName: StringWithDisplay
     $location: StringWithDisplay
     $phoneNumbers: KeyValuesWithDisplay
@@ -112,6 +113,7 @@ const MUTATE_PROFILE = gql`
         description: $description
         firstName: $firstName
         funTitle: $funTitle
+        identities: $identities
         lastName: $lastName
         location: $location
         phoneNumbers: $phoneNumbers
@@ -157,6 +159,26 @@ const MUTATE_PROFILE = gql`
         value
         metadata {
           display
+        }
+      }
+      identities {
+        githubIdV3 {
+          value
+          metadata {
+            display
+          }
+        }
+        bugzillaMozillaOrgId {
+          value
+          metadata {
+            display
+          }
+        }
+        bugzillaMozillaOrgPrimaryEmail {
+          value
+          metadata {
+            display
+          }
         }
       }
       lastName {

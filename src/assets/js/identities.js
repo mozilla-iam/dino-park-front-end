@@ -15,12 +15,12 @@ class Identities {
     this.list.set('github', this.hasGithub());
     this.list.set('bugzilla', this.hasBugzilla());
     this.githubIdentityUpdate = {
-      value: null,
+      remove: false,
       display:
         this.identities.githubIdV3.metadata.display || DISPLAY_LEVELS.private,
     };
     this.bugzillaIdentityUpdate = {
-      value: null,
+      remove: false,
       display:
         this.identities.bugzillaMozillaOrgId.metadata.display ||
         DISPLAY_LEVELS.private,

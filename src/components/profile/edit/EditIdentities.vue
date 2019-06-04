@@ -1,8 +1,10 @@
 <template>
   <EditMutationWrapper
     :editVariables="{
-      github: identities.githubIdentityUpdate,
-      bugzilla: identities.bugzillaIdentityUpdate,
+      identities: {
+        github: identities.githubIdentityUpdate,
+        bugzilla: identities.bugzillaIdentityUpdate,
+      },
     }"
     :initialValues="{}"
     formName="Edit identities"
@@ -14,6 +16,7 @@
       <Button
         class="button--icon-only"
         v-on:click="() => deleteIdentity('github')"
+        :disabled="adding"
       >
         <Icon id="x" :width="17" :height="17"></Icon>
         <span class="visually-hidden">Remove GitHub identity</span>
@@ -47,6 +50,7 @@
       <Button
         class="button--icon-only"
         v-on:click="() => deleteIdentity('bugzilla')"
+        :disabled="adding"
       >
         <Icon id="x" :width="17" :height="17"></Icon>
         <span class="visually-hidden">Remove Bugzilla identity</span>
@@ -135,7 +139,17 @@ export default {
       [this.newIdentity] = this.identities.available();
       this.adding = true;
     },
-    deleteIdentity(name) {},
+    deleteIdentity(name) {
+      switch (name) {
+        case 'github':
+          this.identities.githubIdentityUpdate.remove = true;
+          break;
+        case 'bugzilla':
+          this.identities.bugzillaIdentityUpdate.remove = true;
+          break;
+        default:
+      }
+    },
     redirect(...args) {
       console.log(`re: ${this.newIdentity}`);
       return Identities.redirect(...args);
@@ -147,6 +161,7 @@ export default {
       githubUsername: null,
       adding: false,
       newIdentity: null,
+      deleting: false,
     };
   },
 };
