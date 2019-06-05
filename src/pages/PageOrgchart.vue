@@ -435,9 +435,8 @@ export default {
   cursor: not-allowed;
 }
 .org-chart-buttons__control:hover:enabled {
-  background-color: var(--blue-60);
+  background-color: var(--gray-30);
   border: 2px solid var(--gray-30);
-  color: var(--white);
 }
 .org-chart-buttons__control > svg {
   margin: auto;
