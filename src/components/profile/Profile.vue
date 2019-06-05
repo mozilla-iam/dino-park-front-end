@@ -77,7 +77,11 @@
       v-else
       nav="identities"
       title="Identities"
-      message="Identity editing capabilities are coming soon."
+      :message="
+        userOnOwnProfile
+          ? `You haven't added any identities yet.`
+          : `No identities have been added yet.`
+      "
     >
       <template v-slot:header>
         <EditButton
