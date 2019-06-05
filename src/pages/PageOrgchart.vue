@@ -305,8 +305,9 @@ export default {
   height: 2.5em;
 }
 .org-chart-buttons__control:hover {
-  background-color: var(--blue-30);
+  background-color: var(--blue-60);
   border: 2px solid var(--gray-30);
+  color: var(--white);
 }
 .org-chart-buttons__control > svg {
   margin: auto;
