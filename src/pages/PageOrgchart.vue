@@ -20,6 +20,7 @@
         <span class="visually-hidden">Collapse all</span>
       </button>
       <button
+        :disabled="!dirty"
         type="button"
         @click="expandFirst"
         class="org-chart-buttons__reset org-chart-buttons__control button--icon-only button"
@@ -184,6 +185,7 @@ export default {
       loading: false,
       previewProfileQuery: PREVIEW_PROFILE,
       desktopView: false,
+      dirty: false,
     };
   },
   async created() {
@@ -226,8 +228,9 @@ export default {
         const orgChartRoot = document.querySelector('.org-chart__chart');
         const chartFromStore = Boolean(this.$store.state.org);
         const [f, t] = chartFromStore
-          ? this.$store.state.org
+          ? this.$store.state.org.nodes
           : renderOrgchart(orgchart);
+        this.dirty = chartFromStore ? this.$store.state.org.dirty : false;
         orgChartRoot.innerHTML = '';
         orgChartRoot.appendChild(f);
         orgChartRoot.appendChild(t);
@@ -350,15 +353,16 @@ export default {
         button.setAttribute('aria-label', 'Expand');
         button.style.transform = 'rotateZ(-90deg)';
       }
+      this.dirty = true;
     },
     saveOrgTree() {
       requestIdleCallback(() => {
-        this.$store.commit(
-          'setOrg',
-          Array.from(document.querySelector('.org-chart__chart').children).map(
-            (n) => n.cloneNode(true),
-          ),
-        );
+        this.$store.commit('setOrg', {
+          nodes: Array.from(
+            document.querySelector('.org-chart__chart').children,
+          ).map((n) => n.cloneNode(true)),
+          dirty: this.dirty,
+        });
       });
     },
     expandAll() {
@@ -378,6 +382,7 @@ export default {
       Object.entries(this.expandables).forEach(([id, li]) => {
         this.toggle(li, ids.includes(id));
       });
+      this.dirty = false;
       this.saveOrgTree();
     },
     updateCurrentNode() {
@@ -426,7 +431,10 @@ export default {
   width: 2.5em;
   height: 2.5em;
 }
-.org-chart-buttons__control:hover {
+.org-chart-buttons__control:hover:disabled {
+  cursor: not-allowed;
+}
+.org-chart-buttons__control:hover:enabled {
   background-color: var(--blue-60);
   border: 2px solid var(--gray-30);
   color: var(--white);
