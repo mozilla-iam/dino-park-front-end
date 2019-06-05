@@ -100,7 +100,7 @@ export default {
   border-bottom-right-radius: var(--imageRadius);
 }
 .colleagues__toggle-button:not(.colleagues__toggle-button--current):hover {
-  background-color: var(--gray-30);
+  background-color: var(--gray-20);
 }
 .colleagues__toggle-button:focus {
   position: relative;
