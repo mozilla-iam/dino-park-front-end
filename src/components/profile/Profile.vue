@@ -56,11 +56,40 @@
       <ViewColleagues :username="primaryUsername.value"></ViewColleagues>
     </section>
 
+    <section
+      v-if="identitiesWrapper.anyIdentity() || this.editing"
+      :class="
+        'profile__section' +
+          (this.editing === 'contact' ? ' profile__section--editing' : '')
+      "
+    >
+      <a id="nav-identities" class="profile__anchor"></a>
+      <EditIdentities
+        v-if="this.editing === 'identities'"
+        v-bind="{ identities: identitiesWrapper }"
+      />
+      <ViewIdentities
+        v-else
+        v-bind="{ identities: identitiesWrapper, userOnOwnProfile }"
+      />
+    </section>
     <EmptyCard
+      v-else
       nav="identities"
       title="Identities"
-      message="Identity editing capabilities are coming soon."
+      :message="
+        userOnOwnProfile
+          ? `You haven't added any identities yet.`
+          : `No identities have been added yet.`
+      "
     >
+      <template v-slot:header>
+        <EditButton
+          v-if="userOnOwnProfile"
+          section="identities"
+          sectionId="identities"
+        ></EditButton>
+      </template>
     </EmptyCard>
 
     <section
@@ -270,13 +299,16 @@ import EditAccounts from './edit/EditAccounts.vue';
 import EditContact from './edit/EditContact.vue';
 import EditKeys from './edit/EditKeys.vue';
 import EditLanguages from './edit/EditLanguages.vue';
+import EditIdentities from './edit/EditIdentities.vue';
 import EditPersonalInfo from '@/components/profile/edit/EditPersonalInfo.vue';
 import EditTags from './edit/EditTags.vue';
 import EmptyCard from '@/components/profile/view/EmptyCard.vue';
+import Identities from '@/assets/js/identities';
 import ProfileNav from './ProfileNav.vue';
 import ViewAccounts from './view/ViewAccounts.vue';
 import ViewContact from './view/ViewContact.vue';
 import ViewKeys from './view/ViewKeys.vue';
+import ViewIdentities from './view/ViewIdentities.vue';
 import ViewLanguages from './view/ViewLanguages.vue';
 import ViewPersonalInfo from './view/ViewPersonalInfo.vue';
 import ViewColleagues from './view/ViewColleagues.vue';
@@ -291,6 +323,7 @@ export default {
     editing: String,
     firstName: Object,
     funTitle: Object,
+    identities: Object,
     languages: Object,
     lastName: Object,
     location: Object,
@@ -312,6 +345,7 @@ export default {
     EditButton,
     EditContact,
     EditKeys,
+    EditIdentities,
     EditLanguages,
     EditPersonalInfo,
     EditTags,
@@ -320,6 +354,7 @@ export default {
     ViewAccounts,
     ViewContact,
     ViewKeys,
+    ViewIdentities,
     ViewLanguages,
     ViewPersonalInfo,
     ViewColleagues,
@@ -363,6 +398,9 @@ export default {
     },
     userOnOwnProfile() {
       return this.$store.state.user.uuid.value === this.uuid.value;
+    },
+    identitiesWrapper() {
+      return new Identities(this.identities);
     },
   },
   data() {

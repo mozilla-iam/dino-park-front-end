@@ -38,7 +38,7 @@
     />
     <button
       type="button"
-      class="button button--secondary button--action"
+      class="add-tags__add-more button button--secondary button--action"
       @click="handleAddTag"
     >
       <template v-if="addingTag && newTag.length > 0">
@@ -141,5 +141,8 @@ export default {
 }
 .add-tags__list {
   margin-bottom: 2em;
+}
+.add-tags__add-more {
+  margin-left: auto;
 }
 </style>

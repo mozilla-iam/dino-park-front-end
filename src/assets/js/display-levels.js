@@ -66,5 +66,5 @@ const VALID_DISPLAY_LEVELS = {
 };
 
 export function displayLevelsFor(field) {
-  return VALID_DISPLAY_LEVELS[field] || DISPLAY_ANY;
+  return (field && VALID_DISPLAY_LEVELS[field]) || DISPLAY_ANY;
 }

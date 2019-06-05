@@ -278,6 +278,7 @@ export default {
 .edit-contact__add-more {
   grid-column: 1 / 5;
   justify-self: end;
+  margin-left: auto;
 }
 .edit-contact__header {
   display: flex;

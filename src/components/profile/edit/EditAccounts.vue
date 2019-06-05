@@ -57,7 +57,7 @@
       <hr role="presentation" />
     </div>
     <Button
-      class="edit-contact__add-more button--secondary button button--action"
+      class="edit-accounts__add-more button--secondary button button--action"
       type="button"
       :disabled="noAccountsLeft"
       v-on:click="addUri"
@@ -160,3 +160,9 @@ export default {
   },
 };
 </script>
+
+<style>
+.edit-accounts__add-more {
+  margin-left: auto;
+}
+</style>

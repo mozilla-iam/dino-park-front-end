@@ -38,7 +38,7 @@
     />
     <button
       type="button"
-      class="button button--secondary button--action"
+      class="add-languages__add-more button button--secondary button--action"
       @click="handleAddLanguage"
     >
       <template v-if="addingLanguage && newLanguage.length > 0">
@@ -141,5 +141,8 @@ export default {
 }
 .add-languages__list {
   margin-bottom: 2em;
+}
+.add-languages__add-more {
+  margin-left: auto;
 }
 </style>

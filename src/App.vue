@@ -51,6 +51,9 @@ export default {
   --white: #fff;
   --black: #000;
 
+  --true-green: #12bc00;
+  --neon-red: #ff0039;
+
   --lightBlue: #f2fcfd;
   --transparentBlue: rgba(69, 161, 255, 0.54);
   --transparentWhite: rgba(255, 255, 255, 0.54);
