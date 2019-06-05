@@ -40,7 +40,7 @@
         </div>
         <h2>
           <a
-            href="https://discourse.mozilla.org/t/profile-privacy-display-levels-explained/37906"
+            href="https://discourse.mozilla.org/t/dinopark-faq/33564"
             target="_blank"
             rel="noopener noreferrer"
             >Your Privacy is Protected</a
@@ -50,7 +50,7 @@
           Your Staff profile data is only visible to Staff and NDA’d people by
           default. You can edit this via your profile privacy settings. Read our
           <a
-            href="https://discourse.mozilla.org/t/profile-privacy-display-levels-explained/37906"
+            href="https://discourse.mozilla.org/t/dinopark-faq/33564"
             target="_blank"
             rel="noopener noreferrer"
             >FAQ</a
