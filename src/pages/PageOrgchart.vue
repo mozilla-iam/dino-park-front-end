@@ -20,7 +20,6 @@
         <span class="visually-hidden">Collapse all</span>
       </button>
       <button
-        v-if="showResetButton"
         type="button"
         @click="expandFirst"
         class="org-chart-buttons__reset org-chart-buttons__control button--icon-only button"
@@ -31,21 +30,7 @@
       </button>
     </div>
     <div class="org-chart">
-      <div class="org-chart__chart">
-        <OrgRoot
-          v-if="tree && !loading"
-          :roots="tree"
-          :trace="trace || ''"
-        ></OrgRoot>
-        <OrgRoot
-          v-if="loose && loose.length > 0 && !loading"
-          :roots="loose"
-          :trace="looseTrace || ''"
-          heading="People who do not have a manager set"
-          class="org-root--loose"
-        ></OrgRoot>
-        <LoadingSpinner v-else></LoadingSpinner>
-      </div>
+      <div class="org-chart__chart"><LoadingSpinner></LoadingSpinner></div>
       <ApolloQuery
         v-if="username && (desktopView || openedFromOrgNode)"
         :query="previewProfileQuery"
@@ -77,22 +62,113 @@
 <script>
 import Icon from '@/components/ui/Icon.vue';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
-import OrgRoot from '@/components/org-chart/OrgRoot.vue';
 import Modal from '@/components/_functional/Modal.vue';
 import ProfilePreview from '@/components/profile/ProfilePreview.vue';
 import Toggle from '@/components/ui/Toggle.vue';
 import { PREVIEW_PROFILE } from '@/queries/profile';
 import Fetcher from '@/assets/js/fetcher';
+import generateIdenticon from '@/assets/js/identicon-avatar';
 
 const fetcher = new Fetcher({ failoverOn: [302] });
 
-const toSortedString = (o) =>
-  JSON.stringify(
-    Object.keys(o)
-      .filter((k) => o[k])
-      .sort(),
+function renderNode(node, level = 1) {
+  const e = document.createElement('div');
+  const hasChildren = node.children.length > 0;
+  e.innerHTML = `
+    <li class="org-node ${
+      hasChildren ? 'org-node--expandable' : ''
+    }" style="--nodeLevel: ${level};">
+      <a class="router-link-exact-active router-link-active" id="org-node-0">
+        <div class="user-picture user-picture--small">
+          <img class="user-picture user-picture--small" alt="" role="presentation" aria-hidden="true" width="40">
+          <span class="dino-type">
+            <span aria-hidden="true">S</span>
+            <span class="visually-hidden">Staff</span>
+          </span>
+        </div>
+        <span class="org-node__name"></span>
+        <span class="org-node__title"></span>
+      </a>
+
+        ${
+          hasChildren
+            ? `
+              <div class="org-node__expander">
+                <button type="button" aria-expanded="true" class="org-node__expander-button org-node__toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" role="presentation" focusable="false"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </button>
+                <div tabindex="-1" class="org-node__expander-overflow"><ul></ul></div>
+              </div>`
+            : `
+              <svg
+                class="org-node__no-children-indicator"
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                viewBox="0 0 22 22"
+                aria-hidden="true"
+                role="presentation"
+                focusable="false"
+              >
+                <circle
+                  cx="2"
+                  cy="2"
+                  r="2"
+                  fill="#B1B1B3"
+                  fill-rule="evenodd"
+                  transform="translate(9 9.308)"
+                />
+              </svg>
+            `
+        }
+    </li>`;
+  const li = e.firstElementChild;
+  const { picture, username } = node.data;
+  li.id = username;
+  e.querySelector('a').href = `/o/${username}`;
+  const img = e.querySelector('img');
+  if (
+    picture === null ||
+    picture === '' ||
+    picture === 'default:' ||
+    picture.startsWith('https://s3.amazonaws.com/')
+  ) {
+    generateIdenticon(username, 40).then((src) => {
+      img.src = src;
+    });
+  } else {
+    img.src = `${picture}?size=40`;
+  }
+  e.querySelector('.org-node__name').textContent = `${node.data.firstName} ${
+    node.data.lastName
+  }`;
+  e.querySelector('.org-node__title').textContent = node.data.title;
+  const ul = e.querySelector('ul');
+  if (ul) {
+    node.children.forEach((child) =>
+      ul.appendChild(renderNode(child, level + 1)),
+    );
+  }
+  return li;
+}
+
+function renderOrgchart(orgchart) {
+  const forrest = document.createElement('div');
+  forrest.className = 'org-root org-root--forrest';
+  const forrestInner = document.createElement('ul');
+  forrest.appendChild(forrestInner);
+  orgchart.forrest.forEach((root) =>
+    forrestInner.appendChild(renderNode(root)),
   );
-const haveSameKeys = (a, b) => toSortedString(a) === toSortedString(b);
+  const loose = document.createElement('div');
+  loose.className = 'org-root org-root--loose';
+  loose.innerHTML =
+    '<h2 class="org-root__heading">People who do not have a manager set</h2>';
+  const looseInner = document.createElement('ul');
+  loose.appendChild(looseInner);
+  orgchart.loose.forEach((root) => looseInner.appendChild(renderNode(root)));
+  return [forrest, loose];
+}
 
 export default {
   name: 'PageOrgchart',
@@ -100,90 +176,21 @@ export default {
     Icon,
     LoadingSpinner,
     Modal,
-    OrgRoot,
     ProfilePreview,
     Toggle,
   },
   data() {
-    const { org } = this.$store.state;
     return {
       loading: false,
-      post: null,
-      error: null,
-      tree: [],
-      loose: [],
-      trace: '',
-      looseTrace: '',
       previewProfileQuery: PREVIEW_PROFILE,
       desktopView: false,
-
-      orgFromStore: Boolean(org),
-      ...(org || { expanded: {}, collapsed: null }),
-      subscribers: {},
     };
   },
-  provide() {
-    const orgChartPage = this;
-    return {
-      subscribeToExpanded(id, callback) {
-        orgChartPage.subscribers[id] = () =>
-          callback(orgChartPage.isExpanded(id));
-        return orgChartPage.isExpanded(id);
-      },
-      toggle(id, value = null) {
-        if (value != null && orgChartPage.isExpanded(id) === value) {
-          return;
-        }
-        const useCollapsed = orgChartPage.expanded == null;
-        let collection = useCollapsed
-          ? orgChartPage.collapsed
-          : orgChartPage.expanded;
-
-        collection = { ...collection, [id]: !collection[id] };
-
-        if (useCollapsed) {
-          orgChartPage.collapsed = collection;
-        } else {
-          orgChartPage.expanded = collection;
-        }
-
-        const subscriber = orgChartPage.subscribers[id];
-        if (subscriber) {
-          subscriber();
-        }
-      },
-    };
-  },
-  created() {
-    this.fetchData();
+  async created() {
     window.addEventListener('resize', this.updateView);
     this.updateView();
-  },
-  async updated() {
-    const { username } = this.$route.params;
-    if (username && this.$route.name === 'OrgchartHighlight') {
-      try {
-        const data = await fetcher.fetch(
-          `/api/v4/orgchart/trace/${encodeURIComponent(username)}`,
-        );
-        const { trace } = await data.json();
-        if (trace && trace.startsWith('-1-')) {
-          this.looseTrace = trace.substr(3);
-          this.trace = '';
-        } else {
-          this.looseTrace = '';
-          this.trace = trace;
-        }
-      } catch (e) {
-        if (e instanceof TypeError && e.message.startsWith('NetworkError')) {
-          window.location.reload();
-          return;
-        }
-        this.error = e;
-      }
-    } else {
-      this.trace = '';
-    }
+    await this.fetchData();
+    await this.highlight();
   },
   computed: {
     username() {
@@ -192,20 +199,6 @@ export default {
     openedFromOrgNode() {
       return this.$route.params.openedFromOrgNode;
     },
-    defaultExpandedState() {
-      return this.tree
-        .map((node) => node.data.dinoId)
-        .reduce((obj, key) => {
-          obj[key] = true;
-          return obj;
-        }, {});
-    },
-    showResetButton() {
-      return (
-        this.collapsed ||
-        !haveSameKeys(this.expanded, this.defaultExpandedState)
-      );
-    },
   },
   watch: {
     desktopView() {
@@ -213,28 +206,121 @@ export default {
         this.modalEl.isOpen = true;
       }
     },
+    $route() {
+      this.updateCurrentNode();
+    },
   },
   methods: {
     async fetchData() {
-      this.error = null;
-      this.post = null;
       this.loading = true;
       try {
         const data = await fetcher.fetch('/api/v4/orgchart');
         const orgchart = await data.json();
-        this.tree = orgchart.forrest;
-        this.loose = orgchart.loose;
-        if (!this.orgFromStore && this.$route.name !== 'OrgchartHighlight') {
+        this.initiallyExpanded = orgchart.forrest
+          .map((node) => node.data.username)
+          .reduce((obj, key) => {
+            obj[key] = true;
+            return obj;
+          }, {});
+
+        const orgChartRoot = document.querySelector('.org-chart__chart');
+        const chartFromStore = Boolean(this.$store.state.org);
+        const [f, t] = chartFromStore
+          ? this.$store.state.org
+          : renderOrgchart(orgchart);
+        orgChartRoot.innerHTML = '';
+        orgChartRoot.appendChild(f);
+        orgChartRoot.appendChild(t);
+        this.updateCurrentNode();
+
+        this.expandables = Array.from(
+          orgChartRoot.querySelectorAll('.org-node--expandable'),
+        ).reduce((obj, li) => {
+          obj[li.id] = li;
+          return obj;
+        }, {});
+
+        if (!chartFromStore) {
           this.expandFirst();
         }
+
+        orgChartRoot.addEventListener('click', (event) => {
+          const li = event.target.closest('li');
+
+          if (event.target.closest('button')) {
+            this.toggle(li);
+            this.saveOrgTree();
+            return;
+          }
+
+          const anchor = event.target.closest('a');
+          if (anchor) {
+            this.$router.push({
+              name: 'Orgchart',
+              params: {
+                username: li.id,
+                openedFromOrgNode: true,
+              },
+            });
+            event.preventDefault();
+          }
+        });
       } catch (e) {
         if (e instanceof TypeError && e.message.startsWith('NetworkError')) {
           window.location.reload();
           return;
         }
-        this.error = e;
+        console.error(e);
       }
       this.loading = false;
+    },
+    async highlight() {
+      const { username } = this.$route.params;
+      if (!(username && this.$route.name === 'OrgchartHighlight')) {
+        return;
+      }
+
+      try {
+        const data = await fetcher.fetch(
+          `/api/v4/orgchart/trace/${encodeURIComponent(username)}`,
+        );
+        const { trace } = await data.json();
+        const isLoose = trace && trace.startsWith('-1-');
+
+        const root = this.$el.querySelector(
+          `.org-root--${isLoose ? 'loose' : 'forrest'}`,
+        );
+        const indices = (isLoose ? trace.substr(3) : trace)
+          .split('-')
+          .map(Number);
+        const li = this.toggleTrace(root.firstElementChild, indices);
+        // assume browsers with `scrollBehavior` support scrollIntoView
+        // with object as arguments
+        if ('scrollBehavior' in document.documentElement.style) {
+          li.scrollIntoView({
+            block: 'center',
+          });
+        } else {
+          // scrolls into view with element at bottom of viewport (block: 'end')
+          li.scrollIntoView(false);
+        }
+
+        this.saveOrgTree();
+      } catch (e) {
+        if (e instanceof TypeError && e.message.startsWith('NetworkError')) {
+          window.location.reload();
+          return;
+        }
+        console.error(e);
+      }
+    },
+    toggleTrace(ul, indices) {
+      const index = indices.shift();
+      const li = ul.children[index];
+      this.toggle(li, true);
+      return indices.length > 0
+        ? this.toggleTrace(li.querySelector('ul'), indices)
+        : li;
     },
     updateView() {
       if (matchMedia('(min-width: 57.5em)').matches) {
@@ -244,34 +330,70 @@ export default {
       }
     },
 
+    toggle(li, shouldExpand) {
+      const ul = li.querySelector('ul');
+      if (!ul) return;
+      shouldExpand =
+        shouldExpand === undefined ? ul.style.display === 'none' : shouldExpand;
+
+      ul.style.display = shouldExpand ? 'block' : 'none';
+      const expander = li.querySelector('.org-node__expander');
+      const button = li.querySelector('button');
+      if (shouldExpand) {
+        expander.classList.add('org-node__expander--expanded');
+        button.setAttribute('aria-expanded', 'true');
+        button.setAttribute('aria-label', 'Collapse');
+        button.style.transform = '';
+      } else {
+        expander.classList.remove('org-node__expander--expanded');
+        button.setAttribute('aria-expanded', 'false');
+        button.setAttribute('aria-label', 'Expand');
+        button.style.transform = 'rotateZ(-90deg)';
+      }
+    },
+    saveOrgTree() {
+      requestIdleCallback(() => {
+        this.$store.commit(
+          'setOrg',
+          Array.from(document.querySelector('.org-chart__chart').children).map(
+            (n) => n.cloneNode(true),
+          ),
+        );
+      });
+    },
     expandAll() {
-      this.setOrgData({ expanded: null, collapsed: {} });
+      Object.entries(this.expandables).forEach(([, li]) => {
+        this.toggle(li, true);
+      });
+      this.saveOrgTree();
     },
     collapseAll() {
-      this.setOrgData({ expanded: {}, collapsed: null });
+      Object.entries(this.expandables).forEach(([, li]) => {
+        this.toggle(li, false);
+      });
+      this.saveOrgTree();
     },
     expandFirst() {
-      this.setOrgData({
-        expanded: this.defaultExpandedState,
-        collapsed: null,
+      const ids = Object.keys(this.initiallyExpanded);
+      Object.entries(this.expandables).forEach(([id, li]) => {
+        this.toggle(li, ids.includes(id));
       });
+      this.saveOrgTree();
     },
-    setOrgData(org) {
-      this.expanded = org.expanded;
-      this.collapsed = org.collapsed;
-      Object.values(this.subscribers).forEach((subscriber) => {
-        subscriber();
-      });
-      this.$store.commit('setOrg', org);
-    },
-    isExpanded(id) {
-      return this.expanded ? this.expanded[id] : !this.collapsed[id];
+    updateCurrentNode() {
+      const CURRENT_CLASS = 'org-node--current';
+      const previous = this.$el.querySelector(`.${CURRENT_CLASS}`);
+      if (previous) {
+        previous.classList.remove(CURRENT_CLASS);
+      }
+      const { username } = this.$route.params;
+      if (username) {
+        document.getElementById(username).classList.add(CURRENT_CLASS);
+      }
     },
   },
   mounted() {
-    const searchField = document.getElementById('search-query');
-
-    searchField.focus();
+    document.getElementById('search-query').focus();
   },
 };
 </script>
@@ -360,5 +482,137 @@ export default {
     position: sticky;
     top: 7.5em;
   }
+}
+
+.org-root {
+  width: 100%;
+  max-width: 45em;
+  background-image: linear-gradient(
+    var(--gray-10) 0,
+    var(--gray-10) 50%,
+    #fff 50%
+  );
+  background-size: auto 8em;
+  border-radius: var(--cardRadius);
+  position: relative;
+}
+@media (min-width: 57.5em) {
+  .org-root {
+    box-shadow: var(--shadowCard);
+    margin: 0;
+  }
+}
+.org-root ul {
+  padding: 0;
+  margin: 0;
+}
+
+.org-root--loose {
+  margin-top: 5em;
+}
+.org-root--loose > h2 {
+  font-size: 1em;
+  background: var(--white);
+  padding: 0.75em 3em;
+  color: var(--gray-50);
+  position: absolute;
+  top: -2.5em;
+  line-height: 1;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-radius: var(--cardRadius) var(--cardRadius) 0 0;
+}
+
+.org-node {
+  list-style: none;
+  position: relative; /* positioning context for a::after */
+}
+.org-node a {
+  display: block;
+  height: 4em;
+  padding: 0.75em 0;
+  text-decoration: none;
+  color: inherit;
+  padding-left: 2em;
+  padding-left: calc((var(--nodeLevel) * 2em) + 1.25em);
+  border-left: 0.25em solid transparent;
+}
+.org-node--current > a,
+.org-node:target > a {
+  border-left: 0.25em solid var(--blue-60);
+  background-color: var(--lightBlue);
+}
+.org-node a:hover,
+.org-node a:hover::after {
+  background-color: var(--lightBlue);
+}
+.org-node a:focus,
+.org-node:target > a {
+  position: relative;
+  z-index: var(--layerTwo);
+}
+.org-node__name,
+.org-node__title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+}
+.org-node__name {
+  font-weight: 700;
+}
+.org-node__title {
+  color: var(--gray-50);
+  max-width: 90%;
+}
+.org-node__toggle {
+  font-size: inherit;
+  position: absolute;
+  top: 0;
+  left: 0;
+  left: calc((var(--nodeLevel) * 2em) - 1.5em);
+  width: 2.5em;
+  height: 2.5em;
+  margin: 0.75em 0;
+  padding: 0.65em;
+  z-index: var(--layerOne);
+  border: 0;
+  background-color: transparent;
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: var(--imageRadius);
+  z-index: var(--layerThree);
+}
+.org-node__toggle:hover {
+  background-color: var(--gray-20);
+}
+.org-node__toggle img {
+  margin-right: 0;
+  margin-bottom: -2px;
+}
+.org-node .org-node__expander {
+  position: static; /* so that it is explicitly not a positioning context */
+}
+.org-node .user-picture {
+  float: left;
+  margin-right: 0.75em;
+}
+.org-node__no-children-indicator {
+  position: absolute;
+  top: 1.125em;
+  left: calc((var(--nodeLevel) * 2em) - 1.125em);
+}
+
+.org-node__expander {
+  position: relative;
+}
+.org-node__expander-button {
+  font: inherit;
+}
+.org-node__expander-button > svg,
+.org-node__expander-button > img {
+  margin-right: 1.5em;
 }
 </style>
