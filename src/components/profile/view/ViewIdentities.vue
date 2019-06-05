@@ -9,7 +9,7 @@
       ></EditButton>
     </header>
     <div class="profile__identities">
-      <IconBlockList modifier="icon-block-list--multi-col">
+      <IconBlockList class="icon-block-list--multi-col">
         <IconBlock
           v-if="identities.hasGithub()"
           heading="GitHub"
