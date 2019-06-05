@@ -1,5 +1,5 @@
 <template>
-  <div :class="'card' + (modifier ? ' ' + modifier : '')">
+  <div class="card">
     <slot></slot>
   </div>
 </template>
@@ -7,9 +7,6 @@
 <script>
 export default {
   name: 'Card',
-  props: {
-    modifier: String,
-  },
 };
 </script>
 

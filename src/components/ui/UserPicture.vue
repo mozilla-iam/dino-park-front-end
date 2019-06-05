@@ -78,7 +78,7 @@ export default {
     return {
       dinoTypeSize: 'small',
       slot: 40,
-      modifier: 'user-picture--40',
+      class: 'user-picture--40',
     };
   },
 };

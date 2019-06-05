@@ -9,7 +9,7 @@
       ></EditButton>
     </header>
     <h3 class="visually-hidden">Contact options</h3>
-    <IconBlockList modifier="icon-block-list--multi-col">
+    <IconBlockList class="icon-block-list--multi-col">
       <IconBlock heading="Email" subHeading="primary" icon="email">
         <a :href="`mailto:${primaryEmail.value}`">{{ primaryEmail.value }}</a>
       </IconBlock>

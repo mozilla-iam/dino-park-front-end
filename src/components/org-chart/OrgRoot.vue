@@ -1,5 +1,5 @@
 <template>
-  <div :class="'org-root' + (modifier ? ' ' + modifier : '')">
+  <div class="org-root">
     <h2 class="org-root__heading" v-if="heading">{{ heading }}</h2>
     <ul v-for="(root, index) in roots" :key="index">
       <OrgNode
@@ -25,7 +25,6 @@ export default {
     roots: Array,
     trace: String,
     heading: String,
-    modifier: String,
   },
 };
 </script>
