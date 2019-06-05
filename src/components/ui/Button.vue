@@ -1,9 +1,5 @@
 <template>
-  <button
-    type="button"
-    :class="'button' + (modifier ? ' ' + modifier : '')"
-    @click="$emit('click', $event)"
-  >
+  <button type="button" class="button" @click="$emit('click', $event)">
     <slot></slot>
   </button>
 </template>
@@ -11,9 +7,6 @@
 <script>
 export default {
   name: 'Button',
-  props: {
-    modifier: String,
-  },
 };
 </script>
 
