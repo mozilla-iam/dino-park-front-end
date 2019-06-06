@@ -103,11 +103,9 @@
         >New identity {{ newIdentity }}</label
       >
       <div class="edit-identities__verify">
-        <form v-bind:action="redirect(newIdentity)">
-          <button type="submit">
-            Verify
-          </button>
-        </form>
+        <a v-bind:href="redirect(newIdentity)">
+          Verify
+        </a>
       </div>
       <hr role="presentation" />
     </div>
@@ -206,12 +204,9 @@ export default {
 .edit-identities__verify {
   height: 100%;
   margin: auto 0;
+  display: flex;
 }
-.edit-identities__verify > form {
-  height: 100%;
-  appearance: button;
-}
-.edit-identities__verify button {
+.edit-identities__verify > a {
   background-color: var(--true-green);
   height: 100%;
   padding-left: 2em;
@@ -220,8 +215,11 @@ export default {
   text-transform: uppercase;
   border-radius: var(--imageRadius);
   border: 1px solid transparent;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
 }
-.edit-identities__verify button:hover {
+.edit-identities__verify > a:hover {
   background-color: var(--white);
   border: 1px solid var(--true-green);
   color: var(--true-green);
