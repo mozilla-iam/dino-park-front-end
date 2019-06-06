@@ -97,7 +97,10 @@ export default {
 
       // closes overflow content if clicked anywhere, except the
       // overflowing content itself or elements in the overflow content
-      if (event.target !== expandedEl && !expandedEl.contains(event.target)) {
+      if (
+        expandedEl === null ||
+        (event.target !== expandedEl && !expandedEl.contains(event.target))
+      ) {
         this.isExpanded = false;
       }
 
