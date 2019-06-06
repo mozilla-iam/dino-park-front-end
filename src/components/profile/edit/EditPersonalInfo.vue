@@ -164,9 +164,7 @@
           >This is your job title as provided by our HR Team (Workday). Staff
           information is not editable and is shared with all Staff and NDA’d
           Mozillians. Please contact
-          <a href="mailto:peopleops@mozilla.com@mozilla.com"
-            >peopleops@mozilla.com@mozilla.com</a
-          >
+          <a href="mailto:peopleops@mozilla.com">peopleops@mozilla.com</a>
           to request a change to your job title.</Tooltip
         >
       </div>
@@ -288,9 +286,7 @@
           >This is your worker type as provided by our HR Team (Workday). This
           particular field is classified as Staff only and can’t be shared
           beyond this group. Please contact
-          <a href="mailto:peopleops@mozilla.com@mozilla.com"
-            >peopleops@mozilla.com@mozilla.com</a
-          >
+          <a href="mailto:peopleops@mozilla.com">peopleops@mozilla.com</a>
           to change your information.</Tooltip
         >
       </div>
