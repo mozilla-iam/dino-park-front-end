@@ -417,6 +417,7 @@ export default {
           content = 'Failed to verify identity';
           break;
         default:
+          content = 'Unkown error while verifying an identity';
       }
       this.$router.push({
         name: 'Profile',
