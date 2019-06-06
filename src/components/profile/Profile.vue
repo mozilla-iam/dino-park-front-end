@@ -403,6 +403,36 @@ export default {
       return new Identities(this.identities);
     },
   },
+  mounted() {
+    if (this.$route.query.identityAdded) {
+      let content = null;
+      switch (this.$route.query.identityAdded) {
+        case 'github':
+          content = 'Saved GitHub identity';
+          break;
+        case 'bugzilla':
+          content = 'Saved Bugzilla identity';
+          break;
+        case 'error':
+          content = 'Failed to verify identity';
+          break;
+        default:
+      }
+      this.$router.push({
+        name: 'Profile',
+        params: { username: this.$store.state.user.primaryUsername.value },
+        hash: '#nav-identites',
+      });
+      this.$root.$emit('toast', { content });
+      // Ideally our router should handle this.
+      setTimeout(() => {
+        const el = document.getElementById('nav-identities');
+        if (el) {
+          el.scrollIntoView();
+        }
+      }, 500);
+    }
+  },
   data() {
     return {
       profileNav: [
