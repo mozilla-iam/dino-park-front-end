@@ -1,13 +1,5 @@
 <template>
-  <EditMutationWrapper
-    :editVariables="{
-      pgpPublicKeys,
-      sshPublicKeys,
-    }"
-    :initialValues="initialValues"
-    formName="Edit keys"
-    class="edit-keys"
-  >
+  <div class="edit-keys">
     <header class="profile__section-header" ref="header" tabindex="-1">
       <h2>Keys</h2>
     </header>
@@ -21,8 +13,9 @@
           label="PGP keys privacy levels"
           id="section-pgp-keys-privacy"
           profileFieldName="pgpPublicKeys"
-          :profileFieldObject="pgpPublicKeys"
+          :profileFieldObject="{ display: pgpPublicKeys.metadata.display }"
           :collapsedShowLabel="true"
+          :disabled="true"
         />
       </div>
       <Key
@@ -44,8 +37,9 @@
           label="SSH keys privacy levels"
           id="section-ssh-keys-privacy"
           profileFieldName="sshPublicKeys"
-          :profileFieldObject="sshPublicKeys"
+          :profileFieldObject="{ display: sshPublicKeys.metadata.display }"
           :collapsedShowLabel="true"
+          :disabled="true"
         />
       </div>
       <Key
@@ -66,24 +60,38 @@
         Add / Remove
       </a>
     </div>
-  </EditMutationWrapper>
+    <div class="button-bar">
+      <button
+        type="button"
+        class="button button--secondary"
+        @click="
+          $router.push({
+            name: 'Profile',
+            params: {
+              username,
+            },
+          })
+        "
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
 </template>
 
 <script>
 import Icon from '@/components/ui/Icon.vue';
 import Key from '@/components/ui/Key.vue';
 import PrivacySetting from '@/components/profile/PrivacySetting.vue';
-import EditMutationWrapper from './EditMutationWrapper.vue';
 
 export default {
   name: 'EditKeys',
   props: {
     pgpPublicKeys: Object,
     sshPublicKeys: Object,
-    initialValues: Object,
+    username: String,
   },
   components: {
-    EditMutationWrapper,
     Icon,
     Key,
     PrivacySetting,

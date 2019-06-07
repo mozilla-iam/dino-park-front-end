@@ -84,7 +84,7 @@ export default {
   background-position: center right 1em;
   background-size: 1.25em;
 }
-.privacy-setting--large .options__toggle:hover {
+.privacy-setting--large .options__toggle:not([disabled]):hover {
   background-color: var(--black);
   color: var(--white);
   border-color: transparent;

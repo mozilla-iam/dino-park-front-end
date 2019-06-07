@@ -243,7 +243,6 @@
         v-if="this.editing === 'keys'"
         v-bind="{
           username: primaryUsername.value,
-          initialValues: { sshPublicKeys, pgpPublicKeys },
           sshPublicKeys,
           pgpPublicKeys,
         }"
