@@ -14,7 +14,7 @@
     </header>
     <div
       v-if="identities.hasGithub() && !githubIdentityUpdate.remove"
-      class="edit-contact__item edit-identity__item"
+      class="edit-identity__item edit-identity__item"
     >
       <Button
         class="button--icon-only"
@@ -24,26 +24,11 @@
         <Icon id="x" :width="17" :height="17"></Icon>
         <span class="visually-hidden">Remove GitHub identity</span>
       </Button>
-      <Select
-        class="options--chevron"
-        label="GitHub identity"
-        id="field-github-type"
-        :options="[{ label: 'GitHub', value: 'GitHub' }]"
-        :disabled="true"
-      />
-      <label for="field-github-value" class="visually-hidden"
-        >GitHub identity</label
-      >
-      <div class="input">
-        <input
-          type="text"
-          id="field-github-value"
-          :value="githubUsername"
-          placeholder=""
-          disabled
-        />
+      <span class="edit-identity__item-label">GitHub</span>
+      <span class="edit-identity__item-identity">
+        {{ githubUsername }}
         <span>Verified</span>
-      </div>
+      </span>
       <PrivacySetting
         label="GitHub identity privacy settings"
         id="field-github-privacy"
@@ -53,7 +38,7 @@
     </div>
     <div
       v-if="identities.hasBugzilla() && !bugzillaIdentityUpdate.remove"
-      class="edit-contact__item edit-identity__item"
+      class="edit-identity__item"
     >
       <Button
         class="button--icon-only"
@@ -63,26 +48,11 @@
         <Icon id="x" :width="17" :height="17"></Icon>
         <span class="visually-hidden">Remove Bugzilla identity</span>
       </Button>
-      <Select
-        class="options--chevron"
-        label="Bugzilla identity"
-        id="field-bugzilla-type"
-        :options="[{ label: 'Bugzilla', value: 'Bugzilla' }]"
-        :disabled="true"
-      />
-      <label for="field-bugzilla-value" class="visually-hidden"
-        >Bugzilla identity</label
-      >
-      <div class="input">
-        <input
-          type="text"
-          id="field-bugzilla-value"
-          :value="identities.bugzillaEmail()"
-          placeholder=""
-          disabled
-        />
+      <span class="edit-identity__item-label">Bugzilla</span>
+      <span class="edit-identity__item-identity">
+        {{ identities.bugzillaEmail() }}
         <span>Verified</span>
-      </div>
+      </span>
       <PrivacySetting
         label="Bugzilla identity privacy settings"
         id="field-bugzilla-privacy"
@@ -90,7 +60,11 @@
       />
       <hr role="presentation" />
     </div>
-    <div v-if="adding" class="edit-contact__item">
+    <div v-if="adding" class="edit-identity__item">
+      <Button class="button--icon-only" v-on:click="cancelAdding">
+        <Icon id="x" :width="17" :height="17"></Icon>
+        <span class="visually-hidden">Cancel adding new identity</span>
+      </Button>
       <Select
         ref="new_identity"
         class="options--chevron"
@@ -162,6 +136,9 @@ export default {
       [this.newIdentity] = this.identities.available();
       this.adding = true;
     },
+    cancelAdding() {
+      this.adding = false;
+    },
     deleteIdentity(name) {
       this.deleting = true;
       switch (name) {
@@ -224,20 +201,69 @@ export default {
   border: 1px solid var(--true-green);
   color: var(--true-green);
 }
-.edit-identity__item .input {
-  position: relative;
+
+.edit-identity__item {
+  display: grid;
+  grid-template-columns: auto 1fr 3fr calc(1em + 17px);
+  grid-gap: 1em;
 }
-.edit-identity__item .input input {
+
+.edit-identity__item .button--icon-only {
+  border-color: transparent;
+  background-color: transparent;
+  display: inline-flex;
+  align-items: center;
+  margin-right: 0.5em;
+  color: var(--blue-60);
+  padding: 0;
+}
+.edit-identity__item .button--icon-only:hover {
+  color: var(--black);
+  background-color: transparent;
+}
+
+.edit-identity__item-label {
+  color: var(--gray-50);
+}
+
+.edit-identity__item > hr {
+  grid-column: 2/-1;
+}
+
+.edit-identity__item .options button {
   width: 100%;
-  padding-right: 5em;
+  text-align: left;
 }
-.edit-identity__item .input input + span {
-  position: absolute;
-  bottom: 1em;
-  right: 1em;
+
+.edit-identity__item .popover {
+  width: 18em;
+}
+
+.edit-identity__item span {
+  display: inline-flex;
+  align-items: center;
+}
+
+.edit-identity__item-identity {
+  color: var(--gray-50);
+  border: 1px solid var(--gray-30);
+  width: 100%;
+  padding-right: 0.5em;
+  padding-left: 0.5em;
+  position: relative;
+  grid-column: 2/4;
+}
+@media (min-width: 57.5em) {
+  .edit-identity__item-identity {
+    grid-column: 3/4;
+  }
+}
+.edit-identity__item-identity > span {
   font-size: 0.85em;
   color: var(--true-green);
   letter-spacing: 0.1em;
+  margin-left: auto;
+  margin-right: 0px;
 }
 .edit-identity__add-more {
   margin-left: auto;

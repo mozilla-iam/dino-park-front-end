@@ -60,7 +60,7 @@
       v-if="identitiesWrapper.anyIdentity() || this.editing"
       :class="
         'profile__section' +
-          (this.editing === 'contact' ? ' profile__section--editing' : '')
+          (this.editing === 'identities' ? ' profile__section--editing' : '')
       "
     >
       <a id="nav-identities" class="profile__anchor"></a>
