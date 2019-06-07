@@ -57,10 +57,10 @@
     </section>
 
     <section
-      v-if="identitiesWrapper.anyIdentity() || this.editing"
+      v-if="identitiesWrapper.anyIdentity() || this.editing === 'identities'"
       :class="
         'profile__section' +
-          (this.editing === 'contact' ? ' profile__section--editing' : '')
+          (this.editing === 'identities' ? ' profile__section--editing' : '')
       "
     >
       <a id="nav-identities" class="profile__anchor"></a>
