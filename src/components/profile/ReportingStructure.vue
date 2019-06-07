@@ -35,7 +35,7 @@
               v-for="(direct, index) in this.related.directs.slice(
                 this.initiallyShown,
               )"
-              :modifier="directsView"
+              :class="directsView"
               :key="`direct-${index}`"
               v-bind="direct"
             />
