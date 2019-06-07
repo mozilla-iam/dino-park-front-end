@@ -57,7 +57,7 @@
     </section>
 
     <section
-      v-if="identitiesWrapper.anyIdentity() || this.editing"
+      v-if="identitiesWrapper.anyIdentity() || this.editing === 'identities'"
       :class="
         'profile__section' +
           (this.editing === 'identities' ? ' profile__section--editing' : '')
