@@ -59,6 +59,12 @@ export default {
 .person__name {
   font-weight: 700;
 }
+.person__name,
+.person__preferred-title {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
 .person a {
   color: inherit;
   text-decoration: none;
