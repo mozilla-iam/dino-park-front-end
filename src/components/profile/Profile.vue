@@ -540,9 +540,17 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 .profile__section-header h2 {
-  margin: 0;
+  margin: 0 0 0.75em 0;
+  width: 100%;
+}
+@media (min-width: 35em) {
+  .profile__section-header h2 {
+    margin: 0;
+    width: auto;
+  }
 }
 
 .profile__anchor {
