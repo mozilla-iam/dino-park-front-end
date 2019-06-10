@@ -484,6 +484,11 @@ export default {
 </script>
 
 <style>
+.profile {
+  word-break: break-word;
+  word-wrap: anywhere; /* non-standard, but wide browser support, standardised as overflow-wrap */
+  overflow-wrap: anywhere; /* standard, less browser support */
+}
 @media (min-width: 57.5em) {
   .profile {
     display: grid;
