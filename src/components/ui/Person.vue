@@ -124,6 +124,7 @@ export default {
 .person--borderless .user-picture {
   align-self: center;
   margin-right: 1em;
+  flex: none;
 }
 .person--avatar-only {
   display: inline-block;
