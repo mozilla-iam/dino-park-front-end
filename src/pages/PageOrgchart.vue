@@ -299,13 +299,14 @@ export default {
         const li = this.toggleTrace(root.firstElementChild, indices);
         // assume browsers with `scrollBehavior` support scrollIntoView
         // with object as arguments
+        const card = li.querySelector('a') || li;
         if ('scrollBehavior' in document.documentElement.style) {
-          li.scrollIntoView({
+          card.scrollIntoView({
             block: 'center',
           });
         } else {
           // scrolls into view with element at bottom of viewport (block: 'end')
-          li.scrollIntoView(false);
+          card.scrollIntoView(false);
         }
 
         this.saveOrgTree();
