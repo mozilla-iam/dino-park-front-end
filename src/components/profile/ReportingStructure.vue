@@ -149,6 +149,9 @@ export default {
   font-size: 1em;
   color: var(--gray-50);
 }
+.reporting-structure__directs {
+  min-width: 0;
+}
 .reporting-structure__directs--grid {
   max-height: 3em;
   overflow: hidden;
