@@ -150,7 +150,6 @@ export default {
   position: relative;
   padding-top: 5em;
   margin-top: 5em;
-  word-wrap: anywhere;
 }
 @media (min-width: 57.5em) {
   .profile__intro {
