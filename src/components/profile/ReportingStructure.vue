@@ -12,41 +12,42 @@
       class="reporting-structure__manages"
     >
       <h3>Manages:</h3>
-      <div>
-        <Person
-          v-for="(direct, index) in this.related.directs.slice(
-            0,
-            this.initiallyShown,
-          )"
-          :class="directsView"
-          :key="`direct-${index}`"
-          v-bind="direct"
-        />
-        <ShowMore
-          v-if="this.related.directs.length > this.initiallyShown"
-          buttonText="Show More"
-          alternateButtonText="Show Less"
-          class="reporting-structure__show-more"
-          buttonClass="button button--text-only button--less-padding reporting-structure__show-more-button"
-          :transition="true"
-        >
-          <template slot="overflow">
-            <Person
-              v-for="(direct, index) in this.related.directs.slice(
-                this.initiallyShown,
-              )"
-              :class="directsView"
-              :key="`direct-${index}`"
-              v-bind="direct"
-            />
-          </template>
-          <template slot="icon-expanded">
-            <Icon id="chevron-up" :width="24" :height="24" />
-          </template>
-          <template slot="icon-collapsed">
-            <Icon id="chevron-down" :width="24" :height="24" />
-          </template>
-        </ShowMore>
+      <div
+        ref="gridContainer"
+        :class="
+          'reporting-structure__directs' +
+            (viewAs === 'grid' ? ' reporting-structure__directs--grid' : '') +
+            (managesExpanded
+              ? ' reporting-structure__directs--grid-expanded'
+              : '') +
+            (managesExpandable
+              ? ' reporting-structure__directs--expandable'
+              : '')
+        "
+      >
+        <div ref="grid" class="reporting-structure__directs-list">
+          <Person
+            v-for="(direct, index) in this.related.directs"
+            :class="directsView"
+            :key="`direct-${index}`"
+            v-bind="direct"
+          />
+          <button
+            type="button"
+            class="button button--text-only button--less-padding"
+            v-if="managesExpandable"
+            @click="managesExpanded = !managesExpanded"
+          >
+            <template v-if="managesExpanded">
+              <Icon id="chevron-up" :width="24" :height="24" />
+              Show less
+            </template>
+            <template v-else>
+              <Icon id="chevron-down" :width="24" :height="24" />
+              Show more
+            </template>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -95,10 +96,24 @@ export default {
   created() {
     this.update_user();
   },
+  mounted() {
+    window.setTimeout(() => {
+      const { grid, gridContainer } = this.$refs;
+
+      if (
+        grid &&
+        gridContainer &&
+        grid.clientHeight > gridContainer.clientHeight
+      ) {
+        this.managesExpandable = true;
+      }
+    }, 700);
+  },
   data() {
     return {
       related: new Related(),
-      initiallyShown: 10,
+      managesExpanded: false,
+      managesExpandable: false,
     };
   },
 };
@@ -133,5 +148,37 @@ export default {
   margin: 0 auto;
   font-size: 1em;
   color: var(--gray-50);
+}
+.reporting-structure__directs--grid {
+  max-height: 3em;
+  overflow: hidden;
+}
+.reporting-structure__directs--grid .person--avatar-only {
+  margin: 0;
+}
+.reporting-structure__directs--grid-expanded {
+  max-height: none;
+  overflow: visible;
+}
+.reporting-structure__directs--expandable {
+  margin-bottom: 2em;
+}
+.reporting-structure__directs--grid .reporting-structure__directs-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 3em);
+  justify-content: space-between;
+  grid-gap: 1.4em; /* ~ 20px */
+}
+.reporting-structure__directs--grid button {
+  position: absolute;
+  bottom: 0;
+  width: calc(100% - 2.5em);
+}
+@media (min-width: 57.5em) {
+  .reporting-structure__directs--grid button {
+    left: 10.5em;
+    right: 0;
+    width: calc(100% - 12.5em);
+  }
 }
 </style>
