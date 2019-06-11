@@ -1,6 +1,5 @@
 <template>
   <div id="app" class="app-container">
-    <Banner v-if="showBanner" @close="showBanner = false" ref="banner" />
     <TopBar></TopBar>
     <RouterView class="container" />
     <Footer></Footer>
@@ -8,7 +7,6 @@
 </template>
 
 <script>
-import Banner from '@/components/ui/Banner.vue';
 import TopBar from '@/components/ui/TopBar.vue';
 import Footer from '@/components/ui/Footer.vue';
 
