@@ -156,7 +156,6 @@ export default {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  margin-bottom: 2em;
   width: 100%;
 }
 .top-bar__search-toggle {
