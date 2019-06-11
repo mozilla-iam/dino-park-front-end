@@ -172,7 +172,7 @@ export default {
 .reporting-structure__directs--grid button {
   position: absolute;
   bottom: 0;
-  width: calc(100% - 2.5em);
+  width: calc(100% - 3.5em);
 }
 @media (min-width: 57.5em) {
   .reporting-structure__directs--grid button {
