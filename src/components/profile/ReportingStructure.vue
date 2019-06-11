@@ -169,7 +169,6 @@ export default {
 .reporting-structure__directs--grid .reporting-structure__directs-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, 3em);
-  justify-content: space-between;
   grid-gap: 1.4em; /* ~ 20px */
 }
 .reporting-structure__directs--grid button {
