@@ -168,6 +168,7 @@ abbr {
 }
 
 .container {
+  margin-top: 2em;
   padding: 0 1em;
   width: 100%;
 }
