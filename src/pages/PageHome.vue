@@ -53,7 +53,7 @@
             href="https://discourse.mozilla.org/t/dinopark-faq/33564"
             target="_blank"
             rel="noopener noreferrer"
-            >FAQ</a
+            >Discourse post</a
           >
           for details.
         </p>
