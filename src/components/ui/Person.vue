@@ -59,6 +59,12 @@ export default {
 .person__name {
   font-weight: 700;
 }
+.person__name,
+.person__preferred-title {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
 .person a {
   color: inherit;
   text-decoration: none;
@@ -124,6 +130,7 @@ export default {
 .person--borderless .user-picture {
   align-self: center;
   margin-right: 1em;
+  flex: none;
 }
 .person--avatar-only {
   display: inline-block;

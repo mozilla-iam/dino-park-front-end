@@ -125,6 +125,9 @@ export default {
     grid-gap: 2em;
     grid-template-columns: 6em 1fr;
   }
+  .reporting-structure__manages > div {
+    min-width: 0; /* defaults to auto, which allows people's name/title to grow the grid column */
+  }
 }
 .reporting-structure__show-more {
   max-width: 37.5em;
