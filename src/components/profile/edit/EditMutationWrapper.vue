@@ -164,7 +164,7 @@ export default {
 .mutation-form > div > input,
 .mutation-form > textarea,
 .mutation-form > select {
-  border: 0;
+  border: 1px solid transparent;
   background-color: var(--gray-20);
   border-radius: var(--formElementRadius);
   color: var(--black);
@@ -172,13 +172,24 @@ export default {
   padding: 0.5em 0.9em;
   width: 100%;
 }
+.mutation-form input:hover,
+.mutation-form textarea:hover,
+.mutation-form select:hover,
+.mutation-form input:focus,
+.mutation-form textarea:focus,
+.mutation-form select:focus {
+  border: 1px solid var(--blue-60);
+}
 .mutation-form > input[disabled] {
   background-color: transparent;
-  border-color: transparent;
+  border: 1px solid transparent;
   color: var(--gray-50);
   -webkit-text-fill-color: var(--gray-50);
   padding-left: 0;
   opacity: 1;
+}
+.mutation-form > input[disabled]:hover {
+  border-color: transparent;
 }
 .mutation-form > textarea {
   resize: none;

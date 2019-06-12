@@ -527,7 +527,7 @@ export default {
 .edit-personal-info > textarea,
 .edit-personal-info > div > textarea,
 .edit-personal-info > select {
-  border: 0;
+  border: 1px solid transparent;
   background-color: var(--gray-20);
   border-radius: var(--formElementRadius);
   color: var(--black);
@@ -541,7 +541,7 @@ export default {
 }
 .edit-personal-info > input[disabled] {
   background-color: transparent;
-  border-color: transparent;
+  border: 1px solid transparent;
   color: var(--gray-50);
   -webkit-text-fill-color: var(--gray-50);
   padding-left: 0;

@@ -164,6 +164,10 @@ export default {
   border: 1px solid transparent; /* so that it doesn't grow when it gets a color on expanded */
   background-color: var(--gray-20);
 }
+.options__toggle:hover,
+.options__toggle:focus {
+  border-color: var(--blue-60);
+}
 .options--chevron .options__toggle {
   background-image: url('../../assets/images/chevron-down.svg');
   background-repeat: no-repeat;
