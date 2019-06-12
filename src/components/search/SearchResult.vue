@@ -94,9 +94,11 @@ export default {
   right: 0;
   bottom: 0;
   transition: background-color 0.2s ease-in-out;
+  border: 1px solid transparent;
 }
 .search-result__profile-link:hover::before {
   background-color: var(--lightBlue);
+  border-color: var(--blue-60);
 }
 .search-result__profile-link div {
   position: relative;
