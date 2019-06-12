@@ -503,11 +503,13 @@ export default {
   background-size: auto 8em;
   border-radius: var(--cardRadius);
   position: relative;
+  overflow-x: scroll;
 }
 @media (min-width: 57.5em) {
   .org-root {
     box-shadow: var(--shadowCard);
     margin: 0;
+    overflow-x: hidden;
   }
 }
 .org-root ul {
@@ -538,14 +540,25 @@ export default {
   position: relative; /* positioning context for a::after */
 }
 .org-node a {
-  display: block;
+  display: grid;
+  grid-template-columns: max-content max-content;
+  grid-template-rows: max-content max-content;
   height: 4em;
   padding: 0.75em 0;
   text-decoration: none;
   color: inherit;
   padding-left: 2em;
+  padding-right: 1em;
   padding-left: calc((var(--nodeLevel) * 2em) + 1.25em);
   border-left: 0.25em solid transparent;
+}
+@media (min-width: 57.5em) {
+  .org-node a {
+    grid-template-columns: auto 1fr;
+  }
+}
+.org-node a > div {
+  grid-row: 1/3;
 }
 .org-node--current > a,
 .org-node:target > a {
@@ -563,17 +576,24 @@ export default {
 }
 .org-node__name,
 .org-node__title {
-  overflow: hidden;
+  overflow-x: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  display: block;
+  grid-column: 2/3;
+  max-width: 100vw;
+}
+@media (min-width: 57.5em) {
+  .org-node__name,
+  .org-node__title {
+    max-width: 100%;
+  }
 }
 .org-node__name {
   font-weight: 700;
 }
 .org-node__title {
   color: var(--gray-50);
-  max-width: 90%;
+  grid-row: 2/3;
 }
 .org-node__toggle {
   font-size: inherit;
