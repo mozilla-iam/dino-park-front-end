@@ -439,6 +439,18 @@
         <line x1="21" y1="18" x2="3" y2="18" />
       </g>
     </template>
+    <template v-else-if="id === 'zoom'">
+      <polygon fill="currentColor" points="23 7 16 12 23 17 23 7" />
+      <rect
+        fill="currentColor"
+        x="1"
+        y="5"
+        width="15"
+        height="14"
+        rx="2"
+        ry="2"
+      />
+    </template>
   </svg>
 </template>
 
