@@ -1,5 +1,5 @@
 <script>
-const ENABLED_ACCOUNTS = ['DISCOURSE', 'IRC', 'SLACK'];
+const ENABLED_ACCOUNTS = ['DISCOURSE', 'IRC', 'SLACK', 'ZOOM'];
 const EXTERNAL_ACCOUNTS = {
   AIM: { moz: false, text: 'AIM', icon: 'aim' },
   BITBUCKET: { moz: false, text: 'Bitbucket', icon: 'bitbucket' },
@@ -50,14 +50,21 @@ const EXTERNAL_ACCOUNTS = {
   WEBSITE: { moz: false, text: 'Website URL', icon: 'website' },
   JABBER: { moz: false, text: 'XMPP/Jabber', icon: 'jabber' },
   YAHOO: { moz: false, text: 'Yahoo! Messenger', icon: 'yahoo' },
-  IRC: { moz: false, text: 'IRC', icon: 'irc' },
+  IRC: { moz: true, text: 'IRC', icon: 'irc' },
   SLACK: { moz: true, text: 'Mozilla Slack', icon: 'slack' },
+  ZOOM: {
+    moz: true,
+    text: 'Mozilla Zoom',
+    icon: 'zoom',
+    placeholder: 'Your Personal Meeting ID',
+    uri: 'https://mozilla.zoom.us/j/@@@',
+  },
 };
 
 export default {
   methods: {
     account([key, value]) {
-      const { moz, text, icon } = EXTERNAL_ACCOUNTS[key] || {};
+      const { moz, text, icon, placeholder } = EXTERNAL_ACCOUNTS[key] || {};
       let { uri } = EXTERNAL_ACCOUNTS[key] || { uri: null };
 
       if (uri) {
@@ -69,6 +76,7 @@ export default {
           moz,
           text,
           icon,
+          placeholder,
           value,
           uri,
         };

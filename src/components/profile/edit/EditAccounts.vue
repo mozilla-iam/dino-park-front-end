@@ -45,7 +45,8 @@
         type="text"
         v-model="uris.values[index].v"
         :placeholder="
-          `Your username on ${EXTERNAL_ACCOUNTS[destructUriKey(k).name].text}`
+          EXTERNAL_ACCOUNTS[destructUriKey(k).name].placeholder ||
+            `Your username on ${EXTERNAL_ACCOUNTS[destructUriKey(k).name].text}`
         "
       />
       <Checkbox
