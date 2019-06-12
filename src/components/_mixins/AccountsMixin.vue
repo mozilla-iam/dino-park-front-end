@@ -50,7 +50,7 @@ const EXTERNAL_ACCOUNTS = {
   WEBSITE: { moz: false, text: 'Website URL', icon: 'website' },
   JABBER: { moz: false, text: 'XMPP/Jabber', icon: 'jabber' },
   YAHOO: { moz: false, text: 'Yahoo! Messenger', icon: 'yahoo' },
-  IRC: { moz: false, text: 'IRC', icon: 'irc' },
+  IRC: { moz: true, text: 'IRC', icon: 'irc' },
   SLACK: { moz: true, text: 'Mozilla Slack', icon: 'slack' },
 };
 
