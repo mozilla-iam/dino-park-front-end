@@ -233,13 +233,23 @@ export default {
 .edit-contact__item input[type='email'],
 .edit-contact__item input[type='tel'],
 .edit-contact__item input[type='password'] {
-  border: 0;
+  border: 1px solid transparent;
   background-color: var(--gray-20);
   border-radius: var(--formElementRadius);
   color: var(--black);
   margin: 0;
   padding: 0.5em 0.9em;
   grid-column: 2 / 4;
+}
+.edit-contact__item input[type='text']:hover,
+.edit-contact__item input[type='email']:hover,
+.edit-contact__item input[type='tel']:hover,
+.edit-contact__item input[type='password']:hover,
+.edit-contact__item input[type='text']:focus,
+.edit-contact__item input[type='email']:focus,
+.edit-contact__item input[type='tel']:focus,
+.edit-contact__item input[type='password']:focus {
+  border: 1px solid var(--blue-60);
 }
 @media (min-width: 57.5em) {
   .edit-contact__item input[type='text'],
