@@ -242,6 +242,7 @@ export default {
 .edit-identity__item span {
   display: inline-flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .edit-identity__item-identity {
