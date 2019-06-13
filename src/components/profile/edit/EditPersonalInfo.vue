@@ -459,7 +459,7 @@ export default {
           ],
         ) => {
           obj[key] = {
-            value,
+            value: value || '',
             display: display || DISPLAY_LEVELS.public.value,
           };
           return obj;
