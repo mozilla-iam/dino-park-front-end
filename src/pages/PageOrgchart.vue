@@ -527,20 +527,25 @@ export default {
 
 .org-root--loose {
   margin-top: 5em;
+  background-image: linear-gradient(
+    var(--white) 0,
+    var(--white) 50%,
+    var(--gray-10) 50%
+  );
+  background-position-y: bottom;
 }
 .org-root--loose > h2 {
   font-size: 1em;
   background: var(--white);
   padding: 0.75em 3em;
   color: var(--gray-50);
-  position: absolute;
-  top: -2.5em;
   line-height: 1;
   width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   border-radius: var(--cardRadius) var(--cardRadius) 0 0;
+  margin-bottom: 0px;
 }
 
 .org-node {
