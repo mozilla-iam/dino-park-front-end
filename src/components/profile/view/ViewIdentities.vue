@@ -85,6 +85,6 @@ export default {
 .profile__identities .icon-block__heading > span {
   margin-left: auto;
   margin-right: 0.5em;
-  color: var(--true-green);
+  color: var(--green-80);
 }
 </style>

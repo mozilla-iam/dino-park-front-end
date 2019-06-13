@@ -184,7 +184,7 @@ export default {
   display: flex;
 }
 .edit-identities__verify > a {
-  background-color: var(--true-green);
+  background-color: var(--green-80);
   height: 100%;
   padding-left: 2em;
   padding-right: 2em;
@@ -198,8 +198,8 @@ export default {
 }
 .edit-identities__verify > a:hover {
   background-color: var(--white);
-  border: 1px solid var(--true-green);
-  color: var(--true-green);
+  border: 1px solid var(--green-80);
+  color: var(--green-80);
 }
 
 .edit-identity__item {
@@ -261,7 +261,7 @@ export default {
 }
 .edit-identity__item-identity > span {
   font-size: 0.85em;
-  color: var(--true-green);
+  color: var(--green-80);
   letter-spacing: 0.1em;
   margin-left: auto;
   margin-right: 0px;

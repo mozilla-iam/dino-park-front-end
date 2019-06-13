@@ -48,10 +48,10 @@ export default {
   --gray-50: #737373;
   --gray-60: #4a4a4f;
   --blue-60: #0060df;
+  --green-80: #006504;
   --white: #fff;
   --black: #000;
 
-  --true-green: #12bc00;
   --neon-red: #ff0039;
 
   --lightBlue: #f2fcfd;
