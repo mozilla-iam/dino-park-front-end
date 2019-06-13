@@ -340,7 +340,7 @@ export default {
       shouldExpand =
         shouldExpand === undefined ? ul.style.display === 'none' : shouldExpand;
 
-      ul.style.display = shouldExpand ? 'block' : 'none';
+      ul.style.display = shouldExpand ? 'inline-block' : 'none';
       const expander = li.querySelector('.org-node__expander');
       const button = li.querySelector('button');
       if (shouldExpand) {
@@ -515,6 +515,14 @@ export default {
 .org-root ul {
   padding: 0;
   margin: 0;
+  width: 100%;
+}
+
+.org-root > ul {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  min-width: 100%;
 }
 
 .org-root--loose {

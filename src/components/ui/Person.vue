@@ -64,10 +64,12 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  text-overflow: ellipsis;
 }
 .person a {
   color: inherit;
   text-decoration: none;
+  overflow: hidden;
 }
 .person a::after {
   content: '';
