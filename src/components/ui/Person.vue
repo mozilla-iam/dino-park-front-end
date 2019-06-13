@@ -13,8 +13,8 @@
       <div class="person__name-title">
         <div class="person__name">{{ firstName }} {{ lastName }}</div>
         <div class="person__preferred-title">
-          <template v-if="funTitle">{{ funTitle }}</template>
-          <template v-else-if="title">{{ title }}</template>
+          <template v-if="title">{{ title }}</template>
+          <template v-else-if="funTitle">{{ funTitle }}</template>
         </div>
       </div>
     </RouterLink>
