@@ -43,14 +43,20 @@
             <ProfilePreview
               v-if="data && desktopView"
               v-bind="data.profile"
+              :desktopView="desktopView"
+              @close="closeProfile"
             ></ProfilePreview>
             <Modal
               v-else-if="data"
               :initiallyOpen="true"
-              :closeButton="false"
+              :closeButton="true"
+              @close="closeProfile"
               ref="modalEl"
             >
-              <ProfilePreview v-bind="data.profile"></ProfilePreview>
+              <ProfilePreview
+                v-bind="data.profile"
+                :desktopView="desktopView"
+              ></ProfilePreview>
             </Modal>
             <LoadingSpinner v-else></LoadingSpinner>
           </div>
@@ -358,12 +364,15 @@ export default {
     },
     saveOrgTree() {
       requestIdleCallback(() => {
-        this.$store.commit('setOrg', {
-          nodes: Array.from(
-            document.querySelector('.org-chart__chart').children,
-          ).map((n) => n.cloneNode(true)),
-          dirty: this.dirty,
-        });
+        const orgchart = document.querySelector('.org-chart__chart');
+        if (orgchart) {
+          this.$store.commit('setOrg', {
+            nodes: Array.from(
+              document.querySelector('.org-chart__chart').children,
+            ).map((n) => n.cloneNode(true)),
+            dirty: this.dirty,
+          });
+        }
       });
     },
     expandAll() {
@@ -396,6 +405,9 @@ export default {
       if (username) {
         document.getElementById(username).classList.add(CURRENT_CLASS);
       }
+    },
+    closeProfile() {
+      this.$router.push({ name: 'Orgchart' });
     },
   },
   mounted() {

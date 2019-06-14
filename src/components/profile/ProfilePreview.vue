@@ -1,7 +1,8 @@
 <template>
   <div class="profile-preview" ref="profilePreviewElement" tabindex="-1">
     <button
-      @click="closeProfile"
+      v-if="desktopView"
+      @click="$emit('close')"
       class="button button--icon-only button--secondary profile-preview__close"
     >
       <span class="visually-hidden">Close profile</span>
@@ -121,6 +122,7 @@ export default {
     description: Object,
     uris: Object,
     userId: Object,
+    desktopView: Boolean,
   },
   components: {
     ContactMe,
@@ -130,12 +132,9 @@ export default {
     ProfileTitle,
     ProfileTeamLocation,
   },
-  methods: {
-    closeProfile() {
-      this.$router.push({ name: 'Orgchart' });
-      this.lastActive.focus();
-      this.lastActive = document.body;
-    },
+  deactivated() {
+    this.lastActive.focus();
+    this.lastActive = document.body;
   },
   mounted() {
     this.lastActive = document.activeElement;
