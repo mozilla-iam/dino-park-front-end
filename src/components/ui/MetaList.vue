@@ -17,9 +17,8 @@ export default {
   border-top: 1px solid var(--gray-30);
   border-bottom: 1px solid var(--gray-30);
   overflow: hidden;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 1em 2em;
+  display: flex;
+  justify-content: space-between;
 }
 .edit-personal-info__meta .meta-list {
   grid-template-columns: auto;
@@ -30,18 +29,5 @@ export default {
 }
 .edit-personal-info__meta .meta-list dt {
   margin: 0.125em 0;
-}
-@media (min-width: 32em) {
-  .edit-personal-info__meta .meta-list {
-    grid-template-columns: repeat(2, auto);
-  }
-  .edit-personal-info__meta .meta-list dl {
-    display: contents; /* with multiple columns, lay out not this dl, but its children */
-  }
-}
-@media (min-width: 42em) {
-  .edit-personal-info__meta .meta-list {
-    grid-template-columns: repeat(4, auto);
-  }
 }
 </style>
