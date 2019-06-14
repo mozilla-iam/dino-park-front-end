@@ -76,8 +76,8 @@ export default {
   box-shadow: var(--shadowCard);
   position: -webkit-sticky;
   position: sticky;
-  top: 0;
-  z-index: var(--layerProfileNav);
+  top: 6em;
+  z-index: var(--layerThree);
 }
 @media (min-width: 57.5em) {
   .profile__nav {
