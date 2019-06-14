@@ -73,7 +73,7 @@ export default {
   position: -webkit-sticky;
   position: sticky;
   top: 6.2em;
-  z-index: var(--layerThree);
+  z-index: var(--layerProfileNav);
 }
 @media (min-width: 57.5em) {
   .profile__nav {
