@@ -6,7 +6,7 @@
           v-if="link.id === currentNavItem"
           :href="'#' + link.id"
           class="profile__nav-link profile__nav-link--current"
-          @click="updateCurrentItem"
+          @click="updateCurrentItem(link.id)"
         >
           <Icon :id="link.iconId" :width="24" :height="24" />
           <span class="profile__nav-label">{{ link.label }}</span>
@@ -15,7 +15,7 @@
           v-else
           :href="'#' + link.id"
           :class="'profile__nav-link'"
-          @click="updateCurrentItem"
+          @click="updateCurrentItem(link.id)"
         >
           <Icon :id="link.iconId" :width="24" :height="24" />
           <span class="profile__nav-label hide-mobile">{{ link.label }}</span>
@@ -52,12 +52,8 @@ export default {
     },
   },
   methods: {
-    updateCurrentItem(event) {
-      if (event.target.tagName === 'A') {
-        this.currentNavItem = event.target.hash.substr(1);
-      } else if (event.target.parentElement.tagName === 'A') {
-        this.currentNavItem = event.target.parentElement.hash.substr(1);
-      }
+    updateCurrentItem(id) {
+      this.currentNavItem = id;
     },
   },
   data() {
@@ -76,7 +72,7 @@ export default {
   box-shadow: var(--shadowCard);
   position: -webkit-sticky;
   position: sticky;
-  top: 6em;
+  top: 6.2em;
   z-index: var(--layerThree);
 }
 @media (min-width: 57.5em) {
@@ -93,6 +89,7 @@ export default {
   padding: 0;
   margin: 0;
   display: flex;
+  background: var(--white);
 }
 @media (min-width: 57.5em) {
   .profile__nav ul {
@@ -121,7 +118,6 @@ export default {
   justify-content: center;
   height: 100%;
   padding: 1.35em 0.5em;
-  background: var(--white);
   text-decoration: none;
   border-bottom: 2px solid var(--gray-20);
   border-left: 1px solid var(--grey-30);
@@ -136,7 +132,6 @@ li:first-child .profile__nav-link {
   border-bottom: 2px solid currentColor;
 }
 .profile__nav-link:focus {
-  position: relative;
   z-index: var(--layerOne);
 }
 @media (min-width: 57.5em) {
@@ -159,18 +154,21 @@ li:first-child .profile__nav-link {
   }
 }
 .profile__nav-label {
+  visibility: visible;
   position: absolute;
-  left: -9999em;
+  top: 0px;
+  left: 0px;
+  width: 100%;
 }
-@media (min-width: 37.5em) {
+@media (min-width: 57.5em) {
   .profile__nav-label {
     position: static;
+    top: inherit;
+    left: inherit;
+    width: inherit;
   }
 }
 .profile__nav-link--current {
   color: var(--blue-60);
-}
-.profile__nav-link--current .profile__nav-label {
-  position: static;
 }
 </style>

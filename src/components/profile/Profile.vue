@@ -549,7 +549,12 @@ export default {
 }
 
 .profile__anchor {
-  top: -7em;
+  top: -13.5em;
   position: relative;
+}
+@media (min-width: 57.5em) {
+  .profile__anchor {
+    top: -7em;
+  }
 }
 </style>
