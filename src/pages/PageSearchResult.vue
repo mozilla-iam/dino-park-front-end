@@ -141,7 +141,9 @@ export default {
           `/api/v4/search/simple/?${params.toString()}`,
         );
         const results = await data.json();
-        return results;
+        if (!results.error) {
+          return results;
+        }
       } catch (e) {
         if (e instanceof TypeError && e.message.startsWith('NetworkError')) {
           window.location.reload();
