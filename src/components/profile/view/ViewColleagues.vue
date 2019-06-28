@@ -5,19 +5,6 @@
       <div class="colleagues__toggle">
         <button
           type="button"
-          @click="setPreference('grid')"
-          :class="
-            'colleagues__toggle-button' +
-              (viewPreference === 'grid'
-                ? ' colleagues__toggle-button--current'
-                : '')
-          "
-        >
-          <Icon id="grid" :width="18" :height="18" />
-          <span class="visually-hidden">View as grid</span>
-        </button>
-        <button
-          type="button"
           @click="setPreference('list')"
           :class="
             'colleagues__toggle-button' +
@@ -28,6 +15,19 @@
         >
           <Icon id="list" :width="18" :height="18" />
           <span class="visually-hidden">List</span>
+        </button>
+        <button
+          type="button"
+          @click="setPreference('grid')"
+          :class="
+            'colleagues__toggle-button' +
+              (viewPreference === 'grid'
+                ? ' colleagues__toggle-button--current'
+                : '')
+          "
+        >
+          <Icon id="grid" :width="18" :height="18" />
+          <span class="visually-hidden">View as grid</span>
         </button>
       </div>
       <RouterLink
