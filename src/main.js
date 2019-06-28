@@ -79,7 +79,7 @@ const store = new Vuex.Store({
   state: {
     user: null,
     org: null,
-    personViewPreference: 'grid',
+    personViewPreference: 'list',
   },
   actions: {
     async fetchUser({ commit }) {

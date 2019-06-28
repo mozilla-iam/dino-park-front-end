@@ -66,7 +66,7 @@ export default {
     loading: false,
     viewAs: {
       type: String,
-      default: 'grid',
+      default: 'list',
     },
   },
   components: {
@@ -80,6 +80,9 @@ export default {
       return this.related.directs.length > 1 && this.viewAs === 'grid'
         ? 'person--borderless person--avatar-only'
         : 'person--borderless';
+    },
+    initiallyShown() {
+      return this.viewAs === 'grid' ? undefined : 8;
     },
   },
   watch: {
@@ -98,7 +101,6 @@ export default {
   data() {
     return {
       related: new Related(),
-      initiallyShown: 10,
     };
   },
 };
