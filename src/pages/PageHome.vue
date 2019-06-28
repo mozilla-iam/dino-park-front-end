@@ -30,8 +30,14 @@
           >
         </h2>
         <p>
-          Join us on Discourse and let us know how we can make the Mozilla
-          Directory even better.
+          Join us on
+          <a
+            href="https://discourse.mozilla.org/c/iam/dinopark"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Discourse</a
+          >
+          and let us know how we can make the Mozilla Directory even better.
         </p>
       </Card>
       <Card>
