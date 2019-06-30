@@ -1,6 +1,7 @@
 <template>
   <Modal
     heading="Edit Profile Picture"
+    class="edit-picture-modal"
     :initiallyOpen="true"
     :closeButton="true"
     @close="$emit('close')"
@@ -72,6 +73,7 @@
         Select
       </button>
     </div>
+    <LoadingSpinner v-if="loading"></LoadingSpinner>
   </Modal>
 </template>
 
@@ -80,6 +82,7 @@ import Modal from '@/components/_functional/Modal.vue';
 import UserPicture from '@/components/ui/UserPicture.vue';
 import Crop from './Cropper.vue';
 import Fetcher from '@/assets/js/fetcher';
+import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 
 const fetcher = new Fetcher({ failoverOn: [302], failoverOnError: true });
 
@@ -106,12 +109,14 @@ export default {
     Crop,
     Modal,
     UserPicture,
+    LoadingSpinner,
   },
   data() {
     return {
       imgSrc: null,
       editPicture: (this.picture && this.picture.value) || '',
       privacyAgreed: false,
+      loading: false,
     };
   },
   methods: {
@@ -138,20 +143,30 @@ export default {
           method: 'POST',
           body: formData,
         });
-        const { uuid } = await res.json();
-        if (uuid) {
-          this.pictureData.value = img;
-          this.picture.value = `intermediate:${uuid}`;
-          this.$emit('close');
+        try {
+          const { uuid } = await res.json();
+          if (uuid) {
+            this.pictureData.value = img;
+            this.picture.value = `intermediate:${uuid}`;
+            this.$emit('close');
+            return;
+          }
+        } catch (e) {
+          // TODO: make toast visible.
+          this.$root.$emit('toast', { content: 'Unable to upload picture.' });
           return;
         }
       }
+      // TODO: make toast visible.
       this.$root.$emit('toast', { content: 'Unable to process picture.' });
     },
     select() {
       if (this.$refs.crop && this.imgSrc !== null) {
+        this.loading = true;
         const data = this.$refs.crop.cropper.toDataURL();
-        this.resize(data);
+        this.resize(data).finally(() => {
+          this.loading = false;
+        });
       } else {
         // nothing changed
         if (this.editPicture === 'default:') {
@@ -176,6 +191,18 @@ export default {
 </script>
 
 <style>
+.edit-picture-modal .loading {
+  position: absolute;
+  z-index: var(--layerOne);
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
 .edit-picture-modal__picture-buttons {
   margin-bottom: 1.5em;
   display: flex;
