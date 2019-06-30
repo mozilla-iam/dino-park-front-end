@@ -7,13 +7,24 @@
     >
       <Icon id="x" :width="16" :height="16"></Icon
       ><span class="visually-hidden">Remove {{ tag }}</span></Button
-    >{{ tag }}</span
-  >
+    >
+    <RouterLink
+      :to="{
+        name: 'Search',
+        query: {
+          query: `${searchField}:&quot;${escape(tag)}&quot;`,
+        },
+      }"
+      >{{ tag }}
+    </RouterLink>
+  </span>
 </template>
 
 <script>
 import Button from '@/components/ui/Button.vue';
 import Icon from '@/components/ui/Icon.vue';
+
+const quote = /"/g;
 
 export default {
   name: 'Tag',
@@ -23,10 +34,16 @@ export default {
       type: Boolean,
       default: false,
     },
+    searchField: String,
   },
   components: {
     Button,
     Icon,
+  },
+  methods: {
+    escape(s) {
+      return s.replace(quote, '\\"');
+    },
   },
 };
 </script>

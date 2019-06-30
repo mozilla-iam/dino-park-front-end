@@ -11,6 +11,7 @@
     <Tag
       v-if="Object.entries(languages.values).length > 0"
       v-for="(language, index) in languages.values"
+      searchField="languages"
       :tag="language"
       :key="`language-${index}`"
     >
