@@ -19,6 +19,7 @@
       v-if="showPictureModal"
       v-bind="{
         picture,
+        pictureData,
         username: loggedInUser.primaryUsername,
         staffInformation,
       }"
@@ -30,7 +31,7 @@
     <div class="edit-personal-info">
       <div class="edit-personal-info__picture">
         <UserPicture
-          :picture="picture.value"
+          :picture="pictureData.value"
           :username="loggedInUser.primaryUsername.value"
           :size="264"
           :isStaff="true"
@@ -467,6 +468,7 @@ export default {
         {},
       ),
       showPictureModal: false,
+      pictureData: { value: this.initialValues.picture.value || 'default:' },
       timezones: [],
       locations: [],
     };
