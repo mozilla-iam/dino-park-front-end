@@ -79,7 +79,6 @@
 import Modal from '@/components/_functional/Modal.vue';
 import UserPicture from '@/components/ui/UserPicture.vue';
 import Crop from './Cropper.vue';
-import loadImage from 'blueimp-load-image';
 import Fetcher from '@/assets/js/fetcher';
 
 const fetcher = new Fetcher({ failoverOn: [302], failoverOnError: true });
@@ -120,7 +119,8 @@ export default {
       this.editPicture = 'default:';
       this.imgSrc = null;
     },
-    handleChangeFile(event) {
+    async handleChangeFile(event) {
+      const { default: loadImage } = await import('blueimp-load-image');
       loadImage(
         event.target.files[0],
         (img) => {
