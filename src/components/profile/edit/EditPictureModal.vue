@@ -79,11 +79,29 @@
 import Modal from '@/components/_functional/Modal.vue';
 import UserPicture from '@/components/ui/UserPicture.vue';
 import Crop from './Cropper.vue';
-import loadImage from 'blueimp-load-image';
+import Fetcher from '@/assets/js/fetcher';
+
+const fetcher = new Fetcher({ failoverOn: [302], failoverOnError: true });
+
+function pngDataUrlToFile(dataUrl = '') {
+  const prefix = 'data:image/png;base64,';
+  const base64Data = dataUrl.substring(prefix.length);
+  if (!dataUrl.startsWith(prefix) || !base64Data) {
+    return null;
+  }
+  const byteString = atob(base64Data);
+  const buf = Uint8Array.from(byteString, (b) => b.charCodeAt(0));
+  return new Blob([buf], { tpye: 'image/png' });
+}
 
 export default {
   name: 'EditPictureModal',
-  props: { picture: Object, username: Object, staffInformation: Object },
+  props: {
+    picture: Object,
+    pictureData: Object,
+    username: Object,
+    staffInformation: Object,
+  },
   components: {
     Crop,
     Modal,
@@ -101,7 +119,8 @@ export default {
       this.editPicture = 'default:';
       this.imgSrc = null;
     },
-    handleChangeFile(event) {
+    async handleChangeFile(event) {
+      const { default: loadImage } = await import('blueimp-load-image');
       loadImage(
         event.target.files[0],
         (img) => {
@@ -110,15 +129,24 @@ export default {
         { orientation: true },
       );
     },
-    resize(img) {
-      loadImage(
-        img,
-        (pic) => {
-          this.picture.value = pic.toDataURL();
+    async resize(img) {
+      const file = pngDataUrlToFile(img);
+      if (file !== null) {
+        const formData = new FormData();
+        formData.append('data', file);
+        const res = await fetcher.fetch('/avatar/send/intermediate', {
+          method: 'POST',
+          body: formData,
+        });
+        const { uuid } = await res.json();
+        if (uuid) {
+          this.pictureData.value = img;
+          this.picture.value = `intermediate:${uuid}`;
           this.$emit('close');
-        },
-        { canvas: true, minWidth: 264, maxWidth: 264, downsamplingRatio: 0.75 },
-      );
+          return;
+        }
+      }
+      this.$root.$emit('toast', { content: 'Unable to process picture.' });
     },
     select() {
       if (this.$refs.crop && this.imgSrc !== null) {
