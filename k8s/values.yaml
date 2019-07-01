@@ -1,3 +1,4 @@
 name: dino-park-front-end
 namespace: dino-park
 rev: latest
+replicas: 1
