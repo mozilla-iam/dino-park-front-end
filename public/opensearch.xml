@@ -1,11 +1,9 @@
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/"
                        xmlns:moz="http://www.mozilla.org/2006/browser/search/">
-  <ShortName>Mozilla Directory</ShortName>
-  <Description>Search the Mozilla Directory</Description>
+  <ShortName>Mozilla People Directory</ShortName>
+  <Description>Search the Mozilla People Directory</Description>
   <Url type="text/html" method="get" 
-       template="https://people.mozilla.org/s?query={searchTerms}">
-  </Url>
-  <OutputEncoding>UTF-8</OutputEncoding>
+       template="https://people.mozilla.org/s?query={searchTerms}"/>
   <InputEncoding>UTF-8</InputEncoding>
   <moz:SearchForm>https://people.mozilla.org</moz:SearchForm>
   <Image width="16" height="16" type="image/x-icon">data:image/x-icon;base64,
