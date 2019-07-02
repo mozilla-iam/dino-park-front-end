@@ -44,7 +44,7 @@
         />
         <hr role="presentation" />
       </div>
-      <div class="edit-contact__info">Add / Remove Email via Identities</div>
+      <div class="edit-contact__info">Email editing coming soon</div>
       <div class="edit-contact__header">
         <h3>Phone</h3>
         <PrivacySetting
