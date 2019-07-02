@@ -146,9 +146,9 @@ function renderNode(node, level = 1) {
   } else {
     img.src = `${picture}?size=40`;
   }
-  e.querySelector('.org-node__name').textContent = `${node.data.firstName} ${
-    node.data.lastName
-  }`;
+  e.querySelector(
+    '.org-node__name',
+  ).textContent = `${node.data.firstName} ${node.data.lastName}`;
   e.querySelector('.org-node__title').textContent = node.data.title;
   const ul = e.querySelector('ul');
   if (ul) {
@@ -429,6 +429,9 @@ export default {
   .org-chart-buttons {
     margin-bottom: 0;
   }
+}
+.org-chart-buttons__reset[disabled] {
+  visibility: hidden;
 }
 .org-chart-buttons__reset {
   margin-left: 2em;
