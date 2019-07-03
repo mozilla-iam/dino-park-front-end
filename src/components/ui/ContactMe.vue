@@ -14,7 +14,8 @@
       <Popover
         class="contact-me"
         layer="var(--layerContactMe)"
-        initialMaxWidth="310"
+        :initialMaxWidth="310"
+        :floating="false"
       >
         <div class="contact-me__item">
           <a :href="`mailto:${primaryEmail}`" class="contact-me__pair">
