@@ -15,6 +15,10 @@ export default {
       type: Number,
       default: 350,
     },
+    floating: {
+      type: Boolean,
+      default: true,
+    },
   },
   methods: {
     positionAndSize() {
@@ -33,8 +37,9 @@ export default {
       const centeredSpaceOnRight = spaceOnRight + width / 2;
 
       if (
-        centeredSpaceOnLeft > 0.5 * this.maxWidth &&
-        centeredSpaceOnRight > 0.5 * this.maxWidth
+        !this.floating ||
+        (centeredSpaceOnLeft > 0.5 * this.maxWidth &&
+          centeredSpaceOnRight > 0.5 * this.maxWidth)
       ) {
         return;
       }
