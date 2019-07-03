@@ -15,8 +15,10 @@ class Fetcher {
     this.failoverFn();
   }
 
-  async fetch(resource, init) {
+  async fetch(resource, _init) {
     try {
+      const init = _init || {};
+      init.credentials = 'same-origin';
       const res = await fetch(resource, init);
       if (this.failoverOn.includes(res.status)) {
         console.log(`got status ${res.status} → failing over`);
