@@ -227,6 +227,7 @@
         @input="updateLocations"
         :filter="'none'"
         :source="locations"
+        :onSelect="setTimezone"
       >
       </Combobox>
       <PrivacySetting
@@ -266,12 +267,7 @@
           information, we will display your local time on your profile.</Tooltip
         >
       </div>
-      <Combobox
-        id="field-timezone"
-        v-model="timezone.value"
-        :source="timezones"
-      >
-      </Combobox>
+      <input type="text" id="field-timezone" disabled :value="timezone.value" />
       <PrivacySetting
         label="Timezone privacy levels"
         id="field-timezone-privacy"
@@ -440,12 +436,6 @@ export default {
   },
   mounted() {
     this.$refs.header.focus();
-    fetcher
-      .fetch('/api/v4/timezone/list/')
-      .then((res) => res.json())
-      .then((timezones) => {
-        this.timezones = timezones;
-      });
   },
   data() {
     return {
@@ -481,15 +471,19 @@ export default {
           `/world/suggest?s=${encodeURIComponent(query)}`,
         );
         const json = await res.json();
-        const locations = new Set(
-          json.map(
-            ({ country, region, city }) => `${city}, ${region}, ${country}`,
-          ),
+        const locations = new Map(
+          json.map((l) => [`${l.city}, ${l.region}, ${l.country}`, l]),
         );
-        this.locations = [...locations];
+        this.locations = [...locations.entries()].map(([display, item]) => {
+          return { display, item };
+        });
       } catch (e) {
         console.error(e);
       }
+    },
+    setTimezone({ item }) {
+      console.log(item.timezone);
+      this.timezone.value = item.timezone;
     },
   },
 };

@@ -15,6 +15,10 @@ const FILTERS = {
   none: () => () => true,
 };
 
+function itemToString(item) {
+  return (item && item.display) || item;
+}
+
 const Combobox = ({
   id,
   filter,
@@ -22,6 +26,7 @@ const Combobox = ({
   placeholder,
   value,
   source,
+  onSelect = () => {},
   ...props
 }) =>
   h(
@@ -30,6 +35,8 @@ const Combobox = ({
       inputValue: value,
       selectedItem: value,
       onStateChange: onChange,
+      onSelect,
+      itemToString,
       ...props,
     },
     ({
@@ -58,21 +65,25 @@ const Combobox = ({
           h(
             'ul',
             { class: 'combobox__options', ...getMenuProps() },
-            source.filter(filter(value)).map((option, i) =>
-              h(
-                'li',
-                {
-                  key: option,
-                  class: `combobox__option ${
-                    i === highlightedIndex
-                      ? 'combobox__option--highlighted'
-                      : ''
-                  }`,
-                  ...getItemProps({ item: option }),
-                },
-                option,
-              ),
-            ),
+            source
+              .filter((option) => option !== null)
+              .filter(filter(value))
+              .map((item, i) => {
+                const option = itemToString(item);
+                return h(
+                  'li',
+                  {
+                    key: option,
+                    class: `combobox__option ${
+                      i === highlightedIndex
+                        ? 'combobox__option--highlighted'
+                        : ''
+                    }`,
+                    ...getItemProps({ item }),
+                  },
+                  option,
+                );
+              }),
           ),
       ]),
   );
@@ -84,6 +95,7 @@ export default {
     source: Array,
     value: String,
     placeholder: String,
+    onSelect: Function,
     filter: {
       type: String,
       default: 'includes',
@@ -93,7 +105,7 @@ export default {
     renderPreact() {
       this.node = render(
         h(Combobox, {
-          ...pick(this, ['id', 'source', 'value', 'placeholder']),
+          ...pick(this, ['id', 'source', 'value', 'placeholder', 'onSelect']),
           filter: FILTERS[this.filter],
           onChange: (changes) => {
             if (Object.prototype.hasOwnProperty.call(changes, 'inputValue')) {
