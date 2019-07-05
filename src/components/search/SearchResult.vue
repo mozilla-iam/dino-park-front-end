@@ -1,8 +1,7 @@
 <template>
   <li class="search-result">
     <UserPicture
-      :picture="picture"
-      :username="username"
+      :avatar="{ picture, username }"
       class="search-result__image"
       :size="40"
       :isStaff="isStaff"

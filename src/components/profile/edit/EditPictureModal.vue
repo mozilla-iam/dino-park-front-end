@@ -32,8 +32,7 @@
       <Crop v-if="imgSrc" :src="imgSrc" ref="crop" />
       <UserPicture
         v-else
-        :picture="editPicture"
-        :username="username.value"
+        :avatar="{ picture: editPicture, username: username.value }"
         :size="264"
         :isStaff="staffInformation.staff.value"
       ></UserPicture>
@@ -80,7 +79,6 @@
 <script>
 import Modal from '@/components/_functional/Modal.vue';
 import UserPicture from '@/components/ui/UserPicture.vue';
-import Crop from './Cropper.vue';
 import Fetcher from '@/assets/js/fetcher';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 
@@ -106,7 +104,7 @@ export default {
     staffInformation: Object,
   },
   components: {
-    Crop,
+    Crop: () => import('./Cropper.vue'),
     Modal,
     UserPicture,
     LoadingSpinner,

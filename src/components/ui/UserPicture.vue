@@ -1,6 +1,8 @@
 <template>
   <div :class="'user-picture' + (modifier ? ' ' + modifier : '')">
     <img
+      v-if="src"
+      ref="img"
       :class="cls"
       :src="src"
       alt=""
@@ -20,8 +22,12 @@ export default {
   name: 'UserPicture',
   props: {
     size: Number,
-    picture: String,
-    username: String,
+    avatar: {
+      type: Object,
+      default: () => {
+        return { picture: '', username: 'dino' };
+      },
+    },
     cls: String,
     isStaff: Boolean,
   },
@@ -29,38 +35,16 @@ export default {
     DinoType,
   },
   watch: {
-    username() {
-      this.updateUserPicture();
+    size() {
+      this.updateSize();
     },
-    picture() {
-      this.updateUserPicture();
-    },
-  },
-  asyncComputed: {
-    async src() {
-      this.decidePictureCategory();
-      return this.updateUserPicture();
+    avatar() {
+      this.src = '';
+      Promise.resolve().then(() => this.updateUserPicture());
     },
   },
   methods: {
-    async updateUserPicture() {
-      if (this.picture === 'empty:') {
-        return '';
-      }
-      if (this.picture && this.picture.startsWith('data:')) {
-        return this.picture;
-      }
-      if (
-        this.picture === null ||
-        this.picture === '' ||
-        this.picture === 'default:' ||
-        this.picture.startsWith('https://s3.amazonaws.com/')
-      ) {
-        return generateIdenticon(this.username, this.size);
-      }
-      return `${this.picture}?size=${this.slot}`;
-    },
-    decidePictureCategory() {
+    updateSize() {
       if (this.size <= 40) {
         this.dinoTypeSize = 'small';
         this.slot = 40;
@@ -73,12 +57,37 @@ export default {
       }
       this.modifier = `user-picture--${this.dinoTypeSize}`;
     },
+    async updateUserPicture() {
+      this.updateSize();
+      if (this.avatar.picture === 'empty:') {
+        this.src = '';
+      } else if (
+        this.avatar.picture &&
+        this.avatar.picture.startsWith('data:')
+      ) {
+        this.sec = this.avatar.picture;
+      } else if (
+        this.avatar.picture === null ||
+        this.avatar.picture === '' ||
+        this.avatar.picture === 'default:' ||
+        this.avatar.picture.startsWith('https://s3.amazonaws.com/')
+      ) {
+        this.src = await generateIdenticon(this.avatar.username, this.size);
+      } else {
+        this.src = `${this.avatar.picture}?size=${this.slot}`;
+      }
+    },
+  },
+  created() {
+    this.updateUserPicture();
   },
   data() {
     return {
+      src: '',
       dinoTypeSize: 'small',
       slot: 40,
       class: 'user-picture--40',
+      modifier: '',
     };
   },
 };

@@ -4,8 +4,10 @@
       <button class="user-menu__close-avatar" type="button">
         <span class="visually-hidden">Close user menu</span>
         <UserPicture
-          :picture="user.picture.value"
-          :username="user.primaryUsername.value"
+          :avatar="{
+            picture: user.picture.value,
+            username: user.primaryUsername.value,
+          }"
           :size="40"
         ></UserPicture>
       </button>

@@ -8,8 +8,7 @@
     <div class="profile__intro-photo">
       <div class="profile__headshot">
         <UserPicture
-          :picture="picture.value"
-          :username="primaryUsername.value"
+          :avatar="{ picture: picture.value, username: primaryUsername.value }"
           :size="264"
           :isStaff="staffInformation.staff.value"
         ></UserPicture>

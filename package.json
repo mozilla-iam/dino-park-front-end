@@ -14,8 +14,7 @@
     "blueimp-load-image": "^2.22.0",
     "cropd": "^1.0.3",
     "downshift": "^3.2.10",
-    "graphql": "^14.4.1",
-    "graphql-tag": "^2.10.1",
+    "graphql": "^14.4.2",
     "identicon.js": "^2.3.3",
     "insane": "^2.6.2",
     "marked": "^0.6.3",
@@ -23,7 +22,6 @@
     "preact": "^8.4.2",
     "vue": "^2.6.10",
     "vue-apollo": "^3.0.0-beta.28",
-    "vue-async-computed": "^3.7.0",
     "vue-router": "^3.0.6",
     "vuex": "^3.1.1"
   },

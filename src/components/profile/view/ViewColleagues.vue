@@ -2,7 +2,7 @@
   <div class="colleagues">
     <header class="profile__section-header">
       <h2>Colleagues</h2>
-      <div class="colleagues__toggle">
+      <div v-if="related.directs.length > 1" class="colleagues__toggle">
         <button
           type="button"
           @click="setPreference('list')"
@@ -43,7 +43,7 @@
       </RouterLink>
     </header>
     <ReportingStructure
-      :username="username"
+      :related="related"
       :viewAs="viewPreference"
     ></ReportingStructure>
   </div>
@@ -51,6 +51,7 @@
 
 <script>
 import Icon from '@/components/ui/Icon.vue';
+import Related from '@/assets/js/related';
 import ReportingStructure from '@/components/profile/ReportingStructure.vue';
 
 export default {
@@ -66,11 +67,27 @@ export default {
     setPreference(preference) {
       this.$store.commit('setPersonViewPreference', preference);
     },
+    update_user(u = this.username) {
+      this.related.update(u);
+    },
   },
   computed: {
     viewPreference() {
       return this.$store.state.personViewPreference;
     },
+  },
+  watch: {
+    username(u) {
+      this.update_user(u);
+    },
+  },
+  created() {
+    this.update_user();
+  },
+  data() {
+    return {
+      related: new Related(),
+    };
   },
 };
 </script>
