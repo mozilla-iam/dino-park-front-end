@@ -26,8 +26,7 @@
     </button>
     <div class="profile-preview__image">
       <UserPicture
-        :picture="picture.value"
-        :username="primaryUsername.value"
+        :avatar="{ picture: picture.value, username: primaryUsername.value }"
         :size="100"
         :isStaff="staffInformation.staff.value"
       />

@@ -3,7 +3,6 @@ import ApolloClient from 'apollo-boost';
 import VueApollo from 'vue-apollo';
 import { InMemoryCache, defaultDataIdFromObject } from 'apollo-cache-inmemory';
 import Vuex from 'vuex';
-import AsyncComputed from 'vue-async-computed';
 import App from './App.vue';
 import router from './router';
 import { USER_MENU_PROFILE } from './queries/profile';
@@ -72,7 +71,6 @@ const apolloProvider = new VueApollo({
 });
 
 Vue.use(VueApollo);
-Vue.use(AsyncComputed);
 Vue.use(Vuex);
 
 const store = new Vuex.Store({

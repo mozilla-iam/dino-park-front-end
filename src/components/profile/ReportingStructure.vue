@@ -56,13 +56,12 @@
 import Icon from '@/components/ui/Icon.vue';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 import Person from '@/components/ui/Person.vue';
-import Related from '@/assets/js/related';
 import ShowMore from '@/components/_functional/ShowMore.vue';
 
 export default {
   name: 'ReportingStructure',
   props: {
-    username: String,
+    related: Object,
     loading: false,
     viewAs: {
       type: String,
@@ -84,24 +83,6 @@ export default {
     initiallyShown() {
       return this.viewAs === 'grid' ? undefined : 8;
     },
-  },
-  watch: {
-    username(u) {
-      this.update_user(u);
-    },
-  },
-  methods: {
-    update_user(u = this.username) {
-      this.related.update(u);
-    },
-  },
-  created() {
-    this.update_user();
-  },
-  data() {
-    return {
-      related: new Related(),
-    };
   },
 };
 </script>

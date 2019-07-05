@@ -31,8 +31,10 @@
     <div class="edit-personal-info">
       <div class="edit-personal-info__picture">
         <UserPicture
-          :picture="pictureData.value"
-          :username="loggedInUser.primaryUsername.value"
+          :avatar="{
+            picture: pictureData.value,
+            username: loggedInUser.primaryUsername.value,
+          }"
           :size="264"
           :isStaff="true"
         ></UserPicture>
@@ -394,7 +396,6 @@
 </template>
 
 <script>
-import Combobox from '@/components/ui/Combobox.vue';
 import EditMutationWrapper from '@/components/profile/edit/EditMutationWrapper.vue';
 import Icon from '@/components/ui/Icon.vue';
 import Meta from '@/components/ui/Meta.vue';
@@ -419,7 +420,7 @@ export default {
     initialValues: Object,
   },
   components: {
-    Combobox,
+    Combobox: () => import('@/components/ui/Combobox.vue'),
     EditPictureModal,
     EditMutationWrapper,
     Icon,
