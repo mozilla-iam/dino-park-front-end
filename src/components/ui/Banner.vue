@@ -3,7 +3,7 @@
     <p>
       This is a beta version,
       <a
-        href="https://github.com/mozilla-iam/dino-park-issues/issues"
+        v-bind:href="globalLinks.feedback"
         target="_blank"
         rel="noopener noreferrer"
         >let us know what you think</a
@@ -31,8 +31,11 @@
 </template>
 
 <script>
+import LinksMixin from '@/components/_mixins/LinksMixin.vue';
+
 export default {
   name: 'Banner',
+  mixins: [LinksMixin],
 };
 </script>
 
