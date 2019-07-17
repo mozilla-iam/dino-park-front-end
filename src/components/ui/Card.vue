@@ -14,10 +14,24 @@ export default {
 .card {
   background-color: var(--white);
   box-shadow: var(--shadowCard);
-  padding: 1em;
+  padding: 0;
   position: relative;
   border-radius: var(--cardRadius);
 }
+
+.card:hover {
+  box-shadow: var(--shadowCardHover);
+}
+
+.card:hover .card__link h2 {
+  text-decoration: underline;
+}
+
+.card__link {
+  text-decoration: none;
+  color: inherit;
+}
+
 .card--centered-content {
   align-items: center;
   justify-content: center;
@@ -40,16 +54,7 @@ export default {
   border-bottom: 2px solid transparent;
   transition: border-bottom-color 0.1s ease-in-out;
 }
-.card h2 > a::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  transition: box-shadow 0.1s ease-in-out;
-  border-radius: var(--cardRadius);
-}
+
 .card h2 > a:hover,
 .card h2 > a:focus {
   border-bottom: 2px solid var(--black);
@@ -65,8 +70,11 @@ export default {
   display: flex;
   align-content: center;
   justify-content: center;
-  margin: -1em -1em 1em;
+  margin: 0;
   border-radius: var(--cardRadius) var(--cardRadius) 0 0;
+}
+.card__content {
+  padding: 1em;
 }
 .card h2 + p {
   margin-top: 0;

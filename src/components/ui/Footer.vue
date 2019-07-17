@@ -1,58 +1,68 @@
 <template>
   <footer class="footer">
     <a
-      href="https://www.mozilla.org/en-US/about/governance/policies/participation/"
+      v-for="(single, index) in links"
+      v-bind:key="index"
+      v-bind:href="single.link"
       class="footer__link"
       target="_blank"
       rel="noopener noreferrer"
-      ><Icon id="cpg" :width="12" :height="12" />
-      <abbr title="Community Participation Guidelines">CPG</abbr></a
     >
-    <a
-      href="https://discourse.mozilla.org/t/dinopark-faq/33564"
-      class="footer__link"
-      target="_blank"
-      rel="noopener noreferrer"
-      ><Icon id="faq" :width="12" :height="12" /> FAQ</a
-    >
-    <a
-      href="https://github.com/mozilla-iam/dino-park-issues"
-      class="footer__link"
-      target="_blank"
-      rel="noopener noreferrer"
-      ><Icon id="github" :width="12" :height="12" /> GitHub</a
-    >
-    <a
-      href="https://discourse.mozilla.org/c/iam/dinopark"
-      class="footer__link"
-      target="_blank"
-      rel="noopener noreferrer"
-      ><Icon id="envelope" :width="12" :height="12" /> Helpdesk</a
-    >
-    <a
-      href="https://www.mozilla.org/en-US/legal"
-      class="footer__link"
-      target="_blank"
-      rel="noopener noreferrer"
-      ><Icon id="check" :width="12" :height="12" /> Legal</a
-    >
-    <a
-      href="https://www.mozilla.org/en-US/privacy/"
-      class="footer__link"
-      target="_blank"
-      rel="noopener noreferrer"
-      ><Icon id="lock" :width="12" :height="12" /> Privacy</a
-    >
+      <Icon v-bind:id="single.icon" :width="12" :height="12" />
+      <abbr v-if="single.abbr" v-bind:title="single.abbr">{{
+        single.label
+      }}</abbr>
+      {{ !single.abbr ? single.label : '' }}
+    </a>
   </footer>
 </template>
 
 <script>
 import Icon from '@/components/ui/Icon.vue';
+import LinksMixin from '@/components/_mixins/LinksMixin.vue';
 
 export default {
   name: 'Footer',
+  mixins: [LinksMixin],
   components: {
     Icon,
+  },
+  computed: {
+    links() {
+      return [
+        {
+          link: this.globalLinks.participationGuidelines,
+          icon: 'cpg',
+          label: 'CPG',
+          abbr: 'Community Participation Guidelines',
+        },
+        {
+          link: this.globalLinks.faq,
+          icon: 'faq',
+          label: 'FAQ',
+        },
+        {
+          link: this.globalLinks.githubIssues,
+          icon: 'github',
+          label: 'GitHub',
+        },
+        {
+          link: this.globalLinks.feedback,
+          icon: 'envelope',
+          label: 'Helpdesk',
+        },
+        {
+          link: this.globalLinks.legal,
+          icon: 'check',
+          label: 'Legal',
+        },
+        {
+          link: this.globalLinks.privacy,
+          icon: 'lock',
+          label: 'Privacy',
+        },
+      ];
+    },
   },
 };
 </script>

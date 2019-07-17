@@ -11,81 +11,28 @@
         ones, now in beta.
       </p>
       <p>
-        <RouterLink :to="{ name: 'Orgchart' }" class="button"
-          >View the Org Chart<Icon id="chevron-right" :width="24" :height="24"
-        /></RouterLink>
+        <RouterLink :to="{ name: 'Orgchart' }" class="button">
+          View the Org Chart
+          <Icon id="chevron-right" :width="24" :height="24" />
+        </RouterLink>
       </p>
     </div>
     <CardRow>
-      <Card>
-        <div class="card__icon">
-          <Icon id="irc" :width="64" :height="64"></Icon>
-        </div>
-        <h2>
-          <a
-            href="https://discourse.mozilla.org/c/iam/dinopark"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Your Feedback Matters</a
-          >
-        </h2>
-        <p>
-          Join us on
-          <a
-            href="https://discourse.mozilla.org/c/iam/dinopark"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Discourse</a
-          >
-          and let us know how we can make the Mozilla Directory even better.
-        </p>
-      </Card>
-      <Card>
-        <div class="card__icon">
-          <Icon id="lock" :width="64" :height="64"></Icon>
-        </div>
-        <h2>
-          <a
-            href="https://discourse.mozilla.org/t/dinopark-faq/33564"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Your Privacy is Protected</a
-          >
-        </h2>
-        <p>
-          Your Staff profile data is only visible to Staff and NDA’d people by
-          default. You can edit this via your profile privacy settings. Read our
-          <a
-            href="https://discourse.mozilla.org/t/dinopark-faq/33564"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Discourse post</a
-          >
-          for details.
-        </p>
-      </Card>
-      <Card>
-        <div class="card__icon">
-          <Icon id="edit" :width="64" :height="64"></Icon>
-        </div>
-        <h2>
-          <a
-            href="https://discourse.mozilla.org/t/edit-mode-announcement/38563"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Recent Additions</a
-          >
-        </h2>
-        <p>
-          Profile editing is now live with privacy controls and synchronized
-          Workday information. Read more about this and improved people search
-          capabilities in our
-          <a
-            href="https://discourse.mozilla.org/t/edit-mode-announcement/38563"
-            target="_blank"
-            >Discourse post</a
-          >.
-        </p>
+      <Card v-for="(card, idx) in cards" :key="idx">
+        <a
+          v-bind:href="card.link"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="card__link"
+        >
+          <div class="card__icon">
+            <Icon v-bind:id="card.icon" :width="64" :height="64"></Icon>
+          </div>
+          <div class="card__content">
+            <h2>{{ card.headline }}</h2>
+            <p>{{ card.description }}</p>
+          </div>
+        </a>
       </Card>
     </CardRow>
   </main>
@@ -96,14 +43,43 @@ import Card from '@/components/ui/Card.vue';
 import CardRow from '@/components/ui/CardRow.vue';
 import Icon from '@/components/ui/Icon.vue';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
+import LinksMixin from '@/components/_mixins/LinksMixin.vue';
 
 export default {
   name: 'PageHome',
+  mixins: [LinksMixin],
   components: {
     Card,
     CardRow,
     Icon,
     LoadingSpinner,
+  },
+  computed: {
+    cards() {
+      return [
+        {
+          link: this.globalLinks.feedback,
+          icon: 'irc',
+          headline: 'Your Feedback Matters',
+          description:
+            'Join us on Discourse and let us know how we can make the Mozilla Directory even better.',
+        },
+        {
+          link: this.globalLinks.profilePrivacy,
+          icon: 'lock',
+          headline: 'Your Privacy is Protected',
+          description:
+            'Your Staff profile data is only visible to Staff and NDA’d people by default. You can edit this via your profile privacy settings. Read our Discourse post for details.',
+        },
+        {
+          link: this.globalLinks.editModeAnnouncement,
+          icon: 'edit',
+          headline: 'Recent Additions',
+          description:
+            'Profile editing is now live with privacy controls and synchronized Workday information. Read more about this and improved people search capabilities in our Discourse post.',
+        },
+      ];
+    },
   },
 };
 </script>
