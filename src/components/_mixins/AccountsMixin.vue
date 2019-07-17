@@ -94,7 +94,7 @@ export default {
   data() {
     return {
       availableAccounts: ENABLED_ACCOUNTS.filter(
-        (account) => Object.keys(EXTERNAL_ACCOUNTS).indexOf(account) !== -1,
+        (account) => account in EXTERNAL_ACCOUNTS,
       ),
       EXTERNAL_ACCOUNTS,
     };
