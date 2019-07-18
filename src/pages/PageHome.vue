@@ -12,7 +12,7 @@
       </p>
       <p>
         <RouterLink :to="{ name: 'Orgchart' }" class="button">
-          View the Org Chart
+          <span>View the Org Chart</span>
           <Icon id="chevron-right" :width="24" :height="24" />
         </RouterLink>
       </p>
