@@ -21,3 +21,6 @@ yarn-error.log*
 *.sw*
 
 .terraform
+
+# Jest coverage directories
+coverage
