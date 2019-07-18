@@ -9,9 +9,9 @@
       rel="noopener noreferrer"
     >
       <Icon v-bind:id="single.icon" :width="12" :height="12" />
-      <abbr v-if="single.abbr" v-bind:title="single.abbr">{{
-        single.label
-      }}</abbr>
+      <abbr v-if="single.abbr" v-bind:title="single.abbr">
+        {{ single.label }}
+      </abbr>
       {{ !single.abbr ? single.label : '' }}
     </a>
   </footer>
@@ -45,11 +45,6 @@ export default {
           link: this.globalLinks.githubIssues,
           icon: 'github',
           label: 'GitHub',
-        },
-        {
-          link: this.globalLinks.feedback,
-          icon: 'envelope',
-          label: 'Helpdesk',
         },
         {
           link: this.globalLinks.legal,
