@@ -1,5 +1,5 @@
 <script>
-const ENABLED_ACCOUNTS = ['DISCOURSE', 'IRC', 'SLACK', 'ZOOM'];
+const ENABLED_ACCOUNTS = ['SLACK', 'DISCOURSE', 'IRC', 'ZOOM'];
 const EXTERNAL_ACCOUNTS = {
   AIM: { moz: false, text: 'AIM', icon: 'aim' },
   BITBUCKET: { moz: false, text: 'Bitbucket', icon: 'bitbucket' },
@@ -93,8 +93,8 @@ export default {
   },
   data() {
     return {
-      availableAccounts: [...Object.keys(EXTERNAL_ACCOUNTS)].filter((account) =>
-        ENABLED_ACCOUNTS.includes(account),
+      availableAccounts: ENABLED_ACCOUNTS.filter(
+        (account) => account in EXTERNAL_ACCOUNTS,
       ),
       EXTERNAL_ACCOUNTS,
     };
