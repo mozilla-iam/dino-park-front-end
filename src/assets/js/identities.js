@@ -38,9 +38,7 @@ class Identities {
   }
 
   bugzillaProfile() {
-    return `https://bugzilla.mozilla.org/user_profile?user_id=${
-      this.identities.bugzillaMozillaOrgId.value
-    }`;
+    return `https://bugzilla.mozilla.org/user_profile?user_id=${this.identities.bugzillaMozillaOrgId.value}`;
   }
 
   bugzillaDisplay() {
@@ -82,11 +80,14 @@ class Identities {
         .then((r) => r.json())
         .then(({ username }) => {
           this.githubUsername = username;
-          return username;
+          return { username, link: `https://github.com/${username}` };
         })
         .catch((e) => {
           console.error(e);
-          return null;
+          return {
+            username: `id: ${this.identities.githubIdV3.value}`,
+            link: `https://api.github.com/user/${this.identities.githubIdV3.value}`,
+          };
         });
     }
     return Promise.resolve(null);
