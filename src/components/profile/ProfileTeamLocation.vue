@@ -60,10 +60,9 @@ export default {
     },
     timezoneWithTime() {
       if (this.timezone) {
-        return `${this.localtime} local time in ${(this.timezone || '').replace(
-          '_',
-          ' ',
-        )}`;
+        return `${this.localtime} local time (${this.getTimezoneName(
+          this.timezone,
+        )})`;
       }
       return null;
     },
@@ -79,6 +78,18 @@ export default {
     }
   },
   methods: {
+    getTimezoneName(timezone) {
+      try {
+        return new Intl.DateTimeFormat('default', {
+          timeZoneName: 'short',
+          timeZone: timezone,
+        })
+          .formatToParts(new Date())[6]
+          .value.replace('GMT', 'UTC');
+      } catch (_) {
+        return '?';
+      }
+    },
     getLocaltime() {
       if (this.timezone) {
         try {
