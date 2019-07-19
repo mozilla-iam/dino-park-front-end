@@ -87,7 +87,6 @@ function renderNode(node, level = 1) {
     }" style="--nodeLevel: ${level};">
       <a class="router-link-exact-active router-link-active" id="org-node-0">
         <div class="user-picture user-picture--small">
-          <img class="user-picture user-picture--small" alt="" role="presentation" aria-hidden="true" width="40">
           <span class="dino-type">
             <span aria-hidden="true">S</span>
             <span class="visually-hidden">Staff</span>
@@ -133,7 +132,7 @@ function renderNode(node, level = 1) {
   const { picture, username } = node.data;
   li.id = username;
   e.querySelector('a').href = `/o/${username}`;
-  const img = e.querySelector('img');
+  const img = e.querySelector('.user-picture');
   if (
     picture === null ||
     picture === '' ||
@@ -141,10 +140,12 @@ function renderNode(node, level = 1) {
     picture.startsWith('https://s3.amazonaws.com/')
   ) {
     generateIdenticon(username, 40).then((src) => {
-      img.src = src;
+      img.style.backgroundSize = 'cover';
+      img.style.backgroundImage = `url("${src}")`;
     });
   } else {
-    img.src = `${picture}?size=40`;
+    img.style.backgroundSize = 'cover';
+    img.style.backgroundImage = `url("${picture}?size=40")`;
   }
   e.querySelector(
     '.org-node__name',
