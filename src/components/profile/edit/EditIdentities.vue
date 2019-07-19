@@ -128,7 +128,7 @@ export default {
   },
   methods: {
     update() {
-      this.identities.fetchGithubUsername().then((username) => {
+      this.identities.fetchGithubUsername().then(({ username }) => {
         this.githubUsername = username;
       });
     },

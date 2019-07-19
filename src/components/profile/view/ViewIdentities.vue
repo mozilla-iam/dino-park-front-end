@@ -13,15 +13,12 @@
         <IconBlock
           v-if="identities.hasGithub()"
           heading="GitHub"
-          subHeading="Verified"
+          :subHeading="githubUsername && 'Verified'"
           icon="github"
         >
-          <a
-            :href="`https://github.com/${githubUsername}`"
-            target="_blank"
-            rel="noreferrer noopener"
-            >{{ githubUsername }}</a
-          >
+          <a :href="githubLink" target="_blank" rel="noreferrer noopener">{{
+            githubUsername
+          }}</a>
         </IconBlock>
         <IconBlock
           v-if="identities.hasBugzilla()"
@@ -61,12 +58,14 @@ export default {
     this.update();
     return {
       githubUsername: null,
+      githubLink: '#',
     };
   },
   methods: {
     update() {
-      this.identities.fetchGithubUsername().then((username) => {
+      this.identities.fetchGithubUsername().then(({ username, link }) => {
         this.githubUsername = username;
+        this.githubLink = link;
       });
     },
   },
