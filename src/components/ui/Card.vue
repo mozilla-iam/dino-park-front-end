@@ -23,13 +23,10 @@ export default {
   box-shadow: var(--shadowCardHover);
 }
 
-.card:hover .card__link h2 {
-  text-decoration: underline;
-}
-
 .card__link {
   text-decoration: none;
   color: inherit;
+  height: 100%;
 }
 
 .card--centered-content {
@@ -46,17 +43,13 @@ export default {
 .card h2 {
   font-weight: 700;
   font-size: 1.25em;
-}
-.card h2 > a {
-  color: inherit;
-  text-decoration: none;
-  display: inline;
   border-bottom: 2px solid transparent;
   transition: border-bottom-color 0.1s ease-in-out;
+  display: inline-block;
 }
 
-.card h2 > a:hover,
-.card h2 > a:focus {
+.card:hover h2,
+.card:focus h2 {
   border-bottom: 2px solid var(--black);
 }
 .card h2 > a:hover::after,

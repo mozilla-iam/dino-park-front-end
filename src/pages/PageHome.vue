@@ -30,7 +30,7 @@
           </div>
           <div class="card__content">
             <h2>{{ card.headline }}</h2>
-            <p>{{ card.description }}</p>
+            <p v-html="card.description"></p>
           </div>
         </a>
       </Card>
@@ -56,27 +56,36 @@ export default {
   },
   computed: {
     cards() {
+      const getLink = (url, text) => {
+        return `<a href="${url}" target="_blank" rel="noopener noreferrer">${text}</a>`;
+      };
       return [
         {
           link: this.globalLinks.feedback,
           icon: 'irc',
           headline: 'Your Feedback Matters',
-          description:
-            'Join us on Discourse and let us know how we can make the Mozilla Directory even better.',
+          description: `Join us on ${getLink(
+            this.globalLinks.feedback,
+            'Discourse',
+          )} and let us know how we can make the Mozilla Directory even better.`,
         },
         {
           link: this.globalLinks.profilePrivacy,
           icon: 'lock',
           headline: 'Your Privacy is Protected',
-          description:
-            'Your Staff profile data is only visible to Staff and NDA’d people by default. You can edit this via your profile privacy settings. Read our Discourse post for details.',
+          description: `Your Staff profile data is only visible to Staff and NDA’d people by default. You can edit this via your profile privacy settings. Read our ${getLink(
+            this.globalLinks.profilePrivacy,
+            'Discourse post',
+          )} for details.`,
         },
         {
           link: this.globalLinks.editModeAnnouncement,
           icon: 'edit',
           headline: 'Recent Additions',
-          description:
-            'Profile editing is now live with privacy controls and synchronized Workday information. Read more about this and improved people search capabilities in our Discourse post.',
+          description: `Profile editing is now live with privacy controls and synchronized Workday information. Read more about this and improved people search capabilities in our ${getLink(
+            this.globalLinks.editModeAnnouncement,
+            'Discourse post',
+          )}.`,
         },
       ];
     },
