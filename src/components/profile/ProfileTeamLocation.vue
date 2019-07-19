@@ -60,7 +60,9 @@ export default {
     },
     timezoneWithTime() {
       if (this.timezone) {
-        return `${this.localtime} local time (${this.timezoneName})`;
+        return `${this.localtime} local time (${this.getTimezoneName(
+          this.timezone,
+        )})`;
       }
       return null;
     },
@@ -103,7 +105,6 @@ export default {
   data() {
     return {
       localtime: this.getLocaltime(),
-      timezoneName: this.getTimezoneName(this.timezone),
     };
   },
 };
