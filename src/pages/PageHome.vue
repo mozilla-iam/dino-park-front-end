@@ -19,20 +19,21 @@
     </div>
     <CardRow>
       <Card v-for="(card, idx) in cards" :key="idx">
-        <a
-          v-bind:href="card.link"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="card__link"
-        >
-          <div class="card__icon">
-            <Icon v-bind:id="card.icon" :width="64" :height="64"></Icon>
-          </div>
-          <div class="card__content">
-            <h2>{{ card.headline }}</h2>
-            <p v-html="card.description"></p>
-          </div>
-        </a>
+        <div class="card__icon">
+          <Icon v-bind:id="card.icon" :width="64" :height="64"></Icon>
+        </div>
+        <div class="card__content">
+          <h2>
+            <a
+              v-bind:href="card.link"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="card__link"
+              >{{ card.headline }}</a
+            >
+          </h2>
+          <p v-html="card.description"></p>
+        </div>
       </Card>
     </CardRow>
   </main>

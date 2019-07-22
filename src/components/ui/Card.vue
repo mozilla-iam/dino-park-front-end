@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card" v-on:click="onCardClicked">
     <slot></slot>
   </div>
 </template>
@@ -7,6 +7,31 @@
 <script>
 export default {
   name: 'Card',
+  methods: {
+    /**
+     * Determine if card either has a 'primary link' defined by '.card__link'
+     * or if the clicked item is itself an anchor tag. If it has either, redirect
+     * according to link requirements.
+     */
+    onCardClicked(e) {
+      const openLink = (href, isBlank = true) => {
+        if (isBlank) {
+          window.open(href, '_blank');
+        } else {
+          window.location.href = href;
+        }
+        e.preventDefault();
+      };
+      if (e.target.tagName.toLowerCase() === 'a') {
+        openLink(e.target.href, e.target.target === '_blank');
+      } else {
+        const cardLink = this.$el.querySelector('.card__link');
+        if (cardLink && cardLink.href) {
+          openLink(cardLink.href, cardLink.target === '_blank');
+        }
+      }
+    },
+  },
 };
 </script>
 
@@ -17,6 +42,7 @@ export default {
   padding: 0;
   position: relative;
   border-radius: var(--cardRadius);
+  cursor: pointer;
 }
 
 .card:hover {
@@ -26,7 +52,6 @@ export default {
 .card__link {
   text-decoration: none;
   color: inherit;
-  height: 100%;
 }
 
 .card--centered-content {
