@@ -65,11 +65,11 @@ const router = new Router({
     if (to.hash) {
       return { selector: to.hash };
     }
-    if (scrolling.toEdit(to)) {
+    if (
+      scrolling.toEdit(to) ||
+      scrolling.fromEditToSelf(to, from, router.app)
+    ) {
       return { selector: `#nav-${to.query.section}` };
-    }
-    if (scrolling.fromEditToSelf(to, from, router.app)) {
-      return { selector: `#nav-${from.query.section}` };
     }
     if (scrolling.toProfile(to, from)) {
       return { x: 0, y: 0 };
