@@ -2,7 +2,7 @@
   <transition name="modal-">
     <div class="modal" tabindex="-1" @keyup.esc="$emit('close')" ref="modalEl">
       <div class="modal__content">
-        <div class="modal__header">
+        <header class="modal__header">
           <button
             v-if="closeButton"
             type="button"
@@ -13,7 +13,7 @@
             <Icon id="x" :width="30" :height="30"></Icon>
           </button>
           <h1 v-if="heading">{{ heading }}</h1>
-        </div>
+        </header>
         <slot></slot>
       </div>
     </div>
