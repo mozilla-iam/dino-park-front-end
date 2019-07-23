@@ -124,6 +124,14 @@ export default {
   flex-direction: row;
   position: relative;
 }
+.search-form__fields:focus .search-form__input,
+.search-form__fields:hover .search-form__input {
+  border: 1px solid var(--blue-60);
+}
+.search-form__fields:focus button[type='submit'],
+.search-form__fields:hover button[type='submit'] {
+  border-right: 1px solid var(--blue-60);
+}
 .search-form__fields input,
 .search-form__fields button[type='submit'] {
   font-size: 1.15em;
@@ -141,20 +149,7 @@ export default {
 .search-form__input::placeholder {
   text-align: center;
 }
-.search-form__input:focus,
-.search-form__input:hover {
-  border: 1px solid var(--blue-60);
-}
-.search-form__input:focus + .search-form__submit,
-.search-form__input:hover + .search-form__submit {
-  border-color: var(--blue-60);
-}
-.focus-styles .search-form__input:focus,
-.focus-styles .search-form__input:hover,
-.focus-styles .search-form__input:focus + .search-form__submit,
-.focus-styles .search-form__input:hover + .search-form__submit {
-  border-color: var(--gray-30);
-}
+
 .search-form__submit {
   border: 0;
   border-right: 1px solid var(--gray-30);
