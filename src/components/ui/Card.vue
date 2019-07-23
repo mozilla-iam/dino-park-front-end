@@ -1,5 +1,5 @@
 <template>
-  <div class="card" v-on:click="onCardClicked">
+  <div class="card">
     <slot></slot>
   </div>
 </template>
@@ -7,31 +7,6 @@
 <script>
 export default {
   name: 'Card',
-  methods: {
-    /**
-     * Determine if card either has a 'primary link' defined by '.card__link'
-     * or if the clicked item is itself an anchor tag. If it has either, redirect
-     * according to link requirements.
-     */
-    onCardClicked(e) {
-      const openLink = (href, isBlank = true) => {
-        if (isBlank) {
-          window.open(href, '_blank');
-        } else {
-          window.location.href = href;
-        }
-        e.preventDefault();
-      };
-      if (e.target.tagName.toLowerCase() === 'a') {
-        openLink(e.target.href, e.target.target === '_blank');
-      } else {
-        const cardLink = this.$el.querySelector('.card__link');
-        if (cardLink && cardLink.href) {
-          openLink(cardLink.href, cardLink.target === '_blank');
-        }
-      }
-    },
-  },
 };
 </script>
 
@@ -39,21 +14,10 @@ export default {
 .card {
   background-color: var(--white);
   box-shadow: var(--shadowCard);
-  padding: 0;
+  padding: 1em;
   position: relative;
   border-radius: var(--cardRadius);
-  cursor: pointer;
 }
-
-.card:hover {
-  box-shadow: var(--shadowCardHover);
-}
-
-.card__link {
-  text-decoration: none;
-  color: inherit;
-}
-
 .card--centered-content {
   align-items: center;
   justify-content: center;
@@ -68,13 +32,26 @@ export default {
 .card h2 {
   font-weight: 700;
   font-size: 1.25em;
+}
+.card h2 > a {
+  color: inherit;
+  text-decoration: none;
+  display: inline;
   border-bottom: 2px solid transparent;
   transition: border-bottom-color 0.1s ease-in-out;
-  display: inline-block;
 }
-
-.card:hover h2,
-.card:focus h2 {
+.card h2 > a::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: box-shadow 0.1s ease-in-out;
+  border-radius: var(--cardRadius);
+}
+.card h2 > a:hover,
+.card h2 > a:focus {
   border-bottom: 2px solid var(--black);
 }
 .card h2 > a:hover::after,
@@ -88,11 +65,8 @@ export default {
   display: flex;
   align-content: center;
   justify-content: center;
-  margin: 0;
+  margin: -1em -1em 1em;
   border-radius: var(--cardRadius) var(--cardRadius) 0 0;
-}
-.card__content {
-  padding: 1em;
 }
 .card h2 + p {
   margin-top: 0;
