@@ -5,7 +5,7 @@
       ref="img"
       :class="cls"
       :src="src"
-      alt=""
+      alt
       :width="size"
       role="presentation"
       aria-hidden="true"
@@ -154,12 +154,7 @@ export default {
     height: 18.75em;
   }
   .user-picture--large .dino-type {
-    left: 50%;
-    right: auto;
-    bottom: -0.5em;
-    transform: translate(-50%, 25%);
     padding: 0.75em 2em;
-    border-radius: 2em;
   }
 }
 </style>
