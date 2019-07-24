@@ -31,7 +31,9 @@
       </button>
     </div>
     <div class="org-chart">
-      <div class="org-chart__chart"><LoadingSpinner></LoadingSpinner></div>
+      <div class="org-chart__chart">
+        <LoadingSpinner></LoadingSpinner>
+      </div>
       <ApolloQuery
         v-if="username && (desktopView || openedFromOrgNode)"
         :query="previewProfileQuery"
@@ -199,8 +201,8 @@ export default {
   async created() {
     window.addEventListener('resize', this.updateView);
     this.updateView();
-    await this.fetchData();
-    await this.highlight();
+    this.highlight();
+    this.fetchData();
   },
   computed: {
     username() {
