@@ -82,10 +82,13 @@ export default {
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: var(--gray-20);
   font-family: 'Open Sans', sans-serif;
-  scroll-behavior: smooth;
   margin: 0;
   font-size: 87.5%;
   letter-spacing: 0.04em;
