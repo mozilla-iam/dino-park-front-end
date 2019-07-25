@@ -84,6 +84,12 @@ const USER_MENU_PROFILE = gql`
       primaryEmail {
         value
       }
+      location {
+        value
+      }
+      timezone {
+        value
+      }
     }
   }
 `;

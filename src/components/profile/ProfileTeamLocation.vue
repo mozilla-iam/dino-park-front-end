@@ -6,12 +6,9 @@
         <RouterLink
           v-if="team && teamManager"
           :to="{ name: 'Profile', params: { username: teamManager.username } }"
+          >{{ team }}</RouterLink
         >
-          {{ team }}
-        </RouterLink>
-        <template v-else>
-          {{ team }}
-        </template>
+        <template v-else>{{ team }}</template>
       </strong>
       {{ entity }}
     </div>
@@ -26,16 +23,17 @@
                 query: locationSearchString,
               },
             }"
-            >{{ location || officeLocation }}
+          >
+            {{ location || officeLocation }}
             {{ location && officeLocation && `(${officeLocation})` }}
           </RouterLink>
           {{ timezoneWithTime }}
         </template>
         <template v-else>
-          <strong
-            >{{ location || officeLocation }}
-            {{ location && officeLocation && `(${officeLocation})` }}</strong
-          >
+          <strong>
+            {{ location || officeLocation }}
+            {{ location && officeLocation && `(${officeLocation})` }}
+          </strong>
           {{ timezoneWithTime }}
         </template>
       </div>
@@ -44,6 +42,9 @@
 </template>
 
 <script>
+import geoTz from 'geo-tz';
+import { DateTime } from 'luxon';
+
 export default {
   name: 'ProfileTeamLocation',
   props: {
@@ -59,10 +60,25 @@ export default {
       return 'officeLocation:"' + this.officeLocation + '"'; // eslint-disable-line
     },
     timezoneWithTime() {
+      let dt = DateTime.local();
+      dt = dt.setZone(this.timezone);
+      const profileOffset = dt.offset;
+      dt = dt.setZone(this.currentTimezone);
+      const currentLocalOffset = dt.offset;
+      const printedOffsetRaw = this.getOffsetDiffFromMinutes(
+        currentLocalOffset,
+        profileOffset,
+      );
+      let printedOffset = '';
+      if (printedOffsetRaw !== null && printedOffsetRaw !== 0) {
+        printedOffset = ` | ${
+          printedOffsetRaw > 0 ? '+' : ''
+        }${printedOffsetRaw}hrs to you`;
+      }
       if (this.timezone) {
         return `${this.localtime} local time (${this.getTimezoneName(
           this.timezone,
-        )})`;
+        )})${printedOffset}`;
       }
       return null;
     },
@@ -71,6 +87,7 @@ export default {
     this.interval = window.setInterval(() => {
       this.localtime = this.getLocaltime();
     }, 1000);
+    this.getCurrentLocation();
   },
   beforeDestroy() {
     if (this.interval) {
@@ -78,6 +95,50 @@ export default {
     }
   },
   methods: {
+    processLocation(position) {
+      const timezone = geoTz(
+        position.coords.latitude,
+        position.coords.longitude,
+      );
+      if (timezone.length === 0) {
+        return;
+      }
+      this.currentTimezone = timezone[0];
+    },
+    processLocationError(error) {
+      console.log('Unable to retrieve location error: ', error.message);
+      this.currentTimezone = this.$store.state.user.timezone.value;
+    },
+    getOffsetDiffFromMinutes(localOffset, targetOffset) {
+      if (isNaN(localOffset) || isNaN(targetOffset)) {
+        return null;
+      }
+      const calcLocalOffset = localOffset / 60;
+      const calcTargetOffset = targetOffset / 60;
+      if (calcLocalOffset < 0) {
+        if (targetOffset > 0) {
+          return Math.abs(calcLocalOffset) + calcTargetOffset;
+        } else {
+          return Math.abs(calcLocalOffset) - Math.abs(calcTargetOffset);
+        }
+      } else {
+        if (calcTargetOffset > 0) {
+          return calcTargetOffset - calcLocalOffset;
+        } else {
+          return calcLocalOffset - calcTargetOffset;
+        }
+      }
+    },
+    getCurrentLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          this.processLocation.bind(this),
+          this.processLocationError.bind(this),
+        );
+      } else {
+        this.currentTimezone = this.$store.state.user.timezone.value;
+      }
+    },
     getTimezoneName(timezone) {
       try {
         return new Intl.DateTimeFormat('default', {
@@ -105,6 +166,7 @@ export default {
   data() {
     return {
       localtime: this.getLocaltime(),
+      currentTimezone: '',
     };
   },
 };
