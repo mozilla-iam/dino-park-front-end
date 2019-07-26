@@ -193,6 +193,7 @@ export default {
       previewProfileQuery: PREVIEW_PROFILE,
       desktopView: false,
       dirty: false,
+      rawJson: null,
     };
   },
   async created() {
@@ -231,9 +232,12 @@ export default {
             obj[key] = true;
             return obj;
           }, {});
-
         const orgChartRoot = document.querySelector('.org-chart__chart');
-        const chartFromStore = Boolean(this.$store.state.org);
+        let chartFromStore = Boolean(this.$store.state.org);
+        this.rawJson = JSON.stringify(orgchart);
+        if (chartFromStore && this.rawJson !== this.$store.state.org.rawJson) {
+          chartFromStore = false;
+        }
         const [f, t] = chartFromStore
           ? this.$store.state.org.nodes
           : renderOrgchart(orgchart);
@@ -372,6 +376,7 @@ export default {
               document.querySelector('.org-chart__chart').children,
             ).map((n) => n.cloneNode(true)),
             dirty: this.dirty,
+            rawJson: this.rawJson,
           });
         }
       });
