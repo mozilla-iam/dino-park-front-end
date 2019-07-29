@@ -29,6 +29,7 @@ export default {
       },
     },
     cls: String,
+    pictureSize: Number,
     isStaff: Boolean,
   },
   components: {
@@ -55,6 +56,7 @@ export default {
         this.dinoTypeSize = 'large';
         this.slot = 264;
       }
+      this.slot = this.pictureSize || this.slot;
       this.modifier = `user-picture--${this.dinoTypeSize}`;
     },
     async updateUserPicture() {
