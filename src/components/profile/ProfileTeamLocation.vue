@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import geoTz from 'geo-tz';
+import tzlookup from 'tz-lookup';
 import { DateTime } from 'luxon';
 
 export default {
@@ -96,21 +96,17 @@ export default {
   },
   methods: {
     processLocation(position) {
-      const timezone = geoTz(
+      this.currentTimezone = tzlookup(
         position.coords.latitude,
         position.coords.longitude,
       );
-      if (timezone.length === 0) {
-        return;
-      }
-      this.currentTimezone = timezone[0];
     },
     processLocationError(error) {
-      console.log('Unable to retrieve location error: ', error.message);
+      console.log('Unable to retrieve location: ', error.message);
       this.currentTimezone = this.$store.state.user.timezone.value;
     },
     getOffsetDiffFromMinutes(localOffset, targetOffset) {
-      if (isNaN(localOffset) || isNaN(targetOffset)) {
+      if (Number.isNaN(localOffset) || Number.isNaN(targetOffset)) {
         return null;
       }
       const calcLocalOffset = localOffset / 60;
@@ -118,16 +114,13 @@ export default {
       if (calcLocalOffset < 0) {
         if (targetOffset > 0) {
           return Math.abs(calcLocalOffset) + calcTargetOffset;
-        } else {
-          return Math.abs(calcLocalOffset) - Math.abs(calcTargetOffset);
         }
-      } else {
-        if (calcTargetOffset > 0) {
-          return calcTargetOffset - calcLocalOffset;
-        } else {
-          return calcLocalOffset - calcTargetOffset;
-        }
+        return Math.abs(calcLocalOffset) - Math.abs(calcTargetOffset);
       }
+      if (calcTargetOffset > 0) {
+        return calcTargetOffset - calcLocalOffset;
+      }
+      return calcLocalOffset - calcTargetOffset;
     },
     getCurrentLocation() {
       if (navigator.geolocation) {
