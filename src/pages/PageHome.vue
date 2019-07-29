@@ -63,10 +63,7 @@ export default {
           link: this.globalLinks.feedback,
           icon: 'irc',
           headline: 'Your Feedback Matters',
-          description: `Join us on ${getLink(
-            this.globalLinks.feedback,
-            'Discourse',
-          )} and let us know how we can make the Mozilla Directory even better.`,
+          description: `Let us know how we can make the Mozilla Directory even better.`,
         },
         {
           link: this.globalLinks.profilePrivacy,
