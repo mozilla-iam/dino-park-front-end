@@ -143,8 +143,7 @@ export default {
   -webkit-appearance: none;
   appearance: none;
   border-radius: 0;
-  padding: 0.5em;
-  padding-left: 3em;
+  padding: 0.5em 3em;
 }
 .search-form__input::placeholder {
   text-align: center;
@@ -174,11 +173,11 @@ export default {
 .search-form__clear-button {
   background-color: var(--white);
   position: absolute;
-  right: 0;
   border: 0;
-  top: 1em;
-  right: 1em;
-  width: 2em;
+  top: 1px;
+  right: 1px;
+  bottom: 1px;
+  width: 3em;
   padding: 0;
   line-height: 1;
 }
