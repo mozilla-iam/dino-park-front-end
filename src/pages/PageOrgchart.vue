@@ -196,13 +196,14 @@ export default {
       desktopView: false,
       dirty: false,
       rawJson: null,
+      chartForHighlightClicked: false,
     };
   },
   async created() {
     window.addEventListener('resize', this.updateView);
     this.updateView();
-    this.highlight();
-    this.fetchData();
+    await this.fetchData();
+    await this.highlight();
   },
   computed: {
     username() {
@@ -262,7 +263,7 @@ export default {
 
         orgChartRoot.addEventListener('click', (event) => {
           const li = event.target.closest('li');
-
+          this.chartForHighlightClicked = true;
           if (event.target.closest('button')) {
             this.toggle(li);
             this.saveOrgTree();
@@ -384,9 +385,36 @@ export default {
       });
     },
     expandAll() {
-      Object.entries(this.expandables).forEach(([, li]) => {
-        this.toggle(li, true);
-      });
+      const entries = Object.entries(this.expandables);
+      const loadSet = (idx, num) => {
+        entries.slice(idx, idx + num).forEach(([, li]) => {
+          this.toggle(li, true);
+        });
+      };
+      let step = 25,
+        i = 0,
+        intervalTime = 1000;
+      let inter = setInterval(() => {
+        const run = () => {
+          if (i < entries.length) {
+            loadSet(i, step);
+            i += step;
+            if (i + step > entries.length) {
+              step = entries.length - i;
+            }
+          } else {
+            clearInterval(inter);
+          }
+        };
+        if (this.chartForHighlightClicked) {
+          setTimeout(() => {
+            run();
+            this.chartForHighlightClicked = false;
+          });
+        } else {
+          run();
+        }
+      }, intervalTime);
       this.saveOrgTree();
     },
     collapseAll() {
