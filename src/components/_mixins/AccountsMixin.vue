@@ -1,5 +1,5 @@
 <script>
-const ENABLED_ACCOUNTS = ['SLACK', 'DISCOURSE', 'IRC', 'ZOOM'];
+const ENABLED_ACCOUNTS = ['SLACK', 'ZOOM', 'DISCOURSE', 'IRC'];
 const EXTERNAL_ACCOUNTS = {
   AIM: { moz: false, text: 'AIM', icon: 'aim' },
   BITBUCKET: { moz: false, text: 'Bitbucket', icon: 'bitbucket' },
