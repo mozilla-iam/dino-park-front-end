@@ -66,6 +66,9 @@ export default {
   text-decoration: none;
   overflow: hidden;
 }
+.person a:hover {
+  color: var(--blue-60);
+}
 .person a::after {
   content: '';
   display: block;
