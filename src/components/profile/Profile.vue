@@ -391,7 +391,7 @@ export default {
           this.editing === 'keys' ||
           ((this.pgpPublicKeys.values || this.sshPublicKeys.values) &&
             (Object.entries(this.pgpPublicKeys.values).length > 0 ||
-              Object.entries(this.pgpPublicKeys.values).length > 0)) ||
+              Object.entries(this.sshPublicKeys.values).length > 0)) ||
           false,
       };
     },
