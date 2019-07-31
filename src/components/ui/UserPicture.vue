@@ -67,7 +67,7 @@ export default {
         this.avatar.picture &&
         this.avatar.picture.startsWith('data:')
       ) {
-        this.sec = this.avatar.picture;
+        this.src = this.avatar.picture;
       } else if (
         this.avatar.picture === null ||
         this.avatar.picture === '' ||

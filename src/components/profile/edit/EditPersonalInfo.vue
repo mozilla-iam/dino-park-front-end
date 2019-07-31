@@ -30,14 +30,7 @@
     </header>
     <div class="edit-personal-info">
       <div class="edit-personal-info__picture">
-        <UserPicture
-          :avatar="{
-            picture: pictureData.value,
-            username: loggedInUser.primaryUsername.value,
-          }"
-          :size="264"
-          :isStaff="true"
-        ></UserPicture>
+        <UserPicture :avatar="avatar" :size="264" :isStaff="true"></UserPicture>
         <button
           class="button button--icon-only edit-personal-info__picture-edit-button"
           type="button"
@@ -432,6 +425,12 @@ export default {
   computed: {
     loggedInUser() {
       return this.$store.state.user;
+    },
+    avatar() {
+      return {
+        picture: this.pictureData.value,
+        username: this.loggedInUser.primaryUsername.value,
+      };
     },
   },
   mounted() {
