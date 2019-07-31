@@ -42,9 +42,6 @@
 </template>
 
 <script>
-import tzlookup from 'tz-lookup';
-import { DateTime } from 'luxon';
-
 export default {
   name: 'ProfileTeamLocation',
   props: {
@@ -60,20 +57,31 @@ export default {
       return 'officeLocation:"' + this.officeLocation + '"'; // eslint-disable-line
     },
     timezoneWithTime() {
-      let dt = DateTime.local();
-      dt = dt.setZone(this.timezone);
-      const profileOffset = dt.offset;
-      dt = dt.setZone(this.currentTimezone);
-      const currentLocalOffset = dt.offset;
-      const printedOffsetRaw = this.getOffsetDiffFromMinutes(
-        currentLocalOffset,
-        profileOffset,
-      );
+      const currDate = new Date();
+      const dateOptions = {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+      };
+      if (!this.timezone || !this.currentTimezone) {
+        return null;
+      }
+      const profileDate = new Intl.DateTimeFormat('en-US', {
+        ...dateOptions,
+        timeZone: this.timezone,
+      }).format(currDate);
+      const currentLocalDate = new Intl.DateTimeFormat('en-US', {
+        ...dateOptions,
+        timeZone: this.currentTimezone,
+      }).format(currDate);
+      const hoursDiff =
+        (new Date(profileDate) - new Date(currentLocalDate)) / 36e5;
       let printedOffset = '';
-      if (printedOffsetRaw !== null && printedOffsetRaw !== 0) {
-        printedOffset = ` | ${
-          printedOffsetRaw > 0 ? '+' : ''
-        }${printedOffsetRaw}hrs to you`;
+      if (hoursDiff !== null && hoursDiff !== 0) {
+        printedOffset = ` | ${hoursDiff > 0 ? '+' : ''}${hoursDiff}hrs to you`;
       }
       if (this.timezone) {
         return `${this.localtime} local time (${this.getTimezoneName(
@@ -87,7 +95,6 @@ export default {
     this.interval = window.setInterval(() => {
       this.localtime = this.getLocaltime();
     }, 1000);
-    this.getCurrentLocation();
   },
   beforeDestroy() {
     if (this.interval) {
@@ -95,16 +102,6 @@ export default {
     }
   },
   methods: {
-    processLocation(position) {
-      this.currentTimezone = tzlookup(
-        position.coords.latitude,
-        position.coords.longitude,
-      );
-    },
-    processLocationError(error) {
-      console.log('Unable to retrieve location: ', error.message);
-      this.currentTimezone = this.$store.state.user.timezone.value;
-    },
     getOffsetDiffFromMinutes(localOffset, targetOffset) {
       if (Number.isNaN(localOffset) || Number.isNaN(targetOffset)) {
         return null;
@@ -121,16 +118,6 @@ export default {
         return calcTargetOffset - calcLocalOffset;
       }
       return calcLocalOffset - calcTargetOffset;
-    },
-    getCurrentLocation() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          this.processLocation.bind(this),
-          this.processLocationError.bind(this),
-        );
-      } else {
-        this.currentTimezone = this.$store.state.user.timezone.value;
-      }
     },
     getTimezoneName(timezone) {
       try {
@@ -159,7 +146,7 @@ export default {
   data() {
     return {
       localtime: this.getLocaltime(),
-      currentTimezone: '',
+      currentTimezone: this.$store.state.user.timezone.value,
     };
   },
 };
