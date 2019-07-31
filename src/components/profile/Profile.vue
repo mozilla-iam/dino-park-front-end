@@ -279,7 +279,7 @@
     >
       <a id="nav-access-groups" class="profile__anchor"></a>
       <ViewAccessGroups
-        v-bind="(accessInformation, userOnOwnProfile)"
+        v-bind="{ accessInformation, userOnOwnProfile }"
       ></ViewAccessGroups>
     </section>
     <EmptyCard
@@ -304,6 +304,7 @@ import EditTags from './edit/EditTags.vue';
 import EmptyCard from '@/components/profile/view/EmptyCard.vue';
 import Identities from '@/assets/js/identities';
 import ProfileNav from './ProfileNav.vue';
+import ViewAccessGroups from './view/ViewAccessGroups.vue';
 import ViewAccounts from './view/ViewAccounts.vue';
 import ViewContact from './view/ViewContact.vue';
 import ViewKeys from './view/ViewKeys.vue';
@@ -350,6 +351,7 @@ export default {
     EditTags,
     EmptyCard,
     ProfileNav,
+    ViewAccessGroups,
     ViewAccounts,
     ViewContact,
     ViewKeys,
