@@ -51,7 +51,7 @@
       :onStaffProfile="staffInformation.staff.value"
     ></ProfileNav>
 
-    <section v-if="staffInformation.staff.value" class="profile__section">
+    <section v-if="staffInformation.staff.value" class="profile__section first">
       <a id="nav-relations" class="profile__anchor"></a>
       <ViewColleagues :username="primaryUsername.value"></ViewColleagues>
     </section>
@@ -288,8 +288,7 @@
       nav="access-groups"
       title="Access Groups"
       message="Support for Access Group management is coming soon."
-    >
-    </EmptyCard>
+    ></EmptyCard>
   </main>
 </template>
 
@@ -511,9 +510,17 @@ export default {
   border-radius: var(--cardRadius);
   position: relative;
 }
+
+.profile__section.first {
+  padding: 0;
+}
+
+.profile__section.first .profile__section-header {
+  margin: 0 0 1.5em 0;
+}
 @supports (--key: value) {
   .profile__section {
-    border-color: transparent;
+    border: none;
     box-shadow: var(--shadowCard);
   }
 }
@@ -528,9 +535,7 @@ export default {
 .profile__section:first-child {
   grid-column: 1 / -1;
 }
-.profile__section h3 {
-  margin: 1.5em 0 1em;
-}
+
 .profile__section .reporting-structure h3 {
   margin-top: 0;
 }
