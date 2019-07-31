@@ -168,6 +168,7 @@ export default {
       } else {
         // nothing changed
         if (this.editPicture === 'default:') {
+          this.pictureData.value = '';
           this.picture.value = '';
         }
         this.$emit('close');
