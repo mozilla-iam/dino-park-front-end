@@ -10,7 +10,11 @@
     </div>
     <div
       v-if="this.related.directs.length > 0"
-      class="reporting-structure__container reporting-structure__manages"
+      :class="{
+        'reporting-structure__container': true,
+        'reporting-structure__manages': true,
+        'has-more': this.related.directs.length > this.initiallyShown,
+      }"
     >
       <h3>Manages:</h3>
       <div class="reporting-structure__content">
@@ -19,7 +23,7 @@
             0,
             this.initiallyShown,
           )"
-          :class="directsView"
+          :class="getViewClasses('directs')"
           :key="`direct-${index}`"
           v-bind="direct"
         />
@@ -36,7 +40,7 @@
               v-for="(direct, index) in this.related.directs.slice(
                 this.initiallyShown,
               )"
-              :class="directsView"
+              :class="getViewClasses('directs')"
               :key="`direct-${index}`"
               v-bind="direct"
             />
@@ -65,7 +69,7 @@
             0,
             this.initiallyShown,
           )"
-          :class="peersView"
+          :class="getViewClasses('peers')"
           :key="`peer-${index}`"
           v-bind="peer"
         />
@@ -82,7 +86,7 @@
               v-for="(peer, index) in this.related.peers.slice(
                 this.initiallyShown,
               )"
-              :class="peersView"
+              :class="getViewClasses('peers')"
               :key="`peer-${index}`"
               v-bind="peer"
             />
@@ -121,17 +125,15 @@ export default {
     Person,
     ShowMore,
   },
+  methods: {
+    getViewClasses(relatedCollection) {
+      return this.related[relatedCollection].length > 1 &&
+        this.viewAs === 'grid'
+        ? 'person--borderless person--avatar-only'
+        : 'person--borderless';
+    },
+  },
   computed: {
-    directsView() {
-      return this.related.directs.length > 1 && this.viewAs === 'grid'
-        ? 'person--borderless person--avatar-only'
-        : 'person--borderless';
-    },
-    peersView() {
-      return this.related.peers.length > 1 && this.viewAs === 'grid'
-        ? 'person--borderless person--avatar-only'
-        : 'person--borderless';
-    },
     initiallyShown() {
       return this.viewAs === 'grid' ? undefined : 8;
     },
@@ -163,17 +165,13 @@ export default {
 }
 
 @media (min-width: 50em) {
-  .reporting-structure__reports-to,
-  .reporting-structure__manages,
-  .reporting-structure__peers {
+  .reporting-structure__container {
     display: grid;
     grid-gap: 2em;
     grid-template-columns: 6em 1fr;
   }
-  .reporting-structure__manages > div {
-    min-width: 0; /* defaults to auto, which allows people's name/title to grow the grid column */
-  }
-  .reporting-structure__peers > div {
+
+  .reporting-structure__content {
     min-width: 0; /* defaults to auto, which allows people's name/title to grow the grid column */
   }
 }
