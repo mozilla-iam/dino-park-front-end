@@ -57,43 +57,64 @@ export default {
       return 'officeLocation:"' + this.officeLocation + '"'; // eslint-disable-line
     },
     timezoneWithTime() {
-      const currDate = new Date();
-      const dateOptions = {
-        year: 'numeric',
-        month: 'numeric',
-        day: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric',
-      };
+      const getHoursDiff = (date1, date2) =>
+        (new Date(date1) - new Date(date2)) / 36e5;
+
       if (!this.timezone || !this.currentTimezone) {
         return null;
       }
-      const profileDate = new Intl.DateTimeFormat('en-US', {
-        ...dateOptions,
-        timeZone: this.timezone,
-      }).format(currDate);
-      const currentLocalDate = new Intl.DateTimeFormat('en-US', {
-        ...dateOptions,
-        timeZone: this.currentTimezone,
-      }).format(currDate);
-      const hoursDiff =
-        (new Date(profileDate) - new Date(currentLocalDate)) / 36e5;
+      // Get viewed profile timezone
+      const profileDate = this.getFormattedDateWithTimezone(
+        this.localtime,
+        this.timezone,
+      );
+
+      // Get logged in profile timezone
+      const currentLocalDate = this.getFormattedDateWithTimezone(
+        this.localtime,
+        this.currentTimezone,
+      );
+
+      // Get browser timezone
+      const browserTimezone = this.getBrowserTimezone();
+      let currentBrowserDate = null;
+      let printedBrowserOffset = '';
+
+      // Build browser timezone string
+      if (browserTimezone && browserTimezone !== this.currentTimezone) {
+        currentBrowserDate = this.getFormattedDateWithTimezone(
+          this.localtime,
+          browserTimezone,
+        );
+        const browserHoursDiff = getHoursDiff(profileDate, currentBrowserDate);
+        if (browserHoursDiff !== null && browserHoursDiff !== 0) {
+          printedBrowserOffset = `, ${
+            browserHoursDiff > 0 ? '+' : ''
+          }${browserHoursDiff}hrs to your current time`;
+        }
+      }
+
+      // Build local timezone string;
+      const hoursDiff = getHoursDiff(profileDate, currentLocalDate);
       let printedOffset = '';
       if (hoursDiff !== null && hoursDiff !== 0) {
-        printedOffset = ` | ${hoursDiff > 0 ? '+' : ''}${hoursDiff}hrs to you`;
+        printedOffset = ` | ${
+          hoursDiff > 0 ? '+' : ''
+        }${hoursDiff}hrs to your local time`;
       }
+
+      // Return final string
       if (this.timezone) {
-        return `${this.localtime} local time (${this.getTimezoneName(
+        return `${this.getLocaltime()} local time (${this.getTimezoneName(
           this.timezone,
-        )})${printedOffset}`;
+        )})${printedOffset}${printedBrowserOffset}`;
       }
       return null;
     },
   },
   mounted() {
     this.interval = window.setInterval(() => {
-      this.localtime = this.getLocaltime();
+      this.localtime = new Date();
     }, 1000);
   },
   beforeDestroy() {
@@ -102,22 +123,24 @@ export default {
     }
   },
   methods: {
-    getOffsetDiffFromMinutes(localOffset, targetOffset) {
-      if (Number.isNaN(localOffset) || Number.isNaN(targetOffset)) {
+    getFormattedDateWithTimezone(datetime, tz) {
+      return new Intl.DateTimeFormat('en-US', {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        timeZone: tz,
+      }).format(datetime);
+    },
+    getBrowserTimezone() {
+      try {
+        return Intl.DateTimeFormat().resolvedOptions().timeZone;
+      } catch (e) {
+        console.log('Unable to get browser timezone: ', e);
         return null;
       }
-      const calcLocalOffset = localOffset / 60;
-      const calcTargetOffset = targetOffset / 60;
-      if (calcLocalOffset < 0) {
-        if (targetOffset > 0) {
-          return Math.abs(calcLocalOffset) + calcTargetOffset;
-        }
-        return Math.abs(calcLocalOffset) - Math.abs(calcTargetOffset);
-      }
-      if (calcTargetOffset > 0) {
-        return calcTargetOffset - calcLocalOffset;
-      }
-      return calcLocalOffset - calcTargetOffset;
     },
     getTimezoneName(timezone) {
       try {
@@ -135,7 +158,7 @@ export default {
       if (this.timezone) {
         try {
           const options = { timeZone: this.timezone };
-          return new Date().toLocaleTimeString(navigator.language, options);
+          return this.localtime.toLocaleTimeString(navigator.language, options);
         } catch (e) {
           return 'unknown';
         }
@@ -145,7 +168,7 @@ export default {
   },
   data() {
     return {
-      localtime: this.getLocaltime(),
+      localtime: new Date(),
       currentTimezone: this.$store.state.user.timezone.value,
     };
   },
