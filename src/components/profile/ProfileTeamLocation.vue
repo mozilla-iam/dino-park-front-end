@@ -37,10 +37,11 @@
             v-if="hasTimezoneOffset"
             buttonText="Open timezone info"
             alternateButtonText="Close timezone info"
-            >{{
-              hasBrowserTimezone ? hasTimezoneInfoText : hasNoTimezoneInfoText
-            }}</Tooltip
           >
+            {{
+              hasBrowserTimezone ? hasTimezoneInfoText : hasNoTimezoneInfoText
+            }}
+          </Tooltip>
         </template>
         <template v-else>
           <strong>
@@ -52,10 +53,11 @@
             v-if="hasTimezoneOffset"
             buttonText="Open timezone info"
             alternateButtonText="Close timezone info"
-            >{{
-              hasBrowserTimezone ? hasTimezoneInfoText : hasNoTimezoneInfoText
-            }}</Tooltip
           >
+            {{
+              hasBrowserTimezone ? hasTimezoneInfoText : hasNoTimezoneInfoText
+            }}
+          </Tooltip>
         </template>
       </div>
     </div>
@@ -288,6 +290,9 @@ export default {
 }
 
 .profile__team-location-content .tooltip button {
+  color: var(--gray-50);
+}
+.profile__team-location-content .tooltip button:hover {
   color: var(--blue-60);
 }
 </style>
