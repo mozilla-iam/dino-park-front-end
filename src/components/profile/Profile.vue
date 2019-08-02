@@ -529,8 +529,8 @@ export default {
   color: var(--gray-50);
   border: 2px solid var(--gray-30);
 }
-.profile__section--editing {
-  border-color: var(--blue-60);
+.profile__section.profile__section--editing {
+  border: 2px solid var(--blue-60);
 }
 .profile__section:first-child {
   grid-column: 1 / -1;
