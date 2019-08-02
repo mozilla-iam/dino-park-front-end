@@ -31,7 +31,9 @@
       </button>
     </div>
     <div class="org-chart">
-      <div class="org-chart__chart"><LoadingSpinner></LoadingSpinner></div>
+      <div class="org-chart__chart">
+        <LoadingSpinner></LoadingSpinner>
+      </div>
       <ApolloQuery
         v-if="username && (desktopView || openedFromOrgNode)"
         :query="previewProfileQuery"
@@ -67,6 +69,7 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import Icon from '@/components/ui/Icon.vue';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 import Modal from '@/components/_functional/Modal.vue';
@@ -81,6 +84,14 @@ const fetcher = new Fetcher({ failoverOn: [302] });
 function renderNode(node, level = 1) {
   const e = document.createElement('div');
   const hasChildren = node.children.length > 0;
+  const IconClass = Vue.extend(Icon);
+  const icon = new IconClass({
+    propsData: {
+      id: 'staff',
+      width: 10,
+      height: 10,
+    },
+  }).$mount();
   e.innerHTML = `
     <li class="org-node ${
       hasChildren ? 'org-node--expandable' : ''
@@ -88,7 +99,6 @@ function renderNode(node, level = 1) {
       <a class="router-link-exact-active router-link-active" id="org-node-0">
         <div class="user-picture user-picture--small">
           <span class="dino-type">
-            <span aria-hidden="true">S</span>
             <span class="visually-hidden">Staff</span>
           </span>
         </div>
@@ -128,6 +138,11 @@ function renderNode(node, level = 1) {
             `
         }
     </li>`;
+  const [dinoEl] = e.getElementsByClassName('dino-type');
+  if (dinoEl) {
+    dinoEl.appendChild(icon.$el);
+  }
+
   const li = e.firstElementChild;
   const { picture, username } = node.data;
   li.id = username;

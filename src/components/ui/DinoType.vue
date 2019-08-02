@@ -1,7 +1,7 @@
 <template>
   <span class="dino-type">
     <template v-if="size === 'small'">
-      <span aria-hidden="true">S</span>
+      <Icon id="staff" :width="10" :height="10"></Icon>
       <span class="visually-hidden">Staff</span>
     </template>
     <template v-else
@@ -11,8 +11,11 @@
 </template>
 
 <script>
+import Icon from '@/components/ui/Icon.vue';
+
 export default {
   name: 'DinoType',
+  components: { Icon },
   props: {
     size: String,
   },
