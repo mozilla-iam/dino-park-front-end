@@ -14,6 +14,17 @@
         <a :href="`mailto:${primaryEmail.value}`">{{ primaryEmail.value }}</a>
       </IconBlock>
       <IconBlock
+        v-for="[key, value] in Object.entries(uris.values || {}).filter(([k]) =>
+          isEmailKey(k),
+        )"
+        :key="`email-${key}`"
+        heading="Email"
+        :subHeading="destructEmailKey(key).view"
+        icon="email"
+      >
+        <a :href="`email:${value}`">{{ value }}</a>
+      </IconBlock>
+      <IconBlock
         v-for="[key, value] in Object.entries(phoneNumbers.values || {})"
         :key="`phoneNumber-${key}`"
         heading="Phone"
@@ -27,6 +38,7 @@
 </template>
 
 <script>
+import EmailsMixin from '@/components/_mixins/EmailsMixin.vue';
 import PhoneNumbersMixin from '@/components/_mixins/PhoneNumbersMixin.vue';
 import EditButton from '@/components/profile/edit/EditButton.vue';
 import IconBlock from '@/components/ui/IconBlock.vue';
@@ -37,9 +49,10 @@ export default {
   props: {
     primaryEmail: Object,
     phoneNumbers: Object,
+    uris: Object,
     userOnOwnProfile: Boolean,
   },
-  mixins: [PhoneNumbersMixin],
+  mixins: [EmailsMixin, PhoneNumbersMixin],
   components: {
     EditButton,
     IconBlock,

@@ -105,15 +105,17 @@
           username: primaryUsername.value,
           initialPrimaryEmail: primaryEmail,
           initialPhoneNumbers: phoneNumbers,
+          initialUris: uris,
           initialValues: {
             primaryEmail,
             phoneNumbers,
+            uris,
           },
         }"
       />
       <ViewContact
         v-else
-        v-bind="{ primaryEmail, phoneNumbers, userOnOwnProfile }"
+        v-bind="{ primaryEmail, phoneNumbers, uris, userOnOwnProfile }"
       ></ViewContact>
     </section>
 
