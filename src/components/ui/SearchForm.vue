@@ -1,9 +1,7 @@
 <template>
   <form
     class="search-form"
-    :action="
-      this.$router.resolve({ name: 'Search', query: { query, who } }).href
-    "
+    :action="this.$router.resolve({ name: 'Search', query: urlQuery }).href"
     @submit="handleSubmit"
     method="GET"
   >
@@ -96,6 +94,12 @@ export default {
     },
     who() {
       return this.$route.query.who || 'staff';
+    },
+    urlQuery() {
+      if (this.query) {
+        return { query: this.query, who: this.who };
+      }
+      return { who: this.who };
     },
   },
   data() {
