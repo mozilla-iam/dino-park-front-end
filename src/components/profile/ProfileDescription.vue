@@ -39,9 +39,10 @@ export default {
   content: '';
   display: block;
   position: absolute;
-  top: calc(100% - 3em);
+  top: 4em;
   height: 3em;
   width: 100%;
   background: linear-gradient(rgba(255, 255, 255, 0) 0, var(--white) 100%);
+  pointer-events: none;
 }
 </style>
