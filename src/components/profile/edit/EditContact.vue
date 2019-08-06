@@ -80,8 +80,10 @@
         >
         <input
           :id="`field-phone-${index}-value`"
+          class="field-phone__input"
           type="tel"
-          placeholder="Phone number"
+          pattern="\+[1-9][0-9 \-]*"
+          placeholder="+1 163 7826 3789 (Phone number)"
           v-model="phoneNumbers.values[index].v"
         />
         <Checkbox
@@ -298,5 +300,10 @@ export default {
 }
 .edit-contact__header ~ .edit-contact__header {
   margin: 3em 0 1em;
+}
+input:invalid:hover.field-phone__input,
+input:invalid:focus.field-phone__input,
+input:invalid.field-phone__input {
+  border-color: var(--neon-red);
 }
 </style>
