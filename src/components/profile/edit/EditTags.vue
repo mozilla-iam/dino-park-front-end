@@ -21,7 +21,6 @@
     <div class="add-tags__list">
       <Tag
         v-for="({ k, v }, index) in tags.values"
-        searchField="tags"
         :tag="v"
         :key="`tag-${index}`"
         :removable="true"

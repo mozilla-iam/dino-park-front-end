@@ -8,12 +8,7 @@
         sectionId="tags"
       ></EditButton>
     </header>
-    <Tag
-      v-for="(tag, index) in tags.values"
-      searchField="tags"
-      :tag="tag"
-      :key="`tag-${index}`"
-    />
+    <Tag v-for="(tag, index) in tags.values" :tag="tag" :key="`tag-${index}`" />
   </div>
 </template>
 
