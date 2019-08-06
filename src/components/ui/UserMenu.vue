@@ -86,10 +86,10 @@
         </span>
       </li>
     </ul>
-    <span class="user-menu__faux-link user-menu__log-out">
+    <a href="/oauth/logout?redirect=/" class="user-menu__log-out">
       <span>Log Out</span>
       <Icon id="log-out" :width="24" :height="24" />
-    </span>
+    </a>
   </div>
 </template>
 
@@ -144,15 +144,18 @@ export default {
     height: auto;
   }
 }
+.user-menu__header a {
+  display: block;
+}
 .user-menu a {
   color: var(--white);
   text-decoration: none;
   margin: 0 2px;
-  display: block;
 }
 .user-menu a:hover {
   color: var(--white);
 }
+a.user-menu__log-out,
 .user-menu__items a,
 .user-menu__faux-link {
   display: flex;
@@ -162,6 +165,7 @@ export default {
 .focus-styles .user-menu button:focus {
   box-shadow: 0px 0 0 1px var(--white), 0 0 0 3px var(--transparentWhite);
 }
+a.user-menu__log-out svg,
 .user-menu__items a svg,
 .user-menu__faux-link svg {
   margin-left: auto;
@@ -207,12 +211,6 @@ export default {
   border-top: 1px solid var(--gray-50);
   margin-top: auto; /* works because it is a flex item in a flex container */
 }
-.user-menu__log-out:hover {
-  color: var(--gray-40);
-}
-.user-menu__faux-link.user-menu__log-out:hover {
-  color: var(--gray-50);
-}
 .user-menu__header-name,
 .user-menu__header-email,
 .user-menu a span {
@@ -235,6 +233,7 @@ export default {
     margin: 2em 0;
   }
 }
+a.user-menu__log-out:hover,
 .user-menu__items a:hover {
   color: var(--gray-40);
 }
