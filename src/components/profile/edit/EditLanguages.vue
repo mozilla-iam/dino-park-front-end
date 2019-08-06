@@ -21,6 +21,7 @@
     <div class="add-languages__list">
       <Tag
         v-for="({ k, v }, index) in languages.values"
+        searchField="languages"
         :tag="v"
         :key="`language-${index}`"
         :removable="true"
