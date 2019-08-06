@@ -66,6 +66,9 @@
             <Meta
               metaKey="Desk number"
               :metaValue="staffInformation.wprDeskNumber.value"
+              :link="
+                deskNumberToOfficePlanLink(staffInformation.wprDeskNumber.value)
+              "
             />
             <Meta
               metaKey="Cost center"
@@ -89,6 +92,7 @@
 
 <script>
 import CompanyMixin from '@/components/_mixins/CompanyMixin.vue';
+import OfficesMixin from '@/components/_mixins/OfficesMixin.vue';
 import ContactMe from '@/components/ui/ContactMe.vue';
 import EditButton from '@/components/profile/edit/EditButton.vue';
 import Icon from '@/components/ui/Icon.vue';
@@ -102,7 +106,7 @@ import ProfileTitle from '../ProfileTitle.vue';
 import ProfileTeamLocation from '../ProfileTeamLocation.vue';
 
 export default {
-  mixins: [CompanyMixin],
+  mixins: [CompanyMixin, OfficesMixin],
   name: 'ViewPersonalInfo',
   props: {
     alternativeName: Object,
