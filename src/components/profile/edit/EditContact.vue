@@ -2,6 +2,7 @@
   <EditMutationWrapper
     :editVariables="{
       phoneNumbers,
+      uris,
     }"
     :initialValues="initialValues"
     formName="Edit contact information"
@@ -16,22 +17,24 @@
       <div class="edit-contact__item">
         <Select
           class="options--chevron"
-          label="Email adddress 1 type"
-          id="field-email-1-type"
+          label="Primary email adddress type"
+          id="field-email-primary-type"
           :options="[{ label: 'Primary', value: 'Primary' }]"
           :disabled="true"
         />
-        <label for="field-email-1-value" class="visually-hidden">Email 1</label>
+        <label for="field-email-primary-value" class="visually-hidden"
+          >Email 1</label
+        >
         <input
           type="email"
-          id="field-email-1-value"
+          id="field-email-primary-value"
           :value="primaryEmail.value"
           placeholder="Email address"
           disabled
         />
         <PrivacySetting
-          label="Email address 1 privacy settings"
-          id="field-email-1-privacy"
+          label="Primary email address privacy settings"
+          id="field-email-primary-privacy"
           profileFieldName="primaryEmail"
           :profileFieldObject="primaryEmail"
           :disabled="true"
@@ -44,7 +47,48 @@
         />
         <hr role="presentation" />
       </div>
-      <div class="edit-contact__info">Email editing coming soon</div>
+      <div
+        v-for="({ k, v: email }, index) in uris.values"
+        v-if="isEmailKey(k)"
+        :key="`email-${index}`"
+        class="edit-contact__item"
+      >
+        <Button
+          class="button--icon-only"
+          v-on:click="() => deleteEmailUriNumber(index)"
+        >
+          <Icon id="x" :width="17" :height="17"></Icon>
+          <span class="visually-hidden">Remove email address</span>
+        </Button>
+        <Select
+          class="options--chevron"
+          :label="`Email number ${index} type`"
+          :id="`field-email-${index}-type`"
+          :options="emailLabels(k, index)"
+          v-model="uris.values[index].k"
+        />
+        <label :for="`field-email-${index}-value`" class="visually-hidden"
+          >Email {{ `${index + 1}` }}</label
+        >
+        <input
+          :id="`field-email-${index}-value`"
+          type="tel"
+          placeholder="Email address"
+          v-model="uris.values[index].v"
+        />
+        <Checkbox
+          @input="(newValue) => toggleEmailContactMe(newValue, index)"
+          :checked="destructEmailKey(k).contact"
+          label="Show in Contact Me button"
+          class="edit-contact__set-as-contact"
+        />
+        <hr role="presentation" />
+      </div>
+      <Button
+        class="edit-contact__add-more button--secondary button--action"
+        v-on:click="addEmail"
+        ><Icon id="plus" :width="16" :height="16" />Add Email</Button
+      >
       <div class="edit-contact__header">
         <h3>Phone</h3>
         <PrivacySetting
@@ -108,6 +152,7 @@
 <script>
 import Checkbox from '@/components/ui/Checkbox.vue';
 import PhoneNumbersMixin from '@/components/_mixins/PhoneNumbersMixin.vue';
+import EmailsMixin from '@/components/_mixins/EmailsMixin.vue';
 import Button from '@/components/ui/Button.vue';
 import EditMutationWrapper from './EditMutationWrapper.vue';
 import PrivacySetting from '@/components/profile/PrivacySetting.vue';
@@ -120,10 +165,11 @@ export default {
   props: {
     initialPrimaryEmail: Object,
     initialPhoneNumbers: Object,
+    initialUris: Object,
     initialValues: Object,
     editVariables: Object,
   },
-  mixins: [PhoneNumbersMixin],
+  mixins: [PhoneNumbersMixin, EmailsMixin],
   components: {
     Button,
     Checkbox,
@@ -136,6 +182,19 @@ export default {
     this.$refs.header.focus();
   },
   methods: {
+    addEmail() {
+      const count = this.uris.values.filter(({ k }) => this.isEmailKey(k))
+        .length;
+      this.uris.values.push({
+        k: this.constructEmailKey({ num: count }),
+        v: '',
+      });
+    },
+    deleteEmail(index) {
+      if (this.uris.values.length > index) {
+        this.uris.values.splice(index, 1);
+      }
+    },
     addPhoneNumber() {
       const count = this.phoneNumbers.values.length;
       this.phoneNumbers.values.push({
@@ -148,27 +207,58 @@ export default {
         this.phoneNumbers.values.splice(index, 1);
       }
     },
-    togglePhoneNumberContactMe(newValue, index) {
-      const number = this.destructPhoneKey(
-        this.phoneNumbers.values[index].k,
-        index,
-      );
-      number.contact = newValue;
-      this.phoneNumbers.values[index].k = this.constructPhoneKey(number);
+    toggleContactMe(newValue, index, list, destruct, construct) {
+      const field = destruct(list[index].k, index);
+      field.contact = newValue;
+      list[index].k = construct(field);
     },
-    phoneNumberLabels(k, index) {
-      const current = this.destructPhoneKey(k).view;
-      const names = ['Primary', 'Personal', 'Work', 'Home'].filter(
-        (name) => name !== current,
+    togglePhoneNumberContactMe(newValue, index) {
+      this.toggleContactMe(
+        newValue,
+        index,
+        this.phoneNumbers.values,
+        this.destructPhoneKey,
+        this.constructPhoneKey,
       );
+    },
+    toggleEmailContactMe(newValue, index) {
+      this.toggleContactMe(
+        newValue,
+        index,
+        this.uris.values,
+        this.destructEmailKey,
+        this.constructEmailKey,
+      );
+    },
+    labels(k, index, desctruct, construct, allOptions) {
+      const current = desctruct(k).view;
+      const names = allOptions.filter((name) => name !== current);
       const options = names.map((label) => {
         return {
           label,
-          value: this.constructPhoneKey({ view: label, num: index }),
+          value: construct({ view: label, num: index }),
         };
       });
       options.push({ label: current, value: k });
       return options;
+    },
+    emailLabels(k, index) {
+      return this.labels(
+        k,
+        index,
+        this.destructEmailKey,
+        this.constructEmailKey,
+        ['Alternative', 'Private', 'Bugmail'],
+      );
+    },
+    phoneNumberLabels(k, index) {
+      return this.labels(
+        k,
+        index,
+        this.destructPhoneKey,
+        this.constructPhoneKey,
+        ['Primary', 'Personal', 'Work', 'Home'],
+      );
     },
   },
   data() {
@@ -176,6 +266,7 @@ export default {
       values: numbers,
       metadata: { display: numbersDisplay },
     } = this.initialPhoneNumbers;
+    const { values: uris } = this.initialUris;
     const {
       value: email,
       metadata: { display: emailDisplay },
@@ -185,6 +276,11 @@ export default {
       primaryEmail: {
         value: email,
         display: emailDisplay || DISPLAY_LEVELS.private.value,
+      },
+      uris: {
+        values: Object.entries(uris || {}).map(([k, v]) => {
+          return { k, v };
+        }),
       },
       phoneNumbers: {
         values: Object.entries(numbers || {}).map(([k, v]) => {

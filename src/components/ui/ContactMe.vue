@@ -24,6 +24,16 @@
           </a>
         </div>
         <div
+          v-for="(email, index) in displayedEmailAddresses"
+          :key="`e-${index}`"
+          class="contact-me__item"
+        >
+          <a :href="`mailto:${email.value}`" class="contact-me__pair">
+            <Icon id="at-sign" :width="24" :height="24" />
+            <span class="contact-me__value">{{ email.value }}</span>
+          </a>
+        </div>
+        <div
           v-for="(number, index) in displayedPhoneNumbers"
           :key="`p-${index}`"
           class="contact-me__item"
@@ -91,6 +101,7 @@
 
 <script>
 import AccountsMixin from '@/components/_mixins/AccountsMixin.vue';
+import EmailsMixin from '@/components/_mixins/EmailsMixin.vue';
 import PhoneNumbersMixin from '@/components/_mixins/PhoneNumbersMixin.vue';
 import Icon from '@/components/ui/Icon.vue';
 import Popover from '@/components/ui/Popover.vue';
@@ -103,13 +114,24 @@ export default {
     phoneNumbers: Object,
     uris: Object,
   },
-  mixins: [PhoneNumbersMixin, AccountsMixin],
+  mixins: [EmailsMixin, PhoneNumbersMixin, AccountsMixin],
   components: {
     Icon,
     Popover,
     ShowMore,
   },
   computed: {
+    displayedEmailAddresses() {
+      const { values: uris } = this.uris || {};
+      const displayedEmails = Object.entries(uris || {})
+        .filter(([k]) => this.isEmailKey(k))
+        .map(([key, value]) => {
+          const { view, contact } = this.destructEmailKey(key);
+          return { view, contact, value };
+        })
+        .filter(({ contact }) => contact);
+      return displayedEmails;
+    },
     displayedPhoneNumbers() {
       const { values: numbers } = this.phoneNumbers || {};
       const dispalyedNumbers = Object.entries(numbers || {})
@@ -123,6 +145,7 @@ export default {
     displayedUris() {
       const { values: uris } = this.uris || {};
       const dispalyedUris = Object.entries(uris || {})
+        .filter(([k]) => this.isAccountKey(k))
         .map(([key, value]) => {
           const { name, contact } = this.destructUriKey(key);
           const account = this.account([name, value]);

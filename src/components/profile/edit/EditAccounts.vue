@@ -19,6 +19,7 @@
     </header>
     <div
       v-for="({ k, v }, index) in uris.values"
+      v-if="isAccountKey(k)"
       :key="index"
       class="edit-contact__item"
     >

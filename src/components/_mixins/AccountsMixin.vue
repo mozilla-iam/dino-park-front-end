@@ -83,6 +83,9 @@ export default {
       }
       return null;
     },
+    isAccountKey(key) {
+      return (key && key.startsWith('EA#')) || false;
+    },
     destructUriKey(key) {
       const [typ, name, contact = 'n'] = key.split('#');
       return { typ, name, contact: contact === 'y' };
