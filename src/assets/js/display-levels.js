@@ -52,8 +52,8 @@ const DISPLAY_ANY = [
 
 const VALID_DISPLAY_LEVELS = {
   primaryUsername: DISPLAY_PUBLIC_ONLY,
-  firstName: DISPLAY_NOT_PRIVATE,
-  lastName: DISPLAY_NOT_PRIVATE,
+  phoneNumbers: DISPLAY_ANY,
+  'accessInformation.mozilliansorg': DISPLAY_ANY,
   'staffInformation.manager': DISPLAY_STAFF_NDAED_ONLY,
   'staffInformation.director': DISPLAY_STAFF_NDAED_ONLY,
   'staffInformation.staff': DISPLAY_STAFF_NDAED_ONLY,
@@ -66,5 +66,5 @@ const VALID_DISPLAY_LEVELS = {
 };
 
 export function displayLevelsFor(field) {
-  return (field && VALID_DISPLAY_LEVELS[field]) || DISPLAY_ANY;
+  return (field && VALID_DISPLAY_LEVELS[field]) || DISPLAY_NOT_PRIVATE;
 }
