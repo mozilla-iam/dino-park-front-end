@@ -124,6 +124,7 @@
           :id="`field-phone-${index}-value`"
           class="field-phone__input"
           type="tel"
+          required
           pattern="\+([1-9][0-9 \-]*)*"
           placeholder="+1 163 7826 3789 (Phone number)"
           title="+X XXX XXX…"
