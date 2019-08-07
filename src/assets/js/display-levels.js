@@ -52,6 +52,7 @@ const DISPLAY_ANY = [
 
 const VALID_DISPLAY_LEVELS = {
   primaryUsername: DISPLAY_PUBLIC_ONLY,
+  phoneNumbers: DISPLAY_ANY,
   'accessInformation.mozilliansorg': DISPLAY_ANY,
   'staffInformation.manager': DISPLAY_STAFF_NDAED_ONLY,
   'staffInformation.director': DISPLAY_STAFF_NDAED_ONLY,
