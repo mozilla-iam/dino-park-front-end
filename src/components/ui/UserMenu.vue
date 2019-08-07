@@ -86,7 +86,7 @@
         </span>
       </li>
     </ul>
-    <a href="/oauth/logout?redirect=/" class="user-menu__log-out">
+    <a href="/oauth/logout?redirect=/logbackin.html" class="user-menu__log-out">
       <span>Log Out</span>
       <Icon id="log-out" :width="24" :height="24" />
     </a>
