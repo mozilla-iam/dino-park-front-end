@@ -53,10 +53,7 @@
         :key="`email-${index}`"
         class="edit-contact__item"
       >
-        <Button
-          class="button--icon-only"
-          v-on:click="() => deleteEmailUriNumber(index)"
-        >
+        <Button class="button--icon-only" v-on:click="() => deleteEmail(index)">
           <Icon id="x" :width="17" :height="17"></Icon>
           <span class="visually-hidden">Remove email address</span>
         </Button>
@@ -72,7 +69,8 @@
         >
         <input
           :id="`field-email-${index}-value`"
-          type="tel"
+          type="email"
+          required
           placeholder="Email address"
           v-model="uris.values[index].v"
         />

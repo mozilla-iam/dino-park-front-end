@@ -44,6 +44,7 @@
       <input
         :id="`field-account-${index}-username`"
         type="text"
+        required
         v-model="uris.values[index].v"
         :placeholder="
           EXTERNAL_ACCOUNTS[destructUriKey(k).name].placeholder ||
