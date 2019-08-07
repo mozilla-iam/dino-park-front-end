@@ -465,6 +465,11 @@ export default {
   },
   methods: {
     async updateLocations(query) {
+      this.timezone.value = '';
+      const hit = this.locations[0] || {};
+      if (query === hit.display) {
+        this.setTimezone(hit);
+      }
       try {
         const res = await fetcher.fetch(
           `/world/suggest?s=${encodeURIComponent(query)}`,
@@ -480,9 +485,8 @@ export default {
         console.error(e);
       }
     },
-    setTimezone({ item }) {
-      console.log(item.timezone);
-      this.timezone.value = item.timezone;
+    setTimezone({ item: { timezone } = {} }) {
+      this.timezone.value = timezone || '';
     },
   },
 };
