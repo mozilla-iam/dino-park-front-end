@@ -126,10 +126,12 @@
           :id="`field-phone-${index}-value`"
           class="field-phone__input"
           type="tel"
-          pattern="\+[1-9][0-9 \-]*"
+          pattern="\+([1-9][0-9 \-]*)*"
           placeholder="+1 163 7826 3789 (Phone number)"
+          title="+X XXX XXX…"
           v-model="phoneNumbers.values[index].v"
         />
+        <span>Enter country code +[1-9]</span>
         <Checkbox
           @input="(newValue) => togglePhoneNumberContactMe(newValue, index)"
           :checked="destructPhoneKey(k).contact"
@@ -396,6 +398,23 @@ export default {
 }
 .edit-contact__header ~ .edit-contact__header {
   margin: 3em 0 1em;
+}
+input.field-phone__input + span {
+  grid-column: 2 / 4;
+  color: var(--neon-red);
+  margin-top: -0.5em;
+  font-size: small;
+}
+@media (min-width: 57.5em) {
+  input.field-phone__input + span {
+    grid-column: 3 / 4;
+  }
+}
+input:valid.field-phone__input + span {
+  display: none;
+}
+input:invalid.field-phone__input + span {
+  display: initial;
 }
 input:invalid:hover.field-phone__input,
 input:invalid:focus.field-phone__input,
