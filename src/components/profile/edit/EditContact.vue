@@ -91,6 +91,12 @@
         />
         <hr role="presentation" />
       </div>
+      <div class="edit-contact__item">
+        <span class="edit-contact__item__info"
+          >Additional Email Addresses share their privacy settings with External
+          Accounts for now and are managed in the External Accounts card.</span
+        >
+      </div>
       <Button
         class="edit-contact__add-more button--secondary button--action"
         v-on:click="addEmail"
@@ -426,5 +432,17 @@ input:invalid:not(focus).edit-contact__input-w-error
 }
 input:invalid:not(focus).edit-contact__input-w-error {
   border-color: var(--neon-red);
+}
+.edit-contact__item__info {
+  grid-column: 2 / 4;
+  color: var(--gray-60);
+  font-size: small;
+  margin-left: 3em;
+  margin-bottom: 1em;
+}
+@media (min-width: 57.5em) {
+  .edit-contact__item__info {
+    margin-left: 1em;
+  }
 }
 </style>
