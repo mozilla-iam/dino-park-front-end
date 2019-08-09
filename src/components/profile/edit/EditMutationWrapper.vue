@@ -11,7 +11,8 @@
       <form
         class="mutation-form"
         action=""
-        v-on:submit.prevent="mutate"
+        :novalidate="novalidate"
+        v-on:submit.prevent="(ev) => check(mutate, ev)"
         :aria-label="formName"
       >
         <slot></slot>
@@ -52,8 +53,22 @@ export default {
     initialValues: Object,
     formName: String,
     editVariables: Object,
+    novalidate: {
+      type: Boolean,
+      default: false,
+    },
   },
   methods: {
+    check(mutate, ev) {
+      if (this.novalidate) {
+        const form = ev.target;
+        if (form.checkValidity()) {
+          return mutate(ev);
+        }
+        return ev.preventDefault();
+      }
+      return mutate(ev);
+    },
     handleError(e) {
       let msg = '';
       switch (e.message) {
