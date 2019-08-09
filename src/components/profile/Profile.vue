@@ -295,6 +295,7 @@
 </template>
 
 <script>
+import AccountsMixin from '@/components/_mixins/AccountsMixin.vue';
 import EditButton from '@/components/profile/edit/EditButton.vue';
 import EditAccounts from './edit/EditAccounts.vue';
 import EditContact from './edit/EditContact.vue';
@@ -342,6 +343,7 @@ export default {
     uuid: Object,
     primaryUsername: Object,
   },
+  mixins: [AccountsMixin],
   components: {
     EditAccounts,
     EditButton,
@@ -376,7 +378,9 @@ export default {
         accounts:
           this.editing === 'accounts' ||
           (this.uris.values &&
-            Object.entries(this.uris.values).length > 0 &&
+            Object.entries(this.uris.values).filter(([k]) =>
+              this.isAccountKey(k),
+            ).length > 0 &&
             true) ||
           false,
         languages:
