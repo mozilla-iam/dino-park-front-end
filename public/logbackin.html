@@ -25,5 +25,8 @@
   </head>
   <body>
     <main>Successfully logged out. <a href="/">Log back in.</a></main>
+    <script>
+      window.location.href = `https://auth.mozilla.auth0.com/v2/logout?returnTo=https://${window.location.hostname}/`;
+    </script>
   </body>
 </html>
