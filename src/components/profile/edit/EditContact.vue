@@ -5,6 +5,7 @@
       uris,
     }"
     :initialValues="initialValues"
+    :novalidate="true"
     formName="Edit contact information"
   >
     <header class="profile__section-header" ref="header" tabindex="-1">
@@ -68,12 +69,13 @@
           >Email {{ `${index + 1}` }}</label
         >
         <input
+          class="edit-contact__input-w-error"
           :id="`field-email-${index}-value`"
           type="email"
-          required
           placeholder="Email address"
           v-model="uris.values[index].v"
         />
+        <span>Enter a valid email address</span>
         <Checkbox
           @input="(newValue) => toggleEmailContactMe(newValue, index)"
           :checked="destructEmailKey(k).contact"
@@ -122,12 +124,10 @@
         >
         <input
           :id="`field-phone-${index}-value`"
-          class="field-phone__input"
+          class="edit-contact__input-w-error"
           type="tel"
-          required
           pattern="\+([1-9][0-9 \-]*)*"
           placeholder="+1 163 7826 3789 (Phone number)"
-          title="+X XXX XXX…"
           v-model="phoneNumbers.values[index].v"
         />
         <span>Enter country code +[1-9]</span>
@@ -398,26 +398,25 @@ export default {
 .edit-contact__header ~ .edit-contact__header {
   margin: 3em 0 1em;
 }
-input.field-phone__input + span {
+input.edit-contact__input-w-error + span {
   grid-column: 2 / 4;
   color: var(--neon-red);
   margin-top: -0.5em;
   font-size: small;
 }
 @media (min-width: 57.5em) {
-  input.field-phone__input + span {
+  input.edit-contact__input-w-error + span {
     grid-column: 3 / 4;
   }
 }
-input:valid.field-phone__input + span {
+input:focus:invalid.edit-contact__input-w-error + span,
+input:valid.edit-contact__input-w-error + span {
   display: none;
 }
-input:invalid.field-phone__input + span {
+input:invalid:not(focus).edit-contact__input-w-error + span {
   display: initial;
 }
-input:invalid:hover.field-phone__input,
-input:invalid:focus.field-phone__input,
-input:invalid.field-phone__input {
+input:invalid:not(focus).edit-contact__input-w-error {
   border-color: var(--neon-red);
 }
 </style>
