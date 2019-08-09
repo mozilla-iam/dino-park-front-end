@@ -75,7 +75,14 @@
           placeholder="Email address"
           v-model="uris.values[index].v"
         />
-        <span>Enter a valid email address</span>
+        <PrivacySetting
+          label="Additional email address privacy settings"
+          :id="`field-email-${index}-privacy`"
+          profileFieldName="uris"
+          :profileFieldObject="uris"
+          :disabled="true"
+        />
+        <span class="edit-contact__error-msg">Enter a valid email address</span>
         <Checkbox
           @input="(newValue) => toggleEmailContactMe(newValue, index)"
           :checked="destructEmailKey(k).contact"
@@ -130,7 +137,7 @@
           placeholder="+1 163 7826 3789 (Phone number)"
           v-model="phoneNumbers.values[index].v"
         />
-        <span>Enter country code +[1-9]</span>
+        <span class="edit-contact__error-msg">Enter country code +[1-9]</span>
         <Checkbox
           @input="(newValue) => togglePhoneNumberContactMe(newValue, index)"
           :checked="destructPhoneKey(k).contact"
@@ -398,22 +405,23 @@ export default {
 .edit-contact__header ~ .edit-contact__header {
   margin: 3em 0 1em;
 }
-input.edit-contact__input-w-error + span {
+input.edit-contact__input-w-error ~ .edit-contact__error-msg {
   grid-column: 2 / 4;
   color: var(--neon-red);
   margin-top: -0.5em;
   font-size: small;
 }
 @media (min-width: 57.5em) {
-  input.edit-contact__input-w-error + span {
+  input.edit-contact__input-w-error ~ .edit-contact__error-msg {
     grid-column: 3 / 4;
   }
 }
-input:focus:invalid.edit-contact__input-w-error + span,
-input:valid.edit-contact__input-w-error + span {
+input:focus:invalid.edit-contact__input-w-error ~ .edit-contact__error-msg,
+input:valid.edit-contact__input-w-error ~ .edit-contact__error-msg {
   display: none;
 }
-input:invalid:not(focus).edit-contact__input-w-error + span {
+input:invalid:not(focus).edit-contact__input-w-error
+  ~ .edit-contact__error-msg {
   display: initial;
 }
 input:invalid:not(focus).edit-contact__input-w-error {
