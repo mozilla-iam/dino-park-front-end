@@ -1,6 +1,6 @@
 <template>
   <main class="org-chart-main">
-    <div class="org-chart-buttons" v-if="!loading">
+    <div class="org-chart-buttons" v-if="!loading && !imagesLoaded">
       <button
         type="button"
         @click="expandAll"
@@ -77,9 +77,10 @@ import Toggle from '@/components/ui/Toggle.vue';
 import { PREVIEW_PROFILE } from '@/queries/profile';
 import Fetcher from '@/assets/js/fetcher';
 import generateIdenticon from '@/assets/js/identicon-avatar';
+import ImageCollectionHandler from '@/assets/js/image-collection-handler';
 
 const fetcher = new Fetcher({ failoverOn: [302] });
-
+let context = null;
 function renderNode(node, level = 1) {
   const e = document.createElement('div');
   const hasChildren = node.children.length > 0;
@@ -135,20 +136,10 @@ function renderNode(node, level = 1) {
   li.id = username;
   e.querySelector('a').href = `/o/${username}`;
   const img = e.querySelector('.user-picture');
-  if (
-    picture === null ||
-    picture === '' ||
-    picture === 'default:' ||
-    picture.startsWith('https://s3.amazonaws.com/')
-  ) {
-    generateIdenticon(username, 40).then((src) => {
-      img.style.backgroundSize = 'cover';
-      img.style.backgroundImage = `url("${src}")`;
-    });
-  } else {
-    img.style.backgroundSize = 'cover';
-    img.style.backgroundImage = `url("${picture}?size=40")`;
-  }
+  const innerImg = new Image();
+  innerImg.src = '/img/empty_profile.png';
+  innerImg.className = 'profile_image';
+  img.appendChild(innerImg);
   e.querySelector(
     '.org-node__name',
   ).textContent = `${node.data.firstName} ${node.data.lastName}`;
@@ -197,6 +188,9 @@ export default {
       dirty: false,
       rawJson: null,
       chartForHighlightClicked: false,
+      images: {},
+      imagePromises: [],
+      imagesLoaded: false,
     };
   },
   async created() {
@@ -224,9 +218,33 @@ export default {
     },
   },
   methods: {
+    loadNodes(nodes) {
+      const collection = new ImageCollectionHandler();
+      collection.loadImagesFromNodes(nodes);
+      return collection;
+    },
     async fetchData() {
       this.loading = true;
       try {
+        const collection = new ImageCollectionHandler({
+          onImageLoaded: (key, image) => {
+            const el = document.getElementById(key);
+            const selectedImage = el.querySelector('.profile_image');
+            if (!selectedImage) {
+              console.log("Couldn't find key: ", key);
+            } else {
+              selectedImage.parentNode.replaceChild(image, selectedImage);
+            }
+          },
+        });
+        const printData = (pData) => {
+          const link = document.createElement('link');
+          link.href = pData.data.picture + '?size=40';
+          document.getElementById('app').appendChild(link);
+          for (let i = 0, len = pData.children.length; i < len; i++) {
+            printData(pData.children[i]);
+          }
+        };
         const data = await fetcher.fetch('/api/v4/orgchart');
         const orgchart = await data.json();
         this.initiallyExpanded = orgchart.forrest
@@ -236,11 +254,32 @@ export default {
             return obj;
           }, {});
         const orgChartRoot = document.querySelector('.org-chart__chart');
+
         let chartFromStore = Boolean(this.$store.state.org);
         this.rawJson = JSON.stringify(orgchart);
         if (chartFromStore && this.rawJson !== this.$store.state.org.rawJson) {
           chartFromStore = false;
         }
+        let initialNodes = [];
+        let initialIds = [];
+        const nodes = [];
+        const initialExpandableKeys = Object.keys(this.initiallyExpanded);
+        const gatherChildren = (currentStack) => {
+          let nextStack = [];
+          for (let i = 0, len = currentStack.length; i < len; i++) {
+            nodes.push(currentStack[i].data);
+            if (currentStack[i].children.length > 0) {
+              nextStack = nextStack.concat(currentStack[i].children);
+            }
+          }
+          if (nextStack.length > 0) {
+            gatherChildren(nextStack);
+          }
+        };
+        gatherChildren(orgchart.forrest);
+        const loadedInitialImages = collection.loadImagesFromNodes(
+          initialNodes,
+        );
         const [f, t] = chartFromStore
           ? this.$store.state.org.nodes
           : renderOrgchart(orgchart);
@@ -261,15 +300,26 @@ export default {
           this.expandFirst();
         }
 
+        const loadedFinalImages = collection.loadImagesFromNodes(nodes);
+
         orgChartRoot.addEventListener('click', (event) => {
           const li = event.target.closest('li');
+
           this.chartForHighlightClicked = true;
           if (event.target.closest('button')) {
             this.toggle(li);
             this.saveOrgTree();
-            return;
+            let selectedUl = li.querySelector('ul');
+            if (selectedUl) {
+              collection.interruptImagesWithNodeList(
+                [...selectedUl.childNodes].map((node) =>
+                  node.getAttribute('id'),
+                ),
+              );
+            }
+          } else {
+            collection.interruptImagesWithNode(li.getAttribute('id'));
           }
-
           const anchor = event.target.closest('a');
           if (anchor) {
             this.$router.push({
@@ -282,6 +332,7 @@ export default {
             event.preventDefault();
           }
         });
+        this.loading = false;
       } catch (e) {
         if (e instanceof TypeError && e.message.startsWith('NetworkError')) {
           window.location.reload();
@@ -385,36 +436,9 @@ export default {
       });
     },
     expandAll() {
-      const entries = Object.entries(this.expandables);
-      const loadSet = (idx, num) => {
-        entries.slice(idx, idx + num).forEach(([, li]) => {
-          this.toggle(li, true);
-        });
-      };
-      let step = 25,
-        i = 0,
-        intervalTime = 1000;
-      let inter = setInterval(() => {
-        const run = () => {
-          if (i < entries.length) {
-            loadSet(i, step);
-            i += step;
-            if (i + step > entries.length) {
-              step = entries.length - i;
-            }
-          } else {
-            clearInterval(inter);
-          }
-        };
-        if (this.chartForHighlightClicked) {
-          setTimeout(() => {
-            run();
-            this.chartForHighlightClicked = false;
-          });
-        } else {
-          run();
-        }
-      }, intervalTime);
+      Object.entries(this.expandables).forEach(([, li]) => {
+        this.toggle(li, true);
+      });
       this.saveOrgTree();
     },
     collapseAll() {
@@ -447,6 +471,7 @@ export default {
     },
   },
   mounted() {
+    context = this;
     document.getElementById('search-query').focus();
   },
 };
