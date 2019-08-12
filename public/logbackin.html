@@ -26,7 +26,10 @@
   <body>
     <main>Successfully logged out. <a href="/">Log back in.</a></main>
     <script>
-      window.location.href = `https://auth.mozilla.auth0.com/v2/logout?returnTo=https://${window.location.hostname}/`;
+      const redirect = encodeURIComponent(
+        `https://${window.location.hostname}/?t=${new Date().valueOf()}`,
+      );
+      window.location.href = `https://auth.mozilla.auth0.com/v2/logout?returnTo=${redirect}`;
     </script>
   </body>
 </html>
