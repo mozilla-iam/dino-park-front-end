@@ -511,6 +511,11 @@ export default {
   position: relative;
 }
 
+.profile__section:not(.profile__section--editing):not(.first) {
+  padding: calc(2px + 1.5em);
+  box-sizing: content-box;
+}
+
 .profile__section.first {
   padding: 0;
 }
@@ -548,6 +553,15 @@ export default {
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
+}
+
+.profile__section:not(.profile__section--editing):not(.first)
+  .profile__section-header {
+  margin: calc(-1.5em - 2px) calc(-1.5em - 2px) calc(1.5em + 2px)
+    calc(-1.5em - 2px);
+  padding-top: calc(1.5em + 2px);
+  padding-left: calc(1.5em + 2px);
+  padding-right: calc(1.5em + 2px);
 }
 .profile__section-header h2 {
   margin: 0 0 0.75em 0;
