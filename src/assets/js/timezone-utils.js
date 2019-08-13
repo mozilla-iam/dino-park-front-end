@@ -2,7 +2,7 @@ export const getHoursDiff = (date1, date2) =>
   (new Date(date1) - new Date(date2)) / 36e5;
 
 export const getFormattedDateWithTimezone = (datetime, tz) => {
-  let options = {
+  const options = {
     year: 'numeric',
     month: 'numeric',
     day: 'numeric',

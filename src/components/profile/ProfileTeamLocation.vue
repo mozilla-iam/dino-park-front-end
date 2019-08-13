@@ -173,13 +173,16 @@ export default {
         hoursDiff !== browserHoursDiff
       ) {
         return `${printedLocalOffset}${
-          printedBrowserOffset === '' ? '' : ', ' + printedBrowserOffset
+          printedBrowserOffset === '' ? '' : `, ${printedBrowserOffset}`
         }`;
-      } else if (hoursDiff !== null && browserHoursDiff !== null) {
+      }
+      if (hoursDiff !== null && browserHoursDiff !== null) {
         return printedBrowserOffset;
-      } else if (hoursDiff !== null) {
+      }
+      if (hoursDiff !== null) {
         return printedLocalOffset;
-      } else if (browserHoursDiff !== null) {
+      }
+      if (browserHoursDiff !== null) {
         return browserHoursDiff;
       }
       return null;
