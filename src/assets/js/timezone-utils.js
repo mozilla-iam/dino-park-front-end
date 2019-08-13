@@ -1,6 +1,23 @@
 export const getHoursDiff = (date1, date2) =>
   (new Date(date1) - new Date(date2)) / 36e5;
 
+export const decimalToHours = (decimal) => {
+  const sign = decimal > 0 ? '+' : '-';
+  decimal = Math.abs(decimal);
+  const hours = Math.floor(decimal);
+  const minutes = Math.abs(parseFloat((decimal % 1).toFixed(2)) * 60);
+  if (hours === 0 && minutes === 0) {
+    return '';
+  }
+  if (hours === 0) {
+    return `${sign}:${minutes < 10 ? `0${minutes}` : minutes}`;
+  }
+  if (minutes === 0) {
+    return sign + hours;
+  }
+  return `${sign}${hours}:${minutes < 10 ? `0${minutes}` : minutes}`;
+};
+
 export const getFormattedDateWithTimezone = (datetime, tz) => {
   const options = {
     year: 'numeric',

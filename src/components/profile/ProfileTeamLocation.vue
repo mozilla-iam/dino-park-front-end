@@ -78,6 +78,7 @@ import {
   getFormattedDateWithTimezone,
   getBrowserTimezone,
   getTimezoneName,
+  decimalToHours,
 } from '@/assets/js/timezone-utils';
 
 export default {
@@ -153,9 +154,9 @@ export default {
         );
         browserHoursDiff = getHoursDiff(profileDate, currentBrowserDate);
         if (browserHoursDiff !== null && browserHoursDiff !== 0) {
-          printedBrowserOffset = `${
-            browserHoursDiff > 0 ? '+' : ''
-          }${browserHoursDiff}hrs to your current time`;
+          printedBrowserOffset = `${decimalToHours(
+            browserHoursDiff,
+          )}hrs to your current time`;
         }
       }
 
@@ -163,9 +164,9 @@ export default {
       const hoursDiff = getHoursDiff(profileDate, currentLocalDate);
       let printedLocalOffset = '';
       if (hoursDiff !== null && hoursDiff !== 0) {
-        printedLocalOffset = `${
-          hoursDiff > 0 ? '+' : ''
-        }${hoursDiff}hrs to your local time`;
+        printedLocalOffset = `${decimalToHours(
+          hoursDiff,
+        )}hrs to your local time`;
       }
       if (
         hoursDiff !== null &&
