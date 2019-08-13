@@ -73,9 +73,13 @@
 <script>
 import Icon from '@/components/ui/Icon.vue';
 import Tooltip from '@/components/ui/Tooltip.vue';
+import {
+  getHoursDiff,
+  getFormattedDateWithTimezone,
+  getBrowserTimezone,
+  getTimezoneName,
+} from '@/assets/js/timezone-utils';
 
-const getHoursDiff = (date1, date2) =>
-  (new Date(date1) - new Date(date2)) / 36e5;
 export default {
   name: 'ProfileTeamLocation',
   components: { Icon, Tooltip },
@@ -92,13 +96,13 @@ export default {
       return 'officeLocation:"' + this.officeLocation + '"'; // eslint-disable-line
     },
     hasBrowserTimezone() {
-      const profileDate = this.getFormattedDateWithTimezone(
+      const profileDate = getFormattedDateWithTimezone(
         this.localtime,
         this.timezone,
       );
-      const browserTimezone = this.getBrowserTimezone();
+      const browserTimezone = getBrowserTimezone();
       if (browserTimezone && browserTimezone !== this.currentTimezone) {
-        const currentBrowserDate = this.getFormattedDateWithTimezone(
+        const currentBrowserDate = getFormattedDateWithTimezone(
           this.localtime,
           browserTimezone,
         );
@@ -113,7 +117,7 @@ export default {
     timezoneWithTime() {
       // Return final string
       if (this.timezone) {
-        return `${this.getLocaltime()} local time (${this.getTimezoneName(
+        return `${this.getLocaltime()} local time (${getTimezoneName(
           this.timezone,
         )})`;
       }
@@ -125,25 +129,25 @@ export default {
       }
 
       // Get viewed profile timezone
-      const profileDate = this.getFormattedDateWithTimezone(
+      const profileDate = getFormattedDateWithTimezone(
         this.localtime,
         this.timezone,
       );
 
       // Get logged in profile timezone
-      const currentLocalDate = this.getFormattedDateWithTimezone(
+      const currentLocalDate = getFormattedDateWithTimezone(
         this.localtime,
         this.currentTimezone,
       );
 
       // Get browser timezone
-      const browserTimezone = this.getBrowserTimezone();
+      const browserTimezone = getBrowserTimezone();
       let currentBrowserDate = null;
       let printedBrowserOffset = '';
       let browserHoursDiff = null;
       // Build browser timezone string
       if (browserTimezone && browserTimezone !== this.currentTimezone) {
-        currentBrowserDate = this.getFormattedDateWithTimezone(
+        currentBrowserDate = getFormattedDateWithTimezone(
           this.localtime,
           browserTimezone,
         );
@@ -192,40 +196,6 @@ export default {
     }
   },
   methods: {
-    getFormattedDateWithTimezone(datetime, tz) {
-      let options = {
-        year: 'numeric',
-        month: 'numeric',
-        day: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric',
-      };
-      if (tz) {
-        options.timeZone = tz;
-      }
-      return new Intl.DateTimeFormat('en-US', options).format(datetime);
-    },
-    getBrowserTimezone() {
-      try {
-        return Intl.DateTimeFormat().resolvedOptions().timeZone;
-      } catch (e) {
-        console.log('Unable to get browser timezone: ', e);
-        return null;
-      }
-    },
-    getTimezoneName(timezone) {
-      try {
-        return new Intl.DateTimeFormat('default', {
-          timeZoneName: 'short',
-          timeZone: timezone,
-        })
-          .formatToParts(new Date())[6]
-          .value.replace('GMT', 'UTC');
-      } catch (_) {
-        return '?';
-      }
-    },
     getLocaltime() {
       if (this.timezone) {
         try {
