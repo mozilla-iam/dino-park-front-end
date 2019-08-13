@@ -32,7 +32,12 @@
             {{ location || officeLocation }}
             {{ location && officeLocation && `(${officeLocation})` }}
           </RouterLink>
-          <span>{{ timezoneWithTime }}</span>
+          <span
+            class="timezone-print"
+            v-bind:class="{ 'timezone-print': true, 'has-diff': timezoneDiff }"
+            >{{ timezoneWithTime }}</span
+          >
+          <span class="timezone-diff">{{ timezoneDiff }}</span>
           <Tooltip
             v-if="hasTimezoneOffset"
             buttonText="Open timezone info"
@@ -48,7 +53,8 @@
             {{ location || officeLocation }}
             {{ location && officeLocation && `(${officeLocation})` }}
           </strong>
-          <span>{{ timezoneWithTime }}</span>
+          <span class="timezone-print">{{ timezoneWithTime }}</span>
+          <span class="timezone-diff">{{ timezoneDiff }}</span>
           <Tooltip
             v-if="hasTimezoneOffset"
             buttonText="Open timezone info"
@@ -102,23 +108,22 @@ export default {
       return false;
     },
     hasTimezoneOffset() {
-      const profileDate = this.getFormattedDateWithTimezone(
-        this.localtime,
-        this.timezone,
-      );
-
-      // Get logged in profile timezone
-      const currentLocalDate = this.getFormattedDateWithTimezone(
-        this.localtime,
-        this.currentTimezone,
-      );
-      const hoursDiff = getHoursDiff(profileDate, currentLocalDate);
-      return hoursDiff !== null && hoursDiff !== 0;
+      return this.timezoneDiff !== '' && this.timezoneDiff !== null;
     },
     timezoneWithTime() {
+      // Return final string
+      if (this.timezone) {
+        return `${this.getLocaltime()} local time (${this.getTimezoneName(
+          this.timezone,
+        )})`;
+      }
+      return null;
+    },
+    timezoneDiff() {
       if (!this.timezone || !this.currentTimezone) {
         return null;
       }
+
       // Get viewed profile timezone
       const profileDate = this.getFormattedDateWithTimezone(
         this.localtime,
@@ -135,16 +140,16 @@ export default {
       const browserTimezone = this.getBrowserTimezone();
       let currentBrowserDate = null;
       let printedBrowserOffset = '';
-
+      let browserHoursDiff = null;
       // Build browser timezone string
       if (browserTimezone && browserTimezone !== this.currentTimezone) {
         currentBrowserDate = this.getFormattedDateWithTimezone(
           this.localtime,
           browserTimezone,
         );
-        const browserHoursDiff = getHoursDiff(profileDate, currentBrowserDate);
+        browserHoursDiff = getHoursDiff(profileDate, currentBrowserDate);
         if (browserHoursDiff !== null && browserHoursDiff !== 0) {
-          printedBrowserOffset = `, ${
+          printedBrowserOffset = `${
             browserHoursDiff > 0 ? '+' : ''
           }${browserHoursDiff}hrs to your current time`;
         }
@@ -152,18 +157,26 @@ export default {
 
       // Build local timezone string;
       const hoursDiff = getHoursDiff(profileDate, currentLocalDate);
-      let printedOffset = '';
+      let printedLocalOffset = '';
       if (hoursDiff !== null && hoursDiff !== 0) {
-        printedOffset = ` | ${
+        printedLocalOffset = `${
           hoursDiff > 0 ? '+' : ''
-        }${hoursDiff}hrs to your local time${printedBrowserOffset}`;
+        }${hoursDiff}hrs to your local time`;
       }
-
-      // Return final string
-      if (this.timezone) {
-        return `${this.getLocaltime()} local time (${this.getTimezoneName(
-          this.timezone,
-        )})${printedOffset}`;
+      if (
+        hoursDiff !== null &&
+        browserHoursDiff !== null &&
+        hoursDiff !== browserHoursDiff
+      ) {
+        return `${printedLocalOffset}${
+          printedBrowserOffset === '' ? '' : ', ' + printedBrowserOffset
+        }`;
+      } else if (hoursDiff !== null && browserHoursDiff !== null) {
+        return printedBrowserOffset;
+      } else if (hoursDiff !== null) {
+        return printedLocalOffset;
+      } else if (browserHoursDiff !== null) {
+        return browserHoursDiff;
       }
       return null;
     },
@@ -180,15 +193,18 @@ export default {
   },
   methods: {
     getFormattedDateWithTimezone(datetime, tz) {
-      return new Intl.DateTimeFormat('en-US', {
+      let options = {
         year: 'numeric',
         month: 'numeric',
         day: 'numeric',
         hour: 'numeric',
         minute: 'numeric',
         second: 'numeric',
-        timeZone: tz,
-      }).format(datetime);
+      };
+      if (tz) {
+        options.timeZone = tz;
+      }
+      return new Intl.DateTimeFormat('en-US', options).format(datetime);
     },
     getBrowserTimezone() {
       try {
@@ -282,7 +298,25 @@ export default {
     margin-right: 1em;
     padding-right: 1em;
     padding-left: 0;
+    width: 50%;
   }
+
+  .profile__team-location .profile__location {
+    width: 50%;
+  }
+}
+
+.timezone-print {
+  border-right: none;
+  padding-right: 0.5em;
+}
+
+.timezone-print.has-diff {
+  border-right: 1px solid var(--gray-30);
+}
+
+.timezone-diff {
+  padding-left: 0.5em;
 }
 
 .profile__team-location-content .tooltip {
