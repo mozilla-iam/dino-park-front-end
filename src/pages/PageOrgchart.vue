@@ -192,7 +192,7 @@ function renderNode(
         renderNode(
           child,
           level + 1,
-          idx === parseInt(toExpand)
+          idx === parseInt(toExpand) && traceIndices.length > 0
             ? {
                 ...initiallyExpanded,
                 [child.data.username]: true,
