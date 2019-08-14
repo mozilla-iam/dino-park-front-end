@@ -1,15 +1,11 @@
 <template>
-  <div :class="'user-picture' + (modifier ? ' ' + modifier : '')">
-    <img
-      v-if="src"
-      ref="img"
-      :class="cls"
-      :src="src"
-      alt=""
-      :width="size"
-      role="presentation"
-      aria-hidden="true"
-    />
+  <div
+    :class="['user-picture', modifier ? ' ' + modifier : '', cls]"
+    v-bind:style="{
+      backgroundImage: `url(${src})`,
+      backgroundSize: `${size}px`,
+    }"
+  >
     <DinoType v-if="isStaff" :size="dinoTypeSize" />
   </div>
 </template>
