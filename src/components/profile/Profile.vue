@@ -513,7 +513,6 @@ export default {
 
 .profile__section:not(.profile__section--editing):not(.first) {
   padding: calc(2px + 1.5em);
-  box-sizing: content-box;
 }
 
 .profile__section.first {
