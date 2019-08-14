@@ -20,7 +20,6 @@ export default class ImageCollectionHandler {
         }
         const poppedNode = this.nodesToLoad.shift();
         if (this.loadedIds.includes(poppedNode.username)) {
-          console.log('Already loaded: ', poppedNode.username);
           loadNextNode();
           return;
         }

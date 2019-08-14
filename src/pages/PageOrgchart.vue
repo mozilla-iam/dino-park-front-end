@@ -79,9 +79,16 @@ import Fetcher from '@/assets/js/fetcher';
 import generateIdenticon from '@/assets/js/identicon-avatar';
 import ImageCollectionHandler from '@/assets/js/image-collection-handler';
 
+const blankProfile = require('@/assets/images/empty_profile.png');
 const fetcher = new Fetcher({ failoverOn: [302] });
 let context = null;
-function renderNode(node, level = 1) {
+function renderNode(
+  node,
+  level = 1,
+  initiallyExpanded = {},
+  traceIndices = [],
+  renderImage = false,
+) {
   const e = document.createElement('div');
   const hasChildren = node.children.length > 0;
   e.innerHTML = `
@@ -98,12 +105,20 @@ function renderNode(node, level = 1) {
         <span class="org-node__name"></span>
         <span class="org-node__title"></span>
       </a>
-
+    
         ${
           hasChildren
             ? `
-              <div class="org-node__expander">
-                <button type="button" aria-expanded="true" class="org-node__expander-button org-node__toggle">
+              <div class="org-node__expander${
+                node.data.username in initiallyExpanded ? ' ' : ''
+              }">
+                <button type="button" aria-expanded="${
+                  node.data.username in initiallyExpanded ? true : false
+                }" aria-label="${
+                node.data.username in initiallyExpanded
+                  ? 'Expanded'
+                  : 'Collapsed'
+              }" class="org-node__expander-button org-node__toggle">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" role="presentation" focusable="false"><polyline points="6 9 12 15 18 9"></polyline></svg>
                 </button>
                 <div tabindex="-1" class="org-node__expander-overflow"><ul></ul></div>
@@ -136,30 +151,84 @@ function renderNode(node, level = 1) {
   li.id = username;
   e.querySelector('a').href = `/o/${username}`;
   const img = e.querySelector('.user-picture');
-  const innerImg = new Image();
-  innerImg.src = '/img/empty_profile.png';
-  innerImg.className = 'profile_image';
-  img.appendChild(innerImg);
+  if (renderImage) {
+    if (
+      picture === null ||
+      picture === '' ||
+      picture === 'default:' ||
+      picture.startsWith('https://s3.amazonaws.com/')
+    ) {
+      generateIdenticon(username, 40).then((src) => {
+        img.style.backgroundSize = 'cover';
+        img.style.backgroundImage = `url("${src}")`;
+      });
+    } else {
+      img.style.backgroundSize = 'cover';
+      img.style.backgroundImage = `url("${picture}?size=40")`;
+    }
+  } else {
+    const innerImg = new Image();
+    innerImg.src = blankProfile;
+    innerImg.className = 'profile_image';
+    img.appendChild(innerImg);
+  }
+
   e.querySelector(
     '.org-node__name',
   ).textContent = `${node.data.firstName} ${node.data.lastName}`;
   e.querySelector('.org-node__title').textContent = node.data.title;
   const ul = e.querySelector('ul');
+  const button = e.querySelector('button');
   if (ul) {
-    node.children.forEach((child) =>
-      ul.appendChild(renderNode(child, level + 1)),
+    ul.style.display = !(node.data.username in initiallyExpanded)
+      ? 'none'
+      : 'inline-block';
+    button.style.transform = !(node.data.username in initiallyExpanded)
+      ? 'rotateZ(-90deg)'
+      : '';
+    node.children.forEach((child, idx) =>
+      ul.appendChild(
+        renderNode(
+          child,
+          level + 1,
+          idx === parseInt(toExpand)
+            ? {
+                ...initiallyExpanded,
+                [child.data.username]: true,
+              }
+            : initiallyExpanded,
+          idx === toExpand ? traceIndices : [],
+          !Number.isNaN(parseInt(toExpand)) ||
+            child.data.username in initiallyExpanded ||
+            node.data.username in initiallyExpanded,
+        ),
+      ),
     );
   }
   return li;
 }
 
-function renderOrgchart(orgchart) {
+function renderOrgchart(orgchart, initiallyExpanded, traceIndices) {
   const forrest = document.createElement('div');
   forrest.className = 'org-root org-root--forrest';
   const forrestInner = document.createElement('ul');
+  const toExpand = traceIndices.shift();
   forrest.appendChild(forrestInner);
-  orgchart.forrest.forEach((root) =>
-    forrestInner.appendChild(renderNode(root)),
+  orgchart.forrest.forEach((root, idx) =>
+    forrestInner.appendChild(
+      renderNode(
+        root,
+        1,
+        idx === toExpand
+          ? {
+              ...initiallyExpanded,
+              [root.data.username]: true,
+            }
+          : initiallyExpanded,
+        idx === toExpand ? traceIndices : [],
+        root.data.username in initiallyExpanded,
+      ),
+    ),
   );
   const loose = document.createElement('div');
   loose.className = 'org-root org-root--loose';
@@ -167,7 +236,11 @@ function renderOrgchart(orgchart) {
     '<h2 class="org-root__heading">People who do not have a manager set</h2>';
   const looseInner = document.createElement('ul');
   loose.appendChild(looseInner);
-  orgchart.loose.forEach((root) => looseInner.appendChild(renderNode(root)));
+  orgchart.loose.forEach((root, idx) =>
+    looseInner.appendChild(
+      renderNode(root, 1, initiallyExpanded, traceIndices, true),
+    ),
+  );
   return [forrest, loose];
 }
 
@@ -191,13 +264,23 @@ export default {
       images: {},
       imagePromises: [],
       imagesLoaded: false,
+      collection: new ImageCollectionHandler({
+        onImageLoaded: (key, image) => {
+          const el = document.getElementById(key);
+          const selectedImage = el.querySelector('.profile_image');
+          if (!selectedImage) {
+            console.log("Couldn't find key: ", key);
+          } else {
+            selectedImage.parentNode.replaceChild(image, selectedImage);
+          }
+        },
+      }),
     };
   },
   async created() {
     window.addEventListener('resize', this.updateView);
     this.updateView();
     await this.fetchData();
-    await this.highlight();
   },
   computed: {
     username() {
@@ -218,170 +301,128 @@ export default {
     },
   },
   methods: {
-    loadNodes(nodes) {
-      const collection = new ImageCollectionHandler();
-      collection.loadImagesFromNodes(nodes);
-      return collection;
-    },
     async fetchData() {
+      const { username } = this.$route.params;
       this.loading = true;
-      try {
-        const collection = new ImageCollectionHandler({
-          onImageLoaded: (key, image) => {
-            const el = document.getElementById(key);
-            const selectedImage = el.querySelector('.profile_image');
-            if (!selectedImage) {
-              console.log("Couldn't find key: ", key);
-            } else {
-              selectedImage.parentNode.replaceChild(image, selectedImage);
-            }
-          },
-        });
-        const printData = (pData) => {
-          const link = document.createElement('link');
-          link.href = pData.data.picture + '?size=40';
-          document.getElementById('app').appendChild(link);
-          for (let i = 0, len = pData.children.length; i < len; i++) {
-            printData(pData.children[i]);
-          }
-        };
-        const data = await fetcher.fetch('/api/v4/orgchart');
-        const orgchart = await data.json();
-        this.initiallyExpanded = orgchart.forrest
-          .map((node) => node.data.username)
-          .reduce((obj, key) => {
-            obj[key] = true;
-            return obj;
-          }, {});
-        const orgChartRoot = document.querySelector('.org-chart__chart');
-
-        let chartFromStore = Boolean(this.$store.state.org);
-        this.rawJson = JSON.stringify(orgchart);
-        if (chartFromStore && this.rawJson !== this.$store.state.org.rawJson) {
-          chartFromStore = false;
+      const printData = (pData) => {
+        const link = document.createElement('link');
+        link.href = pData.data.picture + '?size=40';
+        document.getElementById('app').appendChild(link);
+        for (let i = 0, len = pData.children.length; i < len; i++) {
+          printData(pData.children[i]);
         }
-        let initialNodes = [];
-        let initialIds = [];
-        const nodes = [];
-        const initialExpandableKeys = Object.keys(this.initiallyExpanded);
-        const gatherChildren = (currentStack) => {
-          let nextStack = [];
-          for (let i = 0, len = currentStack.length; i < len; i++) {
-            nodes.push(currentStack[i].data);
-            if (currentStack[i].children.length > 0) {
-              nextStack = nextStack.concat(currentStack[i].children);
-            }
-          }
-          if (nextStack.length > 0) {
-            gatherChildren(nextStack);
-          }
-        };
-        gatherChildren(orgchart.forrest);
-        const loadedInitialImages = collection.loadImagesFromNodes(
-          initialNodes,
-        );
-        const [f, t] = chartFromStore
-          ? this.$store.state.org.nodes
-          : renderOrgchart(orgchart);
-        this.dirty = chartFromStore ? this.$store.state.org.dirty : false;
-        orgChartRoot.innerHTML = '';
-        orgChartRoot.appendChild(f);
-        orgChartRoot.appendChild(t);
-        this.updateCurrentNode();
+      };
+      let orgchart = null;
+      let trace = '';
+      try {
+        const data = await fetcher.fetch('/api/v4/orgchart');
+        orgchart = await data.json();
+      } catch (e) {
+        if (e instanceof TypeError && e.message.startsWith('NetworkError')) {
+          window.location.reload();
+          return;
+        }
+        console.error('OrgChart error: ', e);
+      }
+      if (username && this.$route.name === 'OrgchartHighlight') {
+        try {
+          const data = await fetcher.fetch(
+            `/api/v4/orgchart/trace/${encodeURIComponent(username)}`,
+          );
+          const traceJSON = await data.json();
 
-        this.expandables = Array.from(
-          orgChartRoot.querySelectorAll('.org-node--expandable'),
-        ).reduce((obj, li) => {
-          obj[li.id] = li;
+          trace = traceJSON.trace;
+          console.log('Found trace: ', trace);
+        } catch (e) {
+          if (e instanceof TypeError && e.message.startsWith('NetworkError')) {
+            window.location.reload();
+            return;
+          }
+          console.error('Trace error: ', e);
+        }
+      }
+      const isLoose = trace && trace.startsWith('-1-');
+      const indices = (isLoose ? trace.substr(3) : trace)
+        .split('-')
+        .map(Number);
+      this.initiallyExpanded = orgchart.forrest
+        .map((node) => node.data.username)
+        .reduce((obj, key) => {
+          obj[key] = true;
           return obj;
         }, {});
+      const orgChartRoot = document.querySelector('.org-chart__chart');
 
-        if (!chartFromStore) {
-          this.expandFirst();
-        }
-
-        const loadedFinalImages = collection.loadImagesFromNodes(nodes);
-
-        orgChartRoot.addEventListener('click', (event) => {
-          const li = event.target.closest('li');
-
-          this.chartForHighlightClicked = true;
-          if (event.target.closest('button')) {
-            this.toggle(li);
-            this.saveOrgTree();
-            let selectedUl = li.querySelector('ul');
-            if (selectedUl) {
-              collection.interruptImagesWithNodeList(
-                [...selectedUl.childNodes].map((node) =>
-                  node.getAttribute('id'),
-                ),
-              );
-            }
-          } else {
-            collection.interruptImagesWithNode(li.getAttribute('id'));
-          }
-          const anchor = event.target.closest('a');
-          if (anchor) {
-            this.$router.push({
-              name: 'Orgchart',
-              params: {
-                username: li.id,
-                openedFromOrgNode: true,
-              },
-            });
-            event.preventDefault();
-          }
-        });
-        this.loading = false;
-      } catch (e) {
-        if (e instanceof TypeError && e.message.startsWith('NetworkError')) {
-          window.location.reload();
-          return;
-        }
-        console.error(e);
+      let chartFromStore = Boolean(this.$store.state.org);
+      this.rawJson = JSON.stringify(orgchart);
+      if (chartFromStore && this.rawJson !== this.$store.state.org.rawJson) {
+        chartFromStore = false;
       }
-      this.loading = false;
-    },
-    async highlight() {
-      const { username } = this.$route.params;
-      if (!(username && this.$route.name === 'OrgchartHighlight')) {
-        return;
-      }
+      let initialNodes = [];
+      let initialIds = [];
+      const nodes = [];
+      const initialExpandableKeys = Object.keys(this.initiallyExpanded);
+      const gatherChildren = (currentStack) => {
+        let nextStack = [];
+        for (let i = 0, len = currentStack.length; i < len; i++) {
+          nodes.push(currentStack[i].data);
+          if (currentStack[i].children.length > 0) {
+            nextStack = nextStack.concat(currentStack[i].children);
+          }
+        }
+        if (nextStack.length > 0) {
+          gatherChildren(nextStack);
+        }
+      };
+      gatherChildren(orgchart.forrest);
+      const [f, t] = chartFromStore
+        ? this.$store.state.org.nodes
+        : renderOrgchart(orgchart, this.initiallyExpanded, indices);
+      this.dirty = chartFromStore ? this.$store.state.org.dirty : false;
+      orgChartRoot.innerHTML = '';
+      orgChartRoot.appendChild(f);
+      orgChartRoot.appendChild(t);
+      this.updateCurrentNode();
+      this.expandables = Array.from(
+        orgChartRoot.querySelectorAll('.org-node--expandable'),
+      ).reduce((obj, li) => {
+        obj[li.id] = li;
+        return obj;
+      }, {});
+      const loadedFinalImages = this.collection.loadImagesFromNodes(
+        nodes.filter((node) => !initialIds.includes(node.username)),
+      );
 
-      try {
-        const data = await fetcher.fetch(
-          `/api/v4/orgchart/trace/${encodeURIComponent(username)}`,
-        );
-        const { trace } = await data.json();
-        const isLoose = trace && trace.startsWith('-1-');
+      orgChartRoot.addEventListener('click', (event) => {
+        const li = event.target.closest('li');
 
-        const root = this.$el.querySelector(
-          `.org-root--${isLoose ? 'loose' : 'forrest'}`,
-        );
-        const indices = (isLoose ? trace.substr(3) : trace)
-          .split('-')
-          .map(Number);
-        const li = this.toggleTrace(root.firstElementChild, indices);
-        // assume browsers with `scrollBehavior` support scrollIntoView
-        // with object as arguments
-        const card = li.querySelector('a') || li;
-        if ('scrollBehavior' in document.documentElement.style) {
-          card.scrollIntoView({
-            block: 'center',
-          });
+        this.chartForHighlightClicked = true;
+        if (event.target.closest('button')) {
+          this.toggle(li);
+          this.saveOrgTree();
+          let selectedUl = li.querySelector('ul');
+          if (selectedUl) {
+            this.collection.interruptImagesWithNodeList(
+              [...selectedUl.childNodes].map((node) => node.getAttribute('id')),
+            );
+          }
         } else {
-          // scrolls into view with element at bottom of viewport (block: 'end')
-          card.scrollIntoView(false);
+          this.collection.interruptImagesWithNode(li.getAttribute('id'));
         }
+        const anchor = event.target.closest('a');
+        if (anchor) {
+          this.$router.push({
+            name: 'Orgchart',
+            params: {
+              username: li.id,
+              openedFromOrgNode: true,
+            },
+          });
+          event.preventDefault();
+        }
+      });
 
-        this.saveOrgTree();
-      } catch (e) {
-        if (e instanceof TypeError && e.message.startsWith('NetworkError')) {
-          window.location.reload();
-          return;
-        }
-        console.error(e);
-      }
+      this.loading = false;
     },
     toggleTrace(ul, indices) {
       const index = indices.shift();
