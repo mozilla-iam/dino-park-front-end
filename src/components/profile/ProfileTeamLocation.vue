@@ -146,6 +146,7 @@ export default {
       let currentBrowserDate = null;
       let printedBrowserOffset = '';
       let browserHoursDiff = null;
+      let validBrowserHoursDiff = false;
       // Build browser timezone string
       if (browserTimezone && browserTimezone !== this.currentTimezone) {
         currentBrowserDate = getFormattedDateWithTimezone(
@@ -153,7 +154,9 @@ export default {
           browserTimezone,
         );
         browserHoursDiff = getHoursDiff(profileDate, currentBrowserDate);
-        if (browserHoursDiff !== null && browserHoursDiff !== 0) {
+        validBrowserHoursDiff =
+          browserHoursDiff !== null && browserHoursDiff !== 0;
+        if (validBrowserHoursDiff) {
           printedBrowserOffset = `${decimalToHours(
             browserHoursDiff,
           )}hrs to your current time`;
@@ -162,28 +165,30 @@ export default {
 
       // Build local timezone string;
       const hoursDiff = getHoursDiff(profileDate, currentLocalDate);
+      const validHoursDiff = hoursDiff !== null && hoursDiff !== 0;
       let printedLocalOffset = '';
-      if (hoursDiff !== null && hoursDiff !== 0) {
+      if (validHoursDiff) {
         printedLocalOffset = `${decimalToHours(
           hoursDiff,
         )}hrs to your local time`;
       }
+
       if (
-        hoursDiff !== null &&
-        browserHoursDiff !== null &&
+        validHoursDiff &&
+        validBrowserHoursDiff &&
         hoursDiff !== browserHoursDiff
       ) {
         return `${printedLocalOffset}${
           printedBrowserOffset === '' ? '' : `, ${printedBrowserOffset}`
         }`;
       }
-      if (hoursDiff !== null && browserHoursDiff !== null) {
+      if (validHoursDiff && validBrowserHoursDiff) {
         return printedBrowserOffset;
       }
-      if (hoursDiff !== null) {
+      if (validHoursDiff) {
         return printedLocalOffset;
       }
-      if (browserHoursDiff !== null) {
+      if (validBrowserHoursDiff) {
         return browserHoursDiff;
       }
       return null;
