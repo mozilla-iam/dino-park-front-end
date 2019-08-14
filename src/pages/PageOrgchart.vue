@@ -180,6 +180,7 @@ function renderNode(
   const ul = e.querySelector('ul');
   const button = e.querySelector('button');
   if (ul) {
+    const toExpand = traceIndices.shift();
     ul.style.display = !(node.data.username in initiallyExpanded)
       ? 'none'
       : 'inline-block';
@@ -488,6 +489,7 @@ export default {
       });
       this.saveOrgTree();
     },
+    // TODO: Consider removing
     expandFirst() {
       const ids = Object.keys(this.initiallyExpanded);
       Object.entries(this.expandables).forEach(([id, li]) => {
