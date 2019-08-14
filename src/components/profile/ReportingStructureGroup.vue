@@ -92,7 +92,7 @@ export default {
       return this.viewAs === 'grid' ? undefined : 8;
     },
     hasMoreToView() {
-      return !this.isSingle || this.collection.length > this.initiallyShown;
+      return !this.isSingle && this.collection.length > this.initiallyShown;
     },
   },
 };
