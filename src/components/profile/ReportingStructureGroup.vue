@@ -104,6 +104,10 @@ export default {
   margin: 1.5em 0 0 1.5em;
   padding: 0;
   width: 6em;
+  min-width: 6em;
+}
+.reporting-structure__content {
+  min-width: 0;
 }
 .reporting-structure__container {
   display: flex;
