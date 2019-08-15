@@ -43,6 +43,7 @@
           description,
           uris,
           userOnOwnProfile,
+          editable: !viewAs,
         }"
       />
     </div>
@@ -67,6 +68,7 @@
       message="No identities have been added yet."
       messageOwn="You haven't added any identities yet."
       :editing="editing === 'identities'"
+      :editable="!viewAs"
     >
       <template v-slot:edit>
         <EditIdentities v-bind="{ identities: identitiesWrapper }" />
@@ -86,6 +88,7 @@
       message="No contact details have been added yet."
       messageOwn="You haven't added any contact details yet."
       :editing="editing === 'contact'"
+      :editable="!viewAs"
     >
       <template v-slot:edit>
         <EditContact
@@ -116,6 +119,7 @@
       message="No accounts have been added yet."
       messageOwn="You haven't added any accounts yet."
       :editing="editing === 'accounts'"
+      :editable="!viewAs"
     >
       <template v-slot:edit>
         <EditAccounts
@@ -139,6 +143,7 @@
       message="No languages have been added yet."
       messageOwn="You haven't added any languages yet."
       :editing="editing === 'languages'"
+      :editable="!viewAs"
     >
       <template v-slot:edit>
         <EditLanguages
@@ -162,6 +167,7 @@
       message="No tags have been added yet."
       messageOwn="You haven't added any tags yet."
       :editing="editing === 'tags'"
+      :editable="!viewAs"
     >
       <template v-slot:edit>
         <EditTags
@@ -185,6 +191,7 @@
       message="No keys have been added yet."
       messageOwn="You haven't added any keys yet."
       :editing="editing === 'keys'"
+      :editable="!viewAs"
     >
       <template v-slot:edit>
         <EditKeys
@@ -221,7 +228,7 @@
       :empty="
         Object.keys(accessInformation.mozilliansorg.values || {}).length === 0
       "
-      :editable="true"
+      :editable="!viewAs"
       message="Not a member of any access group."
       messageOwn="You are not a member of any access group."
       :editing="editing === 'access-groups'"
@@ -290,6 +297,7 @@ export default {
     uris: Object,
     uuid: Object,
     primaryUsername: Object,
+    viewAs: Boolean,
   },
   mixins: [AccountsMixin, EnvironmentMixin],
   components: {

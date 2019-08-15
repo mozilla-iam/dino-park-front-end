@@ -2,9 +2,14 @@
   <ApolloQuery
     :query="displayProfile"
     :variables="variables"
+    :fetchPolicy="viewAs.filter ? 'no-cache' : 'cache-first'"
     clientId="mutationClient"
   >
     <template slot-scope="{ result: { loading, data, error } }">
+      <PreviewAs
+        v-if="variables.username === null"
+        :viewAsFilter="viewAs"
+      ></PreviewAs>
       <LoadingSpinner v-if="loading"></LoadingSpinner>
       <template v-else-if="data && data.profile !== null">
         <Profile
@@ -16,6 +21,7 @@
               ? $route.query.section
               : null
           "
+          :viewAs="variables.viewAsActive"
         ></Profile>
       </template>
       <Page404 v-else-if="error || (data && data.profile === null)"></Page404>
@@ -31,6 +37,7 @@ import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 import { DISPLAY_PROFILE } from '@/queries/profile';
 import Related from '@/assets/js/related';
 import Page404 from './PageUnknown.vue';
+import PreviewAs from '@/components/profile/PreviewAs.vue';
 
 export default {
   name: 'PageProfile',
@@ -38,6 +45,7 @@ export default {
     Error,
     Profile,
     Page404,
+    PreviewAs,
     LoadingSpinner,
   },
   computed: {
@@ -46,15 +54,24 @@ export default {
         this.$route.params.username ===
         this.$store.state.user.primaryUsername.value
       ) {
-        return { username: null };
+        return {
+          username: null,
+          viewAs: this.viewAs.filter || null,
+          viewAsActive: this.viewAs.active,
+        };
       }
-      return { username: this.$route.params.username || null };
+      return {
+        username: this.$route.params.username || null,
+        viewAs: null,
+        viewAsActive: false,
+      };
     },
   },
   data() {
     return {
       displayProfile: DISPLAY_PROFILE,
       related: new Related(),
+      viewAs: { filter: null, active: false },
     };
   },
 };

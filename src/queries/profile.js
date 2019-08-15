@@ -231,8 +231,8 @@ const MUTATE_PROFILE = gql`
 `;
 
 const DISPLAY_PROFILE = gql`
-  query DisplayProfile($username: String) {
-    profile(username: $username) {
+  query DisplayProfile($username: String, $viewAs: Display = null) {
+    profile(username: $username, viewAs: $viewAs) {
       uuid {
         value
       }

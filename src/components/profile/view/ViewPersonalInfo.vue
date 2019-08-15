@@ -1,7 +1,7 @@
 <template>
   <div class="profile__intro">
     <EditButton
-      v-if="userOnOwnProfile"
+      v-if="userOnOwnProfile && editable"
       section="personal info"
       sectionId="personal-info"
     ></EditButton>
@@ -126,6 +126,7 @@ export default {
     description: Object,
     uris: Object,
     userOnOwnProfile: Boolean,
+    editable: Boolean,
   },
   components: {
     ContactMe,

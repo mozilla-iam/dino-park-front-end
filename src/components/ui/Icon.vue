@@ -73,6 +73,16 @@
         stroke-linejoin="round"
       />
     </template>
+    <template v-else-if="id === 'chevron-left'">
+      <polyline
+        points="15 18 9 12 15 6"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-line-ap="round"
+        fill="none"
+        stroke-linejoin="round"
+      />
+    </template>
     <template v-else-if="id === 'org-chart'">
       <path
         d="M11.5 12a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm0 2a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7zm7 8a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7zm0-2a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM3.5 7a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7zm0-2a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM3 7h1v1H3V7zm0 2h1v1H3V9zm1 3h-.5a.5.5 0 0 1-.5-.5V11h1v1zm1 0v-1h1v1H5zm2 0v-1h1v1H7zm4 2h1v1h-1v-1zm0 2h1v1h-1v-1zm1 3h-.5a.5.5 0 0 1-.5-.5V18h1v1zm1 0v-1h1v1h-1z"
@@ -500,6 +510,20 @@
         <use fill="currentColor" fill-opacity="0" xlink:href="#a" />
       </g>
     </template>
+    <template v-else-if="id === 'eye'">
+      <defs>
+        <path
+          id="a"
+          d="M23.925 11.6C23.725 11.2 19.515 3 12 3 4.484 3 .276 11.2.075 11.6c-.1.3-.1.6 0 .9.2.3 4.41 8.5 11.925 8.5 7.516 0 11.724-8.2 11.925-8.6.1-.2.1-.6 0-.8zM12 19c-5.411 0-8.919-5.4-9.92-7C2.98 10.4 6.588 5 12 5s8.919 5.4 9.92 7c-1.001 1.6-4.509 7-9.92 7zm0-11c-2.205 0-4.008 1.8-4.008 4S9.795 16 12 16s4.008-1.8 4.008-4S14.205 8 12 8zm0 6c-1.102 0-2.004-.9-2.004-2s.902-2 2.004-2c1.102 0 2.004.9 2.004 2s-.902 2-2.004 2z"
+        />
+        <g fill="#000" mask="url(#b)">
+          <path d="M0 0h24v24H0z" />
+        </g>
+      </g>
+    </template>
+    <template v-else-if="id === 'avatar'">
+      <image :href="avatar" x="0" y="0" width="24" height="24" />
+    </template>
   </svg>
 </template>
 
@@ -510,6 +534,11 @@ export default {
     width: Number,
     height: Number,
     id: String,
+  },
+  data() {
+    return {
+      avatar: `${this.$store.state.user.picture.value}?size=40`,
+    };
   },
 };
 </script>
