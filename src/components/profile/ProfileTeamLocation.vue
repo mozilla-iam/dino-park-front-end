@@ -189,7 +189,7 @@ export default {
         return printedLocalOffset;
       }
       if (validBrowserHoursDiff) {
-        return browserHoursDiff;
+        return printedBrowserOffset;
       }
       return null;
     },
