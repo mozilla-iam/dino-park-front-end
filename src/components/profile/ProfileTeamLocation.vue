@@ -1,23 +1,25 @@
 <template>
   <div class="profile__team-location">
-    <div class="profile__team">
+    <div class="profile__team-section profile__team">
       <h3 class="visually-hidden">Team</h3>
-      <strong>
-        <RouterLink
-          v-if="team && teamManager"
-          :to="{ name: 'Profile', params: { username: teamManager.username } }"
-        >
-          {{ team }}
-        </RouterLink>
-        <template v-else>
-          {{ team }}
-        </template>
-      </strong>
-      {{ entity }}
+      <div class="profile__team-location-content">
+        <strong>
+          <RouterLink
+            v-if="team && teamManager"
+            :to="{
+              name: 'Profile',
+              params: { username: teamManager.username },
+            }"
+            >{{ team }}</RouterLink
+          >
+          <template v-else>{{ team }}</template>
+        </strong>
+        {{ entity }}
+      </div>
     </div>
-    <div class="profile__location">
+    <div class="profile__team-section profile__location">
       <h3 class="visually-hidden">Location</h3>
-      <div>
+      <div class="profile__team-location-content">
         <template v-if="officeLocation">
           <RouterLink
             :to="{
@@ -26,17 +28,42 @@
                 query: locationSearchString,
               },
             }"
-            >{{ location || officeLocation }}
+          >
+            {{ location || officeLocation }}
             {{ location && officeLocation && `(${officeLocation})` }}
           </RouterLink>
-          {{ timezoneWithTime }}
+          <span
+            class="timezone-print"
+            v-bind:class="{ 'timezone-print': true, 'has-diff': timezoneDiff }"
+            >{{ timezoneWithTime }}</span
+          >
+          <span class="timezone-diff">{{ timezoneDiff }}</span>
+          <Tooltip
+            v-if="hasTimezoneOffset"
+            buttonText="Open timezone info"
+            alternateButtonText="Close timezone info"
+          >
+            {{
+              hasBrowserTimezone ? hasTimezoneInfoText : hasNoTimezoneInfoText
+            }}
+          </Tooltip>
         </template>
         <template v-else>
-          <strong
-            >{{ location || officeLocation }}
-            {{ location && officeLocation && `(${officeLocation})` }}</strong
+          <strong>
+            {{ location || officeLocation }}
+            {{ location && officeLocation && `(${officeLocation})` }}
+          </strong>
+          <span class="timezone-print">{{ timezoneWithTime }}</span>
+          <span class="timezone-diff">{{ timezoneDiff }}</span>
+          <Tooltip
+            v-if="hasTimezoneOffset"
+            buttonText="Open timezone info"
+            alternateButtonText="Close timezone info"
           >
-          {{ timezoneWithTime }}
+            {{
+              hasBrowserTimezone ? hasTimezoneInfoText : hasNoTimezoneInfoText
+            }}
+          </Tooltip>
         </template>
       </div>
     </div>
@@ -44,8 +71,19 @@
 </template>
 
 <script>
+import Icon from '@/components/ui/Icon.vue';
+import Tooltip from '@/components/ui/Tooltip.vue';
+import {
+  getHoursDiff,
+  getFormattedDateWithTimezone,
+  getBrowserTimezone,
+  getTimezoneName,
+  decimalToHours,
+} from '@/assets/js/timezone-utils';
+
 export default {
   name: 'ProfileTeamLocation',
+  components: { Icon, Tooltip },
   props: {
     team: String,
     teamManager: Object,
@@ -58,18 +96,107 @@ export default {
     locationSearchString() {
       return 'officeLocation:"' + this.officeLocation + '"'; // eslint-disable-line
     },
+    hasBrowserTimezone() {
+      const profileDate = getFormattedDateWithTimezone(
+        this.localtime,
+        this.timezone,
+      );
+      const browserTimezone = getBrowserTimezone();
+      if (browserTimezone && browserTimezone !== this.currentTimezone) {
+        const currentBrowserDate = getFormattedDateWithTimezone(
+          this.localtime,
+          browserTimezone,
+        );
+        const browserHoursDiff = getHoursDiff(profileDate, currentBrowserDate);
+        return browserHoursDiff !== null && browserHoursDiff !== 0;
+      }
+      return false;
+    },
+    hasTimezoneOffset() {
+      return this.timezoneDiff !== '' && this.timezoneDiff !== null;
+    },
     timezoneWithTime() {
+      // Return final string
       if (this.timezone) {
-        return `${this.localtime} local time (${this.getTimezoneName(
+        return `${this.getLocaltime()} local time (${getTimezoneName(
           this.timezone,
         )})`;
+      }
+      return null;
+    },
+    timezoneDiff() {
+      if (!this.timezone || !this.currentTimezone) {
+        return null;
+      }
+
+      // Get viewed profile timezone
+      const profileDate = getFormattedDateWithTimezone(
+        this.localtime,
+        this.timezone,
+      );
+
+      // Get logged in profile timezone
+      const currentLocalDate = getFormattedDateWithTimezone(
+        this.localtime,
+        this.currentTimezone,
+      );
+
+      // Get browser timezone
+      const browserTimezone = getBrowserTimezone();
+      let currentBrowserDate = null;
+      let printedBrowserOffset = '';
+      let browserHoursDiff = null;
+      let validBrowserHoursDiff = false;
+      // Build browser timezone string
+      if (browserTimezone && browserTimezone !== this.currentTimezone) {
+        currentBrowserDate = getFormattedDateWithTimezone(
+          this.localtime,
+          browserTimezone,
+        );
+        browserHoursDiff = getHoursDiff(profileDate, currentBrowserDate);
+        validBrowserHoursDiff =
+          browserHoursDiff !== null && browserHoursDiff !== 0;
+        if (validBrowserHoursDiff) {
+          printedBrowserOffset = `${decimalToHours(
+            browserHoursDiff,
+          )}hrs to your current time`;
+        }
+      }
+
+      // Build local timezone string;
+      const hoursDiff = getHoursDiff(profileDate, currentLocalDate);
+      const validHoursDiff = hoursDiff !== null && hoursDiff !== 0;
+      let printedLocalOffset = '';
+      if (validHoursDiff) {
+        printedLocalOffset = `${decimalToHours(
+          hoursDiff,
+        )}hrs to your local time`;
+      }
+
+      if (
+        validHoursDiff &&
+        validBrowserHoursDiff &&
+        hoursDiff !== browserHoursDiff
+      ) {
+        return `${printedLocalOffset}${
+          printedBrowserOffset === '' ? '' : `, ${printedBrowserOffset}`
+        }`;
+      }
+      if (validHoursDiff && validBrowserHoursDiff) {
+        return printedBrowserOffset;
+      }
+      if (validHoursDiff) {
+        return printedLocalOffset;
+      }
+      if (validBrowserHoursDiff) {
+        return printedBrowserOffset;
       }
       return null;
     },
   },
   mounted() {
     this.interval = window.setInterval(() => {
-      this.localtime = this.getLocaltime();
+      this.localtime = new Date();
     }, 1000);
   },
   beforeDestroy() {
@@ -78,23 +205,11 @@ export default {
     }
   },
   methods: {
-    getTimezoneName(timezone) {
-      try {
-        return new Intl.DateTimeFormat('default', {
-          timeZoneName: 'short',
-          timeZone: timezone,
-        })
-          .formatToParts(new Date())[6]
-          .value.replace('GMT', 'UTC');
-      } catch (_) {
-        return '?';
-      }
-    },
     getLocaltime() {
       if (this.timezone) {
         try {
           const options = { timeZone: this.timezone };
-          return new Date().toLocaleTimeString(navigator.language, options);
+          return this.localtime.toLocaleTimeString(navigator.language, options);
         } catch (e) {
           return 'unknown';
         }
@@ -104,7 +219,12 @@ export default {
   },
   data() {
     return {
-      localtime: this.getLocaltime(),
+      localtime: new Date(),
+      currentTimezone: this.$store.state.user.timezone.value,
+      hasTimezoneInfoText:
+        'Since your browser location and profile timezone are different, we get this from your browser',
+      hasNoTimezoneInfoText:
+        'We get this from what you set up in your profile as your primary location',
     };
   },
 };
@@ -132,8 +252,8 @@ export default {
   color: var(--gray-50);
   text-transform: uppercase;
 }
-.profile__team-location div > a,
-.profile__team-location div > strong {
+.profile__team-location .profile__team-location-content > a,
+.profile__team-location .profile__team-location-content > strong {
   font-size: 0.9em;
 }
 .profile__team-location a:hover {
@@ -149,14 +269,43 @@ export default {
     display: flex;
     margin: 2em 0;
   }
-  .profile__team-location div {
+  .profile__team-location .profile__team-section {
     padding-left: 0;
   }
-  .profile__team-location div:first-child {
+  .profile__team-location .profile__team {
     border-right: 1px solid var(--gray-30);
     margin-right: 1em;
     padding-right: 1em;
     padding-left: 0;
+    width: 50%;
   }
+
+  .profile__team-location .profile__location {
+    width: 50%;
+  }
+}
+
+.timezone-print {
+  border-right: none;
+  padding-right: 0.5em;
+}
+
+.timezone-print.has-diff {
+  border-right: 1px solid var(--gray-30);
+}
+
+.timezone-diff {
+  padding-left: 0.5em;
+}
+
+.profile__team-location-content .tooltip {
+  margin-left: 0.25em;
+}
+
+.profile__team-location-content .tooltip button {
+  color: var(--gray-50);
+}
+.profile__team-location-content .tooltip button:hover {
+  color: var(--blue-60);
 }
 </style>
