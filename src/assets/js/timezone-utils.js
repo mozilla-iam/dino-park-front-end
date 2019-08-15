@@ -37,7 +37,7 @@ export const getBrowserTimezone = () => {
   try {
     return Intl.DateTimeFormat().resolvedOptions().timeZone;
   } catch (e) {
-    console.log('Unable to get browser timezone: ', e);
+    console.error('Unable to get browser timezone: ', e);
     return null;
   }
 };
@@ -50,7 +50,8 @@ export const getTimezoneName = (timezone) => {
     })
       .formatToParts(new Date())[6]
       .value.replace('GMT', 'UTC');
-  } catch (_) {
+  } catch (e) {
+    console.error('Error getting timezone name: ', e);
     return '?';
   }
 };
