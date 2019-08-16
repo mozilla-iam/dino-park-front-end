@@ -99,21 +99,24 @@ export default {
 </script>
 
 <style>
+.reporting-structure__container {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--gray-30);
+  padding-top: 1.5em;
+  padding-bottom: 1.5em;
+}
+
 .reporting-structure h3 {
   font-weight: 400;
-  margin: 1.5em 0 0 1.5em;
+  margin: 1.5em 0 1em 1.5em;
   padding: 0;
   width: 6em;
   min-width: 6em;
 }
 .reporting-structure__content {
   min-width: 0;
-}
-.reporting-structure__container {
-  display: flex;
-  border-top: 1px solid var(--gray-30);
-  padding-top: 1.5em;
-  padding-bottom: 1.5em;
+  margin-left: 1.5em;
 }
 
 .reporting-structure__container:first-child {
@@ -134,6 +137,8 @@ export default {
 
   .reporting-structure__content {
     min-width: 0; /* defaults to auto, which allows people's name/title to grow the grid column */
+    margin-left: 1.5em;
+    margin-top: 0;
   }
 }
 .reporting-structure__show-more {
