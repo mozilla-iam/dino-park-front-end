@@ -124,11 +124,17 @@ export default {
       }
       return null;
     },
+    /**
+     * Get text for hour based time difference between user and viewing profile
+     */
     timezoneDiff() {
-      if (!this.timezone || !this.currentTimezone) {
+      if (!this.timezone) {
         return null;
       }
 
+      /**
+       * Get all 3 different timezones
+       */
       // Get viewed profile timezone
       const profileDate = getFormattedDateWithTimezone(
         this.localtime,
@@ -143,11 +149,15 @@ export default {
 
       // Get browser timezone
       const browserTimezone = getBrowserTimezone();
+
+      /**
+       * Begin calculations
+       */
+      // Build browser timezone string
       let currentBrowserDate = null;
       let printedBrowserOffset = '';
       let browserHoursDiff = null;
       let validBrowserHoursDiff = false;
-      // Build browser timezone string
       if (browserTimezone && browserTimezone !== this.currentTimezone) {
         currentBrowserDate = getFormattedDateWithTimezone(
           this.localtime,
@@ -173,6 +183,7 @@ export default {
         )}hrs to your local time`;
       }
 
+      // Return appropriate text
       if (
         validHoursDiff &&
         validBrowserHoursDiff &&
