@@ -85,7 +85,7 @@
           :id="`field-phone-${index}-value`"
           class="edit-contact__input-w-error"
           type="tel"
-          pattern="\+([1-9][0-9 \-]*)*"
+          pattern="\+[1-9][0-9 \-]*"
           placeholder="+1 163 7826 3789 (Phone number)"
           v-model="phoneNumbers.values[index].v"
         />
