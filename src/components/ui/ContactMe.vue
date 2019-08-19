@@ -101,6 +101,7 @@ export default {
   props: {
     primaryEmail: String,
     phoneNumbers: Object,
+    uris: Object,
   },
   mixins: [PhoneNumbersMixin, AccountsMixin],
   components: {
