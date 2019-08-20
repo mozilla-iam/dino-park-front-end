@@ -134,12 +134,6 @@ export default {
     grid-gap: 2em;
     grid-template-columns: 6em 1fr;
   }
-
-  .reporting-structure__content {
-    min-width: 0; /* defaults to auto, which allows people's name/title to grow the grid column */
-    margin-left: 1.5em;
-    margin-top: 0;
-  }
 }
 .reporting-structure__show-more {
   max-width: 37.5em;
