@@ -9,7 +9,6 @@
             username: user.primaryUsername.value,
           }"
           :size="40"
-          :pictureSize="100"
         ></UserPicture>
       </button>
       <div class="user-menu__name">
