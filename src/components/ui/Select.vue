@@ -211,8 +211,9 @@ export default {
   color: inherit;
 }
 .options__option-icon {
-  width: 2em;
+  width: 1.25em;
   margin-right: 0.75em;
+  margin-left: 0.375em;
 }
 .options__option-checked {
   margin-left: auto;

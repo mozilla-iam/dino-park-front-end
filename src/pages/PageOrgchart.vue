@@ -80,18 +80,11 @@ import Fetcher from '@/assets/js/fetcher';
 import generateIdenticon from '@/assets/js/identicon-avatar';
 
 const fetcher = new Fetcher({ failoverOn: [302] });
-
+const IconClass = Vue.extend(Icon);
+let icon = null;
 function renderNode(node, level = 1) {
   const e = document.createElement('div');
   const hasChildren = node.children.length > 0;
-  const IconClass = Vue.extend(Icon);
-  const icon = new IconClass({
-    propsData: {
-      id: 'staff',
-      width: 10,
-      height: 10,
-    },
-  }).$mount();
   e.innerHTML = `
     <li class="org-node ${
       hasChildren ? 'org-node--expandable' : ''
@@ -140,7 +133,7 @@ function renderNode(node, level = 1) {
     </li>`;
   const [dinoEl] = e.getElementsByClassName('dino-type');
   if (dinoEl) {
-    dinoEl.appendChild(icon.$el);
+    dinoEl.appendChild(icon.$el.cloneNode(true));
   }
 
   const li = e.firstElementChild;
@@ -433,6 +426,13 @@ export default {
   },
   mounted() {
     document.getElementById('search-query').focus();
+    icon = new IconClass({
+      propsData: {
+        id: 'staff',
+        width: 10,
+        height: 10,
+      },
+    }).$mount();
   },
 };
 </script>
