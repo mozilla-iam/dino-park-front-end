@@ -51,7 +51,7 @@
       :onStaffProfile="staffInformation.staff.value"
     ></ProfileNav>
 
-    <section v-if="staffInformation.staff.value" class="profile__section">
+    <section v-if="staffInformation.staff.value" class="profile__section first">
       <a id="nav-relations" class="profile__anchor"></a>
       <ViewColleagues :username="primaryUsername.value"></ViewColleagues>
     </section>
@@ -288,8 +288,7 @@
       nav="access-groups"
       title="Access Groups"
       message="Support for Access Group management is coming soon."
-    >
-    </EmptyCard>
+    ></EmptyCard>
   </main>
 </template>
 
@@ -511,9 +510,21 @@ export default {
   border-radius: var(--cardRadius);
   position: relative;
 }
+
+.profile__section:not(.profile__section--editing):not(.first) {
+  padding: calc(2px + 1.5em);
+}
+
+.profile__section.first {
+  padding: 0;
+}
+
+.profile__section.first .profile__section-header {
+  margin: 0 0 1.5em 0;
+}
 @supports (--key: value) {
   .profile__section {
-    border-color: transparent;
+    border: none;
     box-shadow: var(--shadowCard);
   }
 }
@@ -522,15 +533,13 @@ export default {
   color: var(--gray-50);
   border: 2px solid var(--gray-30);
 }
-.profile__section--editing {
-  border-color: var(--blue-60);
+.profile__section.profile__section--editing {
+  border: 2px solid var(--blue-60);
 }
 .profile__section:first-child {
   grid-column: 1 / -1;
 }
-.profile__section h3 {
-  margin: 1.5em 0 1em;
-}
+
 .profile__section .reporting-structure h3 {
   margin-top: 0;
 }
@@ -543,6 +552,15 @@ export default {
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
+}
+
+.profile__section:not(.profile__section--editing):not(.first)
+  .profile__section-header {
+  margin: calc(-1.5em - 2px) calc(-1.5em - 2px) calc(1.5em + 2px)
+    calc(-1.5em - 2px);
+  padding-top: calc(1.5em + 2px);
+  padding-left: calc(1.5em + 2px);
+  padding-right: calc(1.5em + 2px);
 }
 .profile__section-header h2 {
   margin: 0 0 0.75em 0;
