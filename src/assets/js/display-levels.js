@@ -22,7 +22,7 @@ export const DISPLAY_LEVELS = {
   staff: {
     label: 'Staff',
     value: 'STAFF',
-    icon: 'staff',
+    icon: 'staff-outline',
   },
   private: {
     label: 'Private',
