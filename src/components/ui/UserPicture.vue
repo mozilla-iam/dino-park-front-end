@@ -80,13 +80,12 @@ export default {
       }
     },
     buildSrcset() {
+      if (!this.slot) return '';
       return [40, 100, 264]
-        .map(
-          (s) =>
-            `${this.avatar.picture}?size=${s} ${(s / this.slot).toPrecision(
-              2,
-            )}x`,
-        )
+        .map((s) => {
+          const res = (s / this.slot).toPrecision(2);
+          return `${this.avatar.picture}?size=${s} ${res}x`;
+        })
         .join(' ');
     },
   },
