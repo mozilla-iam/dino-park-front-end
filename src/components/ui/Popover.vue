@@ -84,8 +84,7 @@ export default {
   top: calc(100% + 0.5em);
   left: 50%;
   width: 90vw;
-  margin: 0 -2.25em;
-  transform: translateX(calc(-50% + 2.25em));
+  transform: translateX(calc(-50%));
   color: var(--gray-60);
   border-radius: var(--imageRadius);
   border: 2px solid var(--gray-30);
@@ -93,9 +92,6 @@ export default {
 @media (min-width: 57.5em) {
   .popover {
     min-width: 18em;
-    left: 50%;
-    transform: translateX(calc(-50% - 1.5em));
-    margin: 0 1.5em;
   }
 }
 .popover::before {
@@ -117,10 +113,7 @@ export default {
   position: relative;
 }
 .popover--left {
-  left: 0;
-}
-.popover--left {
-  transform: translateX(calc(-100% + 5.25em));
+  transform: translateX(calc(-100% + 1.5em));
 }
 .popover--left::before {
   left: auto;
@@ -141,7 +134,7 @@ export default {
 }
 @media (min-width: 57.5em) {
   .popover--right {
-    transform: translateX(calc(100% - 0.75em));
+    transform: translateX(calc(-2.25em));
   }
 }
 .popover a {
