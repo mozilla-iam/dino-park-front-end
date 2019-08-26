@@ -71,6 +71,7 @@
 <script>
 import Vue from 'vue';
 import Icon from '@/components/ui/Icon.vue';
+import DinoType from '@/components/ui/DinoType.vue';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 import Modal from '@/components/_functional/Modal.vue';
 import ProfilePreview from '@/components/profile/ProfilePreview.vue';
@@ -80,7 +81,7 @@ import Fetcher from '@/assets/js/fetcher';
 import generateIdenticon from '@/assets/js/identicon-avatar';
 
 const fetcher = new Fetcher({ failoverOn: [302] });
-const IconClass = Vue.extend(Icon);
+const DinoTypeClass = Vue.extend(DinoType);
 let icon = null;
 function renderNode(node, level = 1) {
   const e = document.createElement('div');
@@ -190,6 +191,7 @@ export default {
   name: 'PageOrgchart',
   components: {
     Icon,
+    DinoType,
     LoadingSpinner,
     Modal,
     ProfilePreview,
@@ -426,11 +428,9 @@ export default {
   },
   mounted() {
     document.getElementById('search-query').focus();
-    icon = new IconClass({
+    icon = new DinoTypeClass({
       propsData: {
-        id: 'staff',
-        width: 10,
-        height: 10,
+        size: 'small',
       },
     }).$mount();
   },

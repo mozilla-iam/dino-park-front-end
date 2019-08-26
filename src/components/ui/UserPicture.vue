@@ -116,7 +116,6 @@ export default {
   right: 0;
   bottom: 0;
   line-height: 1;
-  padding: 0.25em;
 }
 .user-picture--small {
   width: 2.85em;
@@ -127,7 +126,6 @@ export default {
   text-transform: uppercase;
   letter-spacing: 0.1em;
   border-radius: var(--imageRadius) 0;
-  padding: 0.25em;
 }
 .user-picture--medium {
   width: 6.25em;
