@@ -1,13 +1,5 @@
 <template>
   <div>
-    <header class="profile__section-header">
-      <h2>Keys</h2>
-      <EditButton
-        v-if="userOnOwnProfile"
-        section="keys"
-        sectionId="keys"
-      ></EditButton>
-    </header>
     <template
       v-if="pgpPublicKeys && Object.keys(pgpPublicKeys.values).length > 0"
     >
@@ -94,7 +86,6 @@
 </template>
 
 <script>
-import EditButton from '@/components/profile/edit/EditButton.vue';
 import Icon from '@/components/ui/Icon.vue';
 import Key from '@/components/ui/Key.vue';
 import ShowMore from '@/components/_functional/ShowMore.vue';
@@ -107,7 +98,6 @@ export default {
     userOnOwnProfile: Boolean,
   },
   components: {
-    EditButton,
     Icon,
     Key,
     ShowMore,

@@ -1,13 +1,5 @@
 <template>
   <div>
-    <header class="profile__section-header">
-      <h2>Languages</h2>
-      <EditButton
-        v-if="userOnOwnProfile"
-        section="languages"
-        sectionId="languages"
-      ></EditButton>
-    </header>
     <Tag
       v-if="Object.entries(languages.values).length > 0"
       v-for="(language, index) in languages.values"
@@ -20,7 +12,6 @@
 </template>
 
 <script>
-import EditButton from '@/components/profile/edit/EditButton.vue';
 import Tag from '@/components/ui/Tag.vue';
 
 export default {
@@ -30,7 +21,6 @@ export default {
     userOnOwnProfile: Boolean,
   },
   components: {
-    EditButton,
     Tag,
   },
 };

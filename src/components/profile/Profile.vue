@@ -56,239 +56,168 @@
       <ViewColleagues :username="primaryUsername.value"></ViewColleagues>
     </section>
 
-    <section
-      v-if="identitiesWrapper.anyIdentity() || this.editing === 'identities'"
-      :class="
-        'profile__section' +
-          (this.editing === 'identities' ? ' profile__section--editing' : '')
-      "
-    >
-      <a id="nav-identities" class="profile__anchor"></a>
-      <EditIdentities
-        v-if="this.editing === 'identities'"
-        v-bind="{ identities: identitiesWrapper }"
-      />
-      <ViewIdentities
-        v-else
-        v-bind="{ identities: identitiesWrapper, userOnOwnProfile }"
-      />
-    </section>
-    <EmptyCard
-      v-else
-      nav="identities"
+    <ProfileSection
+      section="identities"
       title="Identities"
-      :message="
-        userOnOwnProfile
-          ? `You haven't added any identities yet.`
-          : `No identities have been added yet.`
-      "
+      :userOnOwnProfile="userOnOwnProfile"
+      :empty="!identitiesWrapper.anyIdentity()"
+      message="No identities have been added yet."
+      messageOwn="You haven't added any identities yet."
+      :editing="editing === 'identities'"
     >
-      <template v-slot:header>
-        <EditButton
-          v-if="userOnOwnProfile"
-          section="identities"
-          sectionId="identities"
-        ></EditButton>
+      <template v-slot:edit>
+        <EditIdentities v-bind="{ identities: identitiesWrapper }" />
       </template>
-    </EmptyCard>
+      <template v-slot:view>
+        <ViewIdentities
+          v-bind="{ identities: identitiesWrapper, userOnOwnProfile }"
+        />
+      </template>
+    </ProfileSection>
 
-    <section
-      :class="
-        'profile__section' +
-          (this.editing === 'contact' ? ' profile__section--editing' : '')
-      "
+    <ProfileSection
+      section="contact"
+      title="Contact"
+      :userOnOwnProfile="userOnOwnProfile"
+      :empty="!sections.contact"
+      message="No contact details have been added yet."
+      messageOwn="You haven't added any contact details yet."
+      :editing="editing === 'contact'"
     >
-      <a id="nav-contact" class="profile__anchor"></a>
-      <EditContact
-        v-if="this.editing === 'contact'"
-        v-bind="{
-          username: primaryUsername.value,
-          initialPrimaryEmail: primaryEmail,
-          initialPhoneNumbers: phoneNumbers,
-          initialValues: {
-            primaryEmail,
-            phoneNumbers,
-            uris,
-          },
-        }"
-      />
-      <ViewContact
-        v-else
-        v-bind="{ primaryEmail, phoneNumbers, userOnOwnProfile }"
-      ></ViewContact>
-    </section>
+      <template v-slot:edit>
+        <EditContact
+          v-bind="{
+            username: primaryUsername.value,
+            initialPrimaryEmail: primaryEmail,
+            initialPhoneNumbers: phoneNumbers,
+            initialValues: {
+              primaryEmail,
+              phoneNumbers,
+              uris,
+            },
+          }"
+        />
+      </template>
+      <template v-slot:view>
+        <ViewContact
+          v-bind="{ primaryEmail, phoneNumbers, userOnOwnProfile }"
+        ></ViewContact>
+      </template>
+    </ProfileSection>
 
-    <section
-      v-if="sections.accounts"
-      :class="
-        'profile__section' +
-          (this.editing === 'accounts' ? ' profile__section--editing' : '')
-      "
-    >
-      <a id="nav-accounts" class="profile__anchor"></a>
-      <EditAccounts
-        v-if="this.editing === 'accounts'"
-        v-bind="{
-          username: primaryUsername.value,
-          initialValues: { uris },
-          initialUris: uris,
-        }"
-      ></EditAccounts>
-      <ViewAccounts v-else v-bind="{ uris, userOnOwnProfile }"></ViewAccounts>
-    </section>
-    <EmptyCard
-      v-else
-      nav="accounts"
+    <ProfileSection
+      section="accounts"
       title="Accounts"
-      :message="
-        userOnOwnProfile
-          ? `You haven't added any accounts yet.`
-          : `No accounts have been added yet.`
-      "
+      :userOnOwnProfile="userOnOwnProfile"
+      :empty="!sections.accounts"
+      message="No accounts have been added yet."
+      messageOwn="You haven't added any accounts yet."
+      :editing="editing === 'accounts'"
     >
-      <template v-slot:header>
-        <EditButton
-          v-if="userOnOwnProfile"
-          section="accounts"
-          sectionId="accounts"
-        ></EditButton>
+      <template v-slot:edit>
+        <EditAccounts
+          v-bind="{
+            username: primaryUsername.value,
+            initialValues: { uris },
+            initialUris: uris,
+          }"
+        ></EditAccounts>
       </template>
-    </EmptyCard>
+      <template v-slot:view>
+        <ViewAccounts v-bind="{ uris, userOnOwnProfile }"></ViewAccounts>
+      </template>
+    </ProfileSection>
 
-    <section
-      v-if="sections.languages"
-      :class="
-        'profile__section' +
-          (this.editing === 'languages' ? ' profile__section--editing' : '')
-      "
-    >
-      <a id="nav-languages" class="profile__anchor"></a>
-      <EditLanguages
-        v-if="this.editing === 'languages'"
-        v-bind="{
-          username: primaryUsername.value,
-          initialValues: { languages },
-          initialLanguages: languages,
-        }"
-      ></EditLanguages>
-      <ViewLanguages
-        v-else
-        v-bind="{ languages, userOnOwnProfile }"
-      ></ViewLanguages>
-    </section>
-    <EmptyCard
-      v-else
-      nav="languages"
+    <ProfileSection
+      section="languages"
       title="Languages"
-      :message="
-        userOnOwnProfile
-          ? `You haven't added any languages yet.`
-          : `No languages have been added yet.`
-      "
+      :userOnOwnProfile="userOnOwnProfile"
+      :empty="!sections.languages"
+      message="No languages have been added yet."
+      messageOwn="You haven't added any languages yet."
+      :editing="editing === 'languages'"
     >
-      <template v-slot:header>
-        <EditButton
-          v-if="userOnOwnProfile"
-          section="languages"
-          sectionId="languages"
-        ></EditButton>
+      <template v-slot:edit>
+        <EditLanguages
+          v-bind="{
+            username: primaryUsername.value,
+            initialValues: { languages },
+            initialLanguages: languages,
+          }"
+        ></EditLanguages>
       </template>
-    </EmptyCard>
+      <template v-slot:view>
+        <ViewLanguages v-bind="{ languages, userOnOwnProfile }"></ViewLanguages>
+      </template>
+    </ProfileSection>
 
-    <section
-      v-if="sections.tags"
-      :class="
-        'profile__section' +
-          (this.editing === 'tags' ? ' profile__section--editing' : '')
-      "
-    >
-      <a id="nav-tags" class="profile__anchor"></a>
-      <EditTags
-        v-if="this.editing === 'tags'"
-        v-bind="{
-          username: primaryUsername.value,
-          initialValues: { tags },
-          initialTags: tags,
-        }"
-      ></EditTags>
-      <ViewTags v-else v-bind="{ tags, userOnOwnProfile }"></ViewTags>
-    </section>
-    <EmptyCard
-      v-else
-      nav="tags"
+    <ProfileSection
+      section="tags"
       title="Tags"
-      :message="
-        userOnOwnProfile
-          ? `You haven't added any tags yet.`
-          : `No tags have been added yet.`
-      "
+      :userOnOwnProfile="userOnOwnProfile"
+      :empty="!sections.tags"
+      message="No tags have been added yet."
+      messageOwn="You haven't added any tags yet."
+      :editing="editing === 'tags'"
     >
-      <template v-slot:header>
-        <EditButton
-          v-if="userOnOwnProfile"
-          section="tags"
-          sectionId="tags"
-        ></EditButton>
+      <template v-slot:edit>
+        <EditTags
+          v-bind="{
+            username: primaryUsername.value,
+            initialValues: { tags },
+            initialTags: tags,
+          }"
+        ></EditTags>
       </template>
-    </EmptyCard>
+      <template v-slot:view>
+        <ViewTags v-bind="{ tags, userOnOwnProfile }"></ViewTags>
+      </template>
+    </ProfileSection>
 
-    <section
-      v-if="sections.keys"
-      :class="
-        'profile__section' +
-          (this.editing === 'keys' ? ' profile__section--editing' : '')
-      "
-    >
-      <a id="nav-keys" class="profile__anchor"></a>
-      <EditKeys
-        v-if="this.editing === 'keys'"
-        v-bind="{
-          username: primaryUsername.value,
-          sshPublicKeys,
-          pgpPublicKeys,
-        }"
-      />
-      <ViewKeys
-        v-else
-        v-bind="{ pgpPublicKeys, sshPublicKeys, userOnOwnProfile }"
-      ></ViewKeys>
-    </section>
-    <EmptyCard
-      v-else
-      nav="keys"
+    <ProfileSection
+      section="keys"
       title="Keys"
-      :message="
-        userOnOwnProfile
-          ? `You haven't added any keys yet.`
-          : `No keys have been added yet.`
-      "
+      :userOnOwnProfile="userOnOwnProfile"
+      :empty="!sections.keys"
+      message="No keys have been added yet."
+      messageOwn="You haven't added any keys yet."
+      :editing="editing === 'keys'"
     >
-      <template v-slot:header>
-        <EditButton
-          v-if="userOnOwnProfile"
-          section="keys"
-          sectionId="keys"
-        ></EditButton>
+      <template v-slot:edit>
+        <EditKeys
+          v-bind="{
+            username: primaryUsername.value,
+            sshPublicKeys,
+            pgpPublicKeys,
+          }"
+        />
       </template>
-    </EmptyCard>
+      <template v-slot:view>
+        <ViewKeys
+          v-bind="{ pgpPublicKeys, sshPublicKeys, userOnOwnProfile }"
+        ></ViewKeys>
+      </template>
+    </ProfileSection>
 
-    <section
-      v-if="
-        Object.keys(accessInformation.mozilliansorg.values || {}).length > 0
-      "
-      class="profile__section"
-    >
-      <a id="nav-access-groups" class="profile__anchor"></a>
-      <ViewAccessGroups
-        v-bind="{ accessInformation, userOnOwnProfile }"
-      ></ViewAccessGroups>
-    </section>
-    <EmptyCard
-      v-else
-      nav="access-groups"
+    <ProfileSection
+      section="access-groups"
       title="Access Groups"
+      :userOnOwnProfile="userOnOwnProfile"
+      :empty="
+        Object.keys(accessInformation.mozilliansorg.values || {}).length === 0
+      "
+      :editable="false"
       message="Support for Access Group management is coming soon."
-    ></EmptyCard>
+      messageOwn="Support for Access Group management is coming soon."
+      :editing="editing === 'access-groups'"
+    >
+      <template v-slot:edit> </template>
+      <template v-slot:view>
+        <ViewAccessGroups
+          v-bind="{ accessInformation, userOnOwnProfile }"
+        ></ViewAccessGroups>
+      </template>
+    </ProfileSection>
   </main>
 </template>
 
@@ -302,9 +231,9 @@ import EditLanguages from './edit/EditLanguages.vue';
 import EditIdentities from './edit/EditIdentities.vue';
 import EditPersonalInfo from '@/components/profile/edit/EditPersonalInfo.vue';
 import EditTags from './edit/EditTags.vue';
-import EmptyCard from '@/components/profile/view/EmptyCard.vue';
 import Identities from '@/assets/js/identities';
 import ProfileNav from './ProfileNav.vue';
+import ProfileSection from './ProfileSection.vue';
 import ViewAccessGroups from './view/ViewAccessGroups.vue';
 import ViewAccounts from './view/ViewAccounts.vue';
 import ViewContact from './view/ViewContact.vue';
@@ -351,8 +280,8 @@ export default {
     EditLanguages,
     EditPersonalInfo,
     EditTags,
-    EmptyCard,
     ProfileNav,
+    ProfileSection,
     ViewAccessGroups,
     ViewAccounts,
     ViewContact,
@@ -372,7 +301,9 @@ export default {
     sections() {
       return {
         relations: this.staffInformation.staff,
-        contact: true,
+        contact:
+          this.primaryEmail.value ||
+          Object.entries(this.phoneNumbers.values || {}).length > 0,
         accounts:
           this.editing === 'accounts' ||
           (this.uris.values &&

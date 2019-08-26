@@ -1,61 +1,50 @@
 <template>
-  <div>
-    <header class="profile__section-header">
-      <h2>Accounts</h2>
-      <EditButton
-        v-if="userOnOwnProfile"
-        section="accounts"
-        sectionId="accounts"
-      ></EditButton>
-    </header>
-    <div class="profile__external-accounts">
-      <div v-if="accounts.mozilla.length">
-        <h3>Mozilla</h3>
-        <IconBlockList>
-          <IconBlock
-            v-for="(acc, index) in accounts.mozilla"
-            :key="`acc-moz-${index}`"
-            :heading="acc.text"
-            :icon="acc.icon"
+  <div class="profile__external-accounts">
+    <div v-if="accounts.mozilla.length">
+      <h3>Mozilla</h3>
+      <IconBlockList>
+        <IconBlock
+          v-for="(acc, index) in accounts.mozilla"
+          :key="`acc-moz-${index}`"
+          :heading="acc.text"
+          :icon="acc.icon"
+        >
+          <a
+            v-if="acc.uri"
+            :href="acc.uri"
+            target="_blank"
+            rel="noreferrer noopener"
+            >{{ acc.value }}</a
           >
-            <a
-              v-if="acc.uri"
-              :href="acc.uri"
-              target="_blank"
-              rel="noreferrer noopener"
-              >{{ acc.value }}</a
-            >
-            <template v-else>{{ acc.value }}</template>
-          </IconBlock>
-        </IconBlockList>
-      </div>
-      <div v-if="accounts.other.length">
-        <h3>Elsewhere</h3>
-        <IconBlockList>
-          <IconBlock
-            v-for="(acc, index) in accounts.other"
-            :key="`acc-other-${index}`"
-            :heading="acc.text"
-            :icon="acc.icon"
+          <template v-else>{{ acc.value }}</template>
+        </IconBlock>
+      </IconBlockList>
+    </div>
+    <div v-if="accounts.other.length">
+      <h3>Elsewhere</h3>
+      <IconBlockList>
+        <IconBlock
+          v-for="(acc, index) in accounts.other"
+          :key="`acc-other-${index}`"
+          :heading="acc.text"
+          :icon="acc.icon"
+        >
+          <a
+            v-if="acc.uri"
+            :href="acc.uri"
+            target="_blank"
+            rel="noreferrer noopener"
+            >{{ acc.value }}</a
           >
-            <a
-              v-if="acc.uri"
-              :href="acc.uri"
-              target="_blank"
-              rel="noreferrer noopener"
-              >{{ acc.value }}</a
-            >
-            <template v-else>{{ acc.value }}</template>
-          </IconBlock>
-        </IconBlockList>
-      </div>
+          <template v-else>{{ acc.value }}</template>
+        </IconBlock>
+      </IconBlockList>
     </div>
   </div>
 </template>
 
 <script>
 import AccountsMixin from '@/components/_mixins/AccountsMixin.vue';
-import EditButton from '@/components/profile/edit/EditButton.vue';
 import IconBlock from '@/components/ui/IconBlock.vue';
 import IconBlockList from '@/components/ui/IconBlockList.vue';
 
@@ -67,7 +56,6 @@ export default {
   },
   mixins: [AccountsMixin],
   components: {
-    EditButton,
     IconBlock,
     IconBlockList,
   },

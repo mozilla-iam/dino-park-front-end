@@ -1,13 +1,5 @@
 <template>
   <div>
-    <header class="profile__section-header">
-      <h2>Contact</h2>
-      <EditButton
-        v-if="userOnOwnProfile"
-        section="contact"
-        sectionId="contact"
-      ></EditButton>
-    </header>
     <h3 class="visually-hidden">Contact options</h3>
     <IconBlockList class="icon-block-list--multi-col">
       <IconBlock heading="Email" subHeading="primary" icon="email">
@@ -28,7 +20,6 @@
 
 <script>
 import PhoneNumbersMixin from '@/components/_mixins/PhoneNumbersMixin.vue';
-import EditButton from '@/components/profile/edit/EditButton.vue';
 import IconBlock from '@/components/ui/IconBlock.vue';
 import IconBlockList from '@/components/ui/IconBlockList.vue';
 
@@ -41,7 +32,6 @@ export default {
   },
   mixins: [PhoneNumbersMixin],
   components: {
-    EditButton,
     IconBlock,
     IconBlockList,
   },
