@@ -24,6 +24,8 @@
         alternateButtonText="Show Less"
         class="reporting-structure__show-more"
         buttonClass="button button--text-only button--less-padding reporting-structure__show-more-button"
+        :closeOnUpdate="true"
+        :updateIndicator="$route.params.username"
         :transition="true"
       >
         <template slot="overflow">
