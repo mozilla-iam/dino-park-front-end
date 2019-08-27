@@ -1,10 +1,7 @@
 <template>
   <div class="person">
     <UserPicture :avatar="{ picture, username }" :size="40" :isStaff="true" />
-    <RouterLink
-      :to="{ name: 'Profile', params: { username } }"
-      :title="`${firstName} ${lastName}`"
-    >
+    <a v-bind:href="personLink" :title="`${firstName} ${lastName}`">
       <div class="person__name-title">
         <div class="person__name">{{ firstName }} {{ lastName }}</div>
         <div class="person__preferred-title">
@@ -12,7 +9,7 @@
           <template v-else-if="funTitle">{{ funTitle }}</template>
         </div>
       </div>
-    </RouterLink>
+    </a>
   </div>
 </template>
 
@@ -34,6 +31,14 @@ export default {
   components: {
     DinoType,
     UserPicture,
+  },
+  computed: {
+    personLink() {
+      return this.$router.resolve({
+        name: 'Profile',
+        params: { username: this.username },
+      }).href;
+    },
   },
 };
 </script>
