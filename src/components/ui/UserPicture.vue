@@ -5,6 +5,7 @@
       ref="img"
       :class="cls"
       :src="src"
+      :srcset="srcset"
       alt=""
       :width="size"
       role="presentation"
@@ -29,7 +30,6 @@ export default {
       },
     },
     cls: String,
-    pictureSize: Number,
     isStaff: Boolean,
   },
   components: {
@@ -56,7 +56,6 @@ export default {
         this.dinoTypeSize = 'large';
         this.slot = 264;
       }
-      this.slot = this.pictureSize || this.slot;
       this.modifier = `user-picture--${this.dinoTypeSize}`;
     },
     async updateUserPicture() {
@@ -77,7 +76,17 @@ export default {
         this.src = await generateIdenticon(this.avatar.username, this.size);
       } else {
         this.src = `${this.avatar.picture}?size=${this.slot}`;
+        this.srcset = this.buildSrcset();
       }
+    },
+    buildSrcset() {
+      if (!this.slot) return '';
+      return [40, 100, 264]
+        .map((s) => {
+          const res = (s / this.slot).toPrecision(2);
+          return `${this.avatar.picture}?size=${s} ${res}x`;
+        })
+        .join(' ');
     },
   },
   created() {
@@ -86,6 +95,7 @@ export default {
   data() {
     return {
       src: '',
+      srcset: '',
       dinoTypeSize: 'small',
       slot: 40,
       class: 'user-picture--40',
