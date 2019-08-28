@@ -4,7 +4,7 @@
       <h2>Keys</h2>
     </header>
     <template
-      v-if="pgpPublicKeys && Object.keys(pgpPublicKeys.values).length > 0"
+      v-if="pgpPublicKeys && Object.keys(pgpPublicKeys.values || {}).length > 0"
     >
       <div class="edit-keys__header">
         <h3>PGP keys</h3>
@@ -28,7 +28,7 @@
       />
     </template>
     <template
-      v-if="sshPublicKeys && Object.keys(sshPublicKeys.values).length > 0"
+      v-if="sshPublicKeys && Object.keys(sshPublicKeys.values || {}).length > 0"
     >
       <div class="edit-keys__header">
         <h3>SSH keys</h3>

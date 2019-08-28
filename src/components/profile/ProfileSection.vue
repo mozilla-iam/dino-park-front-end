@@ -1,5 +1,5 @@
 <template>
-  <section :class="cls">
+  <section :class="cssClasses">
     <a :id="`nav-${section}`" class="profile__anchor"></a>
     <slot name="edit" v-if="editing"></slot>
     <div v-else>
@@ -41,14 +41,12 @@ export default {
   },
   components: { EditButton, EmptyCard },
   computed: {
-    cls() {
-      let cls = 'profile__section';
-      if (this.editing) {
-        cls += ' profile__section--editing';
-      } else if (this.empty) {
-        cls += ' profile__section--disabled';
-      }
-      return cls;
+    cssClasses() {
+      return {
+        profile__section: true,
+        'profile__section--editing': this.editing,
+        'profile__section--disabled': !this.editing && this.empty,
+      };
     },
   },
 };
