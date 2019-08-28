@@ -119,6 +119,7 @@ export default {
 .reporting-structure__content {
   min-width: 0;
   margin-left: 1.5em;
+  padding-right: 1.5em;
 }
 
 .reporting-structure__container:first-child {
