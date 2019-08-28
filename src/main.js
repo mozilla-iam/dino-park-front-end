@@ -98,7 +98,7 @@ const store = new Vuex.Store({
   },
 });
 
-store.dispatch('fetchUser').then(() => {
+store.dispatch('fetchUser').then(function() {
   new Vue({
     router,
     apolloProvider,
