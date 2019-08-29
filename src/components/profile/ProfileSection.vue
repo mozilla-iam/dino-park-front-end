@@ -2,7 +2,7 @@
   <section :class="cssClasses">
     <a :id="`nav-${section}`" class="profile__anchor"></a>
     <slot name="edit" v-if="editing"></slot>
-    <div v-else>
+    <template v-else>
       <header class="profile__section-header">
         <h2>{{ title }}</h2>
         <EditButton
@@ -13,7 +13,7 @@
       </header>
       <p v-if="empty">{{ userOnOwnProfile ? messageOwn : message }}</p>
       <slot name="view" v-else></slot>
-    </div>
+    </template>
   </section>
 </template>
 
