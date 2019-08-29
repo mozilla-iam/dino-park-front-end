@@ -97,7 +97,7 @@ const store = new Vuex.Store({
     },
   },
 });
-
+// eslint-disable-next-line
 store.dispatch('fetchUser').then(function() {
   new Vue({
     router,
