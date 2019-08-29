@@ -2,7 +2,7 @@
   <div class="colleagues">
     <header class="profile__section-header">
       <h2>Colleagues</h2>
-      <div v-if="related.directs.length > 1" class="colleagues__toggle">
+      <div v-if="canShowColleaguesToggle" class="colleagues__toggle">
         <button
           type="button"
           @click="setPreference('list')"
@@ -37,8 +37,7 @@
         }"
         class="button button--secondary button--small"
       >
-        <Icon id="org-chart" :width="16" :height="16" />
-        Org Chart
+        <Icon id="org-chart" :width="16" :height="16" />Org Chart
         <Icon id="chevron-right" :width="18" :height="18" />
       </RouterLink>
     </header>
@@ -74,6 +73,9 @@ export default {
   computed: {
     viewPreference() {
       return this.$store.state.personViewPreference;
+    },
+    canShowColleaguesToggle() {
+      return this.related.directs.length > 1 || this.related.peers.length > 1;
     },
   },
   watch: {
