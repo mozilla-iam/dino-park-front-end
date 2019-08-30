@@ -20,7 +20,7 @@
     <div class="profile__team-section profile__location">
       <h3 class="visually-hidden">Location</h3>
       <div class="profile__team-location-content">
-        <template v-if="officeLocation">
+        <span class="profile-team-location-links" v-if="location">
           <RouterLink
             :to="{
               name: 'Search',
@@ -28,43 +28,45 @@
                 query: locationSearchString,
               },
             }"
+            >{{ location }}</RouterLink
           >
-            {{ location || officeLocation }}
-            {{ location && officeLocation && `(${officeLocation})` }}
-          </RouterLink>
-          <span
-            class="timezone-print"
-            v-bind:class="{ 'timezone-print': true, 'has-diff': timezoneDiff }"
-            >{{ timezoneWithTime }}</span
+          <RouterLink
+            v-if="officeLocation"
+            :to="{
+              name: 'Search',
+              query: {
+                query: officeLocationSearchString,
+              },
+            }"
+            >({{ officeLocation }})</RouterLink
           >
-          <span class="timezone-diff">{{ timezoneDiff }}</span>
-          <Tooltip
-            v-if="hasTimezoneOffset"
-            buttonText="Open timezone info"
-            alternateButtonText="Close timezone info"
+        </span>
+        <span class="profile-team-location-links" v-else-if="officeLocation">
+          <RouterLink
+            class="profile-team-location-links"
+            v-if="officeLocation"
+            :to="{
+              name: 'Search',
+              query: {
+                query: officeLocationSearchString,
+              },
+            }"
+            >{{ officeLocation }}</RouterLink
           >
-            {{
-              hasBrowserTimezone ? hasTimezoneInfoText : hasNoTimezoneInfoText
-            }}
-          </Tooltip>
-        </template>
-        <template v-else>
-          <strong>
-            {{ location || officeLocation }}
-            {{ location && officeLocation && `(${officeLocation})` }}
-          </strong>
-          <span class="timezone-print">{{ timezoneWithTime }}</span>
-          <span class="timezone-diff">{{ timezoneDiff }}</span>
-          <Tooltip
-            v-if="hasTimezoneOffset"
-            buttonText="Open timezone info"
-            alternateButtonText="Close timezone info"
-          >
-            {{
-              hasBrowserTimezone ? hasTimezoneInfoText : hasNoTimezoneInfoText
-            }}
-          </Tooltip>
-        </template>
+        </span>
+        <span
+          class="timezone-print"
+          v-bind:class="{ 'timezone-print': true, 'has-diff': timezoneDiff }"
+          >{{ timezoneWithTime }}</span
+        >
+        <span class="timezone-diff">{{ timezoneDiff }}</span>
+        <Tooltip
+          v-if="hasTimezoneOffset"
+          buttonText="Open timezone info"
+          alternateButtonText="Close timezone info"
+        >
+          {{ hasBrowserTimezone ? hasTimezoneInfoText : hasNoTimezoneInfoText }}
+        </Tooltip>
       </div>
     </div>
   </div>
@@ -93,8 +95,11 @@ export default {
     timezone: String,
   },
   computed: {
-    locationSearchString() {
+    officeLocationSearchString() {
       return 'officeLocation:"' + this.officeLocation + '"'; // eslint-disable-line
+    },
+    locationSearchString() {
+      return 'location:"' + this.location + '"'; // eslint-disable-line
     },
     hasBrowserTimezone() {
       const profileDate = getFormattedDateWithTimezone(
@@ -258,7 +263,7 @@ export default {
 }
 .profile__team-location a,
 .profile__team-location strong {
-  display: block;
+  display: inline;
   font-weight: 700;
   color: var(--gray-50);
   text-transform: uppercase;
@@ -318,5 +323,8 @@ export default {
 }
 .profile__team-location-content .tooltip button:hover {
   color: var(--blue-60);
+}
+.profile-team-location-links {
+  display: block;
 }
 </style>
