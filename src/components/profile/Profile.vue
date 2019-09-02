@@ -207,8 +207,8 @@
         Object.keys(accessInformation.mozilliansorg.values || {}).length === 0
       "
       :editable="true"
-      message="Not a member of any access group yet."
-      messageOwn="You are not a member of any access group yet."
+      message="Not a member of any access group."
+      messageOwn="You are not a member of any access group."
       :editing="editing === 'access-groups'"
     >
       <template v-slot:edit>
