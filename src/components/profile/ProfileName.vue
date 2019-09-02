@@ -52,6 +52,7 @@ export default {
 }
 .profile__user-name,
 .profile__pronoun {
+  display: inline-block;
   font-size: 1.25em;
   color: var(--gray-50);
 }
