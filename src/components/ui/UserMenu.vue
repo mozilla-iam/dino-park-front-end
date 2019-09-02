@@ -175,7 +175,7 @@ a.user-menu__log-out svg,
   cursor: not-allowed;
 }
 .user-menu__header {
-  padding: 1.18em 1.75em; /* :'( */
+  padding: 1.5em 1.75em; /* :'( */
   border-bottom: 1px solid var(--gray-50);
   display: flex;
   position: relative;
