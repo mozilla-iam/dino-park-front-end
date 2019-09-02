@@ -41,7 +41,6 @@
 
 <script>
 import { MUTATE_PROFILE, DISPLAY_PROFILE } from '@/queries/profile';
-import { DISPLAY_LEVELS } from '@/assets/js/display-levels';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 
 export default {
@@ -131,25 +130,6 @@ export default {
     return {
       displayProfile: DISPLAY_PROFILE,
       mutateProfile: MUTATE_PROFILE,
-      ...Object.entries(this.initialValues).reduce(
-        (
-          obj,
-          [
-            key,
-            {
-              value,
-              metadata: { display },
-            },
-          ],
-        ) => {
-          obj[key] = {
-            value,
-            display: display || DISPLAY_LEVELS.public.value,
-          };
-          return obj;
-        },
-        {},
-      ),
     };
   },
 };
