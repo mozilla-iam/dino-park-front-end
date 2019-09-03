@@ -35,7 +35,7 @@
     <a
       id="access-information__external-link"
       class="button button--secondary button--action"
-      href="https://mozillians.org"
+      href="https://mozillians.org/user/edit/#mygroups"
       target="_blank"
       rel="noreferrer noopener"
     >
