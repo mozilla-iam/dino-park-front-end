@@ -164,9 +164,11 @@ export default {
       remove: false,
       display: this.identities.githubDisplay(),
     };
-    this.update();
+    if (this.identities.githubUsername === null) {
+      this.update();
+    }
     return {
-      githubUsername: null,
+      githubUsername: this.identities.githubUsername,
       adding: false,
       newIdentity: null,
       deleting: false,
