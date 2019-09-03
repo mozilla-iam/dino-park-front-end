@@ -16,6 +16,7 @@
 
 <script>
 import generateIdenticon from '@/assets/js/identicon-avatar';
+import avatarUrl from '@/assets/js/avatars';
 import DinoType from './DinoType.vue';
 
 export default {
@@ -76,7 +77,7 @@ export default {
       ) {
         this.src = await generateIdenticon(this.avatar.username, this.size);
       } else {
-        this.src = `${this.avatar.picture}?size=${this.slot}`;
+        this.src = `${avatarUrl(this.avatar.picture)}?size=${this.slot}`;
       }
     },
   },

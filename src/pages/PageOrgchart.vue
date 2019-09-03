@@ -74,6 +74,7 @@ import ProfilePreview from '@/components/profile/ProfilePreview.vue';
 import Toggle from '@/components/ui/Toggle.vue';
 import { PREVIEW_PROFILE } from '@/queries/profile';
 import Fetcher from '@/assets/js/fetcher';
+import avatarUrl from '@/assets/js/avatars';
 import generateIdenticon from '@/assets/js/identicon-avatar';
 
 const fetcher = new Fetcher({ failoverOn: [302] });
@@ -145,7 +146,7 @@ function renderNode(node, level = 1) {
     });
   } else {
     img.style.backgroundSize = 'cover';
-    img.style.backgroundImage = `url("${picture}?size=40")`;
+    img.style.backgroundImage = `url("${avatarUrl(picture)}?size=40")`;
   }
   e.querySelector(
     '.org-node__name',
