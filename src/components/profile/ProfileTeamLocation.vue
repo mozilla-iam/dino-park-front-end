@@ -64,9 +64,10 @@
           v-if="hasTimezoneOffset"
           buttonText="Open timezone info"
           alternateButtonText="Close timezone info"
+          >{{
+            hasBrowserTimezone ? hasTimezoneInfoText : hasNoTimezoneInfoText
+          }}</Tooltip
         >
-          {{ hasBrowserTimezone ? hasTimezoneInfoText : hasNoTimezoneInfoText }}
-        </Tooltip>
       </div>
     </div>
   </div>
@@ -268,8 +269,8 @@ export default {
   color: var(--gray-50);
   text-transform: uppercase;
 }
-.profile__team-location .profile__team-location-content > a,
-.profile__team-location .profile__team-location-content > strong {
+.profile__team-location .profile__team-location-content a,
+.profile__team-location .profile__team-location-content strong {
   font-size: 0.9em;
 }
 .profile__team-location a:hover {
@@ -326,5 +327,9 @@ export default {
 }
 .profile-team-location-links {
   display: block;
+}
+
+.profile-team-location-links > a:first-child {
+  padding-right: 0.25em;
 }
 </style>
