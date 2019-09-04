@@ -77,21 +77,17 @@ export default {
     this.$refs.header.focus();
   },
   data() {
-    console.log(JSON.stringify(this.initialAccessInformation));
     const {
       mozilliansorg: {
-        metadata: { display = DISPLAY_LEVELS.private.value },
-      },
+        values = {},
+        metadata: { display = DISPLAY_LEVELS.private.value } = {},
+      } = {},
     } = this.initialAccessInformation;
     return {
       editMozilliansorgGroups: {
         display,
       },
-      mozilliansorgGroups: [
-        ...Object.entries(
-          this.initialAccessInformation.mozilliansorg.values || {},
-        ),
-      ],
+      mozilliansorgGroups: [...Object.entries(values)],
     };
   },
 };
