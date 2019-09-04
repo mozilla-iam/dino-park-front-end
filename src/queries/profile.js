@@ -108,6 +108,7 @@ const MUTATE_PROFILE = gql`
     $languages: KeyValuesWithDisplay
     $tags: KeyValuesWithDisplay
     $uris: KeyValuesWithDisplay
+    $accessInformationMozilliansorg: Display
   ) {
     profile(
       update: {
@@ -126,6 +127,7 @@ const MUTATE_PROFILE = gql`
         languages: $languages
         tags: $tags
         uris: $uris
+        accessInformationMozilliansorg: $accessInformationMozilliansorg
       }
     ) {
       uuid {
@@ -238,6 +240,14 @@ const MUTATE_PROFILE = gql`
           display
         }
       }
+      accessInformation {
+        mozilliansorg {
+          values
+          metadata {
+            display
+          }
+        }
+      }
     }
   }
 `;
@@ -251,6 +261,9 @@ const DISPLAY_PROFILE = gql`
       accessInformation {
         mozilliansorg {
           values
+          metadata {
+            display
+          }
         }
       }
       alternativeName {

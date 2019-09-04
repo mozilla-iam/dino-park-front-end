@@ -206,12 +206,16 @@
       :empty="
         Object.keys(accessInformation.mozilliansorg.values || {}).length === 0
       "
-      :editable="false"
-      message="Support for Access Group management is coming soon."
-      messageOwn="Support for Access Group management is coming soon."
+      :editable="true"
+      message="Not a member of any access group."
+      messageOwn="You are not a member of any access group."
       :editing="editing === 'access-groups'"
     >
-      <template v-slot:edit> </template>
+      <template v-slot:edit>
+        <EditAccessGroups
+          v-bind="{ initialAccessInformation: accessInformation }"
+        ></EditAccessGroups>
+      </template>
       <template v-slot:view>
         <ViewAccessGroups
           v-bind="{ accessInformation, userOnOwnProfile }"
@@ -224,6 +228,7 @@
 <script>
 import AccountsMixin from '@/components/_mixins/AccountsMixin.vue';
 import EditButton from '@/components/profile/edit/EditButton.vue';
+import EditAccessGroups from './edit/EditAccessGroups.vue';
 import EditAccounts from './edit/EditAccounts.vue';
 import EditContact from './edit/EditContact.vue';
 import EditKeys from './edit/EditKeys.vue';
@@ -272,6 +277,7 @@ export default {
   },
   mixins: [AccountsMixin],
   components: {
+    EditAccessGroups,
     EditAccounts,
     EditButton,
     EditContact,
