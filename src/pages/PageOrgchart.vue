@@ -146,7 +146,7 @@ function renderNode(node, level = 1) {
     });
   } else {
     img.style.backgroundSize = 'cover';
-    img.style.backgroundImage = `url("${avatarUrl(picture)}?size=40")`;
+    img.style.backgroundImage = `url("${avatarUrl(picture, 40)}")`;
   }
   e.querySelector(
     '.org-node__name',

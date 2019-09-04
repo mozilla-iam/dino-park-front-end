@@ -77,7 +77,7 @@ export default {
       ) {
         this.src = await generateIdenticon(this.avatar.username, this.size);
       } else {
-        this.src = `${avatarUrl(this.avatar.picture)}?size=${this.slot}`;
+        this.src = avatarUrl(this.avatar.picture, this.slot);
       }
     },
   },

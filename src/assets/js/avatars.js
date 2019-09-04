@@ -1,5 +1,6 @@
-export default function avatarUrl(profilePictureUrl) {
-  const url = new URL(profilePictureUrl, window.location.href);
+export default function avatarUrl(profilePicturePath, size = 264) {
+  const url = new URL(profilePicturePath, window.location.href);
   url.hostname = window.location.hostname;
+  url.searchParams.set('size', size);
   return url.toString();
 }
