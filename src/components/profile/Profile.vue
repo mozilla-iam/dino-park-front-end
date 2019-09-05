@@ -354,9 +354,6 @@ export default {
     userOnOwnProfile() {
       return this.$store.state.user.uuid.value === this.uuid.value;
     },
-    identitiesWrapper() {
-      return new Identities(this.identities);
-    },
   },
   mounted() {
     if (this.$route.query.identityAdded) {
@@ -389,8 +386,18 @@ export default {
       }, 500);
     }
   },
+  watch: {
+    identities(n, o) {
+      // This get's triggerd when leaving/entering edit mode. So we compare
+      // identities for now. To be fixed.
+      if (JSON.stringify(n) !== JSON.stringify(o)) {
+        this.identitiesWrapper = new Identities(this.identities);
+      }
+    },
+  },
   data() {
     return {
+      identitiesWrapper: new Identities(this.identities),
       profileNav: [
         {
           id: 'nav-relations',

@@ -103,7 +103,7 @@ import Select from '@/components/ui/Select.vue';
 
 export default {
   props: {
-    identities: Object,
+    identities: Identities,
   },
   components: {
     Button,

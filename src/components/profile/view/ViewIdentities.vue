@@ -31,11 +31,12 @@
 <script>
 import IconBlock from '@/components/ui/IconBlock.vue';
 import IconBlockList from '@/components/ui/IconBlockList.vue';
+import Identities from '@/assets/js/identities';
 
 export default {
   name: 'ViewIdentities',
   props: {
-    identities: Object,
+    identities: Identities,
     userOnOwnProfile: Boolean,
   },
   components: {
@@ -43,7 +44,9 @@ export default {
     IconBlockList,
   },
   data() {
-    this.update();
+    if (this.identities.githubUsername === null) {
+      this.update();
+    }
     return {
       githubUsername: null,
       githubLink: '#',
