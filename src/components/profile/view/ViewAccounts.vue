@@ -41,10 +41,25 @@ export default {
   },
   computed: {
     accounts() {
+      const map = {};
+      // Get all account objects from 'uris'
       const wellKnown = Object.entries(this.uris.values || {})
         .filter(([k]) => this.isAccountKey(k))
-        .map(([k, v]) => this.account([this.destructUriKey(k).name, v]))
+        .map(([k, v], idx) => {
+          const { name } = this.destructUriKey(k);
+          map[name] = idx;
+          return this.account([name, v]);
+        })
         .filter((a) => a !== null && typeof a !== 'undefined' && a.value);
+
+      // Backfill any uri values inside of wellKnown
+      Object.entries(this.uris.values || {})
+        .filter(([k]) => this.isAccountUri(k))
+        .map(([k, v]) => {
+          const { name } = this.destructUriKey(k);
+          wellKnown[map[name]].uri = v;
+        });
+
       const returnAccounts = [
         {
           title: 'Mozilla',
