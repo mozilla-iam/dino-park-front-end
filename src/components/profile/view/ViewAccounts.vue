@@ -1,31 +1,11 @@
 <template>
   <div class="profile__external-accounts">
-    <div v-if="accounts.mozilla.length">
-      <h3>Mozilla</h3>
-      <IconBlockList>
+    <div v-for="(account, idx) in accounts" v-bind:key="idx">
+      <h3>{{ account.title }}</h3>
+      <IconBlockList class="external-accounts__list">
         <IconBlock
-          v-for="(acc, index) in accounts.mozilla"
-          :key="`acc-moz-${index}`"
-          :heading="acc.text"
-          :icon="acc.icon"
-        >
-          <a
-            v-if="acc.uri"
-            :href="acc.uri"
-            target="_blank"
-            rel="noreferrer noopener"
-            >{{ acc.value }}</a
-          >
-          <template v-else>{{ acc.value }}</template>
-        </IconBlock>
-      </IconBlockList>
-    </div>
-    <div v-if="accounts.other.length">
-      <h3>Elsewhere</h3>
-      <IconBlockList>
-        <IconBlock
-          v-for="(acc, index) in accounts.other"
-          :key="`acc-other-${index}`"
+          v-for="(acc, index) in account.data"
+          :key="`acc-${account.key}-${index}`"
           :heading="acc.text"
           :icon="acc.icon"
         >
@@ -65,9 +45,18 @@ export default {
         .filter(([k]) => this.isAccountKey(k))
         .map(([k, v]) => this.account([this.destructUriKey(k).name, v]))
         .filter((a) => a !== null && typeof a !== 'undefined' && a.value);
-      const mozilla = wellKnown.filter(({ moz }) => moz);
+      const returnAccounts = [
+        {
+          title: 'Mozilla',
+          key: 'moz',
+          data: wellKnown.filter(({ moz }) => moz),
+        },
+      ];
       const other = wellKnown.filter(({ moz }) => !moz);
-      return { mozilla, other };
+      if (other.length > 0) {
+        returnAccounts.push({ title: 'Elsewhere', key: 'other', data: other });
+      }
+      return returnAccounts;
     },
   },
 };
@@ -76,12 +65,21 @@ export default {
 <style>
 @media (min-width: 57.5em) {
   .profile__external-accounts {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 2em;
+    display: flex;
+    flex-direction: column;
   }
   .profile__external-accounts h3 {
     margin-top: 0; /* because grid item margins don't collapse */
+  }
+
+  .profile__external-accounts .external-accounts__list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .profile__external-accounts .external-accounts__list .icon-block {
+    width: 45%;
   }
 }
 </style>
