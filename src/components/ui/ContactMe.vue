@@ -123,15 +123,9 @@ export default {
     },
     displayedUris() {
       const { values: uris } = this.uris || {};
-      const dispalyedUris = Object.entries(uris || {})
-        .filter(([k]) => this.isAccountKey(k))
-        .map(([key, value]) => {
-          const { name, contact } = this.destructUriKey(key);
-          const account = this.account([name, value]);
-          return { contact, ...account };
-        })
-        .filter(({ contact }) => contact);
-      return dispalyedUris;
+      return this.getMozillaAccounts(this.uris).filter(
+        ({ contact }) => contact,
+      );
     },
     notEmpty() {
       return (
