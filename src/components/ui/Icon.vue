@@ -528,6 +528,8 @@
 </template>
 
 <script>
+import avatarUrl from '@/assets/js/avatars';
+
 export default {
   name: 'Icon',
   props: {
@@ -537,7 +539,7 @@ export default {
   },
   data() {
     return {
-      avatar: `${this.$store.state.user.picture.value}?size=40`,
+      avatar: avatarUrl(this.$store.state.user.picture.value, 40),
     };
   },
 };
