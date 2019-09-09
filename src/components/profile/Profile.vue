@@ -200,6 +200,18 @@
     </ProfileSection>
 
     <ProfileSection
+      v-if="prodEnv"
+      section="access-groups"
+      title="Access Groups"
+      :userOnOwnProfile="userOnOwnProfile"
+      :empty="true"
+      :editable="false"
+      message="Support for Access Group management is coming soon."
+      messageOwn="Support for Access Group management is coming soon."
+    >
+    </ProfileSection>
+    <ProfileSection
+      v-else
       section="access-groups"
       title="Access Groups"
       :userOnOwnProfile="userOnOwnProfile"
@@ -236,6 +248,7 @@ import EditLanguages from './edit/EditLanguages.vue';
 import EditIdentities from './edit/EditIdentities.vue';
 import EditPersonalInfo from '@/components/profile/edit/EditPersonalInfo.vue';
 import EditTags from './edit/EditTags.vue';
+import EnvironmentMixin from '@/components/_mixins/EnvironmentMixin.vue';
 import Identities from '@/assets/js/identities';
 import ProfileNav from './ProfileNav.vue';
 import ProfileSection from './ProfileSection.vue';
@@ -275,7 +288,7 @@ export default {
     uuid: Object,
     primaryUsername: Object,
   },
-  mixins: [AccountsMixin],
+  mixins: [AccountsMixin, EnvironmentMixin],
   components: {
     EditAccessGroups,
     EditAccounts,
