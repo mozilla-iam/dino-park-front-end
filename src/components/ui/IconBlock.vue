@@ -37,6 +37,7 @@ export default {
 <style>
 .icon-block {
   border: 1px solid var(--gray-30);
+  border-radius: 0.3em;
   padding: 0.5em;
   list-style: none;
   display: flex; /* avoid breaking between columns */

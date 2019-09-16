@@ -451,6 +451,24 @@
         ry="2"
       />
     </template>
+    <template v-else-if="id === 'idcard'">
+      <defs>
+        <path
+          id="a"
+          d="M1 4h22a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zm1 2v12h20V6H2zm3 2h5a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1zm1 2v4h3v-4H6zm8-2h3a1 1 0 0 1 0 2h-3a1 1 0 0 1 0-2zm0 4h5a1 1 0 0 1 0 2h-5a1 1 0 0 1 0-2z"
+        />
+        <path id="c" d="M0 0h24v24H0z" />
+      </defs>
+      <g fill="none" fill-rule="evenodd">
+        <mask id="b" fill="#fff">
+          <use xlink:href="#a" />
+        </mask>
+        <use fill="#000" fill-rule="nonzero" xlink:href="#a" />
+        <g mask="url(#b)">
+          <use fill="#000" fill-opacity="0" xlink:href="#c" />
+        </g>
+      </g>
+    </template>
   </svg>
 </template>
 
