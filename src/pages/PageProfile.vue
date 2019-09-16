@@ -48,7 +48,7 @@ export default {
       ) {
         return { username: null };
       }
-      return { username: this.$route.params.username };
+      return { username: this.$route.params.username || null };
     },
   },
   data() {

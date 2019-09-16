@@ -1,6 +1,12 @@
 import Fetcher from '@/assets/js/fetcher';
 import { DISPLAY_LEVELS } from '@/assets/js/display-levels';
 
+const EMPTY_IDENTITIES = {
+  githubIdV3: { value: null, metadata: { display: null } },
+  bugzillaMozillaOrgId: { value: null, metadata: { display: null } },
+  bugzillaMozillaOrgPrimaryEmail: { value: null, metadata: { display: null } },
+};
+
 const labels = {
   github: 'GitHub',
   bugzilla: 'Bugzilla',
@@ -9,8 +15,9 @@ const labels = {
 class Identities {
   constructor(identities) {
     this.fetcher = new Fetcher({ failoverOn: [302] });
-    this.identities = identities;
+    this.identities = { ...EMPTY_IDENTITIES, ...identities };
     this.githubUsername = null;
+    this.githubLink = null;
     this.list = new Map();
     this.list.set('github', this.hasGithub());
     this.list.set('bugzilla', this.hasBugzilla());
@@ -80,7 +87,8 @@ class Identities {
         .then((r) => r.json())
         .then(({ username }) => {
           this.githubUsername = username;
-          return { username, link: `https://github.com/${username}` };
+          this.githubLink = `https://github.com/${username}`;
+          return { username, link: this.githubLink };
         })
         .catch((e) => {
           console.error(e);
