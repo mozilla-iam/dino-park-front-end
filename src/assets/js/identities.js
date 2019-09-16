@@ -17,6 +17,7 @@ class Identities {
     this.fetcher = new Fetcher({ failoverOn: [302] });
     this.identities = { ...EMPTY_IDENTITIES, ...identities };
     this.githubUsername = null;
+    this.githubLink = null;
     this.list = new Map();
     this.list.set('github', this.hasGithub());
     this.list.set('bugzilla', this.hasBugzilla());
@@ -86,7 +87,8 @@ class Identities {
         .then((r) => r.json())
         .then(({ username }) => {
           this.githubUsername = username;
-          return { username, link: `https://github.com/${username}` };
+          this.githubLink = `https://github.com/${username}`;
+          return { username, link: this.githubLink };
         })
         .catch((e) => {
           console.error(e);

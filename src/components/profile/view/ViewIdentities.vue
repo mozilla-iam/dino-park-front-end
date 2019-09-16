@@ -48,8 +48,8 @@ export default {
       this.update();
     }
     return {
-      githubUsername: null,
-      githubLink: '#',
+      githubUsername: this.identities.githubUsername,
+      githubLink: this.identities.githubLink || '#',
     };
   },
   methods: {

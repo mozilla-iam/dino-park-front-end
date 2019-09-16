@@ -388,11 +388,7 @@ export default {
   },
   watch: {
     identities(n, o) {
-      // This get's triggerd when leaving/entering edit mode. So we compare
-      // identities for now. To be fixed.
-      if (JSON.stringify(n) !== JSON.stringify(o)) {
-        this.identitiesWrapper = new Identities(this.identities);
-      }
+      this.identitiesWrapper = new Identities(this.identities);
     },
   },
   data() {
