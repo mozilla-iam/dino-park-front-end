@@ -247,6 +247,12 @@ const MUTATE_PROFILE = gql`
             display
           }
         }
+        ldap {
+          values
+          metadata {
+            display
+          }
+        }
       }
     }
   }
@@ -260,6 +266,12 @@ const DISPLAY_PROFILE = gql`
       }
       accessInformation {
         mozilliansorg {
+          values
+          metadata {
+            display
+          }
+        }
+        ldap {
           values
           metadata {
             display
