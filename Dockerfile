@@ -3,6 +3,7 @@ FROM node:alpine as build-stage
 
 WORKDIR /app
 COPY package.json ./
+COPY package-lock.json ./
 RUN npm install
 COPY . .
 ARG baseurl=/
