@@ -10,7 +10,7 @@
       <h2>Access Groups</h2>
     </header>
     <div class="profile__access-groups">
-      <div v-if="initialAccessInformation.ldap.values">
+      <template v-if="initialAccessInformation.ldap.values">
         <div class="edit-access-groups__mozillians-header">
           <h3>LDAP</h3>
           <PrivacySetting
@@ -34,53 +34,49 @@
             {{ group }}
           </IconBlock>
         </IconBlockList>
+      </template>
+      <div class="edit-access-groups__mozillians-header">
+        <h3>mozillas.org</h3>
+        <PrivacySetting
+          class="privacy-setting--large"
+          label="Mozillians.org access groups privacy levels"
+          id="section-access-groups-mozillians-privacy"
+          profileFieldName="accessInformation.mozilliansorg"
+          :profileFieldObject="editMozilliansorgGroups"
+          :collapsedShowLabel="true"
+        />
       </div>
-      <div>
-        <div class="edit-access-groups__mozillians-header">
-          <h3>mozillas.org</h3>
-          <PrivacySetting
-            class="privacy-setting--large"
-            label="Mozillians.org access groups privacy levels"
-            id="section-access-groups-mozillians-privacy"
-            profileFieldName="accessInformation.mozilliansorg"
-            :profileFieldObject="editMozilliansorgGroups"
-            :collapsedShowLabel="true"
-          />
-        </div>
-        <IconBlockList
-          v-if="mozilliansorgGroups.length > 0"
-          class="icon-block-list--multi-col"
+      <IconBlockList
+        v-if="mozilliansorgGroups.length > 0"
+        class="icon-block-list--multi-col"
+      >
+        <IconBlock
+          v-for="[group] in mozilliansorgGroups"
+          :key="`group-${group}`"
+          icon="dino"
         >
-          <IconBlock
-            v-for="[group] in mozilliansorgGroups"
-            :key="`group-${group}`"
-            icon="dino"
+          <ExternalLink
+            :href="`https://mozillians.org/group/${encodeURIComponent(group)}`"
+            >{{ group }}</ExternalLink
           >
-            <ExternalLink
-              :href="
-                `https://mozillians.org/group/${encodeURIComponent(group)}`
-              "
-              >{{ group }}</ExternalLink
-            >
-          </IconBlock>
-        </IconBlockList>
-        <p v-else>
-          You have not joined any mozilliansorg access group.
-        </p>
-        <p class="edit-access-groups__mozillians-footer">
-          Mozillians access groups are currently managed at mozillians.org
-        </p>
-        <a
-          id="access-information__external-link"
-          class="button button--secondary button--action"
-          href="https://mozillians.org/user/edit/#mygroups"
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          <Icon id="external" :width="18" :height="18" />
-          Manage
-        </a>
-      </div>
+        </IconBlock>
+      </IconBlockList>
+      <p v-else>
+        You have not joined any mozilliansorg access group.
+      </p>
+      <p class="edit-access-groups__mozillians-footer">
+        Mozillians access groups are currently managed at mozillians.org
+      </p>
+      <a
+        id="access-information__external-link"
+        class="button button--secondary button--action"
+        href="https://mozillians.org/user/edit/#mygroups"
+        target="_blank"
+        rel="noreferrer noopener"
+      >
+        <Icon id="external" :width="18" :height="18" />
+        Manage
+      </a>
     </div>
   </EditMutationWrapper>
 </template>

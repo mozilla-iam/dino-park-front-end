@@ -1,6 +1,6 @@
 <template>
   <div class="profile__access-groups">
-    <div v-if="accessInformation.ldap.values">
+    <template v-if="accessInformation.ldap.values">
       <h3>LDAP</h3>
       <IconBlockList class="icon-block-list--multi-col">
         <IconBlock
@@ -11,8 +11,8 @@
           {{ group }}
         </IconBlock>
       </IconBlockList>
-    </div>
-    <div v-if="accessInformation.mozilliansorg.values">
+    </template>
+    <template v-if="accessInformation.mozilliansorg.values">
       <h3>mozillas.org</h3>
       <IconBlockList class="icon-block-list--multi-col">
         <IconBlock
@@ -31,7 +31,7 @@
       <p class="view-access-groups__mozillians-footer">
         Mozillians access groups are currently managed at mozillians.org
       </p>
-    </div>
+    </template>
   </div>
 </template>
 
