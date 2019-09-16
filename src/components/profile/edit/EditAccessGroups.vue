@@ -67,6 +67,7 @@
       <p class="edit-access-groups__mozillians-footer">
         Mozillians access groups are currently managed at mozillians.org
       </p>
+      <hr role="presentation" />
       <a
         id="access-information__external-link"
         class="button button--secondary button--action"
@@ -147,5 +148,8 @@ export default {
   padding-left: 4em;
   text-align: right;
   color: var(--gray-50);
+}
+.profile__access-groups hr {
+  margin-left: 1.5em;
 }
 </style>
