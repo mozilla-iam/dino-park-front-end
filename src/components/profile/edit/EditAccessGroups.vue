@@ -9,7 +9,7 @@
     <header class="profile__section-header" ref="header" tabindex="-1">
       <h2>Access Groups</h2>
     </header>
-    <div class="profile__access-groups">
+    <div class="edit-profile__access-groups">
       <template v-if="initialAccessInformation.ldap.values">
         <div class="edit-access-groups__mozillians-header">
           <h3>LDAP</h3>
@@ -18,7 +18,7 @@
             label="LDAP access groups privacy levels"
             id="section-access-groups-ldap-privacy"
             profileFieldName="accessInformation.ldap"
-            :profileFieldObject="initialAccessInformation.ldap.metadata.display"
+            :profileFieldObject="initialAccessInformation.ldap.metadata"
             :collapsedShowLabel="true"
             :disabled="true"
           />
@@ -34,6 +34,7 @@
             {{ group }}
           </IconBlock>
         </IconBlockList>
+        <hr role="presentation" />
       </template>
       <div class="edit-access-groups__mozillians-header">
         <h3>mozillas.org</h3>
@@ -53,7 +54,7 @@
         <IconBlock
           v-for="[group] in mozilliansorgGroups"
           :key="`group-${group}`"
-          icon="dino"
+          icon="moz"
         >
           <ExternalLink
             :href="`https://mozillians.org/group/${encodeURIComponent(group)}`"
@@ -67,7 +68,6 @@
       <p class="edit-access-groups__mozillians-footer">
         Mozillians access groups are currently managed at mozillians.org
       </p>
-      <hr role="presentation" />
       <a
         id="access-information__external-link"
         class="button button--secondary button--action"
@@ -76,7 +76,7 @@
         rel="noreferrer noopener"
       >
         <Icon id="external" :width="18" :height="18" />
-        Manage
+        Manage at mozillians.org
       </a>
     </div>
   </EditMutationWrapper>
@@ -137,19 +137,32 @@ export default {
   margin-left: auto;
   max-width: max-content;
 }
+.edit-profile__access-groups h3 {
+  margin-top: auto;
+  margin-bottom: auto;
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+ul + .edit-access-groups__mozillians-header {
+  margin-top: 2em;
+}
 .edit-access-groups__mozillians-header {
   display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 .edit-access-groups__mozillians-header .privacy-setting {
   margin-left: auto;
 }
 .edit-access-groups__mozillians-footer {
   margin-top: 1.5em;
-  padding-left: 4em;
-  text-align: right;
+  padding-right: 4em;
+  margin-bottom: 1.5em;
   color: var(--gray-50);
 }
-.profile__access-groups hr {
-  margin-left: 1.5em;
+.edit-profile__access-groups hr {
+  margin-top: 1.5em;
+  margin-left: 1em;
 }
 </style>

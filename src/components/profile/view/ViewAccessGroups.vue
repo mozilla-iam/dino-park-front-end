@@ -20,7 +20,7 @@
             accessInformation.mozilliansorg.values,
           )"
           :key="`group-${group}`"
-          icon="dino"
+          icon="moz"
         >
           <ExternalLink
             :href="`https://mozillians.org/group/${encodeURIComponent(group)}`"
@@ -56,8 +56,10 @@ export default {
 <style>
 .view-access-groups__mozillians-footer {
   margin-top: 1.5em;
-  padding-left: 4em;
-  text-align: right;
+  padding-right: 4em;
   color: var(--gray-50);
+}
+.profile__access-groups ul + h3 {
+  margin-top: 2em;
 }
 </style>
