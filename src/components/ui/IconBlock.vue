@@ -63,7 +63,6 @@ export default {
   background-color: var(--gray-30);
   position: absolute;
   left: -1em;
-  top: 1em;
   border-radius: 100%;
   background-size: 1em;
   background-position: center center;
