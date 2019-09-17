@@ -255,7 +255,7 @@ export default {
 .privacy-select--large .options__toggle {
   background-color: white;
   border-color: var(--gray-50);
-  padding: 1.1em 3em 1.1em 2em;
+  padding: 1em 3em 1em 2em;
   color: var(--black);
   border-radius: 2.5em;
   background-image: url('../../assets/images/chevron-down.svg');
