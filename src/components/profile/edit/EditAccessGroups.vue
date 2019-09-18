@@ -65,9 +65,6 @@
       <p v-else>
         You have not joined any mozilliansorg access group.
       </p>
-      <p class="edit-access-groups__mozillians-footer">
-        Mozillians access groups are currently managed at mozillians.org
-      </p>
       <a
         id="access-information__external-link"
         class="button button--secondary button--action"
@@ -157,12 +154,6 @@ export default {
 }
 .edit-access-groups__header .privacy-setting {
   margin-left: auto;
-}
-.edit-access-groups__mozillians-footer {
-  margin-top: 1.5em;
-  padding-right: 4em;
-  margin-bottom: 1.5em;
-  color: var(--gray-50);
 }
 .edit-profile__access-groups hr {
   margin-top: 1.5em;
