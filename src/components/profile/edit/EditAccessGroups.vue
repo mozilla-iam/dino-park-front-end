@@ -11,7 +11,7 @@
     </header>
     <div class="edit-profile__access-groups">
       <template v-if="initialAccessInformation.ldap.values">
-        <div class="edit-access-groups__mozillians-header">
+        <div class="edit-access-groups__header">
           <h3>LDAP</h3>
           <PrivacySetting
             class="privacy-setting--large"
@@ -36,7 +36,7 @@
         </IconBlockList>
         <hr role="presentation" />
       </template>
-      <div class="edit-access-groups__mozillians-header">
+      <div class="edit-access-groups__header">
         <h3>mozillians.org</h3>
         <PrivacySetting
           class="privacy-setting--large"
@@ -143,16 +143,19 @@ export default {
   padding-top: 1em;
   padding-bottom: 1em;
 }
-ul + .edit-access-groups__mozillians-header {
+.edit-access-groups__header:first-child {
+  margin-top: unset;
+}
+.edit-access-groups__header {
   margin-top: 2em;
 }
-.edit-access-groups__mozillians-header {
+.edit-access-groups__header {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   justify-content: space-between;
 }
-.edit-access-groups__mozillians-header .privacy-setting {
+.edit-access-groups__header .privacy-setting {
   margin-left: auto;
 }
 .edit-access-groups__mozillians-footer {

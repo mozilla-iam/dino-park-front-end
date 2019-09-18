@@ -59,7 +59,10 @@ export default {
   padding-right: 4em;
   color: var(--gray-50);
 }
-.profile__access-groups ul + h3 {
+.profile__access-groups > h3:first-child {
+  margin-top: unset;
+}
+.profile__access-groups > h3 {
   margin-top: 2em;
 }
 </style>
