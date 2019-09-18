@@ -45,8 +45,9 @@ export default {
   justify-content: center;
   margin-bottom: 1em;
   padding-left: 1.5em;
-  margin-left: 1.5em;
-  min-height: 3.5em;
+  padding-top: 0.6em;
+  padding-bottom: 0.6em;
+  margin-left: 1em;
   position: relative;
   break-inside: avoid;
 }

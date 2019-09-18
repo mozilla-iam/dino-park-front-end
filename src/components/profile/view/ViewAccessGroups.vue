@@ -13,14 +13,14 @@
       </IconBlockList>
     </template>
     <template v-if="accessInformation.mozilliansorg.values">
-      <h3>mozillas.org</h3>
+      <h3>mozillians.org</h3>
       <IconBlockList class="icon-block-list--multi-col">
         <IconBlock
           v-for="[group] in Object.entries(
             accessInformation.mozilliansorg.values,
           )"
           :key="`group-${group}`"
-          icon="dino"
+          icon="moz"
         >
           <ExternalLink
             :href="`https://mozillians.org/group/${encodeURIComponent(group)}`"
@@ -56,8 +56,13 @@ export default {
 <style>
 .view-access-groups__mozillians-footer {
   margin-top: 1.5em;
-  padding-left: 4em;
-  text-align: right;
+  padding-right: 4em;
   color: var(--gray-50);
+}
+.profile__access-groups > h3:first-child {
+  margin-top: unset;
+}
+.profile__access-groups > h3 {
+  margin-top: 2em;
 }
 </style>

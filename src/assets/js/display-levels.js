@@ -31,6 +31,7 @@ export const DISPLAY_LEVELS = {
   },
 };
 
+const DISPLAY_PRIVATE_ONLY = [DISPLAY_LEVELS.private];
 const DISPLAY_PUBLIC_ONLY = [DISPLAY_LEVELS.public];
 const DISPLAY_STAFF_NDAED_ONLY = [DISPLAY_LEVELS.ndaed, DISPLAY_LEVELS.staff];
 const DISPLAY_STAFF_ONLY = [DISPLAY_LEVELS.staff];
@@ -53,7 +54,8 @@ const DISPLAY_ANY = [
 const VALID_DISPLAY_LEVELS = {
   primaryUsername: DISPLAY_PUBLIC_ONLY,
   phoneNumbers: DISPLAY_ANY,
-  'accessInformation.mozilliansorg': DISPLAY_ANY,
+  'accessInformation.ldap': DISPLAY_PRIVATE_ONLY,
+  'accessInformation.mozilliansorg': DISPLAY_NOT_PRIVATE,
   'staffInformation.manager': DISPLAY_STAFF_NDAED_ONLY,
   'staffInformation.director': DISPLAY_STAFF_NDAED_ONLY,
   'staffInformation.staff': DISPLAY_STAFF_NDAED_ONLY,

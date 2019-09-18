@@ -8,7 +8,7 @@
     <span>
       <slot></slot>
     </span>
-    <Icon id="external" :width="'1.1em'" :height="'1.1em'"></Icon>
+    <Icon id="external" :width="17" :height="17"></Icon>
   </a>
 </template>
 

@@ -452,21 +452,52 @@
       />
     </template>
     <template v-else-if="id === 'idcard'">
-      <defs>
+      <g fill="none" fill-rule="evenodd">
         <path
-          id="a"
-          d="M1 4h22a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zm1 2v12h20V6H2zm3 2h5a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1zm1 2v4h3v-4H6zm8-2h3a1 1 0 0 1 0 2h-3a1 1 0 0 1 0-2zm0 4h5a1 1 0 0 1 0 2h-5a1 1 0 0 1 0-2z"
+          fill="currentColor"
+          fill-rule="nonzero"
+          d="M4 4h16a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H4a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3zm0 2a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H4z"
         />
-        <path id="c" d="M0 0h24v24H0z" />
+        <rect
+          width="6"
+          height="2"
+          x="13"
+          y="8"
+          fill="#000"
+          fill-rule="nonzero"
+          rx="1"
+        />
+        <rect
+          width="4"
+          height="2"
+          x="13"
+          y="12"
+          fill="#000"
+          fill-rule="nonzero"
+          rx="1"
+        />
+        <rect
+          width="5"
+          height="6"
+          x="5"
+          y="9"
+          stroke="#000"
+          stroke-width="2"
+          rx="1"
+        />
+      </g>
+    </template>
+    <template v-else-if="id === 'moz'">
+      <defs>
+        <path id="a" d="M0 0h24v24H0z" />
       </defs>
       <g fill="none" fill-rule="evenodd">
-        <mask id="b" fill="#fff">
-          <use xlink:href="#a" />
-        </mask>
-        <use fill="#000" fill-rule="nonzero" xlink:href="#a" />
-        <g mask="url(#b)">
-          <use fill="#000" fill-opacity="0" xlink:href="#c" />
-        </g>
+        <path
+          fill="currentColor"
+          fill-rule="nonzero"
+          d="M22.276 15.227H24V18h-5.436v-7.193c0-2.21-.752-3.034-2.21-3.034-1.768 0-2.476 1.257-2.476 2.99v4.42h1.724v2.774h-5.436v-7.15c0-2.21-.752-3.034-2.21-3.034-1.768 0-2.475 1.257-2.475 2.99v4.42h2.475v2.774H0v-2.774h1.724v-7.15H0V5.26h5.436v1.907C6.232 5.823 7.558 5 9.37 5c1.857 0 3.58.867 4.2 2.73C14.275 6.04 15.734 5 17.767 5c2.342 0 4.464 1.387 4.464 4.377v5.85h.044z"
+        />
+        <use fill="currentColor" fill-opacity="0" xlink:href="#a" />
       </g>
     </template>
   </svg>
