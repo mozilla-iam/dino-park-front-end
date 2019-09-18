@@ -98,11 +98,14 @@ export default {
     ) {
       const data = store.readQuery({
         query: DISPLAY_PROFILE,
+        variables: {
+          username: null,
+        },
       });
       store.writeQuery({
         query: DISPLAY_PROFILE,
         variables: {
-          username: this.loggedInUser,
+          username: null,
         },
         data: { profile: { ...data.profile, ...profile } },
       });

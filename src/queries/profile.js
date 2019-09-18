@@ -63,34 +63,6 @@ const PREVIEW_PROFILE = gql`
   }
 `;
 
-const USER_MENU_PROFILE = gql`
-  query {
-    profile {
-      uuid {
-        value
-      }
-      firstName {
-        value
-      }
-      lastName {
-        value
-      }
-      picture {
-        value
-      }
-      primaryUsername {
-        value
-      }
-      primaryEmail {
-        value
-      }
-      timezone {
-        value
-      }
-    }
-  }
-`;
-
 const MUTATE_PROFILE = gql`
   mutation UpdateProfile(
     $primaryUsername: StringWithDisplay
@@ -454,4 +426,4 @@ const DISPLAY_PROFILE = gql`
   }
 `;
 
-export { DISPLAY_PROFILE, MUTATE_PROFILE, PREVIEW_PROFILE, USER_MENU_PROFILE };
+export { DISPLAY_PROFILE, MUTATE_PROFILE, PREVIEW_PROFILE };
