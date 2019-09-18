@@ -37,7 +37,7 @@
         <hr role="presentation" />
       </template>
       <div class="edit-access-groups__mozillians-header">
-        <h3>mozillas.org</h3>
+        <h3>mozillians.org</h3>
         <PrivacySetting
           class="privacy-setting--large"
           label="Mozillians.org access groups privacy levels"

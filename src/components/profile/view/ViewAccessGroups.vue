@@ -13,7 +13,7 @@
       </IconBlockList>
     </template>
     <template v-if="accessInformation.mozilliansorg.values">
-      <h3>mozillas.org</h3>
+      <h3>mozillians.org</h3>
       <IconBlockList class="icon-block-list--multi-col">
         <IconBlock
           v-for="[group] in Object.entries(
