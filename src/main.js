@@ -5,7 +5,7 @@ import { InMemoryCache, defaultDataIdFromObject } from 'apollo-cache-inmemory';
 import Vuex from 'vuex';
 import App from './App.vue';
 import router from './router';
-import { USER_MENU_PROFILE } from './queries/profile';
+import { DISPLAY_PROFILE } from './queries/profile';
 
 // polyfill/fallback adapted from MDN (https://developer.mozilla.org/en-US/docs/Web/API/Background_Tasks_API#Falling_back_to_setTimeout)
 window.requestIdleCallback =
@@ -81,7 +81,10 @@ const store = new Vuex.Store({
   },
   actions: {
     async fetchUser({ commit }) {
-      const { data } = await client.query({ query: USER_MENU_PROFILE });
+      const { data } = await client.query({
+        query: DISPLAY_PROFILE,
+        variables: { username: null },
+      });
       commit('setUser', data.profile);
     },
   },
