@@ -42,7 +42,7 @@
         {{ `${EXTERNAL_ACCOUNTS[destructUriKey(k).name].text}` }}</label
       >
       <EditSlack
-        v-if="isKeySlack(this.destructUriKey(key).name)"
+        v-if="isKeySlack(destructUriKey(k).name)"
         :slack="uris.values[index]"
       />
       <input
