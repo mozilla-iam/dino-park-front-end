@@ -6,6 +6,7 @@ import Vuex from 'vuex';
 import App from './App.vue';
 import router from './router';
 import { DISPLAY_PROFILE } from './queries/profile';
+import Scope from './assets/js/scope';
 
 // polyfill/fallback adapted from MDN (https://developer.mozilla.org/en-US/docs/Web/API/Background_Tasks_API#Falling_back_to_setTimeout)
 window.requestIdleCallback =
@@ -76,6 +77,7 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     user: null,
+    scope: new Scope(),
     org: null,
     personViewPreference: 'list',
   },
@@ -91,12 +93,21 @@ const store = new Vuex.Store({
   mutations: {
     setUser(state, user) {
       state.user = user;
+      state.scope.update(user);
     },
     setOrg(state, org) {
       state.org = org;
     },
     setPersonViewPreference(state, preference) {
       state.personViewPreference = preference;
+    },
+  },
+});
+
+Vue.mixin({
+  computed: {
+    scope() {
+      return this.$store.state.scope;
     },
   },
 });

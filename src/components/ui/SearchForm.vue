@@ -93,7 +93,7 @@ export default {
       },
     },
     who() {
-      return this.$route.query.who || 'staff';
+      return this.$route.query.who || this.scope.isStaff ? 'staff' : 'all';
     },
     urlQuery() {
       if (this.query) {
