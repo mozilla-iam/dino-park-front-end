@@ -3,21 +3,28 @@
     <div v-for="(account, idx) in accounts" v-bind:key="idx">
       <h3>{{ account.title }}</h3>
       <IconBlockList class="external-accounts__list">
-        <IconBlock
-          v-for="(acc, index) in account.data"
-          :key="`acc-${account.key}-${index}`"
-          :heading="acc.text"
-          :icon="acc.icon"
-        >
-          <a
-            v-if="acc.uri"
-            :href="acc.uri"
-            target="_blank"
-            rel="noreferrer noopener"
-            >{{ acc.value }}</a
+        <template v-for="(acc, index) in account.data">
+          <ViewSlack
+            v-if="isKeySlack(acc.key)"
+            :slack="acc"
+            v-bind:key="`acc-${account.key}-${index}`"
+          />
+          <IconBlock
+            v-else
+            :key="`acc-${account.key}-${index}`"
+            :heading="acc.text"
+            :icon="acc.icon"
           >
-          <template v-else>{{ acc.value }}</template>
-        </IconBlock>
+            <a
+              v-if="acc.uri"
+              :href="acc.uri"
+              target="_blank"
+              rel="noreferrer noopener"
+              >{{ acc.value }}</a
+            >
+            <template v-else>{{ acc.value }}</template>
+          </IconBlock>
+        </template>
       </IconBlockList>
     </div>
   </div>
@@ -27,6 +34,7 @@
 import AccountsMixin from '@/components/_mixins/AccountsMixin.vue';
 import IconBlock from '@/components/ui/IconBlock.vue';
 import IconBlockList from '@/components/ui/IconBlockList.vue';
+import ViewSlack from '@/components/profile/view/ViewSlack.vue';
 
 export default {
   name: 'ViewAccounts',
@@ -36,6 +44,7 @@ export default {
   },
   mixins: [AccountsMixin],
   components: {
+    ViewSlack,
     IconBlock,
     IconBlockList,
   },

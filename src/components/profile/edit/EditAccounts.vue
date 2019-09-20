@@ -41,29 +41,20 @@
         >Username on
         {{ `${EXTERNAL_ACCOUNTS[destructUriKey(k).name].text}` }}</label
       >
+      <EditSlack
+        v-if="isKeySlack(this.destructUriKey(key).name)"
+        :slack="uris.values[index]"
+      />
       <input
         :id="`field-account-${index}-username`"
         type="text"
         v-model="uris.values[index].v"
-        v-if="destructUriKey(k).name !== 'SLACK'"
+        v-else
         :placeholder="
           EXTERNAL_ACCOUNTS[destructUriKey(k).name].placeholder ||
             `Your username on ${EXTERNAL_ACCOUNTS[destructUriKey(k).name].text}`
         "
       />
-      <a
-        v-if="destructUriKey(k).name === 'SLACK'"
-        href="https://slack.com/oauth/authorize?scope=identity.basic,identity.avatar&client_id=371351187216.732388024356&state=test"
-        ><img
-          alt="Sign in with Slack"
-          height="40"
-          width="172"
-          src="https://platform.slack-edge.com/img/sign_in_with_slack.png"
-          srcset="
-            https://platform.slack-edge.com/img/sign_in_with_slack.png    1x,
-            https://platform.slack-edge.com/img/sign_in_with_slack@2x.png 2x
-          "
-      /></a>
       <Checkbox
         @input="(newValue) => toggleUriContactMe(newValue, index)"
         :checked="destructUriKey(k).contact"
@@ -91,6 +82,7 @@ import PrivacySetting from '@/components/profile/PrivacySetting.vue';
 import Select from '@/components/ui/Select.vue';
 import { displayLevelsFor, DISPLAY_LEVELS } from '@/assets/js/display-levels';
 import EditMutationWrapper from './EditMutationWrapper.vue';
+import EditSlack from '@/components/profile/edit/EditSlack.vue';
 
 export default {
   name: 'EditAccounts',
@@ -106,6 +98,7 @@ export default {
   },
   mixins: [AccountsMixin],
   components: {
+    EditSlack,
     Button,
     Checkbox,
     EditMutationWrapper,
@@ -180,5 +173,9 @@ export default {
 <style>
 .edit-accounts__add-more {
   margin-left: auto;
+}
+
+.options--chevron {
+  align-self: center;
 }
 </style>

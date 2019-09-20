@@ -123,9 +123,19 @@ export default {
     },
     displayedUris() {
       const { values: uris } = this.uris || {};
-      return this.getMozillaAccounts(this.uris).filter(
-        ({ contact }) => contact,
-      );
+      return this.getMozillaAccounts(this.uris)
+        .map((account) => {
+          const ext = {};
+          if (this.isKeySlack(account.key) && account.value.includes('#')) {
+            ext.uri = account.value.substring(0, account.value.indexOf('#'));
+            ext.value = account.value.substring(account.value.indexOf('#') + 1);
+          }
+          return {
+            ...account,
+            ...ext,
+          };
+        })
+        .filter(({ contact }) => contact);
     },
     notEmpty() {
       return (

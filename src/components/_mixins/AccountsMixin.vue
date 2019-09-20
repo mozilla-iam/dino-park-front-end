@@ -73,6 +73,7 @@ export default {
 
       if (text && icon && typeof moz === 'boolean') {
         return {
+          key,
           moz,
           text,
           icon,
@@ -87,8 +88,8 @@ export default {
     isAccountKey(key) {
       return (key && key.startsWith('EA#')) || false;
     },
-    isAccountUri(key) {
-      return (key && key.startsWith('EA-URI#')) || false;
+    isKeySlack(key) {
+      return key === 'SLACK';
     },
     destructUriKey(key) {
       const [typ, name, contact = 'n'] = key.split('#');
@@ -108,15 +109,6 @@ export default {
           return this.account([name, v, contact]);
         })
         .filter((a) => a !== null && typeof a !== 'undefined' && a.value);
-
-      // Backfill any uri values inside of mAccounts
-      Object.entries(uris.values || {})
-        .filter(([k]) => this.isAccountUri(k))
-        .map(([k, v]) => {
-          const { name } = this.destructUriKey(k);
-          mAccounts[map[name]].uri = v;
-          return mAccounts[map[name]];
-        });
       return mAccounts;
     },
   },
