@@ -154,7 +154,7 @@
         :profileFieldObject="alternativeName"
       />
 
-      <template v-if="isStaff">
+      <template v-if="scope.isStaff">
         <hr role="presentation" />
 
         <div class="edit-personal-info__label">
@@ -236,7 +236,7 @@
         :profileFieldObject="location"
       />
 
-      <template v-if="isStaff">
+      <template v-if="scope.isStaff">
         <hr role="presentation" />
 
         <div class="edit-personal-info__label">
@@ -276,7 +276,7 @@
         :profileFieldObject="timezone"
       />
 
-      <template v-if="isStaff">
+      <template v-if="scope.isStaff">
         <hr role="presentation" />
 
         <div class="edit-personal-info__label">
@@ -468,7 +468,6 @@ export default {
         {},
       ),
       showPictureModal: false,
-      isStaff: this.$store.state.scope.isStaff,
       pictureData: { value: this.initialValues.picture.value || 'default:' },
       timezones: [],
       locations: [],
