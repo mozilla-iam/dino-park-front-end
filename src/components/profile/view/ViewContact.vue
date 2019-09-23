@@ -2,7 +2,12 @@
   <div>
     <h3 class="visually-hidden">Contact options</h3>
     <IconBlockList class="icon-block-list--multi-col">
-      <IconBlock heading="Email" subHeading="primary" icon="email">
+      <IconBlock
+        v-if="primaryEmail.value"
+        heading="Email"
+        subHeading="primary"
+        icon="email"
+      >
         <a :href="`mailto:${primaryEmail.value}`">{{ primaryEmail.value }}</a>
       </IconBlock>
       <IconBlock
