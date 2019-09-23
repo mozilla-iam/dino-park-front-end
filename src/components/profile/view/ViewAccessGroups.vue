@@ -65,4 +65,7 @@ export default {
 .profile__access-groups > h3 {
   margin-top: 2em;
 }
+.profile__access-groups .icon-block {
+  color: var(--gray-50);
+}
 </style>

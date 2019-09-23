@@ -159,4 +159,7 @@ export default {
   margin-top: 1.5em;
   margin-left: 1em;
 }
+.edit-profile__access-groups .icon-block {
+  color: var(--gray-50);
+}
 </style>
