@@ -123,7 +123,7 @@ export default {
     },
     displayedUris() {
       const { values: uris } = this.uris || {};
-      return this.getMozillaAccounts(this.uris)
+      return this.getMozillaAccounts(uris)
         .map((account) => {
           const ext = {};
           if (this.isKeySlack(account.key) && account.value.includes('#')) {
