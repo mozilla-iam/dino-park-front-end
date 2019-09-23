@@ -66,9 +66,9 @@
     <Button
       class="edit-accounts__add-more button--secondary button button--action"
       type="button"
-      :disabled="noAccountsLeft"
+      :disabled="noAccountsLeft || dirty"
       v-on:click="addUri"
-      ><Icon id="plus" :width="16" :height="16" />Add Account</Button
+      ><Icon id="plus" :width="16" :height="16" />{{ addButtonText }}</Button
     >
   </EditMutationWrapper>
 </template>
@@ -126,6 +126,7 @@ export default {
     deleteUri(index) {
       if (this.uris.values.length > index) {
         this.uris.values.splice(index, 1);
+        this.dirty = true;
       }
     },
     toggleUriContactMe(checked, index) {
@@ -138,6 +139,15 @@ export default {
     this.$refs.header.focus();
   },
   computed: {
+    addButtonText() {
+      if (this.dirty) {
+        return 'Save Changes First';
+      }
+      if (this.remainingAccounts.length === 0) {
+        return 'All Accounts Added';
+      }
+      return 'Add Account';
+    },
     remainingAccounts() {
       const selectedUris = this.uris.values.map(
         ({ k }) => this.destructUriKey(k).name,
@@ -159,6 +169,7 @@ export default {
       metadata: { display = DISPLAY_LEVELS.private.value },
     } = this.initialUris;
     return {
+      dirty: false,
       uris: {
         values: Object.entries(initialUris || {}).map(([k, v]) => {
           return { k, v };
@@ -173,6 +184,10 @@ export default {
 <style>
 .edit-accounts__add-more {
   margin-left: auto;
+}
+
+.edit-accounts__add-more > svg {
+  vertical-align: sub;
 }
 
 .options--chevron {
