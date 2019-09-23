@@ -6,21 +6,14 @@
     clientId="mutationClient"
   >
     <template slot-scope="{ result: { loading, data, error } }">
-      <PreviewAs
-        v-if="variables.username === null"
-        :viewAsFilter="viewAs"
-      ></PreviewAs>
+      <PreviewAs v-if="showPreviewAs" :viewAsFilter="viewAs"></PreviewAs>
       <LoadingSpinner v-if="loading"></LoadingSpinner>
       <template v-else-if="data && data.profile !== null">
         <Profile
           v-bind="data.profile"
           :manager="related.manager"
           :directs="related.directs"
-          :editing="
-            $route.name === 'Edit Profile' && $route.query.section
-              ? $route.query.section
-              : null
-          "
+          :editing="editing"
           :viewAs="variables.viewAsActive"
         ></Profile>
       </template>
@@ -65,6 +58,15 @@ export default {
         viewAs: null,
         viewAsActive: false,
       };
+    },
+    editing() {
+      if (this.$route.name === 'Edit Profile' && this.$route.query.section) {
+        return this.$route.query.section;
+      }
+      return null;
+    },
+    showPreviewAs() {
+      return this.variables.username === null && this.editing === null;
     },
   },
   data() {
