@@ -113,6 +113,7 @@ export default {
       // closes overflow content if clicked anywhere, except the
       // overflowing content itself
       if (
+        expandedEl &&
         event.target !== expandedEl &&
         expandedEl.contains(event.target) === false &&
         this.open === true
