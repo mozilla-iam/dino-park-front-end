@@ -1,59 +1,57 @@
 <template>
   <div class="profile__team-location">
-    <div class="profile__team-section profile__team">
+    <div v-if="team" class="profile__team-section profile__team">
       <h3 class="visually-hidden">Team</h3>
-      <div class="profile__team-location-content">
-        <strong>
-          <RouterLink
-            v-if="team && teamManager"
-            :to="{
-              name: 'Profile',
-              params: { username: teamManager.username },
-            }"
-            >{{ team }}</RouterLink
-          >
-          <template v-else>{{ team }}</template>
-        </strong>
-        {{ entity }}
-      </div>
+      <strong>
+        <RouterLink
+          v-if="team && teamManager"
+          :to="{
+            name: 'Profile',
+            params: { username: teamManager.username },
+          }"
+          >{{ team }}</RouterLink
+        >
+        <template v-else>{{ team }}</template>
+      </strong>
+      <span>{{ entity }}</span>
     </div>
     <div class="profile__team-section profile__location">
       <h3 class="visually-hidden">Location</h3>
-      <div class="profile__team-location-content">
-        <span class="profile-team-location-links" v-if="location">
-          <RouterLink
-            :to="{
-              name: 'Search',
-              query: {
-                query: locationSearchString,
-              },
-            }"
-            >{{ location }}</RouterLink
-          >
-          <RouterLink
-            v-if="officeLocation"
-            :to="{
-              name: 'Search',
-              query: {
-                query: officeLocationSearchString,
-              },
-            }"
-            >({{ officeLocation }})</RouterLink
-          >
-        </span>
-        <span class="profile-team-location-links" v-else-if="officeLocation">
-          <RouterLink
-            class="profile-team-location-links"
-            v-if="officeLocation"
-            :to="{
-              name: 'Search',
-              query: {
-                query: officeLocationSearchString,
-              },
-            }"
-            >{{ officeLocation }}</RouterLink
-          >
-        </span>
+      <span class="profile-team-location-links" v-if="location">
+        <RouterLink
+          :to="{
+            name: 'Search',
+            query: {
+              query: locationSearchString,
+            },
+          }"
+          >{{ location }}</RouterLink
+        >
+        <RouterLink
+          v-if="officeLocation"
+          :to="{
+            name: 'Search',
+            query: {
+              query: officeLocationSearchString,
+            },
+          }"
+          >({{ officeLocation }})</RouterLink
+        >
+      </span>
+      <span class="profile-team-location-links" v-else-if="officeLocation">
+        <RouterLink
+          class="profile-team-location-links"
+          v-if="officeLocation"
+          :to="{
+            name: 'Search',
+            query: {
+              query: officeLocationSearchString,
+            },
+          }"
+          >{{ officeLocation }}</RouterLink
+        >
+      </span>
+      <div class="profile-team-lcation__timezone">
         <span
           class="timezone-print"
           v-bind:class="{ 'timezone-print': true, 'has-diff': timezoneDiff }"
@@ -286,19 +284,16 @@ export default {
     display: flex;
     margin: 2em 0;
   }
-  .profile__team-location .profile__team-section {
+  .profile__team-location > .profile__team-section {
     padding-left: 0;
+    min-width: 50%;
+    max-width: 100%;
   }
   .profile__team-location .profile__team {
     border-right: 1px solid var(--gray-30);
     margin-right: 1em;
     padding-right: 1em;
     padding-left: 0;
-    width: 50%;
-  }
-
-  .profile__team-location .profile__location {
-    width: 50%;
   }
 }
 
@@ -314,15 +309,19 @@ export default {
 .timezone-diff {
   padding-left: 0.5em;
 }
+.profile__team-section {
+  display: flex;
+  flex-direction: column;
+}
 
-.profile__team-location-content .tooltip {
+.profile__team-section .tooltip {
   margin-left: 0.25em;
 }
 
-.profile__team-location-content .tooltip button {
+.profile__team-section .tooltip button {
   color: var(--gray-50);
 }
-.profile__team-location-content .tooltip button:hover {
+.profile__team-section .tooltip button:hover {
   color: var(--blue-60);
 }
 .profile-team-location-links {

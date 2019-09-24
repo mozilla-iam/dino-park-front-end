@@ -39,7 +39,7 @@ export default {
   },
   computed: {
     profileLinks() {
-      if (this.onStaffProfile) {
+      if (this.scope.isStaff && this.onStaffProfile) {
         return this.links;
       }
 

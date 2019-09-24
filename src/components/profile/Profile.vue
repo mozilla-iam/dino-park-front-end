@@ -51,7 +51,10 @@
       :onStaffProfile="staffInformation.staff.value"
     ></ProfileNav>
 
-    <section v-if="staffInformation.staff.value" class="profile__section first">
+    <section
+      v-if="scope.isStaff && staffInformation.staff.value"
+      class="profile__section first"
+    >
       <a id="nav-relations" class="profile__anchor"></a>
       <ViewColleagues :username="primaryUsername.value"></ViewColleagues>
     </section>

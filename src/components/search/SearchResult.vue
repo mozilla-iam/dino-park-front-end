@@ -14,7 +14,7 @@
       <div class="search-result__title">{{ title || funTitle }}</div>
     </RouterLink>
     <RouterLink
-      v-if="isStaff"
+      v-if="scope.isStaff"
       :to="{ name: 'OrgchartHighlight', params: { username: username } }"
       class="search-result__orgchart-link"
     >

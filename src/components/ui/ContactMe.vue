@@ -17,7 +17,7 @@
         :initialMaxWidth="310"
         :floating="false"
       >
-        <div class="contact-me__item">
+        <div v-if="primaryEmail" class="contact-me__item">
           <a :href="`mailto:${primaryEmail}`" class="contact-me__pair">
             <Icon id="at-sign" :width="24" :height="24" />
             <span class="contact-me__value">{{ primaryEmail }}</span>

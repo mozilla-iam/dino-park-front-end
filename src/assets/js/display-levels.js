@@ -54,17 +54,8 @@ const DISPLAY_ANY = [
 const VALID_DISPLAY_LEVELS = {
   primaryUsername: DISPLAY_PUBLIC_ONLY,
   phoneNumbers: DISPLAY_ANY,
-  'accessInformation.ldap': DISPLAY_PRIVATE_ONLY,
+  'accessInformation.ldap': DISPLAY_ANY,
   'accessInformation.mozilliansorg': DISPLAY_NOT_PRIVATE,
-  'staffInformation.manager': DISPLAY_STAFF_NDAED_ONLY,
-  'staffInformation.director': DISPLAY_STAFF_NDAED_ONLY,
-  'staffInformation.staff': DISPLAY_STAFF_NDAED_ONLY,
-  'staffInformation.title': DISPLAY_STAFF_NDAED_ONLY,
-  'staffInformation.team': DISPLAY_STAFF_NDAED_ONLY,
-  'staffInformation.costCenter': DISPLAY_STAFF_ONLY,
-  'staffInformation.workerType': DISPLAY_STAFF_ONLY,
-  'staffInformation.wprDeskNumber': DISPLAY_STAFF_NDAED_ONLY,
-  'staffInformation.officeLocation': DISPLAY_STAFF_NDAED_ONLY,
 };
 
 export function displayLevelsFor(field) {

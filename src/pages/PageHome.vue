@@ -8,7 +8,7 @@
       <h1>Welcome to the Mozilla People Directory</h1>
       <p>
         A secure place to quickly find your team members and easily discover new
-        ones, now in beta.
+        ones.
       </p>
       <p>
         <RouterLink :to="{ name: 'Orgchart' }" class="button">

@@ -39,6 +39,7 @@
         </template>
       </ShowMore>
       <RouterLink
+        v-if="scope.isStaff"
         :to="{ name: 'Orgchart' }"
         class="top-bar__link"
         exact-active-class="top-bar__link--current"
