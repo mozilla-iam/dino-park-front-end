@@ -10,7 +10,7 @@
     <header class="profile__section-header" ref="header" tabindex="-1">
       <h2>Languages</h2>
       <PrivacySetting
-        class="privacy-setting--large"
+        class="privacy-select--large"
         label="Languages privacy levels"
         id="section-languages-privacy"
         profileFieldName="languages"

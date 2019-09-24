@@ -1,5 +1,6 @@
 <template>
   <ShowMore
+    v-if="notEmpty"
     buttonText="Contact Me"
     alternateButtonText="Contact Me"
     buttonClass="button button--icon-end contact-me__button"
@@ -131,6 +132,13 @@ export default {
         })
         .filter(({ contact }) => contact);
       return dispalyedUris;
+    },
+    notEmpty() {
+      return (
+        this.displayedPhoneNumbers.length > 0 ||
+        this.displayedUris.length > 0 ||
+        this.primaryEmail
+      );
     },
   },
 };

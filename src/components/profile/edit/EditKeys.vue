@@ -9,7 +9,7 @@
       <div class="edit-keys__header">
         <h3>PGP keys</h3>
         <PrivacySetting
-          class="privacy-setting--large"
+          class="privacy-select--large"
           label="PGP keys privacy levels"
           id="section-pgp-keys-privacy"
           profileFieldName="pgpPublicKeys"
@@ -33,7 +33,7 @@
       <div class="edit-keys__header">
         <h3>SSH keys</h3>
         <PrivacySetting
-          class="privacy-setting--large"
+          class="privacy-select--large"
           label="SSH keys privacy levels"
           id="section-ssh-keys-privacy"
           profileFieldName="sshPublicKeys"
@@ -113,7 +113,7 @@ export default {
 .edit-keys__header > h3 {
   margin: 0;
 }
-.edit-keys__header .privacy-setting {
+.edit-keys__header .privacy-select {
   margin-left: auto;
 }
 </style>

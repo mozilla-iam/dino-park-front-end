@@ -14,7 +14,7 @@
         <div class="edit-access-groups__header">
           <h3>LDAP</h3>
           <PrivacySetting
-            class="privacy-setting--large"
+            class="privacy-select--large"
             label="LDAP access groups privacy levels"
             id="section-access-groups-ldap-privacy"
             profileFieldName="accessInformation.ldap"
@@ -39,7 +39,7 @@
       <div class="edit-access-groups__header">
         <h3>mozillians.org</h3>
         <PrivacySetting
-          class="privacy-setting--large"
+          class="privacy-select--large"
           label="Mozillians.org access groups privacy levels"
           id="section-access-groups-mozillians-privacy"
           profileFieldName="accessInformation.mozilliansorg"
@@ -152,7 +152,7 @@ export default {
   flex-wrap: wrap;
   justify-content: space-between;
 }
-.edit-access-groups__header .privacy-setting {
+.edit-access-groups__header .privacy-select {
   margin-left: auto;
 }
 .edit-profile__access-groups hr {

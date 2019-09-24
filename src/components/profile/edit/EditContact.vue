@@ -51,7 +51,7 @@
       <div class="edit-contact__header">
         <h3>Phone</h3>
         <PrivacySetting
-          class="privacy-setting--large"
+          class="privacy-select--large"
           label="Phone number 1 privacy settings"
           id="field-phone-number-1-privacy"
           profileFieldName="phoneNumbers"
@@ -313,7 +313,7 @@ export default {
 .edit-contact__header {
   display: flex;
 }
-.edit-contact__header .privacy-setting {
+.edit-contact__header .privacy-select {
   margin-left: auto;
 }
 .edit-contact__header ~ .edit-contact__header {

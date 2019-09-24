@@ -9,7 +9,7 @@
     <header class="profile__section-header" ref="header" tabindex="-1">
       <h2>Accounts</h2>
       <PrivacySetting
-        class="privacy-setting--large"
+        class="privacy-select--large"
         label="Accounts privacy levels"
         id="section-accounts-privacy"
         profileFieldName="uris"

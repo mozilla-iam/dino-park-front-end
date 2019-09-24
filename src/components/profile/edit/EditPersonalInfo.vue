@@ -565,7 +565,7 @@ export default {
 .edit-personal-info__picture
   .user-picture
   ~ .edit-personal-info__picture-edit-button,
-.edit-personal-info__picture .user-picture ~ .privacy-setting {
+.edit-personal-info__picture .user-picture ~ .privacy-select {
   display: inline-flex;
   vertical-align: bottom;
   margin-right: 0.5em;
@@ -658,7 +658,7 @@ export default {
     font-size: inherit;
   }
   .edit-personal-info__privacy,
-  .privacy-setting {
+  .privacy-select {
     grid-column: 4 / 5;
     align-self: center;
     justify-self: center;

@@ -1,6 +1,6 @@
 <template>
   <div class="profile__team-location">
-    <div v-if="team" class="profile__team-section profile__team">
+    <div v-if="showTeam" class="profile__team-section profile__team">
       <h3 class="visually-hidden">Team</h3>
       <strong>
         <RouterLink
@@ -15,7 +15,7 @@
       </strong>
       <span>{{ entity }}</span>
     </div>
-    <div class="profile__team-section profile__location">
+    <div v-if="showLocation" class="profile__team-section profile__location">
       <h3 class="visually-hidden">Location</h3>
       <span class="profile-team-location-links" v-if="location">
         <RouterLink
@@ -94,6 +94,12 @@ export default {
     timezone: String,
   },
   computed: {
+    showTeam() {
+      return this.team || this.entity;
+    },
+    showLocation() {
+      return this.location || this.officeLocation || this.timezone;
+    },
     officeLocationSearchString() {
       return 'officeLocation:"' + this.officeLocation + '"'; // eslint-disable-line
     },
