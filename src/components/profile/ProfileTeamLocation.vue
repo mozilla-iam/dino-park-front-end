@@ -284,12 +284,10 @@ export default {
     display: flex;
     margin: 2em 0;
   }
-  .profile__team-location > * {
+  .profile__team-location > .profile__team-section {
+    padding-left: 0;
     min-width: 50%;
     max-width: 100%;
-  }
-  .profile__team-location .profile__team-section {
-    padding-left: 0;
   }
   .profile__team-location .profile__team {
     border-right: 1px solid var(--gray-30);
