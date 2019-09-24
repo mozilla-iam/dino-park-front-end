@@ -43,6 +43,7 @@ export default {
   methods: {
     activate() {
       this.viewAsFilter.active = true;
+      this.viewAsFilter.filter = 'PRIVATE';
     },
 
     deactivate() {
