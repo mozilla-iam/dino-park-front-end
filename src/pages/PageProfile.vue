@@ -6,9 +6,9 @@
     clientId="mutationClient"
   >
     <template slot-scope="{ result: { loading, data, error } }">
-      <PreviewAs v-if="showPreviewAs" :viewAsFilter="viewAs"></PreviewAs>
       <LoadingSpinner v-if="loading"></LoadingSpinner>
       <template v-else-if="data && data.profile !== null">
+        <PreviewAs v-if="showPreviewAs" :viewAsFilter="viewAs"></PreviewAs>
         <Profile
           v-bind="data.profile"
           :manager="related.manager"
