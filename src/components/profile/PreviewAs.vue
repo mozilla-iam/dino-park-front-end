@@ -59,7 +59,7 @@ export default {
         { label: 'Myself', value: 'PRIVATE', icon: 'avatar' },
         { label: 'Staff', value: 'STAFF', icon: 'staff' },
         { label: "Ndae'd", value: 'NDAED', icon: 'triangle' },
-        { label: 'Authenticated', value: 'AUTHENTICATED', icon: 'lock' },
+        { label: 'Registered', value: 'AUTHENTICATED', icon: 'lock' },
         { label: 'Public', value: 'PUBLIC', icon: 'world' },
       ],
     };
