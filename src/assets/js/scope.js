@@ -10,12 +10,20 @@ class Scope {
   }
 
   update(user) {
-    const {
-      staffInformation: { staff: { value: isStaff = false } = {} } = {},
-      accessInformation: {
-        mozilliansorg: { values: { nda: isNdaed = false } = {} } = {},
-      } = {},
-    } = user;
+    let isStaff = false;
+    let isNdaed = false;
+    try {
+      const {
+        staffInformation: { staff: { value: isStaffBool = false } = {} } = {},
+        accessInformation: {
+          mozilliansorg: { values: { nda: isNdaedBool = false } = {} } = {},
+        } = {},
+      } = user;
+      isStaff = isStaffBool;
+      isNdaed = isNdaedBool;
+    } catch (e) {
+      console.error('Error: ', e);
+    }
     this.isStaff = isStaff;
     this.isNdaed = isNdaed;
   }
