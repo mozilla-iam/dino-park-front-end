@@ -13,11 +13,11 @@ class Scope {
     const {
       staffInformation: { staff: { value: isStaff = false } = {} } = {},
       accessInformation: {
-        mozilliansorg: { values: { nda: isNdaed = false } = {} } = {},
+        mozilliansorg: { values: mozilliansorgGroups = {} } = {},
       } = {},
-    } = user;
+    } = user || {};
     this.isStaff = isStaff;
-    this.isNdaed = isNdaed;
+    this.isNdaed = 'nda' in (mozilliansorgGroups || {});
   }
 }
 
