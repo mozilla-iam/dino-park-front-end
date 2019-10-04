@@ -528,13 +528,14 @@
       </g>
     </template>
     <template v-else-if="id === 'avatar'">
-      <image :href="avatar" x="0" y="0" width="24" height="24" />
+      <image v-if="avatar" :href="avatar" x="0" y="0" width="24" height="24" />
     </template>
   </svg>
 </template>
 
 <script>
 import avatarUrl from '@/assets/js/avatars';
+import generateIdenticon from '@/assets/js/identicon-avatar';
 
 export default {
   name: 'Icon',
@@ -543,9 +544,22 @@ export default {
     height: Number,
     id: String,
   },
+  methods: {
+    getAvatar() {
+      if (this.$store.state.user.picture.value) {
+        return avatarUrl(this.$store.state.user.picture.value, 40);
+      }
+      generateIdenticon(this.$store.state.user.primaryUsername.value, 40).then(
+        (a) => {
+          this.avatar = a;
+        },
+      );
+      return null;
+    },
+  },
   data() {
     return {
-      avatar: avatarUrl(this.$store.state.user.picture.value, 40),
+      avatar: this.id === 'avatar' && this.getAvatar(),
     };
   },
 };
