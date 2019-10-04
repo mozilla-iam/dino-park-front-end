@@ -10,11 +10,11 @@
       :to="{ name: 'Profile', params: { username: username } }"
       class="search-result__profile-link"
     >
-      <div class="search-result__name">{{ firstName }} {{ lastName }}</div>
+      <div class="search-result__name">{{ displayName }}</div>
       <div class="search-result__title">{{ title || funTitle }}</div>
     </RouterLink>
     <RouterLink
-      v-if="scope.isStaff"
+      v-if="scope.isStaff && isStaff"
       :to="{ name: 'OrgchartHighlight', params: { username: username } }"
       class="search-result__orgchart-link"
     >
@@ -55,6 +55,17 @@ export default {
   },
   components: {
     UserPicture,
+  },
+  computed: {
+    displayName() {
+      if (this.firstName || this.lastName) {
+        return `${this.firstName} ${this.lastName}`;
+      }
+      if (!this.username.startsWith('r--')) {
+        return this.username;
+      }
+      return 'Anonymous User';
+    },
   },
 };
 </script>
