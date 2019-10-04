@@ -1,18 +1,15 @@
 <template>
   <aside class="preview-as">
-    <Button
-      v-if="viewAsFilter.active"
-      class="preview-as__button"
-      @click="deactivate"
+    <Button v-if="viewAsActive" class="preview-as__button" @click="deactivate"
       ><Icon id="chevron-left" :width="17" :height="17"></Icon>Back</Button
     >
-    <div v-if="viewAsFilter.active" class="preview-as__select-container">
+    <div v-if="viewAsActive" class="preview-as__select-container">
       <span>Previewing profile as</span>
       <Select
         class="privacy-select privacy-select--blue privacy-select--large"
         :label="'Preview Profile As'"
         :id="'preview-profile-selection'"
-        v-model="viewAsFilter.filter"
+        v-model="viewAs"
         :options="viewAsOptions"
         :expanededShowIcon="true"
         :collapsedShowIcon="true"
@@ -39,23 +36,38 @@ export default {
   components: { Select, Button, Icon },
   props: {
     viewAsFilter: Object,
+    viewAsActive: Boolean,
   },
   methods: {
     activate() {
-      this.viewAsFilter.active = true;
-      this.viewAsFilter.filter = 'PRIVATE';
+      this.viewAs = this.$route.query.pa || 'PRIVATE';
+      this.updateFilter();
     },
 
     deactivate() {
-      this.viewAsFilter.active = false;
-      this.viewAsFilter.filter = null;
+      this.viewAs = null;
+    },
+    updateFilter() {
+      if (this.viewAs) {
+        this.$router.push({ query: { pa: this.viewAs } });
+      } else {
+        this.$router.push({ query: {} });
+      }
+      this.viewAsFilter.filter = this.viewAs;
     },
   },
   destroyed() {
     this.deactivate();
   },
+  watch: {
+    viewAs() {
+      this.updateFilter();
+    },
+  },
   data() {
+    this.viewAsFilter.filter = this.$route.query.pa || 'PRIVATE';
     return {
+      viewAs: this.viewAsFilter.filter,
       viewAsOptions: [
         { label: 'Myself', value: 'PRIVATE', icon: 'avatar' },
         { label: 'Staff', value: 'STAFF', icon: 'staff' },
