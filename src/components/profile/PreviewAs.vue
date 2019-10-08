@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     activate() {
-      this.viewAs = this.$route.query.pa || 'PRIVATE';
+      this.viewAs = this.$route.query.pa || PERMISSIONS.private;
       this.updateFilter();
     },
 
@@ -62,7 +62,9 @@ export default {
         this.$router.push({ query: { pa: this.viewAs } });
       } else {
         const rQuery = Object.assign({}, this.$route.query);
-        delete rQuery['pa'];
+        if ('pa' in rQuery) {
+          delete rQuery.pa;
+        }
         this.$router.push({ query: rQuery });
       }
       this.viewAsFilter.filter = this.viewAs;
