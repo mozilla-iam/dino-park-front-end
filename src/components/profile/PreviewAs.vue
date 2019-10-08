@@ -1,8 +1,8 @@
 <template>
   <aside class="preview-as">
-    <Button v-if="viewAsActive" class="preview-as__button" @click="deactivate"
-      ><Icon id="chevron-left" :width="17" :height="17"></Icon>Back</Button
-    >
+    <Button v-if="viewAsActive" class="preview-as__button" @click="deactivate">
+      <Icon id="chevron-left" :width="17" :height="17"></Icon>Back
+    </Button>
     <div v-if="viewAsActive" class="preview-as__select-container">
       <span>Previewing profile as</span>
       <Select
@@ -20,9 +20,11 @@
       v-else
       @click="activate"
       class="preview-as__button preview-as__activate-button"
-      ><Icon id="eye" :width="17" :height="17"></Icon><span>Preview As</span
-      ><Icon id="chevron-right" :width="17" :height="17"></Icon
-    ></Button>
+    >
+      <Icon id="eye" :width="17" :height="17"></Icon>
+      <span>Preview As</span>
+      <Icon id="chevron-right" :width="17" :height="17"></Icon>
+    </Button>
   </aside>
 </template>
 
@@ -30,6 +32,14 @@
 import Icon from '@/components/ui/Icon.vue';
 import Button from '@/components/ui/Button.vue';
 import Select from '@/components/ui/Select.vue';
+
+const PERMISSIONS = {
+  private: 'PRIVATE',
+  staff: 'STAFF',
+  ndaed: 'NDAED',
+  authenticated: 'AUTHENTICATED',
+  public: 'PUBLIC',
+};
 
 export default {
   name: 'PreviewAs',
@@ -51,7 +61,9 @@ export default {
       if (this.viewAs) {
         this.$router.push({ query: { pa: this.viewAs } });
       } else {
-        this.$router.push({ query: {} });
+        const rQuery = Object.assign({}, this.$route.query);
+        delete rQuery['pa'];
+        this.$router.push({ query: rQuery });
       }
       this.viewAsFilter.filter = this.viewAs;
     },
@@ -65,15 +77,15 @@ export default {
     },
   },
   data() {
-    this.viewAsFilter.filter = this.$route.query.pa || 'PRIVATE';
+    this.viewAsFilter.filter = this.$route.query.pa || PERMISSIONS.private;
     return {
       viewAs: this.viewAsFilter.filter,
       viewAsOptions: [
-        { label: 'Myself', value: 'PRIVATE', icon: 'avatar' },
-        { label: 'Staff', value: 'STAFF', icon: 'staff' },
-        { label: "Ndae'd", value: 'NDAED', icon: 'triangle' },
-        { label: 'Registered', value: 'AUTHENTICATED', icon: 'lock' },
-        { label: 'Public', value: 'PUBLIC', icon: 'world' },
+        { label: 'Myself', value: PERMISSIONS.private, icon: 'avatar' },
+        { label: 'Staff', value: PERMISSIONS.staff, icon: 'staff' },
+        { label: "Ndae'd", value: PERMISSIONS.ndaed, icon: 'triangle' },
+        { label: 'Registered', value: PERMISSIONS.authenticated, icon: 'lock' },
+        { label: 'Public', value: PERMISSIONS.public, icon: 'world' },
       ],
     };
   },
