@@ -198,7 +198,7 @@
         stroke-linecap="round"
         stroke-linejoin="round"
         d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
-      ></path>
+      />
       <line
         fill="none"
         stroke="currentColor"
@@ -209,7 +209,7 @@
         y1="1"
         x2="23"
         y2="23"
-      ></line>
+      />
     </template>
     <template v-else-if="id === 'triangle'">
       <path
@@ -219,7 +219,7 @@
         stroke-linecap="round"
         stroke-linejoin="round"
         d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"
-      ></path>
+      />
     </template>
     <template v-else-if="id === 'activity'">
       <polyline
@@ -229,7 +229,7 @@
         stroke-linecap="round"
         stroke-linejoin="round"
         points="22 12 18 12 15 21 9 3 6 12 2 12"
-      ></polyline>
+      />
     </template>
     <template v-else-if="id === 'world'">
       <g
@@ -239,11 +239,11 @@
         stroke-linecap="round"
         stroke-linejoin="round"
       >
-        <circle cx="12" cy="12" r="10"></circle>
-        <line x1="2" y1="12" x2="22" y2="12"></line>
+        <circle cx="12" cy="12" r="10" />
+        <line x1="2" y1="12" x2="22" y2="12" />
         <path
           d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
-        ></path>
+        />
       </g>
     </template>
     <template v-else-if="id === 'staff'">
@@ -286,7 +286,7 @@
       <path
         d="M2,20.0001 L2,5.00004167 L22.0000778,5.00004167 L22.0000778,20.0001 L2,20.0001 Z M3.66708982,18.3338435 L20.3338213,18.3338435 L20.3338213,6.66671481 L3.66708982,6.66671481 L3.66708982,18.3338435 Z M12.8333755,10.0000611 L12.8333755,8.33338796 L14.9167169,8.33338796 L14.9167169,10.0000611 L12.8333755,10.0000611 Z M9.08336088,10.0000611 L9.08336088,8.33338796 L11.5833706,8.33338796 L11.5833706,10.0000611 L9.08336088,10.0000611 Z M5.3333463,10.0000611 L5.3333463,8.33338796 L7.83335602,8.33338796 L7.83335602,10.0000611 L5.3333463,10.0000611 Z M16.58339,13.3334074 L16.58339,11.6667343 L18.6667315,11.6667343 L18.6667315,13.3334074 L16.58339,13.3334074 Z M13.2500437,13.3334074 L13.2500437,11.6667343 L15.3333852,11.6667343 L15.3333852,13.3334074 L13.2500437,13.3334074 Z M9.91669745,13.3334074 L9.91669745,11.6667343 L12.0000389,11.6667343 L12.0000389,13.3334074 L9.91669745,13.3334074 Z M5.3333463,13.3334074 L5.3333463,11.6667343 L8.66669259,11.6667343 L8.66669259,13.3334074 L5.3333463,13.3334074 Z M16.1667218,10.0000611 L16.1667218,8.33338796 L18.6667315,8.33338796 L18.6667315,10.0000611 L16.1667218,10.0000611 Z M5.3333463,16.6667537 L5.3333463,15.0000806 L18.6667315,15.0000806 L18.6667315,16.6667537 L5.3333463,16.6667537 Z"
         fill="currentColor"
-      ></path>
+      />
     </template>
     <template v-else-if="id === 'chain'">
       <path
@@ -334,28 +334,28 @@
       >
         <path
           d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"
-        ></path>
+        />
         <path
           d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"
-        ></path>
+        />
         <path
           d="M9.5 14c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.33 8 20.5v-5c0-.83.67-1.5 1.5-1.5z"
-        ></path>
+        />
         <path
           d="M3.5 14H5v1.5c0 .83-.67 1.5-1.5 1.5S2 16.33 2 15.5 2.67 14 3.5 14z"
-        ></path>
+        />
         <path
           d="M14 14.5c0-.83.67-1.5 1.5-1.5h5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-5c-.83 0-1.5-.67-1.5-1.5z"
-        ></path>
+        />
         <path
           d="M15.5 19H14v1.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z"
-        ></path>
+        />
         <path
           d="M10 9.5C10 8.67 9.33 8 8.5 8h-5C2.67 8 2 8.67 2 9.5S2.67 11 3.5 11h5c.83 0 1.5-.67 1.5-1.5z"
-        ></path>
+        />
         <path
           d="M8.5 5H10V3.5C10 2.67 9.33 2 8.5 2S7 2.67 7 3.5 7.67 5 8.5 5z"
-        ></path>
+        />
       </g>
     </template>
     <template v-else-if="id === 'rotate'">
@@ -528,7 +528,14 @@
       </g>
     </template>
     <template v-else-if="id === 'avatar'">
-      <image v-if="avatar" :href="avatar" x="0" y="0" width="24" height="24" />
+      <image
+        v-if="computedAvatarUrl"
+        :href="computedAvatarUrl"
+        x="0"
+        y="0"
+        width="24"
+        height="24"
+      />
     </template>
   </svg>
 </template>
@@ -544,22 +551,24 @@ export default {
     height: Number,
     id: String,
   },
-  methods: {
-    getAvatar() {
+  mounted() {
+    generateIdenticon(this.$store.state.user.primaryUsername.value, 40).then(
+      (a) => {
+        this.generatedAvatarUrl = a;
+      },
+    );
+  },
+  computed: {
+    computedAvatarUrl() {
       if (this.$store.state.user.picture.value) {
         return avatarUrl(this.$store.state.user.picture.value, 40);
       }
-      generateIdenticon(this.$store.state.user.primaryUsername.value, 40).then(
-        (a) => {
-          this.avatar = a;
-        },
-      );
-      return null;
+      return this.generatedAvatarUrl;
     },
   },
   data() {
     return {
-      avatar: this.id === 'avatar' && this.getAvatar(),
+      generatedAvatarUrl: null,
     };
   },
 };
