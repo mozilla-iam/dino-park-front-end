@@ -8,7 +8,11 @@
     <template slot-scope="{ result: { loading, data, error } }">
       <LoadingSpinner v-if="loading"></LoadingSpinner>
       <template v-else-if="data && data.profile !== null">
-        <PreviewAs v-if="showPreviewAs" :viewAsFilter="viewAs"></PreviewAs>
+        <PreviewAs
+          v-if="showPreviewAs"
+          :viewAsFilter="viewAs"
+          :viewAsActive="variables.viewAsActive"
+        ></PreviewAs>
         <Profile
           v-bind="data.profile"
           :manager="related.manager"
@@ -49,10 +53,11 @@ export default {
         this.$route.params.username ===
         this.$store.state.user.primaryUsername.value
       ) {
+        const viewAsActive = Boolean(this.$route.query.pa);
         return {
           username: null,
-          viewAs: this.viewAs.filter || null,
-          viewAsActive: this.viewAs.active,
+          viewAs: viewAsActive ? this.viewAs.filter : null,
+          viewAsActive,
         };
       }
       return {
@@ -79,7 +84,7 @@ export default {
     return {
       displayProfile: DISPLAY_PROFILE,
       related: new Related(),
-      viewAs: { filter: null, active: false },
+      viewAs: { filter: null },
     };
   },
 };
