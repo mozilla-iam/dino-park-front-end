@@ -11,7 +11,7 @@
           :sectionId="section"
         ></EditButton>
       </header>
-      <p v-if="empty">{{ userOnOwnProfile ? messageOwn : message }}</p>
+      <p v-if="empty">{{ emptyMessageText }}</p>
       <slot name="view" v-else></slot>
     </template>
   </section>
@@ -20,6 +20,7 @@
 <script>
 import EditButton from '@/components/profile/edit/EditButton.vue';
 import EmptyCard from '@/components/profile/view/EmptyCard.vue';
+import { DISPLAY_LEVELS } from '@/assets/js/display-levels';
 
 export default {
   name: 'ProfileSection',
@@ -47,6 +48,17 @@ export default {
         'profile__section--editing': this.editing,
         'profile__section--disabled': !this.editing && this.empty,
       };
+    },
+    emptyMessageText() {
+      if (
+        !this.userOnOwnProfile ||
+        ![undefined, DISPLAY_LEVELS.private.value].includes(
+          this.$route.query.pa,
+        )
+      ) {
+        return this.message;
+      }
+      return this.messageOwn;
     },
   },
 };
