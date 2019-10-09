@@ -3,17 +3,17 @@
     <a class="sign-in-link" v-if="slack.v === ''" href="/whoami/slack/add">
       <img
         alt="Sign in with Slack"
-        src="https://platform.slack-edge.com/img/sign_in_with_slack.png"
+        src="@/assets/images/sign_in_with_slack.png"
         srcset="
-          https://platform.slack-edge.com/img/sign_in_with_slack.png    1x,
-          https://platform.slack-edge.com/img/sign_in_with_slack@2x.png 2x
+          @/assets/images/sign_in_with_slack.png    1x,
+          @/assets/images/sign_in_with_slack@2x.png 2x
         "
       />
     </a>
     <IconBlock v-else :heading="'Mozilla Slack'" :icon="'slack'">
-      <a v-if="uri" :href="uri" target="_blank" rel="noreferrer noopener">{{
-        text
-      }}</a>
+      <a v-if="uri" :href="uri" target="_blank" rel="noreferrer noopener">
+        {{ text }}
+      </a>
       <template v-else>{{ text }}</template>
     </IconBlock>
   </div>
@@ -39,8 +39,18 @@ export default {
 </script>
 <style>
 .slack-container {
-  display: inline-block;
+  display: block;
+  width: 100%;
   align-self: center;
+  grid-column: 2 / 4;
+}
+
+@media (min-width: 57.5em) {
+  .slack-container {
+    display: inline-block;
+    align-self: center;
+    grid-column: auto;
+  }
 }
 
 .sign-in {
