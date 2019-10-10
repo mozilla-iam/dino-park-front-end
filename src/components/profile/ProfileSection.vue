@@ -52,9 +52,8 @@ export default {
     emptyMessageText() {
       if (
         !this.userOnOwnProfile ||
-        ![undefined, DISPLAY_LEVELS.private.value].includes(
-          this.$route.query.pa,
-        )
+        (this.$route.query.pa !== undefined &&
+          this.$route.query.pa !== DISPLAY_LEVELS.private.value)
       ) {
         return this.message;
       }
