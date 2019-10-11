@@ -79,13 +79,9 @@ export default {
   }
 
   .profile__external-accounts .external-accounts__list {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  .profile__external-accounts .external-accounts__list .icon-block {
-    width: 45%;
+    display: block;
+    columns: 2;
+    column-gap: 2em;
   }
 }
 </style>

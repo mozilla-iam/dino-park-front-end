@@ -1,8 +1,13 @@
 <template>
-  <IconBlock :heading="'Mozilla Slack'" :icon="'slack'">
-    <a v-if="uri" :href="uri" target="_blank" rel="noreferrer noopener">{{
-      text
-    }}</a>
+  <IconBlock
+    class="slack-block"
+    heading="Mozilla Slack"
+    subHeading="Verified"
+    icon="slack"
+  >
+    <a v-if="uri" :href="uri" target="_blank" rel="noreferrer noopener">
+      {{ text }}
+    </a>
     <template v-else>{{ text }}</template>
   </IconBlock>
 </template>
@@ -25,4 +30,13 @@ export default {
   },
 };
 </script>
-<style></style>
+<style>
+.slack-block .icon-block__heading {
+  display: flex;
+}
+.slack-block .icon-block__heading > span {
+  margin-left: auto;
+  margin-right: 0.5em;
+  color: var(--green-80);
+}
+</style>
