@@ -135,7 +135,6 @@ export default {
   margin-bottom: auto;
   padding-top: 1em;
   padding-bottom: 1em;
-  width: 100%;
 }
 .edit-access-groups__header:first-child {
   margin-top: unset;
@@ -150,8 +149,7 @@ export default {
   justify-content: space-between;
 }
 .edit-access-groups__header .privacy-select {
-  margin-right: auto;
-  margin-left: 0;
+  margin-left: auto;
 }
 .edit-profile__access-groups hr {
   margin-top: 1.5em;
@@ -159,15 +157,5 @@ export default {
 }
 .edit-profile__access-groups .icon-block {
   color: var(--gray-50);
-}
-
-@media (min-width: 50em) {
-  .edit-profile__access-groups h3 {
-    width: auto;
-  }
-  .edit-access-groups__header .privacy-select {
-    margin-left: auto;
-    margin-right: 0;
-  }
 }
 </style>
