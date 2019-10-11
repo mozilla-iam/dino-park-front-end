@@ -78,30 +78,14 @@ export default {
       viewAs: this.viewAsFilter.filter,
       viewAsOptions: [
         {
+          ...DISPLAY_LEVELS.private,
           label: 'Myself',
-          value: DISPLAY_LEVELS.private.value,
           icon: 'avatar',
         },
-        {
-          label: DISPLAY_LEVELS.staff.label,
-          value: DISPLAY_LEVELS.staff.value,
-          icon: DISPLAY_LEVELS.staff.icon,
-        },
-        {
-          label: DISPLAY_LEVELS.ndaed.label,
-          value: DISPLAY_LEVELS.ndaed.value,
-          icon: DISPLAY_LEVELS.ndaed.icon,
-        },
-        {
-          label: DISPLAY_LEVELS.authenticated.label,
-          value: DISPLAY_LEVELS.authenticated.value,
-          icon: DISPLAY_LEVELS.authenticated.icon,
-        },
-        {
-          label: DISPLAY_LEVELS.public.label,
-          value: DISPLAY_LEVELS.public.value,
-          icon: DISPLAY_LEVELS.public.icon,
-        },
+        DISPLAY_LEVELS.staff,
+        DISPLAY_LEVELS.ndaed,
+        DISPLAY_LEVELS.authenticated,
+        DISPLAY_LEVELS.public,
       ],
     };
   },
