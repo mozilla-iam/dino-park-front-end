@@ -11,8 +11,14 @@
         ones.
       </p>
       <p>
-        <RouterLink :to="{ name: 'Orgchart' }" class="button">
-          <span>View the Org Chart</span>
+        <RouterLink
+          :to="{
+            name: 'Profile',
+            params: { username },
+          }"
+          class="button"
+        >
+          <span class="button-text">My profile</span>
           <Icon id="chevron-right" :width="24" :height="24" />
         </RouterLink>
       </p>
@@ -54,6 +60,9 @@ export default {
     LoadingSpinner,
   },
   computed: {
+    username() {
+      return this.$store.state.user.primaryUsername.value;
+    },
     cards() {
       const getLink = (url, text) => {
         return `<a href="${url}" target="_blank" rel="noopener noreferrer">${text}</a>`;
@@ -115,6 +124,10 @@ export default {
   display: inline-block;
   margin-top: 2em;
   margin-bottom: 2em;
+}
+
+.home__intro .button .button-text {
+  vertical-align: middle;
 }
 .home__intro .button svg {
   margin-left: 1em;
