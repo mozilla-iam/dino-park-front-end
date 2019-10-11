@@ -51,13 +51,13 @@ export default {
     },
     emptyMessageText() {
       if (
-        !this.userOnOwnProfile ||
-        (this.$route.query.pa !== undefined &&
-          this.$route.query.pa !== DISPLAY_LEVELS.private.value)
+        this.userOnOwnProfile &&
+        DISPLAY_LEVELS.private.value ===
+          (this.$route.query.pa || DISPLAY_LEVELS.private.value)
       ) {
-        return this.message;
+        return this.messageOwn;
       }
-      return this.messageOwn;
+      return this.message;
     },
   },
 };

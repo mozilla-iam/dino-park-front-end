@@ -83,22 +83,22 @@ export default {
           icon: 'avatar',
         },
         {
-          label: 'Staff',
+          label: DISPLAY_LEVELS.staff.label,
           value: DISPLAY_LEVELS.staff.value,
           icon: DISPLAY_LEVELS.staff.icon,
         },
         {
-          label: "Ndae'd",
+          label: DISPLAY_LEVELS.ndaed.label,
           value: DISPLAY_LEVELS.ndaed.value,
           icon: DISPLAY_LEVELS.ndaed.icon,
         },
         {
-          label: 'Registered',
+          label: DISPLAY_LEVELS.authenticated.label,
           value: DISPLAY_LEVELS.authenticated.value,
           icon: DISPLAY_LEVELS.authenticated.icon,
         },
         {
-          label: 'Public',
+          label: DISPLAY_LEVELS.public.label,
           value: DISPLAY_LEVELS.public.value,
           icon: DISPLAY_LEVELS.public.icon,
         },
