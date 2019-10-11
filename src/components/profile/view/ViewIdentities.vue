@@ -7,15 +7,15 @@
         :subHeading="githubUsername && 'Verified'"
         icon="github"
       >
-        <a :href="githubLink" target="_blank" rel="noreferrer noopener">{{
-          githubUsername
-        }}</a>
+        <a :href="githubLink" target="_blank" rel="noreferrer noopener">
+          {{ githubUsername }}
+        </a>
       </IconBlock>
       <IconBlock
         v-if="identities.hasBugzilla()"
         heading="Bugzilla"
         subHeading="Verified"
-        icon="dino"
+        icon="moz"
       >
         <a
           :href="identities.bugzillaProfile()"
