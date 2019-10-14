@@ -32,14 +32,7 @@
 import Icon from '@/components/ui/Icon.vue';
 import Button from '@/components/ui/Button.vue';
 import Select from '@/components/ui/Select.vue';
-
-const PERMISSIONS = {
-  private: 'PRIVATE',
-  staff: 'STAFF',
-  ndaed: 'NDAED',
-  authenticated: 'AUTHENTICATED',
-  public: 'PUBLIC',
-};
+import { DISPLAY_LEVELS } from '@/assets/js/display-levels';
 
 export default {
   name: 'PreviewAs',
@@ -50,7 +43,7 @@ export default {
   },
   methods: {
     activate() {
-      this.viewAs = this.$route.query.pa || PERMISSIONS.private;
+      this.viewAs = this.$route.query.pa || DISPLAY_LEVELS.private.value;
       this.updateFilter();
     },
 
@@ -79,15 +72,20 @@ export default {
     },
   },
   data() {
-    this.viewAsFilter.filter = this.$route.query.pa || PERMISSIONS.private;
+    this.viewAsFilter.filter =
+      this.$route.query.pa || DISPLAY_LEVELS.private.value;
     return {
       viewAs: this.viewAsFilter.filter,
       viewAsOptions: [
-        { label: 'Myself', value: PERMISSIONS.private, icon: 'avatar' },
-        { label: 'Staff', value: PERMISSIONS.staff, icon: 'staff' },
-        { label: "Ndae'd", value: PERMISSIONS.ndaed, icon: 'triangle' },
-        { label: 'Registered', value: PERMISSIONS.authenticated, icon: 'lock' },
-        { label: 'Public', value: PERMISSIONS.public, icon: 'world' },
+        {
+          ...DISPLAY_LEVELS.private,
+          label: 'Myself',
+          icon: 'avatar',
+        },
+        DISPLAY_LEVELS.staff,
+        DISPLAY_LEVELS.ndaed,
+        DISPLAY_LEVELS.authenticated,
+        DISPLAY_LEVELS.public,
       ],
     };
   },

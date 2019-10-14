@@ -15,7 +15,7 @@ export const DISPLAY_LEVELS = {
     icon: 'activity',
   },
   ndaed: {
-    label: "NDA'd + Staff",
+    label: "NDA'd",
     value: 'NDAED',
     icon: 'triangle',
   },
