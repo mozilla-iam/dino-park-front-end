@@ -2,12 +2,12 @@
   <IconBlock
     class="slack-block"
     heading="Mozilla Slack"
-    subHeading="Verified"
+    :subHeading="isVerified ? 'Verified' : ''"
     icon="slack"
   >
-    <a v-if="uri" :href="uri" target="_blank" rel="noreferrer noopener">
-      {{ text }}
-    </a>
+    <a v-if="uri" :href="uri" target="_blank" rel="noreferrer noopener">{{
+      text
+    }}</a>
     <template v-else>{{ text }}</template>
   </IconBlock>
 </template>
@@ -21,6 +21,9 @@ export default {
     slack: Object,
   },
   computed: {
+    isVerified() {
+      return this.slack.value.match(/^https:\/\/.*slack\.com[^#]*#.*/);
+    },
     uri() {
       return this.slack.value.substring(0, this.slack.value.indexOf('#'));
     },
