@@ -28,7 +28,6 @@
 </template>
 
 <script>
-import EnvironmentMixin from '@/components/_mixins/EnvironmentMixin.vue';
 import Error from '@/components/ui/Error.vue';
 import Profile from '@/components/profile/Profile.vue';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
@@ -46,7 +45,6 @@ export default {
     PreviewAs,
     LoadingSpinner,
   },
-  mixins: [EnvironmentMixin],
   computed: {
     variables() {
       if (
@@ -73,11 +71,7 @@ export default {
       return null;
     },
     showPreviewAs() {
-      return (
-        !this.prodEnv &&
-        this.variables.username === null &&
-        this.editing === null
-      );
+      return this.variables.username === null && this.editing === null;
     },
   },
   data() {
