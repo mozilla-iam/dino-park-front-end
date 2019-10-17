@@ -84,11 +84,11 @@ export default {
           )} for details.`,
         },
         {
-          link: this.globalLinks.editModeAnnouncement,
-          icon: 'edit',
+          link: this.globalLinks.groupsAnnouncement,
+          icon: 'idcard',
           headline: 'Recent Additions',
-          description: `Profile editing is now live with privacy controls and synchronized Workday information. Read more about this and improved people search capabilities in our ${getLink(
-            this.globalLinks.editModeAnnouncement,
+          description: `LDAP and Mozillians.org access groups are now displayed under the <i>Access groups</i> section. Read more about this and all newly added functionality in our ${getLink(
+            this.globalLinks.groupsAnnouncement,
             'Discourse post',
           )}.`,
         },

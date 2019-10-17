@@ -4,9 +4,10 @@ export default {
     return {
       globalLinks: {
         feedback: 'https://github.com/mozilla-iam/dino-park-issues/issues',
-        profilePrivacy: 'https://discourse.mozilla.org/t/dinopark-faq/33564',
-        editModeAnnouncement:
-          'https://discourse.mozilla.org/t/edit-mode-announcement/38563',
+        profilePrivacy:
+          'https://discourse.mozilla.org/t/profile-privacy-display-levels-explained/37906',
+        groupsAnnouncement:
+          'https://discourse.mozilla.org/t/mozilla-people-directory-what-s-new/46994',
         participationGuidelines:
           'https://www.mozilla.org/en-US/about/governance/policies/participation/',
         faq: 'https://discourse.mozilla.org/t/dinopark-faq/33564',

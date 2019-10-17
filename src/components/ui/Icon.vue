@@ -467,7 +467,7 @@
           height="2"
           x="13"
           y="8"
-          fill="#000"
+          fill="currentColor"
           fill-rule="nonzero"
           rx="1"
         />
@@ -476,7 +476,7 @@
           height="2"
           x="13"
           y="12"
-          fill="#000"
+          fill="currentColor"
           fill-rule="nonzero"
           rx="1"
         />
@@ -485,7 +485,7 @@
           height="6"
           x="5"
           y="9"
-          stroke="#000"
+          stroke="currentColor"
           stroke-width="2"
           rx="1"
         />
