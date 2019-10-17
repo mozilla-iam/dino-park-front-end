@@ -31,7 +31,9 @@
       </button>
     </div>
     <div class="org-chart">
-      <div class="org-chart__chart"><LoadingSpinner></LoadingSpinner></div>
+      <div class="org-chart__chart">
+        <LoadingSpinner v-if="loading"></LoadingSpinner>
+      </div>
       <ApolloQuery
         v-if="username && (desktopView || openedFromOrgNode)"
         :query="previewProfileQuery"
@@ -226,6 +228,10 @@ export default {
       this.loading = true;
       try {
         const data = await fetcher.fetch('/api/v4/orgchart');
+        if (data.status === 403) {
+          this.$router.push({ path: '/forbidden' });
+          return;
+        }
         const orgchart = await data.json();
         this.initiallyExpanded = orgchart.forrest
           .map((node) => node.data.username)
