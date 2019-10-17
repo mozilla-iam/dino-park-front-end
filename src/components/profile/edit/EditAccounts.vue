@@ -41,10 +41,15 @@
         >Username on
         {{ `${EXTERNAL_ACCOUNTS[destructUriKey(k).name].text}` }}</label
       >
+      <EditSlack
+        v-if="isKeySlack(destructUriKey(k).name)"
+        :slack="uris.values[index]"
+      />
       <input
         :id="`field-account-${index}-username`"
         type="text"
         v-model="uris.values[index].v"
+        v-else
         :placeholder="
           EXTERNAL_ACCOUNTS[destructUriKey(k).name].placeholder ||
             `Your username on ${EXTERNAL_ACCOUNTS[destructUriKey(k).name].text}`
@@ -61,9 +66,9 @@
     <Button
       class="edit-accounts__add-more button--secondary button button--action"
       type="button"
-      :disabled="noAccountsLeft"
+      :disabled="noAccountsLeft || dirty"
       v-on:click="addUri"
-      ><Icon id="plus" :width="16" :height="16" />Add Account</Button
+      ><Icon id="plus" :width="16" :height="16" />{{ addButtonText }}</Button
     >
   </EditMutationWrapper>
 </template>
@@ -77,6 +82,7 @@ import PrivacySetting from '@/components/profile/PrivacySetting.vue';
 import Select from '@/components/ui/Select.vue';
 import { displayLevelsFor, DISPLAY_LEVELS } from '@/assets/js/display-levels';
 import EditMutationWrapper from './EditMutationWrapper.vue';
+import EditSlack from '@/components/profile/edit/EditSlack.vue';
 
 export default {
   name: 'EditAccounts',
@@ -92,6 +98,7 @@ export default {
   },
   mixins: [AccountsMixin],
   components: {
+    EditSlack,
     Button,
     Checkbox,
     EditMutationWrapper,
@@ -119,6 +126,7 @@ export default {
     deleteUri(index) {
       if (this.uris.values.length > index) {
         this.uris.values.splice(index, 1);
+        this.dirty = true;
       }
     },
     toggleUriContactMe(checked, index) {
@@ -131,6 +139,15 @@ export default {
     this.$refs.header.focus();
   },
   computed: {
+    addButtonText() {
+      if (this.dirty) {
+        return 'Save Changes First';
+      }
+      if (this.remainingAccounts.length === 0) {
+        return 'All Accounts Added';
+      }
+      return 'Add Account';
+    },
     remainingAccounts() {
       const selectedUris = this.uris.values.map(
         ({ k }) => this.destructUriKey(k).name,
@@ -152,6 +169,7 @@ export default {
       metadata: { display = DISPLAY_LEVELS.private.value },
     } = this.initialUris;
     return {
+      dirty: false,
       uris: {
         values: Object.entries(initialUris || {}).map(([k, v]) => {
           return { k, v };
@@ -166,5 +184,13 @@ export default {
 <style>
 .edit-accounts__add-more {
   margin-left: auto;
+}
+
+.edit-accounts__add-more > svg {
+  vertical-align: sub;
+}
+
+.options--chevron {
+  align-self: center;
 }
 </style>
