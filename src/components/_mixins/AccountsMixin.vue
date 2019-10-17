@@ -63,7 +63,7 @@ const EXTERNAL_ACCOUNTS = {
 
 export default {
   methods: {
-    account([key, value, contact]) {
+    account([key, value]) {
       const { moz, text, icon, placeholder } = EXTERNAL_ACCOUNTS[key] || {};
       let { uri } = EXTERNAL_ACCOUNTS[key] || { uri: null };
 
@@ -73,14 +73,12 @@ export default {
 
       if (text && icon && typeof moz === 'boolean') {
         return {
-          key,
           moz,
           text,
           icon,
           placeholder,
           value,
           uri,
-          contact,
         };
       }
       return null;
@@ -88,28 +86,12 @@ export default {
     isAccountKey(key) {
       return (key && key.startsWith('EA#')) || false;
     },
-    isKeySlack(key) {
-      return key === 'SLACK';
-    },
     destructUriKey(key) {
       const [typ, name, contact = 'n'] = key.split('#');
       return { typ, name, contact: contact === 'y' };
     },
     constructUriKey({ typ = 'EA', name, contact = false }) {
       return `${typ}#${name}#${contact ? 'y' : 'n'}`;
-    },
-    getMozillaAccounts(uris) {
-      const map = {};
-      // Get all account objects from 'uris'
-      const mAccounts = Object.entries(uris.values || {})
-        .filter(([k]) => this.isAccountKey(k))
-        .map(([k, v], idx) => {
-          const { name, contact } = this.destructUriKey(k);
-          map[name] = idx;
-          return this.account([name, v, contact]);
-        })
-        .filter((a) => a !== null && typeof a !== 'undefined' && a.value);
-      return mAccounts;
     },
   },
   data() {
