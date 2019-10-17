@@ -58,8 +58,14 @@ export default {
   },
   computed: {
     displayName() {
-      if (this.firstName || this.lastName) {
+      if (this.firstName && this.lastName) {
         return `${this.firstName} ${this.lastName}`;
+      }
+      if (this.firstName) {
+        return this.firstName;
+      }
+      if (this.lastName) {
+        return this.lastName;
       }
       if (!this.username.startsWith('r--')) {
         return this.username;
