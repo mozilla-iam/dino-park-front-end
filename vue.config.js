@@ -11,7 +11,7 @@ const HTTPS = HTTPS_CERT &&
 
 module.exports = {
   productionSourceMap: false,
-  filenameHashing: false,
+  filenameHashing: true,
   publicPath: BASE_URL,
   configureWebpack: {
     resolve: {
