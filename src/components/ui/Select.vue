@@ -80,6 +80,10 @@ export default {
       type: Boolean,
       default: true,
     },
+    nonOption: {
+      type: Object,
+      default: null,
+    },
   },
   components: {
     Icon,
@@ -142,7 +146,9 @@ export default {
   computed: {
     selectedOption() {
       const { options, value } = this.$props;
-      return options.find((o) => o.value === value) || options[0];
+      return (
+        options.find((o) => o.value === value) || this.nonOption || options[0]
+      );
     },
     selectedLabel() {
       return this.selectedOption ? this.selectedOption.label : null;

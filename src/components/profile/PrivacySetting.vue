@@ -6,6 +6,7 @@
     v-bind="privacySettings"
     v-model="profileFieldObject.display"
     :options="displayLevelsFor(profileFieldName)"
+    :nonOption="currentDisplayOption()"
     :disabled="disabled"
     @input="$emit('input', $event)"
   >
@@ -22,7 +23,7 @@
 
 <script>
 import Select from '@/components/ui/Select.vue';
-import { displayLevelsFor } from '@/assets/js/display-levels';
+import { displayLevelsFor, DISPLAY_LEVELS } from '@/assets/js/display-levels';
 
 export default {
   name: 'PrivacySetting',
@@ -42,6 +43,13 @@ export default {
   },
   methods: {
     displayLevelsFor,
+    currentDisplayOption() {
+      return (
+        Object.values(DISPLAY_LEVELS).find(
+          (v) => v.value === this.profileFieldObject.display,
+        ) || null
+      );
+    },
   },
   data() {
     return {
