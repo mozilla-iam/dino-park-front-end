@@ -2,13 +2,23 @@
   <main class="home">
     <div class="home__intro">
       <img
-        src="@/assets/images/laptop-phone.jpg"
-        srcset="@/assets/images/laptop-phone@2x.jpg 2x"
+        v-if="scope.isStaff"
+        src="@/assets/images/laptop-phone.png"
+        srcset="@/assets/images/laptop-phone@2x.png 2x"
+      />
+      <img
+        v-else
+        src="@/assets/images/laptop-phone-community.png"
+        srcset="@/assets/images/laptop-phone-community@2x.png 2x"
       />
       <h1>Welcome to the Mozilla People Directory</h1>
-      <p>
+      <p v-if="scope.isStaff">
         A secure place to quickly find your team members and easily discover new
         ones.
+      </p>
+      <p v-else>
+        A secure place to quickly find your fellow Mozillians and share
+        information about yourself!
       </p>
       <p>
         <RouterLink
@@ -78,10 +88,15 @@ export default {
           link: this.globalLinks.profilePrivacy,
           icon: 'lock',
           headline: 'Your Privacy is Protected',
-          description: `Your Staff profile data is only visible to Staff and NDA’d people by default. You can edit this via your profile privacy settings. Read our ${getLink(
-            this.globalLinks.profilePrivacy,
-            'Discourse post',
-          )} for details.`,
+          description: this.scope.isStaff
+            ? `Your Staff profile data is only visible to Staff and NDA’d people by default. You can edit this via your profile privacy settings. Read our ${getLink(
+                this.globalLinks.profilePrivacy,
+                'Discourse post',
+              )} for details.`
+            : `You control how and with whom your data is being shared. Read our ${getLink(
+                this.globalLinks.profilePrivacy,
+                'Discourse post',
+              )} for further details.`,
         },
         {
           link: this.globalLinks.groupsAnnouncement,
