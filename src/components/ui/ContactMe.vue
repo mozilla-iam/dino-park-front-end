@@ -24,6 +24,15 @@
             <span class="contact-me__value">{{ primaryEmail }}</span>
           </a>
         </div>
+        <div v-if="displayedSecondaryEmail" class="contact-me__item">
+          <a
+            :href="`mailto:${displayedSecondaryEmail}`"
+            class="contact-me__pair"
+          >
+            <Icon id="at-sign" :width="24" :height="24" />
+            <span class="contact-me__value">{{ displayedSecondaryEmail }}</span>
+          </a>
+        </div>
         <div
           v-for="(number, index) in displayedPhoneNumbers"
           :key="`p-${index}`"
@@ -100,6 +109,7 @@ import ShowMore from '@/components/_functional/ShowMore.vue';
 export default {
   name: 'ContactMe',
   props: {
+    identities: Object,
     primaryEmail: String,
     phoneNumbers: Object,
     uris: Object,
@@ -111,6 +121,9 @@ export default {
     ShowMore,
   },
   computed: {
+    displayedSecondaryEmail() {
+      return this.identities.custom1PrimaryEmail.value;
+    },
     displayedPhoneNumbers() {
       const { values: numbers } = this.phoneNumbers || {};
       const dispalyedNumbers = Object.entries(numbers || {})
@@ -140,6 +153,7 @@ export default {
       return (
         this.displayedPhoneNumbers.length > 0 ||
         this.displayedUris.length > 0 ||
+        this.displayedSecondaryEmail ||
         this.primaryEmail
       );
     },

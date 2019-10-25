@@ -81,6 +81,8 @@ const MUTATE_PROFILE = gql`
     $tags: KeyValuesWithDisplay
     $uris: KeyValuesWithDisplay
     $accessInformationMozilliansorg: Display
+    $custom1PrimaryEmail: StringWithDisplay
+    $custom2PrimaryEmail: StringWithDisplay
   ) {
     profile(
       update: {
@@ -100,6 +102,8 @@ const MUTATE_PROFILE = gql`
         tags: $tags
         uris: $uris
         accessInformationMozilliansorg: $accessInformationMozilliansorg
+        custom1PrimaryEmail: $custom1PrimaryEmail
+        custom2PrimaryEmail: $custom2PrimaryEmail
       }
     ) {
       uuid {
@@ -152,6 +156,18 @@ const MUTATE_PROFILE = gql`
           }
         }
         bugzillaMozillaOrgPrimaryEmail {
+          value
+          metadata {
+            display
+          }
+        }
+        custom1PrimaryEmail {
+          value
+          metadata {
+            display
+          }
+        }
+        custom2PrimaryEmail {
           value
           metadata {
             display
@@ -294,6 +310,18 @@ const DISPLAY_PROFILE = gql`
           }
         }
         bugzillaMozillaOrgPrimaryEmail {
+          value
+          metadata {
+            display
+          }
+        }
+        custom1PrimaryEmail {
+          value
+          metadata {
+            display
+          }
+        }
+        custom2PrimaryEmail {
           value
           metadata {
             display

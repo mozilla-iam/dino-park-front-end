@@ -42,6 +42,7 @@
           location,
           description,
           uris,
+          identities,
           userOnOwnProfile,
           editable: !viewAs,
         }"
@@ -95,6 +96,8 @@
           v-bind="{
             username: primaryUsername.value,
             initialPrimaryEmail: primaryEmail,
+            initialSecondaryEmail1: identities.custom1PrimaryEmail,
+            initialSecondaryEmail2: identities.custom2PrimaryEmail,
             initialPhoneNumbers: phoneNumbers,
             initialValues: {
               primaryEmail,
@@ -106,7 +109,7 @@
       </template>
       <template v-slot:view>
         <ViewContact
-          v-bind="{ primaryEmail, phoneNumbers, userOnOwnProfile }"
+          v-bind="{ primaryEmail, phoneNumbers, identities, userOnOwnProfile }"
         ></ViewContact>
       </template>
     </ProfileSection>
@@ -320,6 +323,8 @@ export default {
         relations: this.staffInformation.staff,
         contact:
           this.primaryEmail.value ||
+          this.identities.custom1PrimaryEmail.value ||
+          this.identities.custom2PrimaryEmail.value ||
           Object.entries(this.phoneNumbers.values || {}).length > 0,
         accounts:
           this.editing === 'accounts' ||
@@ -380,7 +385,7 @@ export default {
       this.$router.push({
         name: 'Profile',
         params: { username: this.$store.state.user.primaryUsername.value },
-        hash: '#nav-identites',
+        hash: '#nav-identities',
       });
       this.$root.$emit('toast', { content });
       // Ideally our router should handle this.
