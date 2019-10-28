@@ -1,8 +1,6 @@
 <template>
   <EditMutationWrapper
-    :editVariables="{
-      phoneNumbers,
-    }"
+    :editVariables="editVariables"
     :initialValues="initialValues"
     :novalidate="true"
     formName="Edit contact information"
@@ -43,11 +41,53 @@
           :checked="true"
           label="Show in Contact Me button"
           class="edit-contact__set-as-contact"
-          :disabled="true"
         />
         <hr role="presentation" />
       </div>
-      <div class="edit-contact__info">Email editing coming soon</div>
+      <div v-if="hasSecondaryEmail" class="edit-contact__item">
+        <Button class="button--icon-only" v-on:click="removeSecondaryEmail">
+          <Icon id="x" :width="17" :height="17"></Icon>
+          <span class="visually-hidden">Remove secondary email</span>
+        </Button>
+        <Select
+          class="options--chevron"
+          label="Secondary email adddress type"
+          id="field-email-secondary-type"
+          :options="[{ label: 'Secondary', value: 'Secondary' }]"
+          :disabled="true"
+        />
+        <label for="field-email-secondary-value" class="visually-hidden"
+          >Email 2</label
+        >
+        <input
+          type="email"
+          id="field-email-secondary-value"
+          class="edit-contact__input-w-error"
+          v-model="editSecondaryEmail.value"
+          placeholder="Email address"
+        />
+        <span class="edit-contact__error-msg">Enter a valid email address</span>
+        <PrivacySetting
+          label="Secondary email address privacy settings"
+          id="field-email-secondary-privacy"
+          profileFieldName="editSecondaryEmail"
+          :profileFieldObject="editSecondaryEmail"
+        />
+        <Checkbox
+          label="Show in Contact Me button"
+          class="edit-contact__set-as-contact"
+          @input="(newValue) => toggleSecondaryEmailContactMe(newValue)"
+          :checked="secondaryEmailContactMe"
+        />
+        <hr role="presentation" />
+      </div>
+      <hr role="presentation" />
+      <Button
+        class="edit-contact__add-more button--secondary button--action"
+        v-if="!hasSecondaryEmail"
+        v-on:click="addSecondaryEmail"
+        ><Icon id="plus" :width="16" :height="16" />Add Secondary Email</Button
+      >
       <div class="edit-contact__header">
         <h3>Phone</h3>
         <PrivacySetting
@@ -119,14 +159,20 @@ import Icon from '@/components/ui/Icon.vue';
 import Select from '@/components/ui/Select.vue';
 import { DISPLAY_LEVELS } from '@/assets/js/display-levels';
 
+const EMPTY_SECONDARY_EMAIL = {
+  value: '',
+  display: DISPLAY_LEVELS.private.value,
+};
+
 export default {
   name: 'EditContact',
   props: {
     initialPrimaryEmail: Object,
+    initialSecondaryEmail1: Object,
+    initialSecondaryEmail2: Object,
     initialPhoneNumbers: Object,
     initialUris: Object,
     initialValues: Object,
-    editVariables: Object,
   },
   mixins: [PhoneNumbersMixin],
   components: {
@@ -140,7 +186,38 @@ export default {
   mounted() {
     this.$refs.header.focus();
   },
+  computed: {
+    editVariables() {
+      return {
+        phoneNumbers: this.phoneNumbers,
+        custom1PrimaryEmail: this.custom1PrimaryEmail,
+        custom2PrimaryEmail: this.custom2PrimaryEmail,
+      };
+    },
+  },
   methods: {
+    removeSecondaryEmail() {
+      this.hasSecondaryEmail = false;
+      this.editSecondaryEmail = EMPTY_SECONDARY_EMAIL;
+      this.custom1PrimaryEmail = EMPTY_SECONDARY_EMAIL;
+      this.custom2PrimaryEmail = EMPTY_SECONDARY_EMAIL;
+    },
+    addSecondaryEmail() {
+      this.hasSecondaryEmail = true;
+      this.updateSecondaryEmail();
+    },
+    toggleSecondaryEmailContactMe(checked) {
+      this.secondaryEmailContactMe = checked;
+      this.updateSecondaryEmail();
+    },
+    updateSecondaryEmail() {
+      this.custom1PrimaryEmail = this.secondaryEmailContactMe
+        ? this.editSecondaryEmail
+        : EMPTY_SECONDARY_EMAIL;
+      this.custom2PrimaryEmail = this.secondaryEmailContactMe
+        ? EMPTY_SECONDARY_EMAIL
+        : this.editSecondaryEmail;
+    },
     addPhoneNumber() {
       const count = this.phoneNumbers.values.length;
       this.phoneNumbers.values.push({
@@ -198,8 +275,49 @@ export default {
       value: email,
       metadata: { display: emailDisplay },
     } = this.initialPrimaryEmail;
+
+    /*
+     * Since we do not support the contact me flag on profile v2 we creatively use
+     * two custom email fields to store the contact me flag.
+     *
+     * If the value for the secondary email ist stored in custom1PrimaryEmail (editSecondaryEmail1)
+     * we consider the contact me flag to be set. If it's stored in custom2PrimaryEmail we
+     * consider it not set (see secondaryEmailContactMe).
+     */
+    const {
+      value: editSecondaryEmail1 = '',
+      metadata: { display: editSecondaryEmail1Display },
+    } = this.initialSecondaryEmail1;
+    const {
+      value: editSecondaryEmail2 = '',
+      metadata: { display: editSecondaryEmail2Display },
+    } = this.initialSecondaryEmail2;
+    const secondaryEmailContactMe = Boolean(editSecondaryEmail1);
+
+    const editSecondaryEmail = {
+      value: secondaryEmailContactMe
+        ? editSecondaryEmail1
+        : editSecondaryEmail2,
+      display:
+        (secondaryEmailContactMe
+          ? editSecondaryEmail1Display
+          : editSecondaryEmail2Display) || DISPLAY_LEVELS.private.value,
+    };
+    const hasSecondaryEmail = Boolean(editSecondaryEmail.value);
+    const custom1PrimaryEmail = secondaryEmailContactMe
+      ? editSecondaryEmail
+      : EMPTY_SECONDARY_EMAIL;
+    const custom2PrimaryEmail = secondaryEmailContactMe
+      ? EMPTY_SECONDARY_EMAIL
+      : editSecondaryEmail;
+
     return {
       MAX_NUMBERS: 5,
+      hasSecondaryEmail,
+      secondaryEmailContactMe,
+      editSecondaryEmail,
+      custom1PrimaryEmail,
+      custom2PrimaryEmail,
       primaryEmail: {
         value: email,
         display: emailDisplay || DISPLAY_LEVELS.private.value,
@@ -225,6 +343,9 @@ export default {
   .edit-contact__item {
     grid-template-columns: 3em 1fr 3fr auto;
   }
+}
+.edit-contact__item > .privacy-select {
+  grid-row: 1/2;
 }
 .edit-contact__item .button--icon-only {
   border-color: transparent;

@@ -15,6 +15,7 @@
       </div>
       <div class="hide-mobile profile__contact-me-container">
         <ContactMe
+          :identities="identities"
           :primaryEmail="primaryEmail.value"
           :phoneNumbers="phoneNumbers"
           :uris="uris"
@@ -35,6 +36,7 @@
       ></ProfileTitle>
       <div class="hide-desktop">
         <ContactMe
+          :identities="identities"
           :primaryEmail="primaryEmail.value"
           :phoneNumbers="phoneNumbers"
           :uris="uris"
@@ -125,6 +127,7 @@ export default {
     location: Object,
     description: Object,
     uris: Object,
+    identities: Object,
     userOnOwnProfile: Boolean,
     editable: Boolean,
   },
