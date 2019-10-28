@@ -62,9 +62,11 @@
         <input
           type="email"
           id="field-email-secondary-value"
+          class="edit-contact__input-w-error"
           v-model="editSecondaryEmail.value"
           placeholder="Email address"
         />
+        <span class="edit-contact__error-msg">Enter a valid email address</span>
         <PrivacySetting
           label="Secondary email address privacy settings"
           id="field-email-secondary-privacy"
@@ -341,6 +343,9 @@ export default {
   .edit-contact__item {
     grid-template-columns: 3em 1fr 3fr auto;
   }
+}
+.edit-contact__item > .privacy-select {
+  grid-row: 1/2;
 }
 .edit-contact__item .button--icon-only {
   border-color: transparent;

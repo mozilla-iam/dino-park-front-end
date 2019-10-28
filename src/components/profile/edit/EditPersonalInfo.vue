@@ -657,7 +657,6 @@ export default {
     background-color: var(--gray-20);
     font-size: inherit;
   }
-  .edit-personal-info__privacy,
   .privacy-select {
     grid-column: 4 / 5;
     align-self: center;
