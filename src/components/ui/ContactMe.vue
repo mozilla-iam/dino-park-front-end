@@ -135,19 +135,16 @@ export default {
       return dispalyedNumbers;
     },
     displayedUris() {
-      return this.getMozillaAccounts(this.uris)
-        .map((account) => {
-          const ext = {};
-          if (this.isKeySlack(account.key) && account.value.includes('#')) {
-            ext.uri = account.value.substring(0, account.value.indexOf('#'));
-            ext.value = account.value.substring(account.value.indexOf('#') + 1);
-          }
-          return {
-            ...account,
-            ...ext,
-          };
+      const { values: uris } = this.uris || {};
+      const dispalyedUris = Object.entries(uris || {})
+        .filter(([k]) => this.isAccountKey(k))
+        .map(([key, value]) => {
+          const { name, contact } = this.destructUriKey(key);
+          const account = this.account([name, value]);
+          return { contact, ...account };
         })
         .filter(({ contact }) => contact);
+      return dispalyedUris;
     },
     notEmpty() {
       return (

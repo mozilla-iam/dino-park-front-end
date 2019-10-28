@@ -364,17 +364,12 @@ export default {
   mounted() {
     if (this.$route.query.identityAdded) {
       let content = null;
-      let navToEl = 'nav-identities';
       switch (this.$route.query.identityAdded) {
         case 'github':
           content = 'Saved GitHub identity';
           break;
         case 'bugzilla':
           content = 'Saved Bugzilla identity';
-          break;
-        case 'slack':
-          content = 'Saved Slack account';
-          navToEl = 'nav-accounts';
           break;
         case 'error':
           content = 'Failed to verify identity';
@@ -390,7 +385,7 @@ export default {
       this.$root.$emit('toast', { content });
       // Ideally our router should handle this.
       setTimeout(() => {
-        const el = document.getElementById(navToEl);
+        const el = document.getElementById('nav-identities');
         if (el) {
           el.scrollIntoView();
         }
