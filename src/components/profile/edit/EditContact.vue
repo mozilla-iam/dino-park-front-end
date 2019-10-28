@@ -41,6 +41,7 @@
           :checked="true"
           label="Show in Contact Me button"
           class="edit-contact__set-as-contact"
+          :disabled="true"
         />
         <hr role="presentation" />
       </div>
