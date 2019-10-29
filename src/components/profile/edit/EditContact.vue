@@ -304,6 +304,17 @@ export default {
           ? editSecondaryEmail1Display
           : editSecondaryEmail2Display) || DISPLAY_LEVELS.private.value,
     };
+
+    /*
+     * Display level for customXPrimaryEmail defaults to PUBLIC upon creation.
+     * We want it to default to STAFF.
+     */
+    const firstTimeSecondaryEmail =
+      editSecondaryEmail1 === null && editSecondaryEmail2 === null;
+    if (firstTimeSecondaryEmail) {
+      editSecondaryEmail.display = DISPLAY_LEVELS.staff.value;
+    }
+
     const hasSecondaryEmail = Boolean(editSecondaryEmail.value);
     const custom1PrimaryEmail = secondaryEmailContactMe
       ? editSecondaryEmail
