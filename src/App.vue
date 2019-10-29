@@ -82,10 +82,6 @@ export default {
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 body {
   background: var(--gray-20);
   font-family: 'Open Sans', sans-serif;
