@@ -143,7 +143,6 @@ export default {
 .mutation-form input,
 .mutation-form select,
 .mutation-form textarea {
-  display: block;
   font: inherit;
 }
 .mutation-form + .loading {
