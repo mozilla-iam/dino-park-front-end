@@ -405,7 +405,6 @@ import TextInput from '@/components/ui/TextInput.vue';
 import TextArea from '@/components/ui/TextArea.vue';
 import Tooltip from '@/components/ui/Tooltip.vue';
 import UserPicture from '@/components/ui/UserPicture.vue';
-import { DISPLAY_LEVELS } from '@/assets/js/display-levels';
 import EditPictureModal from './EditPictureModal.vue';
 import Fetcher from '@/assets/js/fetcher';
 
