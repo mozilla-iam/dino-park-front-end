@@ -461,7 +461,7 @@ export default {
         ) => {
           obj[key] = {
             value: value || '',
-            display: display || DISPLAY_LEVELS.public.value,
+            display: display || null,
           };
           return obj;
         },
