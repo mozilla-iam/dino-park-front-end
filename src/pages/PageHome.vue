@@ -136,14 +136,11 @@ export default {
   color: var(--gray-50);
 }
 .home__intro .button {
-  display: inline-block;
+  display: inline-flex;
   margin-top: 2em;
   margin-bottom: 2em;
 }
 
-.home__intro .button .button-text {
-  vertical-align: middle;
-}
 .home__intro .button svg {
   margin-left: 1em;
 }

@@ -25,7 +25,7 @@ export default {
 }
 .error__message > .button {
   margin: 4em 0;
-  display: inline-block;
+  display: inline-flex;
 }
 @media (min-width: 57.5em) {
   .error {
