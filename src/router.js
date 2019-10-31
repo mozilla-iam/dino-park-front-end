@@ -5,6 +5,7 @@ import PageProfile from './pages/PageProfile.vue';
 import PageOrgchart from './pages/PageOrgchart.vue';
 import PageSearchResult from './pages/PageSearchResult.vue';
 import PageUnknown from './pages/PageUnknown.vue';
+import PageAccessGroup from './pages/PageAccessGroup.vue';
 import scrolling from './assets/js/scrolling';
 
 Vue.use(Router);
@@ -58,6 +59,12 @@ const router = new Router({
       },
       name: 'Search',
       component: PageSearchResult,
+      props: true,
+    },
+    {
+      path: '/a/:groupid',
+      name: 'Access Group',
+      component: PageAccessGroup,
       props: true,
     },
   ],
