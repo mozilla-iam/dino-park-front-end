@@ -175,6 +175,12 @@ export default {
 .options__toggle:focus {
   border-color: var(--blue-60);
 }
+
+@media (min-width: 57.5em) {
+  .options--chevron {
+    z-index: var(--layerAboveNav);
+  }
+}
 .options--chevron .options__toggle {
   background-image: url('../../assets/images/chevron-down.svg');
   background-repeat: no-repeat;
