@@ -28,5 +28,7 @@ export default {
 .external-link > svg {
   margin-left: 0.2em;
   vertical-align: sub;
+  width: 1rem;
+  height: 1rem;
 }
 </style>

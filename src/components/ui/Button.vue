@@ -15,7 +15,7 @@ export default {
   text-align: center;
   text-decoration: none;
   padding: 1.1em 2em;
-  display: block;
+  display: flex;
   font-family: inherit;
   font-size: 0.9em;
   letter-spacing: 0.05em;
@@ -26,6 +26,7 @@ export default {
   transition: background-color 0.1s ease-in-out;
   -webkit-appearance: none;
   appearance: none;
+  align-items: center;
 }
 .button:hover {
   background-color: var(--white);
@@ -35,8 +36,9 @@ export default {
 }
 .button img,
 .button svg {
-  vertical-align: middle;
   margin-right: 0.5em;
+  width: 1rem;
+  height: 1rem;
 }
 
 .button--secondary {
@@ -104,8 +106,9 @@ export default {
 }
 .button--icon-only img,
 .button--icon-only svg {
-  vertical-align: middle;
   margin-right: 0;
+  width: 1rem;
+  height: 1rem;
 }
 
 .button--icon-end {
@@ -116,6 +119,8 @@ export default {
   order: 10;
   margin-left: 0.75em;
   margin-right: 0;
+  width: 1rem;
+  height: 1rem;
 }
 
 .button[disabled] {
