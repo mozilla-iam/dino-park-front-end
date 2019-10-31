@@ -6,8 +6,6 @@ import PageOrgchart from './pages/PageOrgchart.vue';
 import PageSearchResult from './pages/PageSearchResult.vue';
 import PageUnknown from './pages/PageUnknown.vue';
 import PageAccessGroup from './pages/PageAccessGroup.vue';
-import PageAccessGroupTerms from './pages/PageAccessGroupTerms.vue';
-import PageAccessGroupEdit from './pages/PageAccessGroupEdit.vue';
 import scrolling from './assets/js/scrolling';
 
 Vue.use(Router);
@@ -99,6 +97,12 @@ const router = new Router({
       component: PageAccessGroup,
       props: true,
       meta: { key: 'access-group' },
+    },
+    {
+      path: '/a/:groupid',
+      name: 'Access Group',
+      component: PageAccessGroup,
+      props: true,
     },
   ],
   scrollBehavior(to, from) {
