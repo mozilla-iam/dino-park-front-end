@@ -26,15 +26,13 @@ export default {
   transition: background-color 0.1s ease-in-out;
   -webkit-appearance: none;
   appearance: none;
+  align-items: center;
 }
 .button:hover {
   background-color: var(--white);
   border-color: var(--blue-60);
   color: var(--blue-60);
   text-decoration: none;
-}
-.button > * {
-  align-self: center;
 }
 .button img,
 .button svg {
