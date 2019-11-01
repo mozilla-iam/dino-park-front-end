@@ -6,7 +6,7 @@
       <header class="profile__section-header">
         <h2>{{ title }}</h2>
         <EditButton
-          v-if="editable && userOnOwnProfile"
+          v-if="editable && userOnOwnProfile && !needsLdap"
           :section="section"
           :sectionId="section"
         ></EditButton>
@@ -38,6 +38,8 @@ export default {
     },
     message: String,
     messageOwn: String,
+    messageNoLdap: String,
+    isLdap: Boolean,
     editing: Boolean,
   },
   components: { EditButton, EmptyCard },
@@ -49,12 +51,18 @@ export default {
         'profile__section--disabled': !this.editing && this.empty,
       };
     },
+    needsLdap() {
+      return this.messageNoLdap && !this.isLdap;
+    },
     emptyMessageText() {
       if (
         this.userOnOwnProfile &&
         DISPLAY_LEVELS.private.value ===
           (this.$route.query.pa || DISPLAY_LEVELS.private.value)
       ) {
+        if (this.needsLdap) {
+          return this.messageNoLdap;
+        }
         return this.messageOwn;
       }
       return this.message;
