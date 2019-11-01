@@ -1,11 +1,14 @@
 <template>
   <section class="panel__section">
     <slot name="meta"></slot>
-    <header class="panel__section-header">
+    <header class="panel__section-header" v-if="!hideContent">
       <h2>{{ title }}</h2>
       <slot name="header"></slot>
     </header>
-    <div :class="{ 'panel__section-content': true, full: fullContent }">
+    <div
+      v-if="!hideContent"
+      :class="{ 'panel__section-content': true, full: fullContent }"
+    >
       <slot name="content"></slot>
     </div>
   </section>
@@ -20,6 +23,10 @@ export default {
       default: false,
     },
     title: String,
+    hideContent: {
+      type: Boolean,
+      default: false,
+    },
   },
 };
 </script>
