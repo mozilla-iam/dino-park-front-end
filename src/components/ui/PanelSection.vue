@@ -1,13 +1,14 @@
 <template>
-  <div class="panel__section">
+  <section class="panel__section">
+    <slot name="meta"></slot>
     <header class="panel__section-header">
       <h2>{{ title }}</h2>
-      <slot name="header-content"></slot>
+      <slot name="header"></slot>
     </header>
     <div :class="{ 'panel__section-content': true, full: fullContent }">
-      <slot name="view"></slot>
+      <slot name="content"></slot>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>

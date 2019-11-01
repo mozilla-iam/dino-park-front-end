@@ -2,7 +2,7 @@
   <main class="access-group">
     <h1>Access Group: {{ groupid }}</h1>
     <PanelSection title="Test">
-      <template v-slot:view>
+      <template v-slot:content>
         <p>Panel slot</p>
       </template>
     </PanelSection>
