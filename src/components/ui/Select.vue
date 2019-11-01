@@ -297,8 +297,8 @@ export default {
 .privacy-select--large .options__toggle svg {
   order: -1;
   margin: 0 0.5em 0 0;
-  width: 1rem;
-  height: 1rem;
+  width: 1.3em;
+  height: 1.3em;
   align-self: center;
 }
 .privacy-select a:hover {

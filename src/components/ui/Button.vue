@@ -37,8 +37,8 @@ export default {
 .button img,
 .button svg {
   margin-right: 0.5em;
-  width: 1rem;
-  height: 1rem;
+  width: 1.3em;
+  height: 1.3em;
 }
 
 .button--secondary {
@@ -107,8 +107,8 @@ export default {
 .button--icon-only img,
 .button--icon-only svg {
   margin-right: 0;
-  width: 1rem;
-  height: 1rem;
+  width: 1.3em;
+  height: 1.3em;
 }
 
 .button--icon-end {
@@ -119,8 +119,8 @@ export default {
   order: 10;
   margin-left: 0.75em;
   margin-right: 0;
-  width: 1rem;
-  height: 1rem;
+  width: 1.3em;
+  height: 1.3em;
 }
 
 .button[disabled] {
