@@ -14,10 +14,12 @@ class Scope {
       staffInformation: { staff: { value: isStaff = false } = {} } = {},
       accessInformation: {
         mozilliansorg: { values: mozilliansorgGroups = {} } = {},
+        ldap: { values: ldapGroups = {} } = {},
       } = {},
     } = user || {};
     this.isStaff = isStaff;
     this.isNdaed = 'nda' in (mozilliansorgGroups || {});
+    this.isLdap = ldapGroups ? Object.keys(ldapGroups).length > 0 : false;
   }
 }
 
