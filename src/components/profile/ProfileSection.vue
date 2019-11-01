@@ -1,19 +1,12 @@
 <template>
-  <PanelSection :class="cssClasses" :title="title" :hideContent="editing">
+  <PanelSection :class="cssClasses" :title="title">
     <template v-slot:meta>
       <a :id="`nav-${section}`" class="profile__anchor"></a>
       <slot name="edit" v-if="editing"></slot>
     </template>
     <template v-slot:header v-if="!editing">
       <EditButton
-        class="profile__edit"
         v-if="editable && userOnOwnProfile && !needsLdap"
-        :sendTo="{
-          name: 'Edit Profile',
-          query: {
-            section,
-          },
-        }"
         :section="section"
         :sectionId="section"
       ></EditButton>
@@ -125,7 +118,8 @@ export default {
   margin-top: 0;
 }
 
-.profile__section-header {
+.profile__section .profile__section-header,
+.profile__section .panel__section-header {
   padding: 1.5em;
   margin: -1.5em -1.5em 1.5em -1.5em;
   border-bottom: 1px solid var(--gray-30);
@@ -136,6 +130,8 @@ export default {
 }
 
 .profile__section:not(.profile__section--editing):not(.first)
+  .panel__section-header,
+.profile__section:not(.profile__section--editing):not(.first)
   .profile__section-header {
   margin: calc(-1.5em - 2px) calc(-1.5em - 2px) calc(1.5em + 2px)
     calc(-1.5em - 2px);
@@ -143,12 +139,14 @@ export default {
   padding-left: calc(1.5em + 2px);
   padding-right: calc(1.5em + 2px);
 }
-.profile__section-header h2 {
+.profile__section .panel__section-header h2,
+.profile__section .profile__section-header h2 {
   margin: 0 0 0.75em 0;
   width: 100%;
 }
 @media (min-width: 35em) {
-  .profile__section-header h2 {
+  .profile__section .panel__section-header h2,
+  .profile__section .profile__section-header h2 {
     margin: 0;
     width: auto;
   }
