@@ -193,7 +193,7 @@
       :empty="!sections.keys"
       message="No keys have been added yet."
       messageOwn="You haven't added any keys yet."
-      messageNoLdap="You need an LDAP account to add keys."
+      messageNoLdap="Adding keys currently requires an LDAP account."
       :isLdap="scope.isLdap"
       :editing="editing === 'keys'"
       :editable="!viewAs"

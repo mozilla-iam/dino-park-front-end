@@ -19,7 +19,7 @@ class Scope {
     } = user || {};
     this.isStaff = isStaff;
     this.isNdaed = 'nda' in (mozilliansorgGroups || {});
-    this.isLdap = ldapGroups ? Object.keys(ldapGroups).length > 0 : false;
+    this.isLdap = Boolean(ldapGroups);
   }
 }
 
