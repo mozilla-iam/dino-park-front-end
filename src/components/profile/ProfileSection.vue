@@ -1,5 +1,5 @@
 <template>
-  <PanelSection :class="cssClasses" :title="title">
+  <PanelSection :class="cssClasses" :title="title" :hideContent="editing">
     <template v-slot:meta>
       <a :id="`nav-${section}`" class="profile__anchor"></a>
       <slot name="edit" v-if="editing"></slot>
