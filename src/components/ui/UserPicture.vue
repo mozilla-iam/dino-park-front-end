@@ -116,38 +116,28 @@ export default {
   position: absolute;
   right: 0;
   bottom: 0;
-  line-height: 1;
-  padding: 0.25em;
+  height: auto;
 }
 .user-picture--small {
   width: 2.85em;
   height: 2.85em;
 }
 .user-picture--small .dino-type {
-  font-size: 0.75em;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  border-radius: var(--imageRadius) 0;
-  padding: 0.25em;
+  width: 1em;
 }
 .user-picture--medium {
   width: 6.25em;
   height: 6.25em;
 }
 .user-picture--medium .dino-type {
-  font-size: 0.9em;
-  letter-spacing: 0.05em;
-  padding: 0.3em 0.6em 0.3em 1.2em;
-  border-radius: 1em 0 var(--imageRadius);
+  width: 2em;
 }
 .user-picture--large /* the 'large' UserPicture is actually medium on small screens */ {
   width: 6.25em;
   height: 6.25em;
 }
 .user-picture--large .dino-type {
-  letter-spacing: 0.05em;
-  padding: 0.3em 0.6em 0.3em 1.2em;
-  border-radius: 1em 0 var(--imageRadius);
+  width: 2em;
 }
 @media (min-width: 57.5em) {
   .user-picture--large {
@@ -155,12 +145,7 @@ export default {
     height: 18.75em;
   }
   .user-picture--large .dino-type {
-    left: 50%;
-    right: auto;
-    bottom: -0.5em;
-    transform: translate(-50%, 25%);
-    padding: 0.75em 2em;
-    border-radius: 2em;
+    width: 3em;
   }
 }
 </style>

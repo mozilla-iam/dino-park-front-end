@@ -78,6 +78,7 @@ import { PREVIEW_PROFILE } from '@/queries/profile';
 import Fetcher from '@/assets/js/fetcher';
 import avatarUrl from '@/assets/js/avatars';
 import generateIdenticon from '@/assets/js/identicon-avatar';
+import mozillaM from '@/assets/images/mozilla-m.svg';
 
 const fetcher = new Fetcher({ failoverOn: [302] });
 
@@ -90,10 +91,7 @@ function renderNode(node, level = 1) {
     }" style="--nodeLevel: ${level};">
       <a class="router-link-exact-active router-link-active" id="org-node-0">
         <div class="user-picture user-picture--small">
-          <span class="dino-type">
-            <span aria-hidden="true">S</span>
-            <span class="visually-hidden">Staff</span>
-          </span>
+          <img src="${mozillaM}" class="dino-type" alt="Staff">
         </div>
         <span class="org-node__name"></span>
         <span class="org-node__title"></span>
