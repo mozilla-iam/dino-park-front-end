@@ -2,10 +2,7 @@
   <main class="access-group">
     <section class="primary-area">
       <section class="primary-area__description">
-        <AccessGroupDescription
-          :title="groupid"
-          :editable="!editing"
-        ></AccessGroupDescription>
+        <AccessGroupDescription :title="groupid" :editable="!editing"></AccessGroupDescription>
       </section>
       <aside class="primary-area__control">
         <PanelSection title="Membership Management">
