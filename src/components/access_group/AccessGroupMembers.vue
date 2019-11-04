@@ -12,15 +12,10 @@
         class="members-container__tooltip"
         buttonText="Member search info"
         alternateButtonText="Close member search info"
-        >You can search by name, username and email</Tooltip
-      >
+      >You can search by name, username and email</Tooltip>
     </header>
     <ul class="members-container__list">
-      <li
-        v-for="(column, idx) in filteredListDisplay"
-        :key="idx"
-        class="list-column-container"
-      >
+      <li v-for="(column, idx) in filteredListDisplay" :key="idx" class="list-column-container">
         <ul class="members-container__list-column">
           <li v-for="(member, idx2) in column" :key="idx2" class="list-item-container">
             <AccessGroupMemberItem :member="member" />
