@@ -5,10 +5,7 @@
       <h2>{{ title }}</h2>
       <slot name="header"></slot>
     </header>
-    <div
-      v-if="!hideContent"
-      :class="{ 'panel__section-content': true, full: fullContent }"
-    >
+    <div v-if="!hideContent" :class="{ 'panel__section-content': true, full: fullContent }">
       <slot name="content"></slot>
     </div>
   </article>
