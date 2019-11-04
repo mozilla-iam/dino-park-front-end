@@ -1,5 +1,5 @@
 <template>
-  <img src="@/assets/images/mozilla-m.svg" class="dino-type" alt="Staff" />
+  <img src="@/assets/images/mozilla-m.svg" class="dino-type" alt="Mozilla" />
 </template>
 
 <style>

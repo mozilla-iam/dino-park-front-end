@@ -91,7 +91,7 @@ function renderNode(node, level = 1) {
     }" style="--nodeLevel: ${level};">
       <a class="router-link-exact-active router-link-active" id="org-node-0">
         <div class="user-picture user-picture--small">
-          <img src="${mozillaM}" class="dino-type" alt="Staff">
+          <img src="${mozillaM}" class="dino-type" alt="Mozilla">
         </div>
         <span class="org-node__name"></span>
         <span class="org-node__title"></span>

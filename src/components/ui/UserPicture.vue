@@ -145,7 +145,7 @@ export default {
     height: 18.75em;
   }
   .user-picture--large .dino-type {
-    width: 3em;
+    width: 5em;
   }
 }
 </style>
