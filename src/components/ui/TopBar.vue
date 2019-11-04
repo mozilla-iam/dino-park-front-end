@@ -79,7 +79,7 @@
               }"
               :size="40"
               :pictureSize="100"
-              dinoType="Staff"
+              :showLabel="scope.isStaff"
             ></UserPicture>
           </template>
         </ShowMore>

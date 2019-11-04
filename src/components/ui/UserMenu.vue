@@ -10,6 +10,7 @@
           }"
           :size="40"
           :pictureSize="100"
+          :showLabel="scope.isStaff"
         ></UserPicture>
       </button>
       <div class="user-menu__name">

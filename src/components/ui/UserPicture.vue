@@ -10,7 +10,7 @@
       role="presentation"
       aria-hidden="true"
     />
-    <DinoType v-if="isStaff" :size="dinoTypeSize" />
+    <DinoType v-if="showLabel" :size="dinoTypeSize" />
   </div>
 </template>
 
@@ -31,7 +31,7 @@ export default {
     },
     cls: String,
     pictureSize: Number,
-    isStaff: Boolean,
+    showLabel: Boolean,
   },
   components: {
     DinoType,

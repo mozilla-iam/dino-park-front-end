@@ -28,7 +28,7 @@
       <UserPicture
         :avatar="{ picture: picture.value, username: primaryUsername.value }"
         :size="100"
-        :isStaff="staffInformation.staff.value"
+        :showLabel="staffInformation.staff.value"
       />
     </div>
     <ProfileName
