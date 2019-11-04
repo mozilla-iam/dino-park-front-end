@@ -1,5 +1,5 @@
 <template>
-  <section class="panel__section">
+  <article class="panel__section">
     <slot name="meta"></slot>
     <header class="panel__section-header" v-if="!hideContent">
       <h2>{{ title }}</h2>
@@ -11,7 +11,7 @@
     >
       <slot name="content"></slot>
     </div>
-  </section>
+  </article>
 </template>
 
 <script>
@@ -72,7 +72,7 @@ export default {
   flex-wrap: wrap;
 }
 
-.panel__section-content.full {
+.panel__section-content:not(.full) {
   padding: 1.5em;
 }
 

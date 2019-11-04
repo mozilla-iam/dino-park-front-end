@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import EditButton from '@/components/profile/edit/EditButton.vue';
+import EditButton from '@/components/ui/EditButton.vue';
 import EmptyCard from '@/components/profile/view/EmptyCard.vue';
 import PanelSection from '@/components/ui/PanelSection.vue';
 import { DISPLAY_LEVELS } from '@/assets/js/display-levels';
@@ -143,6 +143,10 @@ export default {
 .profile__section .profile__section-header h2 {
   margin: 0 0 0.75em 0;
   width: 100%;
+}
+
+.profile__section .panel__section-content {
+  padding: 0;
 }
 @media (min-width: 35em) {
   .profile__section .panel__section-header h2,
