@@ -1,7 +1,7 @@
 <template>
-  <div class="profile-description">
-    <h2 class="visually-hidden">About</h2>
-    <p v-html="marked(description)"></p>
+  <div v-if="parsedDescription" class="profile-description">
+    <strong>Biography</strong>
+    <p v-html="parsedDescription"></p>
   </div>
 </template>
 
@@ -14,10 +14,10 @@ export default {
   props: {
     description: String,
   },
-  methods: {
-    marked(value) {
-      if (value) {
-        return insane(marked(value, { gfm: true }));
+  computed: {
+    parsedDescription() {
+      if (this.description) {
+        return insane(marked(this.description, { gfm: true }));
       }
       return '';
     },
@@ -29,6 +29,15 @@ export default {
 .profile-description {
   max-width: 100%;
   color: var(--gray-50);
+  border: 1px solid var(--gray-30);
+  border-radius: 0.3em;
+  padding: 1em;
+  padding-bottom: 0;
+  margin-top: 2em;
+}
+.profile-description > strong {
+  text-transform: uppercase;
+  font-size: 0.9em;
 }
 .profile-description--faded {
   max-height: 7em;
