@@ -144,6 +144,10 @@ export default {
   margin: 0 0 0.75em 0;
   width: 100%;
 }
+
+.profile__section .panel__section-content {
+  padding: 0;
+}
 @media (min-width: 35em) {
   .profile__section .panel__section-header h2,
   .profile__section .profile__section-header h2 {
