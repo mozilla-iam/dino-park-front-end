@@ -237,8 +237,8 @@
 </template>
 
 <script>
+import EditButton from '@/components/ui/EditButton.vue';
 import AccountsMixin from '@/components/_mixins/AccountsMixin.vue';
-import EditButton from '@/components/profile/edit/EditButton.vue';
 import EditAccessGroups from './edit/EditAccessGroups.vue';
 import EditAccounts from './edit/EditAccounts.vue';
 import EditContact from './edit/EditContact.vue';

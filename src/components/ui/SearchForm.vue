@@ -16,7 +16,7 @@
           v-model="searchQuery"
           class="search-form__input"
           ref="searchQueryField"
-          placeholder="Search People by Name"
+          :placeholder="searchFormLabel"
         />
         <button
           type="button"
@@ -64,20 +64,17 @@
 <script>
 export default {
   name: 'SearchForm',
+  props: {
+    searchFormLabel: String,
+    searchFormHandler: Function,
+  },
   methods: {
     handleSubmit(event) {
       event.preventDefault();
-
       if (!this.searchQuery.length > 0) {
         this.$refs.searchQueryField.focus();
       } else {
-        this.$router.push({
-          name: 'Search',
-          query: {
-            query: this.searchQuery,
-            who: this.who,
-          },
-        });
+        this.searchFormHandler(this.searchQuery, this.who);
         this.$emit('close-search-form');
       }
     },
