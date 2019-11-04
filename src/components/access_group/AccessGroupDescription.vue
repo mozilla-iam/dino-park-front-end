@@ -4,10 +4,7 @@
       <div class="description-container__meta">
         <div class="label-container">
           <p class="label-container__text">Access Group</p>
-          <Tooltip
-            buttonText="Access group info"
-            alternateButtonText="Close access group info"
-          >
+          <Tooltip buttonText="Access group info" alternateButtonText="Close access group info">
             You can learn more about Access Groups on
             <a href="#">Access Groups wiki page</a>
           </Tooltip>
