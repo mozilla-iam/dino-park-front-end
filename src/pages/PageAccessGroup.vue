@@ -1,11 +1,25 @@
 <template>
   <main class="access-group">
-    <h1>Access Group: {{ groupid }}</h1>
-    <PanelSection title="Test">
-      <template v-slot:content>
-        <p>Panel slot</p>
-      </template>
-    </PanelSection>
+    <section class="primary-area">
+      <section class="primary-area__description">
+        <AccessGroupDescription :title="groupid"></AccessGroupDescription>
+      </section>
+      <aside class="primary-area__control">
+        <PanelSection title="Membership Management">
+          <template v-slot:content>
+            <p>Panel slot</p>
+          </template>
+        </PanelSection>
+        <PanelSection title="Curators">
+          <template v-slot:content>
+            <p>Panel slot</p>
+          </template>
+        </PanelSection>
+      </aside>
+    </section>
+    <section class="secondary-area">
+      <AccessGroupMembers />
+    </section>
   </main>
 </template>
 
@@ -14,6 +28,8 @@ import Icon from '@/components/ui/Icon.vue';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 import LinksMixin from '@/components/_mixins/LinksMixin.vue';
 import PanelSection from '@/components/ui/PanelSection.vue';
+import AccessGroupDescription from '@/components/access_group/AccessGroupDescription.vue';
+import AccessGroupMembers from '@/components/access_group/AccessGroupMembers.vue';
 
 export default {
   name: 'AccessGroup',
@@ -22,6 +38,8 @@ export default {
     Icon,
     LoadingSpinner,
     PanelSection,
+    AccessGroupDescription,
+    AccessGroupMembers,
   },
   props: {
     groupid: String,
@@ -61,7 +79,7 @@ export default {
   .access-group {
     display: inline-block;
     width: 100%;
-    padding: 4em 4em 2em;
+    padding-top: 4em;
   }
   .access-group > img {
     float: right;
@@ -69,5 +87,26 @@ export default {
     max-width: 50%;
     margin-bottom: 0;
   }
+}
+
+.primary-area {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.primary-area__description {
+  width: 50%;
+  margin-right: 5%;
+}
+
+.primary-area__control {
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+}
+
+.secondary-area {
+  overflow: visible;
 }
 </style>
