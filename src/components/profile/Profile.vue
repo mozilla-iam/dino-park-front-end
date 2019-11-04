@@ -187,6 +187,30 @@
     </ProfileSection>
 
     <ProfileSection
+      section="access-groups"
+      title="Access Groups"
+      :userOnOwnProfile="userOnOwnProfile"
+      :empty="
+        Object.keys(accessInformation.mozilliansorg.values || {}).length === 0
+      "
+      :editable="!viewAs"
+      message="Not a member of any access group."
+      messageOwn="You are not a member of any access group."
+      :editing="editing === 'access-groups'"
+    >
+      <template v-slot:edit>
+        <EditAccessGroups
+          v-bind="{ initialAccessInformation: accessInformation }"
+        ></EditAccessGroups>
+      </template>
+      <template v-slot:view>
+        <ViewAccessGroups
+          v-bind="{ accessInformation, userOnOwnProfile }"
+        ></ViewAccessGroups>
+      </template>
+    </ProfileSection>
+
+    <ProfileSection
       section="keys"
       title="Keys"
       :userOnOwnProfile="userOnOwnProfile"
@@ -211,30 +235,6 @@
         <ViewKeys
           v-bind="{ pgpPublicKeys, sshPublicKeys, userOnOwnProfile }"
         ></ViewKeys>
-      </template>
-    </ProfileSection>
-
-    <ProfileSection
-      section="access-groups"
-      title="Access Groups"
-      :userOnOwnProfile="userOnOwnProfile"
-      :empty="
-        Object.keys(accessInformation.mozilliansorg.values || {}).length === 0
-      "
-      :editable="!viewAs"
-      message="Not a member of any access group."
-      messageOwn="You are not a member of any access group."
-      :editing="editing === 'access-groups'"
-    >
-      <template v-slot:edit>
-        <EditAccessGroups
-          v-bind="{ initialAccessInformation: accessInformation }"
-        ></EditAccessGroups>
-      </template>
-      <template v-slot:view>
-        <ViewAccessGroups
-          v-bind="{ accessInformation, userOnOwnProfile }"
-        ></ViewAccessGroups>
       </template>
     </ProfileSection>
   </main>
@@ -429,14 +429,14 @@ export default {
           label: 'Tags',
         },
         {
-          id: 'nav-keys',
-          iconId: 'keys',
-          label: 'Keys',
-        },
-        {
           id: 'nav-access-groups',
           iconId: 'lock',
           label: 'Access Groups',
+        },
+        {
+          id: 'nav-keys',
+          iconId: 'keys',
+          label: 'Keys',
         },
       ],
     };
