@@ -123,7 +123,7 @@ export default {
       editMozilliansorgGroups: {
         display,
       },
-      mozilliansorgGroups: [...Object.entries(values)],
+      mozilliansorgGroups: [...Object.entries(values || {})],
     };
   },
 };
