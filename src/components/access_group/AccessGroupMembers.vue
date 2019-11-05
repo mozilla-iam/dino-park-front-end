@@ -72,6 +72,7 @@ export default {
     title: String,
   },
   methods: {
+    // eslint-disable-next-line
     searchFormHandler(searchQuery, scope) {
       console.log('Searching: ', searchQuery);
       return searchQuery;
