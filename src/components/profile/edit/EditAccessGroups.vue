@@ -30,9 +30,8 @@
             )"
             :key="`group-${group}`"
             icon="idcard"
+            >{{ group }}</IconBlock
           >
-            {{ group }}
-          </IconBlock>
         </IconBlockList>
         <hr role="presentation" />
       </template>
@@ -62,9 +61,7 @@
           >
         </IconBlock>
       </IconBlockList>
-      <p v-else>
-        You have not joined any mozilliansorg access group.
-      </p>
+      <p v-else>You have not joined any mozilliansorg access group.</p>
       <a
         id="access-information__external-link"
         class="button button--secondary button--action"
@@ -72,8 +69,7 @@
         target="_blank"
         rel="noreferrer noopener"
       >
-        <Icon id="external" :width="18" :height="18" />
-        Manage at mozillians.org
+        <Icon id="external" :width="18" :height="18" />Manage at mozillians.org
       </a>
     </div>
   </EditMutationWrapper>
