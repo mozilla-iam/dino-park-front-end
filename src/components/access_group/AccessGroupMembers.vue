@@ -17,33 +17,20 @@
       />
     </header>
     <ul class="members-container__list">
-      <li v-for="(member, idx) in memberList" :key="idx" class="list-item">
-        <article class="list-item__main">
-          <div class="member-view">
-            <UserPicture
-              :avatar="{ picture: member.imageUrl, username: member.name }"
-              class="member-view__image"
-              :size="40"
-              :isStaff="true"
-            />
-            <div class="member-view__info">
-              <p class="info-header">{{ member.name }}</p>
-              <p class="info-sub">{{ member.jobTitle }}</p>
-            </div>
-          </div>
-          <button class="member-action">
-            <Icon id="info" :width="24" :height="24" />
-          </button>
-        </article>
-        <aside class="list-item__expandable"></aside>
+      <li
+        v-for="(member, idx) in memberList"
+        :key="idx"
+        class="list-item-container"
+      >
+        <AccessGroupMemberItem :member="member" />
       </li>
     </ul>
   </article>
 </template>
 
 <script>
-import UserPicture from '@/components/ui/UserPicture.vue';
 import EditButton from '@/components/ui/EditButton.vue';
+import AccessGroupMemberItem from '@/components/access_group/AccessGroupMemberItem.vue';
 import SearchForm from '@/components/ui/SearchForm.vue';
 import Select from '@/components/ui/Select.vue';
 import Icon from '@/components/ui/Icon.vue';
@@ -55,6 +42,7 @@ const testList = [
     jobTitle: 'Batman',
     memberSince: '2001',
     addedBy: 'Andrew Sunada',
+    addedByMemberId: '1234',
   },
   {
     imageUrl: '',
@@ -62,12 +50,27 @@ const testList = [
     jobTitle: 'Nightwing',
     memberSince: '2001',
     addedBy: 'Bruce Wayne',
+    addedByMemberId: '123',
+  },
+  {
+    imageUrl: '',
+    name: 'Jason Todd',
+    jobTitle: 'Red Hood',
+    memberSince: '2001',
+    addedBy: 'Bruce Wayne',
+    addedByMemberId: '1233',
   },
 ];
 
 export default {
   name: 'AccessGroupMembers',
-  components: { EditButton, Icon, SearchForm, Select, UserPicture },
+  components: {
+    EditButton,
+    Icon,
+    SearchForm,
+    Select,
+    AccessGroupMemberItem,
+  },
   props: {
     title: String,
   },
@@ -105,66 +108,21 @@ export default {
   width: 100%;
 }
 
-.members-container__list .list-item {
-  background: var(--white);
+.members-container__list .list-item-container {
   width: calc(50% - 0.5em);
   float: left;
   display: flex;
-  box-shadow: var(--shadowCard);
+  margin-top: 0;
 }
-
-.members-container__list .list-item:nth-child(odd) {
+.members-container__list .list-item-container:nth-child(n + 3) {
+  margin-top: 0.5em;
+}
+.members-container__list .list-item-container:nth-child(odd) {
   margin-right: 1em;
 }
 
 .members-container__list .list-item:first-child {
   margin-left: 0;
-}
-
-.list-item .list-item__main {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.list-item__main .member-view {
-  display: flex;
-}
-
-.member-view .member-view__image {
-  margin: 1em;
-  width: 3.5em;
-  height: 3.5em;
-}
-
-.member-view .member-view__info {
-  margin-top: 1em;
-}
-.member-view .member-view__info p {
-  margin: 0 0 0.25em 0;
-}
-
-.member-view__info .info-header {
-  font-weight: bold;
-  color: var(--black);
-}
-
-.member-view__info .info-sub {
-  margin-top: 0;
-}
-
-.list-item__main .member-action {
-  width: 7em;
-  margin: 0.5em;
-  background: var(--white);
-  border-left: 2px solid var(--gray-20);
-  border-right: none;
-  border-top: none;
-  border-bottom: none;
-}
-
-.list-item .list-item__expandable {
-  display: none;
 }
 
 .members-container__top-bar .top-bar__search {
