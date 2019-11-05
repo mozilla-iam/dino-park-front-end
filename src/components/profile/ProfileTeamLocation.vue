@@ -288,7 +288,7 @@ export default {
   }
   .profile__team-location {
     display: flex;
-    margin: 1em 0;
+    margin: 2em 0;
   }
   .profile__team-location > .profile__team-section {
     padding-left: 0;

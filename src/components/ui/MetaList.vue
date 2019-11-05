@@ -12,7 +12,7 @@ export default {
 
 <style>
 .meta-list {
-  margin: 1em 0;
+  margin: 2em 0;
   overflow: hidden;
   display: flex;
   justify-content: space-between;

@@ -31,8 +31,7 @@ export default {
   color: var(--gray-50);
   border: 1px solid var(--gray-30);
   border-radius: 0.3em;
-  padding: 1em;
-  padding-bottom: 0;
+  padding: 0.8em 1em 0;
   margin-top: 2em;
 }
 .profile-description > strong {
