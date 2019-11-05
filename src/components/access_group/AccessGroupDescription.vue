@@ -31,6 +31,7 @@ export default {
 <style>
 .description-container {
   background: var(--white);
+  box-shadow: var(--shadowCard);
   margin: 0 0 2em;
   position: relative;
   padding: 1.5em;
