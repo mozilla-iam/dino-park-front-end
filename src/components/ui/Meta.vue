@@ -30,12 +30,21 @@ export default {
 .meta-list__item {
   width: 50%;
   float: left;
-  margin: 0 0 1em;
+  margin: 0;
+  margin-right: 1em;
+  padding-right: 1em;
+  border-right: 1px solid var(--gray-30);
+  color: var(--gray-50);
+}
+
+.meta-list__item:last-child {
+  border: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .meta-list__item dt {
   text-transform: uppercase;
-  color: var(--gray-50);
   font-weight: 700;
   letter-spacing: 0.025em;
   font-size: 0.9em;

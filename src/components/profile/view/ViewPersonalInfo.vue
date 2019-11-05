@@ -50,44 +50,28 @@
         :officeLocation="staffInformation.officeLocation.value"
         :timezone="timezone.value"
       ></ProfileTeamLocation>
+      <MetaList v-if="this.staffInformation.staff.value">
+        <h3 class="visually-hidden">Meta</h3>
+        <Meta
+          metaKey="Worker type"
+          :metaValue="staffInformation.workerType.value"
+        />
+        <Meta
+          metaKey="Desk number"
+          :metaValue="staffInformation.wprDeskNumber.value"
+          :link="
+            deskNumberToOfficePlanLink(staffInformation.wprDeskNumber.value)
+          "
+        />
+        <Meta
+          metaKey="Cost center"
+          :metaValue="
+            staffInformation.costCenter.value &&
+              staffInformation.costCenter.value.replace(/\.0$/, '')
+          "
+        />
+      </MetaList>
       <ProfileDescription :description="description.value"></ProfileDescription>
-      <ShowMore
-        v-if="this.staffInformation.staff.value"
-        buttonText="Show More"
-        alternateButtonText="Show Less"
-        buttonClass="button button--text-only button--less-padding"
-        :transition="true"
-      >
-        <template slot="overflow">
-          <MetaList>
-            <h3 class="visually-hidden">Meta</h3>
-            <Meta
-              metaKey="Worker type"
-              :metaValue="staffInformation.workerType.value"
-            />
-            <Meta
-              metaKey="Desk number"
-              :metaValue="staffInformation.wprDeskNumber.value"
-              :link="
-                deskNumberToOfficePlanLink(staffInformation.wprDeskNumber.value)
-              "
-            />
-            <Meta
-              metaKey="Cost center"
-              :metaValue="
-                staffInformation.costCenter.value &&
-                  staffInformation.costCenter.value.replace(/\.0$/, '')
-              "
-            />
-          </MetaList>
-        </template>
-        <template slot="icon-expanded">
-          <Icon id="chevron-up" :width="24" :height="24" />
-        </template>
-        <template slot="icon-collapsed">
-          <Icon id="chevron-down" :width="24" :height="24" />
-        </template>
-      </ShowMore>
     </div>
   </div>
 </template>
@@ -100,7 +84,6 @@ import EditButton from '@/components/profile/edit/EditButton.vue';
 import Icon from '@/components/ui/Icon.vue';
 import Meta from '@/components/ui/Meta.vue';
 import MetaList from '@/components/ui/MetaList.vue';
-import ShowMore from '@/components/_functional/ShowMore.vue';
 import UserPicture from '@/components/ui/UserPicture.vue';
 import ProfileDescription from '../ProfileDescription.vue';
 import ProfileName from '../ProfileName.vue';
@@ -141,7 +124,6 @@ export default {
     ProfileName,
     ProfileTeamLocation,
     ProfileTitle,
-    ShowMore,
     UserPicture,
   },
   computed: {
