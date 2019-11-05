@@ -176,4 +176,11 @@ export default {
   right: 1.5em;
   top: 1.5em;
 }
+
+.top-bar__filter .options__toggle {
+  background-color: var(--white);
+  border-radius: 2em;
+  border: 2px solid var(--gray-20);
+  padding: 0.75em 2.5em 0.75em 1.5em;
+}
 </style>
