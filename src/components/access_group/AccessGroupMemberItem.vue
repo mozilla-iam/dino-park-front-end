@@ -1,20 +1,16 @@
 <template>
-  <div :class="{ 'list-item': true, primary: isCurator }">
+  <div class="list-item">
     <article class="list-item__main">
       <div class="member-view">
         <UserPicture
-          :avatar="{ picture: member.picture, username: member.name }"
+          :avatar="{ picture: member.imageUrl, username: member.name }"
           class="member-view__image"
           :size="40"
           :isStaff="true"
         />
         <div class="member-view__info">
           <p class="info-header">{{ member.name }}</p>
-          <p class="info-sub">
-            <Icon v-if="isCurator" id="crown-fill" :width="16" :height="16" />{{
-              member.role
-            }}
-          </p>
+          <p class="info-sub">{{ member.jobTitle }}</p>
         </div>
       </div>
       <button
@@ -27,11 +23,13 @@
     <aside class="list-item__expandable" v-if="showExpandable">
       <p class="expandable-row">
         <span class="expandable-row__label">Member since</span>
-        <span class="expandable-row__content">{{ formatDate(member.since) }}</span>
+        <span class="expandable-row__content">{{ member.memberSince }}</span>
       </p>
       <p class="expandable-row">
         <span class="expandable-row__label">Added by</span>
-        <span class="expandable-row__content">{{ member.added_by.name }}</span>
+        <a :href="addedByProfile" class="expandable-row__content">{{
+          member.addedBy
+        }}</a>
       </p>
     </aside>
   </div>
@@ -41,7 +39,6 @@
 import UserPicture from '@/components/ui/UserPicture.vue';
 import EditButton from '@/components/ui/EditButton.vue';
 import Icon from '@/components/ui/Icon.vue';
-import { DISPLAY_MEMBER_ROLES, MEMBER_IDEX } from '@/view_models/AccessGroupViewModel';
 
 export default {
   name: 'AccessGroupMemberItem',
@@ -53,17 +50,10 @@ export default {
     toggleExpandable() {
       this.showExpandable = !this.showExpandable;
     },
-    // TODO: This needs to be done in the vuex model
-    formatDate(dateString) {
-      return new Date(dateString).toLocaleDateString('en-US');
-    },
   },
   computed: {
     addedByProfile() {
       return `/p/${this.member.addedByMemberId}`;
-    },
-    isCurator() {
-      return this.member.role === DISPLAY_MEMBER_ROLES[MEMBER_IDEX.Curator];
     },
   },
   data() {
@@ -80,7 +70,6 @@ export default {
   box-shadow: var(--shadowCard);
   background: var(--white);
 }
-
 .list-item .list-item__main {
   display: flex;
   justify-content: space-between;
@@ -111,17 +100,6 @@ export default {
 
 .member-view__info .info-sub {
   margin-top: 0;
-}
-
-.list-item.primary .member-view__info .info-sub {
-  color: #006504;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.list-item.primary .member-view__info .info-sub svg {
-  margin-right: 0.25em;
 }
 
 .list-item__main .member-action {
