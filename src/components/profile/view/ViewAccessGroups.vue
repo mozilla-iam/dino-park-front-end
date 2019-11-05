@@ -7,9 +7,8 @@
           v-for="[group] in Object.entries(accessInformation.ldap.values)"
           :key="`group-${group}`"
           icon="idcard"
+          >{{ group }}</IconBlock
         >
-          {{ group }}
-        </IconBlock>
       </IconBlockList>
     </template>
     <template v-if="accessInformation.mozilliansorg.values">
@@ -22,10 +21,7 @@
           :key="`group-${group}`"
           icon="moz"
         >
-          <ExternalLink
-            :href="`https://mozillians.org/group/${encodeURIComponent(group)}`"
-            >{{ group }}</ExternalLink
-          >
+          <ExternalLink :href="`/a/${group}`">{{ group }}</ExternalLink>
         </IconBlock>
       </IconBlockList>
       <p class="view-access-groups__mozillians-footer">
