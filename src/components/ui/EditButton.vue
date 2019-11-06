@@ -1,14 +1,5 @@
 <template>
-  <RouterLink
-    v-if="noEditCardOpen()"
-    class="edit-button"
-    :to="{
-      name: 'Edit Profile',
-      query: {
-        section: sectionId,
-      },
-    }"
-  >
+  <RouterLink v-if="noEditCardOpen()" class="edit-button" :to="sendTo">
     <Icon id="pencil" :width="20" :height="20"></Icon>
     <span class="visually-hidden">Edit {{ section }}</span>
   </RouterLink>
@@ -27,6 +18,7 @@ export default {
   props: {
     section: String,
     sectionId: String,
+    sendTo: Object,
   },
   components: {
     Icon,
