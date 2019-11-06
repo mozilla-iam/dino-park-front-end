@@ -10,7 +10,7 @@
       <aside class="primary-area__control">
         <PanelSection title="Membership Management">
           <template v-slot:content>
-            <p>Panel slot</p>
+            <AccessGroupMembershipManagement></AccessGroupMembershipManagement>
           </template>
         </PanelSection>
         <PanelSection title="Curators">
@@ -32,6 +32,7 @@ import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 import LinksMixin from '@/components/_mixins/LinksMixin.vue';
 import PanelSection from '@/components/ui/PanelSection.vue';
 import AccessGroupDescription from '@/components/access_group/AccessGroupDescription.vue';
+import AccessGroupMembershipManagement from '@/components/access_group/AccessGroupMembershipManagement.vue';
 import AccessGroupMembers from '@/components/access_group/AccessGroupMembers.vue';
 
 export default {
@@ -43,6 +44,7 @@ export default {
     PanelSection,
     AccessGroupDescription,
     AccessGroupMembers,
+    AccessGroupMembershipManagement,
   },
   props: {
     groupid: String,
