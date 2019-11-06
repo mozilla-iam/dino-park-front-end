@@ -34,7 +34,6 @@
         v-else
         :avatar="{ picture: editPicture, username: username.value }"
         :size="264"
-        :isStaff="staffInformation.staff.value"
       ></UserPicture>
     </div>
 

@@ -30,11 +30,7 @@
     </header>
     <div class="edit-personal-info">
       <div class="edit-personal-info__picture">
-        <UserPicture
-          :avatar="avatar"
-          :size="264"
-          :isStaff="scope.isStaff"
-        ></UserPicture>
+        <UserPicture :avatar="avatar" :size="264"></UserPicture>
         <button
           class="button button--icon-only edit-personal-info__picture-edit-button"
           type="button"

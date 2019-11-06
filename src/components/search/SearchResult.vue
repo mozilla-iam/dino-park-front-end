@@ -4,7 +4,7 @@
       :avatar="{ picture, username }"
       class="search-result__image"
       :size="40"
-      :isStaff="isStaff"
+      :showLabel="isStaff"
     ></UserPicture>
     <RouterLink
       :to="{ name: 'Profile', params: { username: username } }"
