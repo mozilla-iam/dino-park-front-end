@@ -7,6 +7,12 @@
     <template v-slot:header v-if="!editing">
       <EditButton
         v-if="editable && userOnOwnProfile && !needsLdap"
+        :sendTo="{
+          name: 'Edit Profile',
+          query: {
+            section,
+          },
+        }"
         :section="section"
         :sectionId="section"
       ></EditButton>

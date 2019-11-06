@@ -8,7 +8,17 @@
             <Icon id="info" :width="16" :height="16" />
           </span>
         </div>
-        <EditButton></EditButton>
+        <EditButton
+          v-if="editable"
+          :sendTo="{
+            name: 'Edit Access Group',
+            query: {
+              section,
+            },
+          }"
+          :section="section"
+          :sectionId="section"
+        ></EditButton>
       </div>
       <h1 class="description-container__title">{{ title }}</h1>
     </header>
@@ -24,6 +34,15 @@ export default {
   components: { EditButton, Icon },
   props: {
     title: String,
+    editable: {
+      type: Boolean,
+      default: true,
+    },
+  },
+  data() {
+    return {
+      section: 'description',
+    };
   },
 };
 </script>

@@ -2,8 +2,14 @@
   <div class="profile__intro">
     <EditButton
       v-if="userOnOwnProfile && editable"
-      section="personal info"
-      sectionId="personal-info"
+      :sendTo="{
+        name: 'Edit Profile',
+        query: {
+          section: sectionId,
+        },
+      }"
+      :section="section"
+      :sectionId="sectionId"
     ></EditButton>
     <div class="profile__intro-photo">
       <div class="profile__headshot">
@@ -142,6 +148,12 @@ export default {
     currentUser() {
       return this.$store.state.user;
     },
+  },
+  data() {
+    return {
+      section: 'personal info',
+      sectionId: 'personal-info',
+    };
   },
 };
 </script>
