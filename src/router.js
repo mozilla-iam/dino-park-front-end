@@ -104,6 +104,15 @@ const router = new Router({
       component: PageAccessGroup,
       props: true,
     },
+    {
+      path: '/g',
+      name: 'Edit Access Group',
+      component: PageAccessGroup,
+      query: {
+        section: ':section?',
+      },
+      props: true,
+    },
   ],
   scrollBehavior(to, from) {
     if (to.hash) {
