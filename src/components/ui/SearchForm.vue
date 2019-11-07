@@ -144,7 +144,7 @@ export default {
   -webkit-appearance: none;
   appearance: none;
   border-radius: 0;
-  padding: 0.5em 3em;
+  padding: 0.5em 1.75em 0.5em 3em;
 }
 .search-form__input::placeholder {
   text-align: center;
@@ -175,12 +175,18 @@ export default {
   background-color: var(--white);
   position: absolute;
   border: 0;
-  top: 1px;
+  top: 3px;
   right: 1px;
   bottom: 1px;
-  width: 3em;
+  width: 2em;
   padding: 0;
   line-height: 1;
+}
+
+@media (min-width: 57.5em) {
+  .search-form__clear-button {
+    width: 3em;
+  }
 }
 .search-form__clear-button:hover {
   color: var(--blue-60);
