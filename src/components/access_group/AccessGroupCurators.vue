@@ -12,7 +12,7 @@
         :isStaff="true"
       />
       <p class="curator-name">{{ curator.name }}</p>
-      <a href="#" class="curator-email">
+      <a :href="`mailto:${curator.email}`" class="curator-email">
         <Icon id="email" :width="16" :height="16" />
       </a>
     </li>
@@ -96,8 +96,34 @@ export default {
 }
 .curators-list:not(.tiled) .curators-list__item .curator-name {
   width: 80%;
-  margin: 0.6em 1em;
+  margin: 0.6em 0;
   display: flex;
   align-items: center;
+}
+
+.curators-list.tiled {
+  display: grid;
+  grid-template-columns: 20% 20% 20% 20% 20%;
+  grid-row-gap: 1em;
+}
+
+.curators-list.tiled .curators-list__item {
+  width: 5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.curators-list.tiled .curators-list__item:nth-child(6n) {
+  flex-basis: 100%;
+}
+
+.curators-list.tiled .curators-list__item .curator-name {
+  display: none;
+}
+
+.curators-list.tiled .curators-list__item .curator-email {
+  margin-top: 0.5em;
 }
 </style>
