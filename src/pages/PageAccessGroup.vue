@@ -89,6 +89,7 @@ export default {
 .access-group p:last-child {
   margin-bottom: 0;
 }
+
 @media (min-width: 50em) {
   .access-group {
     display: inline-block;
@@ -105,19 +106,30 @@ export default {
 
 .primary-area {
   display: flex;
-  flex-direction: row;
-  width: 100%;
+  flex-direction: column;
 }
 
 .primary-area__description {
-  width: 50%;
-  margin-right: 5%;
+  width: 100%;
 }
 
-.primary-area__control {
-  display: flex;
-  flex-direction: column;
-  width: 45%;
+@media (min-width: 57.5em) {
+  .primary-area {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
+
+  .primary-area__description {
+    width: 50%;
+    margin-right: 5%;
+  }
+
+  .primary-area__control {
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+  }
 }
 
 .secondary-area {
