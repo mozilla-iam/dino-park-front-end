@@ -66,6 +66,24 @@ const curatorsList = [
     curatorId: '78',
     email: 'joker@gotham.com',
   },
+  {
+    imageUrl: '/p/780',
+    name: 'Catwoman',
+    curatorId: '780',
+    email: 'catwoman@gotham.com',
+  },
+  {
+    imageUrl: '/p/781',
+    name: 'Harley Quinn',
+    curatorId: '781',
+    email: 'harleyquinn@gotham.com',
+  },
+  {
+    imageUrl: '/p/782',
+    name: 'Riddler',
+    curatorId: '782',
+    email: 'riddler@gotham.com',
+  },
 ];
 export default {
   name: 'AccessGroup',
