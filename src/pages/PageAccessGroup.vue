@@ -2,10 +2,7 @@
   <main class="access-group">
     <section class="primary-area">
       <section class="primary-area__description">
-        <AccessGroupDescription
-          :title="groupid"
-          :editable="!editing"
-        ></AccessGroupDescription>
+        <AccessGroupDescription :title="groupid" :editable="!editing"></AccessGroupDescription>
       </section>
       <aside class="primary-area__control">
         <PanelSection title="Membership Management">
@@ -13,9 +10,22 @@
             <AccessGroupMembershipManagement></AccessGroupMembershipManagement>
           </template>
         </PanelSection>
-        <PanelSection title="Curators">
+        <PanelSection title="Curators" :fullContent="curatorsList.length <= 3">
+          <template v-slot:header>
+            <EditButton
+              v-if="!editing"
+              :sendTo="{
+                name: 'Edit Access Group',
+                query: {
+                  section: 'curators',
+                },
+              }"
+              section="curators"
+              sectionId="curators"
+            ></EditButton>
+          </template>
           <template v-slot:content>
-            <p>Panel slot</p>
+            <AccessGroupCurators :curatorsList="curatorsList"></AccessGroupCurators>
           </template>
         </PanelSection>
       </aside>
@@ -29,22 +39,46 @@
 <script>
 import Icon from '@/components/ui/Icon.vue';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
+import EditButton from '@/components/ui/EditButton.vue';
 import LinksMixin from '@/components/_mixins/LinksMixin.vue';
 import PanelSection from '@/components/ui/PanelSection.vue';
 import AccessGroupDescription from '@/components/access_group/AccessGroupDescription.vue';
 import AccessGroupMembershipManagement from '@/components/access_group/AccessGroupMembershipManagement.vue';
 import AccessGroupMembers from '@/components/access_group/AccessGroupMembers.vue';
+import AccessGroupCurators from '@/components/access_group/AccessGroupCurators.vue';
 
+const curatorsList = [
+  {
+    imageUrl: '/p/123',
+    name: 'Batman',
+    curatorId: '123',
+    email: 'batman@gotham.com',
+  },
+  {
+    imageUrl: '/p/1234',
+    name: 'Robin',
+    curatorId: '1234',
+    email: 'robin@gotham.com',
+  },
+  {
+    imageUrl: '/p/78',
+    name: 'Joker',
+    curatorId: '78',
+    email: 'joker@gotham.com',
+  },
+];
 export default {
   name: 'AccessGroup',
   mixins: [LinksMixin],
   components: {
     Icon,
     LoadingSpinner,
+    EditButton,
     PanelSection,
     AccessGroupDescription,
     AccessGroupMembers,
     AccessGroupMembershipManagement,
+    AccessGroupCurators,
   },
   props: {
     groupid: String,
@@ -59,6 +93,11 @@ export default {
       }
       return null;
     },
+  },
+  data() {
+    return {
+      curatorsList,
+    };
   },
 };
 </script>
@@ -85,9 +124,6 @@ export default {
   margin-bottom: 2em;
 }
 
-.access-group .button svg {
-  margin-left: 1em;
-}
 .access-group p:last-child {
   margin-bottom: 0;
 }
