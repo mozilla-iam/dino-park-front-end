@@ -5,7 +5,7 @@
         class="top-bar__search"
         id="access-group-members-search"
         :searchFormHandler="searchFormHandler"
-        searchFormLabel="Search Members by Name"
+        searchFormLabel="Members Search"
       ></SearchForm>
       <Select
         class="options--chevron top-bar__filter"
@@ -99,6 +99,12 @@ export default {
   position: relative;
   padding: 1.5em;
   display: flex;
+  justify-content: space-between;
+}
+@media (min-width: 57.5em) {
+  .members-container__top-bar {
+    justify-content: initial;
+  }
 }
 
 .members-container__list {
@@ -109,16 +115,24 @@ export default {
 }
 
 .members-container__list .list-item-container {
-  width: calc(50% - 0.5em);
-  float: left;
+  width: 100%;
   display: flex;
-  margin-top: 0;
+  margin-top: 1em;
 }
-.members-container__list .list-item-container:nth-child(n + 3) {
-  margin-top: 0.5em;
-}
-.members-container__list .list-item-container:nth-child(odd) {
-  margin-right: 1em;
+@media (min-width: 57.5em) {
+  .members-container__list .list-item-container {
+    width: calc(50% - 0.5em);
+    float: left;
+    display: flex;
+    margin-top: 0;
+  }
+
+  .members-container__list .list-item-container:nth-child(n + 3) {
+    margin-top: 0.5em;
+  }
+  .members-container__list .list-item-container:nth-child(odd) {
+    margin-right: 1em;
+  }
 }
 
 .members-container__list .list-item:first-child {
@@ -126,14 +140,21 @@ export default {
 }
 
 .members-container__top-bar .top-bar__search {
-  margin: 0 auto;
-  width: 25em;
+  margin: 0 1em 0 0;
+  width: 15em;
 }
 
-.members-container__top-bar .top-bar__filter {
-  position: absolute;
-  right: 1.5em;
-  top: 1.5em;
+@media (min-width: 57.5em) {
+  .members-container__top-bar .top-bar__search {
+    margin: 0 auto;
+    width: 25em;
+  }
+
+  .members-container__top-bar .top-bar__filter {
+    position: absolute;
+    right: 1.5em;
+    top: 1.5em;
+  }
 }
 
 .top-bar__filter .options__toggle {
