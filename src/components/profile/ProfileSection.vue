@@ -6,6 +6,7 @@
     </template>
     <template v-slot:header v-if="!editing">
       <EditButton
+        class="profile__edit"
         v-if="editable && userOnOwnProfile && !needsLdap"
         :sendTo="{
           name: 'Edit Profile',
@@ -147,7 +148,7 @@ export default {
 }
 .profile__section .panel__section-header h2,
 .profile__section .profile__section-header h2 {
-  margin: 0 0 0.75em 0;
+  margin: 0;
   width: 100%;
 }
 
@@ -155,6 +156,11 @@ export default {
   padding: 0;
 }
 @media (min-width: 35em) {
+  .profile__section .panel__section-header h2,
+  .profile__section .profile__section-header h2 {
+    margin: 0 0 0.75em 0;
+  }
+
   .profile__section .panel__section-header h2,
   .profile__section .profile__section-header h2 {
     margin: 0;
@@ -165,5 +171,16 @@ export default {
   background-color: var(--gray-20);
   color: var(--gray-50);
   border: 2px solid var(--gray-30);
+}
+
+.profile__section .edit-button.profile__edit {
+  position: absolute;
+  top: 2em;
+  right: 1.5em;
+}
+.profile__intro .edit-button {
+  position: absolute;
+  top: 1em;
+  right: 0;
 }
 </style>

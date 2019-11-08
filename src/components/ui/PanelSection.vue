@@ -77,7 +77,7 @@ export default {
 }
 
 .panel__section-header h2 {
-  margin: 0 0 0.75em 0;
+  margin: 0;
   width: 100%;
 }
 @media (min-width: 35em) {
