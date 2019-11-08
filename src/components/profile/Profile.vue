@@ -54,7 +54,7 @@
     ></ProfileNav>
 
     <section
-      v-if="scope.isStaff && staffInformation.staff.value"
+      v-if="allowStaffOnlyFields && staffInformation.staff.value"
       class="profile__section first"
     >
       <a id="nav-relations" class="profile__anchor"></a>
@@ -290,6 +290,7 @@ export default {
     uuid: Object,
     primaryUsername: Object,
     viewAs: Boolean,
+    allowStaffOnlyFields: Boolean,
   },
   mixins: [AccountsMixin],
   components: {
