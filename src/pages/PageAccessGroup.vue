@@ -121,14 +121,14 @@ export default {
   }
 
   .primary-area__description {
-    width: 50%;
+    width: 55%;
     margin-right: 5%;
   }
 
   .primary-area__control {
     display: flex;
     flex-direction: column;
-    width: 45%;
+    width: 40%;
   }
 }
 
