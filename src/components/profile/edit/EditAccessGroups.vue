@@ -116,7 +116,7 @@ export default {
     const {
       mozilliansorg: {
         values = {},
-        metadata: { display = DISPLAY_LEVELS.private.value } = {},
+        metadata: { display = DISPLAY_LEVELS.staff.value } = {},
       } = {},
     } = this.initialAccessInformation;
     return {
