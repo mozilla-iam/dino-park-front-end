@@ -191,7 +191,8 @@
       title="Access Groups"
       :userOnOwnProfile="userOnOwnProfile"
       :empty="
-        Object.keys(accessInformation.mozilliansorg.values || {}).length === 0
+        Object.keys(accessInformation.mozilliansorg.values || {}).length ===
+          0 && Object.keys(accessInformation.ldap.values || {}).length === 0
       "
       :editable="!viewAs"
       message="Not a member of any access group."
