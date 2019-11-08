@@ -1,10 +1,11 @@
 import Vue from 'vue';
 import AccessGroupDescription from './AccessGroupDescription.vue';
-import getMountedComponentWithStore from '../../../tests/utils/getMountedComponentWithStore';
 
 describe('AccessGroupDescription', () => {
+  const Constructor = Vue.extend(AccessGroupDescription);
+
   it('should exist', () => {
-    const wrapper = getMountedComponentWithStore(AccessGroupDescription);
-    expect(wrapper.vm).toBeInstanceOf(Vue);
+    const component = new Constructor();
+    expect(component).toBeInstanceOf(Vue);
   });
 });
