@@ -45,14 +45,4 @@ export default {
 .edit-button:hover {
   color: var(--blue-60);
 }
-.profile__section-header .edit-button {
-  position: absolute;
-  top: 1.5em;
-  right: 1.5em;
-}
-.profile__intro .edit-button {
-  position: absolute;
-  top: 1em;
-  right: 0;
-}
 </style>
