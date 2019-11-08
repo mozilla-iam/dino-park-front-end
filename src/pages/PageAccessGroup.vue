@@ -2,7 +2,10 @@
   <main class="access-group">
     <section class="primary-area">
       <section class="primary-area__description">
-        <AccessGroupDescription :title="groupid" :editable="!editing"></AccessGroupDescription>
+        <AccessGroupDescription
+          :title="groupid"
+          :editable="!editing"
+        ></AccessGroupDescription>
       </section>
       <aside class="primary-area__control">
         <PanelSection title="Membership Management">
@@ -10,9 +13,14 @@
             <AccessGroupMembershipManagement></AccessGroupMembershipManagement>
           </template>
         </PanelSection>
-        <PanelSection title="Curators" :fullContent="curatorsList.length <= 3">
+        <PanelSection
+          title="Curators"
+          :fullOnMobile="true"
+          :fullContent="curatorsList.length <= 3"
+        >
           <template v-slot:header>
             <EditButton
+              class="access-group__edit"
               v-if="!editing"
               :sendTo="{
                 name: 'Edit Access Group',
@@ -25,7 +33,9 @@
             ></EditButton>
           </template>
           <template v-slot:content>
-            <AccessGroupCurators :curatorsList="curatorsList"></AccessGroupCurators>
+            <AccessGroupCurators
+              :curatorsList="curatorsList"
+            ></AccessGroupCurators>
           </template>
         </PanelSection>
       </aside>
@@ -158,6 +168,12 @@ export default {
     max-width: 50%;
     margin-bottom: 0;
   }
+}
+
+.access-group .edit-button.access-group__edit {
+  position: absolute;
+  top: 2em;
+  right: 1.5em;
 }
 
 .primary-area {
