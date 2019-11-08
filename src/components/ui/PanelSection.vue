@@ -1,5 +1,5 @@
 <template>
-  <article class="panel__section">
+  <article :class="{ panel__section: true, 'full-on-mobile': fullOnMobile }">
     <slot name="meta"></slot>
     <header class="panel__section-header" v-if="!hideContent">
       <h2>{{ title }}</h2>
@@ -19,6 +19,10 @@ export default {
   name: 'PanelSection',
   props: {
     fullContent: {
+      type: Boolean,
+      default: false,
+    },
+    fullOnMobile: {
       type: Boolean,
       default: false,
     },
@@ -74,6 +78,15 @@ export default {
 
 .panel__section-content:not(.full) {
   padding: 1.5em;
+}
+
+.panel__section.full-on-mobile .panel__section-content {
+  padding: 0;
+}
+@media (min-width: 35em) {
+  .panel__section.full-on-mobile .panel__section-content:not(.full) {
+    padding: 1.5em;
+  }
 }
 
 .panel__section-header h2 {
