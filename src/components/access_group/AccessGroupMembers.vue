@@ -4,6 +4,7 @@
       <SearchForm
         class="top-bar__search"
         id="access-group-members-search"
+        v-on:clear-query="clearSearchHandler"
         :searchFormHandler="searchFormHandler"
         searchFormLabel="Members Search"
       ></SearchForm>
@@ -11,14 +12,18 @@
         class="options--chevron top-bar__filter"
         label="Filter"
         id="access-group-members-filter"
-        :options="[{ value: 'value1', label: 'Label1' }]"
+        :options="[
+          { value: 'value1', label: 'Label1' },
+          { value: 'value2', label: 'Label2' },
+          { value: 'value3', label: 'Label3' },
+        ]"
         v-model="filter"
         :collapsedShowLabel="true"
       />
     </header>
     <ul class="members-container__list">
       <li
-        v-for="(member, idx) in memberList"
+        v-for="(member, idx) in filteredList"
         :key="idx"
         class="list-item-container"
       >
@@ -77,15 +82,27 @@ export default {
   methods: {
     // eslint-disable-next-line
     searchFormHandler(searchQuery, scope) {
-      console.log('Searching: ', searchQuery);
+      if (searchQuery === '') {
+        this.filteredList = this.memberList;
+        return searchQuery;
+      }
+      this.filteredList = this.memberList.filter((member) => {
+        return (
+          member.name.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1
+        );
+      });
       return searchQuery;
+    },
+    clearSearchHandler() {
+      this.filteredList = this.memberList;
     },
   },
   data() {
     return {
       search: '',
       filter: '',
-      memberList: testList,
+      filteredList: testList.slice(0),
+      memberList: testList.slice(0),
     };
   },
 };
