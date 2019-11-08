@@ -19,6 +19,7 @@
           :directs="related.directs"
           :editing="editing"
           :viewAs="variables.viewAsActive"
+          :allowStaffOnlyFields="allowStaffOnlyFields"
         ></Profile>
       </template>
       <Page404 v-else-if="error || (data && data.profile === null)"></Page404>
@@ -72,6 +73,12 @@ export default {
     },
     showPreviewAs() {
       return this.variables.username === null && this.editing === null;
+    },
+    allowStaffOnlyFields() {
+      return (
+        ['PRIVATE', 'STAFF', null].includes(this.viewAs.filter) &&
+        this.scope.isStaff
+      );
     },
   },
   data() {
