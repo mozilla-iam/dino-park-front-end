@@ -7,7 +7,9 @@
       </a>
     </dd>
     <dd v-else>
-      {{ metaValue }}
+      <slot>
+        {{ metaValue }}
+      </slot>
     </dd>
   </dl>
 </template>
@@ -35,6 +37,7 @@ export default {
   padding-right: 1em;
   border-right: 1px solid var(--gray-30);
   color: var(--gray-50);
+  box-sizing: content-box;
 }
 
 .meta-list__item:last-child {

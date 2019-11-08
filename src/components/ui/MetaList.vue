@@ -13,7 +13,6 @@ export default {
 <style>
 .meta-list {
   margin: 2em 0;
-  overflow: hidden;
   display: flex;
   justify-content: space-between;
 }
