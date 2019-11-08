@@ -79,8 +79,9 @@ export default {
       }
     },
     clearQuery() {
-      this.searchQuery = null;
+      this.searchQuery = '';
       this.$refs.searchQueryField.focus();
+      this.$emit('clear-query');
     },
   },
   computed: {
