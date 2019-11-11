@@ -35,9 +35,9 @@
             <Icon :id="link.icon" :width="16" :height="16" />
           </span>
           <p class="item-text">{{ link.label }}</p>
-          <a target="_blank" :href="link.url" class="item-url">{{
-            link.url
-          }}</a>
+          <a target="_blank" :href="link.url" class="item-url">
+            {{ link.url }}
+          </a>
         </li>
       </ul>
       <a href="#" class="description-content__tos-link">Terms of service</a>
@@ -292,10 +292,12 @@ export default {
   font-size: 1em;
 }
 
-.privilege-container .privilege-toggle-action {
+.description-content .privilege-container .privilege-toggle-action {
   background: var(--white);
   color: var(--gray-60);
   padding-left: 0;
+  margin-top: 1em;
+  margin-bottom: 0;
 }
 
 .privilege-container .privilege-toggle-action.hide {
