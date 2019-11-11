@@ -3,6 +3,7 @@
     <section class="primary-area">
       <section class="primary-area__description">
         <AccessGroupDescription
+          :model="descriptionData"
           :title="groupid"
           :editable="!editing"
         ></AccessGroupDescription>
@@ -95,6 +96,39 @@ const curatorsList = [
     email: 'riddler@gotham.com',
   },
 ];
+
+const descriptionData = {
+  member_count: 50,
+  visible_member_count: 3,
+  invitation_count: 2,
+  renewal_count: 3,
+  group: {
+    id: 1337,
+    name: 'dinopark-test',
+    type: 'closed',
+    description: 'some fance description in markdown',
+    terms: true,
+    links: [
+      {
+        type: 'discourse',
+        value: 'https://discourse.mozilla.org/c/openinnovation',
+      },
+      { type: 'website', value: 'https://meidum.com/mozilla-open-innovation' },
+      { type: 'wiki', value: 'https://wiki.mozilla.org/innovation' },
+      { type: 'slack', value: '#openinnovation' },
+    ],
+    history: [
+      {
+        privilege: 'OI Google Drive Access',
+        date_added: '12 September 2019 00:00:00 GMT',
+      },
+      {
+        privilege: 'OI Google Group Access',
+        date_added: '6 April 2019 00:00:00 GMT',
+      },
+    ],
+  },
+};
 export default {
   name: 'AccessGroup',
   mixins: [LinksMixin],
@@ -125,6 +159,7 @@ export default {
   data() {
     return {
       curatorsList,
+      descriptionData,
     };
   },
 };
