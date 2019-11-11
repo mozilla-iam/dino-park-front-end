@@ -1,11 +1,11 @@
 <template>
   <div>
     <template
-      v-if="pgpPublicKeys && Object.keys(pgpPublicKeys.values).length > 0"
+      v-if="pgpPublicKeys && Object.keys(pgpPublicKeys.values || {}).length > 0"
     >
       <h4 class="visually-hidden">PGP</h4>
       <Key
-        v-for="[key, value] in Object.entries(pgpPublicKeys.values).slice(
+        v-for="[key, value] in Object.entries(pgpPublicKeys.values || {}).slice(
           0,
           this.initiallyShown,
         )"
@@ -15,7 +15,10 @@
         :key="`pgp-${key}`"
       />
       <ShowMore
-        v-if="Object.entries(pgpPublicKeys.values).length > this.initiallyShown"
+        v-if="
+          Object.entries(pgpPublicKeys.values || {}).length >
+            this.initiallyShown
+        "
         buttonText="Show More"
         alternateButtonText="Show Less"
         class="keys__show-more"
@@ -24,9 +27,9 @@
       >
         <template slot="overflow">
           <Key
-            v-for="[key, value] in Object.entries(pgpPublicKeys.values).slice(
-              this.initiallyShown,
-            )"
+            v-for="[key, value] in Object.entries(
+              pgpPublicKeys.values || {},
+            ).slice(this.initiallyShown)"
             type="PGP"
             :title="key"
             :content="value"
@@ -42,11 +45,11 @@
       </ShowMore>
     </template>
     <template
-      v-if="sshPublicKeys && Object.keys(sshPublicKeys.values).length > 0"
+      v-if="sshPublicKeys && Object.keys(sshPublicKeys.values || {}).length > 0"
     >
       <h4 class="visually-hidden">SSH</h4>
       <Key
-        v-for="[key, value] in Object.entries(sshPublicKeys.values).slice(
+        v-for="[key, value] in Object.entries(sshPublicKeys.values || {}).slice(
           0,
           this.initiallyShown,
         )"
@@ -56,7 +59,10 @@
         :key="`ssh-${key}`"
       />
       <ShowMore
-        v-if="Object.entries(sshPublicKeys.values).length > this.initiallyShown"
+        v-if="
+          Object.entries(sshPublicKeys.values || {}).length >
+            this.initiallyShown
+        "
         buttonText="Show More"
         alternateButtonText="Show Less"
         class="keys__show-more"
@@ -65,9 +71,9 @@
       >
         <template slot="overflow">
           <Key
-            v-for="[key, value] in Object.entries(sshPublicKeys.values).slice(
-              this.initiallyShown,
-            )"
+            v-for="[key, value] in Object.entries(
+              sshPublicKeys.values || {},
+            ).slice(this.initiallyShown)"
             type="SSH"
             :title="key"
             :content="value"

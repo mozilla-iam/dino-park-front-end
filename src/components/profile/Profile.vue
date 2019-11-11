@@ -332,30 +332,19 @@ export default {
           Object.entries(this.phoneNumbers.values || {}).length > 0,
         accounts:
           this.editing === 'accounts' ||
-          (this.uris.values &&
-            Object.entries(this.uris.values).filter(([k]) =>
-              this.isAccountKey(k),
-            ).length > 0 &&
-            true) ||
-          false,
+          Object.entries(this.uris.values || {}).filter(([k]) =>
+            this.isAccountKey(k),
+          ).length > 0,
         languages:
           this.editing === 'languages' ||
-          (this.languages.values &&
-            Object.entries(this.languages.values).length > 0 &&
-            true) ||
-          false,
+          Object.entries(this.languages.values || {}).length > 0,
         tags:
           this.editing === 'tags' ||
-          (this.tags.values &&
-            Object.entries(this.tags.values).length > 0 &&
-            true) ||
-          false,
+          Object.entries(this.tags.values || {}).length > 0,
         keys:
           this.editing === 'keys' ||
-          ((this.pgpPublicKeys.values || this.sshPublicKeys.values) &&
-            (Object.entries(this.pgpPublicKeys.values).length > 0 ||
-              Object.entries(this.sshPublicKeys.values).length > 0)) ||
-          false,
+          (Object.entries(this.pgpPublicKeys.values || {}).length > 0 ||
+            Object.entries(this.sshPublicKeys.values || {}).length > 0),
       };
     },
     userOnOwnProfile() {
