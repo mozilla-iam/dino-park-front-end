@@ -90,6 +90,7 @@ export default {
   overflow: visible;
   border-radius: var(--cardRadius);
   position: relative;
+  max-width: 100%;
 }
 
 .profile__section:not(.profile__section--editing):not(.first) {
