@@ -4,9 +4,13 @@
       <div class="description-container__meta">
         <div class="label-container">
           <p class="label-container__text">Access Group</p>
-          <span class="label-container__icon">
-            <Icon id="info" :width="16" :height="16" />
-          </span>
+          <Tooltip
+            buttonText="Access group info"
+            alternateButtonText="Close access group info"
+          >
+            You can learn more about Access Groups on
+            <a href="#">Access Groups wiki page</a>
+          </Tooltip>
         </div>
         <EditButton
           v-if="editable"
@@ -35,9 +39,9 @@
             <Icon :id="link.icon" :width="16" :height="16" />
           </span>
           <p class="item-text">{{ link.label }}</p>
-          <a target="_blank" :href="link.url" class="item-url">
-            {{ link.url }}
-          </a>
+          <a target="_blank" :href="link.url" class="item-url">{{
+            link.url
+          }}</a>
         </li>
       </ul>
       <a href="#" class="description-content__tos-link">Terms of service</a>
@@ -89,6 +93,7 @@
 import EditButton from '@/components/ui/EditButton.vue';
 import Button from '@/components/ui/Button.vue';
 import Icon from '@/components/ui/Icon.vue';
+import Tooltip from '@/components/ui/Tooltip.vue';
 import { link } from 'fs';
 
 const linkSources = {
@@ -115,7 +120,7 @@ const linkSources = {
 };
 export default {
   name: 'AccessGroupDescription',
-  components: { EditButton, Button, Icon },
+  components: { EditButton, Button, Icon, Tooltip },
   props: {
     title: String,
     editable: {
@@ -220,12 +225,17 @@ export default {
   color: var(--black);
 }
 
-.label-container .label-container__icon {
+.label-container .tooltip {
   color: var(--gray-50);
   display: flex;
 }
 
-.label-container .label-container__icon svg {
+.label-container .tooltip .button {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.label-container .tooltip svg {
   display: inline-block;
   vertical-align: middle;
 }
