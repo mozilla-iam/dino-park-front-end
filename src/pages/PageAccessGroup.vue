@@ -214,10 +214,12 @@ export default {
 .primary-area {
   display: flex;
   flex-direction: column;
+  overflow: visible;
 }
 
 .primary-area__description {
   width: 100%;
+  overflow: visible;
 }
 
 @media (min-width: 57.5em) {
