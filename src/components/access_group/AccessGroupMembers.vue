@@ -22,11 +22,7 @@
       />
     </header>
     <ul class="members-container__list">
-      <li
-        v-for="(member, idx) in filteredList"
-        :key="idx"
-        class="list-item-container"
-      >
+      <li v-for="(member, idx) in filteredList" :key="idx" class="list-item-container">
         <AccessGroupMemberItem :member="member" />
       </li>
     </ul>
@@ -59,10 +55,8 @@ export default {
         this.filteredList = this.memberList;
         return searchQuery;
       }
-      this.filteredList = this.memberList.filter((member) => {
-        return (
-          member.name.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1
-        );
+      this.filteredList = this.memberList.filter(member => {
+        return member.name.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1;
       });
       return searchQuery;
     },
@@ -74,8 +68,8 @@ export default {
     return {
       search: '',
       filter: '',
-      filteredList: this.$store.state.accessGroup.members.members.slice(0),
-      memberList: this.$store.state.accessGroup.members.members.slice(0),
+      filteredList: this.$store.state.accessGroup.members.slice(0),
+      memberList: this.$store.state.accessGroup.members.slice(0),
     };
   },
 };

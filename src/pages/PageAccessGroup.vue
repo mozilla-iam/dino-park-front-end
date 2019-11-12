@@ -73,16 +73,13 @@ export default {
   },
   computed: {
     editing() {
-      if (
-        this.$route.name === 'Edit Access Group' &&
-        this.$route.query.section
-      ) {
+      if (this.$route.name === 'Edit Access Group' && this.$route.query.section) {
         return this.$route.query.section;
       }
       return null;
     },
     curatorsCount() {
-      return this.$store.state.accessGroup.curators.members.length;
+      return this.$store.state.accessGroup.curators.length;
     },
   },
 };

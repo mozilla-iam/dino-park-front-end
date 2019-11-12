@@ -4,6 +4,7 @@ import { DISPLAY_PROFILE } from './queries/profile';
 import Scope from './assets/js/scope';
 import { client } from './server';
 import accessGroupData from './accessgroupdata.json';
+import { AccessGroupDetailsViewModel } from './view_models/AccessGroupViewModel';
 
 Vue.use(Vuex);
 export default new Vuex.Store({
@@ -13,6 +14,7 @@ export default new Vuex.Store({
     accessGroup: null,
     org: null,
     personViewPreference: 'list',
+    error: false,
   },
   actions: {
     async fetchUser({ commit }) {
@@ -24,7 +26,11 @@ export default new Vuex.Store({
     },
     async fetchAccessGroup({ commit }) {
       const data = accessGroupData;
-      commit('setAccessGroupData', data);
+      try {
+        commit('setAccessGroupData', data);
+      } catch (e) {
+        throw new Error(e.message);
+      }
       return data;
     },
   },
@@ -40,7 +46,12 @@ export default new Vuex.Store({
       state.personViewPreference = preference;
     },
     setAccessGroupData(state, accessGroup) {
-      state.accessGroup = accessGroup;
+      try {
+        state.accessGroup = new AccessGroupDetailsViewModel(accessGroup);
+      } catch (e) {
+        state.error = e.message;
+        throw new Error(e.message);
+      }
     },
   },
 });

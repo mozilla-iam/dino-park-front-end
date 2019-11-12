@@ -1,10 +1,6 @@
 <template>
   <ul :class="{ 'curators-list': true, tiled: curators.length > 3 }">
-    <li
-      v-for="(curator, idx) in curators"
-      class="curators-list__item"
-      :key="idx"
-    >
+    <li v-for="(curator, idx) in curators" class="curators-list__item" :key="idx">
       <UserPicture
         :avatar="{ picture: curator.picture, username: curator.name }"
         class="curator-image"
@@ -36,7 +32,7 @@ export default {
   },
   computed: {
     curators() {
-      return this.$store.state.accessGroup.curators.members;
+      return this.$store.state.accessGroup.curators;
     },
   },
   data() {
