@@ -19,6 +19,9 @@ const router = new Router({
       path: '*',
       name: 'Unknown',
       component: PageUnknown,
+      query: {
+        message: ':message?',
+      },
     },
     {
       path: '/',
@@ -82,10 +85,7 @@ const router = new Router({
     if (to.hash) {
       return { selector: to.hash };
     }
-    if (
-      scrolling.toEdit(to) ||
-      scrolling.fromEditToSelf(to, from, router.app)
-    ) {
+    if (scrolling.toEdit(to) || scrolling.fromEditToSelf(to, from, router.app)) {
       return { selector: `#nav-${to.query.section}` };
     }
     if (scrolling.toProfile(to, from)) {
@@ -106,7 +106,7 @@ router.beforeEach((to, from, next) => {
   switch (to.name) {
     case 'OrgchartHighlight':
       document.title = `${usernamePrefix(
-        to.params.username,
+        to.params.username
       )}Org chart - Mozilla People Directory`;
       break;
     case 'Orgchart':
@@ -114,7 +114,7 @@ router.beforeEach((to, from, next) => {
       break;
     case 'Profile':
       document.title = `${usernamePrefix(
-        to.params.username,
+        to.params.username
       )}Profile - Mozilla People Directory`;
       break;
     case 'Edit Profile':
@@ -123,7 +123,15 @@ router.beforeEach((to, from, next) => {
     case 'Access Group':
     case 'Edit Access Group':
       // eslint-disable-next-line
-      store.dispatch('fetchAccessGroup').then(function(data) {});
+      store
+        .dispatch('fetchAccessGroup')
+        .then(function(data) {
+          console.log('Fetched group: ', data);
+        })
+        .catch(error => {
+          console.error('Caught dispatch error: ', error);
+          next(`/error?message=${error}`);
+        });
       break;
     default:
       document.title = `${to.name} - Mozilla People Directory`;
