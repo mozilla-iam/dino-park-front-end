@@ -3,14 +3,14 @@
     <article class="list-item__main">
       <div class="member-view">
         <UserPicture
-          :avatar="{ picture: member.imageUrl, username: member.name }"
+          :avatar="{ picture: member.picture, username: member.name }"
           class="member-view__image"
           :size="40"
           :isStaff="true"
         />
         <div class="member-view__info">
           <p class="info-header">{{ member.name }}</p>
-          <p class="info-sub">{{ member.jobTitle }}</p>
+          <p class="info-sub">{{ member.role }}</p>
         </div>
       </div>
       <button
@@ -23,13 +23,15 @@
     <aside class="list-item__expandable" v-if="showExpandable">
       <p class="expandable-row">
         <span class="expandable-row__label">Member since</span>
-        <span class="expandable-row__content">{{ member.memberSince }}</span>
+        <span class="expandable-row__content">{{
+          formatDate(member.since)
+        }}</span>
       </p>
       <p class="expandable-row">
         <span class="expandable-row__label">Added by</span>
-        <a :href="addedByProfile" class="expandable-row__content">{{
-          member.addedBy
-        }}</a>
+        <span class="expandable-row__content">
+          {{ member.added_by.name }}
+        </span>
       </p>
     </aside>
   </div>
@@ -49,6 +51,10 @@ export default {
   methods: {
     toggleExpandable() {
       this.showExpandable = !this.showExpandable;
+    },
+    // TODO: This needs to be done in the vuex model
+    formatDate(dateString) {
+      return new Date(dateString).toLocaleDateString('en-US');
     },
   },
   computed: {
