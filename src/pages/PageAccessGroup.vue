@@ -3,7 +3,6 @@
     <section class="primary-area">
       <section class="primary-area__description">
         <AccessGroupDescription
-          :model="descriptionData"
           :title="groupid"
           :editable="!editing"
         ></AccessGroupDescription>
@@ -17,7 +16,7 @@
         <PanelSection
           title="Curators"
           :fullOnMobile="true"
-          :fullContent="curatorsList.length <= 3"
+          :fullContent="curatorsCount <= 3"
         >
           <template v-slot:header>
             <EditButton
@@ -34,9 +33,7 @@
             ></EditButton>
           </template>
           <template v-slot:content>
-            <AccessGroupCurators
-              :curatorsList="curatorsList"
-            ></AccessGroupCurators>
+            <AccessGroupCurators />
           </template>
         </PanelSection>
       </aside>
@@ -58,77 +55,6 @@ import AccessGroupMembershipManagement from '@/components/access_group/AccessGro
 import AccessGroupMembers from '@/components/access_group/AccessGroupMembers.vue';
 import AccessGroupCurators from '@/components/access_group/AccessGroupCurators.vue';
 
-const curatorsList = [
-  {
-    imageUrl: '/p/123',
-    name: 'Batman',
-    curatorId: '123',
-    email: 'batman@gotham.com',
-  },
-  {
-    imageUrl: '/p/1234',
-    name: 'Robin',
-    curatorId: '1234',
-    email: 'robin@gotham.com',
-  },
-  {
-    imageUrl: '/p/78',
-    name: 'Joker',
-    curatorId: '78',
-    email: 'joker@gotham.com',
-  },
-  {
-    imageUrl: '/p/780',
-    name: 'Catwoman',
-    curatorId: '780',
-    email: 'catwoman@gotham.com',
-  },
-  {
-    imageUrl: '/p/781',
-    name: 'Harley Quinn',
-    curatorId: '781',
-    email: 'harleyquinn@gotham.com',
-  },
-  {
-    imageUrl: '/p/782',
-    name: 'Riddler',
-    curatorId: '782',
-    email: 'riddler@gotham.com',
-  },
-];
-
-const descriptionData = {
-  member_count: 50,
-  visible_member_count: 3,
-  invitation_count: 2,
-  renewal_count: 3,
-  group: {
-    id: 1337,
-    name: 'dinopark-test',
-    type: 'closed',
-    description: 'some fance description in markdown',
-    terms: true,
-    links: [
-      {
-        type: 'discourse',
-        value: 'https://discourse.mozilla.org/c/openinnovation',
-      },
-      { type: 'website', value: 'https://meidum.com/mozilla-open-innovation' },
-      { type: 'wiki', value: 'https://wiki.mozilla.org/innovation' },
-      { type: 'slack', value: '#openinnovation' },
-    ],
-    history: [
-      {
-        privilege: 'OI Google Drive Access',
-        date_added: '12 September 2019 00:00:00 GMT',
-      },
-      {
-        privilege: 'OI Google Group Access',
-        date_added: '6 April 2019 00:00:00 GMT',
-      },
-    ],
-  },
-};
 export default {
   name: 'AccessGroup',
   mixins: [LinksMixin],
@@ -155,12 +81,9 @@ export default {
       }
       return null;
     },
-  },
-  data() {
-    return {
-      curatorsList,
-      descriptionData,
-    };
+    curatorsCount() {
+      return this.$store.state.accessGroup.curators.members.length;
+    },
   },
 };
 </script>
