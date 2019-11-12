@@ -7,6 +7,7 @@ import PageSearchResult from './pages/PageSearchResult.vue';
 import PageUnknown from './pages/PageUnknown.vue';
 import PageAccessGroup from './pages/PageAccessGroup.vue';
 import scrolling from './assets/js/scrolling';
+import store from './store';
 
 Vue.use(Router);
 
@@ -164,9 +165,10 @@ router.beforeEach((to, from, next) => {
     case 'Edit Profile':
       document.title = `Edit - Profile - Mozilla People Directory`;
       break;
-    case 'Access Group TOS':
-      document.title =
-        'Access Group Terms of Service - Mozilla People Directory';
+    case 'Access Group':
+    case 'Edit Access Group':
+      // eslint-disable-next-line
+      store.dispatch('fetchAccessGroup').then(function(data) {});
       break;
     default:
       document.title = `${to.name} - Mozilla People Directory`;

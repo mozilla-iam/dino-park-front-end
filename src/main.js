@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueApollo from 'vue-apollo';
 import App from './App.vue';
-import router, { ACCESS_GROUP_PAGES, ACCESS_GROUP_TOS_PAGE } from './router';
+import router from './router';
 
 import { apolloProvider } from './server';
 import store from './store';
@@ -24,17 +24,10 @@ window.requestIdleCallback =
 
 Vue.use(VueApollo);
 
-Promise.all([store.dispatch('fetchUser'), Fluent.init()]).then(([, fluent]) => {
-  Vue.mixin({
-    methods: {
-      fluent(...args) {
-        return fluent.get(...args);
-      },
-    },
-    computed: {
-      scope() {
-        return this.$store.state.scope;
-      },
+Vue.mixin({
+  computed: {
+    scope() {
+      return this.$store.state.scope;
     },
   });
   new Vue({

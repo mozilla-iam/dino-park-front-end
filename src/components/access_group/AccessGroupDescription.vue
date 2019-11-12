@@ -94,7 +94,6 @@ import EditButton from '@/components/ui/EditButton.vue';
 import Button from '@/components/ui/Button.vue';
 import Icon from '@/components/ui/Icon.vue';
 import Tooltip from '@/components/ui/Tooltip.vue';
-import { link } from 'fs';
 
 const linkSources = {
   discourse: {
@@ -127,7 +126,6 @@ export default {
       type: Boolean,
       default: true,
     },
-    model: Object,
   },
   methods: {
     handleLeaveClick() {
@@ -139,10 +137,12 @@ export default {
     handleHidePrivilegeHistoryClicked() {
       this.privilegeHistoryVisible = false;
     },
+    // TODO: This needs to be done in the vuex model
     formatDate(dateString) {
       return new Date(dateString).toLocaleDateString('en-US');
     },
   },
+
   computed: {
     membersCountText() {
       let fullText = '';
@@ -162,7 +162,7 @@ export default {
       }
       return this.model.group.links.reduce((acc, curr) => {
         if (!(curr.type in linkSources)) {
-          return;
+          return acc;
         }
         acc.push({
           icon: linkSources[curr.type].icon,
@@ -175,6 +175,7 @@ export default {
   },
   data() {
     return {
+      model: this.$store.state.accessGroup,
       section: 'description',
       privilegeHistoryVisible: false,
     };

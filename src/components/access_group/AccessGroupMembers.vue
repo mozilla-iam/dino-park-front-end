@@ -40,33 +40,6 @@ import SearchForm from '@/components/ui/SearchForm.vue';
 import Select from '@/components/ui/Select.vue';
 import Icon from '@/components/ui/Icon.vue';
 
-const testList = [
-  {
-    imageUrl: '',
-    name: 'Bruce Wayne',
-    jobTitle: 'Batman',
-    memberSince: '2001',
-    addedBy: 'Andrew Sunada',
-    addedByMemberId: '1234',
-  },
-  {
-    imageUrl: '',
-    name: 'Dick Grayson',
-    jobTitle: 'Nightwing',
-    memberSince: '2001',
-    addedBy: 'Bruce Wayne',
-    addedByMemberId: '123',
-  },
-  {
-    imageUrl: '',
-    name: 'Jason Todd',
-    jobTitle: 'Red Hood',
-    memberSince: '2001',
-    addedBy: 'Bruce Wayne',
-    addedByMemberId: '1233',
-  },
-];
-
 export default {
   name: 'AccessGroupMembers',
   components: {
@@ -101,8 +74,8 @@ export default {
     return {
       search: '',
       filter: '',
-      filteredList: testList.slice(0),
-      memberList: testList.slice(0),
+      filteredList: this.$store.state.accessGroup.members.members.slice(0),
+      memberList: this.$store.state.accessGroup.members.members.slice(0),
     };
   },
 };

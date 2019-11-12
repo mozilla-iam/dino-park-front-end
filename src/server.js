@@ -1,7 +1,6 @@
 import { InMemoryCache, defaultDataIdFromObject } from 'apollo-cache-inmemory';
 import ApolloClient from 'apollo-boost';
 import VueApollo from 'vue-apollo';
-import reload from '@/assets/js/reload';
 
 function errorHandler(error) {
   const failoverOn = [302];
@@ -12,12 +11,12 @@ function errorHandler(error) {
       networkError.message.startsWith('NetworkError')) ||
       failoverOn.includes(networkError.statusCode))
   ) {
-    reload();
+    window.location.reload();
   }
 }
 
 const cache = new InMemoryCache({
-  dataIdFromObject: object => {
+  dataIdFromObject: (object) => {
     // eslint-disable-next-line no-underscore-dangle
     switch (object.__typename) {
       case 'Profile':
