@@ -1,32 +1,3 @@
-export const INVITATION_STATE = {
-  ACCEPTED: 'accepted',
-  REJECTED: 'rejected',
-};
-export class GroupInvitationViewModel {
-  constructor(data) {
-    this.group_name = '';
-    this.requires_tos = false;
-    this.accepted_tos = false;
-    this.state = '';
-    this.error = false;
-    this.processData(data);
-  }
-
-  processData(data) {
-    try {
-      this.group_name = data.group_name;
-      this.requires_tos = data.terms;
-      if ('state' in data) {
-        this.state = data.state;
-      }
-    } catch (e) {
-      this.error = e.message;
-      console.error('GroupInvitation error: ', e.message);
-      throw new Error(e.message);
-    }
-  }
-}
-
 export class HistoricalEventViewModel {
   constructor(data) {
     this.error = false;
@@ -64,7 +35,6 @@ export class AbbDisplayMemberViewModel {
     this.error = false;
     this.processData(data);
   }
-
   processData(data) {
     try {
       this.uuid = data.user_uuid;
@@ -77,12 +47,8 @@ export class AbbDisplayMemberViewModel {
     }
   }
 }
-export const MEMBER_IDEX = {
-  Admin: 0,
-  Curator: 1,
-  Member: 2,
-};
-export const DISPLAY_MEMBER_ROLES = ['Admin', 'Curator', 'Member'];
+
+const DISPLAY_MEMBER_ROLES = ['Admin', 'Curator', 'Member'];
 export class DisplayMemberViewModel {
   constructor(data) {
     this.uuid = '';
@@ -93,7 +59,7 @@ export class DisplayMemberViewModel {
     this.isStaff = false;
     this.since = '';
     this.expiration = '';
-    [, , this.role] = DISPLAY_MEMBER_ROLES;
+    this.role = DISPLAY_MEMBER_ROLES[2];
     this.added_by = {};
     this.error = false;
     this.processData(data);
@@ -116,18 +82,6 @@ export class DisplayMemberViewModel {
       console.error('Display Member error: ', e.message);
     }
   }
-
-  isAdmin() {
-    return this.role === 'Admin';
-  }
-
-  isCurator() {
-    return this.role === 'Curator';
-  }
-
-  isMember() {
-    return this.role === 'Member';
-  }
 }
 
 const ACCESS_GROUP_TYPES = ['closed', 'reviewed', 'open'];
@@ -135,7 +89,7 @@ export class GroupViewModel {
   constructor(data) {
     this.id = '';
     this.name = '';
-    [this.type] = ACCESS_GROUP_TYPES;
+    this.type = ACCESS_GROUP_TYPES[0];
     this.description = '';
     this.terms = false;
     this.links = [];
@@ -150,6 +104,12 @@ export class GroupViewModel {
       this.name = data.name;
       this.type = ACCESS_GROUP_TYPES.includes(data.type) ? data.type : null;
       this.description = data.description;
+      this.links =
+        data.links.length > 0 ? data.links.map(link => new TypeValueViewModel(link)) : [];
+      this.history =
+        data.history.length > 0
+          ? data.history.map(link => new HistoricalEventViewModel(link))
+          : [];
       this.terms = data.terms;
     } catch (e) {
       this.error = e.message;
@@ -164,6 +124,7 @@ export class AccessGroupDetailsViewModel {
     this.curators = [];
     this.group = {};
     this.member_count = 0;
+    this.visible_member_count = 0;
     this.invitation_count = 0;
     this.renewal_count = 0;
     this.error = false;
