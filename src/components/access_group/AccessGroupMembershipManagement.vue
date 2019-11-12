@@ -43,13 +43,6 @@
 import Icon from '@/components/ui/Icon.vue';
 import Button from '@/components/ui/Button.vue';
 
-const membershipData = {
-  pending: {
-    invitations: [{ memberName: 'Bruce Wayne', memberId: '1' }],
-    renewals: [{ memberName: 'Bruce Wayne', memberId: '1' }],
-  },
-  membershipExpiry: '30 days',
-};
 export default {
   name: 'AccessGroupMembershipManagement',
   components: { Icon, Button },
@@ -58,19 +51,19 @@ export default {
   },
   computed: {
     totalPendingInvitations() {
-      return membershipData.pending.invitations.length;
+      return this.$store.state.accessGroup.invitation_count;
     },
     pendingInvitationsText() {
-      if (membershipData.pending.invitations.length > 1) {
+      if (this.$store.state.accessGroup.invitation_count > 1) {
         return 'pending invitations';
       }
       return 'pending invitation';
     },
     totalPendingRenewals() {
-      return membershipData.pending.renewals.length;
+      return this.$store.state.accessGroup.renewal_count;
     },
     pendingRenewalsText() {
-      if (membershipData.pending.renewals.length > 1) {
+      if (this.$store.state.accessGroup.renewal_count.length > 1) {
         return 'pending renewals';
       }
       return 'pending renewal';
@@ -83,7 +76,8 @@ export default {
   },
   data() {
     return {
-      expiry: membershipData.membershipExpiry,
+      // TODO: Figure out this data
+      expiry: '30 days',
     };
   },
 };
