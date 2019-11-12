@@ -23,9 +23,7 @@
     <aside class="list-item__expandable" v-if="showExpandable">
       <p class="expandable-row">
         <span class="expandable-row__label">Member since</span>
-        <span class="expandable-row__content">
-          {{ formatDate(member.since) }}
-        </span>
+        <span class="expandable-row__content">{{ formatDate(member.since) }}</span>
       </p>
       <p class="expandable-row">
         <span class="expandable-row__label">Added by</span>
