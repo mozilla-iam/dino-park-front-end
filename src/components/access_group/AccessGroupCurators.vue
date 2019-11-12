@@ -6,7 +6,7 @@
       :key="idx"
     >
       <UserPicture
-        :avatar="{ picture: curator.imageUrl, username: curator.name }"
+        :avatar="{ picture: curator.picture, username: curator.name }"
         class="curator-image"
         :size="40"
         :isStaff="true"
@@ -33,11 +33,10 @@ export default {
       type: Boolean,
       default: true,
     },
-    curatorsList: Array,
   },
   computed: {
     curators() {
-      return this.curatorsList;
+      return this.$store.state.accessGroup.curators.members;
     },
   },
   data() {
