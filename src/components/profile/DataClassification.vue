@@ -2,10 +2,10 @@
   <div :class="['data-classification', classificationClass]">
     <span class="data-classification__label">{{ label }}</span>
     <Tooltip
-      :buttonText="'Open ' + label"
-      :alternateButtonText="'Close ' + label"
+      :buttonText="'Open ' + label + ' info'"
+      :alternateButtonText="'Close ' + label + ' info'"
     >
-      This person has access to {{ fullClassifications }} data.<br />
+      {{ infoText }}<br />
       This was determined from profile information visible to you.<br />
       Read more about data classification
       <a
@@ -52,19 +52,15 @@ export default {
           return 'Public';
       }
     },
-    fullClassifications() {
-      const list = [];
-      /* eslint-disable no-fallthrough */
+    infoText() {
       switch (this.classification) {
         case 'staff':
-          list.push('Mozilla Confidential - Staff Only');
+          return 'This person has the highest level of access - Mozilla confidential - Staff only.';
         case 'confidential':
-          list.push("Mozilla Confidential - Staff and NDA'd Mozillians Only");
+          return 'This person has access to data that can be shared with all of Mozilla staff and NDA’d contributors.';
         default:
-          list.push('Public');
+          return 'This person has access to data classified as Public.';
       }
-      /* eslint-enable no-fallthrough */
-      return list.join(', ').replace(/,(?=[^,]*$)/, ', and');
     },
   },
 };
