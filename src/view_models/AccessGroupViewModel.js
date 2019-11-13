@@ -35,6 +35,7 @@ export class AbbDisplayMemberViewModel {
     this.error = false;
     this.processData(data);
   }
+
   processData(data) {
     try {
       this.uuid = data.user_uuid;
@@ -59,7 +60,7 @@ export class DisplayMemberViewModel {
     this.isStaff = false;
     this.since = '';
     this.expiration = '';
-    this.role = DISPLAY_MEMBER_ROLES[2];
+    [, , this.role] = DISPLAY_MEMBER_ROLES;
     this.added_by = {};
     this.error = false;
     this.processData(data);
@@ -89,7 +90,7 @@ export class GroupViewModel {
   constructor(data) {
     this.id = '';
     this.name = '';
-    this.type = ACCESS_GROUP_TYPES[0];
+    [this.type] = ACCESS_GROUP_TYPES;
     this.description = '';
     this.terms = false;
     this.links = [];
@@ -145,6 +146,7 @@ export class AccessGroupDetailsViewModel {
       );
       this.group = new GroupViewModel(data.group);
       this.member_count = data.member_count;
+      this.visible_member_count = data.visible_member_count;
       this.invitation_count = data.invitation_count;
       this.renewal_count = data.renewal_count;
     } catch (e) {
