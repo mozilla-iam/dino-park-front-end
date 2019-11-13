@@ -30,20 +30,9 @@ export default {
 
 <style>
 .meta-list__item {
-  width: 50%;
-  float: left;
   margin: 0;
-  margin-right: 1em;
-  padding-right: 1em;
-  border-right: 1px solid var(--gray-30);
   color: var(--gray-50);
   box-sizing: content-box;
-}
-
-.meta-list__item:last-child {
-  border: 0;
-  margin: 0;
-  padding: 0;
 }
 
 .meta-list__item dt {
@@ -55,11 +44,5 @@ export default {
 
 .meta-list__item dd {
   margin-left: 0;
-}
-
-@supports (display: grid) {
-  .meta__list--item {
-    width: auto;
-  }
 }
 </style>
