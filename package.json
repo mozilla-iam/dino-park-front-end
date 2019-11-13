@@ -43,7 +43,7 @@
     "raw-loader": "^3.1.0",
     "vue-axe": "^1.0.7",
     "vue-template-compiler": "^2.6.10",
-    "vue-test-utils-helpers": "git+https://github.com/AmpleOrganics/vue-test-utils-helpers.git#1.0.3"
+    "vue-test-utils-helpers": "git+ssh://git@github.com/AmpleOrganics/vue-test-utils-helpers.git#1.0.3"
   },
   "husky": {
     "hooks": {

@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import AccessGroupCurators from './AccessGroupCurators.vue';
-import getMountedComponentWithStore from '../../../tests/utils/getMountedComponentWithStore';
+import { getMountedComponentWithStore } from '../../test/TestUtils';
 
 describe('AccessGroupCurators', () => {
   it('should exist', () => {
