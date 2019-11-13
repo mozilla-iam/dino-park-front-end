@@ -166,7 +166,7 @@ router.beforeEach((to, from, next) => {
       // eslint-disable-next-line
       store
         .dispatch('fetchAccessGroup')
-        .then(function(data) {
+        .then(data => {
           console.log('Fetched group: ', data);
         })
         .catch(error => {
