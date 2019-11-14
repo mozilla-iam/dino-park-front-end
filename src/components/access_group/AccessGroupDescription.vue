@@ -29,62 +29,10 @@
     <section class="description-container-area description-content">
       <p class="description-content__sub">{{ membersCountText }}</p>
       <p class="description-content__main">{{ model.group.description }}</p>
-      <ul class="description-content__link-list">
-        <li
-          class="link-list__item"
-          v-for="(link, idx) in linksDisplay"
-          :key="idx"
-        >
-          <span class="item-icon">
-            <Icon :id="link.icon" :width="16" :height="16" />
-          </span>
-          <p class="item-text">{{ link.label }}</p>
-          <a target="_blank" :href="link.url" class="item-url">{{
-            link.url
-          }}</a>
-        </li>
-      </ul>
       <a href="#" class="description-content__tos-link">Terms of service</a>
-      <aside class="privilege-container">
-        <Button
-          class="privilege-toggle-action"
-          v-on:click="handleShowPrivilegeHistoryClicked"
-          v-if="!privilegeHistoryVisible"
-        >
-          <Icon id="chevron-down" :width="16" :height="16"></Icon>Show Privilege
-          History
-        </Button>
-        <table
-          class="privilege-container__display"
-          v-if="privilegeHistoryVisible"
-        >
-          <thead>
-            <tr>
-              <td class="label-cell">Privilege</td>
-              <td>Date Added</td>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(event, idx) in model.group.history" :key="idx">
-              <td class="label-cell">{{ event.privilege }}</td>
-              <td>{{ formatDate(event.date_added) }}</td>
-            </tr>
-          </tbody>
-        </table>
-        <Button
-          class="privilege-toggle-action hide"
-          v-on:click="handleHidePrivilegeHistoryClicked"
-          v-if="privilegeHistoryVisible"
-        >
-          <Icon id="chevron-up" :width="16" :height="16"></Icon>Hide Privilege
-          History
-        </Button>
-      </aside>
     </section>
     <footer class="description-container-area description-footer">
-      <Button class="primary-action" v-on:click="handleLeaveClick"
-        >Leave</Button
-      >
+      <Button class="primary-action" v-on:click="handleLeaveClick">Leave</Button>
     </footer>
   </article>
 </template>
@@ -95,28 +43,6 @@ import Button from '@/components/ui/Button.vue';
 import Icon from '@/components/ui/Icon.vue';
 import Tooltip from '@/components/ui/Tooltip.vue';
 
-const linkSources = {
-  discourse: {
-    icon: 'discourse',
-    label: 'Discourse',
-  },
-  website: {
-    icon: 'world',
-    label: 'Website',
-  },
-  wiki: {
-    icon: 'info',
-    label: 'Wiki',
-  },
-  slack: {
-    icon: 'slack',
-    label: 'Slack',
-  },
-  other: {
-    icon: 'world',
-    label: 'Other',
-  },
-};
 export default {
   name: 'AccessGroupDescription',
   components: { EditButton, Button, Icon, Tooltip },
@@ -130,12 +56,6 @@ export default {
   methods: {
     handleLeaveClick() {
       console.log('Leave clicked');
-    },
-    handleShowPrivilegeHistoryClicked() {
-      this.privilegeHistoryVisible = true;
-    },
-    handleHidePrivilegeHistoryClicked() {
-      this.privilegeHistoryVisible = false;
     },
     // TODO: This needs to be done in the vuex model
     formatDate(dateString) {
@@ -151,33 +71,13 @@ export default {
       } else {
         fullText += `${this.model.member_count} members`;
       }
-      if (this.model.visible_member_count !== this.model.member_count) {
-        fullText += ` (${this.model.visible_member_count} viewable by you)`;
-      }
       return fullText;
-    },
-    linksDisplay() {
-      if (!this.model.group.links.length) {
-        return [];
-      }
-      return this.model.group.links.reduce((acc, curr) => {
-        if (!(curr.type in linkSources)) {
-          return acc;
-        }
-        acc.push({
-          icon: linkSources[curr.type].icon,
-          label: linkSources[curr.type].label,
-          url: curr.value,
-        });
-        return acc;
-      }, []);
     },
   },
   data() {
     return {
       model: this.$store.state.accessGroup,
       section: 'description',
-      privilegeHistoryVisible: false,
     };
   },
 };
