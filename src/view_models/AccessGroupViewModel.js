@@ -48,8 +48,12 @@ export class AbbDisplayMemberViewModel {
     }
   }
 }
-
-const DISPLAY_MEMBER_ROLES = ['Admin', 'Curator', 'Member'];
+export const MEMBER_IDEX = {
+  Admin: 0,
+  Curator: 1,
+  Member: 2,
+};
+export const DISPLAY_MEMBER_ROLES = ['Admin', 'Curator', 'Member'];
 export class DisplayMemberViewModel {
   constructor(data) {
     this.uuid = '';
@@ -105,12 +109,6 @@ export class GroupViewModel {
       this.name = data.name;
       this.type = ACCESS_GROUP_TYPES.includes(data.type) ? data.type : null;
       this.description = data.description;
-      this.links =
-        data.links.length > 0 ? data.links.map(link => new TypeValueViewModel(link)) : [];
-      this.history =
-        data.history.length > 0
-          ? data.history.map(link => new HistoricalEventViewModel(link))
-          : [];
       this.terms = data.terms;
     } catch (e) {
       this.error = e.message;
@@ -125,7 +123,6 @@ export class AccessGroupDetailsViewModel {
     this.curators = [];
     this.group = {};
     this.member_count = 0;
-    this.visible_member_count = 0;
     this.invitation_count = 0;
     this.renewal_count = 0;
     this.error = false;
@@ -146,7 +143,6 @@ export class AccessGroupDetailsViewModel {
       );
       this.group = new GroupViewModel(data.group);
       this.member_count = data.member_count;
-      this.visible_member_count = data.visible_member_count;
       this.invitation_count = data.invitation_count;
       this.renewal_count = data.renewal_count;
     } catch (e) {

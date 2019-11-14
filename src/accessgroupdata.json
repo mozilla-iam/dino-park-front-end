@@ -10,7 +10,7 @@
         "isStaff": true,
         "since": "2014-11-28T12:45:59Z",
         "expiration": "2014-11-28T12:45:59Z",
-        "role": "Admin",
+        "role": "Curator",
         "added_by": {
           "user_uuid": "34a33a8e-d035-4051-acac-497a79235e73",
           "name": "Hans Knall",
@@ -24,7 +24,7 @@
         "username": "batman",
         "email": "batman@gotham.com",
         "isStaff": true,
-        "role": "Batman",
+        "role": "Member",
         "since": "2014-11-28T12:45:59Z",
         "expiration": "2014-11-28T12:45:59Z",
         "added_by": {
@@ -40,7 +40,7 @@
         "username": "nightwing",
         "email": "nightwing@gotham.com",
         "isStaff": true,
-        "role": "Nightwing",
+        "role": "Member",
         "since": "2014-11-28T12:45:59Z",
         "expiration": "2014-11-28T12:45:59Z",
         "added_by": {
@@ -56,7 +56,7 @@
         "username": "redhood",
         "email": "redhood@gotham.com",
         "isStaff": true,
-        "role": "Redhood",
+        "role": "Member",
         "since": "2014-11-28T12:45:59Z",
         "expiration": "2014-11-28T12:45:59Z",
         "added_by": {
@@ -80,7 +80,7 @@
         "isStaff": true,
         "since": "2014-11-28T12:45:59Z",
         "expiration": "2014-11-28T12:45:59Z",
-        "role": "Admin",
+        "role": "Curator",
         "added_by": {
           "user_uuid": "34a33a8e-d035-4051-acac-497a79235e73",
           "name": "Hans Knall",
@@ -97,18 +97,6 @@
     "type": "closed",
     "description": "some fance description in markdown",
     "terms": true,
-    "links": [
-      {
-        "type": "discourse",
-        "value": "https://discourse.mozilla.org/c/openinnovation"
-      },
-      {
-        "type": "website",
-        "value": "https://meidum.com/mozilla-open-innovation"
-      },
-      { "type": "wiki", "value": "https://wiki.mozilla.org/innovation" },
-      { "type": "slack", "value": "#openinnovation" }
-    ],
     "history": [
       {
         "privilege": "OI Google Drive Access",
@@ -121,7 +109,6 @@
     ]
   },
   "member_count": 50,
-  "visible_member_count": 48,
   "invitation_count": 2,
   "renewal_count": 3
 }
