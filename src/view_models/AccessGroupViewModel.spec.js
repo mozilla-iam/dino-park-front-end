@@ -3,8 +3,6 @@ import {
   GroupViewModel,
   DisplayMemberViewModel,
   AbbDisplayMemberViewModel,
-  TypeValueViewModel,
-  HistoricalEventViewModel,
 } from './AccessGroupViewModel';
 import accessGroupData from '../accessgroupdata.json';
 
@@ -35,19 +33,5 @@ describe('AbbDisplayMemberViewModel', () => {
       accessGroupData.members.members[0].added_by
     );
     expect(model).toBeInstanceOf(AbbDisplayMemberViewModel);
-  });
-});
-
-describe('TypeValueViewModel', () => {
-  it('should be created', () => {
-    const model = new TypeValueViewModel(accessGroupData.group.links[0]);
-    expect(model).toBeInstanceOf(TypeValueViewModel);
-  });
-});
-
-describe('HistoricalEventViewModel', () => {
-  it('should be created', () => {
-    const model = new HistoricalEventViewModel(accessGroupData.group.history[0]);
-    expect(model).toBeInstanceOf(HistoricalEventViewModel);
   });
 });

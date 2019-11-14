@@ -1,5 +1,5 @@
 <template>
-  <div class="list-item">
+  <div :class="{ 'list-item': true, primary: isCurator }">
     <article class="list-item__main">
       <div class="member-view">
         <UserPicture
@@ -23,15 +23,13 @@
     <aside class="list-item__expandable" v-if="showExpandable">
       <p class="expandable-row">
         <span class="expandable-row__label">Member since</span>
-        <span class="expandable-row__content">{{
-          formatDate(member.since)
-        }}</span>
+        <span class="expandable-row__content">
+          {{ formatDate(member.since) }}
+        </span>
       </p>
       <p class="expandable-row">
         <span class="expandable-row__label">Added by</span>
-        <span class="expandable-row__content">
-          {{ member.added_by.name }}
-        </span>
+        <span class="expandable-row__content">{{ member.added_by.name }}</span>
       </p>
     </aside>
   </div>
@@ -41,6 +39,7 @@
 import UserPicture from '@/components/ui/UserPicture.vue';
 import EditButton from '@/components/ui/EditButton.vue';
 import Icon from '@/components/ui/Icon.vue';
+import { DISPLAY_MEMBER_ROLES, MEMBER_IDEX } from '@/view_models/AccessGroupViewModel';
 
 export default {
   name: 'AccessGroupMemberItem',
@@ -61,6 +60,9 @@ export default {
     addedByProfile() {
       return `/p/${this.member.addedByMemberId}`;
     },
+    isCurator() {
+      return this.member.role === DISPLAY_MEMBER_ROLES[MEMBER_IDEX.Curator];
+    },
   },
   data() {
     return {
@@ -75,6 +77,9 @@ export default {
   width: 100%;
   box-shadow: var(--shadowCard);
   background: var(--white);
+}
+.list-item.primary {
+  box-shadow: inset 0 -2px 0px var(--blue-60), var(--shadowCard);
 }
 .list-item .list-item__main {
   display: flex;
