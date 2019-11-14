@@ -13,29 +13,6 @@
             <AccessGroupMembershipManagement></AccessGroupMembershipManagement>
           </template>
         </PanelSection>
-        <PanelSection
-          title="Curators"
-          :fullOnMobile="true"
-          :fullContent="curatorsCount <= 3"
-        >
-          <template v-slot:header>
-            <EditButton
-              class="access-group__edit"
-              v-if="!editing"
-              :sendTo="{
-                name: 'Edit Access Group',
-                query: {
-                  section: 'curators',
-                },
-              }"
-              section="curators"
-              sectionId="curators"
-            ></EditButton>
-          </template>
-          <template v-slot:content>
-            <AccessGroupCurators />
-          </template>
-        </PanelSection>
       </aside>
     </section>
     <section class="secondary-area">
