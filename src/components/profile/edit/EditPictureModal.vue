@@ -81,7 +81,7 @@ import UserPicture from '@/components/ui/UserPicture.vue';
 import Fetcher from '@/assets/js/fetcher';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 
-const fetcher = new Fetcher({ failoverOn: [302], failoverOnError: true });
+const fetcher = new Fetcher();
 
 function pngDataUrlToFile(dataUrl = '') {
   const prefix = 'data:image/png;base64,';

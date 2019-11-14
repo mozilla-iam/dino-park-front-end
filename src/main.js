@@ -7,6 +7,7 @@ import App from './App.vue';
 import router from './router';
 import { DISPLAY_PROFILE } from './queries/profile';
 import Scope from './assets/js/scope';
+import reload from '@/assets/js/reload';
 
 // polyfill/fallback adapted from MDN (https://developer.mozilla.org/en-US/docs/Web/API/Background_Tasks_API#Falling_back_to_setTimeout)
 window.requestIdleCallback =
@@ -33,7 +34,7 @@ function errorHandler(error) {
       networkError.message.startsWith('NetworkError')) ||
       failoverOn.includes(networkError.statusCode))
   ) {
-    window.location.reload();
+    reload();
   }
 }
 

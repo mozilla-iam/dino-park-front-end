@@ -1,18 +1,9 @@
-class Fetcher {
-  constructor({
-    failoverOn = [],
-    defaultRes = {},
-    failoverOnError = false,
-    failoverFn = () => window.location.reload(),
-  }) {
-    this.failoverOn = failoverOn;
-    this.failoverFn = failoverFn;
-    this.failoverOnError = failoverOnError;
-    this.defaultRes = defaultRes;
-  }
+import reload from '@/assets/js/reload';
 
-  failover() {
-    this.failoverFn();
+class Fetcher {
+  constructor({ failOnError = true, isError = () => true } = {}) {
+    this.failOnError = failOnError;
+    this.isError = isError;
   }
 
   async fetch(resource, _init) {
@@ -20,18 +11,12 @@ class Fetcher {
       const init = _init || {};
       init.credentials = 'same-origin';
       const res = await fetch(resource, init);
-      if (this.failoverOn.includes(res.status)) {
-        console.log(`got status ${res.status} → failing over`);
-        this.failover();
-      }
       return res;
     } catch (e) {
-      if (this.failoverOnError) {
+      if (this.failOnError && this.isError(e)) {
         console.log(`got error → failing over`);
-        this.failover();
+        reload();
       }
-      console.error(e);
-      console.log(`error requesting ${resource}: ${e}`);
       throw e;
     }
   }

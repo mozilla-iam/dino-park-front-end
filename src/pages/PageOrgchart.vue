@@ -80,7 +80,7 @@ import avatarUrl from '@/assets/js/avatars';
 import generateIdenticon from '@/assets/js/identicon-avatar';
 import mozillaM from '@/assets/images/mozilla-m.svg';
 
-const fetcher = new Fetcher({ failoverOn: [302] });
+const fetcher = new Fetcher();
 
 function renderNode(node, level = 1) {
   const e = document.createElement('div');

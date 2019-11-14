@@ -14,7 +14,7 @@ const labels = {
 
 class Identities {
   constructor(identities) {
-    this.fetcher = new Fetcher({ failoverOn: [302] });
+    this.fetcher = new Fetcher();
     this.identities = { ...EMPTY_IDENTITIES, ...identities };
     this.githubUsername = null;
     this.githubLink = null;

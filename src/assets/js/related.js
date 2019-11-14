@@ -1,6 +1,6 @@
 import Fetcher from '@/assets/js/fetcher';
 
-const fetcher = new Fetcher({ failoverOn: [302] });
+const fetcher = new Fetcher();
 
 class Related {
   constructor() {
