@@ -23,8 +23,8 @@
       >
     </p>
     <p class="secondary-data-row">
-      Memberships set to
-      <span class="secondary-data-row__focus">expire</span> after
+      Memberships that
+      <span class="secondary-data-row__focus">will expire</span> after
       <span class="secondary-data-row__focus">{{ expiry }}</span>
     </p>
     <footer class="action-row">
@@ -77,7 +77,7 @@ export default {
   data() {
     return {
       // TODO: Figure out this data
-      expiry: '30 days',
+      expiry: '1 week',
     };
   },
 };

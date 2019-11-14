@@ -6,24 +6,20 @@
         id="access-group-members-search"
         v-on:clear-query="clearSearchHandler"
         :searchFormHandler="searchFormHandler"
-        searchFormLabel="Members Search"
+        searchFormLabel="Search Members"
       ></SearchForm>
-      <Select
-        class="options--chevron top-bar__filter"
-        label="Filter"
-        id="access-group-members-filter"
-        :options="[
-          { value: 'value1', label: 'Label1' },
-          { value: 'value2', label: 'Label2' },
-          { value: 'value3', label: 'Label3' },
-        ]"
-        v-model="filter"
-        :collapsedShowLabel="true"
-      />
     </header>
     <ul class="members-container__list">
-      <li v-for="(member, idx) in filteredList" :key="idx" class="list-item-container">
-        <AccessGroupMemberItem :member="member" />
+      <li
+        v-for="(column, idx) in filteredListDisplay"
+        :key="idx"
+        class="list-column-container"
+      >
+        <ul class="members-container__list-column">
+          <li v-for="(member, idx2) in column" :key="idx2" class="list-item-container">
+            <AccessGroupMemberItem :member="member" />
+          </li>
+        </ul>
       </li>
     </ul>
   </article>
@@ -35,6 +31,7 @@ import AccessGroupMemberItem from '@/components/access_group/AccessGroupMemberIt
 import SearchForm from '@/components/ui/SearchForm.vue';
 import Select from '@/components/ui/Select.vue';
 import Icon from '@/components/ui/Icon.vue';
+import { getTwoColumnGridArraySplitFromArray } from '@/utils/ComponentUtils';
 
 export default {
   name: 'AccessGroupMembers',
@@ -64,12 +61,20 @@ export default {
       this.filteredList = this.memberList;
     },
   },
+  computed: {
+    filteredListDisplay() {
+      return getTwoColumnGridArraySplitFromArray(this.filteredList);
+    },
+  },
   data() {
+    const fullMemberList = this.$store.state.accessGroup.curators.concat(
+      this.$store.state.accessGroup.members
+    );
     return {
       search: '',
       filter: '',
-      filteredList: this.$store.state.accessGroup.members.slice(0),
-      memberList: this.$store.state.accessGroup.members.slice(0),
+      filteredList: fullMemberList.slice(0),
+      memberList: fullMemberList.slice(0),
     };
   },
 };
@@ -85,9 +90,22 @@ export default {
   display: flex;
   justify-content: space-between;
 }
+
 @media (min-width: 57.5em) {
   .members-container__top-bar {
     justify-content: initial;
+  }
+
+  .members-container__list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: grid;
+    grid-template-columns: calc(50% - 0.5em) calc(50% - 0.5em);
+    grid-row-gap: 1em;
+    grid-column-gap: 1em;
+    grid-auto-rows: min-content;
   }
 }
 
@@ -98,24 +116,40 @@ export default {
   width: 100%;
 }
 
+@media (min-width: 57.5em) {
+  .members-container__list {
+    display: grid;
+    grid-template-columns: calc(50% - 0.5em) calc(50% - 0.5em);
+    grid-row-gap: 1em;
+    grid-column-gap: 1em;
+    grid-auto-rows: min-content;
+  }
+}
+
 .members-container__list .list-item-container {
   width: 100%;
   display: flex;
   margin-top: 1em;
 }
+
+.members-container__list-column {
+  margin: 0;
+  padding: 0;
+}
 @media (min-width: 57.5em) {
+  .members-container__list-column {
+    display: flex;
+    flex-direction: column;
+  }
   .members-container__list .list-item-container {
-    width: calc(50% - 0.5em);
+    /* width: calc(50% - 0.5em); */
     float: left;
     display: flex;
-    margin-top: 0;
+    margin-top: 1em;
   }
 
-  .members-container__list .list-item-container:nth-child(n + 3) {
-    margin-top: 0.5em;
-  }
-  .members-container__list .list-item-container:nth-child(odd) {
-    margin-right: 1em;
+  .members-container__list .list-item-container:first-child {
+    margin-top: 0;
   }
 }
 
@@ -133,18 +167,5 @@ export default {
     margin: 0 auto;
     width: 25em;
   }
-
-  .members-container__top-bar .top-bar__filter {
-    position: absolute;
-    right: 1.5em;
-    top: 1.5em;
-  }
-}
-
-.top-bar__filter .options__toggle {
-  background-color: var(--white);
-  border-radius: 2em;
-  border: 2px solid var(--gray-20);
-  padding: 0.75em 2.5em 0.75em 1.5em;
 }
 </style>
