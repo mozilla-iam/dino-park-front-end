@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <style type="text/css">
+      body {
+        background: #ededf0;
+        font-family: Open Sans, sans-serif;
+        display: flex;
+        align-items: center;
+        margin: 0px;
+        height: 100vh;
+      }
+      main {
+        margin: auto;
+      }
+    </style>
+    <title>Mozilla People Directory</title>
+  </head>
+  <body>
+    <main>Session expired.</main>
+    <script>
+      const reload =
+        new URL(document.location).searchParams.get('reload') ||
+        window.location.origin;
+      const reloadUrl = new URL(reload, window.location.origin);
+      reloadUrl.host = window.location.host;
+      reloadUrl.protocol = window.location.protocol;
+      window.location.href = reloadUrl.toString();
+    </script>
+  </body>
+</html>
