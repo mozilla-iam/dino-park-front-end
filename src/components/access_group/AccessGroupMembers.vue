@@ -151,6 +151,7 @@ export default {
   margin: 0;
   padding: 0;
 }
+
 @media (min-width: 57.5em) {
   .members-container__list-column {
     display: flex;
