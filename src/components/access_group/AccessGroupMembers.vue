@@ -8,6 +8,12 @@
         :searchFormHandler="searchFormHandler"
         searchFormLabel="Search Members"
       ></SearchForm>
+      <Tooltip
+        class="members-container__tooltip"
+        buttonText="Member search info"
+        alternateButtonText="Close member search info"
+        >You can search by name, username and email</Tooltip
+      >
     </header>
     <ul class="members-container__list">
       <li
@@ -30,6 +36,7 @@ import EditButton from '@/components/ui/EditButton.vue';
 import AccessGroupMemberItem from '@/components/access_group/AccessGroupMemberItem.vue';
 import SearchForm from '@/components/ui/SearchForm.vue';
 import Select from '@/components/ui/Select.vue';
+import Tooltip from '@/components/ui/Tooltip.vue';
 import Icon from '@/components/ui/Icon.vue';
 import { getTwoColumnGridArraySplitFromArray } from '@/utils/ComponentUtils';
 
@@ -40,6 +47,7 @@ export default {
     Icon,
     SearchForm,
     Select,
+    Tooltip,
     AccessGroupMemberItem,
   },
   props: {
@@ -95,18 +103,25 @@ export default {
   .members-container__top-bar {
     justify-content: initial;
   }
+}
 
-  .members-container__list {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    display: grid;
-    grid-template-columns: calc(50% - 0.5em) calc(50% - 0.5em);
-    grid-row-gap: 1em;
-    grid-column-gap: 1em;
-    grid-auto-rows: min-content;
+.members-container__top-bar .members-container__tooltip {
+  display: flex;
+  position: absolute;
+  right: 3%;
+  top: 50%;
+  height: 2em;
+  transform: translate(0, -50%);
+}
+
+@media (min-width: 35em) {
+  .members-container__top-bar .members-container__tooltip {
+    right: 2em;
   }
+}
+
+.members-container__top-bar .members-container__tooltip .show-more__button {
+  margin: 0;
 }
 
 .members-container__list {
@@ -142,7 +157,6 @@ export default {
     flex-direction: column;
   }
   .members-container__list .list-item-container {
-    /* width: calc(50% - 0.5em); */
     float: left;
     display: flex;
     margin-top: 1em;
@@ -158,13 +172,12 @@ export default {
 }
 
 .members-container__top-bar .top-bar__search {
-  margin: 0 1em 0 0;
+  margin: 0 auto;
   width: 15em;
 }
 
 @media (min-width: 57.5em) {
   .members-container__top-bar .top-bar__search {
-    margin: 0 auto;
     width: 25em;
   }
 }
