@@ -1,5 +1,8 @@
 <template>
   <main class="access-group">
+    <section class="meta-area">
+      <AccessGroupInvitationNotification />
+    </section>
     <section class="primary-area">
       <section class="primary-area__description">
         <AccessGroupDescription
@@ -31,6 +34,7 @@ import AccessGroupDescription from '@/components/access_group/AccessGroupDescrip
 import AccessGroupMembershipManagement from '@/components/access_group/AccessGroupMembershipManagement.vue';
 import AccessGroupMembers from '@/components/access_group/AccessGroupMembers.vue';
 import AccessGroupCurators from '@/components/access_group/AccessGroupCurators.vue';
+import AccessGroupInvitationNotification from '@/components/access_group/AccessGroupInvitationNotification.vue';
 
 export default {
   name: 'AccessGroup',
@@ -44,6 +48,7 @@ export default {
     AccessGroupMembers,
     AccessGroupMembershipManagement,
     AccessGroupCurators,
+    AccessGroupInvitationNotification,
   },
   props: {
     groupid: String,
@@ -106,6 +111,10 @@ export default {
   position: absolute;
   top: 2em;
   right: 1.5em;
+}
+
+.meta-area {
+  margin-bottom: 1em;
 }
 
 .primary-area {
