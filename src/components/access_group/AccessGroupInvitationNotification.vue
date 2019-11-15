@@ -1,165 +1,94 @@
 <template>
-  <article
-    class="notification-container invitation-notification-container"
-    v-if="showInvitations && invitations.length > 0"
-  >
-    <div
-      class="invitation-notification-item"
-      v-for="(notification, idx) in invitations"
-      :key="idx"
-    >
-      <p
-        class="invitation-notification__description"
-        v-if="isInvitationInitial(notification)"
-      >
-        You've been invited to join {{ notification.group_name }} group
+  <article class="invitation-notification-container">
+    <p class="invitation-notification__description">
+      You've been invited to join {{ groupName }} group
+    </p>
+    <aside class="invitation-notification__tos-container">
+      <p class="tos__description">
+        Accept
+        <a href="#">terms of service</a>
       </p>
-      <p
-        class="invitation-notification__description"
-        v-else-if="isInvitationPendingRejection(notification)"
+      <span class="tos__field">
+        <input type="checkbox" v-model="tosAccepted" />
+      </span>
+    </aside>
+    <footer class="invitation-notification_actions">
+      <Button
+        class="primary-action"
+        v-on:click="handleAcceptClick"
+        :disabled="!tosAccepted"
+        >Accept</Button
       >
-        Are you sure this is what you want to do?
-      </p>
-      <footer class="invitation-notification__actions">
-        <template v-if="isInvitationInitial(notification)">
-          <Button class="primary-action" v-on:click="handleAcceptClick(idx)"
-            >Accept</Button
-          >
-          <Button
-            class="secondary-action button--secondary button--action"
-            v-on:click="handleRejectClick(idx)"
-            >Reject</Button
-          >
-        </template>
-        <template v-if="isInvitationPendingRejection(notification)">
-          <Button
-            class="secondary-action button--secondary button--action"
-            v-on:click="handleRejectClick(idx)"
-            >Confirm</Button
-          >
-          <Button class="primary-action" v-on:click="handleInvitationBack(idx)"
-            >Back</Button
-          >
-        </template>
-      </footer>
-    </div>
+      <Button
+        class="secondary-action button--secondary button--action"
+        v-on:click="handleRejectClick"
+        >Reject</Button
+      >
+    </footer>
   </article>
 </template>
 
 <script>
 import Button from '@/components/ui/Button.vue';
-import LinksMixin from '@/components/_mixins/LinksMixin.vue';
-import { INVITATION_STATE } from '@/view_models/AccessGroupViewModel';
-import { ACCESS_GROUP_TOS_PAGE } from '@/router';
-
-const PENDING_REJECTION = 'PENDING_REJECTION';
 
 export default {
   name: 'AccessGroupInvitationNotification',
   components: { Button },
-  mixins: [LinksMixin],
-  props: {},
+  props: {
+    member: Object,
+  },
   methods: {
-    handleAcceptClick(idx) {
-      const currentInvitation = this.invitations[idx];
-      if (currentInvitation.requires_tos) {
-        this.$router.push({
-          name: 'Access Group TOS',
-          params: { groupname: currentInvitation.group_name },
-          query: {
-            accept: true,
-          },
-        });
-      } else {
-        this.$store.dispatch('acceptGroupInvitation', idx).then(() => {
-          this.$router.push({
-            name: 'Access Group',
-            params: { groupname: currentInvitation.group_name },
-          });
-          this.$root.$emit('toast', {
-            content: 'You accepted the terms for this group.',
-          });
-        });
-      }
-    },
-    handleRejectClick(idx) {
-      const currentInvitation = this.invitations[idx];
-      if (currentInvitation.state === PENDING_REJECTION) {
-        this.$store.dispatch('rejectGroupInvitation', idx).then(() => {
-          this.$root.$emit('toast', {
-            content: `You rejected the invite for group ${currentInvitation.group_name}.`,
-          });
-        });
-      } else if (currentInvitation.state === '') {
-        currentInvitation.state = PENDING_REJECTION;
-      }
-    },
-    handleInvitationBack(idx) {
-      this.invitations[idx].state = '';
-    },
-    isInvitationInitial(invitation) {
-      return invitation.state === '';
-    },
-    isInvitationAccepted(invitation) {
-      return invitation.state === INVITATION_STATE.ACCEPTED;
-    },
-    isInvitationRejected(invitation) {
-      return invitation.state === INVITATION_STATE.REJECTED;
-    },
-    isInvitationPendingRejection(invitation) {
-      return invitation.state === PENDING_REJECTION;
-    },
+    handleAcceptClick() {},
+    handleRejectClick() {},
   },
   computed: {
-    invitations() {
-      return this.$store.getters.getActiveInvitations;
-    },
-    showInvitations() {
-      return this.$route.name !== ACCESS_GROUP_TOS_PAGE;
+    groupName() {
+      return this.$store.state.accessGroup.group.name;
     },
   },
   data() {
     return {
-      mode: '',
+      tosAccepted: false,
     };
   },
 };
 </script>
 
 <style>
-.invitation-notification-item {
+.invitation-notification-container {
   background: #f2fcfd;
   border: 1px solid var(--blue-60);
   border-radius: var(--formElementRadius);
   text-align: center;
   padding: 1em;
-  margin: 1em 0;
-}
-
-.invitation-notification-item:first-child {
-  margin-top: 0;
-}
-
-.invitation-notification-item:last-child {
-  margin-bottom: 0;
 }
 
 .invitation-notification-container .invitation-notification__description {
   margin-top: 0;
 }
 
-.invitation-notification-container .invitation-notification__actions {
+.invitation-notification-container .invitation-notification__tos-container {
+  display: flex;
+  justify-content: center;
+}
+
+.invitation-notification__tos-container .tos__description {
+  margin: 0 1em 0 0;
+}
+.invitation-notification__tos-container .tos__field {
+  display: flex;
+  align-items: center;
+}
+
+.invitation-notification-container .invitation-notification_actions {
   margin-top: 1em;
 }
 
-.invitation-notification-container .invitation-notification__actions .button {
+.invitation-notification-container .invitation-notification_actions .button {
   margin: 0 1em;
-  display: inline-block;
 }
 
-.invitation-notification-container
-  .invitation-notification__actions
-  .button:first-child {
+.invitation-notification-container .invitation-notification_actions .button:first-child {
   margin-left: 0;
 }
 </style>
