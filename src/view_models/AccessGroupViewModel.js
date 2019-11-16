@@ -1,3 +1,34 @@
+export const INVITATION_STATE = {
+  ACCEPTED: 'accepted',
+  REJECTED: 'rejected',
+};
+export class GroupInvitationViewModel {
+  constructor(data) {
+    this.groupName = '';
+    this.groupId = '';
+    this.requiresTOS = false;
+    this.acceptedTOS = false;
+    this.state = '';
+    this.error = false;
+    this.processData(data);
+  }
+
+  processData(data) {
+    try {
+      this.groupName = data.groupName;
+      this.groupId = data.groupId;
+      this.requiresTOS = data.requiresTOS;
+      if ('state' in data) {
+        this.state = data.state;
+      }
+    } catch (e) {
+      this.error = e.message;
+      console.error('GroupInvitation error: ', e.message);
+      throw new Error(e.message);
+    }
+  }
+}
+
 export class HistoricalEventViewModel {
   constructor(data) {
     this.error = false;

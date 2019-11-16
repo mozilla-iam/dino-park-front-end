@@ -9,7 +9,7 @@ import store from './store';
 // polyfill/fallback adapted from MDN (https://developer.mozilla.org/en-US/docs/Web/API/Background_Tasks_API#Falling_back_to_setTimeout)
 window.requestIdleCallback =
   window.requestIdleCallback ||
-  ((handler) => {
+  (handler => {
     const startTime = Date.now();
 
     return setTimeout(() => {
@@ -36,7 +36,11 @@ store.dispatch('fetchUser').then(function() {
   new Vue({
     router,
     apolloProvider,
-    render: (h) => h(App),
+    render: h => h(App),
     store,
   }).$mount('#app');
+});
+
+store.dispatch('fetchGroupInvitations').then(function(data) {
+  console.log('Found invitations: ', data);
 });
