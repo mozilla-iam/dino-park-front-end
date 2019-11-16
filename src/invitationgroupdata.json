@@ -1,0 +1,10 @@
+{
+  "invitations": [
+    {
+      "groupName": "test",
+      "groupId": "test",
+      "requiresTOS": true,
+      "state": ""
+    }
+  ]
+}

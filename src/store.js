@@ -4,7 +4,13 @@ import { DISPLAY_PROFILE } from './queries/profile';
 import Scope from './assets/js/scope';
 import { client } from './server';
 import accessGroupData from './accessgroupdata.json';
-import { AccessGroupDetailsViewModel } from './view_models/AccessGroupViewModel';
+import invitationGroupData from './invitationgroupdata.json';
+import accessGroupTermsOfService from './accessgrouptermsofservice.json';
+import {
+  AccessGroupDetailsViewModel,
+  GroupInvitationViewModel,
+  INVITATION_STATE,
+} from './view_models/AccessGroupViewModel';
 
 Vue.use(Vuex);
 export default new Vuex.Store({
@@ -12,6 +18,7 @@ export default new Vuex.Store({
     user: null,
     scope: new Scope(),
     accessGroup: null,
+    groupInvitations: [],
     org: null,
     personViewPreference: 'list',
     error: false,
@@ -33,6 +40,25 @@ export default new Vuex.Store({
       }
       return data;
     },
+    // TODO: Eventually will want to put this under a list of global fetches
+    async fetchGroupInvitations({ commit }) {
+      const data = invitationGroupData;
+      try {
+        commit('setInvitationData', data.invitations);
+      } catch (e) {
+        throw new Error(e.message);
+      }
+      return data;
+    },
+    async fetchAccessGroupTOS({ commit }) {
+      const { content } = accessGroupTermsOfService;
+      try {
+        commit('setAccessGroupTOS', content);
+      } catch (e) {
+        throw new Error(e.message);
+      }
+      return content;
+    },
   },
   mutations: {
     setUser(state, user) {
@@ -52,6 +78,40 @@ export default new Vuex.Store({
         state.error = e.message;
         throw new Error(e.message);
       }
+    },
+    setInvitationData(state, invitations) {
+      try {
+        state.groupInvitations = invitations.map(
+          invite => new GroupInvitationViewModel(invite)
+        );
+      } catch (e) {
+        state.error = e.message;
+        throw new Error(e.message);
+      }
+    },
+    acceptGroupInvitation(state, idx) {
+      if (idx >= state.groupInvitations.length) {
+        state.error = `Index out of bounds for groupInvitations: ${idx}`;
+        throw new Error(state.error);
+      }
+      state.groupInvitations[idx].state = INVITATION_STATE.ACCEPTED;
+    },
+    rejectGroupInvitation(state, idx) {
+      if (idx >= state.groupInvitations.length) {
+        state.error = `Index out of bounds for groupInvitations: ${idx}`;
+        throw new Error(state.error);
+      }
+      state.groupInvitations[idx].state = INVITATION_STATE.REJECTED;
+    },
+    setAccessGroupTOS(state, content) {
+      state.groupTOS = content;
+    },
+  },
+  getters: {
+    getActiveInvitations: state => {
+      return state.groupInvitations.filter(invitation => {
+        return invitation.state === '';
+      });
     },
   },
 });
