@@ -29,7 +29,7 @@
     <section class="description-container-area description-content">
       <p class="description-content__sub">{{ membersCountText }}</p>
       <p class="description-content__main">{{ model.group.description }}</p>
-      <a href="#" class="description-content__tos-link">Terms of service</a>
+      <a :href="tosUrl" class="description-content__tos-link">Terms of service</a>
     </section>
     <footer class="description-container-area description-footer">
       <Button class="primary-action" v-on:click="handleLeaveClick">Leave</Button>
@@ -72,6 +72,10 @@ export default {
         fullText += `${this.model.member_count} members`;
       }
       return fullText;
+    },
+    // TODO: Move this to somewhere more global
+    tosUrl() {
+      return `${this.$route.path}/tos`;
     },
   },
   data() {

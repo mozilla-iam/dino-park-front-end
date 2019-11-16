@@ -6,6 +6,7 @@ import PageOrgchart from './pages/PageOrgchart.vue';
 import PageSearchResult from './pages/PageSearchResult.vue';
 import PageUnknown from './pages/PageUnknown.vue';
 import PageAccessGroup from './pages/PageAccessGroup.vue';
+import PageAccessGroupTerms from './pages/PageAccessGroupTerms.vue';
 import scrolling from './assets/js/scrolling';
 import store from './store';
 
@@ -105,6 +106,12 @@ const router = new Router({
       props: true,
     },
     {
+      path: '/a/:groupid/tos',
+      name: 'Access Group TOS',
+      component: PageAccessGroupTerms,
+      props: true,
+    },
+    {
       path: '/g',
       name: 'Edit Access Group',
       component: PageAccessGroup,
@@ -135,13 +142,7 @@ function usernamePrefix(username) {
   return '';
 }
 
-export const ACCESS_GROUP_TOS_PAGE = 'Access Group TOS';
-
-export const ACCESS_GROUP_PAGES = [
-  'Access Group',
-  'Edit Access Group',
-  ACCESS_GROUP_TOS_PAGE,
-];
+const ACCESS_GROUP_PAGES = ['Access Group', 'Edit Access Group', 'Access Group TOS'];
 
 router.beforeEach((to, from, next) => {
   switch (to.name) {
@@ -161,21 +162,32 @@ router.beforeEach((to, from, next) => {
     case 'Edit Profile':
       document.title = `Edit - Profile - Mozilla People Directory`;
       break;
-    case 'Access Group':
-    case 'Edit Access Group':
-      // eslint-disable-next-line
+    case 'Access Group TOS':
       store
-        .dispatch('fetchAccessGroup')
+        .dispatch('fetchAccessGroupTOS')
         .then(data => {
-          console.log('Fetched group: ', data);
+          console.log('Fetched terms: ', data);
         })
         .catch(error => {
           console.error('Caught dispatch error: ', error);
           next(`/error?message=${error}`);
         });
+      document.title = 'Access Group Terms of Service - Mozilla People Directory';
       break;
     default:
       document.title = `${to.name} - Mozilla People Directory`;
+  }
+  if (ACCESS_GROUP_PAGES.includes(to.name)) {
+    // eslint-disable-next-line
+    store
+      .dispatch('fetchAccessGroup')
+      .then(data => {
+        console.log('Fetched group: ', data);
+      })
+      .catch(error => {
+        console.error('Caught dispatch error: ', error);
+        next(`/error?message=${error}`);
+      });
   }
   next();
 });

@@ -1,6 +1,6 @@
 <template>
   <main class="access-group">
-    <section class="meta-area">
+    <section class="meta-area" v-if="metaAreaVisible">
       <AccessGroupInvitationNotification />
     </section>
     <section class="primary-area">
@@ -63,6 +63,9 @@ export default {
     curatorsCount() {
       return this.$store.state.accessGroup.curators.length;
     },
+    metaAreaVisible() {
+      return this.$store.getters.getActiveInvitations.length > 0;
+    },
   },
 };
 </script>
@@ -97,7 +100,7 @@ export default {
   .access-group {
     display: inline-block;
     width: 100%;
-    padding-top: 4em;
+    padding-top: 2em;
   }
   .access-group > img {
     float: right;
@@ -113,11 +116,11 @@ export default {
   right: 1.5em;
 }
 
-.meta-area {
+.access-group .meta-area {
   margin-bottom: 1em;
 }
 
-.primary-area {
+.access-group .primary-area {
   display: flex;
   flex-direction: column;
   overflow: visible;
@@ -129,7 +132,7 @@ export default {
 }
 
 @media (min-width: 57.5em) {
-  .primary-area {
+  .access-group .primary-area {
     display: flex;
     flex-direction: row;
     width: 100%;
