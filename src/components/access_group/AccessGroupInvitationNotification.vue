@@ -1,30 +1,39 @@
 <template>
   <article class="invitation-notification-container">
-    <p class="invitation-notification__description">
-      You've been invited to join {{ groupName }} group
-    </p>
-    <aside class="invitation-notification__tos-container">
-      <p class="tos__description">
-        Accept
-        <a href="#">terms of service</a>
+    <div
+      class="invitation-notification-item"
+      v-for="(notification, idx) in invitations"
+      :key="idx"
+    >
+      <p class="invitation-notification__description">
+        You've been invited to join {{ notification.groupName }} group
       </p>
-      <span class="tos__field">
-        <input type="checkbox" v-model="tosAccepted" />
-      </span>
-    </aside>
-    <footer class="invitation-notification_actions">
-      <Button
-        class="primary-action"
-        v-on:click="handleAcceptClick"
-        :disabled="!tosAccepted"
-        >Accept</Button
+      <aside
+        class="invitation-notification__tos-container"
+        v-if="notification.requiresTOS"
       >
-      <Button
-        class="secondary-action button--secondary button--action"
-        v-on:click="handleRejectClick"
-        >Reject</Button
-      >
-    </footer>
+        <p class="tos__description">
+          Accept
+          <a :href="tosUrl">terms of service</a>
+        </p>
+        <span class="tos__field">
+          <input type="checkbox" v-model="notification.acceptedTOS" />
+        </span>
+      </aside>
+      <footer class="invitation-notification_actions">
+        <Button
+          class="primary-action"
+          v-on:click="handleAcceptClick(idx)"
+          :disabled="!notification.acceptedTOS"
+          >Accept</Button
+        >
+        <Button
+          class="secondary-action button--secondary button--action"
+          v-on:click="handleRejectClick(idx)"
+          >Reject</Button
+        >
+      </footer>
+    </div>
   </article>
 </template>
 
@@ -34,22 +43,26 @@ import Button from '@/components/ui/Button.vue';
 export default {
   name: 'AccessGroupInvitationNotification',
   components: { Button },
-  props: {
-    member: Object,
-  },
+  props: {},
   methods: {
-    handleAcceptClick() {},
-    handleRejectClick() {},
+    handleAcceptClick(idx) {
+      this.$store.commit('acceptGroupInvitation', idx);
+    },
+    handleRejectClick(idx) {
+      this.$store.commit('rejectGroupInvitation', idx);
+    },
   },
   computed: {
-    groupName() {
-      return this.$store.state.accessGroup.group.name;
+    invitations() {
+      return this.$store.getters.getActiveInvitations;
+    },
+    // TODO: Move this to somewhere more global
+    tosUrl() {
+      return `${this.$route.path}/tos`;
     },
   },
   data() {
-    return {
-      tosAccepted: false,
-    };
+    return {};
   },
 };
 </script>
