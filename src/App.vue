@@ -2,7 +2,7 @@
   <div id="app" :class="['app-container', containerCSS]">
     <Banner v-if="showBanner" @close="showBanner = false" ref="banner" />
     <TopBar></TopBar>
-    <GlobalNotifications class="container" />
+    <GlobalNotifications />
     <RouterView class="container" />
     <Footer></Footer>
   </div>
@@ -21,11 +21,6 @@ export default {
     TopBar,
     Footer,
     GlobalNotifications,
-  },
-  computed: {
-    containerCSS() {
-      return `${this.$route.meta.key}-container`;
-    },
   },
   methods: {
     awaitTabbing() {

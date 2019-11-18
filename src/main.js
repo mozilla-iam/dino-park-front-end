@@ -38,6 +38,7 @@ Vue.mixin({
   }).$mount('#app');
 });
 
+// eslint-disable-next-line
 store.dispatch('fetchGroupInvitations').then(function(data) {
   console.log('Found invitations: ', data);
 });

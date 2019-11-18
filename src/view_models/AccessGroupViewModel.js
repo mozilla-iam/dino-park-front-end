@@ -4,10 +4,9 @@ export const INVITATION_STATE = {
 };
 export class GroupInvitationViewModel {
   constructor(data) {
-    this.groupName = '';
-    this.groupId = '';
-    this.requiresTOS = false;
-    this.acceptedTOS = false;
+    this.group_name = '';
+    this.requires_tos = false;
+    this.accepted_tos = false;
     this.state = '';
     this.error = false;
     this.processData(data);
@@ -15,9 +14,8 @@ export class GroupInvitationViewModel {
 
   processData(data) {
     try {
-      this.groupName = data.groupName;
-      this.groupId = data.groupId;
-      this.requiresTOS = data.requiresTOS;
+      this.group_name = data.group_name;
+      this.requires_tos = data.terms;
       if ('state' in data) {
         this.state = data.state;
       }
