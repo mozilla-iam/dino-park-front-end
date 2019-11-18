@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 export function getTwoColumnGridArraySplitFromArray(list) {
   return list.reduce(
     (acc, curr, idx) => {

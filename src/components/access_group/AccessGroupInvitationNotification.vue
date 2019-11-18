@@ -63,6 +63,7 @@
 
 <script>
 import Button from '@/components/ui/Button.vue';
+import LinksMixin from '@/components/_mixins/LinksMixin.vue';
 import { INVITATION_STATE } from '@/view_models/AccessGroupViewModel';
 
 const PENDING_REJECTION = 'PENDING_REJECTION';
@@ -70,6 +71,7 @@ const PENDING_REJECTION = 'PENDING_REJECTION';
 export default {
   name: 'AccessGroupInvitationNotification',
   components: { Button },
+  mixins: [LinksMixin],
   props: {},
   methods: {
     handleAcceptClick(idx) {
@@ -110,10 +112,6 @@ export default {
   computed: {
     invitations() {
       return this.$store.getters.getActiveInvitations;
-    },
-    // TODO: Move this to somewhere more global
-    tosUrl() {
-      return `${this.$route.path}/tos`;
     },
   },
   data() {
