@@ -42,10 +42,12 @@ import EditButton from '@/components/ui/EditButton.vue';
 import Button from '@/components/ui/Button.vue';
 import Icon from '@/components/ui/Icon.vue';
 import Tooltip from '@/components/ui/Tooltip.vue';
+import LinksMixin from '@/components/_mixins/LinksMixin.vue';
 
 export default {
   name: 'AccessGroupDescription',
   components: { EditButton, Button, Icon, Tooltip },
+  mixins: [LinksMixin],
   props: {
     title: String,
     editable: {
@@ -72,10 +74,6 @@ export default {
         fullText += `${this.model.member_count} members`;
       }
       return fullText;
-    },
-    // TODO: Move this to somewhere more global
-    tosUrl() {
-      return `${this.$route.path}/tos`;
     },
   },
   data() {

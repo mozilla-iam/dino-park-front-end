@@ -38,7 +38,7 @@ import SearchForm from '@/components/ui/SearchForm.vue';
 import Select from '@/components/ui/Select.vue';
 import Tooltip from '@/components/ui/Tooltip.vue';
 import Icon from '@/components/ui/Icon.vue';
-import { getTwoColumnGridArraySplitFromArray } from '@/utils/ComponentUtils';
+import { getTwoColumnGridArraySplitFromArray } from '@/assets/js/component-utils';
 
 export default {
   name: 'AccessGroupMembers',
