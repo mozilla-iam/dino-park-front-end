@@ -2,6 +2,7 @@
   <div id="app" class="app-container">
     <Banner v-if="showBanner" @close="showBanner = false" ref="banner" />
     <TopBar></TopBar>
+    <GlobalNotifications />
     <RouterView class="container" />
     <Footer></Footer>
   </div>
@@ -11,6 +12,7 @@
 import Banner from '@/components/ui/Banner.vue';
 import TopBar from '@/components/ui/TopBar.vue';
 import Footer from '@/components/ui/Footer.vue';
+import GlobalNotifications from '@/components/ui/GlobalNotifications.vue';
 
 export default {
   name: 'PageHome',
@@ -18,10 +20,11 @@ export default {
     Banner,
     TopBar,
     Footer,
+    GlobalNotifications,
   },
   methods: {
     awaitTabbing() {
-      document.addEventListener('keydown', (e) => {
+      document.addEventListener('keydown', e => {
         if (e.key === 'Tab') {
           document.body.classList.add('focus-styles');
         }
@@ -70,8 +73,7 @@ export default {
   --layerModal: 10;
 
   --shadowCard: 0 0.25em 0.25em 0 rgba(210, 210, 210, 0.5);
-  --focusOutlineShadow: 0px 0 0 1px var(--blue-60),
-    0 0 0 3px var(--transparentBlue);
+  --focusOutlineShadow: 0px 0 0 1px var(--blue-60), 0 0 0 3px var(--transparentBlue);
 
   --imageRadius: 0.25em;
   --formElementRadius: 0.25em;

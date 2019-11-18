@@ -45,6 +45,7 @@ Promise.all([store.dispatch('fetchUser'), Fluent.init()]).then(([, fluent]) => {
   }).$mount('#app');
 });
 
+// eslint-disable-next-line
 store.dispatch('fetchGroupInvitations').then(function(data) {
   console.log('Found invitations: ', data);
 });
