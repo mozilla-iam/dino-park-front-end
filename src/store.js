@@ -11,7 +11,10 @@ import {
   GroupInvitationViewModel,
   INVITATION_STATE,
 } from './view_models/AccessGroupViewModel';
+import AccessGroups from '@/assets/js/access-groups';
+import router from './router';
 
+const accessGroupsService = new AccessGroups();
 Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
@@ -94,14 +97,25 @@ export default new Vuex.Store({
         state.error = `Index out of bounds for groupInvitations: ${idx}`;
         throw new Error(state.error);
       }
-      state.groupInvitations[idx].state = INVITATION_STATE.ACCEPTED;
+      const currentInvitation = state.groupInvitations[idx];
+      currentInvitation.state = INVITATION_STATE.ACCEPTED;
+      accessGroupsService.acceptInvitation(currentInvitation.group_name).then(result => {
+        router.push({
+          name: 'Access Group',
+          params: { groupid: currentInvitation.group_name },
+        });
+      });
     },
     rejectGroupInvitation(state, idx) {
       if (idx >= state.groupInvitations.length) {
         state.error = `Index out of bounds for groupInvitations: ${idx}`;
         throw new Error(state.error);
       }
-      state.groupInvitations[idx].state = INVITATION_STATE.REJECTED;
+      const currentInvitation = state.groupInvitations[idx];
+      currentInvitation.state = INVITATION_STATE.REJECTED;
+      accessGroupsService.rejectInvitation(currentInvitation.group_name).then(result => {
+        console.log('Reject complete: ', currentInvitation.group_name);
+      });
     },
     setAccessGroupTOS(state, content) {
       state.groupTOS = content;
@@ -110,7 +124,10 @@ export default new Vuex.Store({
   getters: {
     getActiveInvitations: state => {
       return state.groupInvitations.filter(invitation => {
-        return invitation.state === '';
+        return (
+          invitation.state !== INVITATION_STATE.ACCEPTED &&
+          invitation.state !== INVITATION_STATE.REJECTED
+        );
       });
     },
   },

@@ -1,37 +1,61 @@
 <template>
-  <article class="invitation-notification-container">
+  <article
+    class="notification-container invitation-notification-container"
+    v-if="invitations.length > 0"
+  >
     <div
       class="invitation-notification-item"
       v-for="(notification, idx) in invitations"
       :key="idx"
     >
-      <p class="invitation-notification__description">
-        You've been invited to join {{ notification.groupName }} group
+      <p
+        class="invitation-notification__description"
+        v-if="isInvitationInitial(notification)"
+      >
+        You've been invited to join {{ notification.group_name }} group
+      </p>
+      <p
+        class="invitation-notification__description"
+        v-else-if="isInvitationPendingRejection(notification)"
+      >
+        Are you sure this is what you want to do?
       </p>
       <aside
         class="invitation-notification__tos-container"
-        v-if="notification.requiresTOS"
+        v-if="notification.requires_tos && isInvitationInitial(notification)"
       >
         <p class="tos__description">
           Accept
           <a :href="tosUrl">terms of service</a>
         </p>
         <span class="tos__field">
-          <input type="checkbox" v-model="notification.acceptedTOS" />
+          <input type="checkbox" v-model="notification.accepted_tos" />
         </span>
       </aside>
-      <footer class="invitation-notification_actions">
-        <Button
-          class="primary-action"
-          v-on:click="handleAcceptClick(idx)"
-          :disabled="!notification.acceptedTOS"
-          >Accept</Button
-        >
-        <Button
-          class="secondary-action button--secondary button--action"
-          v-on:click="handleRejectClick(idx)"
-          >Reject</Button
-        >
+      <footer class="invitation-notification__actions">
+        <template v-if="isInvitationInitial(notification)">
+          <Button
+            class="primary-action"
+            v-on:click="handleAcceptClick(idx)"
+            :disabled="!isInvitationAcceptable(notification)"
+            >Accept</Button
+          >
+          <Button
+            class="secondary-action button--secondary button--action"
+            v-on:click="handleRejectClick(idx)"
+            >Reject</Button
+          >
+        </template>
+        <template v-if="isInvitationPendingRejection(notification)">
+          <Button
+            class="secondary-action button--secondary button--action"
+            v-on:click="handleRejectClick(idx)"
+            >Confirm</Button
+          >
+          <Button class="primary-action" v-on:click="handleInvitationBack(idx)"
+            >Back</Button
+          >
+        </template>
       </footer>
     </div>
   </article>
@@ -39,6 +63,9 @@
 
 <script>
 import Button from '@/components/ui/Button.vue';
+import { INVITATION_STATE } from '@/view_models/AccessGroupViewModel';
+
+const PENDING_REJECTION = 'PENDING_REJECTION';
 
 export default {
   name: 'AccessGroupInvitationNotification',
@@ -49,7 +76,35 @@ export default {
       this.$store.commit('acceptGroupInvitation', idx);
     },
     handleRejectClick(idx) {
-      this.$store.commit('rejectGroupInvitation', idx);
+      if (this.invitations[idx].state === PENDING_REJECTION) {
+        this.$store.commit('rejectGroupInvitation', idx);
+      } else if (this.invitations[idx].state === '') {
+        this.invitations[idx].state = PENDING_REJECTION;
+      }
+    },
+    handleInvitationBack(idx) {
+      this.invitations[idx].state = '';
+    },
+    isInvitationAcceptable(notification) {
+      if (!notification) {
+        return false;
+      }
+      return (
+        !notification.requires_tos ||
+        (notification.requires_tos && notification.accepted_tos)
+      );
+    },
+    isInvitationInitial(invitation) {
+      return invitation.state === '';
+    },
+    isInvitationAccepted(invitation) {
+      return invitation.state === INVITATION_STATE.ACCEPTED;
+    },
+    isInvitationRejected(invitation) {
+      return invitation.state === INVITATION_STATE.REJECTED;
+    },
+    isInvitationPendingRejection(invitation) {
+      return invitation.state === PENDING_REJECTION;
     },
   },
   computed: {
@@ -62,7 +117,9 @@ export default {
     },
   },
   data() {
-    return {};
+    return {
+      mode: '',
+    };
   },
 };
 </script>
@@ -93,15 +150,16 @@ export default {
   align-items: center;
 }
 
-.invitation-notification-container .invitation-notification_actions {
+.invitation-notification-container .invitation-notification__actions {
   margin-top: 1em;
 }
 
-.invitation-notification-container .invitation-notification_actions .button {
+.invitation-notification-container .invitation-notification__actions .button {
   margin: 0 1em;
+  display: inline-block;
 }
 
-.invitation-notification-container .invitation-notification_actions .button:first-child {
+.invitation-notification-container .invitation-notification__actions .button:first-child {
   margin-left: 0;
 }
 </style>
