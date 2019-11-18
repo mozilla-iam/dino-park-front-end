@@ -13,9 +13,9 @@ export default {
 <style>
 .meta-list {
   margin: 2em 0;
-  overflow: hidden;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(7.5em, 1fr));
+  grid-gap: 1em;
 }
 .edit-personal-info__meta .meta-list {
   grid-template-columns: auto;

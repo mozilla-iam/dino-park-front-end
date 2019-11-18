@@ -45,6 +45,7 @@
           identities,
           userOnOwnProfile,
           editable: !viewAs,
+          accessInformation,
         }"
       />
     </div>
