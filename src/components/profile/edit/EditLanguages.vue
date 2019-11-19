@@ -57,7 +57,7 @@
 import Icon from '@/components/ui/Icon.vue';
 import PrivacySetting from '@/components/profile/PrivacySetting.vue';
 import Tag from '@/components/ui/Tag.vue';
-import { displayLevelsFor, DISPLAY_LEVELS } from '@/assets/js/display-levels';
+import { DISPLAY_LEVELS } from '@/assets/js/display-levels';
 import EditMutationWrapper from './EditMutationWrapper.vue';
 
 export default {
@@ -79,7 +79,6 @@ export default {
     Tag,
   },
   methods: {
-    displayLevelsFor,
     handleAddLanguage() {
       if (!this.addingLanguage) {
         this.addingLanguage = true;

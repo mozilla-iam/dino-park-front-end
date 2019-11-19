@@ -1,3 +1,5 @@
+import Scope from '@/assets/js/scope';
+
 export const DISPLAY_LEVELS = {
   public: {
     label: 'Public',
@@ -56,6 +58,15 @@ const VALID_DISPLAY_LEVELS = {
   'accessInformation.mozilliansorg': DISPLAY_NOT_PRIVATE,
 };
 
-export function displayLevelsFor(field) {
-  return (field && VALID_DISPLAY_LEVELS[field]) || DISPLAY_NOT_PRIVATE;
+const NON_STAFF_DISPLAY_LEVELS = {
+  primaryEmail: DISPLAY_ANY,
+};
+
+export function displayLevelsFor(field, scope = new Scope()) {
+  return (
+    (field &&
+      ((!scope.isStaff && NON_STAFF_DISPLAY_LEVELS[field]) ||
+        VALID_DISPLAY_LEVELS[field])) ||
+    DISPLAY_NOT_PRIVATE
+  );
 }

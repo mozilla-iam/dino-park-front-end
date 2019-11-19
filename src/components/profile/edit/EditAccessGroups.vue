@@ -86,7 +86,7 @@ import Icon from '@/components/ui/Icon.vue';
 import IconBlock from '@/components/ui/IconBlock.vue';
 import IconBlockList from '@/components/ui/IconBlockList.vue';
 import PrivacySetting from '@/components/profile/PrivacySetting.vue';
-import { displayLevelsFor, DISPLAY_LEVELS } from '@/assets/js/display-levels';
+import { DISPLAY_LEVELS } from '@/assets/js/display-levels';
 
 export default {
   name: 'EditAccessGroups',
@@ -105,9 +105,6 @@ export default {
     IconBlock,
     IconBlockList,
     PrivacySetting,
-  },
-  methods: {
-    displayLevelsFor,
   },
   mounted() {
     this.$refs.header.focus();

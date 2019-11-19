@@ -75,7 +75,7 @@ import Checkbox from '@/components/ui/Checkbox.vue';
 import Icon from '@/components/ui/Icon.vue';
 import PrivacySetting from '@/components/profile/PrivacySetting.vue';
 import Select from '@/components/ui/Select.vue';
-import { displayLevelsFor, DISPLAY_LEVELS } from '@/assets/js/display-levels';
+import { DISPLAY_LEVELS } from '@/assets/js/display-levels';
 import EditMutationWrapper from './EditMutationWrapper.vue';
 
 export default {
@@ -100,7 +100,6 @@ export default {
     Select,
   },
   methods: {
-    displayLevelsFor,
     formatAsKeyValues([k, v]) {
       return {
         k,

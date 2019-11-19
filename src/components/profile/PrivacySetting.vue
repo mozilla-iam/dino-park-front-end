@@ -5,7 +5,7 @@
     :id="id"
     v-bind="privacySettings"
     v-model="profileFieldObject.display"
-    :options="displayLevelsFor(profileFieldName)"
+    :options="displayLevelsFor(profileFieldName, scope)"
     :nonOption="currentDisplayOption()"
     :disabled="disabled"
     @input="$emit('input', $event)"
