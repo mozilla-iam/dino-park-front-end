@@ -97,6 +97,9 @@ export default {
   margin-right: 0.2em;
 }
 
+.data-classification .popover {
+  z-index: var(--layerAboveNav);
+}
 .data-classification .tooltip button {
   color: inherit;
   display: flex;
