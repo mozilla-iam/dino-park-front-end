@@ -11,6 +11,8 @@
       location,
       timezone,
       description,
+      staffInformationTitle: staffInformationTitle.display,
+      staffInformationOfficeLocation: staffInformationOfficeLocation.display,
     }"
     :initialValues="initialValues"
     formName="Edit personal information"
@@ -169,14 +171,13 @@
           type="text"
           id="field-official-job-title"
           disabled
-          :value="staffInformation.title.value"
+          :value="staffInformationTitle.value"
         />
         <PrivacySetting
           label="Title privacy levels"
           id="field-title-privacy"
           profileFieldName="staffInformation.title"
-          :profileFieldObject="staffInformation.title"
-          :disabled="true"
+          :profileFieldObject="staffInformationTitle"
         />
       </template>
 
@@ -242,14 +243,13 @@
           type="text"
           id="field-office-location"
           disabled
-          :value="staffInformation.officeLocation.value"
+          :value="staffInformationOfficeLocation.value"
         />
         <PrivacySetting
           label="Office location privacy levels"
           id="field-office-location-privacy"
           profileFieldName="staffInformation.officeLocation"
-          :profileFieldObject="staffInformation.officeLocation"
-          :disabled="true"
+          :profileFieldObject="staffInformationOfficeLocation"
         />
       </template>
 
@@ -462,6 +462,14 @@ export default {
         },
         {},
       ),
+      staffInformationTitle: {
+        value: this.staffInformation.title.value,
+        display: this.staffInformation.title.metadata.display,
+      },
+      staffInformationOfficeLocation: {
+        value: this.staffInformation.officeLocation.value,
+        display: this.staffInformation.officeLocation.metadata.display,
+      },
       showPictureModal: false,
       pictureData: { value: this.initialValues.picture.value || 'default:' },
       timezones: [],

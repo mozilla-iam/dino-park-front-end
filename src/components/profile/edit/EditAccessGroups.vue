@@ -2,6 +2,7 @@
   <EditMutationWrapper
     :editVariables="{
       accessInformationMozilliansorg: editMozilliansorgGroups.display,
+      accessInformationLdap: editLdapGroups.display,
     }"
     :initialValues="initialAccessInformation"
     formName="Edit access groups"
@@ -18,9 +19,8 @@
             label="LDAP access groups privacy levels"
             id="section-access-groups-ldap-privacy"
             profileFieldName="accessInformation.ldap"
-            :profileFieldObject="initialAccessInformation.ldap.metadata"
+            :profileFieldObject="editLdapGroups"
             :collapsedShowLabel="true"
-            :disabled="true"
           />
         </div>
         <IconBlockList class="icon-block-list--multi-col">
@@ -115,15 +115,23 @@ export default {
   data() {
     const {
       mozilliansorg: {
-        values = {},
-        metadata: { display = DISPLAY_LEVELS.staff.value } = {},
+        values: mozilliansorgValues = {},
+        metadata: {
+          display: mozilliansorgDisplay = DISPLAY_LEVELS.staff.value,
+        } = {},
+      } = {},
+      ldap: {
+        metadata: { display: ldapDisplay = DISPLAY_LEVELS.private.value } = {},
       } = {},
     } = this.initialAccessInformation;
     return {
       editMozilliansorgGroups: {
-        display,
+        display: mozilliansorgDisplay,
       },
-      mozilliansorgGroups: [...Object.entries(values || {})],
+      editLdapGroups: {
+        display: ldapDisplay,
+      },
+      mozilliansorgGroups: [...Object.entries(mozilliansorgValues || {})],
     };
   },
 };

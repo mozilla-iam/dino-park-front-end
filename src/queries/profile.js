@@ -81,8 +81,12 @@ const MUTATE_PROFILE = gql`
     $tags: KeyValuesWithDisplay
     $uris: KeyValuesWithDisplay
     $accessInformationMozilliansorg: Display
+    $accessInformationLdap: Display
     $custom1PrimaryEmail: StringWithDisplay
     $custom2PrimaryEmail: StringWithDisplay
+    $staffInformationTitle: Display
+    $staffInformationOfficeLocation: Display
+    $primaryEmail: Display
   ) {
     profile(
       update: {
@@ -102,8 +106,12 @@ const MUTATE_PROFILE = gql`
         tags: $tags
         uris: $uris
         accessInformationMozilliansorg: $accessInformationMozilliansorg
+        accessInformationLdap: $accessInformationLdap
         custom1PrimaryEmail: $custom1PrimaryEmail
         custom2PrimaryEmail: $custom2PrimaryEmail
+        staffInformationTitle: $staffInformationTitle
+        staffInformationOfficeLocation: $staffInformationOfficeLocation
+        primaryEmail: $primaryEmail
       }
     ) {
       uuid {
@@ -198,6 +206,12 @@ const MUTATE_PROFILE = gql`
           display
         }
       }
+      primaryEmail {
+        value
+        metadata {
+          display
+        }
+      }
       pronouns {
         value
         metadata {
@@ -237,6 +251,32 @@ const MUTATE_PROFILE = gql`
         }
         ldap {
           values
+          metadata {
+            display
+          }
+        }
+      }
+      staffInformation {
+        staff {
+          value
+          metadata {
+            display
+          }
+        }
+        team {
+          value
+          metadata {
+            display
+          }
+        }
+        title {
+          value
+          metadata {
+            display
+          }
+        }
+        officeLocation {
+          value
           metadata {
             display
           }

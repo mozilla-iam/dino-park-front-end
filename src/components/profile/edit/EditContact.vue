@@ -35,7 +35,6 @@
           id="field-email-primary-privacy"
           profileFieldName="primaryEmail"
           :profileFieldObject="primaryEmail"
-          :disabled="true"
         />
         <Checkbox
           :checked="true"
@@ -162,7 +161,7 @@ import { DISPLAY_LEVELS } from '@/assets/js/display-levels';
 
 const EMPTY_SECONDARY_EMAIL = {
   value: '',
-  display: DISPLAY_LEVELS.private.value,
+  display: DISPLAY_LEVELS.staff.value,
 };
 
 export default {
@@ -191,6 +190,7 @@ export default {
     editVariables() {
       return {
         phoneNumbers: this.phoneNumbers,
+        primaryEmail: this.primaryEmail.display,
         custom1PrimaryEmail: this.custom1PrimaryEmail,
         custom2PrimaryEmail: this.custom2PrimaryEmail,
       };
@@ -302,7 +302,7 @@ export default {
       display:
         (secondaryEmailContactMe
           ? editSecondaryEmail1Display
-          : editSecondaryEmail2Display) || DISPLAY_LEVELS.private.value,
+          : editSecondaryEmail2Display) || DISPLAY_LEVELS.staff.value,
     };
 
     /*
