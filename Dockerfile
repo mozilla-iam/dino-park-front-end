@@ -1,6 +1,7 @@
 # build stage
 FROM node:alpine as build-stage
 
+RUN apk add git
 WORKDIR /app
 COPY package.json ./
 COPY package-lock.json ./
