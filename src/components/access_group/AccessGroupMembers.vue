@@ -14,6 +14,18 @@
         alternateButtonText="Close member search info"
       >You can search by name, username and email</Tooltip>
     </header>
+    <nav class="members-container__tabs">
+      <ul class="tabs-container">
+        <li
+          :class="{ 'tabs-container__item': true, active: isTabActive(tab) }"
+          v-for="(tab, idx) in tabList"
+          :key="idx"
+          @click="handleTabClick(tab)"
+        >
+          {{ tab.label }}
+        </li>
+      </ul>
+    </nav>
     <ul class="members-container__list">
       <li v-for="(column, idx) in filteredListDisplay" :key="idx" class="list-column-container">
         <ul class="members-container__list-column">
@@ -35,6 +47,7 @@ import Tooltip from '@/components/ui/Tooltip.vue';
 import Icon from '@/components/ui/Icon.vue';
 import { getTwoColumnGridArraySplitFromArray } from '@/assets/js/component-utils';
 
+const defaultTab = 'all';
 export default {
   name: 'AccessGroupMembers',
   components: {
@@ -60,13 +73,26 @@ export default {
       });
       return searchQuery;
     },
+    handleTabClick(tab) {
+      this.activeTab = tab.key;
+    },
     clearSearchHandler() {
       this.filteredList = this.memberList;
+    },
+    isTabActive(tab) {
+      return this.activeTab === tab.key;
     },
   },
   computed: {
     filteredListDisplay() {
-      return getTwoColumnGridArraySplitFromArray(this.filteredList);
+      return getTwoColumnGridArraySplitFromArray(
+        this.filteredList.filter(
+          member =>
+            (this.activeTab === 'curators' && member.isCurator()) ||
+            (this.activeTab === 'members' && member.isMember()) ||
+            this.activeTab === 'all'
+        )
+      );
     },
   },
   data() {
@@ -78,6 +104,12 @@ export default {
       filter: '',
       filteredList: fullMemberList.slice(0),
       memberList: fullMemberList.slice(0),
+      tabList: [
+        { key: 'all', label: 'All' },
+        { key: 'curators', label: 'Curators' },
+        { key: 'members', label: 'Members' },
+      ],
+      activeTab: defaultTab,
     };
   },
 };
@@ -87,7 +119,7 @@ export default {
 .members-container__top-bar {
   background: var(--white);
   box-shadow: var(--shadowCard);
-  margin: 0 0 2em;
+  margin: 0;
   position: relative;
   padding: 1.5em;
   display: flex;
@@ -117,6 +149,57 @@ export default {
 
 .members-container__top-bar .members-container__tooltip .show-more__button {
   margin: 0;
+}
+
+.members-container__tabs {
+  min-width: 25em;
+  width: 50%;
+  border: 1px solid var(--gray-40);
+  border-radius: 5em;
+  margin: 1em auto 2em auto;
+}
+
+.members-container__tabs > ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.members-container__tabs .tabs-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.tabs-container .tabs-container__item {
+  flex: 1;
+  border-right: 1px solid var(--gray-40);
+  text-align: center;
+  padding: 1em;
+  cursor: pointer;
+  background: var(--white);
+}
+
+.tabs-container .tabs-container__item.active {
+  background: var(--blue-60);
+  color: var(--white);
+}
+
+.tabs-container .tabs-container__item:first-child {
+  padding: 1em;
+  border-top-left-radius: 5em;
+  border-bottom-left-radius: 5em;
+}
+
+.tabs-container .tabs-container__item:nth-child(2) {
+  padding: 1em 2em;
+}
+
+.tabs-container .tabs-container__item:last-child {
+  border-right: none;
+  padding-right: 2em;
+  padding-left: 1em;
+  border-top-right-radius: 5em;
+  border-bottom-right-radius: 5em;
 }
 
 .members-container__list {
