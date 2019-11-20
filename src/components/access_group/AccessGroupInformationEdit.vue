@@ -26,6 +26,20 @@
         </div>
       </div>
     </article>
+    <article class="edit-information-section">
+      <h3 class="edit-information-section__header">Group links</h3>
+      <div class="edit-information-section__content content-area">
+        <div class="content-area__row">
+          <label class="content-area__label">Website URL</label>
+          <TextInput
+            placeholder="https://www"
+            type="text"
+            v-model="groupData"
+            class="content-area__value"
+          />
+        </div>
+      </div>
+    </article>
   </section>
 </template>
 
