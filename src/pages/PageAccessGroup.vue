@@ -66,10 +66,6 @@ export default {
 </script>
 
 <style>
-.home {
-  padding-top: 2em;
-}
-
 .access-group > img {
   margin-bottom: 1em;
 }
@@ -96,6 +92,8 @@ export default {
     display: inline-block;
     width: 100%;
     padding-top: 2em;
+    padding-left: 3em;
+    padding-right: 3em;
   }
   .access-group > img {
     float: right;
