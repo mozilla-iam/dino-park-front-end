@@ -12,7 +12,6 @@ import {
   INVITATION_STATE,
 } from './view_models/AccessGroupViewModel';
 import AccessGroups from '@/assets/js/access-groups';
-import router from './router';
 
 const accessGroupsService = new AccessGroups();
 Vue.use(Vuex);
@@ -36,6 +35,7 @@ export default new Vuex.Store({
     },
     async fetchAccessGroup({ commit }) {
       const data = accessGroupData;
+      console.log('found acess data: ', data);
       try {
         commit('setAccessGroupData', data);
       } catch (e) {
@@ -61,6 +61,38 @@ export default new Vuex.Store({
         throw new Error(e.message);
       }
       return content;
+    },
+    async acceptGroupInvitation({ commit, state }, idx) {
+      if (idx >= state.groupInvitations.length) {
+        state.error = `Index out of bounds for groupInvitations: ${idx}`;
+        throw new Error(state.error);
+      }
+      const currentInvitation = state.groupInvitations[idx];
+      try {
+        const result = await accessGroupsService.acceptInvitation(
+          currentInvitation.group_name
+        );
+        commit('acceptGroupInvitation', idx);
+        return result;
+      } catch (e) {
+        throw new Error(e.message);
+      }
+    },
+    async rejectGroupInvitation({ commit, state }, idx) {
+      if (idx >= state.groupInvitations.length) {
+        state.error = `Index out of bounds for groupInvitations: ${idx}`;
+        throw new Error(state.error);
+      }
+      const currentInvitation = state.groupInvitations[idx];
+      try {
+        const result = await accessGroupsService.rejectInvitation(
+          currentInvitation.group_name
+        );
+        commit('rejectGroupInvitation', idx);
+        return result;
+      } catch (e) {
+        throw new Error(e.message);
+      }
     },
   },
   mutations: {
@@ -97,25 +129,14 @@ export default new Vuex.Store({
         state.error = `Index out of bounds for groupInvitations: ${idx}`;
         throw new Error(state.error);
       }
-      const currentInvitation = state.groupInvitations[idx];
-      currentInvitation.state = INVITATION_STATE.ACCEPTED;
-      accessGroupsService.acceptInvitation(currentInvitation.group_name).then(result => {
-        router.push({
-          name: 'Access Group',
-          params: { groupid: currentInvitation.group_name },
-        });
-      });
+      state.groupInvitations[idx].state = INVITATION_STATE.ACCEPTED;
     },
     rejectGroupInvitation(state, idx) {
       if (idx >= state.groupInvitations.length) {
         state.error = `Index out of bounds for groupInvitations: ${idx}`;
         throw new Error(state.error);
       }
-      const currentInvitation = state.groupInvitations[idx];
-      currentInvitation.state = INVITATION_STATE.REJECTED;
-      accessGroupsService.rejectInvitation(currentInvitation.group_name).then(result => {
-        console.log('Reject complete: ', currentInvitation.group_name);
-      });
+      state.groupInvitations[idx].state = INVITATION_STATE.REJECTED;
     },
     setAccessGroupTOS(state, content) {
       state.groupTOS = content;
