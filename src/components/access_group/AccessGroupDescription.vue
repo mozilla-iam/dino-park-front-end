@@ -24,9 +24,7 @@
       <h1 class="description-container__title">{{ title }}</h1>
     </header>
     <section class="description-container-area description-content">
-      <p class="description-content__sub">{{ membersCountText }}</p>
       <p class="description-content__main">{{ model.group.description }}</p>
-      <a :href="tosUrl" class="description-content__tos-link">Terms of service</a>
     </section>
     <footer class="description-container-area description-footer">
       <Button class="primary-action" v-on:click="handleLeaveClick">Leave</Button>
@@ -76,7 +74,7 @@ export default {
   data() {
     return {
       model: this.$store.state.accessGroup,
-      section: 'description',
+      section: 'information',
     };
   },
 };

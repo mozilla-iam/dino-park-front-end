@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import AccessGroupDetails from './AccessGroupDetails.vue';
-import getMountedComponentWithStore from '../../../tests/utils/getMountedComponentWithStore';
+import { getMountedComponentWithStore } from '../../test/TestUtils';
 
 describe('AccessGroupDetails', () => {
   it('should exist', () => {
