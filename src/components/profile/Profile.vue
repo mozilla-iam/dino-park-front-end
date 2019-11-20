@@ -1,5 +1,5 @@
 <template>
-  <main class="profile container">
+  <main class="profile">
     <div
       :class="
         'profile__section' +
@@ -443,7 +443,6 @@ export default {
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 0 2em;
     align-items: start;
-    padding: 2em;
   }
 }
 
