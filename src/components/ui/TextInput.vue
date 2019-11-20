@@ -38,7 +38,6 @@ export default {
   margin: 0;
   width: 100%;
   font-size: 1em;
-  padding: 0.5em 0.9em;
 }
 .input input[maxlength] {
   padding: 0.5em 4.5em 0.5em 0.9em;

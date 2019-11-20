@@ -1,10 +1,6 @@
 <template>
   <main class="group-edit">
-    <a
-      class="button group-edit__back-action"
-      :href="backUrl"
-      @click="handleBackClicked"
-    >
+    <a class="button group-edit__back-action" :href="backUrl" @click="handleBackClicked">
       <Icon id="chevron-left" :width="17" :height="17" />Back to group
     </a>
     <section class="edit-container">
@@ -17,15 +13,14 @@
             @click="handleTabClick(tab)"
           >
             <span class="item__icon">
-              <Icon :id="tab.icon" :width="24" :height="24" />
+              <Icon :id="tab.icon" :width="16" :height="16" />
             </span>
             <p class="item__label">{{ tab.label }}</p>
           </li>
         </ul>
       </nav>
       <section class="edit-container__content">
-        <AccessGroupInformationEdit v-if="isInformationTab" />
-        <AccessGroupMembersEdit v-if="isMembersTab" />
+        <AccessGroupInformationEdit />
       </section>
     </section>
   </main>
@@ -35,8 +30,7 @@
 import Icon from '@/components/ui/Icon.vue';
 import Button from '@/components/ui/Button.vue';
 import AccessGroupInformationEdit from '@/components/access_group/AccessGroupInformationEdit.vue';
-import AccessGroupMembersEdit from '@/components/access_group/AccessGroupMembersEdit.vue';
-import AccessGroupInvitationsEdit from '@/components/access_group/AccessGroupInvitationsEdit.vue';
+import router from '@/router';
 
 export default {
   name: 'AccessGroup',
@@ -44,18 +38,16 @@ export default {
     Icon,
     Button,
     AccessGroupInformationEdit,
-    AccessGroupMembersEdit,
-    AccessGroupInvitationsEdit,
   },
   props: {
-    groupname: String,
+    groupid: String,
   },
   methods: {
     handleBackClicked() {
       console.log('Back clicked');
     },
     handleTabClick(tab) {
-      this.$router.push({
+      router.push({
         name: 'Edit Access Group',
         query: {
           section: tab.key,
@@ -73,24 +65,6 @@ export default {
     backUrl() {
       return this.$route.path.substr(0, this.$route.path.lastIndexOf('/'));
     },
-    isInformationTab() {
-      if (!this.$route.query.section) {
-        return false;
-      }
-      return this.$route.query.section === 'information';
-    },
-    isMembersTab() {
-      if (!this.$route.query.section) {
-        return false;
-      }
-      return this.$route.query.section === 'members';
-    },
-    isInvitationsTab() {
-      if (!this.$route.query.section) {
-        return false;
-      }
-      return this.$route.query.section === 'invitations';
-    },
   },
   data() {
     return {
@@ -103,17 +77,17 @@ export default {
         {
           key: 'members',
           label: 'Members',
-          icon: 'users',
+          icon: 'avatar', // Update this to the right icon
         },
         {
           key: 'invitations',
           label: 'Invitations',
-          icon: 'mail-outline',
+          icon: 'mail',
         },
         {
           key: 'history',
           label: 'History',
-          icon: 'clock',
+          icon: 'zoom', // Update this to the right icon
         },
       ],
     };
@@ -122,13 +96,10 @@ export default {
 </script>
 
 <style>
-@media (min-width: 57.5em) {
-  .access-group-container .container {
-    max-width: 70em;
-  }
-}
 .group-edit {
   margin-top: 2em;
+  padding-left: 3em;
+  padding-right: 3em;
 }
 .group-edit .group-edit__back-action {
   background-color: var(--gray-30);

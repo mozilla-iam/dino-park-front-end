@@ -7,6 +7,7 @@ import PageSearchResult from './pages/PageSearchResult.vue';
 import PageUnknown from './pages/PageUnknown.vue';
 import PageAccessGroup from './pages/PageAccessGroup.vue';
 import PageAccessGroupTerms from './pages/PageAccessGroupTerms.vue';
+import PageAccessGroupEdit from './pages/PageAccessGroupEdit.vue';
 import scrolling from './assets/js/scrolling';
 import store from './store';
 
@@ -112,9 +113,9 @@ const router = new Router({
       props: true,
     },
     {
-      path: '/g',
+      path: '/a/:groupid/edit',
       name: 'Edit Access Group',
-      component: PageAccessGroup,
+      component: PageAccessGroupEdit,
       query: {
         section: ':section?',
       },
