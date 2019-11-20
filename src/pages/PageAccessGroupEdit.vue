@@ -20,7 +20,7 @@
         </ul>
       </nav>
       <section class="edit-container__content">
-        <AccessGroupInformationEdit />
+        <AccessGroupInformationEdit v-if="isInformationTab" />
       </section>
     </section>
   </main>
@@ -64,6 +64,12 @@ export default {
   computed: {
     backUrl() {
       return this.$route.path.substr(0, this.$route.path.lastIndexOf('/'));
+    },
+    isInformationTab() {
+      if (!this.$route.query.section) {
+        return false;
+      }
+      return this.$route.query.section === 'information';
     },
   },
   data() {
