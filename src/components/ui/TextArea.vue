@@ -32,6 +32,20 @@ export default {
 .textarea {
   position: relative;
 }
+
+.textarea > textarea {
+  border: 1px solid transparent;
+  background-color: var(--gray-20);
+  border-radius: var(--formElementRadius);
+  color: var(--black);
+  margin: 0;
+  padding: 0.5em 0.9em;
+  padding-bottom: 0.5em;
+  width: 100%;
+  resize: none;
+  font: inherit;
+  margin: 0.5em 0;
+}
 .textarea textarea[maxlength] {
   padding-bottom: 5em;
 }
@@ -39,7 +53,7 @@ export default {
   position: absolute;
   bottom: 1rem;
   right: 0.5rem;
-  font-size: 0.85em;
+  /* font-size: 0.85em; */
   color: var(--gray-50);
   letter-spacing: 0.1em;
 }
