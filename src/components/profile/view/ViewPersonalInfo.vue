@@ -2,8 +2,14 @@
   <div class="profile__intro">
     <EditButton
       v-if="userOnOwnProfile && editable"
-      section="personal info"
-      sectionId="personal-info"
+      :sendTo="{
+        name: 'Edit Profile',
+        query: {
+          section: sectionId,
+        },
+      }"
+      :section="section"
+      :sectionId="sectionId"
     ></EditButton>
     <div class="profile__intro-photo">
       <div class="profile__headshot">
@@ -67,9 +73,7 @@
           metaKey="Desk number"
           v-if="staffInformation.wprDeskNumber.value"
           :metaValue="staffInformation.wprDeskNumber.value"
-          :link="
-            deskNumberToOfficePlanLink(staffInformation.wprDeskNumber.value)
-          "
+          :link="deskNumberToOfficePlanLink(staffInformation.wprDeskNumber.value)"
         />
         <MetaItem
           metaKey="Cost center"
@@ -89,7 +93,7 @@
 import CompanyMixin from '@/components/_mixins/CompanyMixin.vue';
 import OfficesMixin from '@/components/_mixins/OfficesMixin.vue';
 import ContactMe from '@/components/ui/ContactMe.vue';
-import EditButton from '@/components/profile/edit/EditButton.vue';
+import EditButton from '@/components/ui/EditButton.vue';
 import Icon from '@/components/ui/Icon.vue';
 import MetaItem from '@/components/ui/Meta.vue';
 import MetaList from '@/components/ui/MetaList.vue';
@@ -142,6 +146,12 @@ export default {
     currentUser() {
       return this.$store.state.user;
     },
+  },
+  data() {
+    return {
+      section: 'personal info',
+      sectionId: 'personal-info',
+    };
   },
 };
 </script>

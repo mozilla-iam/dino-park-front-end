@@ -8,9 +8,7 @@
           @click="setPreference('list')"
           :class="
             'colleagues__toggle-button' +
-              (viewPreference === 'list'
-                ? ' colleagues__toggle-button--current'
-                : '')
+              (viewPreference === 'list' ? ' colleagues__toggle-button--current' : '')
           "
         >
           <Icon id="list" :width="18" :height="18" />
@@ -21,9 +19,7 @@
           @click="setPreference('grid')"
           :class="
             'colleagues__toggle-button' +
-              (viewPreference === 'grid'
-                ? ' colleagues__toggle-button--current'
-                : '')
+              (viewPreference === 'grid' ? ' colleagues__toggle-button--current' : '')
           "
         >
           <Icon id="grid" :width="18" :height="18" />
@@ -41,10 +37,7 @@
         <Icon id="chevron-right" :width="18" :height="18" />
       </RouterLink>
     </header>
-    <ReportingStructure
-      :related="related"
-      :viewAs="viewPreference"
-    ></ReportingStructure>
+    <ReportingStructure :related="related" :viewAs="viewPreference"></ReportingStructure>
   </div>
 </template>
 
@@ -127,5 +120,9 @@ export default {
 }
 .colleagues__toggle-button--current {
   background-color: var(--gray-20);
+}
+
+.colleagues .profile__section-header h2 {
+  width: auto;
 }
 </style>

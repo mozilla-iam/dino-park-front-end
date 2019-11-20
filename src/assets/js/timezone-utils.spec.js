@@ -16,9 +16,7 @@ describe('timezone-utils', () => {
         minute: 'numeric',
         second: 'numeric',
       };
-      const dateString = Intl.DateTimeFormat('en-US', options).format(
-        new Date(),
-      );
+      const dateString = Intl.DateTimeFormat('en-US', options).format(new Date());
       const diff = getHoursDiff(dateString, dateString);
       expect(diff).toEqual(0);
     });
@@ -36,7 +34,7 @@ describe('timezone-utils', () => {
       firstDate.setHours(firstDate.getHours() + 1);
       const diff = getHoursDiff(
         Intl.DateTimeFormat('en-US', options).format(firstDate),
-        Intl.DateTimeFormat('en-US', options).format(secondDate),
+        Intl.DateTimeFormat('en-US', options).format(secondDate)
       );
       expect(diff).toEqual(1);
     });
@@ -54,7 +52,7 @@ describe('timezone-utils', () => {
       secondDate.setHours(secondDate.getHours() + 1);
       const diff = getHoursDiff(
         Intl.DateTimeFormat('en-US', options).format(firstDate),
-        Intl.DateTimeFormat('en-US', options).format(secondDate),
+        Intl.DateTimeFormat('en-US', options).format(secondDate)
       );
       expect(diff).toEqual(-1);
     });
@@ -65,21 +63,12 @@ describe('timezone-utils', () => {
       expect(decimalToHours(0)).toEqual('');
     });
     it('should return a whole number if a whole number is passed', () => {
-      [-3, -2, -1, 1, 2, 3].forEach((val) => {
-        expect(decimalToHours(val)).toEqual(
-          `${val > 0 ? '+' : '-'}${Math.abs(val)}`,
-        );
+      [-3, -2, -1, 1, 2, 3].forEach(val => {
+        expect(decimalToHours(val)).toEqual(`${val > 0 ? '+' : '-'}${Math.abs(val)}`);
       });
     });
     it(`should return format '(+/-)HH:MM' if decimal is passed`, () => {
-      const expectedFormats = [
-        '-3:45',
-        '-2:30',
-        '-1:15',
-        '+1:15',
-        '+2:30',
-        '+3:45',
-      ];
+      const expectedFormats = ['-3:45', '-2:30', '-1:15', '+1:15', '+2:30', '+3:45'];
       [-3.75, -2.5, -1.25, 1.25, 2.5, 3.75].forEach((val, idx) => {
         expect(decimalToHours(val)).toEqual(expectedFormats[idx]);
       });
@@ -89,7 +78,7 @@ describe('timezone-utils', () => {
     it('should return a string date', () => {
       const formattedDate = getFormattedDateWithTimezone(
         new Date(),
-        'America/Los_Angeles',
+        'America/Los_Angeles'
       );
       expect(typeof formattedDate).toEqual('string');
       expect(formattedDate.length).toBeGreaterThan(0);
@@ -97,19 +86,16 @@ describe('timezone-utils', () => {
     it('should return different timezones', () => {
       const formattedDate1 = getFormattedDateWithTimezone(
         new Date(),
-        'America/Los_Angeles',
+        'America/Los_Angeles'
       );
-      const formattedDate2 = getFormattedDateWithTimezone(
-        new Date(),
-        'America/New_York',
-      );
+      const formattedDate2 = getFormattedDateWithTimezone(new Date(), 'America/New_York');
       expect(formattedDate1 !== formattedDate2).toBe(true);
     });
   });
   describe('getBrowserTimezone', () => {
     it('should return my local timezone', () => {
       expect(getBrowserTimezone()).toEqual(
-        Intl.DateTimeFormat().resolvedOptions().timeZone,
+        Intl.DateTimeFormat().resolvedOptions().timeZone
       );
     });
     it('should throw an error if datetimeformat does not exist', () => {
@@ -127,9 +113,9 @@ describe('timezone-utils', () => {
         'Africa/Sao_Tome',
         'Africa/Porto-Novo',
         'America/Adak',
-        'Australia/LHI',
+        'Asia/Magadan',
       ];
-      testTimezones.forEach((tz) => {
+      testTimezones.forEach(tz => {
         expect(getTimezoneName(tz).length).toBeGreaterThan(0);
       });
     });

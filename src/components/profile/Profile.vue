@@ -76,9 +76,7 @@
         <EditIdentities v-bind="{ identities: identitiesWrapper }" />
       </template>
       <template v-slot:view>
-        <ViewIdentities
-          v-bind="{ identities: identitiesWrapper, userOnOwnProfile }"
-        />
+        <ViewIdentities v-bind="{ identities: identitiesWrapper, userOnOwnProfile }" />
       </template>
     </ProfileSection>
 
@@ -192,8 +190,8 @@
       title="Access Groups"
       :userOnOwnProfile="userOnOwnProfile"
       :empty="
-        Object.keys(accessInformation.mozilliansorg.values || {}).length ===
-          0 && Object.keys(accessInformation.ldap.values || {}).length === 0
+        Object.keys(accessInformation.mozilliansorg.values || {}).length === 0 &&
+          Object.keys(accessInformation.ldap.values || {}).length === 0
       "
       :editable="!viewAs"
       message="Not a member of any access group."
@@ -234,17 +232,15 @@
         />
       </template>
       <template v-slot:view>
-        <ViewKeys
-          v-bind="{ pgpPublicKeys, sshPublicKeys, userOnOwnProfile }"
-        ></ViewKeys>
+        <ViewKeys v-bind="{ pgpPublicKeys, sshPublicKeys, userOnOwnProfile }"></ViewKeys>
       </template>
     </ProfileSection>
   </main>
 </template>
 
 <script>
+import EditButton from '@/components/ui/EditButton.vue';
 import AccountsMixin from '@/components/_mixins/AccountsMixin.vue';
-import EditButton from '@/components/profile/edit/EditButton.vue';
 import EditAccessGroups from './edit/EditAccessGroups.vue';
 import EditAccounts from './edit/EditAccounts.vue';
 import EditContact from './edit/EditContact.vue';
@@ -333,15 +329,13 @@ export default {
           Object.entries(this.phoneNumbers.values || {}).length > 0,
         accounts:
           this.editing === 'accounts' ||
-          Object.entries(this.uris.values || {}).filter(([k]) =>
-            this.isAccountKey(k),
-          ).length > 0,
+          Object.entries(this.uris.values || {}).filter(([k]) => this.isAccountKey(k))
+            .length > 0,
         languages:
           this.editing === 'languages' ||
           Object.entries(this.languages.values || {}).length > 0,
         tags:
-          this.editing === 'tags' ||
-          Object.entries(this.tags.values || {}).length > 0,
+          this.editing === 'tags' || Object.entries(this.tags.values || {}).length > 0,
         keys:
           this.editing === 'keys' ||
           (Object.entries(this.pgpPublicKeys.values || {}).length > 0 ||
@@ -444,79 +438,6 @@ export default {
     grid-gap: 0 2em;
     align-items: start;
     padding: 2em;
-  }
-}
-
-.profile__section {
-  border: 4px solid var(--gray-50);
-  background: #fff;
-  padding: 1.5em;
-  margin: 0 0 2em;
-  grid-column: 2 / -1;
-  overflow: visible;
-  border-radius: var(--cardRadius);
-  position: relative;
-}
-
-.profile__section:not(.profile__section--editing):not(.first) {
-  padding: calc(2px + 1.5em);
-}
-
-.profile__section.first {
-  padding: 0;
-}
-
-.profile__section.first .profile__section-header {
-  margin: 0 0 1.5em 0;
-}
-@supports (--key: value) {
-  .profile__section {
-    border: none;
-    box-shadow: var(--shadowCard);
-  }
-}
-.profile__section--disabled {
-  background-color: var(--gray-20);
-  color: var(--gray-50);
-  border: 2px solid var(--gray-30);
-}
-.profile__section.profile__section--editing {
-  border: 2px solid var(--blue-60);
-}
-.profile__section:first-child {
-  grid-column: 1 / -1;
-}
-
-.profile__section .reporting-structure h3 {
-  margin-top: 0;
-}
-
-.profile__section-header {
-  padding: 1.5em;
-  margin: -1.5em -1.5em 1.5em -1.5em;
-  border-bottom: 1px solid var(--gray-30);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-.profile__section:not(.profile__section--editing):not(.first)
-  .profile__section-header {
-  margin: calc(-1.5em - 2px) calc(-1.5em - 2px) calc(1.5em + 2px)
-    calc(-1.5em - 2px);
-  padding-top: calc(1.5em + 2px);
-  padding-left: calc(1.5em + 2px);
-  padding-right: calc(1.5em + 2px);
-}
-.profile__section-header h2 {
-  margin: 0 0 0.75em 0;
-  width: 100%;
-}
-@media (min-width: 35em) {
-  .profile__section-header h2 {
-    margin: 0;
-    width: auto;
   }
 }
 
