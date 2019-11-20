@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import VueApollo from 'vue-apollo';
 import App from './App.vue';
-import router from './router';
+import router, { ACCESS_GROUP_PAGES, ACCESS_GROUP_TOS_PAGE } from './router';
+
 import { apolloProvider } from './server';
 import store from './store';
 
@@ -43,4 +44,31 @@ store.dispatch('fetchUser').then(function() {
 // eslint-disable-next-line
 store.dispatch('fetchGroupInvitations').then(function(data) {
   console.log('Found invitations: ', data);
+});
+
+router.beforeEach((to, from, next) => {
+  if (ACCESS_GROUP_PAGES.includes(to.name)) {
+    // eslint-disable-next-line
+    store
+      .dispatch('fetchAccessGroup')
+      .then(data => {
+        console.log('Fetched group: ', data);
+      })
+      .catch(error => {
+        console.error('Caught dispatch error: ', error);
+        next(`/error?message=${error}`);
+      });
+  }
+  if (to.name === ACCESS_GROUP_TOS_PAGE) {
+    store
+      .dispatch('fetchAccessGroupTOS')
+      .then(data => {
+        console.log('Fetched terms: ', data);
+      })
+      .catch(error => {
+        console.error('Caught dispatch error: ', error);
+        next(`/error?message=${error}`);
+      });
+  }
+  next();
 });
