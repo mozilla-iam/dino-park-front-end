@@ -9,7 +9,6 @@ import PageAccessGroup from './pages/PageAccessGroup.vue';
 import PageAccessGroupTerms from './pages/PageAccessGroupTerms.vue';
 import PageAccessGroupEdit from './pages/PageAccessGroupEdit.vue';
 import scrolling from './assets/js/scrolling';
-import store from './store';
 
 Vue.use(Router);
 
@@ -101,9 +100,12 @@ const router = new Router({
       meta: { key: 'access-group' },
     },
     {
-      path: '/a/:groupid',
-      name: 'Access Group',
-      component: PageAccessGroup,
+      path: '/a/:groupid/edit',
+      name: 'Edit Access Group',
+      component: PageAccessGroupEdit,
+      query: {
+        section: ':section?',
+      },
       props: true,
     },
     {
@@ -113,12 +115,9 @@ const router = new Router({
       props: true,
     },
     {
-      path: '/a/:groupid/edit',
-      name: 'Edit Access Group',
-      component: PageAccessGroupEdit,
-      query: {
-        section: ':section?',
-      },
+      path: '/a/:groupid',
+      name: 'Access Group',
+      component: PageAccessGroup,
       props: true,
     },
   ],
@@ -143,7 +142,13 @@ function usernamePrefix(username) {
   return '';
 }
 
-const ACCESS_GROUP_PAGES = ['Access Group', 'Edit Access Group', 'Access Group TOS'];
+export const ACCESS_GROUP_TOS_PAGE = 'Access Group TOS';
+
+export const ACCESS_GROUP_PAGES = [
+  'Access Group',
+  'Edit Access Group',
+  ACCESS_GROUP_TOS_PAGE,
+];
 
 router.beforeEach((to, from, next) => {
   switch (to.name) {
@@ -164,31 +169,10 @@ router.beforeEach((to, from, next) => {
       document.title = `Edit - Profile - Mozilla People Directory`;
       break;
     case 'Access Group TOS':
-      store
-        .dispatch('fetchAccessGroupTOS')
-        .then(data => {
-          console.log('Fetched terms: ', data);
-        })
-        .catch(error => {
-          console.error('Caught dispatch error: ', error);
-          next(`/error?message=${error}`);
-        });
       document.title = 'Access Group Terms of Service - Mozilla People Directory';
       break;
     default:
       document.title = `${to.name} - Mozilla People Directory`;
-  }
-  if (ACCESS_GROUP_PAGES.includes(to.name)) {
-    // eslint-disable-next-line
-    store
-      .dispatch('fetchAccessGroup')
-      .then(data => {
-        console.log('Fetched group: ', data);
-      })
-      .catch(error => {
-        console.error('Caught dispatch error: ', error);
-        next(`/error?message=${error}`);
-      });
   }
   next();
 });
