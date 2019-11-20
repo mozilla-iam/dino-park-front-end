@@ -20,8 +20,15 @@ export default  {
   max-width: 74em;
   margin: 0 auto;
   width: 100%;
-  padding: 0 1em;
+  padding: 0 2em;
 }
+
+@media (min-width: 57.5em) {
+  .global-notifications-container {
+    padding: 0 3em;
+  }
+}
+
 .global-notifications-container > .notification-container {
   margin-top: 2em;
 }
