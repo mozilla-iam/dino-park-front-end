@@ -116,6 +116,15 @@ export class DisplayMemberViewModel {
       console.error('Display Member error: ', e.message);
     }
   }
+  isAdmin() {
+    return this.role === 'Admin';
+  }
+  isCurator() {
+    return this.role === 'Curator';
+  }
+  isMember() {
+    return this.role === 'Member';
+  }
 }
 
 const ACCESS_GROUP_TYPES = ['closed', 'reviewed', 'open'];
