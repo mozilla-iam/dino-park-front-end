@@ -10,7 +10,11 @@
         />
         <div class="member-view__info">
           <p class="info-header">{{ member.name }}</p>
-          <p class="info-sub">{{ member.role }}</p>
+          <p class="info-sub">
+            <Icon v-if="isCurator" id="crown-fill" :width="16" :height="16" />{{
+              member.role
+            }}
+          </p>
         </div>
       </div>
       <button
@@ -76,9 +80,7 @@ export default {
   box-shadow: var(--shadowCard);
   background: var(--white);
 }
-.list-item.primary {
-  box-shadow: inset 0 -2px 0px var(--blue-60), var(--shadowCard);
-}
+
 .list-item .list-item__main {
   display: flex;
   justify-content: space-between;
@@ -109,6 +111,17 @@ export default {
 
 .member-view__info .info-sub {
   margin-top: 0;
+}
+
+.list-item.primary .member-view__info .info-sub {
+  color: #006504;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.list-item.primary .member-view__info .info-sub svg {
+  margin-right: 0.25em;
 }
 
 .list-item__main .member-action {
