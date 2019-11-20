@@ -72,8 +72,7 @@ export default {
     },
   },
   data() {
-    this.viewAsFilter.filter =
-      this.$route.query.pa || DISPLAY_LEVELS.private.value;
+    this.viewAsFilter.filter = this.$route.query.pa || DISPLAY_LEVELS.private.value;
     return {
       viewAs: this.viewAsFilter.filter,
       viewAsOptions: [
@@ -101,7 +100,7 @@ export default {
 }
 @media (min-width: 57.5em) {
   .preview-as {
-    padding: 2em 3em 0em 3em;
+    padding: 2em 0em 2em 3em;
   }
 }
 .preview-as__button {
