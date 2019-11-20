@@ -13,6 +13,5 @@ describe('AccessGroupInformationEdit', () => {
   it('should exist', () => {
     const component = new Constructor();
     expect(component).toBeInstanceOf(Vue);
-    1;
   });
 });
