@@ -25,7 +25,7 @@ export default  {
 
 @media (min-width: 57.5em) {
   .global-notifications-container {
-    padding: 0 3em;
+    padding: 0 1em;
   }
 }
 

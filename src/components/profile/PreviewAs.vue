@@ -100,7 +100,7 @@ export default {
 }
 @media (min-width: 57.5em) {
   .preview-as {
-    padding: 0em 0em 2em 3em;
+    padding: 2em 0em 2em 3em;
   }
 }
 .preview-as__button {
