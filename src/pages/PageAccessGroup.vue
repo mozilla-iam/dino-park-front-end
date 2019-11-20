@@ -10,6 +10,11 @@
             <AccessGroupMembershipManagement></AccessGroupMembershipManagement>
           </template>
         </PanelSection>
+        <PanelSection title="Group Details">
+          <template v-slot:content>
+            <AccessGroupDetails></AccessGroupDetails>
+          </template>
+        </PanelSection>
       </aside>
     </section>
     <section class="secondary-area">
@@ -27,7 +32,7 @@ import PanelSection from '@/components/ui/PanelSection.vue';
 import AccessGroupDescription from '@/components/access_group/AccessGroupDescription.vue';
 import AccessGroupMembershipManagement from '@/components/access_group/AccessGroupMembershipManagement.vue';
 import AccessGroupMembers from '@/components/access_group/AccessGroupMembers.vue';
-import AccessGroupCurators from '@/components/access_group/AccessGroupCurators.vue';
+import AccessGroupDetails from '@/components/access_group/AccessGroupDetails.vue';
 
 export default {
   name: 'AccessGroup',
@@ -40,7 +45,7 @@ export default {
     AccessGroupDescription,
     AccessGroupMembers,
     AccessGroupMembershipManagement,
-    AccessGroupCurators,
+    AccessGroupDetails,
   },
   props: {
     groupid: String,
