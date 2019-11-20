@@ -63,6 +63,11 @@ export default {
 </script>
 
 <style>
+@media (min-width: 57.5em) {
+  .access-group.container {
+    margin-top: 2em;
+  }
+}
 .access-group > img {
   margin-bottom: 1em;
 }
@@ -89,6 +94,7 @@ export default {
     display: inline-block;
     width: 100%;
     padding-top: 2em;
+    margin-top: 2em;
   }
   .access-group > img {
     float: right;
