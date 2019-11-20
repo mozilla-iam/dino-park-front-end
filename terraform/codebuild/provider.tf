@@ -7,7 +7,7 @@ provider "aws" {
 }
 
 terraform {
-  required_version = "~> 0.11"
+  required_version = "~> 0.12"
 
   backend "s3" {
     bucket = "eks-terraform-shared-state"
