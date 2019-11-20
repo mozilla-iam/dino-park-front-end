@@ -84,7 +84,10 @@ import SearchResultList from '@/components/search/SearchResultList.vue';
 import SearchToggle from '@/components/search/SearchToggle.vue';
 import Fetcher from '@/assets/js/fetcher';
 
-const fetcher = new Fetcher({ failoverOn: [302] });
+const fetcher = new Fetcher({
+  isError: (e) =>
+    e instanceof TypeError && e.message.startsWith('NetworkError'),
+});
 
 export default {
   name: 'PageSearchResult',
@@ -145,9 +148,6 @@ export default {
           return results;
         }
       } catch (e) {
-        if (e instanceof TypeError && e.message.startsWith('NetworkError')) {
-          window.location.reload();
-        }
         this.error = e;
       }
       return { dinos: [], total: 0, next: null };

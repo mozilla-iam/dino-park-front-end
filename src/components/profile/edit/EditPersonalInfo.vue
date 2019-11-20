@@ -404,8 +404,7 @@ import UserPicture from '@/components/ui/UserPicture.vue';
 import EditPictureModal from './EditPictureModal.vue';
 import Fetcher from '@/assets/js/fetcher';
 
-// TODO: Why do we need failoverOnError here?
-const fetcher = new Fetcher({ failoverOn: [302], failoverOnError: true });
+const fetcher = new Fetcher();
 
 export default {
   name: 'EditPersonalInfo',
