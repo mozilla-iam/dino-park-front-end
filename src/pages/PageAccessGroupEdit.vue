@@ -13,7 +13,7 @@
             @click="handleTabClick(tab)"
           >
             <span class="item__icon">
-              <Icon :id="tab.icon" :width="16" :height="16" />
+              <Icon :id="tab.icon" :width="24" :height="24" />
             </span>
             <p class="item__label">{{ tab.label }}</p>
           </li>
@@ -83,17 +83,17 @@ export default {
         {
           key: 'members',
           label: 'Members',
-          icon: 'avatar', // Update this to the right icon
+          icon: 'users',
         },
         {
           key: 'invitations',
           label: 'Invitations',
-          icon: 'mail',
+          icon: 'mail-outline',
         },
         {
           key: 'history',
           label: 'History',
-          icon: 'zoom', // Update this to the right icon
+          icon: 'clock',
         },
       ],
     };
