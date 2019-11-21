@@ -13,12 +13,11 @@
       />
       <h1>Welcome to the Mozilla People Directory</h1>
       <p v-if="scope.isStaff">
-        A secure place to quickly find your team members and easily discover new
-        ones.
+        A secure place to quickly find your team members and easily discover new ones.
       </p>
       <p v-else>
-        A secure place to quickly find your fellow Mozillians and share
-        information about yourself!
+        A secure place to quickly find your fellow Mozillians and share information about
+        yourself!
       </p>
       <p>
         <RouterLink
@@ -91,11 +90,11 @@ export default {
           description: this.scope.isStaff
             ? `Your Staff profile data is only visible to Staff and NDA’d people by default. You can edit this via your profile privacy settings. Read our ${getLink(
                 this.globalLinks.profilePrivacy,
-                'Discourse post',
+                'Discourse post'
               )} for details.`
             : `You control how and with whom your data is being shared. Read our ${getLink(
                 this.globalLinks.profilePrivacy,
-                'Discourse post',
+                'Discourse post'
               )} for further details.`,
         },
         {
@@ -104,7 +103,7 @@ export default {
           headline: 'Recent Additions',
           description: `LDAP and Mozillians.org access groups are now displayed under the <i>Access groups</i> section. Read more about this and all newly added functionality in our ${getLink(
             this.globalLinks.groupsAnnouncement,
-            'Discourse post',
+            'Discourse post'
           )}.`,
         },
       ];
@@ -114,9 +113,6 @@ export default {
 </script>
 
 <style>
-.home {
-  padding-top: 2em;
-}
 .home__intro {
   background: var(--white);
   padding: 2em;
@@ -148,11 +144,15 @@ export default {
   margin-bottom: 0;
 }
 @media (min-width: 50em) {
+  .home-container .container {
+    max-width: 74em;
+  }
   .home__intro {
     display: inline-block;
     width: 100%;
     padding: 4em 4em 2em;
   }
+
   .home__intro > img {
     float: right;
     margin-left: 8em;
