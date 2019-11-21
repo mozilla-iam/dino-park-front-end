@@ -1,5 +1,3 @@
-import Scope from '@/assets/js/scope';
-
 export const DISPLAY_LEVELS = {
   public: {
     label: 'Public',
@@ -62,10 +60,10 @@ const NON_STAFF_DISPLAY_LEVELS = {
   primaryEmail: DISPLAY_ANY,
 };
 
-export function displayLevelsFor(field, scope = new Scope()) {
+export function displayLevelsFor(field, scope = null) {
   return (
     (field &&
-      ((!scope.isStaff && NON_STAFF_DISPLAY_LEVELS[field]) ||
+      ((scope && !scope.isStaff && NON_STAFF_DISPLAY_LEVELS[field]) ||
         VALID_DISPLAY_LEVELS[field])) ||
     DISPLAY_NOT_PRIVATE
   );
