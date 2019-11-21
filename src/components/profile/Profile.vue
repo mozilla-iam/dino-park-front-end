@@ -432,6 +432,9 @@ export default {
 
 <style>
 @media (min-width: 57.5em) {
+  .profile-container .container {
+    max-width: 70em;
+  }
   .profile {
     display: grid;
     grid-template-columns: repeat(4, 1fr);

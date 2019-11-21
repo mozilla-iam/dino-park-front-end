@@ -28,8 +28,4 @@ export default  {
     padding: 0 1em;
   }
 }
-
-.global-notifications-container > .notification-container {
-  margin-top: 2em;
-}
 </style>
