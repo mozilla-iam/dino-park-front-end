@@ -23,6 +23,7 @@ const router = new Router({
       query: {
         message: ':message?',
       },
+      meta: { key: 'unknown' },
     },
     {
       path: '/',
@@ -73,33 +74,6 @@ const router = new Router({
       meta: { key: 'search' },
     },
     {
-      path: '/a/:groupname/edit',
-      name: 'Edit Access Group',
-      component: PageAccessGroupEdit,
-      query: {
-        section: ':section?',
-      },
-      props: true,
-      meta: { key: 'access-group' },
-    },
-    {
-      path: '/a/:groupname/tos',
-      name: 'Access Group TOS',
-      component: PageAccessGroupTerms,
-      query: {
-        accept: ':accept?',
-      },
-      props: true,
-      meta: { key: 'access-group' },
-    },
-    {
-      path: '/a/:groupname',
-      name: 'Access Group',
-      component: PageAccessGroup,
-      props: true,
-      meta: { key: 'access-group' },
-    },
-    {
       path: '/a/:groupid/edit',
       name: 'Edit Access Group',
       component: PageAccessGroupEdit,
@@ -107,18 +81,21 @@ const router = new Router({
         section: ':section?',
       },
       props: true,
+      meta: { key: 'access-group' },
     },
     {
       path: '/a/:groupid/tos',
       name: 'Access Group TOS',
       component: PageAccessGroupTerms,
       props: true,
+      meta: { key: 'access-group' },
     },
     {
       path: '/a/:groupid',
       name: 'Access Group',
       component: PageAccessGroup,
       props: true,
+      meta: { key: 'access-group' },
     },
   ],
   scrollBehavior(to, from) {

@@ -69,6 +69,9 @@ export default {
 
 <style>
 @media (min-width: 57.5em) {
+  .access-group-container .container {
+    max-width: 70em;
+  }
   .access-group.container {
     margin-top: 2em;
   }

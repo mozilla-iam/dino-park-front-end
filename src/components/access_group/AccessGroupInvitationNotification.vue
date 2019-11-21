@@ -65,7 +65,6 @@
 import Button from '@/components/ui/Button.vue';
 import LinksMixin from '@/components/_mixins/LinksMixin.vue';
 import { INVITATION_STATE } from '@/view_models/AccessGroupViewModel';
-import router from '@/router';
 const PENDING_REJECTION = 'PENDING_REJECTION';
 
 export default {
@@ -77,7 +76,7 @@ export default {
     handleAcceptClick(idx) {
       const currentInvitation = this.invitations[idx];
       this.$store.dispatch('acceptGroupInvitation', idx).then(result => {
-        router.push({
+        this.$router.push({
           name: 'Access Group',
           params: { groupid: currentInvitation.group_name },
         });
