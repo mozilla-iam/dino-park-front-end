@@ -1,14 +1,14 @@
 import { createLocalVue } from '@vue/test-utils';
 import Vue from 'vue';
 import Vuex from 'vuex';
-import AccessGroupMembersEdit from './AccessGroupMembersEdit.vue';
+import AccessGroupInformationEdit from './AccessGroupInformationEdit.vue';
 
 const localVue = createLocalVue();
 
 localVue.use(Vuex);
 
-describe('AccessGroupMembersEdit', () => {
-  const Constructor = Vue.extend(AccessGroupMembersEdit);
+describe('AccessGroupInformationEdit', () => {
+  const Constructor = Vue.extend(AccessGroupInformationEdit);
 
   it('should exist', () => {
     const component = new Constructor();

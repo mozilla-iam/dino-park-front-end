@@ -25,48 +25,11 @@
           </p>
         </div>
       </div>
-    </article>
-    <article class="edit-information-section">
-      <h3 class="edit-information-section__header">Group links</h3>
-      <div class="edit-information-section__content content-area">
-        <div class="content-area__row">
-          <label class="content-area__label">Website URL</label>
-          <TextInput
-            placeholder="https://www"
-            type="text"
-            v-model="groupData"
-            class="content-area__value"
-          />
-        </div>
-        <div class="content-area__row">
-          <label class="content-area__label">Wiki page URL</label>
-          <TextInput
-            placeholder="https://www"
-            type="text"
-            v-model="groupData"
-            class="content-area__value"
-          />
-        </div>
-        <div class="content-area__row">
-          <label class="content-area__label">Slack channel</label>
-          <TextInput
-            placeholder="#channel-name"
-            type="text"
-            v-model="groupData"
-            class="content-area__value"
-          />
-        </div>
-        <div class="content-area__row action-row">
-          <Button class="button--secondary button--action row-primary-action"
-            ><Icon id="plus" :width="16" :height="16" />Add Link</Button
-          >
-        </div>
-      </div>
       <footer class="edit-information-section__footer">
         <Button
           disabled="disabled"
           class="button--secondary button--action row-primary-action"
-          >Update links</Button
+          >Update details</Button
         >
       </footer>
     </article>

@@ -43,6 +43,12 @@ export default {
 </script>
 
 <style>
+@media (min-width: 57.5em) {
+  .access-group-container .container {
+    max-width: 70em;
+  }
+}
+
 .group-terms {
   margin-top: 2em;
 }

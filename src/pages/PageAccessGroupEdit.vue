@@ -21,6 +21,7 @@
       </nav>
       <section class="edit-container__content">
         <AccessGroupInformationEdit v-if="isInformationTab" />
+        <AccessGroupMembersEdit v-if="isMembersTab" />
       </section>
     </section>
   </main>
@@ -30,7 +31,8 @@
 import Icon from '@/components/ui/Icon.vue';
 import Button from '@/components/ui/Button.vue';
 import AccessGroupInformationEdit from '@/components/access_group/AccessGroupInformationEdit.vue';
-import router from '@/router';
+import AccessGroupMembersEdit from '@/components/access_group/AccessGroupMembersEdit.vue';
+import AccessGroupInvitationsEdit from '@/components/access_group/AccessGroupInvitationsEdit.vue';
 
 export default {
   name: 'AccessGroup',
@@ -38,6 +40,8 @@ export default {
     Icon,
     Button,
     AccessGroupInformationEdit,
+    AccessGroupMembersEdit,
+    AccessGroupInvitationsEdit,
   },
   props: {
     groupid: String,
@@ -47,7 +51,7 @@ export default {
       console.log('Back clicked');
     },
     handleTabClick(tab) {
-      router.push({
+      this.$router.push({
         name: 'Edit Access Group',
         query: {
           section: tab.key,
@@ -70,6 +74,18 @@ export default {
         return false;
       }
       return this.$route.query.section === 'information';
+    },
+    isMembersTab() {
+      if (!this.$route.query.section) {
+        return false;
+      }
+      return this.$route.query.section === 'members';
+    },
+    isInvitationsTab() {
+      if (!this.$route.query.section) {
+        return false;
+      }
+      return this.$route.query.section === 'invitations';
     },
   },
   data() {
@@ -102,10 +118,13 @@ export default {
 </script>
 
 <style>
+@media (min-width: 57.5em) {
+  .access-group-container .container {
+    max-width: 70em;
+  }
+}
 .group-edit {
   margin-top: 2em;
-  padding-left: 3em;
-  padding-right: 3em;
 }
 .group-edit .group-edit__back-action {
   background-color: var(--gray-30);
