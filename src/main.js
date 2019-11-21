@@ -72,6 +72,8 @@ const apolloProvider = new VueApollo({
   errorHandler,
 });
 
+const fluent = new Fluent();
+
 Vue.use(VueApollo);
 Vue.use(Vuex);
 
@@ -79,7 +81,6 @@ const store = new Vuex.Store({
   state: {
     user: null,
     scope: new Scope(),
-    fluent: new Fluent(),
     org: null,
     personViewPreference: 'list',
   },
@@ -109,7 +110,7 @@ const store = new Vuex.Store({
 Vue.mixin({
   methods: {
     fluent(...args) {
-      return this.$store.state.fluent.get(...args);
+      return fluent.get(...args);
     },
   },
   computed: {
