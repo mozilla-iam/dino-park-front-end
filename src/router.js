@@ -23,17 +23,20 @@ const router = new Router({
       query: {
         message: ':message?',
       },
+      meta: { key: 'unknown' },
     },
     {
       path: '/',
       name: 'Home',
       component: PageHome,
+      meta: { key: 'home' },
     },
     {
       path: '/p/:username',
       name: 'Profile',
       component: PageProfile,
       props: true,
+      meta: { key: 'profile' },
     },
     {
       path: '/e',
@@ -43,18 +46,21 @@ const router = new Router({
         section: ':section?',
       },
       props: true,
+      meta: { key: 'profile' },
     },
     {
       path: '/o/highlight/:username/',
       name: 'OrgchartHighlight',
       component: PageOrgchart,
       props: true,
+      meta: { key: 'orgchart' },
     },
     {
       path: '/o/:username?',
       name: 'Orgchart',
       component: PageOrgchart,
       props: true,
+      meta: { key: 'orgchart' },
     },
     {
       path: '/s',
@@ -65,6 +71,7 @@ const router = new Router({
       name: 'Search',
       component: PageSearchResult,
       props: true,
+      meta: { key: 'search' },
     },
     {
       path: '/a/:groupid/edit',
@@ -74,18 +81,21 @@ const router = new Router({
         section: ':section?',
       },
       props: true,
+      meta: { key: 'access-group' },
     },
     {
       path: '/a/:groupid/tos',
       name: 'Access Group TOS',
       component: PageAccessGroupTerms,
       props: true,
+      meta: { key: 'access-group' },
     },
     {
       path: '/a/:groupid',
       name: 'Access Group',
       component: PageAccessGroup,
       props: true,
+      meta: { key: 'access-group' },
     },
   ],
   scrollBehavior(to, from) {
