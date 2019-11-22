@@ -1,11 +1,39 @@
 <template>
   <main class="group-terms">
-    <a class="button group-terms__back-action" :href="backUrl" @click="handleBackClicked">
+    <a
+      class="button group-terms__back-action"
+      :href="backUrl"
+      @click="handleBackClicked"
+      v-if="!invitationShowTOSAccept"
+    >
       <Icon id="chevron-left" :width="17" :height="17" />Back to group
     </a>
     <section class="primary-area">
       <h1 class="group-terms__header">Terms and Conditions</h1>
       <p>{{ termsContent }}</p>
+      <footer class="group-terms__form" v-if="invitationShowTOSAccept">
+        <div class="form-action-row">
+          <input
+            type="radio"
+            class="form-action-row__input"
+            :value="true"
+            v-model="termsAccepted"
+          />
+          I do accept these terms
+        </div>
+        <div class="form-action-row">
+          <input
+            type="radio"
+            class="form-action-row__input"
+            :value="false"
+            v-model="termsAccepted"
+          />
+          I do not accept these terms
+        </div>
+        <Button class="button--primary" @click="handleSubmitClicked"
+          >Submit</Button
+        >
+      </footer>
     </section>
   </main>
 </template>
@@ -21,23 +49,65 @@ export default {
     Button,
   },
   props: {
-    groupid: String,
+    groupname: String,
   },
   methods: {
     handleBackClicked() {
       console.log('Back clicked');
     },
+    handleSubmitClicked() {
+      if (this.termsAccepted) {
+        this.acceptTerms();
+      } else {
+        this.doNotAcceptTerms();
+      }
+    },
+    acceptTerms() {
+      this.$store
+        .dispatch('acceptInvitationTOS', this.$route.params.groupname)
+        .then(result => {
+          this.$router.push({
+            name: 'Access Group',
+            query: {
+              groupname: this.$route.query.groupname,
+            },
+          });
+        });
+    },
+    doNotAcceptTerms() {
+      this.$store
+        .dispatch('rejectInvitationTOS', this.$route.params.groupname)
+        .then(result => {
+          this.$router.go(-1);
+        });
+    },
+  },
+  data() {
+    const invitation = this.$store.getters.getInvitationByName(
+      this.$store.state.accessGroup.group.name
+    );
+    return {
+      termsAccepted: true,
+    };
   },
   computed: {
+    groupInvitation() {
+      return this.$store.getters.getInvitationByName(
+        this.$store.state.accessGroup.group.name
+      );
+    },
     termsContent() {
       return this.$store.state.groupTOS;
     },
     backUrl() {
       return this.$route.path.substr(0, this.$route.path.lastIndexOf('/'));
     },
-  },
-  data() {
-    return {};
+    invitationShowTOSAccept() {
+      if (!this.$route.query.accept) {
+        return false;
+      }
+      return this.groupInvitation.requires_tos;
+    },
   },
 };
 </script>
@@ -56,17 +126,25 @@ export default {
   background-color: var(--gray-30);
   color: var(--black);
   display: inline-block;
+  margin-bottom: 2em;
 }
 
 .group-terms .primary-area {
   background: var(--white);
   box-shadow: var(--shadowCard);
   padding: 2em;
-  margin-top: 2em;
 }
 
 .group-terms .group-terms__header {
   margin-top: 0.25em;
   font-size: 3em;
+}
+
+.group-terms .group-terms__form {
+  margin-top: 2em;
+}
+
+.group-terms__form .form-action-row {
+  margin: 1em 0;
 }
 </style>

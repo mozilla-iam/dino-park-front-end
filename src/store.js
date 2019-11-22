@@ -94,6 +94,46 @@ export default new Vuex.Store({
         throw new Error(e.message);
       }
     },
+    async acceptInvitationTOS({ commit, state }, groupName) {
+      const groupInvitation = state.groupInvitations.filter(
+        invitation => invitation.group_name === groupName
+      );
+      if (!groupInvitation || !groupInvitation.length) {
+        state.error = `Group name ${groupName} does not exist`;
+        throw new Error(state.error);
+      }
+      const [currentInvitation] = groupInvitation;
+      try {
+        const result = await accessGroupsService.acceptInvitation(
+          currentInvitation.group_name
+        );
+        // Toast accepted terms of service
+        commit('acceptTOS', groupName);
+        return result;
+      } catch (e) {
+        throw new Error(e.message);
+      }
+    },
+    async rejectInvitationTOS({ commit, state }, groupName) {
+      const groupInvitation = state.groupInvitations.filter(
+        invitation => invitation.group_name === groupName
+      );
+      if (!groupInvitation || !groupInvitation.length) {
+        state.error = `Group name ${groupName} does not exist`;
+        throw new Error(state.error);
+      }
+      const [currentInvitation] = groupInvitation;
+      try {
+        const result = await accessGroupsService.rejectInvitation(
+          currentInvitation.group_name
+        );
+        // Toast rejection terms of service
+        commit('doNotAcceptTOS', groupName);
+        return result;
+      } catch (e) {
+        throw new Error(e.message);
+      }
+    },
   },
   mutations: {
     setUser(state, user) {
@@ -141,8 +181,46 @@ export default new Vuex.Store({
     setAccessGroupTOS(state, content) {
       state.groupTOS = content;
     },
+    acceptTOS(state, groupName) {
+      let found = false;
+      for (let i = 0, len = state.groupInvitations.length; i < len; i++) {
+        if (state.groupInvitations[i].group_name === groupName) {
+          found = true;
+          state.groupInvitations[i].state = INVITATION_STATE.ACCEPTED;
+        }
+      }
+      if (!found) {
+        // Toast accepting terms of service error
+        state.error = `Could not find groupInvitation for accepting groupname: ${groupName}`;
+        throw new Error(state.error);
+      }
+    },
+    doNotAcceptTOS(state, groupName) {
+      let found = false;
+      for (let i = 0, len = state.groupInvitations.length; i < len; i++) {
+        if (state.groupInvitations[i].group_name === groupName) {
+          found = true;
+          state.groupInvitations[i].state = INVITATION_STATE.REJECTED;
+        }
+      }
+      if (!found) {
+        // Toast rejection terms of service error
+        state.error = `Could not find groupInvitation for rejecting groupname: ${groupName}`;
+        throw new Error(state.error);
+      }
+    },
   },
   getters: {
+    getInvitationByName: state => groupName => {
+      console.log('getting group name: ', groupName);
+      const options = state.groupInvitations.filter(
+        invite => invite.group_name === groupName
+      );
+      if (options.length !== 1) {
+        return null;
+      }
+      return options[0];
+    },
     getActiveInvitations: state => {
       return state.groupInvitations.filter(invitation => {
         return (
