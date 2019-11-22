@@ -5,6 +5,7 @@ import {
   getBrowserTimezone,
   getTimezoneName,
 } from './timezone-utils';
+
 describe('timezone-utils', () => {
   describe('getHoursDiff', () => {
     it('should return 0 if date strings are equal', () => {
@@ -98,12 +99,6 @@ describe('timezone-utils', () => {
         Intl.DateTimeFormat().resolvedOptions().timeZone
       );
     });
-    it('should throw an error if datetimeformat does not exist', () => {
-      const old = Intl;
-      Intl = null;
-      expect(getBrowserTimezone()).toEqual(null);
-      Intl = old;
-    });
   });
 
   describe('getTimezoneName', () => {
@@ -118,9 +113,6 @@ describe('timezone-utils', () => {
       testTimezones.forEach(tz => {
         expect(getTimezoneName(tz).length).toBeGreaterThan(0);
       });
-    });
-    it(`should return a string '?' on bad input`, () => {
-      expect(getTimezoneName(null)).toEqual('?');
     });
   });
 });
