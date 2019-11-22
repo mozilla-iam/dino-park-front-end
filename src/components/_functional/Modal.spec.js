@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Modal from './Modal.vue';
 import getRenderedText from '../../../tests/utils/getRenderedText.js';
-import MockStore from '../../test/MockStore';
-import { getMountedComponentWithStore } from '../../test/TestUtils';
+import MockStore from '../../../tests/mocks/mockStore';
+import getMountedComponentWithStore from '../../../tests/utils/getMountedComponentWithStore';
 describe('Modal', () => {
   const Constructor = Vue.extend(Modal);
 
