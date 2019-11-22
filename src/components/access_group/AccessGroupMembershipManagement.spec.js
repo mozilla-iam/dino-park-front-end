@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import AccessGroupMembershipManagement from './AccessGroupMembershipManagement.vue';
-import { getMountedComponentWithStore } from '../../test/TestUtils';
+import getMountedComponentWithStore from '../../../tests/utils/getMountedComponentWithStore';
 
 Vue.use(Router);
 
