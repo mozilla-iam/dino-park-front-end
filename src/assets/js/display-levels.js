@@ -62,9 +62,8 @@ const NON_STAFF_DISPLAY_LEVELS = {
 
 export function displayLevelsFor(field, scope = null) {
   return (
-    (field &&
-      ((scope && !scope.isStaff && NON_STAFF_DISPLAY_LEVELS[field]) ||
-        VALID_DISPLAY_LEVELS[field])) ||
+    (scope && !scope.isStaff && NON_STAFF_DISPLAY_LEVELS[field]) ||
+    VALID_DISPLAY_LEVELS[field] ||
     DISPLAY_NOT_PRIVATE
   );
 }
