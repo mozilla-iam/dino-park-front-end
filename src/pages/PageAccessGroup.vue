@@ -2,7 +2,10 @@
   <main class="access-group">
     <section class="primary-area">
       <section class="primary-area__description">
-        <AccessGroupDescription :title="groupid" :editable="!editing"></AccessGroupDescription>
+        <AccessGroupDescription
+          :title="groupname"
+          :editable="!editing"
+        ></AccessGroupDescription>
       </section>
       <aside class="primary-area__control">
         <PanelSection title="Membership Management">
@@ -48,11 +51,14 @@ export default {
     AccessGroupDetails,
   },
   props: {
-    groupid: String,
+    groupname: String,
   },
   computed: {
     editing() {
-      if (this.$route.name === 'Edit Access Group' && this.$route.query.section) {
+      if (
+        this.$route.name === 'Edit Access Group' &&
+        this.$route.query.section
+      ) {
         return this.$route.query.section;
       }
       return null;

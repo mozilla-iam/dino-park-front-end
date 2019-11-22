@@ -1,6 +1,10 @@
 <template>
   <main class="group-edit">
-    <a class="button group-edit__back-action" :href="backUrl" @click="handleBackClicked">
+    <a
+      class="button group-edit__back-action"
+      :href="backUrl"
+      @click="handleBackClicked"
+    >
       <Icon id="chevron-left" :width="17" :height="17" />Back to group
     </a>
     <section class="edit-container">
@@ -44,7 +48,7 @@ export default {
     AccessGroupInvitationsEdit,
   },
   props: {
-    groupid: String,
+    groupname: String,
   },
   methods: {
     handleBackClicked() {
