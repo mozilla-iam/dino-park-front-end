@@ -74,7 +74,7 @@ const router = new Router({
       meta: { key: 'search' },
     },
     {
-      path: '/a/:groupid/edit',
+      path: '/a/:groupname/edit',
       name: 'Edit Access Group',
       component: PageAccessGroupEdit,
       query: {
@@ -84,14 +84,17 @@ const router = new Router({
       meta: { key: 'access-group' },
     },
     {
-      path: '/a/:groupid/tos',
+      path: '/a/:groupname/tos',
       name: 'Access Group TOS',
       component: PageAccessGroupTerms,
+      query: {
+        accept: ':accept?',
+      },
       props: true,
       meta: { key: 'access-group' },
     },
     {
-      path: '/a/:groupid',
+      path: '/a/:groupname',
       name: 'Access Group',
       component: PageAccessGroup,
       props: true,
@@ -102,7 +105,10 @@ const router = new Router({
     if (to.hash) {
       return { selector: to.hash };
     }
-    if (scrolling.toEdit(to) || scrolling.fromEditToSelf(to, from, router.app)) {
+    if (
+      scrolling.toEdit(to) ||
+      scrolling.fromEditToSelf(to, from, router.app)
+    ) {
       return { selector: `#nav-${to.query.section}` };
     }
     if (scrolling.toProfile(to, from)) {
@@ -146,7 +152,8 @@ router.beforeEach((to, from, next) => {
       document.title = `Edit - Profile - Mozilla People Directory`;
       break;
     case 'Access Group TOS':
-      document.title = 'Access Group Terms of Service - Mozilla People Directory';
+      document.title =
+        'Access Group Terms of Service - Mozilla People Directory';
       break;
     default:
       document.title = `${to.name} - Mozilla People Directory`;

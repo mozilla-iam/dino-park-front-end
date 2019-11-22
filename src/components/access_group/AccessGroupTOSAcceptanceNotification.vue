@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import { INVITATION_STATE } from '@/view_models/AccessGroupViewModel';
 import { ACCESS_GROUP_TOS_PAGE } from '@/router';
 
 export default {
