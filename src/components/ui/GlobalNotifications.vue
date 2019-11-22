@@ -1,16 +1,19 @@
 <template lang="html">
   <section class="global-notifications-container">
+    <AccessGroupTOSAcceptanceNotification />
     <AccessGroupInvitationNotification />
   </section>
 </template>
 
 <script lang="js">
 import AccessGroupInvitationNotification from '@/components/access_group/AccessGroupInvitationNotification.vue';
+import AccessGroupTOSAcceptanceNotification from '@/components/access_group/AccessGroupTOSAcceptanceNotification.vue';
 
 export default  {
   name: 'GlobalNotifications',
   components: {
     AccessGroupInvitationNotification,
+    AccessGroupTOSAcceptanceNotification,
   }
 }
 </script>
@@ -21,6 +24,22 @@ export default  {
   margin: 0 auto;
   width: 100%;
   padding: 0 2em;
+}
+
+.global-notifications-container > article {
+  margin-top: 1em;
+}
+
+.global-notifications-container > article:first-child {
+  margin-top: 0;
+}
+
+.global-notifications-container.container {
+  margin: 2em auto 0 auto;
+}
+
+.global-notifications-container.container:empty {
+  margin: 0 auto;
 }
 
 @media (min-width: 57.5em) {
