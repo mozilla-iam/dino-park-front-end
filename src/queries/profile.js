@@ -80,13 +80,13 @@ const MUTATE_PROFILE = gql`
     $languages: KeyValuesWithDisplay
     $tags: KeyValuesWithDisplay
     $uris: KeyValuesWithDisplay
-    $accessInformationMozilliansorg: Display
-    $accessInformationLdap: Display
     $custom1PrimaryEmail: StringWithDisplay
     $custom2PrimaryEmail: StringWithDisplay
-    $staffInformationTitle: Display
-    $staffInformationOfficeLocation: Display
-    $primaryEmail: Display
+    $accessInformationMozilliansorgDisplay: Display
+    $accessInformationLdapDisplay: Display
+    $staffInformationTitleDisplay: Display
+    $staffInformationOfficeLocationDisplay: Display
+    $primaryEmailDisplay: Display
   ) {
     profile(
       update: {
@@ -105,13 +105,13 @@ const MUTATE_PROFILE = gql`
         languages: $languages
         tags: $tags
         uris: $uris
-        accessInformationMozilliansorg: $accessInformationMozilliansorg
-        accessInformationLdap: $accessInformationLdap
         custom1PrimaryEmail: $custom1PrimaryEmail
         custom2PrimaryEmail: $custom2PrimaryEmail
-        staffInformationTitle: $staffInformationTitle
-        staffInformationOfficeLocation: $staffInformationOfficeLocation
-        primaryEmail: $primaryEmail
+        accessInformationMozilliansorgDisplay: $accessInformationMozilliansorgDisplay
+        accessInformationLdapDisplay: $accessInformationLdapDisplay
+        staffInformationTitleDisplay: $staffInformationTitleDisplay
+        staffInformationOfficeLocationDisplay: $staffInformationOfficeLocationDisplay
+        primaryEmailDisplay: $primaryEmailDisplay
       }
     ) {
       uuid {

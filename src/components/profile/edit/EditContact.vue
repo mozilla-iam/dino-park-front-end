@@ -190,7 +190,7 @@ export default {
     editVariables() {
       return {
         phoneNumbers: this.phoneNumbers,
-        primaryEmail: this.primaryEmail.display,
+        primaryEmailDisplay: this.primaryEmail.display,
         custom1PrimaryEmail: this.custom1PrimaryEmail,
         custom2PrimaryEmail: this.custom2PrimaryEmail,
       };

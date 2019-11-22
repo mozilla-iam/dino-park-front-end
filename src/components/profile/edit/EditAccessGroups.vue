@@ -1,8 +1,8 @@
 <template>
   <EditMutationWrapper
     :editVariables="{
-      accessInformationMozilliansorg: editMozilliansorgGroups.display,
-      accessInformationLdap: editLdapGroups.display,
+      accessInformationMozilliansorgDisplay: editMozilliansorgGroups.display,
+      accessInformationLdapDisplay: editLdapGroups.display,
     }"
     :initialValues="initialAccessInformation"
     formName="Edit access groups"

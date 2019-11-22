@@ -11,8 +11,9 @@
       location,
       timezone,
       description,
-      staffInformationTitle: staffInformationTitle.display,
-      staffInformationOfficeLocation: staffInformationOfficeLocation.display,
+      staffInformationTitleDisplay: staffInformationTitle.display,
+      staffInformationOfficeLocationDisplay:
+        staffInformationOfficeLocation.display,
     }"
     :initialValues="initialValues"
     formName="Edit personal information"
