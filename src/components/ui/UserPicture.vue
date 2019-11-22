@@ -1,5 +1,5 @@
 <template>
-  <div :class="'user-picture' + (modifier ? ' ' + modifier : '')">
+  <div :class="[{ 'user-picture': true, identicon }, modifier]">
     <img
       v-if="src"
       ref="img"
@@ -62,6 +62,7 @@ export default {
     },
     async updateUserPicture() {
       this.updateSize();
+      let identicon = false;
       if (this.avatar.picture === 'empty:') {
         this.src = '';
       } else if (
@@ -76,9 +77,11 @@ export default {
         this.avatar.picture.startsWith('https://s3.amazonaws.com/')
       ) {
         this.src = await generateIdenticon(this.avatar.username, this.size);
+        identicon = true;
       } else {
         this.src = avatarUrl(this.avatar.picture, this.slot);
       }
+      this.identicon = identicon;
     },
   },
   created() {
@@ -91,6 +94,7 @@ export default {
       slot: 40,
       class: 'user-picture--40',
       modifier: '',
+      identicon: true,
     };
   },
 };
