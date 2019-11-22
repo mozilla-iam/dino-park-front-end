@@ -80,9 +80,13 @@ const MUTATE_PROFILE = gql`
     $languages: KeyValuesWithDisplay
     $tags: KeyValuesWithDisplay
     $uris: KeyValuesWithDisplay
-    $accessInformationMozilliansorg: Display
     $custom1PrimaryEmail: StringWithDisplay
     $custom2PrimaryEmail: StringWithDisplay
+    $accessInformationMozilliansorgDisplay: Display
+    $accessInformationLdapDisplay: Display
+    $staffInformationTitleDisplay: Display
+    $staffInformationOfficeLocationDisplay: Display
+    $primaryEmailDisplay: Display
   ) {
     profile(
       update: {
@@ -101,9 +105,13 @@ const MUTATE_PROFILE = gql`
         languages: $languages
         tags: $tags
         uris: $uris
-        accessInformationMozilliansorg: $accessInformationMozilliansorg
         custom1PrimaryEmail: $custom1PrimaryEmail
         custom2PrimaryEmail: $custom2PrimaryEmail
+        accessInformationMozilliansorgDisplay: $accessInformationMozilliansorgDisplay
+        accessInformationLdapDisplay: $accessInformationLdapDisplay
+        staffInformationTitleDisplay: $staffInformationTitleDisplay
+        staffInformationOfficeLocationDisplay: $staffInformationOfficeLocationDisplay
+        primaryEmailDisplay: $primaryEmailDisplay
       }
     ) {
       uuid {
@@ -198,6 +206,12 @@ const MUTATE_PROFILE = gql`
           display
         }
       }
+      primaryEmail {
+        value
+        metadata {
+          display
+        }
+      }
       pronouns {
         value
         metadata {
@@ -237,6 +251,32 @@ const MUTATE_PROFILE = gql`
         }
         ldap {
           values
+          metadata {
+            display
+          }
+        }
+      }
+      staffInformation {
+        staff {
+          value
+          metadata {
+            display
+          }
+        }
+        team {
+          value
+          metadata {
+            display
+          }
+        }
+        title {
+          value
+          metadata {
+            display
+          }
+        }
+        officeLocation {
+          value
           metadata {
             display
           }

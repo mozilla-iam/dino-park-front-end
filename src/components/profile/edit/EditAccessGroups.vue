@@ -1,7 +1,8 @@
 <template>
   <EditMutationWrapper
     :editVariables="{
-      accessInformationMozilliansorg: editMozilliansorgGroups.display,
+      accessInformationMozilliansorgDisplay: editMozilliansorgGroups.display,
+      accessInformationLdapDisplay: editLdapGroups.display,
     }"
     :initialValues="initialAccessInformation"
     formName="Edit access groups"
@@ -18,9 +19,8 @@
             label="LDAP access groups privacy levels"
             id="section-access-groups-ldap-privacy"
             profileFieldName="accessInformation.ldap"
-            :profileFieldObject="initialAccessInformation.ldap.metadata"
+            :profileFieldObject="editLdapGroups"
             :collapsedShowLabel="true"
-            :disabled="true"
           />
         </div>
         <IconBlockList class="icon-block-list--multi-col">
@@ -86,7 +86,7 @@ import Icon from '@/components/ui/Icon.vue';
 import IconBlock from '@/components/ui/IconBlock.vue';
 import IconBlockList from '@/components/ui/IconBlockList.vue';
 import PrivacySetting from '@/components/profile/PrivacySetting.vue';
-import { displayLevelsFor, DISPLAY_LEVELS } from '@/assets/js/display-levels';
+import { DISPLAY_LEVELS } from '@/assets/js/display-levels';
 
 export default {
   name: 'EditAccessGroups',
@@ -106,24 +106,29 @@ export default {
     IconBlockList,
     PrivacySetting,
   },
-  methods: {
-    displayLevelsFor,
-  },
   mounted() {
     this.$refs.header.focus();
   },
   data() {
     const {
       mozilliansorg: {
-        values = {},
-        metadata: { display = DISPLAY_LEVELS.staff.value } = {},
+        values: mozilliansorgValues = {},
+        metadata: {
+          display: mozilliansorgDisplay = DISPLAY_LEVELS.staff.value,
+        } = {},
+      } = {},
+      ldap: {
+        metadata: { display: ldapDisplay = DISPLAY_LEVELS.private.value } = {},
       } = {},
     } = this.initialAccessInformation;
     return {
       editMozilliansorgGroups: {
-        display,
+        display: mozilliansorgDisplay,
       },
-      mozilliansorgGroups: [...Object.entries(values || {})],
+      editLdapGroups: {
+        display: ldapDisplay,
+      },
+      mozilliansorgGroups: [...Object.entries(mozilliansorgValues || {})],
     };
   },
 };
