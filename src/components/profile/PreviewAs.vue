@@ -114,6 +114,8 @@ export default {
   border-color: var(--black);
 }
 .preview-as__select-container {
+  display: flex;
+  align-items: center;
   border-radius: 2.5em;
   background-color: var(--white);
 }
