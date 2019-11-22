@@ -647,6 +647,9 @@ export default {
   .edit-personal-info__picture-privacy {
     right: 2.1em;
   }
+  .user-picture.identicon ~ .edit-personal-info__picture-privacy {
+    display: none;
+  }
   .edit-personal-info__picture button {
     background-color: var(--gray-20);
     font-size: inherit;
