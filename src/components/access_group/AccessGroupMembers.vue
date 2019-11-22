@@ -12,7 +12,8 @@
         class="members-container__tooltip"
         buttonText="Member search info"
         alternateButtonText="Close member search info"
-      >You can search by name, username and email</Tooltip>
+        >You can search by name, username and email</Tooltip
+      >
     </header>
     <nav class="members-container__tabs">
       <ul class="tabs-container">
@@ -26,13 +27,30 @@
         </li>
       </ul>
     </nav>
-    <ul class="members-container__list">
-      <li v-for="(column, idx) in filteredListDisplay" :key="idx" class="list-column-container">
+    <ul class="members-container__list columned">
+      <li
+        v-for="(column, idx) in filteredListTwoColumnDisplay"
+        :key="idx"
+        class="list-column-container"
+      >
         <ul class="members-container__list-column">
-          <li v-for="(member, idx2) in column" :key="idx2" class="list-item-container">
+          <li
+            v-for="(member, idx2) in column"
+            :key="idx2"
+            class="list-item-container"
+          >
             <AccessGroupMemberItem :member="member" />
           </li>
         </ul>
+      </li>
+    </ul>
+    <ul class="members-container__list">
+      <li
+        v-for="(member, idx) in filteredListDisplay"
+        :key="idx"
+        class="list-item-container"
+      >
+        <AccessGroupMemberItem :member="member" />
       </li>
     </ul>
   </article>
@@ -69,7 +87,9 @@ export default {
         return searchQuery;
       }
       this.filteredList = this.memberList.filter(member => {
-        return member.name.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1;
+        return (
+          member.name.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1
+        );
       });
       return searchQuery;
     },
@@ -84,14 +104,15 @@ export default {
     },
   },
   computed: {
+    filteredListTwoColumnDisplay() {
+      return getTwoColumnGridArraySplitFromArray(this.filteredListDisplay);
+    },
     filteredListDisplay() {
-      return getTwoColumnGridArraySplitFromArray(
-        this.filteredList.filter(
-          member =>
-            (this.activeTab === 'curators' && member.isCurator()) ||
-            (this.activeTab === 'members' && member.isMember()) ||
-            this.activeTab === 'all'
-        )
+      return this.filteredList.filter(
+        member =>
+          (this.activeTab === 'curators' && member.isCurator()) ||
+          (this.activeTab === 'members' && member.isMember()) ||
+          this.activeTab === 'all'
       );
     },
   },
@@ -208,14 +229,25 @@ export default {
   padding: 0;
   width: 100%;
 }
+.members-container__list:not(.columned) {
+  display: flex;
+  flex-direction: column;
+}
 
+.members-container__list.columned {
+  display: none;
+}
 @media (min-width: 57.5em) {
-  .members-container__list {
+  .members-container__list.columned {
     display: grid;
     grid-template-columns: calc(50% - 0.5em) calc(50% - 0.5em);
     grid-row-gap: 1em;
     grid-column-gap: 1em;
     grid-auto-rows: min-content;
+  }
+
+  .members-container__list:not(.columned) {
+    display: none;
   }
 }
 
