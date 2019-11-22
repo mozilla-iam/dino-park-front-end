@@ -70,11 +70,3 @@ export default {
   },
 };
 </script>
-
-<style>
-.profile__section--disabled {
-  background-color: var(--gray-20);
-  color: var(--gray-50);
-  border: 2px solid var(--gray-30);
-}
-</style>
