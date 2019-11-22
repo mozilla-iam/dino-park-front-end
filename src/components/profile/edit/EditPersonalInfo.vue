@@ -394,8 +394,6 @@
 <script>
 import EditMutationWrapper from '@/components/profile/edit/EditMutationWrapper.vue';
 import Icon from '@/components/ui/Icon.vue';
-import Meta from '@/components/ui/Meta.vue';
-import MetaList from '@/components/ui/MetaList.vue';
 import PrivacySetting from '@/components/profile/PrivacySetting.vue';
 import Select from '@/components/ui/Select.vue';
 import TextInput from '@/components/ui/TextInput.vue';
@@ -418,8 +416,6 @@ export default {
     EditPictureModal,
     EditMutationWrapper,
     Icon,
-    Meta,
-    MetaList,
     PrivacySetting,
     Select,
     TextInput,
@@ -585,9 +581,6 @@ export default {
 .edit-personal-info__picture .edit-personal-info__picture-edit-button svg {
   margin: 0;
 }
-.edit-personal-info__meta {
-  grid-column: 1 / 2;
-}
 
 @media (min-width: 57.5em) {
   .edit-personal-info {
@@ -664,9 +657,6 @@ export default {
     grid-column: 4 / 5;
     align-self: center;
     justify-self: center;
-  }
-  .edit-personal-info__meta {
-    grid-column: 2 / 4;
   }
 }
 </style>
