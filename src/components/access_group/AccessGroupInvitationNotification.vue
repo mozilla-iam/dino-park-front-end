@@ -76,14 +76,22 @@ export default {
             name: 'Access Group',
             params: { groupname: currentInvitation.group_name },
           });
+          this.$root.$emit('toast', {
+            content: 'You accepted the terms for this group.',
+          });
         });
       }
     },
     handleRejectClick(idx) {
-      if (this.invitations[idx].state === PENDING_REJECTION) {
-        this.$store.dispatch('rejectGroupInvitation', idx);
-      } else if (this.invitations[idx].state === '') {
-        this.invitations[idx].state = PENDING_REJECTION;
+      const currentInvitation = this.invitations[idx];
+      if (currentInvitation.state === PENDING_REJECTION) {
+        this.$store.dispatch('rejectGroupInvitation', idx).then(() => {
+          this.$root.$emit('toast', {
+            content: `You rejected the invite for group ${currentInvitation.group_name}.`,
+          });
+        });
+      } else if (currentInvitation.state === '') {
+        currentInvitation.state = PENDING_REJECTION;
       }
     },
     handleInvitationBack(idx) {
