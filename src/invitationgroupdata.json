@@ -1,19 +1,6 @@
 {
   "invitations": [
     {
-      "group_name": "dinos",
-      "user_uuid": "34a33a8e-d035-4051-acac-497a79235e73",
-      "invitation_expiration": {},
-      "group_expiration": {},
-      "terms": true,
-      "added_by": {
-        "user_uuid": "34a33a8e-d035-4051-acac-497a79235e73",
-        "name": "Hans Knall",
-        "username": "hans",
-        "email": "hans@knall.org"
-      }
-    },
-    {
       "group_name": "dinopark-test",
       "user_uuid": "34a33a8e-d035-4051-acac-497a79235e73",
       "invitation_expiration": {},

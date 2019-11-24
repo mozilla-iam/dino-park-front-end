@@ -65,27 +65,29 @@ export default {
     acceptTerms() {
       this.$store
         .dispatch('acceptInvitationTOS', this.$route.params.groupname)
-        .then(result => {
+        .then(() => {
           this.$router.push({
             name: 'Access Group',
             query: {
               groupname: this.$route.query.groupname,
             },
           });
+          this.$root.$emit('toast', {
+            content: 'You accepted the terms for this group.',
+          });
         });
     },
     doNotAcceptTerms() {
-      this.$store
-        .dispatch('rejectInvitationTOS', this.$route.params.groupname)
-        .then(result => {
-          this.$router.go(-1);
+      const { groupname } = this.$route.params;
+      this.$store.dispatch('rejectInvitationTOS', groupname).then(() => {
+        this.$router.go(-1);
+        this.$root.$emit('toast', {
+          content: `You rejected the invite for group ${groupname}.`,
         });
+      });
     },
   },
   data() {
-    const invitation = this.$store.getters.getInvitationByName(
-      this.$store.state.accessGroup.group.name
-    );
     return {
       termsAccepted: true,
     };
