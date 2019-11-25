@@ -3,17 +3,23 @@
     class="notification-container tos-acceptance-notification-container"
     v-if="showTOSAcceptanceNotification"
   >
-    Membership requires acceptance of the terms below
+    <span class="acceptance-notification__icon">
+      <Icon id="info" :width="32" :height="32" />
+    </span>
+    <p class="acceptance-notification__description">
+      Membership requires acceptance of the terms below
+    </p>
   </article>
 </template>
 
 <script>
-import { INVITATION_STATE } from '@/view_models/AccessGroupViewModel';
+import Icon from '@/components/ui/Icon.vue';
 import { ACCESS_GROUP_TOS_PAGE } from '@/router';
 
 export default {
   name: 'AccessGroupTOSAcceptanceNotification',
   props: {},
+  components: { Icon },
   computed: {
     showTOSAcceptanceNotification() {
       if (!this.$route.query.accept) {
@@ -41,7 +47,16 @@ export default {
   background: #f2fcfd;
   border: 1px solid var(--blue-60);
   border-radius: var(--formElementRadius);
-  text-align: center;
-  padding: 1em;
+  padding: 0.5em 1em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.tos-acceptance-notification-container .acceptance-notification__icon {
+  color: var(--blue-60);
+}
+.tos-acceptance-notification-container .acceptance-notification__description {
+  padding-left: 1em;
 }
 </style>

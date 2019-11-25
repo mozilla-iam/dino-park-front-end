@@ -253,8 +253,22 @@
       />
     </template>
     <template v-else-if="id === 'x'">
-      <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2" />
-      <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2" />
+      <line
+        x1="18"
+        y1="6"
+        x2="6"
+        y2="18"
+        stroke="currentColor"
+        stroke-width="2"
+      />
+      <line
+        x1="6"
+        y1="6"
+        x2="18"
+        y2="18"
+        stroke="currentColor"
+        stroke-width="2"
+      />
     </template>
     <template v-else-if="id === 'plus'">
       <path
@@ -321,19 +335,27 @@
         <path
           d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"
         />
-        <path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" />
+        <path
+          d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"
+        />
         <path
           d="M9.5 14c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.33 8 20.5v-5c0-.83.67-1.5 1.5-1.5z"
         />
-        <path d="M3.5 14H5v1.5c0 .83-.67 1.5-1.5 1.5S2 16.33 2 15.5 2.67 14 3.5 14z" />
+        <path
+          d="M3.5 14H5v1.5c0 .83-.67 1.5-1.5 1.5S2 16.33 2 15.5 2.67 14 3.5 14z"
+        />
         <path
           d="M14 14.5c0-.83.67-1.5 1.5-1.5h5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-5c-.83 0-1.5-.67-1.5-1.5z"
         />
-        <path d="M15.5 19H14v1.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z" />
+        <path
+          d="M15.5 19H14v1.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z"
+        />
         <path
           d="M10 9.5C10 8.67 9.33 8 8.5 8h-5C2.67 8 2 8.67 2 9.5S2.67 11 3.5 11h5c.83 0 1.5-.67 1.5-1.5z"
         />
-        <path d="M8.5 5H10V3.5C10 2.67 9.33 2 8.5 2S7 2.67 7 3.5 7.67 5 8.5 5z" />
+        <path
+          d="M8.5 5H10V3.5C10 2.67 9.33 2 8.5 2S7 2.67 7 3.5 7.67 5 8.5 5z"
+        />
       </g>
     </template>
     <template v-else-if="id === 'rotate'">
@@ -516,7 +538,13 @@
           id="path-1"
         ></path>
       </defs>
-      <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+      <g
+        id="Symbols"
+        stroke="none"
+        stroke-width="1"
+        fill="none"
+        fill-rule="evenodd"
+      >
         <g id="icon-/-crown-fill" transform="translate(-1.000000, 0.000000)">
           <mask id="mask-2" fill="white">
             <use xlink:href="#path-1"></use>
@@ -564,6 +592,88 @@
         <polyline points="12 6 12 12 16 14"></polyline>
       </g>
     </template>
+    <template v-else-if="id === 'user-plus'">
+      <defs>
+        <path
+          d="M17,19 L17,21 C17,21.6 16.6,22 16,22 C15.4,22 15,21.6 15,21 L15,19 C15,17.3 13.7,16 12,16 L5,16 C3.3,16 2,17.3 2,19 L2,21 C2,21.6 1.6,22 1,22 C0.4,22 0,21.6 0,21 L0,19 C0,16.2 2.2,14 5,14 L12,14 C14.8,14 17,16.2 17,19 Z M3.5,7 C3.5,4.2 5.7,2 8.5,2 C11.3,2 13.5,4.2 13.5,7 C13.5,9.8 11.3,12 8.5,12 C5.7,12 3.5,9.8 3.5,7 Z M5.5,7 C5.5,8.7 6.8,10 8.5,10 C10.2,10 11.5,8.7 11.5,7 C11.5,5.3 10.2,4 8.5,4 C6.8,4 5.5,5.3 5.5,7 Z M23,10 L21,10 L21,8 C21,7.4 20.6,7 20,7 C19.4,7 19,7.4 19,8 L19,10 L17,10 C16.4,10 16,10.4 16,11 C16,11.6 16.4,12 17,12 L19,12 L19,14 C19,14.6 19.4,15 20,15 C20.6,15 21,14.6 21,14 L21,12 L23,12 C23.6,12 24,11.6 24,11 C24,10.4 23.6,10 23,10 Z"
+          id="path-1"
+        ></path>
+      </defs>
+      <g
+        id="Cheat-Sheet"
+        stroke="none"
+        stroke-width="1"
+        fill="none"
+        fill-rule="evenodd"
+      >
+        <g id="Artboard" transform="translate(-2898.000000, -2345.000000)">
+          <g
+            id="icon-/-user-plus"
+            transform="translate(2898.000000, 2343.000000)"
+          >
+            <mask id="mask-2" fill="currentColor">
+              <use xlink:href="#path-1"></use>
+            </mask>
+            <use
+              id="Mask"
+              fill="currentColor"
+              fill-rule="nonzero"
+              xlink:href="#path-1"
+            ></use>
+            <g
+              id="Icon-🎨"
+              stroke-width="1"
+              fill-rule="evenodd"
+              mask="url(#mask-2)"
+              fill="#4A4A4A"
+            >
+              <rect id="Shape" x="0" y="0" width="24" height="24"></rect>
+            </g>
+          </g>
+        </g>
+      </g>
+    </template>
+    <template v-else-if="id === 'question-mark-circle'">
+      <defs>
+        <path
+          d="M15.9,10 C15.9,12.6 12.6,13.8 12.2,13.9 C12.1,14 12,14 11.9,14 C11.5,14 11.1,13.7 11,13.3 C10.8,12.8 11.1,12.2 11.6,12 C12.2,11.8 13.9,11 13.9,9.9 C13.9,9 13.4,8.3 12.6,8 C11.6,7.6 10.4,8.2 10,9.2 C9.8,9.7 9.2,10 8.7,9.8 C8.2,9.8 8,9.2 8.1,8.7 C8.8,6.6 11.1,5.5 13.2,6.3 C14.8,6.8 15.9,8.3 15.9,10 Z M23,12 C23,18.1 18.1,23 12,23 C5.9,23 1,18.1 1,12 C1,5.9 5.9,1 12,1 C18.1,1 23,5.9 23,12 Z M21,12 C21,7 17,3 12,3 C7,3 3,7 3,12 C3,17 7,21 12,21 C17,21 21,17 21,12 Z M12.7,16.3 C12.7,16.3 12.6,16.2 12.5,16.2 C12.4,16.2 12.4,16.1 12.3,16.1 C12.2,16.1 12.2,16.1 12.1,16 C11.9,16 11.7,16 11.5,16.1 C11.4,16.1 11.3,16.2 11.2,16.3 C11.1,16.4 11,16.5 11,16.6 C11,16.7 10.9,16.8 10.9,17 C10.9,17.3 11,17.5 11.2,17.7 C11.4,17.9 11.6,18 11.9,18 C12.2,18 12.4,17.9 12.6,17.7 C12.8,17.5 12.9,17.3 12.9,17 C12.9,16.9 12.9,16.7 12.8,16.6 C12.9,16.5 12.8,16.4 12.7,16.3 Z"
+          id="path-1"
+        ></path>
+      </defs>
+      <g
+        id="Cheat-Sheet"
+        stroke="none"
+        stroke-width="1"
+        fill="none"
+        fill-rule="evenodd"
+      >
+        <g id="Artboard" transform="translate(-2949.000000, -2365.000000)">
+          <g
+            id="icon-/-help-circle"
+            transform="translate(2948.000000, 2364.000000)"
+          >
+            <mask id="mask-2" fill="white">
+              <use xlink:href="#path-1"></use>
+            </mask>
+            <use
+              id="Mask"
+              fill="#000000"
+              fill-rule="nonzero"
+              xlink:href="#path-1"
+            ></use>
+            <g
+              id="Icon-🎨"
+              stroke-width="1"
+              fill-rule="evenodd"
+              mask="url(#mask-2)"
+              fill="currentColor"
+            >
+              <rect id="Shape" x="0" y="0" width="24" height="24"></rect>
+            </g>
+          </g>
+        </g>
+      </g>
+    </template>
   </svg>
 </template>
 
@@ -579,9 +689,11 @@ export default {
     id: String,
   },
   mounted() {
-    generateIdenticon(this.$store.state.user.primaryUsername.value, 40).then(a => {
-      this.generatedAvatarUrl = a;
-    });
+    generateIdenticon(this.$store.state.user.primaryUsername.value, 40).then(
+      a => {
+        this.generatedAvatarUrl = a;
+      }
+    );
   },
   computed: {
     computedAvatarUrl() {

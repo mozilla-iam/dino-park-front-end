@@ -8,6 +8,9 @@
       v-for="(notification, idx) in invitations"
       :key="idx"
     >
+      <span class="invitation-notification__icon">
+        <Icon :id="getInvitationIcon(notification)" :width="32" :height="32" />
+      </span>
       <p
         class="invitation-notification__description"
         v-if="isInvitationInitial(notification)"
@@ -18,12 +21,12 @@
         class="invitation-notification__description"
         v-else-if="isInvitationPendingRejection(notification)"
       >
-        Are you sure this is what you want to do?
+        Are you sure you wish to reject this invitation?
       </p>
-      <footer class="invitation-notification__actions">
+      <div class="invitation-notification__actions">
         <template v-if="isInvitationInitial(notification)">
           <Button class="primary-action" v-on:click="handleAcceptClick(idx)"
-            >Accept</Button
+            >Continue</Button
           >
           <Button
             class="secondary-action button--secondary button--action"
@@ -41,13 +44,14 @@
             >Back</Button
           >
         </template>
-      </footer>
+      </div>
     </div>
   </article>
 </template>
 
 <script>
 import Button from '@/components/ui/Button.vue';
+import Icon from '@/components/ui/Icon.vue';
 import LinksMixin from '@/components/_mixins/LinksMixin.vue';
 import { INVITATION_STATE } from '@/view_models/AccessGroupViewModel';
 import { ACCESS_GROUP_TOS_PAGE } from '@/router';
@@ -56,7 +60,7 @@ const PENDING_REJECTION = 'PENDING_REJECTION';
 
 export default {
   name: 'AccessGroupInvitationNotification',
-  components: { Button },
+  components: { Button, Icon },
   mixins: [LinksMixin],
   props: {},
   methods: {
@@ -109,6 +113,9 @@ export default {
     isInvitationPendingRejection(invitation) {
       return invitation.state === PENDING_REJECTION;
     },
+    getInvitationIcon(invitation) {
+      return invitation.state === '' ? 'user-plus' : 'question-mark-circle';
+    },
   },
   computed: {
     invitations() {
@@ -132,8 +139,11 @@ export default {
   border: 1px solid var(--blue-60);
   border-radius: var(--formElementRadius);
   text-align: center;
-  padding: 1em;
+  padding: 0.5em 1em;
   margin: 1em 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .invitation-notification-item:first-child {
@@ -144,12 +154,23 @@ export default {
   margin-bottom: 0;
 }
 
+.invitation-notification-container .invitation-notification__icon {
+  color: var(--blue-60);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 7%;
+  text-align: left;
+}
+
 .invitation-notification-container .invitation-notification__description {
-  margin-top: 0;
+  margin: 0;
+  flex: 1;
+  text-align: left;
+  padding-left: 1em;
 }
 
 .invitation-notification-container .invitation-notification__actions {
-  margin-top: 1em;
 }
 
 .invitation-notification-container .invitation-notification__actions .button {
