@@ -1,7 +1,7 @@
 import { InMemoryCache, defaultDataIdFromObject } from 'apollo-cache-inmemory';
 import ApolloClient from 'apollo-boost';
 import VueApollo from 'vue-apollo';
-import reload from 'reload';
+import reload from '@/assets/js/reload';
 
 function errorHandler(error) {
   const failoverOn = [302];
