@@ -13,16 +13,25 @@
         <h3>Email</h3>
       </div>
       <div class="edit-contact__item">
-        <Select
-          class="options--chevron"
-          label="Primary email adddress type"
-          id="field-email-primary-type"
-          :options="[{ label: 'Primary', value: 'Primary' }]"
-          :disabled="true"
-        />
-        <label for="field-email-primary-value" class="visually-hidden"
-          >Email 1</label
-        >
+        <div class="edit-contact__label">
+          <label for="field-email-primary-value">{{
+            fluent('profile_email_primary')
+          }}</label>
+          <Tooltip
+            :buttonText="fluent('profile_email_primary', 'tooltip-open')"
+            :alternateButtonText="
+              fluent('profile_email_primary', 'tooltip-close')
+            "
+          >
+            <Fluent
+              id="profile_email_primary"
+              attr="tooltip"
+              :args="{ email: 'HROPS@mozilla.com' }"
+              :tags="{
+                email: { tag: 'a', href: 'mailto:HROPS@mozilla.com' },
+              }"
+          /></Tooltip>
+        </div>
         <input
           type="email"
           id="field-email-primary-value"
@@ -45,20 +54,25 @@
         <hr role="presentation" />
       </div>
       <div v-if="hasSecondaryEmail" class="edit-contact__item">
-        <Button class="button--icon-only" v-on:click="removeSecondaryEmail">
+        <Button
+          class="button--icon-only button--x"
+          v-on:click="removeSecondaryEmail"
+        >
           <Icon id="x" :width="17" :height="17"></Icon>
           <span class="visually-hidden">Remove secondary email</span>
         </Button>
-        <Select
-          class="options--chevron"
-          label="Secondary email adddress type"
-          id="field-email-secondary-type"
-          :options="[{ label: 'Secondary', value: 'Secondary' }]"
-          :disabled="true"
-        />
-        <label for="field-email-secondary-value" class="visually-hidden"
-          >Email 2</label
-        >
+        <div class="edit-contact__label">
+          <label for="field-email-secondary-value">{{
+            fluent('profile_email_secondary')
+          }}</label>
+          <Tooltip
+            :buttonText="fluent('profile_email_secondary', 'tooltip-open')"
+            :alternateButtonText="
+              fluent('profile_email_secondary', 'tooltip-close')
+            "
+            >{{ fluent('profile_email_secondary', 'tooltip') }}
+          </Tooltip>
+        </div>
         <input
           type="email"
           id="field-email-secondary-value"
@@ -105,7 +119,7 @@
         class="edit-contact__item"
       >
         <Button
-          class="button--icon-only"
+          class="button--icon-only button--x"
           v-on:click="() => deletePhoneNumber(index)"
         >
           <Icon id="x" :width="17" :height="17"></Icon>
@@ -158,6 +172,8 @@ import PrivacySetting from '@/components/profile/PrivacySetting.vue';
 import Icon from '@/components/ui/Icon.vue';
 import Select from '@/components/ui/Select.vue';
 import { DISPLAY_LEVELS } from '@/assets/js/display-levels';
+import Tooltip from '@/components/ui/Tooltip.vue';
+import Fluent from '@/components/Fluent.vue';
 
 const EMPTY_SECONDARY_EMAIL = {
   value: '',
@@ -182,6 +198,8 @@ export default {
     Icon,
     PrivacySetting,
     Select,
+    Tooltip,
+    Fluent,
   },
   mounted() {
     this.$refs.header.focus();
@@ -359,7 +377,7 @@ export default {
 .edit-contact__item > .privacy-select {
   grid-row: 1/2;
 }
-.edit-contact__item .button--icon-only {
+.edit-contact__item .button--x {
   border-color: transparent;
   background-color: transparent;
   display: inline-block;
@@ -368,12 +386,17 @@ export default {
   color: var(--blue-60);
   padding: 0;
 }
-.edit-contact__item .button--icon-only:hover {
+.edit-contact__item .button--x:hover {
   color: var(--black);
   background-color: transparent;
 }
-.edit-contact__item .options:first-child {
+.edit-contact__label {
   grid-column: 2 / 3;
+  padding: 0.5em 0;
+  color: var(--gray-50);
+}
+.edit-contact__label label + .tooltip {
+  margin-left: 0.5em;
 }
 .edit-contact__item .options button {
   width: 100%;
@@ -429,10 +452,6 @@ export default {
 .edit-contact__item hr {
   margin: 1em 0;
 }
-.edit-contact__info {
-  text-align: right;
-  color: var(--gray-50);
-}
 .edit-contact__set-as-contact input {
   display: inline-block;
   vertical-align: baseline;
@@ -473,17 +492,5 @@ input:invalid:not(focus).edit-contact__input-w-error
 }
 input:invalid:not(focus).edit-contact__input-w-error {
   border-color: var(--neon-red);
-}
-.edit-contact__item__info {
-  grid-column: 2 / 4;
-  color: var(--gray-60);
-  font-size: small;
-  margin-left: 3em;
-  margin-bottom: 1em;
-}
-@media (min-width: 57.5em) {
-  .edit-contact__item__info {
-    margin-left: 1em;
-  }
 }
 </style>

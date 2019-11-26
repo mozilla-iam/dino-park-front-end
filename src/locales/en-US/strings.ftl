@@ -29,3 +29,12 @@ profile_team = Team
   .tooltip = This is your team name as provided by our HR Team (Workday). Staff information is not editable and shared with Mozilla Staff only. Please contact <a data-l10n-name="email">{$email}</a> to change your information.
 profile_bio = Biography
   .tooltip = Tell us more about yourself! This field supports <a data-l10n-name="gfm">GitHub Markdown</a>.
+
+profile_email_primary = Primary
+  .tooltip-open = Open primary email info
+  .tooltip-close = Close primary email info
+  .tooltip = Your staff LDAP email is provided by our HR Team (Workday). Staff information is not editable and shared with Mozilla Staff only. Please contact <a data-l10n-name="email">{$email}</a> to change your information.
+profile_email_secondary = Secondary
+  .tooltip-open = Open secondary email info
+  .tooltip-close = Close secondary email info
+  .tooltip = You can use this section to add any other email you are using and want to share with others.
