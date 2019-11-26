@@ -176,12 +176,6 @@ export class AccessGroupDetailsViewModel {
       throw new Error('Invalid data format');
     }
     try {
-      this.members = data.members.members.map(
-        member => new DisplayMemberViewModel(member)
-      );
-      this.curators = data.curators.members.map(
-        member => new DisplayMemberViewModel(member)
-      );
       this.group = new GroupViewModel(data.group);
       this.member_count = data.member_count;
       this.invitation_count = data.invitation_count;

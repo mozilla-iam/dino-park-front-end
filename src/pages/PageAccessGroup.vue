@@ -80,6 +80,7 @@ export default {
   }
   .access-group.container {
     margin-top: 2em;
+    margin-bottom: 2em;
   }
 }
 .access-group > img {

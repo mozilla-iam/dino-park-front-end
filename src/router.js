@@ -12,6 +12,14 @@ import scrolling from './assets/js/scrolling';
 
 Vue.use(Router);
 
+export const ACCESS_GROUP_TOS_PAGE = 'Access Group TOS';
+export const ACCESS_GROUP_PAGE = 'Access Group';
+export const ACCESS_GROUP_PAGES = [
+  ACCESS_GROUP_PAGE,
+  'Edit Access Group',
+  ACCESS_GROUP_TOS_PAGE,
+];
+
 const router = new Router({
   base: process.env.BASE_URL,
   mode: 'history',
@@ -85,7 +93,7 @@ const router = new Router({
     },
     {
       path: '/a/:groupname/tos',
-      name: 'Access Group TOS',
+      name: ACCESS_GROUP_TOS_PAGE,
       component: PageAccessGroupTerms,
       query: {
         accept: ':accept?',
@@ -95,7 +103,7 @@ const router = new Router({
     },
     {
       path: '/a/:groupname',
-      name: 'Access Group',
+      name: ACCESS_GROUP_PAGE,
       component: PageAccessGroup,
       props: true,
       meta: { key: 'access-group' },
@@ -125,14 +133,6 @@ function usernamePrefix(username) {
   return '';
 }
 
-export const ACCESS_GROUP_TOS_PAGE = 'Access Group TOS';
-
-export const ACCESS_GROUP_PAGES = [
-  'Access Group',
-  'Edit Access Group',
-  ACCESS_GROUP_TOS_PAGE,
-];
-
 router.beforeEach((to, from, next) => {
   switch (to.name) {
     case 'OrgchartHighlight':
@@ -151,7 +151,7 @@ router.beforeEach((to, from, next) => {
     case 'Edit Profile':
       document.title = `Edit - Profile - Mozilla People Directory`;
       break;
-    case 'Access Group TOS':
+    case ACCESS_GROUP_TOS_PAGE:
       document.title =
         'Access Group Terms of Service - Mozilla People Directory';
       break;

@@ -6,10 +6,13 @@ import { client } from './server';
 import accessGroupData from './accessgroupdata.json';
 import invitationGroupData from './invitationgroupdata.json';
 import accessGroupTermsOfService from './accessgrouptermsofservice.json';
+import accessGroupMembers from './accessgroupmembers.json';
+import accessGroupCurators from './accessgroupcurators.json';
 import {
   AccessGroupDetailsViewModel,
   GroupInvitationViewModel,
   INVITATION_STATE,
+  DisplayMemberViewModel,
 } from './view_models/AccessGroupViewModel';
 import AccessGroups from '@/assets/js/access-groups';
 
@@ -42,6 +45,20 @@ export default new Vuex.Store({
         throw new Error(e.message);
       }
       return data;
+    },
+    async fetchAllAccessGroupMembers({ commit }) {
+      const memberData = accessGroupMembers;
+      const curatorsData = accessGroupCurators;
+      try {
+        commit('setAccessGroupMembersData', memberData.members);
+        commit('setAccessGroupCuratorsData', curatorsData.curators);
+      } catch (e) {
+        throw new Error(e.message);
+      }
+      return {
+        members: memberData,
+        curators: curatorsData,
+      };
     },
     // TODO: Eventually will want to put this under a list of global fetches
     async fetchGroupInvitations({ commit }) {
@@ -154,6 +171,26 @@ export default new Vuex.Store({
         throw new Error(e.message);
       }
     },
+    setAccessGroupMembersData(state, memberData) {
+      try {
+        for (let aMember of memberData) {
+          state.accessGroup.members.push(new DisplayMemberViewModel(aMember));
+        }
+      } catch (e) {
+        state.error = e.message;
+        throw new Error(e.message);
+      }
+    },
+    setAccessGroupCuratorsData(state, curatorData) {
+      try {
+        for (let aCurator of curatorData) {
+          state.accessGroup.curators.push(new DisplayMemberViewModel(aCurator));
+        }
+      } catch (e) {
+        state.error = e.message;
+        throw new Error(e.message);
+      }
+    },
     setInvitationData(state, invitations) {
       try {
         state.groupInvitations = invitations.map(
@@ -228,6 +265,9 @@ export default new Vuex.Store({
           invitation.state !== INVITATION_STATE.REJECTED
         );
       });
+    },
+    getAllMembers: state => {
+      return state.accessGroup.curators.concat(state.accessGroup.members);
     },
   },
 });

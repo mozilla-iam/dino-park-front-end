@@ -27,32 +27,48 @@
         </li>
       </ul>
     </nav>
-    <ul class="members-container__list columned">
-      <li
-        v-for="(column, idx) in filteredListTwoColumnDisplay"
-        :key="idx"
-        class="list-column-container"
-      >
-        <ul class="members-container__list-column">
-          <li
-            v-for="(member, idx2) in column"
-            :key="idx2"
-            class="list-item-container"
-          >
-            <AccessGroupMemberItem :member="member" />
-          </li>
-        </ul>
-      </li>
-    </ul>
-    <ul class="members-container__list">
-      <li
-        v-for="(member, idx) in filteredListDisplay"
-        :key="idx"
-        class="list-item-container"
-      >
-        <AccessGroupMemberItem :member="member" />
-      </li>
-    </ul>
+    <template v-if="filteredListDisplay.length > 0">
+      <ul class="members-container__list columned">
+        <li
+          v-for="(column, idx) in filteredListTwoColumnDisplay"
+          :key="idx"
+          class="list-column-container"
+        >
+          <ul class="members-container__list-column">
+            <li
+              v-for="(member, idx2) in column"
+              :key="idx2"
+              class="list-item-container"
+            >
+              <AccessGroupMemberItem :member="member" />
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="members-container__list">
+        <li
+          v-for="(member, idx) in filteredListDisplay"
+          :key="idx"
+          class="list-item-container"
+        >
+          <AccessGroupMemberItem :member="member" />
+        </li>
+      </ul>
+    </template>
+    <template v-else>
+      <p class="members-container__empty">
+        There are no members in this group.<br />Why not
+        <RouterLink
+          :to="{
+            name: 'Edit Access Group',
+            query: {
+              section: 'invitations',
+            },
+          }"
+          >invite some</RouterLink
+        >?
+      </p>
+    </template>
   </article>
 </template>
 
@@ -117,9 +133,7 @@ export default {
     },
   },
   data() {
-    const fullMemberList = this.$store.state.accessGroup.curators.concat(
-      this.$store.state.accessGroup.members
-    );
+    const fullMemberList = this.$store.getters.getAllMembers;
     return {
       search: '',
       filter: '',
@@ -291,5 +305,10 @@ export default {
   .members-container__top-bar .top-bar__search {
     width: 25em;
   }
+}
+
+.members-container .members-container__empty {
+  text-align: center;
+  margin: 3em auto;
 }
 </style>

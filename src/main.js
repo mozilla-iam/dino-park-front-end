@@ -1,7 +1,11 @@
 import Vue from 'vue';
 import VueApollo from 'vue-apollo';
 import App from './App.vue';
-import router, { ACCESS_GROUP_PAGES, ACCESS_GROUP_TOS_PAGE } from './router';
+import router, {
+  ACCESS_GROUP_PAGES,
+  ACCESS_GROUP_TOS_PAGE,
+  ACCESS_GROUP_PAGE,
+} from './router';
 
 import { apolloProvider } from './server';
 import store from './store';
@@ -50,6 +54,18 @@ router.beforeEach((to, from, next) => {
       .dispatch('fetchAccessGroup')
       .then(data => {
         console.log('Fetched group: ', data);
+      })
+      .catch(error => {
+        console.error('Caught dispatch error: ', error);
+        next(`/error?message=${error}`);
+      });
+  }
+  if (to.name === ACCESS_GROUP_PAGE) {
+    // eslint-disable-next-line
+    store
+      .dispatch('fetchAllAccessGroupMembers')
+      .then(data => {
+        console.log('Fetched group members: ', data);
       })
       .catch(error => {
         console.error('Caught dispatch error: ', error);
