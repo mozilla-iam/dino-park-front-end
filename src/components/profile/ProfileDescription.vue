@@ -9,6 +9,30 @@
 import marked from 'marked';
 import insane from 'insane';
 
+insane.defaults.allowedTags = [
+  'a',
+  'blockquote',
+  'br',
+  'code',
+  'del',
+  'em',
+  'h1',
+  'h2',
+  'h3',
+  'h4',
+  'h5',
+  'h6',
+  'li',
+  'ol',
+  'p',
+  'pre',
+  'small',
+  'strong',
+  'sub',
+  'sup',
+  'ul',
+];
+
 export default {
   name: 'ProfileDescription',
   props: {

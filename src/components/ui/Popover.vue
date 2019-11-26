@@ -113,29 +113,17 @@ export default {
   position: relative;
 }
 .popover--left {
-  transform: translateX(calc(-100% + 1.5em));
+  transform: translateX(calc(-100% + 1.75em));
 }
 .popover--left::before {
   left: auto;
   right: 1em;
 }
-@media (min-width: 57.5em) {
-  .popover--left {
-    transform: translateX(
-      calc(-100% + 1.5em)
-    ); /* 1.5em = negative margin on popover */
-  }
-}
 .popover--right {
-  transform: translateX(0);
+  transform: translateX(-2.25em);
 }
 .popover--right::before {
   left: 2em;
-}
-@media (min-width: 57.5em) {
-  .popover--right {
-    transform: translateX(calc(-2.25em));
-  }
 }
 .popover a {
   background-color: var(--white);

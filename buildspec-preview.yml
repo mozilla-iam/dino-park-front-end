@@ -1,0 +1,26 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - '. ci/install_deps.sh'
+  pre_build:
+    commands:
+      - export COMMIT_SHA=$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - export CODEBUILD_WEBHOOK_TRIGGER=${CODEBUILD_WEBHOOK_TRIGGER:-branch/preview}
+      - export PREVIEW=$(if [ "$CODEBUILD_WEBHOOK_TRIGGER" = "branch/preview" ]; then echo 1; fi)
+      - echo "running for ${COMMIT_SHA} in dev and test"
+      - aws ecr get-login --region us-west-2 --no-include-email | bash
+  build:
+    commands:
+      - if [ "$PREVIEW" = 1 ]; then myke docker --baseurl=/preview --name=dino-park-front-end-preview --rev=$COMMIT_SHA push-image --name=dino-park-front-end-preview --rev=$COMMIT_SHA; fi
+  post_build:
+    commands:
+      - |
+        if [ "$PREVIEW" = 1 ]; then
+          echo "Deploying to dev and test envirnoments..."
+          aws eks update-kubeconfig --name kubernetes-stage-us-west-2
+          myke deploy-preview --deploy_env=dev --rev=$COMMIT_SHA
+          aws eks update-kubeconfig --name kubernetes-prod-us-west-2
+          myke deploy-preview --deploy_env=test --rev=$COMMIT_SHA
+        fi

@@ -11,6 +11,9 @@
       location,
       timezone,
       description,
+      staffInformationTitleDisplay: staffInformationTitle.display,
+      staffInformationOfficeLocationDisplay:
+        staffInformationOfficeLocation.display,
     }"
     :initialValues="initialValues"
     formName="Edit personal information"
@@ -166,14 +169,13 @@
           type="text"
           id="field-official-job-title"
           disabled
-          :value="staffInformation.title.value"
+          :value="staffInformationTitle.value"
         />
         <PrivacySetting
           label="Title privacy levels"
           id="field-title-privacy"
           profileFieldName="staffInformation.title"
-          :profileFieldObject="staffInformation.title"
-          :disabled="true"
+          :profileFieldObject="staffInformationTitle"
         />
       </template>
 
@@ -252,14 +254,13 @@
           type="text"
           id="field-office-location"
           disabled
-          :value="staffInformation.officeLocation.value"
+          :value="staffInformationOfficeLocation.value"
         />
         <PrivacySetting
           label="Office location privacy levels"
           id="field-office-location-privacy"
           profileFieldName="staffInformation.officeLocation"
-          :profileFieldObject="staffInformation.officeLocation"
-          :disabled="true"
+          :profileFieldObject="staffInformationOfficeLocation"
         />
       </template>
 
@@ -451,8 +452,6 @@
 <script>
 import EditMutationWrapper from '@/components/profile/edit/EditMutationWrapper.vue';
 import Icon from '@/components/ui/Icon.vue';
-import Meta from '@/components/ui/Meta.vue';
-import MetaList from '@/components/ui/MetaList.vue';
 import PrivacySetting from '@/components/profile/PrivacySetting.vue';
 import Select from '@/components/ui/Select.vue';
 import TextInput from '@/components/ui/TextInput.vue';
@@ -463,8 +462,7 @@ import EditPictureModal from './EditPictureModal.vue';
 import Fetcher from '@/assets/js/fetcher';
 import Fluent from '@/components/Fluent.vue';
 
-// TODO: Why do we need failoverOnError here?
-const fetcher = new Fetcher({ failoverOn: [302], failoverOnError: true });
+const fetcher = new Fetcher();
 
 export default {
   name: 'EditPersonalInfo',
@@ -477,8 +475,6 @@ export default {
     EditPictureModal,
     EditMutationWrapper,
     Icon,
-    Meta,
-    MetaList,
     PrivacySetting,
     Select,
     TextInput,
@@ -522,6 +518,14 @@ export default {
         },
         {},
       ),
+      staffInformationTitle: {
+        value: this.staffInformation.title.value,
+        display: this.staffInformation.title.metadata.display,
+      },
+      staffInformationOfficeLocation: {
+        value: this.staffInformation.officeLocation.value,
+        display: this.staffInformation.officeLocation.metadata.display,
+      },
       showPictureModal: false,
       pictureData: { value: this.initialValues.picture.value || 'default:' },
       timezones: [],
@@ -637,9 +641,6 @@ export default {
 .edit-personal-info__picture .edit-personal-info__picture-edit-button svg {
   margin: 0;
 }
-.edit-personal-info__meta {
-  grid-column: 1 / 2;
-}
 
 @media (min-width: 57.5em) {
   .edit-personal-info {
@@ -708,6 +709,9 @@ export default {
   .edit-personal-info__picture-privacy {
     right: 2.1em;
   }
+  .user-picture.identicon ~ .edit-personal-info__picture-privacy {
+    display: none;
+  }
   .edit-personal-info__picture button {
     background-color: var(--gray-20);
     font-size: inherit;
@@ -716,9 +720,6 @@ export default {
     grid-column: 4 / 5;
     align-self: center;
     justify-self: center;
-  }
-  .edit-personal-info__meta {
-    grid-column: 2 / 4;
   }
 }
 </style>

@@ -39,6 +39,12 @@ const DISPLAY_NOT_PRIVATE = [
   DISPLAY_LEVELS.authenticated,
   DISPLAY_LEVELS.public,
 ];
+const DISPLAY_NOT_STAFF_AND_PRIVATE = [
+  DISPLAY_LEVELS.ndaed,
+  //  DISPLAY_LEVELS.vouched,
+  DISPLAY_LEVELS.authenticated,
+  DISPLAY_LEVELS.public,
+];
 const DISPLAY_ANY = [
   DISPLAY_LEVELS.private,
   DISPLAY_LEVELS.staff,
@@ -47,14 +53,24 @@ const DISPLAY_ANY = [
   DISPLAY_LEVELS.authenticated,
   DISPLAY_LEVELS.public,
 ];
+const DISPLAY_PRIVATE_STAFF = [DISPLAY_LEVELS.private, DISPLAY_LEVELS.staff];
 
 const VALID_DISPLAY_LEVELS = {
   primaryUsername: DISPLAY_PUBLIC_ONLY,
   phoneNumbers: DISPLAY_ANY,
-  'accessInformation.ldap': DISPLAY_ANY,
+  'accessInformation.ldap': DISPLAY_PRIVATE_STAFF,
   'accessInformation.mozilliansorg': DISPLAY_NOT_PRIVATE,
 };
 
-export function displayLevelsFor(field) {
-  return (field && VALID_DISPLAY_LEVELS[field]) || DISPLAY_NOT_PRIVATE;
+const NON_STAFF_DISPLAY_LEVELS = {
+  primaryEmail: DISPLAY_ANY,
+  picture: DISPLAY_NOT_STAFF_AND_PRIVATE,
+};
+
+export function displayLevelsFor(field, scope = null) {
+  return (
+    (scope && !scope.isStaff && NON_STAFF_DISPLAY_LEVELS[field]) ||
+    VALID_DISPLAY_LEVELS[field] ||
+    DISPLAY_NOT_PRIVATE
+  );
 }

@@ -50,21 +50,30 @@
         :officeLocation="staffInformation.officeLocation.value"
         :timezone="timezone.value"
       ></ProfileTeamLocation>
-      <MetaList v-if="this.staffInformation.staff.value">
+      <MetaList>
         <h3 class="visually-hidden">Meta</h3>
-        <Meta
+        <MetaItem metaKey="Access to">
+          <DataClassification
+            :staffInformation="staffInformation"
+            :accessInformation="accessInformation"
+          />
+        </MetaItem>
+        <MetaItem
           metaKey="Worker type"
+          v-if="staffInformation.workerType.value"
           :metaValue="staffInformation.workerType.value"
         />
-        <Meta
+        <MetaItem
           metaKey="Desk number"
+          v-if="staffInformation.wprDeskNumber.value"
           :metaValue="staffInformation.wprDeskNumber.value"
           :link="
             deskNumberToOfficePlanLink(staffInformation.wprDeskNumber.value)
           "
         />
-        <Meta
+        <MetaItem
           metaKey="Cost center"
+          v-if="staffInformation.costCenter.value"
           :metaValue="
             staffInformation.costCenter.value &&
               staffInformation.costCenter.value.replace(/\.0$/, '')
@@ -82,13 +91,14 @@ import OfficesMixin from '@/components/_mixins/OfficesMixin.vue';
 import ContactMe from '@/components/ui/ContactMe.vue';
 import EditButton from '@/components/profile/edit/EditButton.vue';
 import Icon from '@/components/ui/Icon.vue';
-import Meta from '@/components/ui/Meta.vue';
+import MetaItem from '@/components/ui/Meta.vue';
 import MetaList from '@/components/ui/MetaList.vue';
 import UserPicture from '@/components/ui/UserPicture.vue';
 import ProfileDescription from '../ProfileDescription.vue';
 import ProfileName from '../ProfileName.vue';
 import ProfileTitle from '../ProfileTitle.vue';
 import ProfileTeamLocation from '../ProfileTeamLocation.vue';
+import DataClassification from '../DataClassification.vue';
 
 export default {
   mixins: [CompanyMixin, OfficesMixin],
@@ -113,18 +123,20 @@ export default {
     identities: Object,
     userOnOwnProfile: Boolean,
     editable: Boolean,
+    accessInformation: Object,
   },
   components: {
     ContactMe,
     EditButton,
     Icon,
-    Meta,
+    MetaItem,
     MetaList,
     ProfileDescription,
     ProfileName,
     ProfileTeamLocation,
     ProfileTitle,
     UserPicture,
+    DataClassification,
   },
   computed: {
     currentUser() {
