@@ -9,6 +9,7 @@
     "test:unit": "vue-cli-service test:unit --verbose"
   },
   "dependencies": {
+    "@fluent/bundle": "^0.14.0",
     "@types/jest": "^24.0.15",
     "apollo-boost": "^0.4.3",
     "apollo-cache-inmemory": "^1.6.2",
@@ -39,6 +40,7 @@
     "husky": "^2.7.0",
     "prettier": "^1.18.2",
     "pretty-quick": "^1.11.1",
+    "raw-loader": "^3.1.0",
     "vue-axe": "^1.0.7",
     "vue-template-compiler": "^2.6.10"
   },

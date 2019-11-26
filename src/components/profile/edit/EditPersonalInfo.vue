@@ -52,13 +52,11 @@
       </div>
 
       <div class="edit-personal-info__label">
-        <label for="field-username">Username </label>
+        <label for="field-username">{{ fluent('profile_username') }}</label>
         <Tooltip
           buttonText="Open username info"
           alternateButtonText="Close username info"
-          >Your username is publicly visible and included in your profile URL.
-          Pro tip: Use the same username across systems for easy discovery (e.g.
-          IRC, Slack, and Discourse).</Tooltip
+          >{{ fluent('profile_username', 'tooltip') }}</Tooltip
         >
       </div>
       <input type="text" id="field-username" v-model="primaryUsername.value" />
@@ -73,14 +71,11 @@
       <hr role="presentation" />
 
       <div class="edit-personal-info__label">
-        <label for="field-first-name">First Name </label
+        <label for="field-first-name">{{ fluent('profile_first-name') }}</label
         ><Tooltip
           buttonText="Open first name info"
           alternateButtonText="Close first name info"
-          >For Staff members, name data is initially imported from Workday, but
-          any changes you make to your profile will not be reflected back into
-          Workday. Pro tip: If first and last names don’t work for you we have
-          you covered. Please use alternate name instead.</Tooltip
+          >{{ fluent('profile_first-name', 'tooltip') }}</Tooltip
         >
       </div>
       <input type="text" id="field-first-name" v-model="firstName.value" />
@@ -94,7 +89,7 @@
       <hr role="presentation" />
 
       <div class="edit-personal-info__label">
-        <label for="field-last-name">Last Name </label>
+        <label for="field-last-name">{{ fluent('profile_last-name') }}</label>
       </div>
       <input type="text" id="field-last-name" v-model="lastName.value" />
       <PrivacySetting
@@ -107,12 +102,11 @@
       <hr role="presentation" />
 
       <div class="edit-personal-info__label">
-        <label for="field-pronouns">Pronouns </label>
+        <label for="field-pronouns">{{ fluent('profile_pronouns') }}</label>
         <Tooltip
           buttonText="Open pronouns info"
           alternateButtonText="Close pronouns info"
-          >We prepared some pronouns for you to select from. If the list does
-          not match your needs, you can always enter your own pronoun.</Tooltip
+          >{{ fluent('profile_pronouns', 'tooltip') }}</Tooltip
         >
       </div>
       <Combobox
@@ -132,12 +126,11 @@
       <hr role="presentation" />
 
       <div class="edit-personal-info__label">
-        <label for="field-alt-name">Alternate Name</label
+        <label for="field-alt-name">{{ fluent('profile_alt-name') }}</label
         ><Tooltip
           buttonText="Open Alternate Name info"
           alternateButtonText="Close Alternate Name info"
-          >This field allows you to enter an additional or alternate name to
-          your profile and control its visibility level.</Tooltip
+          >{{ fluent('profile_alt-name', 'tooltip') }}</Tooltip
         >
       </div>
       <TextInput
@@ -157,16 +150,20 @@
         <hr role="presentation" />
 
         <div class="edit-personal-info__label">
-          <label for="field-official-job-title">Official Job Title </label
+          <label for="field-official-job-title">{{
+            fluent('profile_official-job-title')
+          }}</label
           ><Tooltip
             buttonText="Open official job title info"
             alternateButtonText="Close official job title info"
-            >This is your job title as provided by our HR Team (Workday). Staff
-            information is not editable and is shared with all Staff and NDA’d
-            Mozillians. Please contact
-            <a href="mailto:peopleops@mozilla.com">peopleops@mozilla.com</a>
-            to request a change to your job title.</Tooltip
-          >
+            ><Fluent
+              id="profile_official-job-title"
+              attr="tooltip"
+              :args="{ email: 'HROPS@mozilla.com' }"
+              :tags="{
+                email: { tag: 'a', href: 'mailto:HROPS@mozilla.com' },
+              }"
+          /></Tooltip>
         </div>
         <input
           type="text"
@@ -185,13 +182,13 @@
       <hr role="presentation" />
 
       <div class="edit-personal-info__label">
-        <label for="field-fun-job-title">Tagline</label>
+        <label for="field-fun-job-title">{{
+          fluent('profile_fun-job-title')
+        }}</label>
         <Tooltip
           buttonText="Open Tagline info"
           alternateButtonText="Close Tagline info"
-          >This field describes what you do in your own words. You may also
-          choose to copy your Official Job Title and make it publicly visible
-          through this field.</Tooltip
+          >{{ fluent('profile_fun-job-title', 'tooltip') }}</Tooltip
         >
       </div>
       <TextInput
@@ -210,12 +207,11 @@
       <hr role="presentation" />
 
       <div class="edit-personal-info__label">
-        <label for="field-location">Location</label>
+        <label for="field-location">{{ fluent('profile_location') }}</label>
         <Tooltip
           buttonText="Open Location info"
           alternateButtonText="Close Location info"
-          >This field is still under construction. For the moment you can enter
-          any value you like.
+          >{{ fluent('profile_location', 'tooltip') }}
         </Tooltip>
       </div>
       <Combobox
@@ -238,7 +234,21 @@
         <hr role="presentation" />
 
         <div class="edit-personal-info__label">
-          <label for="field-office-location">Office Location</label>
+          <label for="field-office-location">{{
+            fluent('profile_office-location')
+          }}</label>
+          <Tooltip
+            buttonText="Open office location info"
+            alternateButtonText="Close office location info"
+            ><Fluent
+              id="profile_office-location"
+              attr="tooltip"
+              :args="{ email: 'HROPS@mozilla.com' }"
+              :tags="{
+                email: { tag: 'a', href: 'mailto:HROPS@mozilla.com' },
+              }"
+            />
+          </Tooltip>
         </div>
         <input
           type="text"
@@ -257,12 +267,11 @@
       <hr role="presentation" />
 
       <div class="edit-personal-info__label">
-        <label for="field-timezone">Timezone</label>
+        <label for="field-timezone">{{ fluent('profile_timezone') }}</label>
         <Tooltip
           buttonText="Open Timezone info"
           alternateButtonText="Close Timezone info"
-          >This list allows you to set your timezone. If you provide this
-          information, we will display your local time on your profile.</Tooltip
+          >{{ fluent('profile_timezone', 'tooltip') }}</Tooltip
         >
       </div>
       <input type="text" id="field-timezone" disabled :value="timezone.value" />
@@ -277,16 +286,20 @@
         <hr role="presentation" />
 
         <div class="edit-personal-info__label">
-          <label for="field-worker-type">Worker Type</label>
+          <label for="field-worker-type">{{
+            fluent('profile_worker-type')
+          }}</label>
           <Tooltip
             buttonText="Open Worker Type info"
             alternateButtonText="Close Worker Type info"
-            >This is your worker type as provided by our HR Team (Workday). This
-            particular field is classified as Staff only and can’t be shared
-            beyond this group. Please contact
-            <a href="mailto:peopleops@mozilla.com">peopleops@mozilla.com</a>
-            to change your information.</Tooltip
-          >
+            ><Fluent
+              id="profile_worker-type"
+              attr="tooltip"
+              :args="{ email: 'HROPS@mozilla.com' }"
+              :tags="{
+                email: { tag: 'a', href: 'mailto:HROPS@mozilla.com' },
+              }"
+          /></Tooltip>
         </div>
         <input
           type="text"
@@ -305,7 +318,20 @@
         <hr role="presentation" />
 
         <div class="edit-personal-info__label">
-          <label for="field-cost-center">Cost Center</label>
+          <label for="field-cost-center">{{
+            fluent('profile_cost-center')
+          }}</label>
+          <Tooltip
+            buttonText="Open cost center info"
+            alternateButtonText="Close cost center info"
+            ><Fluent
+              id="profile_cost-center"
+              attr="tooltip"
+              :args="{ email: 'HROPS@mozilla.com' }"
+              :tags="{
+                email: { tag: 'a', href: 'mailto:HROPS@mozilla.com' },
+              }"
+          /></Tooltip>
         </div>
         <input
           type="text"
@@ -324,7 +350,20 @@
         <hr role="presentation" />
 
         <div class="edit-personal-info__label">
-          <label for="field-desk-number">Desk Number</label>
+          <label for="field-desk-number">{{
+            fluent('profile_desk-number')
+          }}</label>
+          <Tooltip
+            buttonText="Open desk number info"
+            alternateButtonText="Close desk number info"
+            ><Fluent
+              id="profile_desk-number"
+              attr="tooltip"
+              :args="{ email: 'HROPS@mozilla.com' }"
+              :tags="{
+                email: { tag: 'a', href: 'mailto:HROPS@mozilla.com' },
+              }"
+          /></Tooltip>
         </div>
         <input
           type="text"
@@ -343,7 +382,18 @@
         <hr role="presentation" />
 
         <div class="edit-personal-info__label">
-          <label for="field-team">Team</label>
+          <label for="field-team">{{ fluent('profile_team') }}</label>
+          <Tooltip
+            buttonText="Open team info"
+            alternateButtonText="Close team info"
+            ><Fluent
+              id="profile_team"
+              attr="tooltip"
+              :args="{ email: 'HROPS@mozilla.com' }"
+              :tags="{
+                email: { tag: 'a', href: 'mailto:HROPS@mozilla.com' },
+              }"
+          /></Tooltip>
         </div>
         <input
           type="text"
@@ -363,16 +413,24 @@
       <hr role="presentation" />
 
       <div class="edit-personal-info__label">
-        <label for="field-bio">Bio</label>
-        <Tooltip buttonText="Open Bio info" alternateButtonText="Close Bio info"
-          >Tell us more about yourself! This field supports
-          <a
-            href="https://github.github.com/gfm/"
-            target="_blank"
-            rel="noopener noreferrer"
-            >GitHub Markdown</a
-          >.</Tooltip
+        <label for="field-bio">{{ fluent('profile_bio') }}</label>
+        <Tooltip
+          buttonText="Open Bio info"
+          alternateButtonText="Close Bio info"
         >
+          <Fluent
+            id="profile_bio"
+            attr="tooltip"
+            :tags="{
+              gfm: {
+                tag: 'a',
+                href: 'https://github.github.com/gfm/',
+                target: '_blank',
+                rel: 'noopener noreferrer',
+              },
+            }"
+          />
+        </Tooltip>
       </div>
       <TextArea
         id="field-bio"
@@ -402,6 +460,7 @@ import Tooltip from '@/components/ui/Tooltip.vue';
 import UserPicture from '@/components/ui/UserPicture.vue';
 import EditPictureModal from './EditPictureModal.vue';
 import Fetcher from '@/assets/js/fetcher';
+import Fluent from '@/components/Fluent.vue';
 
 const fetcher = new Fetcher();
 
@@ -422,6 +481,7 @@ export default {
     TextArea,
     Tooltip,
     UserPicture,
+    Fluent,
   },
   computed: {
     loggedInUser() {

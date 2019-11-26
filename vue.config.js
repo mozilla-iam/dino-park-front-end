@@ -26,6 +26,10 @@ module.exports = {
           include: /node_modules/,
           type: 'javascript/auto',
         },
+        {
+          test: /\.ftl$/,
+          use: 'raw-loader',
+        },
       ],
     },
   },

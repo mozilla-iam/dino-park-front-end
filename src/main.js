@@ -7,6 +7,7 @@ import App from './App.vue';
 import router from './router';
 import { DISPLAY_PROFILE } from './queries/profile';
 import Scope from './assets/js/scope';
+import Fluent from './assets/js/fluent';
 import reload from '@/assets/js/reload';
 
 // polyfill/fallback adapted from MDN (https://developer.mozilla.org/en-US/docs/Web/API/Background_Tasks_API#Falling_back_to_setTimeout)
@@ -72,6 +73,8 @@ const apolloProvider = new VueApollo({
   errorHandler,
 });
 
+const fluent = new Fluent();
+
 Vue.use(VueApollo);
 Vue.use(Vuex);
 
@@ -106,6 +109,11 @@ const store = new Vuex.Store({
 });
 
 Vue.mixin({
+  methods: {
+    fluent(...args) {
+      return fluent.get(...args);
+    },
+  },
   computed: {
     scope() {
       return this.$store.state.scope;

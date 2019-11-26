@@ -7,6 +7,7 @@ module.exports = {
     '^.+\\.jsx?$': '<rootDir>/node_modules/babel-jest',
   },
   moduleNameMapper: {
+    '\\.ftl$': '<rootDir>/tests/mocks/fluentMock.js',
     '^@/(.*)$': '<rootDir>/src/$1',
   },
   snapshotSerializers: ['jest-serializer-vue'],
