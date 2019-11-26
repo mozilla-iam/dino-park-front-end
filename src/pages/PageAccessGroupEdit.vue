@@ -26,6 +26,8 @@
       <section class="edit-container__content">
         <AccessGroupInformationEdit v-if="isInformationTab" />
         <AccessGroupMembersEdit v-if="isMembersTab" />
+        <AccessGroupInvitationsEdit v-if="isInvitationsTab" />
+        <AccessGroupHistoryEdit v-if="isHistoryTab" />
       </section>
     </section>
   </main>
@@ -37,6 +39,7 @@ import Button from '@/components/ui/Button.vue';
 import AccessGroupInformationEdit from '@/components/access_group/AccessGroupInformationEdit.vue';
 import AccessGroupMembersEdit from '@/components/access_group/AccessGroupMembersEdit.vue';
 import AccessGroupInvitationsEdit from '@/components/access_group/AccessGroupInvitationsEdit.vue';
+import AccessGroupHistoryEdit from '@/components/access_group/AccessGroupHistoryEdit.vue';
 
 export default {
   name: 'AccessGroup',
@@ -46,6 +49,7 @@ export default {
     AccessGroupInformationEdit,
     AccessGroupMembersEdit,
     AccessGroupInvitationsEdit,
+    AccessGroupHistoryEdit,
   },
   props: {
     groupname: String,
@@ -90,6 +94,12 @@ export default {
         return false;
       }
       return this.$route.query.section === 'invitations';
+    },
+    isHistoryTab() {
+      if (!this.$route.query.section) {
+        return false;
+      }
+      return this.$route.query.section === 'history';
     },
   },
   data() {
