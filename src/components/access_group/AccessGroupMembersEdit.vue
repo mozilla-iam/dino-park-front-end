@@ -56,21 +56,31 @@
         <Button
           disabled="disabled"
           class="button--secondary button--action row-primary-action"
-          >Update details</Button
+          >Update curators</Button
         >
       </template>
     </AccessGroupEditPanel>
     <AccessGroupEditPanel title="Expiration">
       <template v-slot:content>
-        <div class="members-list-container">
-          <input type="text" />
+        <div class="members-expiration-container">
+          <div class="content-area__row">
+            <div class="radio-control">
+              <input type="checkbox" checked="true" />Membership can expire
+            </div>
+          </div>
+          <div class="content-area__row">
+            <label class="content-area__label"
+              >Membership will expire after how many days</label
+            >
+            <NumberScrollerInput />
+          </div>
         </div>
       </template>
       <template v-slot:footer>
         <Button
           disabled="disabled"
           class="button--secondary button--action row-primary-action"
-          >Update details</Button
+          >Update expiration</Button
         >
       </template>
     </AccessGroupEditPanel>
@@ -86,6 +96,7 @@ import AccessGroupEditPanel from '@/components/access_group/AccessGroupEditPanel
 import SearchForm from '@/components/ui/SearchForm.vue';
 import AccessGroupMemberListDisplay from '@/components/access_group/AccessGroupMemberListDisplay.vue';
 import TagSelector from '@/components/ui/TagSelector.vue';
+import NumberScrollerInput from '@/components/ui/NumberScrollerInput.vue';
 
 export default {
   name: 'AccessGroupInformationEdit',
@@ -98,6 +109,7 @@ export default {
     SearchForm,
     AccessGroupMemberListDisplay,
     TagSelector,
+    NumberScrollerInput,
   },
   props: [],
   mounted() {},
@@ -199,5 +211,9 @@ export default {
   margin: 1em auto;
   background-color: var(--gray-30);
   color: var(--black);
+}
+
+.members-expiration-container .content-area__row .content-area__label {
+  margin-right: 1em;
 }
 </style>

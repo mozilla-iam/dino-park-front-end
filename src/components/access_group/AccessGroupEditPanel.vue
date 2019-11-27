@@ -73,7 +73,18 @@ export default {
   border-top: 1px solid var(--gray-40);
   margin-top: 2em;
 }
+
 .edit-panel__footer .row-primary-action {
   margin-top: 2em;
+}
+
+.content-area__row .content-area__label {
+  color: var(--gray-40);
+  height: 1.5em;
+}
+
+.content-area__row .radio-control {
+  margin: 0 1em 0 0;
+  color: var(--gray-40);
 }
 </style>
