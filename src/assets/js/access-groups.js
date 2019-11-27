@@ -1,4 +1,7 @@
 import Fetcher from '@/assets/js/fetcher';
+import accessGroupData from '@/accessgroupdata.json';
+import accessGroupMembers from '@/accessgroupmembers.json';
+import accessGroupCurators from '@/accessgroupcurators.json';
 
 export default class AccessGroups {
   constructor() {
@@ -14,6 +17,26 @@ export default class AccessGroups {
   async rejectInvitation(groupName, uuid) {
     return new Promise((res, rej) => {
       res('Rejected invitation');
+    }); //this.fetcher.fetch('');
+  }
+
+  async leaveGroup(groupName) {
+    return new Promise((res, rej) => {
+      res('Left group');
+    }); //this.fetcher.fetch('');
+  }
+
+  async getAccessGroup(groupName) {
+    return new Promise((res, rej) => {
+      res(accessGroupData);
+    }); //this.fetcher.fetch('');
+  }
+
+  async getAllMembers(groupName) {
+    return new Promise((res, rej) => {
+      const { members } = accessGroupMembers;
+      const { curators } = accessGroupCurators;
+      res({ members, curators });
     }); //this.fetcher.fetch('');
   }
 }

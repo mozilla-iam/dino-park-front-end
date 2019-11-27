@@ -4,7 +4,10 @@
       <div class="description-container__meta">
         <div class="label-container">
           <p class="label-container__text">Access Group</p>
-          <Tooltip buttonText="Access group info" alternateButtonText="Close access group info">
+          <Tooltip
+            buttonText="Access group info"
+            alternateButtonText="Close access group info"
+          >
             You can learn more about Access Groups on
             <a href="#">Access Groups wiki page</a>
           </Tooltip>
@@ -27,7 +30,14 @@
       <p class="description-content__main">{{ model.group.description }}</p>
     </section>
     <footer class="description-container-area description-footer">
-      <Button class="primary-action" v-on:click="handleLeaveClick">Leave</Button>
+      <RouterLink
+        class="button primary-action"
+        :to="{
+          name: 'Access Group Confirm Leave',
+        }"
+        >Leave</RouterLink
+      >
+      <!-- <Button class="primary-action" v-on:click="handleLeaveClick">Leave</Button> -->
     </footer>
   </article>
 </template>

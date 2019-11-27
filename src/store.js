@@ -3,11 +3,8 @@ import Vue from 'vue';
 import { DISPLAY_PROFILE } from './queries/profile';
 import Scope from './assets/js/scope';
 import { client } from './server';
-import accessGroupData from './accessgroupdata.json';
 import invitationGroupData from './invitationgroupdata.json';
 import accessGroupTermsOfService from './accessgrouptermsofservice.json';
-import accessGroupMembers from './accessgroupmembers.json';
-import accessGroupCurators from './accessgroupcurators.json';
 import {
   AccessGroupDetailsViewModel,
   GroupInvitationViewModel,
@@ -29,6 +26,7 @@ export default new Vuex.Store({
     error: false,
   },
   actions: {
+    // TODO: Create error handling for this action
     async fetchUser({ commit }) {
       const { data } = await client.query({
         query: DISPLAY_PROFILE,
@@ -36,31 +34,32 @@ export default new Vuex.Store({
       });
       commit('setUser', data.profile);
     },
-    async fetchAccessGroup({ commit }) {
-      const data = accessGroupData;
-      console.log('found acess data: ', data);
+    async fetchAccessGroup({ commit }, groupName) {
       try {
+        const data = await accessGroupsService.getAccessGroup(groupName);
         commit('setAccessGroupData', data);
+        return data;
       } catch (e) {
         throw new Error(e.message);
       }
-      return data;
     },
-    async fetchAllAccessGroupMembers({ commit }) {
-      const memberData = accessGroupMembers;
-      const curatorsData = accessGroupCurators;
+    // TODO: Move the fetcher here to the access group service
+    async fetchAllAccessGroupMembers({ commit }, groupName) {
       try {
-        commit('setAccessGroupMembersData', memberData.members);
-        commit('setAccessGroupCuratorsData', curatorsData.curators);
+        const { members, curators } = await accessGroupsService.getAllMembers(
+          groupName
+        );
+        commit('setAccessGroupMembersData', members);
+        commit('setAccessGroupCuratorsData', curators);
+        return {
+          members,
+          curators,
+        };
       } catch (e) {
         throw new Error(e.message);
       }
-      return {
-        members: memberData,
-        curators: curatorsData,
-      };
     },
-    // TODO: Eventually will want to put this under a list of global fetches
+    // TODO: Move the fetcher here to the access group service
     async fetchGroupInvitations({ commit }) {
       const data = invitationGroupData;
       try {
@@ -70,6 +69,7 @@ export default new Vuex.Store({
       }
       return data;
     },
+    // TODO: Move the fetcher here to the access group service
     async fetchAccessGroupTOS({ commit }) {
       const { content } = accessGroupTermsOfService;
       try {
@@ -150,6 +150,16 @@ export default new Vuex.Store({
       } catch (e) {
         throw new Error(e.message);
       }
+    },
+    async leaveGroup({ commit, state }) {
+      const groupName = state.accessGroup.group.name;
+      try {
+        const result = await accessGroupsService.leaveGroup(groupName);
+        const newAccessGroup = await accessGroupsService.getAccessGroup(
+          groupName
+        );
+        commit('setAccessGroupData', newAccessGroup);
+      } catch (e) {}
     },
   },
   mutations: {

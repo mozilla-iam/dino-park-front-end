@@ -6,20 +6,22 @@ import PageOrgchart from './pages/PageOrgchart.vue';
 import PageSearchResult from './pages/PageSearchResult.vue';
 import PageUnknown from './pages/PageUnknown.vue';
 import PageAccessGroup from './pages/PageAccessGroup.vue';
-import PageAccessGroupTerms from './pages/PageAccessGroupTerms.vue';
-import PageAccessGroupEdit from './pages/PageAccessGroupEdit.vue';
+import AccessGroupTerms from './components/access_group/AccessGroupTerms.vue';
+import AccessGroupEdit from './components/access_group/AccessGroupEdit.vue';
+import AccessGroupView from './components/access_group/AccessGroupView.vue';
 import scrolling from './assets/js/scrolling';
 
 Vue.use(Router);
 
 export const ACCESS_GROUP_TOS_PAGE = 'Access Group TOS';
 export const ACCESS_GROUP_PAGE = 'Access Group';
-export const ACCESS_GROUP_PAGES = [
-  ACCESS_GROUP_PAGE,
-  'Edit Access Group',
-  ACCESS_GROUP_TOS_PAGE,
-];
+export const ACCESS_GROUP_LEAVE_CONFIRMATION_PAGE =
+  'Access Group Confirm Leave';
 
+/**
+ * We are using the "meta: {key: ''}" field here to denote class name and page.
+ * Since we are using the url to hold the state of the page, this is a field to denote which general page we are on
+ */
 const router = new Router({
   base: process.env.BASE_URL,
   mode: 'history',
@@ -82,31 +84,45 @@ const router = new Router({
       meta: { key: 'search' },
     },
     {
-      path: '/a/:groupname/edit',
-      name: 'Edit Access Group',
-      component: PageAccessGroupEdit,
-      query: {
-        section: ':section?',
-      },
-      props: true,
-      meta: { key: 'access-group' },
-    },
-    {
-      path: '/a/:groupname/tos',
-      name: ACCESS_GROUP_TOS_PAGE,
-      component: PageAccessGroupTerms,
-      query: {
-        accept: ':accept?',
-      },
-      props: true,
-      meta: { key: 'access-group' },
-    },
-    {
       path: '/a/:groupname',
-      name: ACCESS_GROUP_PAGE,
       component: PageAccessGroup,
       props: true,
-      meta: { key: 'access-group' },
+      children: [
+        {
+          path: '',
+          name: ACCESS_GROUP_PAGE,
+          component: AccessGroupView,
+          props: true,
+          meta: { key: 'access-group' },
+        },
+        {
+          path: 'edit',
+          name: 'Edit Access Group',
+          component: AccessGroupEdit,
+          query: {
+            section: ':section?',
+          },
+          props: true,
+          meta: { key: 'access-group' },
+        },
+        {
+          path: 'tos',
+          name: ACCESS_GROUP_TOS_PAGE,
+          component: AccessGroupTerms,
+          query: {
+            accept: ':accept?',
+          },
+          props: true,
+          meta: { key: 'access-group' },
+        },
+        {
+          path: 'leave',
+          name: ACCESS_GROUP_LEAVE_CONFIRMATION_PAGE,
+          component: AccessGroupView,
+          props: true,
+          meta: { key: 'access-group', leave: true },
+        },
+      ],
     },
   ],
   scrollBehavior(to, from) {

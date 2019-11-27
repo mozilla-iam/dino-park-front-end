@@ -54,7 +54,10 @@ import Button from '@/components/ui/Button.vue';
 import Icon from '@/components/ui/Icon.vue';
 import LinksMixin from '@/components/_mixins/LinksMixin.vue';
 import { INVITATION_STATE } from '@/view_models/AccessGroupViewModel';
-import { ACCESS_GROUP_TOS_PAGE } from '@/router';
+import {
+  ACCESS_GROUP_TOS_PAGE,
+  ACCESS_GROUP_LEAVE_CONFIRMATION_PAGE,
+} from '@/router';
 
 const PENDING_REJECTION = 'PENDING_REJECTION';
 
@@ -122,7 +125,10 @@ export default {
       return this.$store.getters.getActiveInvitations;
     },
     showInvitations() {
-      return this.$route.name !== ACCESS_GROUP_TOS_PAGE;
+      return (
+        this.$route.name !== ACCESS_GROUP_TOS_PAGE &&
+        this.$route.name !== ACCESS_GROUP_LEAVE_CONFIRMATION_PAGE
+      );
     },
   },
   data() {

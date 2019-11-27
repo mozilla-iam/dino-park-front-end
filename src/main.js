@@ -2,9 +2,9 @@ import Vue from 'vue';
 import VueApollo from 'vue-apollo';
 import App from './App.vue';
 import router, {
-  ACCESS_GROUP_PAGES,
   ACCESS_GROUP_TOS_PAGE,
   ACCESS_GROUP_PAGE,
+  ACCESS_GROUP_LEAVE_CONFIRMATION_PAGE,
 } from './router';
 
 import { apolloProvider } from './server';
@@ -48,40 +48,44 @@ store.dispatch('fetchGroupInvitations').then(function(data) {
 });
 
 router.beforeEach((to, from, next) => {
-  if (ACCESS_GROUP_PAGES.includes(to.name)) {
+  const promises = [];
+  const resolvers = [];
+  if (to.meta.key === 'access-group') {
     // eslint-disable-next-line
-    store
-      .dispatch('fetchAccessGroup')
-      .then(data => {
-        console.log('Fetched group: ', data);
-      })
-      .catch(error => {
-        console.error('Caught dispatch error: ', error);
-        next(`/error?message=${error}`);
-      });
+    promises.push(store.dispatch('fetchAccessGroup', to.params.groupname));
+    resolvers.push(data => {
+      console.log('Fetched group: ', data);
+    });
   }
-  if (to.name === ACCESS_GROUP_PAGE) {
+  if (
+    to.name === ACCESS_GROUP_PAGE ||
+    to.name === ACCESS_GROUP_LEAVE_CONFIRMATION_PAGE
+  ) {
     // eslint-disable-next-line
-    store
-      .dispatch('fetchAllAccessGroupMembers')
-      .then(data => {
-        console.log('Fetched group members: ', data);
-      })
-      .catch(error => {
-        console.error('Caught dispatch error: ', error);
-        next(`/error?message=${error}`);
-      });
+    promises.push(
+      store.dispatch('fetchAllAccessGroupMembers', to.params.groupname)
+    );
+
+    resolvers.push(data => {
+      console.log('Fetched group members: ', data);
+    });
   }
   if (to.name === ACCESS_GROUP_TOS_PAGE) {
-    store
-      .dispatch('fetchAccessGroupTOS')
-      .then(data => {
-        console.log('Fetched terms: ', data);
-      })
-      .catch(error => {
-        console.error('Caught dispatch error: ', error);
-        next(`/error?message=${error}`);
-      });
+    promises.push(store.dispatch('fetchAccessGroupTOS'));
+    resolvers.push(data => {
+      console.log('Fetched terms: ', data);
+    });
   }
-  next();
+
+  Promise.all(promises)
+    .then(results => {
+      for (let i = 0, len = results.length; i < len; i += 1) {
+        resolvers[i](results[i]);
+      }
+      next();
+    })
+    .catch(error => {
+      console.error('Caught dispatch error: ', error);
+      next(`/error?message=${error}`);
+    });
 });
