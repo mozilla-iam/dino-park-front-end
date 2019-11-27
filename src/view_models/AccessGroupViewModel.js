@@ -107,8 +107,10 @@ export class DisplayMemberViewModel {
       this.username = data.username;
       this.email = data.email;
       this.isStaff = data.isStaff;
-      this.since = data.since;
-      this.expiration = data.expiration;
+      this.since = !data.since ? '' : new Date(data.since).toLocaleDateString();
+      this.expiration = !data.expiration
+        ? ''
+        : new Date(data.expiration).toLocaleDateString();
       this.role = DISPLAY_MEMBER_ROLES.includes(data.role) ? data.role : null;
       this.added_by = new AbbDisplayMemberViewModel(data.added_by);
     } catch (e) {
