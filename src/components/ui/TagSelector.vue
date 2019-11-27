@@ -56,7 +56,7 @@ export default {
       this.currentInput = '';
     },
     tagActionClicked(idx) {
-      this.tags.splice(idx);
+      this.tags.splice(idx, 1);
     },
   },
   computed: {
