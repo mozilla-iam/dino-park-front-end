@@ -41,8 +41,7 @@ export default {
       this.updateSize();
     },
     avatar() {
-      this.src = '';
-      Promise.resolve().then(() => this.updateUserPicture());
+      this.updateUserPicture();
     },
   },
   methods: {
@@ -60,28 +59,35 @@ export default {
       this.slot = this.pictureSize || this.slot;
       this.modifier = `user-picture--${this.dinoTypeSize}`;
     },
-    async updateUserPicture() {
+    updateUserPicture() {
       this.updateSize();
-      let identicon = false;
-      if (this.avatar.picture === 'empty:') {
-        this.src = '';
-      } else if (
-        this.avatar.picture &&
-        this.avatar.picture.startsWith('data:')
-      ) {
-        this.src = this.avatar.picture;
-      } else if (
+      if (
         this.avatar.picture === null ||
         this.avatar.picture === '' ||
         this.avatar.picture === 'default:' ||
         this.avatar.picture.startsWith('https://s3.amazonaws.com/')
       ) {
-        this.src = await generateIdenticon(this.avatar.username, this.size);
-        identicon = true;
+        this.identicon = true;
+        generateIdenticon(this.avatar.username, this.size).then((i) => {
+          this.src = i;
+        });
       } else {
-        this.src = avatarUrl(this.avatar.picture, this.slot);
+        this.src = '';
+        this.identicon = false;
+        Promise.resolve().then(() => {
+          // defer to ensure blank src gets set first
+          if (this.avatar.picture === 'empty:') {
+            this.src = '';
+          } else if (
+            this.avatar.picture &&
+            this.avatar.picture.startsWith('data:')
+          ) {
+            this.src = this.avatar.picture;
+          } else {
+            this.src = avatarUrl(this.avatar.picture, this.slot);
+          }
+        });
       }
-      this.identicon = identicon;
     },
   },
   created() {
