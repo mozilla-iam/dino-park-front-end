@@ -521,10 +521,10 @@
         </g>
       </g>
     </template>
-    <template v-else-if="id === 'avatar'">
+    <template v-else-if="id === 'self-avatar'">
       <image
-        v-if="computedAvatarUrl"
-        :href="computedAvatarUrl"
+        v-if="avatarUrl"
+        :href="avatarUrl"
         x="0"
         y="0"
         width="24"
@@ -546,23 +546,22 @@ export default {
     id: String,
   },
   mounted() {
-    generateIdenticon(this.$store.state.user.primaryUsername.value, 40).then(
-      (a) => {
-        this.generatedAvatarUrl = a;
-      },
-    );
-  },
-  computed: {
-    computedAvatarUrl() {
+    if (this.id === 'self-avatar') {
       if (this.$store.state.user.picture.value) {
-        return avatarUrl(this.$store.state.user.picture.value, 40);
+        this.avatarUrl = avatarUrl(this.$store.state.user.picture.value, 40);
+      } else {
+        generateIdenticon(
+          this.$store.state.user.primaryUsername.value,
+          40,
+        ).then((a) => {
+          this.avatarUrl = a;
+        });
       }
-      return this.generatedAvatarUrl;
-    },
+    }
   },
   data() {
     return {
-      generatedAvatarUrl: null,
+      avatarUrl: null,
     };
   },
 };
