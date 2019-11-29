@@ -13,7 +13,7 @@ export default {
         githubIssues: 'https://github.com/mozilla-iam/dino-park-issues',
         legal: 'https://www.mozilla.org/en-US/legal',
         privacy: 'https://www.mozilla.org/en-US/privacy/',
-        hrEmail: 'mailto:HROPS@mozilla.com',
+        hrEmail: 'mailto:peopleops@mozilla.com',
       },
     };
   },
