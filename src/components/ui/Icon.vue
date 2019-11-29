@@ -555,7 +555,7 @@ export default {
   computed: {
     computedAvatarUrl() {
       if (this.$store.state.user.picture.value) {
-        return avatarUrl(this.$store.state.user.picture.value, 40);
+        return avatarUrl(this.$store.state.user.picture.value, 40, true);
       }
       return this.generatedAvatarUrl;
     },
