@@ -80,7 +80,7 @@ export default {
         {
           ...DISPLAY_LEVELS.private,
           label: 'Myself',
-          icon: 'avatar',
+          icon: 'self-avatar',
         },
         DISPLAY_LEVELS.staff,
         DISPLAY_LEVELS.ndaed,
