@@ -18,6 +18,7 @@
             fluent('profile_email_primary')
           }}</label>
           <Tooltip
+            v-if="scope.isStaff"
             :buttonText="fluent('profile_email_primary', 'tooltip-open')"
             :alternateButtonText="
               fluent('profile_email_primary', 'tooltip-close')
