@@ -27,9 +27,8 @@
             <Fluent
               id="profile_email_primary"
               attr="tooltip"
-              :args="{ email: 'HROPS@mozilla.com' }"
               :tags="{
-                email: { tag: 'a', href: 'mailto:HROPS@mozilla.com' },
+                email: { tag: 'a', href: globalLinks.hrEmail },
               }"
           /></Tooltip>
         </div>
@@ -175,6 +174,7 @@ import Select from '@/components/ui/Select.vue';
 import { DISPLAY_LEVELS } from '@/assets/js/display-levels';
 import Tooltip from '@/components/ui/Tooltip.vue';
 import Fluent from '@/components/Fluent.vue';
+import LinksMixin from '@/components/_mixins/LinksMixin.vue';
 
 const EMPTY_SECONDARY_EMAIL = {
   value: '',
@@ -191,7 +191,7 @@ export default {
     initialUris: Object,
     initialValues: Object,
   },
-  mixins: [PhoneNumbersMixin],
+  mixins: [PhoneNumbersMixin, LinksMixin],
   components: {
     Button,
     Checkbox,

@@ -165,7 +165,7 @@
               id="profile_official-job-title"
               attr="tooltip"
               :tags="{
-                email: { tag: 'a', href: hrEmail },
+                email: { tag: 'a', href: globalLinks.hrEmail },
               }"
           /></Tooltip>
         </div>
@@ -248,7 +248,7 @@
               id="profile_office-location"
               attr="tooltip"
               :tags="{
-                email: { tag: 'a', href: hrEmail },
+                email: { tag: 'a', href: globalLinks.hrEmail },
               }"
             />
           </Tooltip>
@@ -299,7 +299,7 @@
               id="profile_worker-type"
               attr="tooltip"
               :tags="{
-                email: { tag: 'a', href: hrEmail },
+                email: { tag: 'a', href: globalLinks.hrEmail },
               }"
           /></Tooltip>
         </div>
@@ -330,7 +330,7 @@
               id="profile_cost-center"
               attr="tooltip"
               :tags="{
-                email: { tag: 'a', href: hrEmail },
+                email: { tag: 'a', href: globalLinks.hrEmail },
               }"
           /></Tooltip>
         </div>
@@ -361,7 +361,7 @@
               id="profile_desk-number"
               attr="tooltip"
               :tags="{
-                email: { tag: 'a', href: hrEmail },
+                email: { tag: 'a', href: globalLinks.hrEmail },
               }"
           /></Tooltip>
         </div>
@@ -390,7 +390,7 @@
               id="profile_team"
               attr="tooltip"
               :tags="{
-                email: { tag: 'a', href: hrEmail },
+                email: { tag: 'a', href: globalLinks.hrEmail },
               }"
           /></Tooltip>
         </div>
@@ -460,6 +460,7 @@ import UserPicture from '@/components/ui/UserPicture.vue';
 import EditPictureModal from './EditPictureModal.vue';
 import Fetcher from '@/assets/js/fetcher';
 import Fluent from '@/components/Fluent.vue';
+import LinksMixin from '@/components/_mixins/LinksMixin.vue';
 
 const fetcher = new Fetcher();
 
@@ -469,6 +470,7 @@ export default {
     staffInformation: Object,
     initialValues: Object,
   },
+  mixins: [LinksMixin],
   components: {
     Combobox: () => import('@/components/ui/Combobox.vue'),
     EditPictureModal,
@@ -529,7 +531,6 @@ export default {
       pictureData: { value: this.initialValues.picture.value || 'default:' },
       timezones: [],
       locations: [],
-      hrEmail: 'mailto:HROPS@mozilla.com',
     };
   },
   methods: {
