@@ -40,7 +40,7 @@
         :variables="{ username }"
         :tag="null"
       >
-        <template slot-scope="{ result: { loading, data } }">
+        <template slot-scope="{ result: { data } }">
           <div class="org-chart__preview">
             <ProfilePreview
               v-if="data && desktopView"
