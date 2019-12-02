@@ -548,7 +548,11 @@ export default {
   mounted() {
     if (this.id === 'self-avatar') {
       if (this.$store.state.user.picture.value) {
-        this.avatarUrl = avatarUrl(this.$store.state.user.picture.value, 40);
+        this.avatarUrl = avatarUrl(
+          this.$store.state.user.picture.value,
+          40,
+          true,
+        );
       } else {
         generateIdenticon(
           this.$store.state.user.primaryUsername.value,

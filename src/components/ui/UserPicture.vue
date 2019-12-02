@@ -84,10 +84,19 @@ export default {
           ) {
             this.src = this.avatar.picture;
           } else {
-            this.src = avatarUrl(this.avatar.picture, this.slot);
+            this.src = avatarUrl(
+              this.avatar.picture,
+              this.slot,
+              this.ownPicture(),
+            );
           }
         });
       }
+    },
+    ownPicture() {
+      return (
+        this.avatar.username === this.$store.state.user.primaryUsername.value
+      );
     },
   },
   created() {
