@@ -4,6 +4,7 @@
     :variables="variables"
     :fetchPolicy="viewAs.filter ? 'no-cache' : 'cache-first'"
     clientId="mutationClient"
+    :notifyOnNetworkStatusChange="true"
   >
     <template slot-scope="{ result: { loading, data, error } }">
       <LoadingSpinner v-if="loading"></LoadingSpinner>
