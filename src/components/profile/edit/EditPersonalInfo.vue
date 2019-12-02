@@ -75,7 +75,12 @@
         ><Tooltip
           buttonText="Open first name info"
           alternateButtonText="Close first name info"
-          >{{ fluent('profile_first-name', 'tooltip') }}</Tooltip
+          >{{
+            fluent(
+              'profile_first-name',
+              scope.isStaff ? 'tooltip-staff' : 'tooltip',
+            )
+          }}</Tooltip
         >
       </div>
       <input type="text" id="field-first-name" v-model="firstName.value" />
@@ -159,9 +164,8 @@
             ><Fluent
               id="profile_official-job-title"
               attr="tooltip"
-              :args="{ email: 'HROPS@mozilla.com' }"
               :tags="{
-                email: { tag: 'a', href: 'mailto:HROPS@mozilla.com' },
+                email: { tag: 'a', href: globalLinks.hrEmail },
               }"
           /></Tooltip>
         </div>
@@ -243,9 +247,8 @@
             ><Fluent
               id="profile_office-location"
               attr="tooltip"
-              :args="{ email: 'HROPS@mozilla.com' }"
               :tags="{
-                email: { tag: 'a', href: 'mailto:HROPS@mozilla.com' },
+                email: { tag: 'a', href: globalLinks.hrEmail },
               }"
             />
           </Tooltip>
@@ -295,9 +298,8 @@
             ><Fluent
               id="profile_worker-type"
               attr="tooltip"
-              :args="{ email: 'HROPS@mozilla.com' }"
               :tags="{
-                email: { tag: 'a', href: 'mailto:HROPS@mozilla.com' },
+                email: { tag: 'a', href: globalLinks.hrEmail },
               }"
           /></Tooltip>
         </div>
@@ -327,9 +329,8 @@
             ><Fluent
               id="profile_cost-center"
               attr="tooltip"
-              :args="{ email: 'HROPS@mozilla.com' }"
               :tags="{
-                email: { tag: 'a', href: 'mailto:HROPS@mozilla.com' },
+                email: { tag: 'a', href: globalLinks.hrEmail },
               }"
           /></Tooltip>
         </div>
@@ -359,9 +360,8 @@
             ><Fluent
               id="profile_desk-number"
               attr="tooltip"
-              :args="{ email: 'HROPS@mozilla.com' }"
               :tags="{
-                email: { tag: 'a', href: 'mailto:HROPS@mozilla.com' },
+                email: { tag: 'a', href: globalLinks.hrEmail },
               }"
           /></Tooltip>
         </div>
@@ -389,9 +389,8 @@
             ><Fluent
               id="profile_team"
               attr="tooltip"
-              :args="{ email: 'HROPS@mozilla.com' }"
               :tags="{
-                email: { tag: 'a', href: 'mailto:HROPS@mozilla.com' },
+                email: { tag: 'a', href: globalLinks.hrEmail },
               }"
           /></Tooltip>
         </div>
@@ -461,6 +460,7 @@ import UserPicture from '@/components/ui/UserPicture.vue';
 import EditPictureModal from './EditPictureModal.vue';
 import Fetcher from '@/assets/js/fetcher';
 import Fluent from '@/components/Fluent.vue';
+import LinksMixin from '@/components/_mixins/LinksMixin.vue';
 
 const fetcher = new Fetcher();
 
@@ -470,6 +470,7 @@ export default {
     staffInformation: Object,
     initialValues: Object,
   },
+  mixins: [LinksMixin],
   components: {
     Combobox: () => import('@/components/ui/Combobox.vue'),
     EditPictureModal,
