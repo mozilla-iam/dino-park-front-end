@@ -18,6 +18,7 @@
       }
     },
     {
+      "user_uuid": "34a33a8e-d035-4051-acac-497a79235e74",
       "picture": "https://picture.api.dev.sso.allizom.org/avatar/get/id/MzI0ZjAwMzA5Yzc1ZGYxYmIzYjdjMGE1NWZmMDc3OGY3NGJjYjAzMjc0NDVhZmI2YWViODBmMzIzOGNhYzM3NyNzdGFmZiMxNTcyODYyNzM3.png",
       "name": "Bruce Wayne",
       "username": "batman",
@@ -34,6 +35,7 @@
       }
     },
     {
+      "user_uuid": "34a33a8e-d035-4051-acac-497a79235e75",
       "picture": "https://picture.api.dev.sso.allizom.org/avatar/get/id/MzI0ZjAwMzA5Yzc1ZGYxYmIzYjdjMGE1NWZmMDc3OGY3NGJjYjAzMjc0NDVhZmI2YWViODBmMzIzOGNhYzM3NyNzdGFmZiMxNTcyODYyNzM3.png",
       "name": "Dick Grayson",
       "username": "nightwing",
@@ -50,6 +52,7 @@
       }
     },
     {
+      "user_uuid": "34a33a8e-d035-4051-acac-497a79235e76",
       "picture": "https://picture.api.dev.sso.allizom.org/avatar/get/id/MzI0ZjAwMzA5Yzc1ZGYxYmIzYjdjMGE1NWZmMDc3OGY3NGJjYjAzMjc0NDVhZmI2YWViODBmMzIzOGNhYzM3NyNzdGFmZiMxNTcyODYyNzM3.png",
       "name": "Jason Todd",
       "username": "redhood",

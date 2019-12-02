@@ -159,7 +159,27 @@ export default new Vuex.Store({
           groupName
         );
         commit('setAccessGroupData', newAccessGroup);
-      } catch (e) {}
+        return newAccessGroup;
+      } catch (e) {
+        throw new Error(e.message);
+      }
+    },
+    async removeMember({ commit, state }, member) {
+      const groupName = state.accessGroup.group.name;
+      try {
+        const result = await accessGroupsService.deleteMember(
+          groupName,
+          member.uuid
+        );
+        const accessGroupMembers = await accessGroupsService.getAllMembers(
+          member.uuid
+        );
+        commit('setAccessGroupMembersData', accessGroupMembers.members);
+        commit('setAccessGroupCuratorsData', accessGroupMembers.curators);
+        return accessGroupMembers;
+      } catch (e) {
+        throw new Error(e.message);
+      }
     },
   },
   mutations: {
@@ -183,6 +203,7 @@ export default new Vuex.Store({
     },
     setAccessGroupMembersData(state, memberData) {
       try {
+        state.accessGroup.members = [];
         for (let aMember of memberData) {
           state.accessGroup.members.push(new DisplayMemberViewModel(aMember));
         }
@@ -193,6 +214,7 @@ export default new Vuex.Store({
     },
     setAccessGroupCuratorsData(state, curatorData) {
       try {
+        state.accessGroup.curators = [];
         for (let aCurator of curatorData) {
           state.accessGroup.curators.push(new DisplayMemberViewModel(aCurator));
         }

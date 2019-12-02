@@ -30,12 +30,38 @@
                 <td class="row-member-display">
                   <AccessGroupMemberListDisplay :member="member" />
                 </td>
-                <td>{{ member.role }}</td>
+                <td
+                  v-if="member.pendingRemoval"
+                  colspan="3"
+                  class="row-member-leave-confirm"
+                >
+                  <p class="leave-confirm__description">
+                    Confirm removal from the group?
+                  </p>
+                  <Button
+                    class="primary-button"
+                    @click="handleRemoveConfirmClick(member)"
+                    >Remove</Button
+                  >
+                  <Button
+                    class="secondary-button"
+                    @click="handleCancelClick(member)"
+                    >Cancel</Button
+                  >
+                </td>
+                <td v-if="!member.pendingRemoval">{{ member.role }}</td>
                 <!-- Turn this into "x days" -->
-                <td>{{ member.expiration }}</td>
-                <td class="row-actions">
-                  <Button class="button--secondary">Renew</Button>
-                  <Button class="tertiary-action delete">
+                <td v-if="!member.pendingRemoval">{{ member.expiration }}</td>
+                <td class="row-actions" v-if="!member.pendingRemoval">
+                  <Button
+                    class="button--secondary"
+                    @click="handleRenewClick(member)"
+                    >Renew</Button
+                  >
+                  <Button
+                    class="tertiary-action delete"
+                    @click="handleRemoveClick(idx)"
+                  >
                     <Icon id="x" :width="16" :height="16" />
                   </Button>
                 </td>
@@ -118,21 +144,49 @@ export default {
       groupData: '',
       groupDescriptionData: '',
       groupTermsData: '',
+      allMembersList: this.$store.getters.getAllMembers.map(member => {
+        return {
+          ...member,
+          pendingRemoval: false,
+        };
+      }),
     };
   },
   methods: {
-    searchFormHandler(search) {},
-    clearSearchHandler() {},
-  },
-  computed: {
-    allMembersList() {
-      return this.$store.getters.getAllMembers.map(member => {
+    refreshMembersList() {
+      this.allMembersList = this.$store.getters.getAllMembers.map(member => {
         return {
           ...member,
           pendingRemoval: false,
         };
       });
     },
+    searchFormHandler(search) {},
+    clearSearchHandler() {},
+    handleRenewClick(member) {
+      console.log('renewing member: ', member);
+      member.pendingRemoval = true;
+    },
+    handleCancelClick(member) {
+      console.log('cancel member: ', member);
+      member.pendingRemoval = false;
+    },
+    handleRemoveClick(idx) {
+      const member = this.allMembersList[idx];
+      console.log('remove member: ', member);
+      member.pendingRemoval = true;
+    },
+    handleRemoveConfirmClick(member) {
+      const memberName = member.name;
+      this.$store.dispatch('removeMember', member).then(result => {
+        this.refreshMembersList();
+        this.$root.$emit('toast', {
+          content: `${memberName} was removed from the group`,
+        });
+      });
+    },
+  },
+  computed: {
     curatorsList() {
       return this.$store.state.accessGroup.curators;
     },
@@ -182,6 +236,44 @@ export default {
 
 .members-table__row .row-member-display {
   width: 30%;
+}
+
+.members-table__row .row-member-leave-confirm {
+  vertical-align: center;
+  text-align: right;
+}
+
+.row-member-leave-confirm .leave-confirm__description {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 1em;
+}
+
+.row-member-leave-confirm .button {
+  display: inline-block;
+  margin: 0 1em;
+}
+
+.row-member-leave-confirm .button:last-child {
+  margin-right: 0;
+}
+
+.row-member-leave-confirm .primary-button {
+  border: 1px solid #ff0039;
+  color: #ff0039;
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
+  height: 2em;
+  background: var(--white);
+}
+
+.row-member-leave-confirm .secondary-button {
+  border: 1px solid var(--gray-60);
+  color: var(--gray-60);
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
+  height: 2em;
+  background: var(--white);
 }
 
 .members-table__row .row-actions {

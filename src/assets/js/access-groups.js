@@ -39,4 +39,12 @@ export default class AccessGroups {
       res({ members, curators });
     }); //this.fetcher.fetch('');
   }
+
+  async deleteMember(groupName, uuid) {
+    return new Promise((res, rej) => {
+      const { members } = accessGroupMembers;
+      const { curators } = accessGroupCurators;
+      res('member deleted');
+    }); //this.fetcher.fetch('');
+  }
 }
