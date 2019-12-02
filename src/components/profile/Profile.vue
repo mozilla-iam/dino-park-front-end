@@ -477,7 +477,7 @@ export default {
 }
 .profile__section--disabled {
   background-color: var(--gray-20);
-  color: var(--gray-50);
+  color: var(--gray-60);
   border: 2px solid var(--gray-30);
 }
 .profile__section.profile__section--editing {
