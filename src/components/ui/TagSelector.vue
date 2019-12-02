@@ -1,8 +1,9 @@
 <template>
   <div class="tag-selector-container">
     <div class="tag-selector">
-      <div class="tag-container" v-for="(tag, idx) in tags" :key="idx">
-        <p class="tag-container__text">{{ tag.label }}</p>
+      <div class="tag-container" v-for="(tag, idx) in tagsDisplay" :key="idx">
+        <p class="tag-container__text" v-if="getLabel">{{ getLabel(tag) }}</p>
+        <p class="tag-container__text" v-else>{{ tag }}</p>
         <Icon
           @click.native="tagActionClicked(idx)"
           class="tag-container__action"
@@ -16,11 +17,17 @@
         type="text"
         v-model="currentInput"
         @change="onSelectorInput"
+        @input="onInput"
       />
     </div>
-    <ul class="selector-auto-complete">
-      <li v-for="(member, idx) in autocompleteList" :key="idx">
-        <AccessGroupMemberListDisplay member="member" />
+    <ul class="selector-auto-complete" v-if="autoCompleteList.length > 0">
+      <li
+        class="selector-auto-complete__item"
+        v-for="(item, idx) in autoCompleteList"
+        :key="idx"
+        @click="handleAddItem(item)"
+      >
+        <AccessGroupMemberListDisplay :member="item" />
       </li>
     </ul>
   </div>
@@ -29,13 +36,18 @@
 <script>
 import Icon from '@/components/ui/Icon.vue';
 import AccessGroupMemberListDisplay from '@/components/access_group/AccessGroupMemberListDisplay.vue';
+import _ from 'lodash';
 
 /**
  * TODO: Make this more general of a component once this works for the access group component
  */
 export default {
   name: 'TagSelector',
-  props: [],
+  props: {
+    value: Array,
+    getLabel: Function,
+    updateAutoComplete: Function,
+  },
   components: {
     Icon,
     AccessGroupMemberListDisplay,
@@ -44,7 +56,8 @@ export default {
   data() {
     return {
       currentInput: '',
-      tags: [],
+      tagsDisplay: this.value,
+      autoCompleteList: [],
     };
   },
   methods: {
@@ -52,11 +65,23 @@ export default {
       if (!this.currentInput) {
         return;
       }
-      this.tags.push({ label: this.currentInput });
-      this.currentInput = '';
     },
     tagActionClicked(idx) {
-      this.tags.splice(idx, 1);
+      this.tagsDisplay.splice(idx, 1);
+    },
+    onInput: _.throttle(function(e) {
+      if (!e) {
+        return;
+      }
+      this.updateAutoComplete(e.target.value).then(members => {
+        this.autoCompleteList = members;
+      });
+    }, 1000),
+    handleAddItem(item) {
+      this.tagsDisplay.push(item);
+      this.$emit('input', this.tagsDisplay);
+      this.autoCompleteList = [];
+      this.currentInput = '';
     },
   },
   computed: {
@@ -68,6 +93,10 @@ export default {
 </script>
 
 <style>
+.tag-selector-container {
+  position: relative;
+}
+
 .tag-selector {
   border: 1px solid var(--blue-60);
   border-radius: var(--formElementRadius);
@@ -114,5 +143,28 @@ export default {
   flex: 1;
   min-width: 5em;
   margin: 0.6em 0;
+}
+
+.tag-selector-container .selector-auto-complete {
+  list-style-type: none;
+  position: absolute;
+  top: 100%;
+  background: var(--white);
+  border: 1px solid var(--blue-60);
+  border-radius: var(--formElementRadius);
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-height: 20em;
+  overflow-y: auto;
+}
+
+.selector-auto-complete .selector-auto-complete__item {
+  cursor: pointer;
+  padding: 0.5em;
+}
+
+.selector-auto-complete .selector-auto-complete__item:hover {
+  background: var(--gray-20);
 }
 </style>

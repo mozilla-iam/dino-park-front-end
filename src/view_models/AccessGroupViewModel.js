@@ -96,7 +96,21 @@ export class DisplayMemberViewModel {
     [, , this.role] = DISPLAY_MEMBER_ROLES;
     this.added_by = {};
     this.error = false;
+    if (!data) {
+      this.error = 'DisplayMemberViewModel data is empty';
+      return;
+    }
     this.processData(data);
+  }
+
+  static fromProfileData(profile) {
+    const member = new DisplayMemberViewModel();
+    member.error = false;
+    member.name = `${profile.firstName} ${profile.lastName}`;
+    member.picture = profile.picture;
+    member.email = profile.email;
+    member.isStaff = profile.isStaff;
+    return member;
   }
 
   processData(data) {

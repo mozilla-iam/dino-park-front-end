@@ -1,16 +1,27 @@
 <template>
-  <input class="number-scroller-input__value" type="number" />
+  <input
+    class="number-scroller-input__value"
+    type="number"
+    v-model="value"
+    @change="onUpdate"
+  />
 </template>
 
 <script>
 export default {
   name: 'NumberScrollerInput',
-  props: [],
+  props: {
+    value: Number,
+  },
   mounted() {},
   data() {
     return {};
   },
-  methods: {},
+  methods: {
+    onUpdate(e) {
+      this.$emit('value', e.target.value);
+    },
+  },
   computed: {},
 };
 </script>

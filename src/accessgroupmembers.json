@@ -1,23 +1,6 @@
 {
   "members": [
     {
-      "user_uuid": "34a33a8e-d035-4051-acac-497a79235e73",
-      "picture": "https://picture.api.dev.sso.allizom.org/avatar/get/id/MzI0ZjAwMzA5Yzc1ZGYxYmIzYjdjMGE1NWZmMDc3OGY3NGJjYjAzMjc0NDVhZmI2YWViODBmMzIzOGNhYzM3NyNzdGFmZiMxNTcyODYyNzM3.png",
-      "name": "Hans Knall",
-      "username": "hans",
-      "email": "hans@knall.org",
-      "isStaff": true,
-      "since": "2014-11-28T12:45:59Z",
-      "expiration": "2014-11-28T12:45:59Z",
-      "role": "Curator",
-      "added_by": {
-        "user_uuid": "34a33a8e-d035-4051-acac-497a79235e73",
-        "name": "Hans Knall",
-        "username": "hans",
-        "email": "hans@knall.org"
-      }
-    },
-    {
       "user_uuid": "34a33a8e-d035-4051-acac-497a79235e74",
       "picture": "https://picture.api.dev.sso.allizom.org/avatar/get/id/MzI0ZjAwMzA5Yzc1ZGYxYmIzYjdjMGE1NWZmMDc3OGY3NGJjYjAzMjc0NDVhZmI2YWViODBmMzIzOGNhYzM3NyNzdGFmZiMxNTcyODYyNzM3.png",
       "name": "Bruce Wayne",

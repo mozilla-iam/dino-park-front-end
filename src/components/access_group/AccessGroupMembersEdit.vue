@@ -75,7 +75,11 @@
     <AccessGroupEditPanel title="Curators">
       <template v-slot:content>
         <div class="members-list-container">
-          <TagSelector />
+          <TagSelector
+            v-model="curatorsList"
+            :getLabel="getTagLabel"
+            :updateAutoComplete="updateAutoCompleteList"
+          />
         </div>
       </template>
       <template v-slot:footer>
@@ -98,7 +102,7 @@
             <label class="content-area__label"
               >Membership will expire after how many days</label
             >
-            <NumberScrollerInput />
+            <NumberScrollerInput v-model="groupExpiration" />
           </div>
         </div>
       </template>
@@ -123,6 +127,10 @@ import SearchForm from '@/components/ui/SearchForm.vue';
 import AccessGroupMemberListDisplay from '@/components/access_group/AccessGroupMemberListDisplay.vue';
 import TagSelector from '@/components/ui/TagSelector.vue';
 import NumberScrollerInput from '@/components/ui/NumberScrollerInput.vue';
+import ProfileApi from '@/assets/js/profile-api';
+import { DisplayMemberViewModel } from '@/view_models/AccessGroupViewModel';
+
+const profileApi = new ProfileApi();
 
 export default {
   name: 'AccessGroupInformationEdit',
@@ -141,9 +149,11 @@ export default {
   mounted() {},
   data() {
     return {
+      groupExpiration: 30,
       groupData: '',
       groupDescriptionData: '',
       groupTermsData: '',
+      curatorsList: this.$store.state.accessGroup.curators,
       allMembersList: this.$store.getters.getAllMembers.map(member => {
         return {
           ...member,
@@ -185,12 +195,23 @@ export default {
         });
       });
     },
-  },
-  computed: {
-    curatorsList() {
-      return this.$store.state.accessGroup.curators;
+    getTagLabel(curator) {
+      return curator.name;
+    },
+    updateAutoCompleteList(search) {
+      return new Promise((res, rej) => {
+        profileApi.searchProfiles(search).then(results => {
+          res(
+            results.map(profile =>
+              DisplayMemberViewModel.fromProfileData(profile)
+            )
+          );
+        });
+      });
+      return;
     },
   },
+  computed: {},
 };
 </script>
 
