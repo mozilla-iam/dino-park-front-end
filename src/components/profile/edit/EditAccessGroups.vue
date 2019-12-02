@@ -4,7 +4,6 @@
       accessInformationMozilliansorgDisplay: editMozilliansorgGroups.display,
       accessInformationLdapDisplay: editLdapGroups.display,
     }"
-    :initialValues="initialAccessInformation"
     formName="Edit access groups"
   >
     <header class="profile__section-header" ref="header" tabindex="-1">

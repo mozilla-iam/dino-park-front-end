@@ -6,7 +6,6 @@
         bugzilla: bugzillaIdentityUpdate,
       },
     }"
-    :initialValues="{}"
     formName="Edit identities"
   >
     <header class="profile__section-header" ref="header" tabindex="-1">

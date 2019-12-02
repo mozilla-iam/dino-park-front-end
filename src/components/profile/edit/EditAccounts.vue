@@ -3,7 +3,6 @@
     :editVariables="{
       uris,
     }"
-    :initialValues="initialValues"
     formName="Edit accounts"
   >
     <header class="profile__section-header" ref="header" tabindex="-1">
@@ -87,7 +86,6 @@ export default {
         return {};
       },
     },
-    initialValues: Object,
     editVariables: Object,
   },
   mixins: [AccountsMixin],

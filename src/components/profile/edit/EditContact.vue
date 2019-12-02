@@ -1,7 +1,6 @@
 <template>
   <EditMutationWrapper
     :editVariables="editVariables"
-    :initialValues="initialValues"
     :novalidate="true"
     formName="Edit contact information"
   >
@@ -189,7 +188,6 @@ export default {
     initialSecondaryEmail2: Object,
     initialPhoneNumbers: Object,
     initialUris: Object,
-    initialValues: Object,
   },
   mixins: [PhoneNumbersMixin, LinksMixin],
   components: {

@@ -49,7 +49,6 @@ export default {
     LoadingSpinner,
   },
   props: {
-    initialValues: Object,
     formName: String,
     editVariables: Object,
     novalidate: {

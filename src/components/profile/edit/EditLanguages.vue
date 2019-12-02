@@ -3,7 +3,6 @@
     :editVariables="{
       languages,
     }"
-    :initialValues="initialValues"
     formName="Edit languages"
     class="add-languages"
   >
@@ -63,7 +62,6 @@ import EditMutationWrapper from './EditMutationWrapper.vue';
 export default {
   name: 'EditLanguages',
   props: {
-    initialValues: Object,
     editVariables: Object,
     initialLanguages: {
       type: Object,
