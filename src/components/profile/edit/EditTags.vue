@@ -3,7 +3,6 @@
     :editVariables="{
       tags,
     }"
-    :initialValues="initialValues"
     formName="Edit tags"
     class="add-tags"
   >
@@ -63,7 +62,6 @@ import EditMutationWrapper from './EditMutationWrapper.vue';
 export default {
   name: 'EditTags',
   props: {
-    initialValues: Object,
     editVariables: Object,
     initialTags: {
       type: Object,

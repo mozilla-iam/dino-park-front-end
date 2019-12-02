@@ -15,7 +15,6 @@
       staffInformationOfficeLocationDisplay:
         staffInformationOfficeLocation.display,
     }"
-    :initialValues="initialValues"
     formName="Edit personal information"
   >
     <EditPictureModal

@@ -100,11 +100,6 @@
             initialSecondaryEmail1: identities.custom1PrimaryEmail,
             initialSecondaryEmail2: identities.custom2PrimaryEmail,
             initialPhoneNumbers: phoneNumbers,
-            initialValues: {
-              primaryEmail,
-              phoneNumbers,
-              uris,
-            },
           }"
         />
       </template>
@@ -129,7 +124,6 @@
         <EditAccounts
           v-bind="{
             username: primaryUsername.value,
-            initialValues: { uris },
             initialUris: uris,
           }"
         ></EditAccounts>
@@ -153,7 +147,6 @@
         <EditLanguages
           v-bind="{
             username: primaryUsername.value,
-            initialValues: { languages },
             initialLanguages: languages,
           }"
         ></EditLanguages>
@@ -177,7 +170,6 @@
         <EditTags
           v-bind="{
             username: primaryUsername.value,
-            initialValues: { tags },
             initialTags: tags,
           }"
         ></EditTags>
