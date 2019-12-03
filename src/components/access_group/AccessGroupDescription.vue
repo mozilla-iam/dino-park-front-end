@@ -27,7 +27,7 @@
       <h1 class="description-container__title">{{ title }}</h1>
     </header>
     <section class="description-container-area description-content">
-      <p class="description-content__main">{{ model.group.description }}</p>
+      <div class="description-content__main" v-html="descriptionDisplay"></div>
     </section>
     <footer class="description-container-area description-footer">
       <RouterLink
@@ -48,6 +48,7 @@ import Button from '@/components/ui/Button.vue';
 import Icon from '@/components/ui/Icon.vue';
 import Tooltip from '@/components/ui/Tooltip.vue';
 import LinksMixin from '@/components/_mixins/LinksMixin.vue';
+import { parseMarkdown } from '@/assets/js/component-utils';
 
 export default {
   name: 'AccessGroupDescription',
@@ -79,6 +80,9 @@ export default {
         fullText += `${this.model.member_count} members`;
       }
       return fullText;
+    },
+    descriptionDisplay() {
+      return parseMarkdown(this.model.group.description);
     },
   },
   data() {

@@ -95,7 +95,7 @@
     "id": 1337,
     "name": "dinopark-test",
     "type": "closed",
-    "description": "some fance description in markdown",
+    "description": "**bold** <br/> some fance description in markdown",
     "terms": true,
     "history": [
       {
