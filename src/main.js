@@ -1,10 +1,23 @@
 import Vue from 'vue';
 import VueApollo from 'vue-apollo';
 import App from './App.vue';
-import router, { ACCESS_GROUP_TOS_PAGE } from './router';
+import router, {
+  ACCESS_GROUP_TOS_PAGE,
+  ACCESS_GROUP_EDIT_PAGE,
+} from './router';
 
 import { apolloProvider } from './server';
 import store from './store';
+
+async function resolvePromisesSerially(promises, resolvers) {
+  try {
+    for (let i = 0, len = promises.length; i < len; i += 1) {
+      resolvers[i](await promises[i]());
+    }
+  } catch (e) {
+    throw new Error(e.message);
+  }
+}
 
 // polyfill/fallback adapted from MDN (https://developer.mozilla.org/en-US/docs/Web/API/Background_Tasks_API#Falling_back_to_setTimeout)
 window.requestIdleCallback =
@@ -29,7 +42,11 @@ Vue.mixin({
     scope() {
       return this.$store.state.scope;
     },
-  });
+  },
+});
+
+// eslint-disable-next-line
+store.dispatch('fetchUser').then(function() {
   new Vue({
     router,
     apolloProvider,
@@ -48,14 +65,16 @@ router.beforeEach((to, from, next) => {
   const resolvers = [];
   if (to.meta.key === 'access-group') {
     // eslint-disable-next-line
-    promises.push(store.dispatch('fetchAccessGroup', to.params.groupname));
+    promises.push(() =>
+      store.dispatch('fetchAccessGroup', to.params.groupname)
+    );
     resolvers.push(data => {
       console.log('Fetched group: ', data);
     });
   }
   if (to.meta.key === 'access-group' && to.name !== ACCESS_GROUP_TOS_PAGE) {
     // eslint-disable-next-line
-    promises.push(
+    promises.push(() =>
       store.dispatch('fetchAllAccessGroupMembers', to.params.groupname)
     );
 
@@ -64,21 +83,23 @@ router.beforeEach((to, from, next) => {
     });
   }
   if (to.name === ACCESS_GROUP_TOS_PAGE) {
-    promises.push(store.dispatch('fetchAccessGroupTOS'));
+    promises.push(() => store.dispatch('fetchAccessGroupTOS'));
     resolvers.push(data => {
       console.log('Fetched terms: ', data);
     });
   }
-
-  Promise.all(promises)
-    .then(results => {
-      for (let i = 0, len = results.length; i < len; i += 1) {
-        resolvers[i](results[i]);
-      }
+  if (to.name === ACCESS_GROUP_EDIT_PAGE) {
+    promises.push(() => store.dispatch('fetchAccessGroupInvitations'));
+    resolvers.push(data => {
+      console.log('Fetched invitations: ', data);
+    });
+  }
+  resolvePromisesSerially(promises, resolvers)
+    .then(() => {
       next();
     })
-    .catch(error => {
-      console.error('Caught dispatch error: ', error);
-      next(`/error?message=${error}`);
+    .catch(e => {
+      console.error('Caught dispatch error: ', e);
+      next(`/error?message=${e}`);
     });
 });

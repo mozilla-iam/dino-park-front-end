@@ -20,7 +20,8 @@ export default new Vuex.Store({
     user: null,
     scope: new Scope(),
     accessGroup: null,
-    groupInvitations: [],
+    userInvitations: [],
+    accessGroupMemberInvitations: [],
     org: null,
     personViewPreference: 'list',
     error: false,
@@ -80,11 +81,11 @@ export default new Vuex.Store({
       return content;
     },
     async acceptGroupInvitation({ commit, state }, idx) {
-      if (idx >= state.groupInvitations.length) {
-        state.error = `Index out of bounds for groupInvitations: ${idx}`;
+      if (idx >= state.userInvitations.length) {
+        state.error = `Index out of bounds for userInvitations: ${idx}`;
         throw new Error(state.error);
       }
-      const currentInvitation = state.groupInvitations[idx];
+      const currentInvitation = state.userInvitations[idx];
       try {
         const result = await accessGroupsService.acceptInvitation(
           currentInvitation.group_name
@@ -96,11 +97,11 @@ export default new Vuex.Store({
       }
     },
     async rejectGroupInvitation({ commit, state }, idx) {
-      if (idx >= state.groupInvitations.length) {
-        state.error = `Index out of bounds for groupInvitations: ${idx}`;
+      if (idx >= state.userInvitations.length) {
+        state.error = `Index out of bounds for userInvitations: ${idx}`;
         throw new Error(state.error);
       }
-      const currentInvitation = state.groupInvitations[idx];
+      const currentInvitation = state.userInvitations[idx];
       try {
         const result = await accessGroupsService.rejectInvitation(
           currentInvitation.group_name
@@ -112,7 +113,7 @@ export default new Vuex.Store({
       }
     },
     async acceptInvitationTOS({ commit, state }, groupName) {
-      const groupInvitation = state.groupInvitations.filter(
+      const groupInvitation = state.userInvitations.filter(
         invitation => invitation.group_name === groupName
       );
       if (!groupInvitation || !groupInvitation.length) {
@@ -132,7 +133,7 @@ export default new Vuex.Store({
       }
     },
     async rejectInvitationTOS({ commit, state }, groupName) {
-      const groupInvitation = state.groupInvitations.filter(
+      const groupInvitation = state.userInvitations.filter(
         invitation => invitation.group_name === groupName
       );
       if (!groupInvitation || !groupInvitation.length) {
@@ -181,6 +182,21 @@ export default new Vuex.Store({
         throw new Error(e.message);
       }
     },
+    async fetchAccessGroupInvitations({ commit, state }) {
+      const groupName = state.accessGroup.group.name;
+      try {
+        const invitations = await accessGroupsService.getAccessGroupMemberInvitations(
+          groupName
+        );
+        commit('setAccessGroupMemberInvitations', invitations);
+        return invitations;
+      } catch (e) {
+        throw new Error(e.message);
+      }
+    },
+    async resendInvite({ commit, state }) {
+      return 'Invitation resent';
+    },
   },
   mutations: {
     setUser(state, user) {
@@ -225,7 +241,7 @@ export default new Vuex.Store({
     },
     setInvitationData(state, invitations) {
       try {
-        state.groupInvitations = invitations.map(
+        state.userInvitations = invitations.map(
           invite => new GroupInvitationViewModel(invite)
         );
       } catch (e) {
@@ -234,28 +250,28 @@ export default new Vuex.Store({
       }
     },
     acceptGroupInvitation(state, idx) {
-      if (idx >= state.groupInvitations.length) {
-        state.error = `Index out of bounds for groupInvitations: ${idx}`;
+      if (idx >= state.userInvitations.length) {
+        state.error = `Index out of bounds for userInvitations: ${idx}`;
         throw new Error(state.error);
       }
-      state.groupInvitations[idx].state = INVITATION_STATE.ACCEPTED;
+      state.userInvitations[idx].state = INVITATION_STATE.ACCEPTED;
     },
     rejectGroupInvitation(state, idx) {
-      if (idx >= state.groupInvitations.length) {
-        state.error = `Index out of bounds for groupInvitations: ${idx}`;
+      if (idx >= state.userInvitations.length) {
+        state.error = `Index out of bounds for userInvitations: ${idx}`;
         throw new Error(state.error);
       }
-      state.groupInvitations[idx].state = INVITATION_STATE.REJECTED;
+      state.userInvitations[idx].state = INVITATION_STATE.REJECTED;
     },
     setAccessGroupTOS(state, content) {
       state.groupTOS = content;
     },
     acceptTOS(state, groupName) {
       let found = false;
-      for (let i = 0, len = state.groupInvitations.length; i < len; i++) {
-        if (state.groupInvitations[i].group_name === groupName) {
+      for (let i = 0, len = state.userInvitations.length; i < len; i++) {
+        if (state.userInvitations[i].group_name === groupName) {
           found = true;
-          state.groupInvitations[i].state = INVITATION_STATE.ACCEPTED;
+          state.userInvitations[i].state = INVITATION_STATE.ACCEPTED;
         }
       }
       if (!found) {
@@ -266,10 +282,10 @@ export default new Vuex.Store({
     },
     doNotAcceptTOS(state, groupName) {
       let found = false;
-      for (let i = 0, len = state.groupInvitations.length; i < len; i++) {
-        if (state.groupInvitations[i].group_name === groupName) {
+      for (let i = 0, len = state.userInvitations.length; i < len; i++) {
+        if (state.userInvitations[i].group_name === groupName) {
           found = true;
-          state.groupInvitations[i].state = INVITATION_STATE.REJECTED;
+          state.userInvitations[i].state = INVITATION_STATE.REJECTED;
         }
       }
       if (!found) {
@@ -278,11 +294,21 @@ export default new Vuex.Store({
         throw new Error(state.error);
       }
     },
+    setAccessGroupMemberInvitations(state, invitations) {
+      try {
+        state.accessGroupMemberInvitations = invitations.map(
+          invite => new DisplayMemberViewModel(invite)
+        );
+      } catch (e) {
+        state.error = e.message;
+        throw new Error(e.message);
+      }
+    },
   },
   getters: {
     getInvitationByName: state => groupName => {
       console.log('getting group name: ', groupName);
-      const options = state.groupInvitations.filter(
+      const options = state.userInvitations.filter(
         invite => invite.group_name === groupName
       );
       if (options.length !== 1) {
@@ -291,12 +317,15 @@ export default new Vuex.Store({
       return options[0];
     },
     getActiveInvitations: state => {
-      return state.groupInvitations.filter(invitation => {
+      return state.userInvitations.filter(invitation => {
         return (
           invitation.state !== INVITATION_STATE.ACCEPTED &&
           invitation.state !== INVITATION_STATE.REJECTED
         );
       });
+    },
+    getAccessGroupMemberInvitations: state => {
+      return state.accessGroupMemberInvitations;
     },
     getAllMembers: state => {
       return state.accessGroup.curators.concat(state.accessGroup.members);

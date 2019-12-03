@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
   <section class="edit-information-container">
     <article class="edit-information-section">
       <h3 class="edit-information-section__header">Group details</h3>
@@ -37,27 +37,29 @@
       <h3 class="edit-information-section__header">Group type</h3>
       <div class="edit-information-section__content content-area">
         <div class="content-area__row">
-          <div class="radio-control"><input type="radio" checked="true" /> Reviewed</div>
+          <div class="radio-control">
+            <input type="radio" checked="true" /> Reviewed
+          </div>
           <div class="radio-control"><input type="radio" /> Closed</div>
         </div>
         <div class="content-area__row radio-control__description">
           <label class="description-label">Reviewed</label>
           <p class="description-content">
-            When a group is set to "Reviewed", Mozillians are presented with a "Request to
-            Join" button on the group page. Once clicked, Group Curators will receive a
-            pending rquest notification, prompting them to review and accept or deny the
-            membership. Group Curators can invite and/or remove people from the group if
-            needed.
+            When a group is set to "Reviewed", Mozillians are presented with a
+            "Request to Join" button on the group page. Once clicked, Group
+            Curators will receive a pending rquest notification, prompting them
+            to review and accept or deny the membership. Group Curators can
+            invite and/or remove people from the group if needed.
           </p>
         </div>
         <div class="content-area__row radio-control__description">
           <label class="description-label">Closed</label>
           <p class="description-content">
-            "Closed" groups provide more tight control over a group. Mozillians cannot
-            request membership, and can only be invited to join the group by Group
-            Curators. Group Curators can, of course, remove people from the group if
-            needed. Avoid using this group type unless you are absolutely sure it is
-            necessary.
+            "Closed" groups provide more tight control over a group. Mozillians
+            cannot request membership, and can only be invited to join the group
+            by Group Curators. Group Curators can, of course, remove people from
+            the group if needed. Avoid using this group type unless you are
+            absolutely sure it is necessary.
           </p>
         </div>
       </div>
@@ -74,7 +76,8 @@
       <div class="edit-information-section__content content-area">
         <div class="content-area__row">
           <div class="radio-control">
-            <input type="checkbox" checked="true" /> New members should accept terms
+            <input type="checkbox" checked="true" /> New members should accept
+            terms
           </div>
         </div>
         <div class="content-area__row multi-line">

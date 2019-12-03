@@ -2,6 +2,7 @@ import Fetcher from '@/assets/js/fetcher';
 import accessGroupData from '@/accessgroupdata.json';
 import accessGroupMembers from '@/accessgroupmembers.json';
 import accessGroupCurators from '@/accessgroupcurators.json';
+import accessGroupMemberInvitations from '@/accessgroupmemberinvitations.json';
 
 export default class AccessGroups {
   constructor() {
@@ -45,6 +46,13 @@ export default class AccessGroups {
       const { members } = accessGroupMembers;
       const { curators } = accessGroupCurators;
       res('member deleted');
+    }); //this.fetcher.fetch('');
+  }
+
+  async getAccessGroupMemberInvitations(groupName) {
+    return new Promise((res, rej) => {
+      const members = accessGroupMemberInvitations;
+      res(members);
     }); //this.fetcher.fetch('');
   }
 }

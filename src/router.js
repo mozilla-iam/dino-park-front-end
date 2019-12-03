@@ -13,6 +13,7 @@ import scrolling from './assets/js/scrolling';
 
 Vue.use(Router);
 
+export const ACCESS_GROUP_EDIT_PAGE = 'Edit Access Group';
 export const ACCESS_GROUP_TOS_PAGE = 'Access Group TOS';
 export const ACCESS_GROUP_PAGE = 'Access Group';
 export const ACCESS_GROUP_LEAVE_CONFIRMATION_PAGE =
@@ -97,7 +98,7 @@ const router = new Router({
         },
         {
           path: 'edit',
-          name: 'Edit Access Group',
+          name: ACCESS_GROUP_EDIT_PAGE,
           component: AccessGroupEdit,
           query: {
             section: ':section?',
