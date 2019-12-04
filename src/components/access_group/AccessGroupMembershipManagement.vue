@@ -28,13 +28,19 @@
       <span class="secondary-data-row__focus">{{ expiry }}</span>
     </p>
     <footer class="action-row">
-      <Button
+      <RouterLink
         class="membership-management__add-more button--secondary button button--action"
         type="button"
+        :to="{
+          name: 'Edit Access Group',
+          query: {
+            section: 'invitations',
+          },
+        }"
         v-on:click="handleAddMembers"
       >
         <Icon id="plus" :width="16" :height="16" />Add Members
-      </Button>
+      </RouterLink>
     </footer>
   </div>
 </template>

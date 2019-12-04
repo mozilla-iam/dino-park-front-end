@@ -38,8 +38,9 @@
       </template>
       <template v-slot:footer>
         <Button
-          disabled="disabled"
+          :disabled="!newInvitesDirty"
           class="button--secondary button--action row-primary-action"
+          @click="handleAddNewInvitesClicked()"
           >Update curators</Button
         >
       </template>
@@ -106,6 +107,7 @@ export default {
     return {
       invitationList: this.$store.getters.getAccessGroupMemberInvitations,
       newInvites: [],
+      newInvitesDirty: false,
       emailInviteText: '',
     };
   },
@@ -132,6 +134,17 @@ export default {
         });
       });
       return;
+    },
+    handleAddNewInvitesClicked() {
+      this.$store
+        .dispatch('addAccessGroupMembers', this.newInvites)
+        .then(result => {
+          this.newInvites = false;
+          this.$root.$emit('toast', {
+            content: 'Members successfully invited',
+          });
+          this.newInvites = [];
+        });
     },
   },
   computed: {},

@@ -82,7 +82,7 @@ router.beforeEach((to, from, next) => {
       console.log('Fetched group members: ', data);
     });
   }
-  if (to.name === ACCESS_GROUP_TOS_PAGE) {
+  if (to.name === ACCESS_GROUP_TOS_PAGE || to.name === ACCESS_GROUP_EDIT_PAGE) {
     promises.push(() => store.dispatch('fetchAccessGroupTOS'));
     resolvers.push(data => {
       console.log('Fetched terms: ', data);

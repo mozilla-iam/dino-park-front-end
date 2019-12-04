@@ -84,8 +84,9 @@
       </template>
       <template v-slot:footer>
         <Button
-          disabled="disabled"
+          :disabled="!curatorsListDirty"
           class="button--secondary button--action row-primary-action"
+          @click="handleCuratorsAddClicked()"
           >Update curators</Button
         >
       </template>
@@ -147,6 +148,11 @@ export default {
   },
   props: [],
   mounted() {},
+  watch: {
+    curatorsList(value) {
+      this.curatorsListDirty = true;
+    },
+  },
   data() {
     return {
       groupExpiration: 30,
@@ -154,6 +160,7 @@ export default {
       groupDescriptionData: '',
       groupTermsData: '',
       curatorsList: this.$store.state.accessGroup.curators,
+      curatorsListDirty: false,
       allMembersList: this.$store.getters.getAllMembers.map(member => {
         return {
           ...member,
@@ -208,7 +215,17 @@ export default {
           );
         });
       });
-      return;
+    },
+    handleCuratorsAddClicked() {
+      this.$store
+        .dispatch('addAccessGroupCurators', this.curatorsList)
+        .then(result => {
+          this.curatorsListDirty = false;
+          this.$root.$emit('toast', {
+            content: 'Curators successfully added',
+          });
+          this.curatorsList = [];
+        });
     },
   },
   computed: {},

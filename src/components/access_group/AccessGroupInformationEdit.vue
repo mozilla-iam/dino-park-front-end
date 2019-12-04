@@ -1,16 +1,10 @@
 <template>
   <section class="edit-information-container">
-    <article class="edit-information-section">
-      <h3 class="edit-information-section__header">Group details</h3>
-      <div class="edit-information-section__content content-area">
+    <AccessGroupEditPanel title="Group details">
+      <template v-slot:content>
         <div class="content-area__row">
           <label class="content-area__label">Group name</label>
-          <TextInput
-            type="text"
-            v-model="groupData"
-            :maxlength="50"
-            class="content-area__value"
-          />
+          <p class="content-area__value">{{ groupName }}</p>
         </div>
         <div class="content-area__row multi-line">
           <label class="content-area__label">Group description</label>
@@ -24,23 +18,26 @@
             Use <a href="#">Markdown</a> for bold, italics, lists, and links.
           </p>
         </div>
-      </div>
-      <footer class="edit-information-section__footer">
+      </template>
+      <template v-slot:footer>
         <Button
-          disabled="disabled"
+          :disabled="!groupDescriptionDirty"
           class="button--secondary button--action row-primary-action"
+          @click="handleDescriptionUpdateClicked()"
           >Update details</Button
         >
-      </footer>
-    </article>
-    <article class="edit-information-section">
-      <h3 class="edit-information-section__header">Group type</h3>
-      <div class="edit-information-section__content content-area">
+      </template>
+    </AccessGroupEditPanel>
+    <AccessGroupEditPanel title="Group type">
+      <template v-slot:content>
         <div class="content-area__row">
           <div class="radio-control">
-            <input type="radio" checked="true" /> Reviewed
+            <input type="radio" value="reviewed" v-model="groupTypeData" />
+            Reviewed
           </div>
-          <div class="radio-control"><input type="radio" /> Closed</div>
+          <div class="radio-control">
+            <input type="radio" value="closed" v-model="groupTypeData" /> Closed
+          </div>
         </div>
         <div class="content-area__row radio-control__description">
           <label class="description-label">Reviewed</label>
@@ -62,22 +59,26 @@
             absolutely sure it is necessary.
           </p>
         </div>
-      </div>
-      <footer class="edit-information-section__footer">
+      </template>
+      <template v-slot:footer>
         <Button
-          disabled="disabled"
+          :disabled="!groupTypeDirty"
           class="button--secondary button--action row-primary-action"
+          @click="handleTypeUpdateClicked()"
           >Update type</Button
         >
-      </footer>
-    </article>
-    <article class="edit-information-section">
-      <h3 class="edit-information-section__header">Membership terms</h3>
-      <div class="edit-information-section__content content-area">
+      </template>
+    </AccessGroupEditPanel>
+    <AccessGroupEditPanel title="Membership terms">
+      <template v-slot:content>
         <div class="content-area__row">
           <div class="radio-control">
-            <input type="checkbox" checked="true" /> New members should accept
-            terms
+            <input
+              type="checkbox"
+              checked="true"
+              v-model="groupTermsRequiredData"
+            />
+            New members should accept terms
           </div>
         </div>
         <div class="content-area__row multi-line">
@@ -92,15 +93,16 @@
             Use <a href="#">Markdown</a> for bold, italics, lists, and links.
           </p>
         </div>
-      </div>
-      <footer class="edit-information-section__footer">
+      </template>
+      <template v-slot:footer>
         <Button
-          disabled="disabled"
+          :disabled="!groupTermsDirty"
           class="button--secondary button--action row-primary-action"
+          @click="handleTermsUpdateClicked()"
           >Update terms</Button
         >
-      </footer>
-    </article>
+      </template>
+    </AccessGroupEditPanel>
   </section>
 </template>
 
@@ -109,21 +111,75 @@ import TextInput from '@/components/ui/TextInput.vue';
 import TextArea from '@/components/ui/TextArea.vue';
 import Button from '@/components/ui/Button.vue';
 import Icon from '@/components/ui/Icon.vue';
+import AccessGroupEditPanel from '@/components/access_group/AccessGroupEditPanel.vue';
 
 export default {
   name: 'AccessGroupInformationEdit',
-  components: { TextInput, TextArea, Button, Icon },
+  components: { TextInput, TextArea, Button, Icon, AccessGroupEditPanel },
   props: [],
   mounted() {},
   data() {
     return {
-      groupData: '',
-      groupDescriptionData: '',
-      groupTermsData: '',
+      groupDescriptionData: this.$store.state.accessGroup.group.description,
+      groupDescriptionDirty: false,
+      groupTermsData: this.$store.state.groupTOS,
+      groupTermsRequiredData: this.$store.state.accessGroup.group.terms,
+      groupTermsDirty: false,
+      groupTypeData: this.$store.state.accessGroup.group.type,
+      groupTypeDirty: false,
     };
   },
-  methods: {},
-  computed: {},
+  watch: {
+    groupDescriptionData(val) {
+      this.groupDescriptionDirty = true;
+    },
+    groupTermsData(val) {
+      this.groupTermsDirty = true;
+    },
+    groupTypeData(val) {
+      this.groupTypeDirty = true;
+    },
+    groupTermsRequiredData(val) {
+      this.groupTermsDirty = true;
+    },
+  },
+  methods: {
+    handleDescriptionUpdateClicked() {
+      this.$store
+        .dispatch('updateAccessGroupDescription', this.groupDescriptionData)
+        .then(() => {
+          this.groupDescriptionDirty = false;
+          this.$root.$emit('toast', {
+            content: 'Group description updated',
+          });
+        });
+    },
+    handleTypeUpdateClicked() {
+      this.$store
+        .dispatch('updateAccessGroupType', this.groupTypeData)
+        .then(() => {
+          this.groupTypeDirty = false;
+          this.$root.$emit('toast', {
+            content: 'Group type updated',
+          });
+        });
+    },
+    handleTermsUpdateClicked() {
+      this.$store
+        .dispatch('updateAccessGroupTOS', this.groupTermsData)
+        .then(() => {
+          this.groupTermsDirty = false;
+          this.$root.$emit('toast', {
+            content: 'Group terms of service updated',
+          });
+        });
+    },
+  },
+  computed: {
+    groupName() {
+      return this.$store.state.accessGroup.group.name;
+    },
+  },
 };
 </script>
 
@@ -200,6 +256,9 @@ export default {
   width: 70%;
 }
 
+.content-area p.content-area__value {
+  color: var(--gray-40);
+}
 .content-area .content-area__row.multi-line .content-area__value {
   width: 100%;
   margin-top: 1em;

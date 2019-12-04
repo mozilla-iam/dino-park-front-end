@@ -22,6 +22,7 @@ export default new Vuex.Store({
     accessGroup: null,
     userInvitations: [],
     accessGroupMemberInvitations: [],
+    groupTOS: '',
     org: null,
     personViewPreference: 'list',
     error: false,
@@ -197,6 +198,76 @@ export default new Vuex.Store({
     async resendInvite({ commit, state }) {
       return 'Invitation resent';
     },
+    async updateAccessGroupDescription({ commit, state }, description) {
+      const { type, name } = state.accessGroup.group;
+      const updateable = {
+        type,
+        description,
+      };
+      try {
+        const result = await accessGroupsService.updateAccessGroupDetails(
+          name,
+          updateable
+        );
+        commit('updateAccessGroupDetails', updateable);
+        return result;
+      } catch (e) {
+        throw new Error(e.message);
+      }
+    },
+    async updateAccessGroupType({ commit, state }, type) {
+      const { description, name } = state.accessGroup.group;
+      const updateable = {
+        type,
+        description,
+      };
+      try {
+        const result = await accessGroupsService.updateAccessGroupDetails(
+          name,
+          updateable
+        );
+        commit('updateAccessGroupDetails', updateable);
+        return result;
+      } catch (e) {
+        throw new Error(e.message);
+      }
+    },
+    async updateAccessGroupTOS({ commit, state }, text) {
+      try {
+        const result = await accessGroupsService.updateAccessGroupTOS(
+          state.accessGroup.group.name,
+          text
+        );
+        commit('updateAccessGroupTOS', text);
+        return result;
+      } catch (e) {
+        throw new Error(e.message);
+      }
+    },
+    async addAccessGroupCurators({ commit, state }, curators) {
+      try {
+        const result = await accessGroupsService.addAccessGroupCurators(
+          state.accessGroup.group.name,
+          curators
+        );
+        commit('addAccessGroupCurators', curators);
+        return result;
+      } catch (e) {
+        throw new Error(e.message);
+      }
+    },
+    async addAccessGroupMembers({ commit, state }, members) {
+      try {
+        const result = await accessGroupsService.addAccessGroupMembers(
+          state.accessGroup.group.name,
+          members
+        );
+        commit('addAccessGroupCurators', members);
+        return result;
+      } catch (e) {
+        throw new Error(e.message);
+      }
+    },
   },
   mutations: {
     setUser(state, user) {
@@ -299,6 +370,26 @@ export default new Vuex.Store({
         state.accessGroupMemberInvitations = invitations.map(
           invite => new DisplayMemberViewModel(invite)
         );
+      } catch (e) {
+        state.error = e.message;
+        throw new Error(e.message);
+      }
+    },
+    updateAccessGroupDetails(state, details) {
+      try {
+        state.accessGroup = {
+          ...state.accessGroup,
+          ...details,
+        };
+      } catch (e) {
+        state.error = e.message;
+        throw new Error(e.message);
+      }
+    },
+
+    updateAccessGroupTOS(state, text) {
+      try {
+        state.groupTOS = text;
       } catch (e) {
         state.error = e.message;
         throw new Error(e.message);

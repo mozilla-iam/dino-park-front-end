@@ -1,7 +1,7 @@
 <template>
   <article :class="{ 'edit-panel-container': true, full: full }">
     <h3 class="edit-panel__header">{{ title }}</h3>
-    <div class="edit-panel__content">
+    <div class="edit-panel__content content-area">
       <slot name="content"></slot>
     </div>
 

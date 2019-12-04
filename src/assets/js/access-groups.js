@@ -55,4 +55,15 @@ export default class AccessGroups {
       res(members);
     }); //this.fetcher.fetch('');
   }
+
+  async updateAccessGroupDetails(groupName, details) {
+    return new Promise((res, rej) => {
+      res('access group updated');
+    }); //this.fetcher.fetch('');
+  }
+  async updateAccessGroupTOS(groupName, tos) {
+    return new Promise((res, rej) => {
+      res('terms of service updated');
+    }); //this.fetcher.fetch('');
+  }
 }
