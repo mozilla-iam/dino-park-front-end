@@ -9,6 +9,7 @@ import PageAccessGroup from './pages/PageAccessGroup.vue';
 import AccessGroupTerms from './components/access_group/AccessGroupTerms.vue';
 import AccessGroupEdit from './components/access_group/AccessGroupEdit.vue';
 import AccessGroupView from './components/access_group/AccessGroupView.vue';
+import AccessGroupCreate from './components/access_group/AccessGroupCreate.vue';
 import scrolling from './assets/js/scrolling';
 
 Vue.use(Router);
@@ -83,6 +84,13 @@ const router = new Router({
       component: PageSearchResult,
       props: true,
       meta: { key: 'search' },
+    },
+    {
+      path: '/a/create',
+      name: 'Create Access Group',
+      component: AccessGroupCreate,
+      props: true,
+      meta: { key: 'access-group' },
     },
     {
       path: '/a/:groupname',

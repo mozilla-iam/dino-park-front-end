@@ -145,8 +145,12 @@ export class DisplayMemberViewModel {
     return this.role === 'Member';
   }
 }
-
-const ACCESS_GROUP_TYPES = ['closed', 'reviewed', 'open'];
+export const TYPE_INDEX = {
+  closed: 0,
+  reviewed: 1,
+  open: 2,
+};
+export const ACCESS_GROUP_TYPES = ['closed', 'reviewed', 'open'];
 export class GroupViewModel {
   constructor(data) {
     this.id = '';

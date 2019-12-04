@@ -188,21 +188,6 @@ export default {
   padding: 1em;
 }
 
-.edit-information-section {
-  padding: 3em 0 1em 2em;
-}
-
-.edit-information-section .edit-information-section__header,
-.edit-information-section .edit-information-section__content,
-.edit-information-section .edit-information-section__footer {
-  width: 70%;
-}
-
-.edit-information-section .edit-information-section__header {
-  font-size: 2em;
-  font-weight: normal;
-}
-
 .content-area__row {
   display: flex;
   flex-direction: row;

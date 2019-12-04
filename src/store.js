@@ -268,6 +268,13 @@ export default new Vuex.Store({
         throw new Error(e.message);
       }
     },
+    async createAccessGroup({ commit, state }, form) {
+      try {
+        return await accessGroupsService.createAccessGroup(form);
+      } catch (e) {
+        throw new Error(e.message);
+      }
+    },
   },
   mutations: {
     setUser(state, user) {

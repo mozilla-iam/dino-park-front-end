@@ -66,4 +66,9 @@ export default class AccessGroups {
       res('terms of service updated');
     }); //this.fetcher.fetch('');
   }
+  async createAccessGroup(form) {
+    return new Promise((res, rej) => {
+      res('access group created');
+    }); //this.fetcher.fetch('');
+  }
 }

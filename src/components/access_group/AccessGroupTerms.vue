@@ -124,6 +124,7 @@ export default {
 .group-terms {
   margin-top: 2em;
 }
+
 .group-terms .group-terms__back-action {
   background-color: var(--gray-30);
   color: var(--black);

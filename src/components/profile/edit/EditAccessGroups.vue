@@ -32,7 +32,7 @@
         <IconBlockList class="icon-block-list--multi-col">
           <IconBlock
             v-for="[group] in Object.entries(
-              initialAccessInformation.ldap.values,
+              initialAccessInformation.ldap.values
             )"
             :key="`group-${group}`"
             icon="idcard"
@@ -77,15 +77,27 @@
         </IconBlock>
       </IconBlockList>
       <p v-else>You have not joined any mozilliansorg access group.</p>
-      <a
-        id="access-information__external-link"
-        class="button button--secondary button--action"
-        href="https://mozillians.org/user/edit/#mygroups"
-        target="_blank"
-        rel="noreferrer noopener"
-      >
-        <Icon id="external" :width="18" :height="18" />Manage at mozillians.org
-      </a>
+      <div class="access-information__actions">
+        <a
+          id="access-information__external-link"
+          class="button button--secondary button--action"
+          href="https://mozillians.org/user/edit/#mygroups"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          <Icon id="external" :width="18" :height="18" />Manage at
+          mozillians.org
+        </a>
+        <a
+          id="access-information__create-link"
+          class="button button--secondary button--action"
+          href="/a/create"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          <Icon id="plus" :width="18" :height="18" />Create Access Group
+        </a>
+      </div>
     </div>
   </EditMutationWrapper>
 </template>
@@ -148,16 +160,13 @@ export default {
 </script>
 
 <style>
-#access-information__external-link {
-  margin-left: auto;
-  max-width: max-content;
-}
 .edit-profile__access-groups h3 {
   margin-top: auto;
   margin-bottom: auto;
   padding-top: 1em;
   padding-bottom: 1em;
 }
+
 .edit-access-groups__header:first-child {
   margin-top: unset;
 }
@@ -180,5 +189,15 @@ export default {
 }
 .edit-profile__access-groups .icon-block {
   color: var(--gray-50);
+}
+
+.access-information__actions {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.access-information__actions .button--action {
+  max-width: max-content;
+  margin-left: 1em;
 }
 </style>
