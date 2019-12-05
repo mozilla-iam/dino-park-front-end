@@ -48,6 +48,13 @@ export default class AccessGroups {
       res('member deleted');
     }); //this.fetcher.fetch('');
   }
+  async deleteCurator(groupName, uuid) {
+    return new Promise((res, rej) => {
+      const { members } = accessGroupMembers;
+      const { curators } = accessGroupCurators;
+      res('curator deleted');
+    }); //this.fetcher.fetch('');
+  }
 
   async getAccessGroupMemberInvitations(groupName) {
     return new Promise((res, rej) => {
@@ -79,6 +86,34 @@ export default class AccessGroups {
   async deleteAccessGroupTOS(groupName) {
     return new Promise((res, rej) => {
       res('access group tos removed');
+    }); //this.fetcher.fetch('');
+  }
+
+  async addAccessGroupCurators(groupName, curators) {
+    // TODO: Since we don't add curators in a batch, this will have to be several requests
+    return new Promise((res, rej) => {
+      res('curators have been added');
+    }); //this.fetcher.fetch('');
+  }
+
+  async removeAccessGroupCurators(groupName, curators) {
+    // TODO: Since we don't add curators in a batch, this will have to be several requests
+    return new Promise((res, rej) => {
+      res('curators have been removed');
+    }); //this.fetcher.fetch('');
+  }
+
+  async addAccessGroupMembers(groupName, curators) {
+    // TODO: Since we don't add curators in a batch, this will have to be several requests
+    return new Promise((res, rej) => {
+      res('members have been added');
+    }); //this.fetcher.fetch('');
+  }
+
+  async removeAccessGroupMembers(groupName, curators) {
+    // TODO: Since we don't add curators in a batch, this will have to be several requests
+    return new Promise((res, rej) => {
+      res('members have been removed');
     }); //this.fetcher.fetch('');
   }
 }

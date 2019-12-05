@@ -183,6 +183,23 @@ export default new Vuex.Store({
         throw new Error(e.message);
       }
     },
+    async removeCurator({ commit, state }, curator) {
+      const groupName = state.accessGroup.group.name;
+      try {
+        const result = await accessGroupsService.deleteCurator(
+          groupName,
+          curator.uuid
+        );
+        const accessGroupMembers = await accessGroupsService.getAllMembers(
+          member.uuid
+        );
+        commit('setAccessGroupMembersData', accessGroupMembers.members);
+        commit('setAccessGroupCuratorsData', accessGroupMembers.curators);
+        return accessGroupMembers;
+      } catch (e) {
+        throw new Error(e.message);
+      }
+    },
     async fetchAccessGroupInvitations({ commit, state }) {
       const groupName = state.accessGroup.group.name;
       try {
@@ -250,8 +267,12 @@ export default new Vuex.Store({
           state.accessGroup.group.name,
           curators
         );
-        commit('addAccessGroupCurators', curators);
-        return result;
+        const accessGroupMembers = await accessGroupsService.getAllMembers(
+          state.accessGroup.group.groupName
+        );
+        commit('setAccessGroupMembersData', accessGroupMembers.members);
+        commit('setAccessGroupCuratorsData', accessGroupMembers.curators);
+        return accessGroupMembers;
       } catch (e) {
         throw new Error(e.message);
       }
@@ -262,8 +283,44 @@ export default new Vuex.Store({
           state.accessGroup.group.name,
           members
         );
-        commit('addAccessGroupCurators', members);
-        return result;
+        const accessGroupMembers = await accessGroupsService.getAllMembers(
+          member.uuid
+        );
+        commit('setAccessGroupMembersData', accessGroupMembers.members);
+        commit('setAccessGroupCuratorsData', accessGroupMembers.curators);
+        return accessGroupMembers;
+      } catch (e) {
+        throw new Error(e.message);
+      }
+    },
+    async removeAccessGroupCurators({ commit, state }, curators) {
+      try {
+        const result = await accessGroupsService.removeAccessGroupCurators(
+          state.accessGroup.group.name,
+          curators
+        );
+        const accessGroupMembers = await accessGroupsService.getAllMembers(
+          member.uuid
+        );
+        commit('setAccessGroupMembersData', accessGroupMembers.members);
+        commit('setAccessGroupCuratorsData', accessGroupMembers.curators);
+        return accessGroupMembers;
+      } catch (e) {
+        throw new Error(e.message);
+      }
+    },
+    async removeAccessGroupMembers({ commit, state }, members) {
+      try {
+        const result = await accessGroupsService.removeAccessGroupMembers(
+          state.accessGroup.group.name,
+          members
+        );
+        const accessGroupMembers = await accessGroupsService.getAllMembers(
+          member.uuid
+        );
+        commit('setAccessGroupMembersData', accessGroupMembers.members);
+        commit('setAccessGroupCuratorsData', accessGroupMembers.curators);
+        return accessGroupMembers;
       } catch (e) {
         throw new Error(e.message);
       }

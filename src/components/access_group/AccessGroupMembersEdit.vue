@@ -76,6 +76,8 @@
       <template v-slot:content>
         <div class="members-list-container">
           <TagSelector
+            v-on:tag:remove="handleCuratorRemoved"
+            v-on:tag:add="handleCuratorAdded"
             v-model="curatorsList"
             :getLabel="getTagLabel"
             :updateAutoComplete="updateAutoCompleteList"
@@ -86,7 +88,7 @@
         <Button
           :disabled="!curatorsListDirty"
           class="button--secondary button--action row-primary-action"
-          @click="handleCuratorsAddClicked()"
+          @click="handleCuratorsUpdateClicked()"
           >Update curators</Button
         >
       </template>
@@ -150,7 +152,9 @@ export default {
   mounted() {},
   watch: {
     curatorsList(value) {
-      this.curatorsListDirty = true;
+      this.curatorsListDirty =
+        JSON.stringify(value) ===
+        JSON.stringify(this.$store.state.accessGroup.curators);
     },
   },
   data() {
@@ -160,6 +164,8 @@ export default {
       groupDescriptionData: '',
       groupTermsData: '',
       curatorsList: this.$store.state.accessGroup.curators,
+      addedCurators: [],
+      removedCurators: [],
       curatorsListDirty: false,
       allMembersList: this.$store.getters.getAllMembers.map(member => {
         return {
@@ -216,16 +222,32 @@ export default {
         });
       });
     },
-    handleCuratorsAddClicked() {
-      this.$store
-        .dispatch('addAccessGroupCurators', this.curatorsList)
-        .then(result => {
-          this.curatorsListDirty = false;
-          this.$root.$emit('toast', {
-            content: 'Curators successfully added',
-          });
-          this.curatorsList = [];
+    handleCuratorAdded(curator) {
+      this.addedCurators.push(curator);
+    },
+    handleCuratorRemoved(curator) {
+      this.removedCurators.push(curator);
+    },
+    handleCuratorsUpdateClicked() {
+      let promises = [];
+      if (this.addedCurators.length > 0) {
+        promises.concat(
+          this.$store.dispatch('addAccessGroupCurators', this.addedCurators)
+        );
+      }
+      if (this.removedCurators.length > 0) {
+        promises.concat(
+          this.$store.dispatch('addAccessGroupCurators', this.addedCurators)
+        );
+      }
+      Promise.all(promises).then(results => {
+        this.$root.$emit('toast', {
+          content: 'Curators successfully added',
         });
+        this.addedCurators = [];
+        this.removedCurators = [];
+        this.curatorsListDirty = false;
+      });
     },
   },
   computed: {},

@@ -67,7 +67,9 @@ export default {
       }
     },
     tagActionClicked(idx) {
+      this.$emit('tag:remove', this.tagsDisplay[idx]);
       this.tagsDisplay.splice(idx, 1);
+      this.$emit('input', this.tagsDisplay);
     },
     onInput: _.throttle(function(e) {
       if (!e) {
@@ -78,6 +80,7 @@ export default {
       });
     }, 1000),
     handleAddItem(item) {
+      this.$emit('tag:add', item);
       this.tagsDisplay.push(item);
       this.$emit('input', this.tagsDisplay);
       this.autoCompleteList = [];

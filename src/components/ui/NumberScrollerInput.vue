@@ -2,7 +2,7 @@
   <input
     class="number-scroller-input__value"
     type="number"
-    v-model="value"
+    v-model="scrollValue"
     @change="onUpdate"
   />
 </template>
@@ -15,11 +15,13 @@ export default {
   },
   mounted() {},
   data() {
-    return {};
+    return {
+      scrollValue: this.value,
+    };
   },
   methods: {
     onUpdate(e) {
-      this.$emit('value', e.target.value);
+      this.$emit('value', this.scrollValue);
     },
   },
   computed: {},
