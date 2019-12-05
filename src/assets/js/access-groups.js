@@ -71,4 +71,14 @@ export default class AccessGroups {
       res('access group created');
     }); //this.fetcher.fetch('');
   }
+  async closeAccessGroup(groupName) {
+    return new Promise((res, rej) => {
+      res('access group closed');
+    }); //this.fetcher.fetch('');
+  }
+  async deleteAccessGroupTOS(groupName) {
+    return new Promise((res, rej) => {
+      res('access group tos removed');
+    }); //this.fetcher.fetch('');
+  }
 }

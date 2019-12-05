@@ -88,15 +88,16 @@
           <Icon id="external" :width="18" :height="18" />Manage at
           mozillians.org
         </a>
-        <a
+        <RouterLink
           id="access-information__create-link"
           class="button button--secondary button--action"
-          href="/a/create"
-          target="_blank"
+          :to="{
+            name: 'Create Access Group',
+          }"
           rel="noreferrer noopener"
         >
           <Icon id="plus" :width="18" :height="18" />Create Access Group
-        </a>
+        </RouterLink>
       </div>
     </div>
   </EditMutationWrapper>

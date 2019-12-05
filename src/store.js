@@ -275,6 +275,26 @@ export default new Vuex.Store({
         throw new Error(e.message);
       }
     },
+    async closeAccessGroup({ commit, state }, groupName) {
+      try {
+        return await accessGroupsService.closeAccessGroup(
+          state.accessGroup.group.name
+        );
+      } catch (e) {
+        throw new Error(e.message);
+      }
+    },
+    async deleteTOS({ commit, state }) {
+      try {
+        const result = await accessGroupsService.deleteAccessGroupTOS(
+          state.accessGroup.group.name
+        );
+        commit('deleteAccessGroupTOS', state.accessGroup.group.name);
+        return result;
+      } catch (e) {
+        throw new Error(e.message);
+      }
+    },
   },
   mutations: {
     setUser(state, user) {
@@ -397,6 +417,15 @@ export default new Vuex.Store({
     updateAccessGroupTOS(state, text) {
       try {
         state.groupTOS = text;
+      } catch (e) {
+        state.error = e.message;
+        throw new Error(e.message);
+      }
+    },
+    deleteAccessGroupTOS(state) {
+      try {
+        state.groupTOS = '';
+        state.accessGroup.group.terms = false;
       } catch (e) {
         state.error = e.message;
         throw new Error(e.message);

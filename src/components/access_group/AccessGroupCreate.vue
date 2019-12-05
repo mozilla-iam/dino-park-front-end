@@ -25,7 +25,8 @@
               class="content-area__value"
             ></TextArea>
             <p class="content-area__value-description">
-              Use <a href="#">Markdown</a> for bold, italics, lists, and links.
+              Use
+              <a href="#">Markdown</a> for bold, italics, lists, and links.
             </p>
           </div>
         </template>
@@ -132,6 +133,7 @@ export default {
     },
     handleBackClicked() {
       this.$router.go(-1);
+      return;
     },
   },
 };

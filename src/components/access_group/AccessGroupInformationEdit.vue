@@ -6,7 +6,7 @@
           <label class="content-area__label">Group name</label>
           <p class="content-area__value">{{ groupName }}</p>
         </div>
-        <div class="content-area__row multi-line">
+        <div class="content-area__row multi-line markdown-outer-container">
           <label class="content-area__label">Group description</label>
           <TextArea
             :rows="5"
@@ -15,8 +15,10 @@
             class="content-area__value"
           ></TextArea>
           <p class="content-area__value-description">
-            Use <a href="#">Markdown</a> for bold, italics, lists, and links.
+            Use
+            <a href="#">Markdown</a> for bold, italics, lists, and links.
           </p>
+          <AccessGroupMarkdownGuide />
         </div>
       </template>
       <template v-slot:footer>
@@ -81,7 +83,10 @@
             New members should accept terms
           </div>
         </div>
-        <div class="content-area__row multi-line">
+        <div
+          class="content-area__row multi-line markdown-outer-container"
+          v-if="groupTermsRequiredData"
+        >
           <label class="content-area__label">Terms and conditions text</label>
           <TextArea
             :rows="5"
@@ -90,8 +95,10 @@
             class="content-area__value"
           ></TextArea>
           <p class="content-area__value-description">
-            Use <a href="#">Markdown</a> for bold, italics, lists, and links.
+            Use
+            <a href="#">Markdown</a> for bold, italics, lists, and links.
           </p>
+          <AccessGroupMarkdownGuide />
         </div>
       </template>
       <template v-slot:footer>
@@ -103,6 +110,30 @@
         >
       </template>
     </AccessGroupEditPanel>
+    <AccessGroupEditPanel title="Close group">
+      <template v-slot:content>
+        <div class="content-area__row">
+          <p class="content-area__description">
+            This action will completely delete the access group and remove all
+            members. To continue, please check the box labelled
+            <span class="focus">I understand</span> and then click the
+            <span class="focus">Close group</span> button.
+          </p>
+        </div>
+        <div class="content-area__row close-group-container">
+          <input type="checkbox" v-model="closeGroupConfirmed" />
+          <label class="content-area__label"
+            >I understand this action will delete the entire group</label
+          >
+          <Button
+            :disabled="!closeGroupConfirmed"
+            class="button--primary primary-action"
+            @click="handleCloseGroupClicked"
+            >Close group</Button
+          >
+        </div>
+      </template>
+    </AccessGroupEditPanel>
   </section>
 </template>
 
@@ -112,10 +143,18 @@ import TextArea from '@/components/ui/TextArea.vue';
 import Button from '@/components/ui/Button.vue';
 import Icon from '@/components/ui/Icon.vue';
 import AccessGroupEditPanel from '@/components/access_group/AccessGroupEditPanel.vue';
+import AccessGroupMarkdownGuide from '@/components/access_group/AccessGroupMarkdownGuide.vue';
 
 export default {
   name: 'AccessGroupInformationEdit',
-  components: { TextInput, TextArea, Button, Icon, AccessGroupEditPanel },
+  components: {
+    TextInput,
+    TextArea,
+    Button,
+    Icon,
+    AccessGroupEditPanel,
+    AccessGroupMarkdownGuide,
+  },
   props: [],
   mounted() {},
   data() {
@@ -127,6 +166,7 @@ export default {
       groupTermsDirty: false,
       groupTypeData: this.$store.state.accessGroup.group.type,
       groupTypeDirty: false,
+      closeGroupConfirmed: false,
     };
   },
   watch: {
@@ -165,14 +205,34 @@ export default {
         });
     },
     handleTermsUpdateClicked() {
-      this.$store
-        .dispatch('updateAccessGroupTOS', this.groupTermsData)
-        .then(() => {
+      if (!this.groupTermsRequiredData) {
+        this.$store.dispatch('deleteTOS').then(() => {
           this.groupTermsDirty = false;
           this.$root.$emit('toast', {
-            content: 'Group terms of service updated',
+            content: 'Group terms of service removed',
           });
         });
+      } else {
+        this.$store
+          .dispatch('updateAccessGroupTOS', this.groupTermsData)
+          .then(() => {
+            this.groupTermsDirty = false;
+            this.$root.$emit('toast', {
+              content: 'Group terms of service updated',
+            });
+          });
+      }
+    },
+    handleCloseGroupClicked() {
+      const groupName = this.$store.state.accessGroup.group.name;
+      this.$store.dispatch('closeAccessGroup').then(() => {
+        this.$root.$emit('toast', {
+          content: `Access group ${groupName} has been closed`,
+        });
+        this.$router.push({
+          path: '/',
+        });
+      });
     },
   },
   computed: {
@@ -194,6 +254,13 @@ export default {
   width: 100%;
   margin: 2em 0;
   align-items: center;
+}
+
+.content-area__row.markdown-outer-container .markdown-guide-container {
+  position: absolute;
+  left: calc(100% + 1em);
+  top: 2.9em;
+  width: 20.5em;
 }
 
 .content-area__row .radio-control {
@@ -235,6 +302,10 @@ export default {
   flex: 1;
   color: var(--gray-40);
   height: 1.5em;
+}
+
+.content-area .focus {
+  font-weight: bold;
 }
 
 .content-area .content-area__value {

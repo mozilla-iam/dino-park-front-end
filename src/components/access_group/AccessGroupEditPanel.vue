@@ -59,6 +59,7 @@ export default {
   width: 100%;
   margin: 2em 0;
   align-items: center;
+  position: relative;
 }
 
 .content-area__row.multi-line {
