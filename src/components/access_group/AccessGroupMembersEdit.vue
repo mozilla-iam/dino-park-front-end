@@ -240,14 +240,18 @@ export default {
           )
         );
       }
-      Promise.all(promises).then(results => {
-        this.$root.$emit('toast', {
-          content: 'Curators successfully added',
+      Promise.all(promises)
+        .then(results => {
+          this.$root.$emit('toast', {
+            content: 'Curators successfully added',
+          });
+          this.addedCurators = [];
+          this.removedCurators = [];
+          this.curatorsListDirty = false;
+        })
+        .catch(e => {
+          console.error(e);
         });
-        this.addedCurators = [];
-        this.removedCurators = [];
-        this.curatorsListDirty = false;
-      });
     },
   },
   computed: {},
