@@ -72,25 +72,21 @@ export default {
           this.src = i;
         });
       } else {
-        this.src = '';
         this.identicon = false;
-        Promise.resolve().then(() => {
-          // defer to ensure blank src gets set first
-          if (this.avatar.picture === 'empty:') {
-            this.src = '';
-          } else if (
-            this.avatar.picture &&
-            this.avatar.picture.startsWith('data:')
-          ) {
-            this.src = this.avatar.picture;
-          } else {
-            this.src = avatarUrl(
-              this.avatar.picture,
-              this.slot,
-              this.ownPicture(),
-            );
-          }
-        });
+        if (this.avatar.picture === 'empty:') {
+          this.src = '';
+        } else if (
+          this.avatar.picture &&
+          this.avatar.picture.startsWith('data:')
+        ) {
+          this.src = this.avatar.picture;
+        } else {
+          this.src = avatarUrl(
+            this.avatar.picture,
+            this.slot,
+            this.ownPicture(),
+          );
+        }
       }
     },
     ownPicture() {
