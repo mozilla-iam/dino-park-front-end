@@ -98,10 +98,11 @@
         <div class="members-expiration-container">
           <div class="content-area__row">
             <div class="radio-control">
-              <input type="checkbox" checked="true" />Membership can expire
+              <input type="checkbox" v-model="membershipCanExpire" />Membership
+              can expire
             </div>
           </div>
-          <div class="content-area__row">
+          <div class="content-area__row" v-if="membershipCanExpire">
             <label class="content-area__label"
               >Membership will expire after how many days</label
             >
@@ -111,8 +112,9 @@
       </template>
       <template v-slot:footer>
         <Button
-          disabled="disabled"
+          :disabled="!groupExpirationDirty"
           class="button--secondary button--action row-primary-action"
+          @click="handleUpdateExpirationClicked"
           >Update expiration</Button
         >
       </template>
@@ -156,10 +158,23 @@ export default {
         JSON.stringify(value) ===
         JSON.stringify(this.$store.state.accessGroup.curators);
     },
+    groupExpiration(value) {
+      if (value !== this.$store.state.accessGroup.expiration) {
+        this.groupExpirationDirty = true;
+      }
+    },
+    membershipCanExpire(value) {
+      if (
+        (value && this.$store.state.accessGroup.expiration === null) ||
+        (!value && this.$store.state.accessGroup.expiration !== null)
+      ) {
+        this.groupExpirationDirty = true;
+      }
+    },
   },
   data() {
     return {
-      groupExpiration: 30,
+      groupExpiration: this.$store.state.accessGroup.expiration,
       groupData: '',
       groupDescriptionData: '',
       groupTermsData: '',
@@ -167,6 +182,8 @@ export default {
       addedCurators: [],
       removedCurators: [],
       curatorsListDirty: false,
+      membershipCanExpire: this.$store.state.accessGroup.expiration !== null,
+      groupExpirationDirty: false,
       allMembersList: this.$store.getters.getAllMembers.map(member => {
         return {
           ...member,
@@ -251,6 +268,16 @@ export default {
         })
         .catch(e => {
           console.error(e);
+        });
+    },
+    handleUpdateExpirationClicked() {
+      this.$store
+        .dispatch('updateAccessGroupExpiration', this.groupExpiration)
+        .then(result => {
+          this.groupExpirationDirty = false;
+          this.$root.$emit('toast', {
+            content: `Access Group expiration has been successfully updated`,
+          });
         });
     },
   },

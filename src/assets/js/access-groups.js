@@ -116,4 +116,11 @@ export default class AccessGroups {
       res('members have been removed');
     }); //this.fetcher.fetch('');
   }
+
+  async updateAccessGroupExpiration(groupName, expiration) {
+    // TODO: Since we don't add curators in a batch, this will have to be several requests
+    return new Promise((res, rej) => {
+      res('Expiration has been updated');
+    }); //this.fetcher.fetch('');
+  }
 }

@@ -352,6 +352,17 @@ export default new Vuex.Store({
         throw new Error(e.message);
       }
     },
+    async updateAccessGroupExpiration({ commit, state }, expiration) {
+      try {
+        const result = await accessGroupsService.updateAccessGroupExpiration(
+          state.accessGroup.group.name
+        );
+        commit('updateAccessGroupExpiration', expiration);
+        return result;
+      } catch (e) {
+        throw new Error(e.message);
+      }
+    },
   },
   mutations: {
     setUser(state, user) {
@@ -487,6 +498,13 @@ export default new Vuex.Store({
         state.error = e.message;
         throw new Error(e.message);
       }
+    },
+    updateAccessGroupExpiration(state, expiration) {
+      // try {
+      // } catch (e) {
+      //   state.error = e.message;
+      //   throw new Error(e.message);
+      // }
     },
   },
   getters: {

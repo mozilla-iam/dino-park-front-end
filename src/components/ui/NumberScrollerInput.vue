@@ -4,6 +4,7 @@
     type="number"
     v-model="scrollValue"
     @change="onUpdate"
+    tabindex="0"
   />
 </template>
 
@@ -21,7 +22,10 @@ export default {
   },
   methods: {
     onUpdate(e) {
-      this.$emit('value', this.scrollValue);
+      if (!parseInt(e.target.value)) {
+        return false;
+      }
+      this.$emit('input', parseInt(e.target.value));
     },
   },
   computed: {},
