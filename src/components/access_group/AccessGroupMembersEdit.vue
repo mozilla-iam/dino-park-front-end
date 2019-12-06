@@ -187,16 +187,13 @@ export default {
     searchFormHandler(search) {},
     clearSearchHandler() {},
     handleRenewClick(member) {
-      console.log('renewing member: ', member);
       member.pendingRemoval = true;
     },
     handleCancelClick(member) {
-      console.log('cancel member: ', member);
       member.pendingRemoval = false;
     },
     handleRemoveClick(idx) {
       const member = this.allMembersList[idx];
-      console.log('remove member: ', member);
       member.pendingRemoval = true;
     },
     handleRemoveConfirmClick(member) {
@@ -237,7 +234,10 @@ export default {
       }
       if (this.removedCurators.length > 0) {
         promises.concat(
-          this.$store.dispatch('addAccessGroupCurators', this.addedCurators)
+          this.$store.dispatch(
+            'removeAccessGroupCurators',
+            this.removedCurators
+          )
         );
       }
       Promise.all(promises).then(results => {
