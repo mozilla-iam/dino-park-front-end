@@ -7,7 +7,7 @@ import router, {
 } from './router';
 
 import { apolloProvider } from './server';
-import store from './store';
+import store from '@/store';
 
 async function resolvePromisesSerially(promises, resolvers) {
   try {
@@ -53,6 +53,15 @@ store.dispatch('fetchUser').then(function() {
     render: h => h(App),
     store,
   }).$mount('#app');
+});
+
+// TODO: After using these for testing, replace the old actions with these
+store.dispatch('userV2/profile/fetch').then(function() {
+  console.log('namespaced profile: ', store.state.userV2.profile);
+});
+
+store.dispatch('userV2/invitations/fetch').then(function() {
+  console.log('namespaced invitations: ', store.state.userV2.invitations);
 });
 
 // eslint-disable-next-line

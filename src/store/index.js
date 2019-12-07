@@ -1,21 +1,27 @@
 import Vuex from 'vuex';
 import Vue from 'vue';
-import { DISPLAY_PROFILE } from './queries/profile';
-import Scope from './assets/js/scope';
-import { client } from './server';
-import invitationGroupData from './invitationgroupdata.json';
-import accessGroupTermsOfService from './accessgrouptermsofservice.json';
+import { DISPLAY_PROFILE } from '@/queries/profile';
+import Scope from '@/assets/js/scope';
+import { client } from '@/server';
+import invitationGroupData from '@/invitationgroupdata.json';
+import accessGroupTermsOfService from '@/accessgrouptermsofservice.json';
 import {
   AccessGroupDetailsViewModel,
   GroupInvitationViewModel,
   INVITATION_STATE,
   DisplayMemberViewModel,
-} from './view_models/AccessGroupViewModel';
+} from '@/view_models/AccessGroupViewModel';
 import AccessGroups from '@/assets/js/access-groups';
+import user from './user.store.js';
+import scope from './scope.store.js';
 
 const accessGroupsService = new AccessGroups();
 Vue.use(Vuex);
 export default new Vuex.Store({
+  modules: {
+    userV2: user,
+    scopeV2: scope,
+  },
   state: {
     user: null,
     scope: new Scope(),
