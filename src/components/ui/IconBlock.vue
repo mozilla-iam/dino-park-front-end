@@ -14,7 +14,7 @@
     >
       {{ subHeading ? subHeading[0] : heading[0] }}
     </div>
-    <slot></slot>
+    <span><slot></slot></span>
   </li>
 </template>
 
