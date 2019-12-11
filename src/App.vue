@@ -82,6 +82,10 @@ export default {
   box-sizing: border-box;
 }
 
+html {
+  overflow-y: scroll;
+}
+
 body {
   background: var(--gray-20);
   font-family: 'Open Sans', sans-serif;
@@ -193,7 +197,7 @@ abbr {
 }
 
 /* best only use these classes on their own, and use a
-   wrapping container to not interfere with an element's 
+   wrapping container to not interfere with an element's
    existing display value */
 @media not screen and (min-width: 57.5em) {
   .hide-mobile {
