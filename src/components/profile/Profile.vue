@@ -51,7 +51,9 @@
     </div>
     <ProfileNav
       :links="profileNav"
-      :onStaffProfile="staffInformation.staff.value"
+      :allowStaffOnlyFields="
+        allowStaffOnlyFields && staffInformation.staff.value
+      "
     ></ProfileNav>
 
     <section

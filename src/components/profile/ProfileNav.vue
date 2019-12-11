@@ -32,14 +32,14 @@ export default {
   name: 'ProfileNav',
   props: {
     links: Array,
-    onStaffProfile: Boolean,
+    allowStaffOnlyFields: Boolean,
   },
   components: {
     Icon,
   },
   computed: {
     profileLinks() {
-      if (this.scope.isStaff && this.onStaffProfile) {
+      if (this.scope.isStaff && this.allowStaffOnlyFields) {
         return this.links;
       }
 

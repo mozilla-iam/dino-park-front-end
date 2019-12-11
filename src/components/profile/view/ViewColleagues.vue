@@ -54,7 +54,7 @@ import Related from '@/assets/js/related';
 import ReportingStructure from '@/components/profile/ReportingStructure.vue';
 
 export default {
-  name: 'ViewRelations',
+  name: 'ViewColleagues',
   props: {
     username: String,
   },

@@ -77,7 +77,7 @@ export default {
     },
     allowStaffOnlyFields() {
       return (
-        ['PRIVATE', 'STAFF', null].includes(this.viewAs.filter) &&
+        ['PRIVATE', 'STAFF', null].includes(this.variables.viewAs) &&
         this.scope.isStaff
       );
     },
