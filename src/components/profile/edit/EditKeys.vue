@@ -1,7 +1,14 @@
 <template>
   <div class="edit-keys">
     <header class="profile__section-header" ref="header" tabindex="-1">
-      <h2>Keys</h2>
+      <div class="profile__section-header__title-info">
+        <h2>{{ fluent('profile_keys') }}</h2>
+        <Tooltip
+          :buttonText="fluent('profile_keys', 'tooltip-open')"
+          :alternateButtonText="fluent('profile_keys', 'tooltip-close')"
+          >{{ fluent('profile_keys', 'tooltip') }}</Tooltip
+        >
+      </div>
     </header>
     <template
       v-if="pgpPublicKeys && Object.keys(pgpPublicKeys.values || {}).length > 0"
@@ -83,6 +90,7 @@
 import Icon from '@/components/ui/Icon.vue';
 import Key from '@/components/ui/Key.vue';
 import PrivacySetting from '@/components/profile/PrivacySetting.vue';
+import Tooltip from '@/components/ui/Tooltip.vue';
 
 export default {
   name: 'EditKeys',
@@ -95,6 +103,7 @@ export default {
     Icon,
     Key,
     PrivacySetting,
+    Tooltip,
   },
 };
 </script>

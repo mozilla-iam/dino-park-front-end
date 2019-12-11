@@ -9,7 +9,14 @@
     formName="Edit identities"
   >
     <header class="profile__section-header" ref="header" tabindex="-1">
-      <h2>Identities</h2>
+      <div class="profile__section-header__title-info">
+        <h2>{{ fluent('profile_identities') }}</h2>
+        <Tooltip
+          :buttonText="fluent('profile_identities', 'tooltip-open')"
+          :alternateButtonText="fluent('profile_identities', 'tooltip-close')"
+          >{{ fluent('profile_identities', 'tooltip') }}</Tooltip
+        >
+      </div>
     </header>
     <div
       v-if="identities.hasGithub() && !githubIdentityUpdate.remove"
@@ -99,6 +106,7 @@ import Icon from '@/components/ui/Icon.vue';
 import Identities from '@/assets/js/identities';
 import PrivacySetting from '@/components/profile/PrivacySetting.vue';
 import Select from '@/components/ui/Select.vue';
+import Tooltip from '@/components/ui/Tooltip.vue';
 
 export default {
   props: {
@@ -110,6 +118,7 @@ export default {
     Icon,
     PrivacySetting,
     Select,
+    Tooltip,
   },
   computed: {
     addButtonText() {

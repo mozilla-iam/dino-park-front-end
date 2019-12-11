@@ -64,9 +64,10 @@ export default {
   --layerProfileNav: 4;
   --layerContactMe: 5;
   --layerAboveNav: 6;
-  --layerTopBar: 7;
-  --layerUserMenu: 8;
-  --layerModal: 9;
+  --layerPopover: 7;
+  --layerTopBar: 8;
+  --layerUserMenu: 9;
+  --layerModal: 10;
 
   --shadowCard: 0 0.25em 0.25em 0 rgba(210, 210, 210, 0.5);
   --focusOutlineShadow: 0px 0 0 1px var(--blue-60),

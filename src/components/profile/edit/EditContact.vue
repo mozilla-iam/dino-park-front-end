@@ -5,7 +5,7 @@
     formName="Edit contact information"
   >
     <header class="profile__section-header" ref="header" tabindex="-1">
-      <h2>Contact</h2>
+      <h2>{{ fluent('profile_contact') }}</h2>
     </header>
     <div class="edit-contact">
       <div class="edit-contact__header">
@@ -17,19 +17,21 @@
             fluent('profile_email_primary')
           }}</label>
           <Tooltip
-            v-if="scope.isStaff"
             :buttonText="fluent('profile_email_primary', 'tooltip-open')"
             :alternateButtonText="
               fluent('profile_email_primary', 'tooltip-close')
             "
           >
             <Fluent
+              v-if="scope.isStaff"
               id="profile_email_primary"
-              attr="tooltip"
+              attr="tooltip-staff"
               :tags="{
                 email: { tag: 'a', href: globalLinks.hrEmail },
               }"
-          /></Tooltip>
+            />
+            <Fluent v-else id="profile_email_primary" attr="tooltip" />
+          </Tooltip>
         </div>
         <input
           type="email"
