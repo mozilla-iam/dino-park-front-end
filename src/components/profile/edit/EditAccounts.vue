@@ -22,7 +22,10 @@
       :key="index"
       class="edit-contact__item"
     >
-      <Button class="button--icon-only" v-on:click="() => deleteUri(index)">
+      <Button
+        class="button--icon-only button--x"
+        v-on:click="() => deleteUri(index)"
+      >
         <Icon id="x" :width="17" :height="17"></Icon>
         <span class="visually-hidden">Remove Account</span>
       </Button>
