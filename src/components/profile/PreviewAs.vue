@@ -107,6 +107,7 @@ export default {
 .preview-as__button {
   background-color: var(--gray-30);
   color: var(--black);
+  font-size: inherit;
 }
 .preview-as__button:hover {
   background-color: var(--gray-30);

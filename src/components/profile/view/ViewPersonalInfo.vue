@@ -1,5 +1,12 @@
 <template>
-  <div class="profile__intro">
+  <div v-if="skeleton" class="profile__intro">
+    <div class="profile__intro-photo">
+      <div class="profile__headshot">
+        <UserPicture :avatar="{ picture: 'empty:' }" :size="264"></UserPicture>
+      </div>
+    </div>
+  </div>
+  <div v-else class="profile__intro">
     <EditButton
       v-if="userOnOwnProfile && editable"
       section="personal info"
@@ -124,6 +131,7 @@ export default {
     userOnOwnProfile: Boolean,
     editable: Boolean,
     accessInformation: Object,
+    skeleton: Boolean,
   },
   components: {
     ContactMe,
@@ -142,6 +150,25 @@ export default {
     currentUser() {
       return this.$store.state.user;
     },
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.nextSkeletonHeight = getComputedStyle(this.$el).getPropertyValue(
+        'height',
+      );
+    });
+  },
+  updated() {
+    this.$nextTick(() => {
+      if (this.skeleton) {
+        this.$el.style.height = this.nextSkeletonHeight;
+      } else {
+        this.$el.style.height = null;
+        this.nextSkeletonHeight = getComputedStyle(this.$el).getPropertyValue(
+          'height',
+        );
+      }
+    });
   },
 };
 </script>

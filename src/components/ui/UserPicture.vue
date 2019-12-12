@@ -114,9 +114,10 @@ export default {
 <style>
 .user-picture {
   position: relative;
+  border-radius: var(--imageRadius);
+  background-color: #f0f0f0; /* same as identicon background color */
 }
 .user-picture img {
-  border-radius: var(--imageRadius);
   max-height: 100%;
 }
 @supports (object-fit: cover) {
