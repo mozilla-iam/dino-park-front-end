@@ -2,7 +2,9 @@ import Fetcher from '@/assets/js/fetcher';
 import accessGroupData from '@/accessgroupdata.json';
 import accessGroupMembers from '@/accessgroupmembers.json';
 import accessGroupCurators from '@/accessgroupcurators.json';
+import accessGroupAllMembers from '@/accessgroupallmembers.json';
 import accessGroupMemberInvitations from '@/accessgroupmemberinvitations.json';
+import accessGroupTermsOfService from '@/accessgrouptermsofservice.json';
 
 export default class AccessGroups {
   constructor() {
@@ -38,6 +40,12 @@ export default class AccessGroups {
       const { members } = accessGroupMembers;
       const { curators } = accessGroupCurators;
       res({ members, curators });
+    }); //this.fetcher.fetch('');
+  }
+
+  async getAllMembersV2(groupName) {
+    return new Promise((res, rej) => {
+      res(accessGroupAllMembers);
     }); //this.fetcher.fetch('');
   }
 
@@ -97,30 +105,33 @@ export default class AccessGroups {
   }
 
   async removeAccessGroupCurators(groupName, curators) {
-    // TODO: Since we don't add curators in a batch, this will have to be several requests
     return new Promise((res, rej) => {
       res('curators have been removed');
     }); //this.fetcher.fetch('');
   }
 
   async addAccessGroupMembers(groupName, curators) {
-    // TODO: Since we don't add curators in a batch, this will have to be several requests
     return new Promise((res, rej) => {
       res('members have been added');
     }); //this.fetcher.fetch('');
   }
 
   async removeAccessGroupMembers(groupName, curators) {
-    // TODO: Since we don't add curators in a batch, this will have to be several requests
     return new Promise((res, rej) => {
       res('members have been removed');
     }); //this.fetcher.fetch('');
   }
 
   async updateAccessGroupExpiration(groupName, expiration) {
-    // TODO: Since we don't add curators in a batch, this will have to be several requests
     return new Promise((res, rej) => {
       res('Expiration has been updated');
+    }); //this.fetcher.fetch('');
+  }
+
+  async getAccessGroupTOS(groupName) {
+    return new Promise((res, rej) => {
+      const { content } = accessGroupTermsOfService;
+      res(content);
     }); //this.fetcher.fetch('');
   }
 }

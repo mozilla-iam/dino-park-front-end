@@ -2,29 +2,31 @@ import { client } from '@/server.js';
 import { DISPLAY_PROFILE } from '@/queries/profile';
 import { ProfileViewModel } from '@/view_models/ProfileViewModel.js';
 
-export default {
-  namespaced: true,
-  state: {
-    data: null,
+export const profileState = {
+  profile: null,
+};
+export const profileActions = {
+  async fetchProfile({ commit, dispatch }) {
+    const { data } = await client.query({
+      query: DISPLAY_PROFILE,
+      variables: { username: null },
+    });
+    dispatch('scopeV2/set', data.profile, { root: true });
+    commit('setProfile', data.profile);
   },
-  actions: {
-    async fetch({ commit, dispatch }) {
-      const { data } = await client.query({
-        query: DISPLAY_PROFILE,
-        variables: { username: null },
-      });
-      dispatch('scopeV2/set', data.profile, { root: true });
-      commit('set', data.profile);
-    },
+};
+export const profileMutations = {
+  setProfile(state, user) {
+    try {
+      state.profile = new ProfileViewModel(user);
+    } catch (e) {
+      state.error = e.message;
+      throw new Error(e.message);
+    }
   },
-  mutations: {
-    set(state, user) {
-      state.data = new ProfileViewModel(user);
-    },
-  },
-  getters: {
-    get: state => {
-      return state.data;
-    },
+};
+export const profileGetters = {
+  getProfile: state => {
+    return state.profile;
   },
 };

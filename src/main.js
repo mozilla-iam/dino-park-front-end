@@ -56,12 +56,29 @@ store.dispatch('fetchUser').then(function() {
 });
 
 // TODO: After using these for testing, replace the old actions with these
-store.dispatch('userV2/profile/fetch').then(function() {
+store.dispatch('userV2/fetchProfile').then(function() {
   console.log('namespaced profile: ', store.state.userV2.profile);
+  store.dispatch('userV2/fetchInvitations').then(function() {
+    console.log('namespaced invitations: ', store.state.userV2);
+  });
 });
 
-store.dispatch('userV2/invitations/fetch').then(function() {
-  console.log('namespaced invitations: ', store.state.userV2.invitations);
+store.dispatch('accessGroupV2/fetchGroup', 'dinopark-test').then(function() {
+  console.log('namespaced accessGroup group: ', store.state.accessGroupV2);
+  store.dispatch('accessGroupV2/fetchInvitations').then(function() {
+    console.log(
+      'accessGroup invitiation: ',
+      store.state.accessGroupV2.invitations
+    );
+  });
+  store
+    .dispatch('accessGroupV2/fetchMembers', 'dinopark-test')
+    .then(function() {
+      console.log('accessGroup members: ', store.state.accessGroupV2.members);
+    });
+  store.dispatch('accessGroupV2/fetchTerms').then(function() {
+    console.log('accessGroup terms: ', store.state.accessGroupV2.terms);
+  });
 });
 
 // eslint-disable-next-line

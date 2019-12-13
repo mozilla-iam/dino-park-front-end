@@ -14,6 +14,7 @@ import {
 import AccessGroups from '@/assets/js/access-groups';
 import user from './user.store.js';
 import scope from './scope.store.js';
+import accessGroup from './access-group.store.js';
 
 const accessGroupsService = new AccessGroups();
 Vue.use(Vuex);
@@ -21,6 +22,7 @@ export default new Vuex.Store({
   modules: {
     userV2: user,
     scopeV2: scope,
+    accessGroupV2: accessGroup,
   },
   state: {
     user: null,
