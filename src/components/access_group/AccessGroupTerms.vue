@@ -95,7 +95,7 @@ export default {
   computed: {
     groupInvitation() {
       return this.$store.getters.getInvitationByName(
-        this.$store.state.accessGroup.group.name
+        this.$store.getters.getAccessGroup.name
       );
     },
     termsContent() {

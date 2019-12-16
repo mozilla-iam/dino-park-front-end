@@ -138,6 +138,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import TextInput from '@/components/ui/TextInput.vue';
 import TextArea from '@/components/ui/TextArea.vue';
 import Button from '@/components/ui/Button.vue';
@@ -158,13 +159,14 @@ export default {
   props: [],
   mounted() {},
   data() {
+    const accessGroup = this.$store.getters['accessGroupV2/getGroup'];
     return {
-      groupDescriptionData: this.$store.state.accessGroup.group.description,
+      groupDescriptionData: accessGroup.description,
       groupDescriptionDirty: false,
       groupTermsData: this.$store.state.groupTOS,
-      groupTermsRequiredData: this.$store.state.accessGroup.group.terms,
+      groupTermsRequiredData: accessGroup.terms,
       groupTermsDirty: false,
-      groupTypeData: this.$store.state.accessGroup.group.type,
+      groupTypeData: accessGroup.type,
       groupTypeDirty: false,
       closeGroupConfirmed: false,
     };
@@ -224,7 +226,7 @@ export default {
       }
     },
     handleCloseGroupClicked() {
-      const groupName = this.$store.state.accessGroup.group.name;
+      const groupName = this.accessGroup.name;
       this.$store.dispatch('closeAccessGroup').then(() => {
         this.$root.$emit('toast', {
           content: `Access group ${groupName} has been closed`,
@@ -236,8 +238,11 @@ export default {
     },
   },
   computed: {
+    ...mapGetters({
+      accessGroup: 'accessGroupV2/getGroup',
+    }),
     groupName() {
-      return this.$store.state.accessGroup.group.name;
+      return this.accessGroup.name;
     },
   },
 };

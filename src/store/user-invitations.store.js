@@ -83,7 +83,12 @@ export const userInvitationsMutations = {
 };
 
 export const userInvitationsGetters = {
-  getInvitations: state => {
-    return state.invitations;
-  },
+  getInvitations: ({ invitations }) => invitations,
+  getActiveInvitations: ({ invitations }) =>
+    invitations.filter(invitation => {
+      return (
+        invitation.state !== INVITATION_STATE.ACCEPTED &&
+        invitation.state !== INVITATION_STATE.REJECTED
+      );
+    }),
 };

@@ -1,7 +1,9 @@
 <template>
   <div class="membership-management-container">
     <p class="primary-data-row">{{ membersCountText }}</p>
-    <a class="primary-data-row" v-if="model.group.terms" :href="tosUrl">Group Terms</a>
+    <a class="primary-data-row" v-if="group.terms" :href="tosUrl"
+      >Group Terms</a
+    >
   </div>
 </template>
 
@@ -9,6 +11,7 @@
 import Icon from '@/components/ui/Icon.vue';
 import LinksMixin from '@/components/_mixins/LinksMixin.vue';
 import UserPicture from '@/components/ui/UserPicture.vue';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'AccessGroupDetails',
@@ -22,20 +25,19 @@ export default {
     },
   },
   computed: {
+    ...mapGetters({
+      group: 'accessGroupV2/getGroup',
+      memberCount: 'accessGroupV2/getMemberCount',
+    }),
     membersCountText() {
       let fullText = '';
-      if (this.model.member_count === 1) {
+      if (this.memberCount === 1) {
         fullText += '1 member';
       } else {
-        fullText += `${this.model.member_count} members`;
+        fullText += `${this.memberCount} members`;
       }
       return fullText;
     },
-  },
-  data() {
-    return {
-      model: this.$store.state.accessGroup,
-    };
   },
 };
 </script>

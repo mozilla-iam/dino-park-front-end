@@ -26,7 +26,7 @@ export default {
         return false;
       }
       const { requires_tos } = this.$store.getters.getInvitationByName(
-        this.$store.state.accessGroup.group.name
+        this.$store.getters.getAccessGroup.name
       );
       return this.$route.name === ACCESS_GROUP_TOS_PAGE && requires_tos;
     },

@@ -134,4 +134,16 @@ export default class AccessGroups {
       res(content);
     }); //this.fetcher.fetch('');
   }
+
+  async updateInviteText(text) {
+    return new Promise((res, rej) => {
+      res('text updated');
+    }); //this.fetcher.fetch('');
+  }
+
+  async resendInvitation(text) {
+    return new Promise((res, rej) => {
+      res('invitation resent');
+    }); //this.fetcher.fetch('');
+  }
 }

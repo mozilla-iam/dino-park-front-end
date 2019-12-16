@@ -49,6 +49,7 @@ import Icon from '@/components/ui/Icon.vue';
 import Tooltip from '@/components/ui/Tooltip.vue';
 import LinksMixin from '@/components/_mixins/LinksMixin.vue';
 import { parseMarkdown } from '@/assets/js/component-utils';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'AccessGroupDescription',
@@ -72,22 +73,25 @@ export default {
   },
 
   computed: {
+    ...mapGetters({
+      accessGroup: 'accessGroupV2/getGroup',
+      memberCount: 'accessGroupV2/memberCount',
+    }),
     membersCountText() {
       let fullText = '';
-      if (this.model.member_count === 1) {
+      if (this.memberCount === 1) {
         fullText += '1 member';
       } else {
-        fullText += `${this.model.member_count} members`;
+        fullText += `${this.memberCount} members`;
       }
       return fullText;
     },
     descriptionDisplay() {
-      return parseMarkdown(this.model.group.description);
+      return parseMarkdown(this.accessGroup.description);
     },
   },
   data() {
     return {
-      model: this.$store.state.accessGroup,
       section: 'information',
     };
   },

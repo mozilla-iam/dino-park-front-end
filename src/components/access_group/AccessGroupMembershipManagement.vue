@@ -48,6 +48,7 @@
 <script>
 import Icon from '@/components/ui/Icon.vue';
 import Button from '@/components/ui/Button.vue';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'AccessGroupMembershipManagement',
@@ -56,20 +57,24 @@ export default {
     title: String,
   },
   computed: {
+    ...mapGetters({
+      invitationCount: 'accessGroupV2/getInvitationCount',
+      renewalCount: 'accessGroupV2/getRenewalCount',
+    }),
     totalPendingInvitations() {
-      return this.$store.state.accessGroup.invitation_count;
+      return this.invitationCount;
     },
     pendingInvitationsText() {
-      if (this.$store.state.accessGroup.invitation_count > 1) {
+      if (this.invitationCount > 1) {
         return 'pending invitations';
       }
       return 'pending invitation';
     },
     totalPendingRenewals() {
-      return this.$store.state.accessGroup.renewal_count;
+      return this.renewalCount;
     },
     pendingRenewalsText() {
-      if (this.$store.state.accessGroup.renewal_count.length > 1) {
+      if (this.renewalCount > 1) {
         return 'pending renewals';
       }
       return 'pending renewal';

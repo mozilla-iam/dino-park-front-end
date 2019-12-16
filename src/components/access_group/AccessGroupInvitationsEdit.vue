@@ -41,7 +41,7 @@
           :disabled="!newInvitesDirty"
           class="button--secondary button--action row-primary-action"
           @click="handleAddNewInvitesClicked()"
-          >Update curators</Button
+          >Invite</Button
         >
       </template>
     </AccessGroupEditPanel>
@@ -50,11 +50,12 @@
         <div class="members-expiration-container">
           <div class="content-area__row">
             <div class="radio-control">
-              <input type="checkbox" checked="true" />Custom invitation text
+              <input type="checkbox" v-model="emailInviteTextEnabled" />Custom
+              invitation text
             </div>
           </div>
         </div>
-        <div class="content-area__row multi-line">
+        <div class="content-area__row multi-line" v-if="emailInviteTextEnabled">
           <label class="content-area__label"
             >Please enter any additional text for the invitation email</label
           >
@@ -68,9 +69,10 @@
       </template>
       <template v-slot:footer>
         <Button
-          disabled="disabled"
+          :disabled="!emailInviteTextDirty"
+          @click="handleUpdateInviteTextClicked"
           class="button--secondary button--action row-primary-action"
-          >Update expiration</Button
+          >Update invite text</Button
         >
       </template>
     </AccessGroupEditPanel>
@@ -104,20 +106,40 @@ export default {
   props: [],
   mounted() {},
   data() {
+    const invitationConfig = this.$store.getters[
+      'accessGroupV2/getInvitationConfig'
+    ];
     return {
       invitationList: this.$store.getters.getAccessGroupMemberInvitations,
       newInvites: [],
       newInvitesDirty: false,
-      emailInviteText: '',
+      emailInviteTextEnabled: invitationConfig !== null,
+      emailInviteText: invitationConfig,
+      emailInviteTextDirty: false,
     };
+  },
+  watch: {
+    newInvites(value) {
+      if (value.length > 0) {
+        this.newInvitesDirty = true;
+      }
+    },
+    emailInviteTextEnabled(value) {
+      this.emailInviteTextDirty = true;
+    },
+    emailInviteText(value) {
+      this.emailInviteTextDirty = true;
+    },
   },
   methods: {
     handleResendClicked(invitation) {
-      this.$store.dispatch('resendInvite', invitation).then(result => {
-        this.$root.$emit('toast', {
-          content: 'Invite email resent',
+      this.$store
+        .dispatch('accessGroupV2/resendInvitation', invitation)
+        .then(result => {
+          this.$root.$emit('toast', {
+            content: 'Invite email resent',
+          });
         });
-      });
     },
     handleRemoveClicked(idx) {},
     getTagLabel(curator) {
@@ -137,13 +159,23 @@ export default {
     },
     handleAddNewInvitesClicked() {
       this.$store
-        .dispatch('addAccessGroupMembers', this.newInvites)
+        .dispatch('accessGroupV2/addMembers', this.newInvites)
         .then(result => {
-          this.newInvites = false;
           this.$root.$emit('toast', {
             content: 'Members successfully invited',
           });
           this.newInvites = [];
+          this.newInvitesDirty = false;
+        });
+    },
+    handleUpdateInviteTextClicked() {
+      this.$store
+        .dispatch('accessGroupV2/updateInviteText', this.newInvites)
+        .then(result => {
+          this.$root.$emit('toast', {
+            content: 'Invitation text successfully updated',
+          });
+          this.emailInviteTextDirty = false;
         });
     },
   },

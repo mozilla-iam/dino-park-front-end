@@ -4,14 +4,18 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 
 export default {
   name: 'AccessGroup',
   components: { LoadingSpinner },
   computed: {
+    ...mapGetters({
+      accessGroup: 'accessGroupV2/getGroup',
+    }),
     showAccessGroup() {
-      return this.$store.state.accessGroup;
+      return this.accessGroup;
     },
   },
   data() {

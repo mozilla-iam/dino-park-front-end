@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     handleLeaveClick() {
-      const groupName = this.$store.state.accessGroup.group.name;
+      const groupName = this.$store.getters.getAccessGroup.name;
       this.$store.dispatch('leaveGroup').then(() => {
         this.$root.$emit('toast', {
           content: `You have left the ${groupName} group`,

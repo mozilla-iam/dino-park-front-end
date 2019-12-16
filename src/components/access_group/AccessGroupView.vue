@@ -63,12 +63,6 @@ export default {
       }
       return null;
     },
-    curatorsCount() {
-      return this.$store.state.accessGroup.curators.length;
-    },
-    metaAreaVisible() {
-      return this.$store.getters.getActiveInvitations.length > 0;
-    },
   },
 };
 </script>

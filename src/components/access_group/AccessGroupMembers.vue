@@ -57,7 +57,8 @@
     </template>
     <template v-else>
       <p class="members-container__empty">
-        There are no members in this group.<br />Why not
+        There are no members in this group.
+        <br />Why not
         <RouterLink
           :to="{
             name: 'Edit Access Group',
@@ -133,7 +134,7 @@ export default {
     },
   },
   data() {
-    const fullMemberList = this.$store.getters.getAllMembers;
+    const fullMemberList = this.$store.getters['accessGroupV2/getMembers'];
     return {
       search: '',
       filter: '',

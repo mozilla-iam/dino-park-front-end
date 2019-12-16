@@ -516,6 +516,9 @@ export default new Vuex.Store({
     },
   },
   getters: {
+    getAccessGroup: rootGetters => {
+      return rootGetters['accessGroupV2/group'];
+    },
     getInvitationByName: state => groupName => {
       console.log('getting group name: ', groupName);
       const options = state.userInvitations.filter(
@@ -536,9 +539,6 @@ export default new Vuex.Store({
     },
     getAccessGroupMemberInvitations: state => {
       return state.accessGroupMemberInvitations;
-    },
-    getAllMembers: state => {
-      return state.accessGroup.curators.concat(state.accessGroup.members);
     },
   },
 });

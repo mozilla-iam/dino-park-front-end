@@ -57,46 +57,34 @@ store.dispatch('fetchUser').then(function() {
 
 // TODO: After using these for testing, replace the old actions with these
 store.dispatch('userV2/fetchProfile').then(function() {
-  console.log('namespaced profile: ', store.state.userV2.profile);
-  store.dispatch('userV2/fetchInvitations').then(function() {
-    console.log('namespaced invitations: ', store.state.userV2);
-  });
+  store.dispatch('userV2/fetchInvitations').then(function() {});
 });
 
 store.dispatch('accessGroupV2/fetchGroup', 'dinopark-test').then(function() {
-  console.log('namespaced accessGroup group: ', store.state.accessGroupV2);
-  store.dispatch('accessGroupV2/fetchInvitations').then(function() {
-    console.log(
-      'accessGroup invitiation: ',
-      store.state.accessGroupV2.invitations
-    );
-  });
+  store.dispatch('accessGroupV2/fetchInvitations').then(function() {});
   store
     .dispatch('accessGroupV2/fetchMembers', 'dinopark-test')
-    .then(function() {
-      console.log('accessGroup members: ', store.state.accessGroupV2.members);
-    });
-  store.dispatch('accessGroupV2/fetchTerms').then(function() {
-    console.log('accessGroup terms: ', store.state.accessGroupV2.terms);
-  });
+    .then(function() {});
+  store.dispatch('accessGroupV2/fetchTerms').then(function() {});
 });
 
 // eslint-disable-next-line
-store.dispatch('fetchGroupInvitations').then(function(data) {
-  console.log('Found invitations: ', data);
-});
+store.dispatch('fetchGroupInvitations').then(function(data) {});
 
 router.beforeEach((to, from, next) => {
   const promises = [];
   const resolvers = [];
   if (to.meta.key === 'access-group') {
     // eslint-disable-next-line
+    promises.push(
+      () => store.dispatch('accessGroupV2/fetchGroup', to.params.groupname)
+      // store.dispatch('fetchAccessGroup', to.params.groupname)
+    );
     promises.push(() =>
       store.dispatch('fetchAccessGroup', to.params.groupname)
     );
-    resolvers.push(data => {
-      console.log('Fetched group: ', data);
-    });
+    resolvers.push(data => {});
+    resolvers.push(data => {});
   }
   if (to.meta.key === 'access-group' && to.name !== ACCESS_GROUP_TOS_PAGE) {
     // eslint-disable-next-line
@@ -104,9 +92,7 @@ router.beforeEach((to, from, next) => {
       store.dispatch('fetchAllAccessGroupMembers', to.params.groupname)
     );
 
-    resolvers.push(data => {
-      console.log('Fetched group members: ', data);
-    });
+    resolvers.push(data => {});
   }
   if (to.name === ACCESS_GROUP_TOS_PAGE || to.name === ACCESS_GROUP_EDIT_PAGE) {
     promises.push(() => store.dispatch('fetchAccessGroupTOS'));
@@ -116,9 +102,7 @@ router.beforeEach((to, from, next) => {
   }
   if (to.name === ACCESS_GROUP_EDIT_PAGE) {
     promises.push(() => store.dispatch('fetchAccessGroupInvitations'));
-    resolvers.push(data => {
-      console.log('Fetched invitations: ', data);
-    });
+    resolvers.push(data => {});
   }
   resolvePromisesSerially(promises, resolvers)
     .then(() => {

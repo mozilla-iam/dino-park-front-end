@@ -123,6 +123,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import TextInput from '@/components/ui/TextInput.vue';
 import TextArea from '@/components/ui/TextArea.vue';
 import Button from '@/components/ui/Button.vue';
@@ -155,36 +156,42 @@ export default {
   watch: {
     curatorsList(value) {
       this.curatorsListDirty =
-        JSON.stringify(value) ===
-        JSON.stringify(this.$store.state.accessGroup.curators);
+        JSON.stringify(value) === JSON.stringify(this.accessGroupCurators);
     },
     groupExpiration(value) {
-      if (value !== this.$store.state.accessGroup.expiration) {
+      if (value !== this.accessGroupExpiration) {
         this.groupExpirationDirty = true;
       }
     },
     membershipCanExpire(value) {
       if (
-        (value && this.$store.state.accessGroup.expiration === null) ||
-        (!value && this.$store.state.accessGroup.expiration !== null)
+        (value && this.accessGroupExpiration === null) ||
+        (!value && this.accessGroupExpiration !== null)
       ) {
         this.groupExpirationDirty = true;
       }
     },
   },
   data() {
+    const accessGroupExpiration = this.$store.getters[
+      'accessGroupV2/getExpiration'
+    ];
+    const accessGroupCurators = this.$store.getters[
+      'accessGroupV2/getCurators'
+    ];
+    const accessGroupMembers = this.$store.getters['accessGroupV2/getMembers'];
     return {
-      groupExpiration: this.$store.state.accessGroup.expiration,
+      groupExpiration: accessGroupExpiration,
       groupData: '',
       groupDescriptionData: '',
       groupTermsData: '',
-      curatorsList: this.$store.state.accessGroup.curators,
+      curatorsList: accessGroupCurators,
       addedCurators: [],
       removedCurators: [],
       curatorsListDirty: false,
-      membershipCanExpire: this.$store.state.accessGroup.expiration !== null,
+      membershipCanExpire: accessGroupExpiration !== null,
       groupExpirationDirty: false,
-      allMembersList: this.$store.getters.getAllMembers.map(member => {
+      allMembersList: accessGroupMembers.map(member => {
         return {
           ...member,
           pendingRemoval: false,
@@ -194,7 +201,7 @@ export default {
   },
   methods: {
     refreshMembersList() {
-      this.allMembersList = this.$store.getters.getAllMembers.map(member => {
+      this.allMembersList = this.allMembers.map(member => {
         return {
           ...member,
           pendingRemoval: false,
@@ -281,7 +288,12 @@ export default {
         });
     },
   },
-  computed: {},
+  computed: mapGetters({
+    group: 'accessGroupV2/getGroup',
+    accessGroupCurators: 'accessGroupV2/members/getCurators',
+    accessGroupExpiration: 'accessGroupV2/getExpiration',
+    allMembers: 'accessGroupV2/getMembers',
+  }),
 };
 </script>
 

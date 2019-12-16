@@ -90,7 +90,7 @@ export const membersMutations = {
   },
 };
 export const membersGetters = {
-  getMembers: state => {
-    return state.members;
-  },
+  getMembers: ({ members }) => members,
+
+  getCurators: ({ members }) => members.filter(member => member.isCurator()),
 };

@@ -134,15 +134,15 @@ export class DisplayMemberViewModel {
   }
 
   isAdmin() {
-    return this.role === 'Admin';
+    return this.role === DISPLAY_MEMBER_ROLES[MEMBER_IDEX.Admin];
   }
 
   isCurator() {
-    return this.role === 'Curator';
+    return this.role === DISPLAY_MEMBER_ROLES[MEMBER_IDEX.Curator];
   }
 
   isMember() {
-    return this.role === 'Member';
+    return this.role === DISPLAY_MEMBER_ROLES[MEMBER_IDEX.Member];
   }
 }
 export const TYPE_INDEX = {

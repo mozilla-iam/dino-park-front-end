@@ -110,5 +110,9 @@
   },
   "member_count": 50,
   "invitation_count": 2,
-  "renewal_count": 3
+  "renewal_count": 3,
+  "expiration": 30,
+  "invitation": {
+    "content": ""
+  }
 }

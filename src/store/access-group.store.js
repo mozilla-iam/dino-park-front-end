@@ -30,6 +30,9 @@ export default {
     group: null,
     memberCount: 0,
     invitationCount: 0,
+    renewalCount: 0,
+    expiration: null,
+    invitationConfig: null,
   },
   actions: {
     ...accessGroupInvitationsActions,
@@ -44,6 +47,24 @@ export default {
         throw new Error(e.message);
       }
     },
+    async updateInviteText(state, text) {
+      try {
+        const data = await accessGroupsService.updateInviteText(text);
+        return data;
+      } catch (e) {
+        state.error = e.message;
+        throw new Error(e.message);
+      }
+    },
+    async resendInvitation(state, invitation) {
+      try {
+        const result = await accessGroupsService.resendInvitation(invitation);
+        return result;
+      } catch (e) {
+        state.error = e.message;
+        throw new Error(e.message);
+      }
+    },
   },
   mutations: {
     ...accessGroupInvitationsMutations,
@@ -54,6 +75,9 @@ export default {
         state.group = new GroupViewModel(accessGroup.group);
         state.memberCount = accessGroup.member_count;
         state.invitationCount = accessGroup.invitation_count;
+        state.renewalCount = accessGroup.renewal_count;
+        state.expiration = accessGroup.expiration;
+        state.invitationConfig = accessGroup.invitation;
       } catch (e) {
         state.error = e.message;
         throw new Error(e.message);
@@ -64,8 +88,12 @@ export default {
     ...accessGroupInvitationsGetters,
     ...membersGetters,
     ...termsGetters,
-    getGroup: state => {
-      return state.data;
-    },
+    getGroup: ({ group }) => group,
+    getMemberCount: ({ memberCount }) => memberCount,
+    getInvitationCount: ({ invitationCount }) => invitationCount,
+    getRenewalCount: ({ renewalCount }) => renewalCount,
+    getExpiration: ({ expiration }) => expiration,
+    getInvitationConfig: ({ invitationConfig }) =>
+      invitationConfig ? invitationConfig.content : null,
   },
 };

@@ -60,6 +60,11 @@ export default {
       autoCompleteList: [],
     };
   },
+  watch: {
+    value(value) {
+      this.tagsDisplay = value;
+    },
+  },
   methods: {
     onSelectorInput(el) {
       if (!this.currentInput) {
