@@ -516,9 +516,6 @@ export default new Vuex.Store({
     },
   },
   getters: {
-    getAccessGroup: rootGetters => {
-      return rootGetters['accessGroupV2/group'];
-    },
     getInvitationByName: state => groupName => {
       console.log('getting group name: ', groupName);
       const options = state.userInvitations.filter(

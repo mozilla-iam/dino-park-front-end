@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import Icon from '@/components/ui/Icon.vue';
 import Button from '@/components/ui/Button.vue';
 import { ACCESS_GROUP_LEAVE_CONFIRMATION_PAGE } from '@/router';
@@ -34,13 +35,16 @@ export default {
   props: {},
   components: { Icon, Button },
   computed: {
+    ...mapGetters({
+      accessGroup: 'accessGroupV2/getGroup',
+    }),
     showLeaveConfirmationNotification() {
       return this.$route.name === ACCESS_GROUP_LEAVE_CONFIRMATION_PAGE;
     },
   },
   methods: {
     handleLeaveClick() {
-      const groupName = this.$store.getters.getAccessGroup.name;
+      const groupName = this.accessGroup.name;
       this.$store.dispatch('leaveGroup').then(() => {
         this.$root.$emit('toast', {
           content: `You have left the ${groupName} group`,
@@ -55,11 +59,6 @@ export default {
         name: 'Access Group',
       });
     },
-  },
-  data() {
-    return {
-      mode: '',
-    };
   },
 };
 </script>

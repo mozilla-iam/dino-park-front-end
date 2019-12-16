@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import Icon from '@/components/ui/Icon.vue';
 import { ACCESS_GROUP_TOS_PAGE } from '@/router';
 
@@ -21,23 +22,21 @@ export default {
   props: {},
   components: { Icon },
   computed: {
+    ...mapGetters({
+      accessGroup: 'accessGroupV2/getGroup',
+    }),
     showTOSAcceptanceNotification() {
       if (!this.$route.query.accept) {
         return false;
       }
       const { requires_tos } = this.$store.getters.getInvitationByName(
-        this.$store.getters.getAccessGroup.name
+        this.accessGroup.name
       );
       return this.$route.name === ACCESS_GROUP_TOS_PAGE && requires_tos;
     },
     showInvitations() {
       return this.$route.name !== ACCESS_GROUP_TOS_PAGE;
     },
-  },
-  data() {
-    return {
-      mode: '',
-    };
   },
 };
 </script>

@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import Icon from '@/components/ui/Icon.vue';
 import Button from '@/components/ui/Button.vue';
 
@@ -93,10 +94,11 @@ export default {
     };
   },
   computed: {
+    ...mapGetters({
+      accessGroup: 'accessGroupV2/getGroup',
+    }),
     groupInvitation() {
-      return this.$store.getters.getInvitationByName(
-        this.$store.getters.getAccessGroup.name
-      );
+      return this.$store.getters.getInvitationByName(this.accessGroup.name);
     },
     termsContent() {
       return this.$store.state.groupTOS;
