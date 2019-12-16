@@ -11,14 +11,12 @@
         src="@/assets/images/laptop-phone-community.png"
         srcset="@/assets/images/laptop-phone-community@2x.png 2x"
       />
-      <h1>Welcome to the Mozilla People Directory</h1>
+      <h1>{{ fluent('home_welcome') }}</h1>
       <p v-if="scope.isStaff">
-        A secure place to quickly find your team members and easily discover new
-        ones.
+        {{ fluent('home_welcome', 'description-staff') }}
       </p>
       <p v-else>
-        A secure place to quickly find your fellow Mozillians and share
-        information about yourself!
+        {{ fluent('home_welcome', 'description') }}
       </p>
       <p>
         <RouterLink
@@ -28,7 +26,9 @@
           }"
           class="button"
         >
-          <span class="button-text">My profile</span>
+          <span class="button-text">{{
+            fluent('home_welcome', 'my-profile')
+          }}</span>
           <Icon id="chevron-right" :width="24" :height="24" />
         </RouterLink>
       </p>
@@ -74,38 +74,43 @@ export default {
       return this.$store.state.user.primaryUsername.value;
     },
     cards() {
-      const getLink = (url, text) => {
-        return `<a href="${url}" target="_blank" rel="noopener noreferrer">${text}</a>`;
-      };
+      const privacyLink =
+        this.scope.isStaff || this.scope.isNdaed
+          ? this.globalLinks.profilePrivacy
+          : this.globalLinks.profilePrivacyPublic;
+      const updatesLink =
+        this.scope.isStaff || this.scope.isNdaed
+          ? this.globalLinks.groupsAnnouncement
+          : this.globalLinks.ldapContributorsAnnouncement;
       return [
         {
           link: this.globalLinks.feedback,
           icon: 'irc',
-          headline: 'Your Feedback Matters',
-          description: `Let us know how we can make the Mozilla Directory even better.`,
+          headline: this.fluent('home_links_feedback'),
+          description: this.fluent('home_links_feedback', 'description'),
         },
         {
-          link: this.globalLinks.profilePrivacy,
+          link: privacyLink,
           icon: 'lock',
-          headline: 'Your Privacy is Protected',
-          description: this.scope.isStaff
-            ? `Your Staff profile data is only visible to Staff and NDA’d people by default. You can edit this via your profile privacy settings. Read our ${getLink(
-                this.globalLinks.profilePrivacy,
-                'Discourse post',
-              )} for details.`
-            : `You control how and with whom your data is being shared. Read our ${getLink(
-                this.globalLinks.profilePrivacy,
-                'Discourse post',
-              )} for further details.`,
+          headline: this.fluent('home_links_privacy'),
+          description: this.fluent({
+            id: 'home_links_privacy',
+            attr: this.scope.isStaff ? 'description-staff' : 'description',
+            tags: { discourse: { tag: 'a', href: privacyLink } },
+          }),
         },
         {
-          link: this.globalLinks.groupsAnnouncement,
+          link: updatesLink,
           icon: 'idcard',
-          headline: 'Recent Additions',
-          description: `LDAP and Mozillians.org access groups are now displayed under the <i>Access groups</i> section. Read more about this and all newly added functionality in our ${getLink(
-            this.globalLinks.groupsAnnouncement,
-            'Discourse post',
-          )}.`,
+          headline: this.fluent('home_links_updates'),
+          description: this.fluent({
+            id: 'home_links_updates',
+            attr:
+              this.scope.isStaff || this.scope.isNdaed
+                ? 'description-groups-announcement'
+                : 'description-ldap-contributor-announcement',
+            tags: { discourse: { tag: 'a', href: updatesLink } },
+          }),
         },
       ];
     },

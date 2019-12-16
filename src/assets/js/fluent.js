@@ -2,6 +2,8 @@ import { FluentBundle, FluentResource } from '@fluent/bundle';
 import insane from 'insane';
 import Strings from '@/locales/en-US/strings.ftl';
 
+const inlineTags = ['i'];
+
 class Fluent {
   constructor(locale = 'en-US') {
     const resource = new FluentResource(Strings);
@@ -44,7 +46,9 @@ class Fluent {
       message,
       {
         allowedAttributes,
-        allowedTags: Object.values(tags).map((t) => t.tag),
+        allowedTags: Object.values(tags)
+          .map((t) => t.tag)
+          .concat(inlineTags),
         allowedSchemes: ['http', 'https', 'mailto'],
         filter(token) {
           const name = token.attrs['data-l10n-name'];
@@ -55,6 +59,9 @@ class Fluent {
             Object.entries(tags[name]).forEach(([k, v]) => {
               token.attrs[k] = v;
             });
+            return true;
+          }
+          if (inlineTags.includes(token.tag)) {
             return true;
           }
           return false;
