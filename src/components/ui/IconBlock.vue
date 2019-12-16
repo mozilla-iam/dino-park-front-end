@@ -43,7 +43,6 @@ export default {
   display: flex; /* avoid breaking between columns */
   flex-direction: column;
   justify-content: center;
-  margin-bottom: 1em;
   padding-left: 1.5em;
   padding-top: 0.6em;
   padding-bottom: 0.6em;
