@@ -79,7 +79,7 @@ export default {
   box-shadow: 0 0.125em 0.25em 0.125em rgba(210, 210, 210, 0.5);
   text-align: left;
   padding-left: 0;
-  z-index: var(--layerThree);
+  z-index: var(--layerPopover);
   position: absolute;
   top: calc(100% + 0.5em);
   left: 50%;

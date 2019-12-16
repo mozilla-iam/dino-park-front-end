@@ -6,7 +6,14 @@
     formName="Edit accounts"
   >
     <header class="profile__section-header" ref="header" tabindex="-1">
-      <h2>Accounts</h2>
+      <div class="profile__section-header__title-info">
+        <h2>{{ fluent('profile_accounts') }}</h2>
+        <Tooltip
+          :buttonText="fluent('profile_accounts', 'tooltip-open')"
+          :alternateButtonText="fluent('profile_accounts', 'tooltip-close')"
+          >{{ fluent('profile_accounts', 'tooltip') }}</Tooltip
+        >
+      </div>
       <PrivacySetting
         class="privacy-select--large"
         label="Accounts privacy levels"
@@ -79,6 +86,7 @@ import PrivacySetting from '@/components/profile/PrivacySetting.vue';
 import Select from '@/components/ui/Select.vue';
 import { DISPLAY_LEVELS } from '@/assets/js/display-levels';
 import EditMutationWrapper from './EditMutationWrapper.vue';
+import Tooltip from '@/components/ui/Tooltip.vue';
 
 export default {
   name: 'EditAccounts',
@@ -99,6 +107,7 @@ export default {
     Icon,
     PrivacySetting,
     Select,
+    Tooltip,
   },
   methods: {
     formatAsKeyValues([k, v]) {

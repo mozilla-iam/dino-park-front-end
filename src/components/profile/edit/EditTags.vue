@@ -7,7 +7,14 @@
     class="add-tags"
   >
     <header class="profile__section-header" ref="header" tabindex="-1">
-      <h2>Tags</h2>
+      <div class="profile__section-header__title-info">
+        <h2>{{ fluent('profile_tags') }}</h2>
+        <Tooltip
+          :buttonText="fluent('profile_tags', 'tooltip-open')"
+          :alternateButtonText="fluent('profile_tags', 'tooltip-close')"
+          >{{ fluent('profile_tags', 'tooltip') }}</Tooltip
+        >
+      </div>
       <PrivacySetting
         class="privacy-select--large"
         label="Tags privacy level"
@@ -58,6 +65,7 @@ import PrivacySetting from '@/components/profile/PrivacySetting.vue';
 import Tag from '@/components/ui/Tag.vue';
 import { DISPLAY_LEVELS } from '@/assets/js/display-levels';
 import EditMutationWrapper from './EditMutationWrapper.vue';
+import Tooltip from '@/components/ui/Tooltip.vue';
 
 export default {
   name: 'EditTags',
@@ -75,6 +83,7 @@ export default {
     Icon,
     PrivacySetting,
     Tag,
+    Tooltip,
   },
   methods: {
     handleAddTag() {

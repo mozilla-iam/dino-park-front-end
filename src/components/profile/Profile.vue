@@ -66,7 +66,7 @@
 
     <ProfileSection
       section="identities"
-      title="Identities"
+      :title="fluent('profile_identities')"
       :userOnOwnProfile="userOnOwnProfile"
       :empty="!identitiesWrapper.anyIdentity()"
       message="No identities have been added yet."
@@ -86,7 +86,7 @@
 
     <ProfileSection
       section="contact"
-      title="Contact"
+      :title="fluent('profile_contact')"
       :userOnOwnProfile="userOnOwnProfile"
       :empty="!sections.contact"
       message="No contact details have been added yet."
@@ -114,7 +114,7 @@
 
     <ProfileSection
       section="accounts"
-      title="Accounts"
+      :title="fluent('profile_accounts')"
       :userOnOwnProfile="userOnOwnProfile"
       :empty="!sections.accounts"
       message="No accounts have been added yet."
@@ -137,7 +137,7 @@
 
     <ProfileSection
       section="languages"
-      title="Languages"
+      :title="fluent('profile_languages')"
       :userOnOwnProfile="userOnOwnProfile"
       :empty="!sections.languages"
       message="No languages have been added yet."
@@ -160,7 +160,7 @@
 
     <ProfileSection
       section="tags"
-      title="Tags"
+      :title="fluent('profile_tags')"
       :userOnOwnProfile="userOnOwnProfile"
       :empty="!sections.tags"
       message="No tags have been added yet."
@@ -183,7 +183,7 @@
 
     <ProfileSection
       section="access-groups"
-      title="Access Groups"
+      :title="fluent('profile_access-groups')"
       :userOnOwnProfile="userOnOwnProfile"
       :empty="
         Object.keys(accessInformation.mozilliansorg.values || {}).length ===
@@ -208,7 +208,7 @@
 
     <ProfileSection
       section="keys"
-      title="Keys"
+      :title="fluent('profile_keys')"
       :userOnOwnProfile="userOnOwnProfile"
       :empty="!sections.keys"
       message="No keys have been added yet."
@@ -512,6 +512,14 @@ export default {
     margin: 0;
     width: auto;
   }
+}
+
+.profile__section-header__title-info {
+  display: flex;
+  align-items: center;
+}
+.profile__section-header__title-info .tooltip {
+  margin-left: 1em;
 }
 
 .profile__anchor {

@@ -7,7 +7,7 @@
     formName="Edit access groups"
   >
     <header class="profile__section-header" ref="header" tabindex="-1">
-      <h2>Access Groups</h2>
+      <h2>{{ fluent('profile_access-groups') }}</h2>
     </header>
     <div class="edit-profile__access-groups">
       <template v-if="initialAccessInformation.ldap.values">

@@ -1,6 +1,6 @@
 ## Profile Page
 
--staff-not-editable = Staff information is not editable and is shared by default with all Mozilla Staff. Please contact <a data-l10n-name="email">our HR Team</a> to request a change to your information.
+-staff-not-editable = Staff information is not editable and is shared by default with all Mozilla Staff. Please contact <a data-l10n-name="email">our HR Team</a> to request any change.
 
 profile_username = Username
   .tooltip = Your username is publicly visible and included in your profile URL. Pro tip: Use the same username across systems for easy discovery (e.g. Slack, Discourse).
@@ -16,6 +16,7 @@ profile_official-job-title = Official Job Title
   .tooltip = This is your job title as provided by our HR Team (Workday). {-staff-not-editable}
 profile_fun-job-title = Tagline
   .tooltip = This field describes what you do in your own words.
+  .tooltip-contributor = {profile_fun-job-title.tooltip} Pro tip: you can be as specific as sharing your current job title/company or you can just describe what you work on and what you are passionate about.
 profile_location = Location
   .tooltip = This field allows you to enter your self-declared location.
 profile_office-location = Office Location
@@ -33,11 +34,40 @@ profile_team = Team
 profile_bio = Biography
   .tooltip = Tell us more about yourself! This field supports <a data-l10n-name="gfm">GitHub Markdown</a>.
 
+profile_identities = Identities
+  .tooltip-open = Open identities info
+  .tooltip-close = Close identities info
+  .tooltip = Here you can add your Github and Bugzilla identities. You will be asked to verify them. Once this is done, they will be displayed on your profile.
+
+profile_contact = Contact
 profile_email_primary = Primary
   .tooltip-open = Open primary email info
   .tooltip-close = Close primary email info
-  .tooltip = Your staff LDAP email is provided by our HR Team (Workday). {-staff-not-editable}
+  .tooltip = This field is not editable and it displays your login email (that we import from Auth0).
+  .tooltip-staff = Your staff LDAP email is provided by our HR Team (Workday). {-staff-not-editable}
 profile_email_secondary = Secondary
   .tooltip-open = Open secondary email info
   .tooltip-close = Close secondary email info
   .tooltip = You can use this section to add any other email you are using and want to share with others.
+
+profile_accounts = Accounts
+  .tooltip-open = Open accounts info
+  .tooltip-close = Close accounts info
+  .tooltip = Use this section to add any of your Slack, Zoom, Discourse or IRC external accounts. You can also choose to display any or all of them in your ‘Contact‘ section.
+
+profile_languages = Languages
+  .tooltip-open = Open languages info
+  .tooltip-close = Close languages info
+  .tooltip = The Mozilla Project spans over many countries and languages. Share the languages you speak to be found easily by other Mozillians.
+
+profile_tags = Tags
+  .tooltip-open = Open tags info
+  .tooltip-close = Close tags info
+  .tooltip = You can use this section to add any skills or interests you’d like to be found by other people.
+
+profile_access-groups = Access Groups
+
+profile_keys = Keys
+  .tooltip-open = Open keys info
+  .tooltip-close = Close keys info
+  .tooltip = In this section you can find  your PGP or SSH keys (if you have any) that we import from your LDAP account.

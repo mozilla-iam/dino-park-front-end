@@ -191,7 +191,12 @@
         <Tooltip
           buttonText="Open Tagline info"
           alternateButtonText="Close Tagline info"
-          >{{ fluent('profile_fun-job-title', 'tooltip') }}</Tooltip
+          >{{
+            fluent(
+              'profile_fun-job-title',
+              scope.isStaff ? 'tooltip' : 'tooltip-contributor',
+            )
+          }}</Tooltip
         >
       </div>
       <TextInput
