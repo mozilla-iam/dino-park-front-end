@@ -82,6 +82,14 @@ profile_tags = Tags
   .tooltip = You can use this section to add any skills or interests you’d like to be found by other people.
 
 profile_access-groups = Access Groups
+profile_access-groups_ldap = LDAP
+  .tooltip-open = Open LDAP info
+  .tooltip-close = Close LDAP info
+  .tooltip = Here you will find all the access groups that are associated to your LDAP account. They are not editable and private by default.
+profile_access-groups_mozillians = mozillians.org
+  .tooltip-open = Open mozillians.org info
+  .tooltip-close = Close mozillians.org info
+  .tooltip = We have imported from mozillians.org all of the access groups that you’re a member of. Currently they can only be managed in mozillians.org.
 
 profile_keys = Keys
   .tooltip-open = Open keys info

@@ -12,7 +12,14 @@
     <div class="edit-profile__access-groups">
       <template v-if="initialAccessInformation.ldap.values">
         <div class="edit-access-groups__header">
-          <h3>LDAP</h3>
+          <h3>{{ fluent('profile_access-groups_ldap') }}</h3>
+          <Tooltip
+            :buttonText="fluent('profile_access-groups_ldap', 'tooltip-open')"
+            :alternateButtonText="
+              fluent('profile_access-groups_ldap', 'tooltip-close')
+            "
+            >{{ fluent('profile_access-groups_ldap', 'tooltip') }}</Tooltip
+          >
           <PrivacySetting
             class="privacy-select--large"
             label="LDAP access groups privacy levels"
@@ -36,7 +43,16 @@
         <hr role="presentation" />
       </template>
       <div class="edit-access-groups__header">
-        <h3>mozillians.org</h3>
+        <h3>{{ fluent('profile_access-groups_mozillians') }}</h3>
+        <Tooltip
+          :buttonText="
+            fluent('profile_access-groups_mozillians', 'tooltip-open')
+          "
+          :alternateButtonText="
+            fluent('profile_access-groups_mozillians', 'tooltip-close')
+          "
+          >{{ fluent('profile_access-groups_mozillians', 'tooltip') }}</Tooltip
+        >
         <PrivacySetting
           class="privacy-select--large"
           label="Mozillians.org access groups privacy levels"
@@ -86,6 +102,7 @@ import IconBlock from '@/components/ui/IconBlock.vue';
 import IconBlockList from '@/components/ui/IconBlockList.vue';
 import PrivacySetting from '@/components/profile/PrivacySetting.vue';
 import { DISPLAY_LEVELS } from '@/assets/js/display-levels';
+import Tooltip from '@/components/ui/Tooltip.vue';
 
 export default {
   name: 'EditAccessGroups',
@@ -104,6 +121,7 @@ export default {
     IconBlock,
     IconBlockList,
     PrivacySetting,
+    Tooltip,
   },
   mounted() {
     this.$refs.header.focus();
@@ -149,12 +167,13 @@ export default {
 }
 .edit-access-groups__header {
   margin-top: 2em;
-}
-.edit-access-groups__header {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   justify-content: space-between;
+}
+.edit-access-groups__header .tooltip {
+  margin-left: 0.5em;
 }
 .edit-access-groups__header .privacy-select {
   margin-left: auto;
