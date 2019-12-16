@@ -72,16 +72,3 @@ export default {
   },
 };
 </script>
-
-<style>
-@media (min-width: 57.5em) {
-  .profile__external-accounts {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 2em;
-  }
-  .profile__external-accounts h3 {
-    margin-top: 0; /* because grid item margins don't collapse */
-  }
-}
-</style>
