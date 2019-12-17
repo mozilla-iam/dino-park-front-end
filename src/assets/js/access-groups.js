@@ -1,25 +1,51 @@
-import Fetcher from '@/assets/js/fetcher';
-import accessGroupData from '@/accessgroupdata.json';
+import {
+  GroupsApi,
+  MembersApi,
+  GroupInvitationsApi,
+  TermsApi,
+  SelfInvitationsApi,
+} from './access-groups-api.js';
 import accessGroupMembers from '@/accessgroupmembers.json';
 import accessGroupCurators from '@/accessgroupcurators.json';
-import accessGroupAllMembers from '@/accessgroupallmembers.json';
 import accessGroupMemberInvitations from '@/accessgroupmemberinvitations.json';
 import accessGroupTermsOfService from '@/accessgrouptermsofservice.json';
 
 export default class AccessGroups {
   constructor() {
-    this.fetcher = new Fetcher({ failoverOn: [302] });
+    this.groupsApi = new GroupsApi();
+    this.membersApi = new MembersApi();
+    this.groupInvitationsApi = new GroupInvitationsApi();
+    this.termsApi = new TermsApi();
+    this.selfInvitationsApi = new SelfInvitationsApi();
   }
 
-  async acceptInvitation(groupName) {
+  /**
+   * Access Group Methods
+   */
+  async getAccessGroup(groupName) {
     return new Promise((res, rej) => {
-      res('Accepted invitation');
+      this.groupsApi
+        .get(groupName)
+        .then(result => {
+          console.log('getAccessGroup result: ', result);
+          res(result);
+        })
+        .catch(error => {
+          console.log('found error: ', error);
+          rej(error);
+        });
+    });
+  }
+
+  async updateAccessGroupDetails(groupName, field, value) {
+    // TODO: set this up to handle any of the available fields to edit
+    return new Promise((res, rej) => {
+      res('access group updated');
     }); //this.fetcher.fetch('');
   }
-
-  async rejectInvitation(groupName, uuid) {
+  async updateAccessGroupExpiration(groupName, expiration) {
     return new Promise((res, rej) => {
-      res('Rejected invitation');
+      res('Expiration has been updated');
     }); //this.fetcher.fetch('');
   }
 
@@ -29,24 +55,33 @@ export default class AccessGroups {
     }); //this.fetcher.fetch('');
   }
 
-  async getAccessGroup(groupName) {
+  async createAccessGroup(form) {
     return new Promise((res, rej) => {
-      res(accessGroupData);
+      res('access group created');
     }); //this.fetcher.fetch('');
   }
+
+  async closeAccessGroup(groupName) {
+    return new Promise((res, rej) => {
+      res('access group closed');
+    }); //this.fetcher.fetch('');
+  }
+
+  /**
+   * Members Methods
+   */
 
   async getAllMembers(groupName) {
     return new Promise((res, rej) => {
-      const { members } = accessGroupMembers;
-      const { curators } = accessGroupCurators;
-      res({ members, curators });
-    }); //this.fetcher.fetch('');
-  }
-
-  async getAllMembersV2(groupName) {
-    return new Promise((res, rej) => {
-      res(accessGroupAllMembers);
-    }); //this.fetcher.fetch('');
+      this.membersApi
+        .get(groupName)
+        .then(result => {
+          res(result);
+        })
+        .catch(error => {
+          rej(error);
+        });
+    });
   }
 
   async deleteMember(groupName, uuid) {
@@ -61,40 +96,6 @@ export default class AccessGroups {
       const { members } = accessGroupMembers;
       const { curators } = accessGroupCurators;
       res('curator deleted');
-    }); //this.fetcher.fetch('');
-  }
-
-  async getAccessGroupMemberInvitations(groupName) {
-    return new Promise((res, rej) => {
-      const members = accessGroupMemberInvitations;
-      res(members);
-    }); //this.fetcher.fetch('');
-  }
-
-  async updateAccessGroupDetails(groupName, field, value) {
-    // TODO: set this up to handle any of the available fields to edit
-    return new Promise((res, rej) => {
-      res('access group updated');
-    }); //this.fetcher.fetch('');
-  }
-  async updateAccessGroupTOS(groupName, tos) {
-    return new Promise((res, rej) => {
-      res('terms of service updated');
-    }); //this.fetcher.fetch('');
-  }
-  async createAccessGroup(form) {
-    return new Promise((res, rej) => {
-      res('access group created');
-    }); //this.fetcher.fetch('');
-  }
-  async closeAccessGroup(groupName) {
-    return new Promise((res, rej) => {
-      res('access group closed');
-    }); //this.fetcher.fetch('');
-  }
-  async deleteAccessGroupTOS(groupName) {
-    return new Promise((res, rej) => {
-      res('access group tos removed');
     }); //this.fetcher.fetch('');
   }
 
@@ -123,17 +124,70 @@ export default class AccessGroups {
     }); //this.fetcher.fetch('');
   }
 
-  async updateAccessGroupExpiration(groupName, expiration) {
+  async getUserInvitations() {
     return new Promise((res, rej) => {
-      res('Expiration has been updated');
+      this.selfInvitationsApi
+        .get()
+        .then(result => {
+          res(result);
+        })
+        .catch(error => {
+          rej(error);
+        });
+    });
+  }
+
+  async acceptInvitation(groupName) {
+    return new Promise((res, rej) => {
+      res('Accepted invitation');
+    }); //this.fetcher.fetch('');
+  }
+
+  async rejectInvitation(groupName, uuid) {
+    return new Promise((res, rej) => {
+      res('Rejected invitation');
+    }); //this.fetcher.fetch('');
+  }
+
+  async getAccessGroupMemberInvitations(groupName) {
+    return new Promise((res, rej) => {
+      const members = accessGroupMemberInvitations;
+      this.groupInvitationsApi
+        .get(groupName)
+        .then(result => {
+          res(result);
+        })
+        .catch(error => {
+          rej(error);
+        });
+    });
+  }
+
+  async updateAccessGroupTOS(groupName, tos) {
+    return new Promise((res, rej) => {
+      res('terms of service updated');
+    }); //this.fetcher.fetch('');
+  }
+
+  async deleteAccessGroupTOS(groupName) {
+    return new Promise((res, rej) => {
+      res('access group tos removed');
     }); //this.fetcher.fetch('');
   }
 
   async getAccessGroupTOS(groupName) {
     return new Promise((res, rej) => {
       const { content } = accessGroupTermsOfService;
-      res(content);
-    }); //this.fetcher.fetch('');
+      this.termsApi
+        .get(groupName)
+        .then(result => {
+          console.log('found terms: ', result);
+          res(result);
+        })
+        .catch(error => {
+          rej(error);
+        });
+    });
   }
 
   async updateInviteText(text) {

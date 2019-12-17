@@ -181,7 +181,7 @@ export default {
     ];
     const accessGroupMembers = this.$store.getters['accessGroupV2/getMembers'];
     return {
-      groupExpiration: accessGroupExpiration,
+      groupExpiration: !accessGroupExpiration ? 0 : accessGroupExpiration,
       groupData: '',
       groupDescriptionData: '',
       groupTermsData: '',

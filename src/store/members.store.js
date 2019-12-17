@@ -9,7 +9,7 @@ export const membersActions = {
   async fetchMembers({ commit }, groupName) {
     try {
       // Change this later
-      const { members } = await accessGroupsService.getAllMembersV2(groupName);
+      const { members } = await accessGroupsService.getAllMembers(groupName);
       commit('setMembers', members);
       return members;
     } catch (e) {

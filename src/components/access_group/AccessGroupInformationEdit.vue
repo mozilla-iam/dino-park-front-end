@@ -33,12 +33,13 @@
     <AccessGroupEditPanel title="Group type">
       <template v-slot:content>
         <div class="content-area__row">
-          <div class="radio-control">
-            <input type="radio" value="reviewed" v-model="groupTypeData" />
-            Reviewed
-          </div>
-          <div class="radio-control">
-            <input type="radio" value="closed" v-model="groupTypeData" /> Closed
+          <div
+            class="radio-control"
+            v-for="(type, idx) in groupTypes"
+            :key="idx"
+          >
+            <input type="radio" :value="type" v-model="groupTypeData" />
+            {{ type }}
           </div>
         </div>
         <div class="content-area__row radio-control__description">
@@ -75,11 +76,7 @@
       <template v-slot:content>
         <div class="content-area__row">
           <div class="radio-control">
-            <input
-              type="checkbox"
-              checked="true"
-              v-model="groupTermsRequiredData"
-            />
+            <input type="checkbox" v-model="groupTermsRequiredData" />
             New members should accept terms
           </div>
         </div>
@@ -145,6 +142,7 @@ import Button from '@/components/ui/Button.vue';
 import Icon from '@/components/ui/Icon.vue';
 import AccessGroupEditPanel from '@/components/access_group/AccessGroupEditPanel.vue';
 import AccessGroupMarkdownGuide from '@/components/access_group/AccessGroupMarkdownGuide.vue';
+import { ACCESS_GROUP_TYPES } from '@/view_models/AccessGroupViewModel.js';
 
 export default {
   name: 'AccessGroupInformationEdit',
@@ -246,6 +244,9 @@ export default {
     }),
     groupName() {
       return this.accessGroup.name;
+    },
+    groupTypes() {
+      return ACCESS_GROUP_TYPES.filter(type => type !== 'Open');
     },
   },
 };

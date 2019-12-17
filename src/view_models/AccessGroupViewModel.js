@@ -122,11 +122,11 @@ export class DisplayMemberViewModel {
       this.email = data.email;
       this.isStaff = data.isStaff;
       this.since = !data.since ? '' : new Date(data.since).toLocaleDateString();
-      this.expiration = !data.expiration
+      this.expiration = !data.group_expiration
         ? ''
-        : new Date(data.expiration).toLocaleDateString();
+        : new Date(data.group_expiration).toLocaleDateString();
       this.role = DISPLAY_MEMBER_ROLES.includes(data.role) ? data.role : null;
-      this.added_by = new AbbDisplayMemberViewModel(data.added_by);
+      this.added_by = new AbbDisplayMemberViewModel(data.host);
     } catch (e) {
       this.error = e.message;
       console.error('Display Member error: ', e.message);
@@ -150,7 +150,7 @@ export const TYPE_INDEX = {
   reviewed: 1,
   open: 2,
 };
-export const ACCESS_GROUP_TYPES = ['closed', 'reviewed', 'open'];
+export const ACCESS_GROUP_TYPES = ['Reviewed', 'Closed', 'Open'];
 export class GroupViewModel {
   constructor(data) {
     this.id = '';
@@ -168,7 +168,7 @@ export class GroupViewModel {
     try {
       this.id = data.id;
       this.name = data.name;
-      this.type = ACCESS_GROUP_TYPES.includes(data.type) ? data.type : null;
+      this.type = ACCESS_GROUP_TYPES.includes(data.typ) ? data.typ : null;
       this.description = data.description;
       this.terms = data.terms;
     } catch (e) {
@@ -192,7 +192,6 @@ export class AccessGroupDetailsViewModel {
   }
 
   processData(data) {
-    // TODO: Begin processing access group data
     if (!data) {
       throw new Error('Invalid data format');
     }
@@ -201,8 +200,7 @@ export class AccessGroupDetailsViewModel {
       this.member_count = data.member_count;
       this.invitation_count = data.invitation_count;
       this.renewal_count = data.renewal_count;
-      // TODO: this should come from some place in the data
-      this.expiration = 30;
+      this.expiration = data.group_expiration;
     } catch (e) {
       this.error = e.message;
       console.error('Access group details data error: ', e.message);

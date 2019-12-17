@@ -44,7 +44,7 @@ export const termsActions = {
 export const termsMutations = {
   setTerms(state, content) {
     try {
-      state.terms = content;
+      state.terms = !content ? '' : content;
     } catch (e) {
       state.error = e.message;
       throw new Error(e.message);

@@ -2,7 +2,6 @@ import {
   GroupInvitationViewModel,
   INVITATION_STATE,
 } from '@/view_models/AccessGroupViewModel.js';
-import invitationGroupData from './invitationgroupdata.json';
 import AccessGroups from '@/assets/js/access-groups';
 
 const accessGroupsService = new AccessGroups();
@@ -13,13 +12,13 @@ export const userInvitationsState = {
 
 export const userInvitationsActions = {
   async fetchInvitations({ commit }) {
-    const data = invitationGroupData;
     try {
-      commit('setInvitations', data.invitations);
+      const data = await accessGroupsService.getUserInvitations();
+      commit('setInvitations', data);
+      return data;
     } catch (e) {
       throw new Error(e.message);
     }
-    return data;
   },
   async acceptInvitation({ state, getters, dispatch }, groupname) {
     const currentInvitation = getters.getInvitationsByName(groupname);
