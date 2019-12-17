@@ -16,61 +16,47 @@ export const membersActions = {
       throw new Error(e.message);
     }
   },
-  async removeMember({ commit, state }, member) {
+  async removeMember({ state, dispatch }, member) {
     const groupName = state.group.name;
     try {
       const result = await accessGroupsService.deleteMember(
         groupName,
         member.uuid
       );
-      const { members } = await accessGroupsService.getAllMembersV2(groupName);
-      commit('setMembers', members);
-      return members;
+      return await dispatch('fetchMembers');
     } catch (e) {
       throw new Error(e.message);
     }
   },
-  async addMembers({ commit, state }, addableMembers) {
+  async addMembers({ state, dispatch }, addableMembers) {
     try {
       const result = await accessGroupsService.addAccessGroupMembers(
         state.group.name,
         addableMembers
       );
-      const { members } = await accessGroupsService.getAllMembersV2(
-        state.group.name
-      );
-      commit('setMembers', members);
-      return members;
+      return await dispatch('fetchMembers');
     } catch (e) {
       throw new Error(e.message);
     }
   },
-  async addCurators({ commit, state }, curators) {
+  async addCurators({ state, dispatch }, curators) {
     try {
       const result = await accessGroupsService.addAccessGroupCurators(
         state.group.name,
         curators
       );
-      const { members } = await accessGroupsService.getAllMembersV2(
-        state.group.name
-      );
-      commit('setMembers', members);
-      return members;
+      return await dispatch('fetchMembers');
     } catch (e) {
       throw new Error(e.message);
     }
   },
-  async removeCurators({ commit, state }, curators) {
+  async removeCurators({ state, dispatch }, curators) {
     try {
       const result = await accessGroupsService.removeAccessGroupCurators(
         state.group.name,
         curators
       );
-      const { members } = await accessGroupsService.getAllMembersV2(
-        state.group.name
-      );
-      commit('setMembers', members);
-      return members;
+      return await dispatch('fetchMembers');
     } catch (e) {
       throw new Error(e.message);
     }

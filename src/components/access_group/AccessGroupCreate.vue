@@ -83,6 +83,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import TextInput from '@/components/ui/TextInput.vue';
 import TextArea from '@/components/ui/TextArea.vue';
 import Button from '@/components/ui/Button.vue';
@@ -112,24 +113,25 @@ export default {
     },
   },
   methods: {
+    ...mapActions({
+      createGroup: 'accessGroupV2/createGroup',
+    }),
     handleCreateClicked() {
-      this.$store
-        .dispatch('createAccessGroup', {
-          name: this.groupName,
-          type: this.groupType,
-          description: this.groupDescription,
-        })
-        .then(() => {
-          this.$root.$emit('toast', {
-            content: `Access Group ${this.groupName} created`,
-          });
-          this.$router.push({
-            name: ACCESS_GROUP_PAGE,
-            params: {
-              groupname: this.groupName,
-            },
-          });
+      this.createGroup({
+        name: this.groupName,
+        type: this.groupType,
+        description: this.groupDescription,
+      }).then(() => {
+        this.$root.$emit('toast', {
+          content: `Access Group ${this.groupName} created`,
         });
+        this.$router.push({
+          name: ACCESS_GROUP_PAGE,
+          params: {
+            groupname: this.groupName,
+          },
+        });
+      });
     },
     handleBackClicked() {
       this.$router.go(-1);

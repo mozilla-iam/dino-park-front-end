@@ -71,7 +71,8 @@ export default class AccessGroups {
     }); //this.fetcher.fetch('');
   }
 
-  async updateAccessGroupDetails(groupName, details) {
+  async updateAccessGroupDetails(groupName, field, value) {
+    // TODO: set this up to handle any of the available fields to edit
     return new Promise((res, rej) => {
       res('access group updated');
     }); //this.fetcher.fetch('');

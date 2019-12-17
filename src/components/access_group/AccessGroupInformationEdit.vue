@@ -138,7 +138,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import TextInput from '@/components/ui/TextInput.vue';
 import TextArea from '@/components/ui/TextArea.vue';
 import Button from '@/components/ui/Button.vue';
@@ -160,10 +160,11 @@ export default {
   mounted() {},
   data() {
     const accessGroup = this.$store.getters['accessGroupV2/getGroup'];
+    const terms = this.$store.getters['accessGroupV2/getTerms'];
     return {
       groupDescriptionData: accessGroup.description,
       groupDescriptionDirty: false,
-      groupTermsData: this.$store.state.groupTOS,
+      groupTermsData: terms,
       groupTermsRequiredData: accessGroup.terms,
       groupTermsDirty: false,
       groupTypeData: accessGroup.type,
@@ -186,48 +187,50 @@ export default {
     },
   },
   methods: {
+    ...mapActions({
+      updateAccessGroup: 'accessGroupV2/updateAccessGroupDetails',
+      deleteTerms: 'accessGroupV2/deleteTerms',
+      updateTerms: 'accessGroupV2/updateTerms',
+      closeGroup: 'accessGroupV2/closeGroup',
+    }),
     handleDescriptionUpdateClicked() {
-      this.$store
-        .dispatch('updateAccessGroupDescription', this.groupDescriptionData)
-        .then(() => {
+      this.updateAccessGroup('description', this.groupDescriptionData).then(
+        () => {
           this.groupDescriptionDirty = false;
           this.$root.$emit('toast', {
             content: 'Group description updated',
           });
-        });
+        }
+      );
     },
     handleTypeUpdateClicked() {
-      this.$store
-        .dispatch('updateAccessGroupType', this.groupTypeData)
-        .then(() => {
-          this.groupTypeDirty = false;
-          this.$root.$emit('toast', {
-            content: 'Group type updated',
-          });
+      this.updateAccessGroup('type', this.groupTypeData).then(() => {
+        this.groupTypeDirty = false;
+        this.$root.$emit('toast', {
+          content: 'Group type updated',
         });
+      });
     },
     handleTermsUpdateClicked() {
       if (!this.groupTermsRequiredData) {
-        this.$store.dispatch('deleteTOS').then(() => {
+        this.deleteTerms().then(() => {
           this.groupTermsDirty = false;
           this.$root.$emit('toast', {
             content: 'Group terms of service removed',
           });
         });
       } else {
-        this.$store
-          .dispatch('updateAccessGroupTOS', this.groupTermsData)
-          .then(() => {
-            this.groupTermsDirty = false;
-            this.$root.$emit('toast', {
-              content: 'Group terms of service updated',
-            });
+        this.updateTerms(this.groupTermsData).then(() => {
+          this.groupTermsDirty = false;
+          this.$root.$emit('toast', {
+            content: 'Group terms of service updated',
           });
+        });
       }
     },
     handleCloseGroupClicked() {
       const groupName = this.accessGroup.name;
-      this.$store.dispatch('closeAccessGroup').then(() => {
+      this.closeGroup().then(() => {
         this.$root.$emit('toast', {
           content: `Access group ${groupName} has been closed`,
         });

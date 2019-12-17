@@ -60,48 +60,32 @@ store.dispatch('userV2/fetchProfile').then(function() {
   store.dispatch('userV2/fetchInvitations').then(function() {});
 });
 
-store.dispatch('accessGroupV2/fetchGroup', 'dinopark-test').then(function() {
-  store.dispatch('accessGroupV2/fetchInvitations').then(function() {});
-  store
-    .dispatch('accessGroupV2/fetchMembers', 'dinopark-test')
-    .then(function() {});
-  store.dispatch('accessGroupV2/fetchTerms').then(function() {});
-});
-
-// eslint-disable-next-line
-store.dispatch('fetchGroupInvitations').then(function(data) {});
-
 router.beforeEach((to, from, next) => {
   const promises = [];
   const resolvers = [];
   if (to.meta.key === 'access-group') {
     // eslint-disable-next-line
-    promises.push(
-      () => store.dispatch('accessGroupV2/fetchGroup', to.params.groupname)
-      // store.dispatch('fetchAccessGroup', to.params.groupname)
-    );
     promises.push(() =>
-      store.dispatch('fetchAccessGroup', to.params.groupname)
+      store.dispatch('accessGroupV2/fetchGroup', to.params.groupname)
     );
-    resolvers.push(data => {});
     resolvers.push(data => {});
   }
   if (to.meta.key === 'access-group' && to.name !== ACCESS_GROUP_TOS_PAGE) {
     // eslint-disable-next-line
     promises.push(() =>
-      store.dispatch('fetchAllAccessGroupMembers', to.params.groupname)
+      store.dispatch('accessGroupV2/fetchMembers', to.params.groupname)
     );
 
     resolvers.push(data => {});
   }
   if (to.name === ACCESS_GROUP_TOS_PAGE || to.name === ACCESS_GROUP_EDIT_PAGE) {
-    promises.push(() => store.dispatch('fetchAccessGroupTOS'));
+    promises.push(() => store.dispatch('accessGroupV2/fetchTerms'));
     resolvers.push(data => {
       console.log('Fetched terms: ', data);
     });
   }
   if (to.name === ACCESS_GROUP_EDIT_PAGE) {
-    promises.push(() => store.dispatch('fetchAccessGroupInvitations'));
+    promises.push(() => store.dispatch('accessGroupV2/fetchInvitations'));
     resolvers.push(data => {});
   }
   resolvePromisesSerially(promises, resolvers)

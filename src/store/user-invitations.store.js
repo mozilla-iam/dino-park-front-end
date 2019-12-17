@@ -21,33 +21,34 @@ export const userInvitationsActions = {
     }
     return data;
   },
-  async acceptInvitations({ commit, state }, idx) {
-    if (idx >= state.data.length) {
-      state.error = `Index out of bounds for invitations: ${idx}`;
+  async acceptInvitation({ state, getters, dispatch }, groupname) {
+    const currentInvitation = getters.getInvitationsByName(groupname);
+    if (!currentInvitation) {
+      state.error = `Could not find group with name: ${groupname}`;
       throw new Error(state.error);
     }
-    const currentInvitation = state.data[idx];
+    console.log('currentInvitation: ', currentInvitation);
     try {
       const result = await accessGroupsService.acceptInvitation(
         currentInvitation.group_name
       );
-      commit('acceptInvitations', idx);
+      const reloadResult = await dispatch('fetchInvitations');
       return result;
     } catch (e) {
       throw new Error(e.message);
     }
   },
-  async rejectInvitations({ commit, state }, idx) {
-    if (idx >= state.data.length) {
-      state.error = `Index out of bounds for invitations: ${idx}`;
+  async rejectInvitation({ state, getters, dispatch }, groupname) {
+    const currentInvitation = getters.getInvitationsByName(groupname);
+    if (!currentInvitation) {
+      state.error = `Could not find group with name: ${groupname}`;
       throw new Error(state.error);
     }
-    const currentInvitation = state.data[idx];
     try {
       const result = await accessGroupsService.rejectInvitation(
         currentInvitation.group_name
       );
-      commit('rejectInvitations', idx);
+      const reloadResult = await dispatch('fetchInvitations');
       return result;
     } catch (e) {
       throw new Error(e.message);
@@ -83,6 +84,15 @@ export const userInvitationsMutations = {
 };
 
 export const userInvitationsGetters = {
+  getInvitationsByName: ({ invitations }) => groupName => {
+    const options = invitations.filter(
+      invite => invite.group_name === groupName
+    );
+    if (options.length !== 1) {
+      return null;
+    }
+    return options[0];
+  },
   getInvitations: ({ invitations }) => invitations,
   getActiveInvitations: ({ invitations }) =>
     invitations.filter(invitation => {

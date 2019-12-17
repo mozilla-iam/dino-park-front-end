@@ -50,6 +50,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import Button from '@/components/ui/Button.vue';
 import Icon from '@/components/ui/Icon.vue';
 import LinksMixin from '@/components/_mixins/LinksMixin.vue';
@@ -78,7 +79,7 @@ export default {
           },
         });
       } else {
-        this.$store.dispatch('acceptGroupInvitation', idx).then(() => {
+        this.$store.dispatch('userV2/acceptInvitation', idx).then(() => {
           this.$router.push({
             name: 'Access Group',
             params: { groupname: currentInvitation.group_name },
@@ -92,7 +93,7 @@ export default {
     handleRejectClick(idx) {
       const currentInvitation = this.invitations[idx];
       if (currentInvitation.state === PENDING_REJECTION) {
-        this.$store.dispatch('rejectGroupInvitation', idx).then(() => {
+        this.$store.dispatch('userV2/rejectInvitation', idx).then(() => {
           this.$root.$emit('toast', {
             content: `You rejected the invite for group ${currentInvitation.group_name}.`,
           });
@@ -121,9 +122,9 @@ export default {
     },
   },
   computed: {
-    invitations() {
-      return this.$store.getters.getActiveInvitations;
-    },
+    ...mapGetters({
+      invitations: 'userV2/getActiveInvitations',
+    }),
     showInvitations() {
       return (
         this.$route.name !== ACCESS_GROUP_TOS_PAGE &&

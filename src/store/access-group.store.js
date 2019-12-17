@@ -47,21 +47,53 @@ export default {
         throw new Error(e.message);
       }
     },
-    async updateInviteText(state, text) {
+    async updateGroup({ dispatch, state }, { field, value }) {
+      try {
+        const result = await accessGroupsService.updateAccessGroupDetails(
+          name,
+          field,
+          value
+        );
+        return await dispatch('fetchGroup', state.group.name);
+      } catch (e) {
+        throw new Error(e.message);
+      }
+    },
+    async updateInviteText({ state, dispatch }, text) {
       try {
         const data = await accessGroupsService.updateInviteText(text);
-        return data;
+        return await dispatch('fetchGroup', state.group.name);
       } catch (e) {
         state.error = e.message;
         throw new Error(e.message);
       }
     },
-    async resendInvitation(state, invitation) {
+    async resendInvitation({ state }, invitation) {
       try {
-        const result = await accessGroupsService.resendInvitation(invitation);
-        return result;
+        return await accessGroupsService.resendInvitation(invitation);
       } catch (e) {
         state.error = e.message;
+        throw new Error(e.message);
+      }
+    },
+    async leaveGroup({ state }) {
+      try {
+        return await accessGroupsService.leaveGroup(state.group.name);
+      } catch (e) {
+        throw new Error(e.message);
+      }
+    },
+    async closeGroup({ state }) {
+      try {
+        return await accessGroupsService.closeAccessGroup(state.group.name);
+      } catch (e) {
+        throw new Error(e.message);
+      }
+    },
+    async createGroup(context, form) {
+      try {
+        return await accessGroupsService.createAccessGroup(form);
+      } catch (e) {
         throw new Error(e.message);
       }
     },

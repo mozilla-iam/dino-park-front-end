@@ -80,6 +80,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import TextInput from '@/components/ui/TextInput.vue';
 import TextArea from '@/components/ui/TextArea.vue';
 import Button from '@/components/ui/Button.vue';
@@ -109,8 +110,11 @@ export default {
     const invitationConfig = this.$store.getters[
       'accessGroupV2/getInvitationConfig'
     ];
+    const accessGroupInvitations = this.$store.getters[
+      'accessGroupV2/getInvitations'
+    ];
     return {
-      invitationList: this.$store.getters.getAccessGroupMemberInvitations,
+      invitationList: accessGroupInvitations,
       newInvites: [],
       newInvitesDirty: false,
       emailInviteTextEnabled: invitationConfig !== null,
@@ -132,14 +136,17 @@ export default {
     },
   },
   methods: {
+    ...mapActions({
+      resendInvitation: 'accessGroupV2/resendInvitation',
+      addMembers: 'accessGroupV2/addMembers',
+      updateInviteText: 'accessGroupV2/updateInviteText',
+    }),
     handleResendClicked(invitation) {
-      this.$store
-        .dispatch('accessGroupV2/resendInvitation', invitation)
-        .then(result => {
-          this.$root.$emit('toast', {
-            content: 'Invite email resent',
-          });
+      this.resendInvitation(invitation).then(result => {
+        this.$root.$emit('toast', {
+          content: 'Invite email resent',
         });
+      });
     },
     handleRemoveClicked(idx) {},
     getTagLabel(curator) {
@@ -158,25 +165,21 @@ export default {
       return;
     },
     handleAddNewInvitesClicked() {
-      this.$store
-        .dispatch('accessGroupV2/addMembers', this.newInvites)
-        .then(result => {
-          this.$root.$emit('toast', {
-            content: 'Members successfully invited',
-          });
-          this.newInvites = [];
-          this.newInvitesDirty = false;
+      this.addMembers(this.newInvites).then(result => {
+        this.$root.$emit('toast', {
+          content: 'Members successfully invited',
         });
+        this.newInvites = [];
+        this.newInvitesDirty = false;
+      });
     },
     handleUpdateInviteTextClicked() {
-      this.$store
-        .dispatch('accessGroupV2/updateInviteText', this.newInvites)
-        .then(result => {
-          this.$root.$emit('toast', {
-            content: 'Invitation text successfully updated',
-          });
-          this.emailInviteTextDirty = false;
+      this.updateInviteText(this.newInvites).then(result => {
+        this.$root.$emit('toast', {
+          content: 'Invitation text successfully updated',
         });
+        this.emailInviteTextDirty = false;
+      });
     },
   },
   computed: {},

@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import Icon from '@/components/ui/Icon.vue';
 import Button from '@/components/ui/Button.vue';
 import { ACCESS_GROUP_LEAVE_CONFIRMATION_PAGE } from '@/router';
@@ -43,9 +43,12 @@ export default {
     },
   },
   methods: {
+    ...mapActions({
+      leaveGroup: 'accessGroupV2/leaveGroup',
+    }),
     handleLeaveClick() {
       const groupName = this.accessGroup.name;
-      this.$store.dispatch('leaveGroup').then(() => {
+      this.leaveGroup().then(() => {
         this.$root.$emit('toast', {
           content: `You have left the ${groupName} group`,
         });

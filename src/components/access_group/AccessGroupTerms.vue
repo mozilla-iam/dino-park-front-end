@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import Icon from '@/components/ui/Icon.vue';
 import Button from '@/components/ui/Button.vue';
 
@@ -53,6 +53,10 @@ export default {
     groupname: String,
   },
   methods: {
+    ...mapActions({
+      acceptInvitation: 'userV2/acceptInvitation',
+      rejectInvitation: 'userV2/rejectInvitation',
+    }),
     handleBackClicked() {
       console.log('Back clicked');
     },
@@ -64,23 +68,21 @@ export default {
       }
     },
     acceptTerms() {
-      this.$store
-        .dispatch('acceptInvitationTOS', this.$route.params.groupname)
-        .then(() => {
-          this.$router.push({
-            name: 'Access Group',
-            query: {
-              groupname: this.$route.query.groupname,
-            },
-          });
-          this.$root.$emit('toast', {
-            content: 'You accepted the terms for this group.',
-          });
+      this.acceptInvitation(this.$route.params.groupname).then(() => {
+        this.$router.push({
+          name: 'Access Group',
+          query: {
+            groupname: this.$route.query.groupname,
+          },
         });
+        this.$root.$emit('toast', {
+          content: 'You accepted the terms for this group.',
+        });
+      });
     },
     doNotAcceptTerms() {
       const { groupname } = this.$route.params;
-      this.$store.dispatch('rejectInvitationTOS', groupname).then(() => {
+      this.rejectInvitation(groupname).then(() => {
         this.$router.go(-1);
         this.$root.$emit('toast', {
           content: `You rejected the invite for group ${groupname}.`,
@@ -96,12 +98,11 @@ export default {
   computed: {
     ...mapGetters({
       accessGroup: 'accessGroupV2/getGroup',
+      termsContent: 'accessGroupV2/getTerms',
+      getInvitationByName: 'userV2/getInvitationsByName',
     }),
     groupInvitation() {
-      return this.$store.getters.getInvitationByName(this.accessGroup.name);
-    },
-    termsContent() {
-      return this.$store.state.groupTOS;
+      return this.getInvitationByName(this.accessGroup.name);
     },
     backUrl() {
       return this.$route.path.substr(0, this.$route.path.lastIndexOf('/'));

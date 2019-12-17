@@ -123,7 +123,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import TextInput from '@/components/ui/TextInput.vue';
 import TextArea from '@/components/ui/TextArea.vue';
 import Button from '@/components/ui/Button.vue';
@@ -200,6 +200,12 @@ export default {
     };
   },
   methods: {
+    ...mapActions({
+      removeMember: 'accessGroupV2/removeMember',
+      addCurators: 'accessGroupV2/addCurators',
+      removeCurators: 'accessGroupV2/removeCurators',
+      updateGroup: 'accessGroupV2/updateGroup',
+    }),
     refreshMembersList() {
       this.allMembersList = this.allMembers.map(member => {
         return {
@@ -252,17 +258,10 @@ export default {
     handleCuratorsUpdateClicked() {
       let promises = [];
       if (this.addedCurators.length > 0) {
-        promises.concat(
-          this.$store.dispatch('addAccessGroupCurators', this.addedCurators)
-        );
+        promises.concat(this.addCurators(this.addedCurators));
       }
       if (this.removedCurators.length > 0) {
-        promises.concat(
-          this.$store.dispatch(
-            'removeAccessGroupCurators',
-            this.removedCurators
-          )
-        );
+        promises.concat(this.removeCurators(this.removedCurators));
       }
       Promise.all(promises)
         .then(results => {
@@ -278,19 +277,17 @@ export default {
         });
     },
     handleUpdateExpirationClicked() {
-      this.$store
-        .dispatch('updateAccessGroupExpiration', this.groupExpiration)
-        .then(result => {
-          this.groupExpirationDirty = false;
-          this.$root.$emit('toast', {
-            content: `Access Group expiration has been successfully updated`,
-          });
+      this.updateGroup('expiration', this.groupExpiration).then(result => {
+        this.groupExpirationDirty = false;
+        this.$root.$emit('toast', {
+          content: `Access Group expiration has been successfully updated`,
         });
+      });
     },
   },
   computed: mapGetters({
     group: 'accessGroupV2/getGroup',
-    accessGroupCurators: 'accessGroupV2/members/getCurators',
+    accessGroupCurators: 'accessGroupV2/getCurators',
     accessGroupExpiration: 'accessGroupV2/getExpiration',
     allMembers: 'accessGroupV2/getMembers',
   }),
