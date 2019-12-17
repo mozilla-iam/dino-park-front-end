@@ -23,6 +23,32 @@ export class GroupsApi extends Api {
       throw new Error(e.message);
     }
   }
+
+  async put(groupName, data) {
+    try {
+      return await this.fetcher.put(`${this.endpoint}/${groupName}`, data);
+    } catch (e) {
+      console.error(e.message);
+      throw new Error(e.message);
+    }
+  }
+
+  async delete(groupName) {
+    try {
+      return await this.fetcher.delete(`${this.endpoint}/${groupName}`);
+    } catch (e) {
+      console.error(e.message);
+      throw new Error(e.message);
+    }
+  }
+
+  static getUpdateObject(data) {
+    return {
+      typ: 'type' in data ? data.type : '',
+      description: 'description' in data ? data.description : '',
+      group_expiration: 'expiration' in data ? data.expiration : 0,
+    };
+  }
 }
 
 export class GroupInvitationsApi extends Api {
@@ -69,6 +95,37 @@ export class TermsApi extends Api {
     try {
       const result = await this.fetcher.fetch(`${this.endpoint}/${groupName}`);
       return await result.json();
+    } catch (e) {
+      console.error(e.message);
+      throw new Error(e.message);
+    }
+  }
+
+  async put(groupName, data) {
+    try {
+      return await this.fetcher.put(`${this.endpoint}/${groupName}`, {
+        text: data,
+      });
+    } catch (e) {
+      console.error(e.message);
+      throw new Error(e.message);
+    }
+  }
+
+  async post(groupName, data) {
+    try {
+      return await this.fetcher.post(`${this.endpoint}/${groupName}`, {
+        text: data,
+      });
+    } catch (e) {
+      console.error(e.message);
+      throw new Error(e.message);
+    }
+  }
+
+  async delete(groupName) {
+    try {
+      return await this.fetcher.delete(`${this.endpoint}/${groupName}`);
     } catch (e) {
       console.error(e.message);
       throw new Error(e.message);

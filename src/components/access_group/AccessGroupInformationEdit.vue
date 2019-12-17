@@ -25,7 +25,7 @@
         <Button
           :disabled="!groupDescriptionDirty"
           class="button--secondary button--action row-primary-action"
-          @click="handleDescriptionUpdateClicked()"
+          @click="handleDescriptionUpdateClicked"
           >Update details</Button
         >
       </template>
@@ -186,35 +186,48 @@ export default {
   },
   methods: {
     ...mapActions({
-      updateAccessGroup: 'accessGroupV2/updateAccessGroupDetails',
+      updateAccessGroup: 'accessGroupV2/updateGroup',
       deleteTerms: 'accessGroupV2/deleteTerms',
       updateTerms: 'accessGroupV2/updateTerms',
+      addTerms: 'accessGroupV2/addTerms',
       closeGroup: 'accessGroupV2/closeGroup',
     }),
-    handleDescriptionUpdateClicked() {
-      this.updateAccessGroup('description', this.groupDescriptionData).then(
+    handleDescriptionUpdateClicked(e) {
+      e.preventDefault();
+      this.updateAccessGroup({
+        field: 'description',
+        value: this.groupDescriptionData,
+      }).then(() => {
+        this.groupDescriptionDirty = false;
+        this.$root.$emit('toast', {
+          content: 'Group description updated',
+        });
+      });
+      return false;
+    },
+    handleTypeUpdateClicked() {
+      this.updateAccessGroup({ field: 'type', value: this.groupTypeData }).then(
         () => {
-          this.groupDescriptionDirty = false;
+          this.groupTypeDirty = false;
           this.$root.$emit('toast', {
-            content: 'Group description updated',
+            content: 'Group type updated',
           });
         }
       );
     },
-    handleTypeUpdateClicked() {
-      this.updateAccessGroup('type', this.groupTypeData).then(() => {
-        this.groupTypeDirty = false;
-        this.$root.$emit('toast', {
-          content: 'Group type updated',
-        });
-      });
-    },
     handleTermsUpdateClicked() {
-      if (!this.groupTermsRequiredData) {
+      if (!this.groupTermsRequiredData && this.accessGroup.terms) {
         this.deleteTerms().then(() => {
           this.groupTermsDirty = false;
           this.$root.$emit('toast', {
             content: 'Group terms of service removed',
+          });
+        });
+      } else if (!this.accessGroup.terms && this.groupTermsData.length > 0) {
+        this.addTerms(this.groupTermsData).then(() => {
+          this.groupTermsDirty = false;
+          this.$root.$emit('toast', {
+            content: 'Group terms of service updated',
           });
         });
       } else {
@@ -241,6 +254,7 @@ export default {
   computed: {
     ...mapGetters({
       accessGroup: 'accessGroupV2/getGroup',
+      terms: 'accessGroupV2/getTerms',
     }),
     groupName() {
       return this.accessGroup.name;

@@ -1,5 +1,6 @@
 import { GroupViewModel } from '@/view_models/AccessGroupViewModel.js';
 import AccessGroups from '@/assets/js/access-groups';
+import { GroupsApi } from '@/assets/js/access-groups-api';
 import {
   accessGroupInvitationsState,
   accessGroupInvitationsActions,
@@ -49,10 +50,13 @@ export default {
     },
     async updateGroup({ dispatch, state }, { field, value }) {
       try {
+        const updateData = GroupsApi.getUpdateObject({
+          ...state.group,
+          [field]: value,
+        });
         const result = await accessGroupsService.updateAccessGroupDetails(
-          name,
-          field,
-          value
+          state.group.name,
+          updateData
         );
         return await dispatch('fetchGroup', state.group.name);
       } catch (e) {
@@ -108,7 +112,7 @@ export default {
         state.memberCount = accessGroup.member_count;
         state.invitationCount = accessGroup.invitation_count;
         state.renewalCount = accessGroup.renewal_count;
-        state.expiration = accessGroup.expiration;
+        state.expiration = accessGroup.group_expiration;
         state.invitationConfig = accessGroup.invitation;
       } catch (e) {
         state.error = e.message;

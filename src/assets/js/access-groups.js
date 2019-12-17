@@ -37,11 +37,13 @@ export default class AccessGroups {
     });
   }
 
-  async updateAccessGroupDetails(groupName, field, value) {
-    // TODO: set this up to handle any of the available fields to edit
-    return new Promise((res, rej) => {
-      res('access group updated');
-    }); //this.fetcher.fetch('');
+  async updateAccessGroupDetails(groupName, updateData) {
+    try {
+      return await this.groupsApi.put(groupName, updateData);
+    } catch (e) {
+      console.log(e.message);
+      throw new Error(e.message);
+    }
   }
   async updateAccessGroupExpiration(groupName, expiration) {
     return new Promise((res, rej) => {
@@ -62,9 +64,12 @@ export default class AccessGroups {
   }
 
   async closeAccessGroup(groupName) {
-    return new Promise((res, rej) => {
-      res('access group closed');
-    }); //this.fetcher.fetch('');
+    try {
+      return await this.groupsApi.delete(groupName);
+    } catch (e) {
+      console.log(e.message);
+      throw new Error(e.message);
+    }
   }
 
   /**
@@ -72,16 +77,12 @@ export default class AccessGroups {
    */
 
   async getAllMembers(groupName) {
-    return new Promise((res, rej) => {
-      this.membersApi
-        .get(groupName)
-        .then(result => {
-          res(result);
-        })
-        .catch(error => {
-          rej(error);
-        });
-    });
+    try {
+      return await this.membersApi.get(groupName);
+    } catch (e) {
+      console.log(e.message);
+      throw new Error(e.message);
+    }
   }
 
   async deleteMember(groupName, uuid) {
@@ -125,16 +126,12 @@ export default class AccessGroups {
   }
 
   async getUserInvitations() {
-    return new Promise((res, rej) => {
-      this.selfInvitationsApi
-        .get()
-        .then(result => {
-          res(result);
-        })
-        .catch(error => {
-          rej(error);
-        });
-    });
+    try {
+      return await this.selfInvitationsApi.get();
+    } catch (e) {
+      console.log(e.message);
+      throw new Error(e.message);
+    }
   }
 
   async acceptInvitation(groupName) {
@@ -150,44 +147,48 @@ export default class AccessGroups {
   }
 
   async getAccessGroupMemberInvitations(groupName) {
-    return new Promise((res, rej) => {
-      const members = accessGroupMemberInvitations;
-      this.groupInvitationsApi
-        .get(groupName)
-        .then(result => {
-          res(result);
-        })
-        .catch(error => {
-          rej(error);
-        });
-    });
+    try {
+      return await this.groupInvitationsApi.get(groupName);
+    } catch (e) {
+      console.log(e.message);
+      throw new Error(e.message);
+    }
   }
 
   async updateAccessGroupTOS(groupName, tos) {
-    return new Promise((res, rej) => {
-      res('terms of service updated');
-    }); //this.fetcher.fetch('');
+    try {
+      return await this.termsApi.put(groupName, tos);
+    } catch (e) {
+      console.log(e.message);
+      throw new Error(e.message);
+    }
+  }
+
+  async addAccessGroupTOS(groupName, tos) {
+    try {
+      return await this.termsApi.post(groupName, tos);
+    } catch (e) {
+      console.log(e.message);
+      throw new Error(e.message);
+    }
   }
 
   async deleteAccessGroupTOS(groupName) {
-    return new Promise((res, rej) => {
-      res('access group tos removed');
-    }); //this.fetcher.fetch('');
+    try {
+      return await this.termsApi.delete(groupName);
+    } catch (e) {
+      console.log(e.message);
+      throw new Error(e.message);
+    }
   }
 
   async getAccessGroupTOS(groupName) {
-    return new Promise((res, rej) => {
-      const { content } = accessGroupTermsOfService;
-      this.termsApi
-        .get(groupName)
-        .then(result => {
-          console.log('found terms: ', result);
-          res(result);
-        })
-        .catch(error => {
-          rej(error);
-        });
-    });
+    try {
+      return await this.termsApi.get(groupName);
+    } catch (e) {
+      console.log(e.message);
+      throw new Error(e.message);
+    }
   }
 
   async updateInviteText(text) {
