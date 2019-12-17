@@ -61,4 +61,26 @@ describe('Fluent', () => {
       }),
     ).toEqual(result);
   });
+
+  it('allows globally whitelisted tags', () => {
+    expect(fluent.get('whitelisted')).toEqual('lorem <i>ipsum</i>');
+  });
+
+  it("doesn't allow attributes on whitelisted tags", () => {
+    expect(fluent.get('whitelisted', 'attributes')).toEqual(
+      'lorem <i>ipsum</i>',
+    );
+  });
+
+  it("doesn't allow whitelisted tags to steal from defined ones", () => {
+    expect(
+      fluent.get({
+        id: 'whitelisted',
+        attr: 'stealing',
+        tags: {
+          one: { tag: 'button', id: 'two', onclick: 'alert("hello")' },
+        },
+      }),
+    ).toEqual('lorem <i>ipsum</i>');
+  });
 });

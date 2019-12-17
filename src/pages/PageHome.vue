@@ -76,7 +76,7 @@ export default {
     cards() {
       const privacyLink =
         this.scope.isStaff || this.scope.isNdaed
-          ? this.globalLinks.profilePrivacy
+          ? this.globalLinks.profilePrivacyNda
           : this.globalLinks.profilePrivacyPublic;
       const updatesLink =
         this.scope.isStaff || this.scope.isNdaed

@@ -39,7 +39,7 @@ export default {
         {
           link:
             this.scope.isStaff || this.scope.isNdaed
-              ? this.globalLinks.faq
+              ? this.globalLinks.faqNda
               : this.globalLinks.faqPublic,
           icon: 'faq',
           label: 'FAQ',
