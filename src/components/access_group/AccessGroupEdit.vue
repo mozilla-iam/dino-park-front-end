@@ -24,10 +24,7 @@
         </ul>
       </nav>
       <section class="edit-container__content">
-        <AccessGroupInformationEdit v-if="isInformationTab" />
-        <AccessGroupMembersEdit v-if="isMembersTab" />
-        <AccessGroupInvitationsEdit v-if="isInvitationsTab" />
-        <AccessGroupHistoryEdit v-if="isHistoryTab" />
+        <component v-bind:is="currentTabView"></component>
       </section>
     </section>
   </main>
@@ -41,6 +38,26 @@ import AccessGroupMembersEdit from '@/components/access_group/AccessGroupMembers
 import AccessGroupInvitationsEdit from '@/components/access_group/AccessGroupInvitationsEdit.vue';
 import AccessGroupHistoryEdit from '@/components/access_group/AccessGroupHistoryEdit.vue';
 
+const tabs = [
+  {
+    key: 'information',
+    label: 'Information',
+    icon: 'info',
+    component: 'AccessGroupInformationEdit',
+  },
+  {
+    key: 'members',
+    label: 'Members',
+    icon: 'users',
+    component: 'AccessGroupMembersEdit',
+  },
+  {
+    key: 'invitations',
+    label: 'Invitations',
+    icon: 'mail-outline',
+    component: 'AccessGroupInvitationsEdit',
+  },
+];
 export default {
   name: 'AccessGroup',
   components: {
@@ -53,6 +70,16 @@ export default {
   },
   props: {
     groupname: String,
+  },
+  mounted() {
+    if (this.getFeature('history-tab')) {
+      tabs.concat({
+        key: 'history',
+        label: 'History',
+        icon: 'clock',
+        component: 'AccessGroupHistoryEdit',
+      });
+    }
   },
   methods: {
     handleBackClicked() {
@@ -77,55 +104,23 @@ export default {
     backUrl() {
       return this.$route.path.substr(0, this.$route.path.lastIndexOf('/'));
     },
-    isInformationTab() {
+    currentTabView() {
+      const defaultTab = 0;
       if (!this.$route.query.section) {
-        return false;
+        return defaultTab;
       }
-      return this.$route.query.section === 'information';
-    },
-    isMembersTab() {
-      if (!this.$route.query.section) {
-        return false;
+      const [currentTab] = tabs.filter(
+        tab => tab.key === this.$route.query.section
+      );
+      if (currentTab) {
+        return currentTab.component;
       }
-      return this.$route.query.section === 'members';
-    },
-    isInvitationsTab() {
-      if (!this.$route.query.section) {
-        return false;
-      }
-      return this.$route.query.section === 'invitations';
-    },
-    isHistoryTab() {
-      if (!this.$route.query.section) {
-        return false;
-      }
-      return this.$route.query.section === 'history';
+      return tabs[defaultTab].component;
     },
   },
   data() {
     return {
-      tabs: [
-        {
-          key: 'information',
-          label: 'Information',
-          icon: 'info',
-        },
-        {
-          key: 'members',
-          label: 'Members',
-          icon: 'users',
-        },
-        {
-          key: 'invitations',
-          label: 'Invitations',
-          icon: 'mail-outline',
-        },
-        {
-          key: 'history',
-          label: 'History',
-          icon: 'clock',
-        },
-      ],
+      tabs,
     };
   },
 };

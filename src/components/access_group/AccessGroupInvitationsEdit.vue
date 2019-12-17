@@ -45,7 +45,10 @@
         >
       </template>
     </AccessGroupEditPanel>
-    <AccessGroupEditPanel title="Additional email invite text">
+    <AccessGroupEditPanel
+      title="Additional email invite text"
+      v-if="getFeature('custom-invitation-text')"
+    >
       <template v-slot:content>
         <div class="members-expiration-container">
           <div class="content-area__row">

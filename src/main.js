@@ -8,6 +8,7 @@ import router, {
 
 import { apolloProvider } from './server';
 import store from '@/store';
+import Features from '@/features.js';
 
 async function resolvePromisesSerially(promises, resolvers) {
   try {
@@ -41,6 +42,11 @@ Vue.mixin({
   computed: {
     scope() {
       return this.$store.state.scope;
+    },
+  },
+  methods: {
+    getFeature(featureName) {
+      return Features.get(featureName);
     },
   },
 });
