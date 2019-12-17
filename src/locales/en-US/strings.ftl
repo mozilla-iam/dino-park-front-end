@@ -1,3 +1,19 @@
+## Home Page
+
+home_welcome = Welcome to the Mozilla People Directory
+  .description = A secure place to quickly find your fellow Mozillians and share information about yourself!
+  .description-staff = A secure place to quickly find your team members and easily discover new ones.
+  .my-profile = My profile
+
+home_links_feedback = Your Feedback Matters
+  .description = Let us know how we can make the Mozilla Directory even better.
+home_links_privacy = Your Privacy is Protected
+  .description = You control how and with whom your data is being shared. Read our <a data-l10n-name="discourse">Discourse post</a> for further details.
+  .description-staff = Your Staff profile data is only visible to Staff and NDA’d people by default. You can edit this via your profile privacy settings. Read our <a data-l10n-name="discourse">Discourse post</a> for details.
+home_links_updates = Recent Additions
+  .description-groups-announcement = LDAP and Mozillians.org access groups are now displayed under the <i>Access groups</i> section. Read more about this and all newly added functionality in our <a data-l10n-name="discourse">Discourse post</a>.
+  .description-ldap-contributor-announcement = Contributors with a volunteer LDAP account can now access PMO. Read all about it in our <a data-l10n-name="discourse">Discourse post</a>.
+
 ## Profile Page
 
 -staff-not-editable = Staff information is not editable and is shared by default with all Mozilla Staff. Please contact <a data-l10n-name="email">our HR Team</a> to request any change.
@@ -66,6 +82,14 @@ profile_tags = Tags
   .tooltip = You can use this section to add any skills or interests you’d like to be found by other people.
 
 profile_access-groups = Access Groups
+profile_access-groups_ldap = LDAP
+  .tooltip-open = Open LDAP info
+  .tooltip-close = Close LDAP info
+  .tooltip = Here you will find all the access groups that are associated to your LDAP account. They are not editable and private by default.
+profile_access-groups_mozillians = mozillians.org
+  .tooltip-open = Open mozillians.org info
+  .tooltip-close = Close mozillians.org info
+  .tooltip = We have imported from mozillians.org all of the access groups that you’re a member of. Currently they can only be managed in mozillians.org.
 
 profile_keys = Keys
   .tooltip-open = Open keys info

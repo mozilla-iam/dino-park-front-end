@@ -37,7 +37,10 @@ export default {
           abbr: 'Community Participation Guidelines',
         },
         {
-          link: this.globalLinks.faq,
+          link:
+            this.scope.isStaff || this.scope.isNdaed
+              ? this.globalLinks.faqNda
+              : this.globalLinks.faqPublic,
           icon: 'faq',
           label: 'FAQ',
         },

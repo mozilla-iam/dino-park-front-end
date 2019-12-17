@@ -2,6 +2,9 @@ import { FluentBundle, FluentResource } from '@fluent/bundle';
 import insane from 'insane';
 import Strings from '@/locales/en-US/strings.ftl';
 
+const whitelistedTags = ['i'];
+const whitelistedAttributes = ['title', 'aria-label'];
+
 class Fluent {
   constructor(locale = 'en-US') {
     const resource = new FluentResource(Strings);
@@ -37,24 +40,28 @@ class Fluent {
     Object.values(tags).forEach((t) => {
       allowedAttributes[t.tag] = Object.keys(t)
         .filter((x) => x !== 'tag')
-        .concat(['title', 'aria-label']);
+        .concat(whitelistedAttributes);
     });
 
     return insane(
       message,
       {
         allowedAttributes,
-        allowedTags: Object.values(tags).map((t) => t.tag),
+        allowedTags: Object.values(tags)
+          .map((t) => t.tag)
+          .concat(whitelistedTags),
         allowedSchemes: ['http', 'https', 'mailto'],
         filter(token) {
           const name = token.attrs['data-l10n-name'];
-          if (
-            Object.keys(tags).includes(name) &&
-            tags[name].tag === token.tag
-          ) {
+          if (name) {
             Object.entries(tags[name]).forEach(([k, v]) => {
               token.attrs[k] = v;
             });
+          }
+          if (
+            whitelistedTags.includes(token.tag) ||
+            (Object.keys(tags).includes(name) && tags[name].tag === token.tag)
+          ) {
             return true;
           }
           return false;
