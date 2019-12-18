@@ -12,7 +12,11 @@
   >
     <template v-slot:extra-content
       ><a
-        href="https://discourse.mozilla.org/t/profile-privacy-display-levels-explained/37906"
+        :href="
+          scope.isStaff || scope.isNda
+            ? globalLinks.profilePrivacyNda
+            : globalLinks.profilePrivacyPublic
+        "
         target="_blank"
         rel="noopener noreferrer"
         >What do these mean?</a
@@ -24,9 +28,11 @@
 <script>
 import Select from '@/components/ui/Select.vue';
 import { displayLevelsFor, DISPLAY_LEVELS } from '@/assets/js/display-levels';
+import LinksMixin from '@/components/_mixins/LinksMixin.vue';
 
 export default {
   name: 'PrivacySetting',
+  mixins: [LinksMixin],
   components: {
     Select,
   },
