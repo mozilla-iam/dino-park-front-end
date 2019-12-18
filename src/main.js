@@ -9,6 +9,7 @@ import router, {
 import { apolloProvider } from './server';
 import store from '@/store';
 import Features from '@/features.js';
+import Fluent from './assets/js/fluent';
 
 async function resolvePromisesSerially(promises, resolvers) {
   try {
@@ -38,6 +39,7 @@ window.requestIdleCallback =
 
 Vue.use(VueApollo);
 
+const fluent = new Fluent();
 Vue.mixin({
   computed: {
     scope() {
@@ -47,6 +49,9 @@ Vue.mixin({
   methods: {
     getFeature(featureName) {
       return Features.get(featureName);
+    },
+    fluent(...args) {
+      return fluent.get(...args);
     },
   },
 });

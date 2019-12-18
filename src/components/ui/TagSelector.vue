@@ -1,5 +1,9 @@
 <template>
-  <div class="tag-selector-container">
+  <div
+    class="tag-selector-container"
+    tabindex="-1"
+    @click="onTagSelectorClicked"
+  >
     <div class="tag-selector">
       <div class="tag-container" v-for="(tag, idx) in tagsDisplay" :key="idx">
         <p class="tag-container__text" v-if="getLabel">{{ getLabel(tag) }}</p>
@@ -18,6 +22,7 @@
         v-model="currentInput"
         @change="onSelectorInput"
         @input="onInput"
+        @blur="onInputBlur"
       />
     </div>
     <ul class="selector-auto-complete" v-if="autoCompleteList.length > 0">
@@ -27,7 +32,10 @@
         :key="idx"
         @click="handleAddItem(item)"
       >
-        <AccessGroupMemberListDisplay :member="item" />
+        <AccessGroupMemberListDisplay
+          class="selector-auto-complete__item"
+          :member="item"
+        />
       </li>
     </ul>
   </div>
@@ -66,6 +74,19 @@ export default {
     },
   },
   methods: {
+    onTagSelectorClicked(e) {
+      const parent = e.target.closest('.tag-selector-container');
+      const itemParent = e.target.closest('.selector-auto-complete__item');
+      if (parent || itemParent) {
+        this.$el.querySelector('.tag-selector__value').focus();
+      }
+    },
+    onInputBlur(e) {
+      const parent = e.target.closest('.tag-selector-container');
+      if (!parent) {
+        this.autoCompleteList = [];
+      }
+    },
     onSelectorInput(el) {
       if (!this.currentInput) {
         return;
@@ -77,7 +98,10 @@ export default {
       this.$emit('input', this.tagsDisplay);
     },
     onInput: _.throttle(function(e) {
-      if (!e) {
+      if (!e || e.target.value === '') {
+        if (e.target.value === '') {
+          this.autoCompleteList = [];
+        }
         return;
       }
       this.updateAutoComplete(e.target.value).then(members => {
@@ -165,6 +189,7 @@ export default {
   width: 100%;
   max-height: 20em;
   overflow-y: auto;
+  z-index: 1;
 }
 
 .selector-auto-complete .selector-auto-complete__item {

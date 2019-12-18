@@ -85,6 +85,25 @@ export class MembersApi extends Api {
   }
 }
 
+export class CuratorsApi extends Api {
+  constructor() {
+    super();
+    this.endpoint = `${API_PREFIX}curators`;
+  }
+
+  async post(groupName, member_uuid) {
+    try {
+      const result = await this.fetcher.post(`${this.endpoint}/${groupName}`, {
+        member_uuid,
+      });
+      return await result.json();
+    } catch (e) {
+      console.error(e.message);
+      throw new Error(e.message);
+    }
+  }
+}
+
 export class TermsApi extends Api {
   constructor() {
     super();
@@ -142,6 +161,25 @@ export class SelfInvitationsApi extends Api {
   async get() {
     try {
       const result = await this.fetcher.fetch(this.endpoint);
+      return await result.json();
+    } catch (e) {
+      console.error(e.message);
+      throw new Error(e.message);
+    }
+  }
+}
+
+export class UsersApi extends Api {
+  constructor() {
+    super();
+    this.endpoint = `${API_PREFIX}users`;
+  }
+
+  async get(q, scope) {
+    try {
+      const result = await this.fetcher.fetch(
+        `${this.endpoint}?q=${q}&t=${scope}`
+      );
       return await result.json();
     } catch (e) {
       console.error(e.message);

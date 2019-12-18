@@ -135,8 +135,9 @@ import TagSelector from '@/components/ui/TagSelector.vue';
 import NumberScrollerInput from '@/components/ui/NumberScrollerInput.vue';
 import ProfileApi from '@/assets/js/profile-api';
 import { DisplayMemberViewModel } from '@/view_models/AccessGroupViewModel';
+import { UsersApi } from '@/assets/js/access-groups-api';
 
-const profileApi = new ProfileApi();
+const usersApi = new UsersApi();
 
 export default {
   name: 'AccessGroupInformationEdit',
@@ -240,11 +241,10 @@ export default {
     },
     updateAutoCompleteList(search) {
       return new Promise((res, rej) => {
-        profileApi.searchProfiles(search).then(results => {
+        usersApi.get(search, this.userScope).then(results => {
+          results = results.concat(results);
           res(
-            results.map(profile =>
-              DisplayMemberViewModel.fromProfileData(profile)
-            )
+            results.map(profile => DisplayMemberViewModel.fromUserData(profile))
           );
         });
       });
@@ -266,7 +266,7 @@ export default {
       Promise.all(promises)
         .then(results => {
           this.$root.$emit('toast', {
-            content: 'Curators successfully added',
+            content: 'Curators successfully updated',
           });
           this.addedCurators = [];
           this.removedCurators = [];
@@ -285,12 +285,27 @@ export default {
       });
     },
   },
-  computed: mapGetters({
-    group: 'accessGroupV2/getGroup',
-    accessGroupCurators: 'accessGroupV2/getCurators',
-    accessGroupExpiration: 'accessGroupV2/getExpiration',
-    allMembers: 'accessGroupV2/getMembers',
-  }),
+  computed: {
+    ...mapGetters({
+      group: 'accessGroupV2/getGroup',
+      accessGroupCurators: 'accessGroupV2/getCurators',
+      accessGroupExpiration: 'accessGroupV2/getExpiration',
+      allMembers: 'accessGroupV2/getMembers',
+    }),
+    userScope() {
+      // TODO: clean this up
+      if (this.scope.isStaff) {
+        return 'Staff';
+      }
+      if (this.scope.isNdaed) {
+        return 'Ndaed';
+      }
+      if (this.scope.isLdap) {
+        return 'Authenticated';
+      }
+      return 'Public';
+    },
+  },
 };
 </script>
 

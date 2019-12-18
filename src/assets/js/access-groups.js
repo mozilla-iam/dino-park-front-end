@@ -4,11 +4,10 @@ import {
   GroupInvitationsApi,
   TermsApi,
   SelfInvitationsApi,
+  CuratorsApi,
 } from './access-groups-api.js';
 import accessGroupMembers from '@/accessgroupmembers.json';
 import accessGroupCurators from '@/accessgroupcurators.json';
-import accessGroupMemberInvitations from '@/accessgroupmemberinvitations.json';
-import accessGroupTermsOfService from '@/accessgrouptermsofservice.json';
 
 export default class AccessGroups {
   constructor() {
@@ -17,6 +16,7 @@ export default class AccessGroups {
     this.groupInvitationsApi = new GroupInvitationsApi();
     this.termsApi = new TermsApi();
     this.selfInvitationsApi = new SelfInvitationsApi();
+    this.curatorsApi = new CuratorsApi();
   }
 
   /**
@@ -101,10 +101,15 @@ export default class AccessGroups {
   }
 
   async addAccessGroupCurators(groupName, curators) {
-    // TODO: Since we don't add curators in a batch, this will have to be several requests
-    return new Promise((res, rej) => {
-      res('curators have been added');
-    }); //this.fetcher.fetch('');
+    try {
+      for (const curator of curators) {
+        await this.curatorsApi.post(groupName, curator.uuid);
+      }
+      return 200;
+    } catch (e) {
+      console.log(e.message);
+      throw new Error(e.message);
+    }
   }
 
   async removeAccessGroupCurators(groupName, curators) {

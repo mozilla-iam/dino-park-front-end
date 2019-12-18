@@ -68,7 +68,7 @@ export class AbbDisplayMemberViewModel {
   processData(data) {
     try {
       this.uuid = data.user_uuid;
-      this.name = data.name;
+      this.name = `${data.first_name} ${data.last_name}`;
       this.username = data.username;
       this.email = data.email;
     } catch (e) {
@@ -103,13 +103,14 @@ export class DisplayMemberViewModel {
     this.processData(data);
   }
 
-  static fromProfileData(profile) {
+  static fromUserData(user) {
     const member = new DisplayMemberViewModel();
+    member.uuid = user.user_uuid;
+    member.name = `${user.first_name} ${user.last_name}`;
+    member.picture = user.picture;
+    member.email = user.email;
+    member.username = user.username;
     member.error = false;
-    member.name = `${profile.firstName} ${profile.lastName}`;
-    member.picture = profile.picture;
-    member.email = profile.email;
-    member.isStaff = profile.isStaff;
     return member;
   }
 
