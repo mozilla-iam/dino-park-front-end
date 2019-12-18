@@ -125,6 +125,7 @@ export default {
     ...membersGetters,
     ...termsGetters,
     getGroup: ({ group }) => group,
+    getGroupName: ({ group }) => group.name,
     getMemberCount: ({ memberCount }) => memberCount,
     getInvitationCount: ({ invitationCount }) => invitationCount,
     getRenewalCount: ({ renewalCount }) => renewalCount,

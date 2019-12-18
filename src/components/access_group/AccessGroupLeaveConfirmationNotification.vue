@@ -37,6 +37,7 @@ export default {
   computed: {
     ...mapGetters({
       accessGroup: 'accessGroup/getGroup',
+      groupName: 'accessGroup/getGroupName',
     }),
     showLeaveConfirmationNotification() {
       return this.$route.name === ACCESS_GROUP_LEAVE_CONFIRMATION_PAGE;
@@ -47,10 +48,9 @@ export default {
       leaveGroup: 'accessGroup/leaveGroup',
     }),
     handleLeaveClick() {
-      const groupName = this.accessGroup.name;
       this.leaveGroup().then(() => {
         this.$root.$emit('toast', {
-          content: `You have left the ${groupName} group`,
+          content: `You have left the ${this.groupName} group`,
         });
         this.$router.push({
           name: 'Access Group',
