@@ -242,7 +242,6 @@ export default {
     updateAutoCompleteList(search) {
       return new Promise((res, rej) => {
         usersApi.get(search, this.userScope).then(results => {
-          results = results.concat(results);
           res(
             results.map(profile => DisplayMemberViewModel.fromUserData(profile))
           );
