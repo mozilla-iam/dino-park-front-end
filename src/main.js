@@ -77,26 +77,26 @@ router.beforeEach((to, from, next) => {
   if (to.meta.key === 'access-group') {
     // eslint-disable-next-line
     promises.push(() =>
-      store.dispatch('accessGroupV2/fetchGroup', to.params.groupname)
+      store.dispatch('accessGroup/fetchGroup', to.params.groupname)
     );
     resolvers.push(data => {});
   }
   if (to.meta.key === 'access-group' && to.name !== ACCESS_GROUP_TOS_PAGE) {
     // eslint-disable-next-line
     promises.push(() =>
-      store.dispatch('accessGroupV2/fetchMembers', to.params.groupname)
+      store.dispatch('accessGroup/fetchMembers', to.params.groupname)
     );
 
     resolvers.push(data => {});
   }
   if (to.name === ACCESS_GROUP_TOS_PAGE || to.name === ACCESS_GROUP_EDIT_PAGE) {
-    promises.push(() => store.dispatch('accessGroupV2/fetchTerms'));
+    promises.push(() => store.dispatch('accessGroup/fetchTerms'));
     resolvers.push(data => {
       console.log('Fetched terms: ', data);
     });
   }
   if (to.name === ACCESS_GROUP_EDIT_PAGE) {
-    promises.push(() => store.dispatch('accessGroupV2/fetchInvitations'));
+    promises.push(() => store.dispatch('accessGroup/fetchInvitations'));
     resolvers.push(data => {});
   }
   resolvePromisesSerially(promises, resolvers)

@@ -157,8 +157,8 @@ export default {
   props: [],
   mounted() {},
   data() {
-    const accessGroup = this.$store.getters['accessGroupV2/getGroup'];
-    const terms = this.$store.getters['accessGroupV2/getTerms'];
+    const accessGroup = this.$store.getters['accessGroup/getGroup'];
+    const terms = this.$store.getters['accessGroup/getTerms'];
     return {
       groupDescriptionData: accessGroup.description,
       groupDescriptionDirty: false,
@@ -186,15 +186,15 @@ export default {
   },
   methods: {
     ...mapActions({
-      updateAccessGroup: 'accessGroupV2/updateGroup',
-      deleteTerms: 'accessGroupV2/deleteTerms',
-      updateTerms: 'accessGroupV2/updateTerms',
-      addTerms: 'accessGroupV2/addTerms',
-      closeGroup: 'accessGroupV2/closeGroup',
+      updateGroup: 'accessGroup/updateGroup',
+      deleteTerms: 'accessGroup/deleteTerms',
+      updateTerms: 'accessGroup/updateTerms',
+      addTerms: 'accessGroup/addTerms',
+      closeGroup: 'accessGroup/closeGroup',
     }),
     handleDescriptionUpdateClicked(e) {
       e.preventDefault();
-      this.updateAccessGroup({
+      this.updateGroup({
         field: 'description',
         value: this.groupDescriptionData,
       }).then(() => {
@@ -206,7 +206,7 @@ export default {
       return false;
     },
     handleTypeUpdateClicked() {
-      this.updateAccessGroup({ field: 'type', value: this.groupTypeData }).then(
+      this.updateGroup({ field: 'type', value: this.groupTypeData }).then(
         () => {
           this.groupTypeDirty = false;
           this.$root.$emit('toast', {
@@ -253,8 +253,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      accessGroup: 'accessGroupV2/getGroup',
-      terms: 'accessGroupV2/getTerms',
+      accessGroup: 'accessGroup/getGroup',
+      terms: 'accessGroup/getTerms',
     }),
     groupName() {
       return this.accessGroup.name;

@@ -83,6 +83,24 @@ export class MembersApi extends Api {
       throw new Error(e.message);
     }
   }
+
+  async post(groupName, memberUuid, groupExpiration) {
+    try {
+      const result = await this.fetcher.post(
+        `${this.endpoint}/${groupName}/${memberUuid}`,
+        {
+          group_expiration: groupExpiration,
+        }
+      );
+      if (Number.isInteger(result)) {
+        throw new Error('Member post error: ' + result);
+      }
+      return await result.json();
+    } catch (e) {
+      console.error(e.message);
+      throw new Error(e.message);
+    }
+  }
 }
 
 export class CuratorsApi extends Api {

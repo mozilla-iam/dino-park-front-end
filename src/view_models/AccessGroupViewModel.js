@@ -161,6 +161,7 @@ export class GroupViewModel {
     this.terms = false;
     this.links = [];
     this.history = [];
+    this.expiration = 0;
     this.error = false;
     this.processData(data);
   }
@@ -172,6 +173,7 @@ export class GroupViewModel {
       this.type = ACCESS_GROUP_TYPES.includes(data.typ) ? data.typ : null;
       this.description = data.description;
       this.terms = data.terms;
+      this.expiration = data.expiration;
     } catch (e) {
       this.error = e.message;
       console.error('Group data error: ', e.message);
@@ -187,7 +189,6 @@ export class AccessGroupDetailsViewModel {
     this.member_count = 0;
     this.invitation_count = 0;
     this.renewal_count = 0;
-    this.expiration = null;
     this.error = false;
     this.processData(data);
   }
@@ -201,7 +202,6 @@ export class AccessGroupDetailsViewModel {
       this.member_count = data.member_count;
       this.invitation_count = data.invitation_count;
       this.renewal_count = data.renewal_count;
-      this.expiration = data.group_expiration;
     } catch (e) {
       this.error = e.message;
       console.error('Access group details data error: ', e.message);

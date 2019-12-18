@@ -23,7 +23,7 @@ export default {
   components: { Icon },
   computed: {
     ...mapGetters({
-      accessGroup: 'accessGroupV2/getGroup',
+      accessGroup: 'accessGroup/getGroup',
       getInvitationsByName: 'userV2/getInvitationsByName',
     }),
     showTOSAcceptanceNotification() {

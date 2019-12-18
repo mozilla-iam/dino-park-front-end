@@ -36,7 +36,7 @@ export default {
   components: { Icon, Button },
   computed: {
     ...mapGetters({
-      accessGroup: 'accessGroupV2/getGroup',
+      accessGroup: 'accessGroup/getGroup',
     }),
     showLeaveConfirmationNotification() {
       return this.$route.name === ACCESS_GROUP_LEAVE_CONFIRMATION_PAGE;
@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      leaveGroup: 'accessGroupV2/leaveGroup',
+      leaveGroup: 'accessGroup/leaveGroup',
     }),
     handleLeaveClick() {
       const groupName = this.accessGroup.name;

@@ -128,7 +128,7 @@ export default {
     getMemberCount: ({ memberCount }) => memberCount,
     getInvitationCount: ({ invitationCount }) => invitationCount,
     getRenewalCount: ({ renewalCount }) => renewalCount,
-    getExpiration: ({ expiration }) => expiration,
+    getExpiration: ({ group }) => (group ? group.expiration : 0),
     getInvitationConfig: ({ invitationConfig }) =>
       invitationConfig ? invitationConfig.content : null,
   },

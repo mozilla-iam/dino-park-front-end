@@ -12,7 +12,7 @@ export default new Vuex.Store({
   modules: {
     userV2: user,
     scopeV2: scope,
-    accessGroupV2: accessGroup,
+    accessGroup,
   },
   state: {
     user: null,

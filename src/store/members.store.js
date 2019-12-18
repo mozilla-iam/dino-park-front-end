@@ -28,11 +28,12 @@ export const membersActions = {
       throw new Error(e.message);
     }
   },
-  async addMembers({ state, dispatch }, addableMembers) {
+  async addMembers({ state, dispatch }, { invites, expiration }) {
     try {
-      const result = await accessGroupsService.addAccessGroupMembers(
+      const result = await accessGroupsService.addMembers(
         state.group.name,
-        addableMembers
+        invites,
+        expiration
       );
       return await dispatch('fetchMembers');
     } catch (e) {
@@ -41,7 +42,7 @@ export const membersActions = {
   },
   async addCurators({ state, dispatch }, curators) {
     try {
-      const result = await accessGroupsService.addAccessGroupCurators(
+      const result = await accessGroupsService.addCurators(
         state.group.name,
         curators
       );
@@ -52,7 +53,7 @@ export const membersActions = {
   },
   async removeCurators({ state, dispatch }, curators) {
     try {
-      const result = await accessGroupsService.removeAccessGroupCurators(
+      const result = await accessGroupsService.removeCurators(
         state.group.name,
         curators
       );

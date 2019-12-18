@@ -26,8 +26,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      group: 'accessGroupV2/getGroup',
-      memberCount: 'accessGroupV2/getMemberCount',
+      group: 'accessGroup/getGroup',
+      memberCount: 'accessGroup/getMemberCount',
     }),
     membersCountText() {
       let fullText = '';

@@ -5,6 +5,7 @@ import {
   TermsApi,
   SelfInvitationsApi,
   CuratorsApi,
+  UsersApi,
 } from './access-groups-api.js';
 import accessGroupMembers from '@/accessgroupmembers.json';
 import accessGroupCurators from '@/accessgroupcurators.json';
@@ -17,6 +18,7 @@ export default class AccessGroups {
     this.termsApi = new TermsApi();
     this.selfInvitationsApi = new SelfInvitationsApi();
     this.curatorsApi = new CuratorsApi();
+    this.usersApi = new UsersApi();
   }
 
   /**
@@ -100,7 +102,7 @@ export default class AccessGroups {
     }); //this.fetcher.fetch('');
   }
 
-  async addAccessGroupCurators(groupName, curators) {
+  async addCurators(groupName, curators) {
     try {
       for (const curator of curators) {
         await this.curatorsApi.post(groupName, curator.uuid);
@@ -112,19 +114,25 @@ export default class AccessGroups {
     }
   }
 
-  async removeAccessGroupCurators(groupName, curators) {
+  async removeCurators(groupName, curators) {
     return new Promise((res, rej) => {
       res('curators have been removed');
     }); //this.fetcher.fetch('');
   }
 
-  async addAccessGroupMembers(groupName, curators) {
-    return new Promise((res, rej) => {
-      res('members have been added');
-    }); //this.fetcher.fetch('');
+  async addMembers(groupName, members, expiration) {
+    try {
+      for (const member of members) {
+        await this.membersApi.post(groupName, member.uuid, expiration);
+      }
+      return 200;
+    } catch (e) {
+      console.log(e.message);
+      throw new Error(e.message);
+    }
   }
 
-  async removeAccessGroupMembers(groupName, curators) {
+  async removeMembers(groupName, curators) {
     return new Promise((res, rej) => {
       res('members have been removed');
     }); //this.fetcher.fetch('');
@@ -206,5 +214,17 @@ export default class AccessGroups {
     return new Promise((res, rej) => {
       res('invitation resent');
     }); //this.fetcher.fetch('');
+  }
+
+  async getUsers(q, scope) {
+    try {
+      let users = await this.usersApi.get(q, scope);
+      // TODO: Replace this with: users = users.filter(({ email }) => email !== null);
+      users = users.filter(({ first_name }) => first_name !== null);
+      return users;
+    } catch (e) {
+      console.log(e.message);
+      throw new Error(e.message);
+    }
   }
 }

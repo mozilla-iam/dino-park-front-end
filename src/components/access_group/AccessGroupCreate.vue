@@ -114,7 +114,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      createGroup: 'accessGroupV2/createGroup',
+      createGroup: 'accessGroup/createGroup',
     }),
     handleCreateClicked() {
       this.createGroup({

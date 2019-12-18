@@ -82,7 +82,13 @@ export default {
       }
     },
     onInputBlur(e) {
-      const parent = e.target.closest('.tag-selector-container');
+      // TODO: This currently only works on firefox.
+      if (!e.explicitOriginalTarget || !e.explicitOriginalTarget.closest) {
+        return;
+      }
+      const parent = e.explicitOriginalTarget.closest(
+        '.tag-selector-container'
+      );
       if (!parent) {
         this.autoCompleteList = [];
       }

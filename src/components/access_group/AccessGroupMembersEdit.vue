@@ -135,9 +135,9 @@ import TagSelector from '@/components/ui/TagSelector.vue';
 import NumberScrollerInput from '@/components/ui/NumberScrollerInput.vue';
 import ProfileApi from '@/assets/js/profile-api';
 import { DisplayMemberViewModel } from '@/view_models/AccessGroupViewModel';
-import { UsersApi } from '@/assets/js/access-groups-api';
+import AccessGroups from '@/assets/js/access-groups';
 
-const usersApi = new UsersApi();
+const accessGroups = new AccessGroups();
 
 export default {
   name: 'AccessGroupInformationEdit',
@@ -175,12 +175,10 @@ export default {
   },
   data() {
     const accessGroupExpiration = this.$store.getters[
-      'accessGroupV2/getExpiration'
+      'accessGroup/getExpiration'
     ];
-    const accessGroupCurators = this.$store.getters[
-      'accessGroupV2/getCurators'
-    ];
-    const accessGroupMembers = this.$store.getters['accessGroupV2/getMembers'];
+    const accessGroupCurators = this.$store.getters['accessGroup/getCurators'];
+    const accessGroupMembers = this.$store.getters['accessGroup/getMembers'];
     return {
       groupExpiration: !accessGroupExpiration ? 0 : accessGroupExpiration,
       groupData: '',
@@ -202,10 +200,10 @@ export default {
   },
   methods: {
     ...mapActions({
-      removeMember: 'accessGroupV2/removeMember',
-      addCurators: 'accessGroupV2/addCurators',
-      removeCurators: 'accessGroupV2/removeCurators',
-      updateGroup: 'accessGroupV2/updateGroup',
+      removeMember: 'accessGroup/removeMember',
+      addCurators: 'accessGroup/addCurators',
+      removeCurators: 'accessGroup/removeCurators',
+      updateGroup: 'accessGroup/updateGroup',
     }),
     refreshMembersList() {
       this.allMembersList = this.allMembers.map(member => {
@@ -241,7 +239,7 @@ export default {
     },
     updateAutoCompleteList(search) {
       return new Promise((res, rej) => {
-        usersApi.get(search, this.userScope).then(results => {
+        accessGroups.getUsers(search, this.getScope).then(results => {
           res(
             results.map(profile => DisplayMemberViewModel.fromUserData(profile))
           );
@@ -276,7 +274,10 @@ export default {
         });
     },
     handleUpdateExpirationClicked() {
-      this.updateGroup('expiration', this.groupExpiration).then(result => {
+      this.updateGroup({
+        field: 'expiration',
+        value: this.groupExpiration,
+      }).then(result => {
         this.groupExpirationDirty = false;
         this.$root.$emit('toast', {
           content: `Access Group expiration has been successfully updated`,
@@ -284,27 +285,13 @@ export default {
       });
     },
   },
-  computed: {
-    ...mapGetters({
-      group: 'accessGroupV2/getGroup',
-      accessGroupCurators: 'accessGroupV2/getCurators',
-      accessGroupExpiration: 'accessGroupV2/getExpiration',
-      allMembers: 'accessGroupV2/getMembers',
-    }),
-    userScope() {
-      // TODO: clean this up
-      if (this.scope.isStaff) {
-        return 'Staff';
-      }
-      if (this.scope.isNdaed) {
-        return 'Ndaed';
-      }
-      if (this.scope.isLdap) {
-        return 'Authenticated';
-      }
-      return 'Public';
-    },
-  },
+  computed: mapGetters({
+    group: 'accessGroup/getGroup',
+    accessGroupCurators: 'accessGroup/getCurators',
+    accessGroupExpiration: 'accessGroup/getExpiration',
+    allMembers: 'accessGroup/getMembers',
+    getScope: 'scopeV2/get',
+  }),
 };
 </script>
 

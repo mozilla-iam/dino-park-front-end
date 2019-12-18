@@ -58,8 +58,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      invitationCount: 'accessGroupV2/getInvitationCount',
-      renewalCount: 'accessGroupV2/getRenewalCount',
+      invitationCount: 'accessGroup/getInvitationCount',
+      renewalCount: 'accessGroup/getRenewalCount',
     }),
     totalPendingInvitations() {
       return this.invitationCount;

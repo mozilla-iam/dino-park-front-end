@@ -83,18 +83,18 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import TextInput from '@/components/ui/TextInput.vue';
 import TextArea from '@/components/ui/TextArea.vue';
 import Button from '@/components/ui/Button.vue';
 import Icon from '@/components/ui/Icon.vue';
 import AccessGroupEditPanel from '@/components/access_group/AccessGroupEditPanel.vue';
 import TagSelector from '@/components/ui/TagSelector.vue';
-import ProfileApi from '@/assets/js/profile-api';
+import AccessGroups from '@/assets/js/access-groups';
 import { DisplayMemberViewModel } from '@/view_models/AccessGroupViewModel';
 import AccessGroupMemberListDisplay from '@/components/access_group/AccessGroupMemberListDisplay.vue';
 
-const profileApi = new ProfileApi();
+const accessGroups = new AccessGroups();
 
 export default {
   name: 'AccessGroupInvitationsEdit',
@@ -111,10 +111,10 @@ export default {
   mounted() {},
   data() {
     const invitationConfig = this.$store.getters[
-      'accessGroupV2/getInvitationConfig'
+      'accessGroup/getInvitationConfig'
     ];
     const accessGroupInvitations = this.$store.getters[
-      'accessGroupV2/getInvitations'
+      'accessGroup/getInvitations'
     ];
     return {
       invitationList: accessGroupInvitations,
@@ -140,9 +140,9 @@ export default {
   },
   methods: {
     ...mapActions({
-      resendInvitation: 'accessGroupV2/resendInvitation',
-      addMembers: 'accessGroupV2/addMembers',
-      updateInviteText: 'accessGroupV2/updateInviteText',
+      resendInvitation: 'accessGroup/resendInvitation',
+      addMembers: 'accessGroup/addMembers',
+      updateInviteText: 'accessGroup/updateInviteText',
     }),
     handleResendClicked(invitation) {
       this.resendInvitation(invitation).then(result => {
@@ -157,18 +157,18 @@ export default {
     },
     updateAutoCompleteList(search) {
       return new Promise((res, rej) => {
-        profileApi.searchProfiles(search).then(results => {
+        accessGroups.getUsers(search, this.getScope).then(results => {
           res(
-            results.map(profile =>
-              DisplayMemberViewModel.fromProfileData(profile)
-            )
+            results.map(profile => DisplayMemberViewModel.fromUserData(profile))
           );
         });
       });
-      return;
     },
     handleAddNewInvitesClicked() {
-      this.addMembers(this.newInvites).then(result => {
+      this.addMembers({
+        invites: this.newInvites,
+        expiration: this.groupExpiration,
+      }).then(result => {
         this.$root.$emit('toast', {
           content: 'Members successfully invited',
         });
@@ -185,11 +185,19 @@ export default {
       });
     },
   },
-  computed: {},
+  computed: mapGetters({
+    getScope: 'scopeV2/get',
+    groupExpiration: 'accessGroup/getExpiration',
+  }),
 };
 </script>
 
 <style>
+.edit-invitations-container {
+  /* enable tag selector dropdown */
+  overflow: visible;
+}
+
 .pending-invitations-container {
   list-style-type: none;
   margin: 0;

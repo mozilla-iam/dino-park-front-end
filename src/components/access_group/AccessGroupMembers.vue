@@ -134,7 +134,7 @@ export default {
     },
   },
   data() {
-    const fullMemberList = this.$store.getters['accessGroupV2/getMembers'];
+    const fullMemberList = this.$store.getters['accessGroup/getMembers'];
     return {
       search: '',
       filter: '',

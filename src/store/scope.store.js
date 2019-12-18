@@ -31,9 +31,19 @@ export default {
   },
   getters: {
     get(state) {
-      return {
-        ...state,
-      };
+      if (state.isStaff) {
+        return 'Staff';
+      }
+      if (state.isNdaed) {
+        return 'Ndaed';
+      }
+      if (state.isLdap) {
+        return 'Authenticated';
+      }
+      return 'Public';
     },
+    isStaff: ({ isStaff }) => isStaff,
+    isNdaed: ({ isNdaed }) => isNdaed,
+    isLdap: ({ isLdap }) => isLdap,
   },
 };

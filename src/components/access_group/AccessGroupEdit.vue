@@ -143,12 +143,20 @@ export default {
 
 .group-edit .edit-container {
   margin-top: 2em;
+  /* enable tag selector dropdown */
+  overflow: visible;
 }
 
 .edit-container__tabs,
 .edit-container__content {
   background: var(--white);
   box-shadow: var(--shadowCard);
+}
+
+.edit-container__content {
+  margin-top: 1em;
+  /* enable tag selector dropdown */
+  overflow: visible;
 }
 
 .edit-container__tabs .tabs-container {
@@ -179,9 +187,5 @@ export default {
   display: flex;
   align-items: center;
   margin-right: 1em;
-}
-
-.edit-container__content {
-  margin-top: 1em;
 }
 </style>

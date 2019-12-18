@@ -97,8 +97,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      accessGroup: 'accessGroupV2/getGroup',
-      termsContent: 'accessGroupV2/getTerms',
+      accessGroup: 'accessGroup/getGroup',
+      termsContent: 'accessGroup/getTerms',
       getInvitationByName: 'userV2/getInvitationsByName',
     }),
     groupInvitation() {
