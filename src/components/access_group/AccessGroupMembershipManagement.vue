@@ -3,6 +3,7 @@
     <p class="primary-data-row">
       <span class="primary-data-row__count">{{ totalPendingInvitations }}</span>
       <RouterLink
+        v-if="showEdit"
         class="primary-data-row__direct"
         :to="{
           name: 'Edit Access Group',
@@ -10,10 +11,14 @@
         }"
         >{{ pendingInvitationsText }}</RouterLink
       >
+      <span class="primary-data-row__direct" v-else>{{
+        pendingInvitationsText
+      }}</span>
     </p>
     <p class="primary-data-row">
       <span class="primary-data-row__count">{{ totalPendingRenewals }}</span>
       <RouterLink
+        v-if="showEdit"
         class="primary-data-row__direct"
         :to="{
           name: 'Edit Access Group',
@@ -21,6 +26,9 @@
         }"
         >{{ pendingRenewalsText }}</RouterLink
       >
+      <span class="primary-data-row__direct" v-else>{{
+        pendingRenewalsText
+      }}</span>
     </p>
     <p class="secondary-data-row">
       Memberships that
