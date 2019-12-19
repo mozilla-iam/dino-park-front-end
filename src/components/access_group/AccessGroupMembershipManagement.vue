@@ -6,7 +6,7 @@
         class="primary-data-row__direct"
         :to="{
           name: 'Edit Access Group',
-          query: { section: 'pending-acceptance' },
+          query: { section: 'invitations' },
         }"
         >{{ pendingInvitationsText }}</RouterLink
       >
@@ -17,7 +17,7 @@
         class="primary-data-row__direct"
         :to="{
           name: 'Edit Access Group',
-          query: { section: 'pending-renewal' },
+          query: { section: 'members' },
         }"
         >{{ pendingRenewalsText }}</RouterLink
       >
