@@ -118,7 +118,7 @@ export class DisplayMemberViewModel {
     try {
       this.uuid = data.user_uuid;
       this.picture = data.picture;
-      this.name = data.name;
+      this.name = `${data.first_name} ${data.last_name}`;
       this.username = data.username;
       this.email = data.email;
       this.isStaff = data.isStaff;

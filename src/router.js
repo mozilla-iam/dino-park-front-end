@@ -13,7 +13,7 @@ import AccessGroupCreate from './components/access_group/AccessGroupCreate.vue';
 import scrolling from './assets/js/scrolling';
 
 Vue.use(Router);
-
+export const ACCESS_GROUP_CREATE_PAGE = 'Create Access Group';
 export const ACCESS_GROUP_EDIT_PAGE = 'Edit Access Group';
 export const ACCESS_GROUP_TOS_PAGE = 'Access Group TOS';
 export const ACCESS_GROUP_PAGE = 'Access Group';
@@ -87,7 +87,7 @@ const router = new Router({
     },
     {
       path: '/a/create',
-      name: 'Create Access Group',
+      name: ACCESS_GROUP_CREATE_PAGE,
       component: AccessGroupCreate,
       props: true,
       meta: { key: 'access-group' },

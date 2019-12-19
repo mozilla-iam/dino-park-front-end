@@ -49,6 +49,14 @@ export class GroupsApi extends Api {
       group_expiration: 'expiration' in data ? data.expiration : 0,
     };
   }
+  async create(data) {
+    try {
+      return await this.fetcher.post(this.endpoint, data);
+    } catch (e) {
+      console.error(e.message);
+      throw new Error(e.message);
+    }
+  }
 }
 
 export class GroupInvitationsApi extends Api {
@@ -193,6 +201,23 @@ export class TermsApi extends Api {
   async delete(groupName) {
     try {
       return await this.fetcher.delete(`${this.endpoint}/${groupName}`);
+    } catch (e) {
+      console.error(e.message);
+      throw new Error(e.message);
+    }
+  }
+}
+
+export class SelfApi extends Api {
+  constructor() {
+    super();
+    this.endpoint = `${API_PREFIX}self`;
+  }
+
+  async delete(groupName) {
+    try {
+      const result = await this.fetcher.delete(`${this.endpoint}/${groupName}`);
+      return await result.json();
     } catch (e) {
       console.error(e.message);
       throw new Error(e.message);

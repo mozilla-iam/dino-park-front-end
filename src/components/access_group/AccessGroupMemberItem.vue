@@ -27,7 +27,9 @@
     <aside class="list-item__expandable" v-if="showExpandable">
       <p class="expandable-row">
         <span class="expandable-row__label">Member since</span>
-        <span class="expandable-row__content">{{ formatDate(member.since) }}</span>
+        <span class="expandable-row__content">{{
+          formatDate(member.since)
+        }}</span>
       </p>
       <p class="expandable-row">
         <span class="expandable-row__label">Added by</span>
@@ -41,7 +43,10 @@
 import UserPicture from '@/components/ui/UserPicture.vue';
 import EditButton from '@/components/ui/EditButton.vue';
 import Icon from '@/components/ui/Icon.vue';
-import { DISPLAY_MEMBER_ROLES, MEMBER_IDEX } from '@/view_models/AccessGroupViewModel';
+import {
+  DISPLAY_MEMBER_ROLES,
+  MEMBER_IDEX,
+} from '@/view_models/AccessGroupViewModel';
 
 export default {
   name: 'AccessGroupMemberItem',

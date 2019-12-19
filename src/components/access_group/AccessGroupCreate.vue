@@ -34,13 +34,13 @@
       <AccessGroupEditPanel title="Group type">
         <template v-slot:content>
           <div class="content-area__row">
-            <div class="radio-control">
-              <input type="radio" value="reviewed" v-model="groupType" />
-              Reviewed
-            </div>
-            <div class="radio-control">
-              <input type="radio" value="closed" v-model="groupType" />
-              Closed
+            <div
+              class="radio-control"
+              v-for="(type, idx) in groupTypes"
+              :key="idx"
+            >
+              <input type="radio" :value="type" v-model="groupType" />
+              {{ type }}
             </div>
           </div>
           <div class="content-area__row radio-control__description">
@@ -110,6 +110,9 @@ export default {
   computed: {
     createEnabled() {
       return this.groupName.length > 0;
+    },
+    groupTypes() {
+      return ACCESS_GROUP_TYPES.filter(type => type !== 'Open');
     },
   },
   methods: {

@@ -142,7 +142,6 @@ import Button from '@/components/ui/Button.vue';
 import Icon from '@/components/ui/Icon.vue';
 import AccessGroupEditPanel from '@/components/access_group/AccessGroupEditPanel.vue';
 import AccessGroupMarkdownGuide from '@/components/access_group/AccessGroupMarkdownGuide.vue';
-import { ACCESS_GROUP_TYPES } from '@/view_models/AccessGroupViewModel.js';
 
 export default {
   name: 'AccessGroupInformationEdit',
@@ -258,9 +257,6 @@ export default {
     }),
     groupName() {
       return this.accessGroup.name;
-    },
-    groupTypes() {
-      return ACCESS_GROUP_TYPES.filter(type => type !== 'Open');
     },
   },
 };

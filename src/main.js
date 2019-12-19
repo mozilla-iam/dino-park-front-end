@@ -4,7 +4,9 @@ import App from './App.vue';
 import router, {
   ACCESS_GROUP_TOS_PAGE,
   ACCESS_GROUP_EDIT_PAGE,
+  ACCESS_GROUP_CREATE_PAGE,
 } from './router';
+import { ACCESS_GROUP_TYPES } from '@/view_models/AccessGroupViewModel.js';
 
 import { apolloProvider } from './server';
 import store from '@/store';
@@ -45,6 +47,9 @@ Vue.mixin({
     scope() {
       return this.$store.state.scope;
     },
+    groupTypes() {
+      return ACCESS_GROUP_TYPES.filter(type => type !== 'Open');
+    },
   },
   methods: {
     getFeature(featureName) {
@@ -74,6 +79,10 @@ store.dispatch('userV2/fetchProfile').then(function() {
 router.beforeEach((to, from, next) => {
   const promises = [];
   const resolvers = [];
+  if (to.name === ACCESS_GROUP_CREATE_PAGE) {
+    next();
+    return;
+  }
   if (to.meta.key === 'access-group') {
     // eslint-disable-next-line
     promises.push(() =>

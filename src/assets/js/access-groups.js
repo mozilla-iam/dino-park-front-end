@@ -6,6 +6,7 @@ import {
   SelfInvitationsApi,
   CuratorsApi,
   UsersApi,
+  SelfApi,
 } from './access-groups-api.js';
 import accessGroupMembers from '@/accessgroupmembers.json';
 import accessGroupCurators from '@/accessgroupcurators.json';
@@ -19,6 +20,7 @@ export default class AccessGroups {
     this.selfInvitationsApi = new SelfInvitationsApi();
     this.curatorsApi = new CuratorsApi();
     this.usersApi = new UsersApi();
+    this.selfApi = new SelfApi();
   }
 
   /**
@@ -55,15 +57,21 @@ export default class AccessGroups {
   }
 
   async leaveGroup(groupName) {
-    return new Promise((res, rej) => {
-      res('Left group');
-    }); //this.fetcher.fetch('');
+    try {
+      return await this.selfApi.delete(groupName);
+    } catch (e) {
+      console.log(e.message);
+      throw new Error(e.message);
+    }
   }
 
   async createAccessGroup(form) {
-    return new Promise((res, rej) => {
-      res('access group created');
-    }); //this.fetcher.fetch('');
+    try {
+      return await this.groupsApi.create(form);
+    } catch (e) {
+      console.log(e.message);
+      throw new Error(e.message);
+    }
   }
 
   async closeAccessGroup(groupName) {
