@@ -174,6 +174,9 @@ export default {
       ) {
         this.groupExpirationDirty = true;
       }
+      if (!value) {
+        this.groupExpiration = null;
+      }
     },
   },
   data() {

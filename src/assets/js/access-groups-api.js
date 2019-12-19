@@ -119,6 +119,18 @@ export class MembersApi extends Api {
       throw new Error(e.message);
     }
   }
+
+  async delete(groupName, memberUuid) {
+    try {
+      const result = await this.fetcher.delete(
+        `${this.endpoint}/${groupName}/${memberUuid}`
+      );
+      return await result.status;
+    } catch (e) {
+      console.error(e.message);
+      throw new Error(e.message);
+    }
+  }
 }
 
 export class CuratorsApi extends Api {

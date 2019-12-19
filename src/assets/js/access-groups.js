@@ -88,11 +88,12 @@ export default class AccessGroups {
   }
 
   async deleteMember(groupName, uuid) {
-    return new Promise((res, rej) => {
-      const { members } = accessGroupMembers;
-      const { curators } = accessGroupCurators;
-      res('member deleted');
-    }); //this.fetcher.fetch('');
+    try {
+      return await this.membersApi.delete(groupName, uuid);
+    } catch (e) {
+      console.log(e.message);
+      throw new Error(e.message);
+    }
   }
   async deleteCurator(groupName, uuid) {
     return new Promise((res, rej) => {
