@@ -90,6 +90,8 @@ export const membersMutations = {
 };
 export const membersGetters = {
   getMembers: ({ members }) => members,
-
   getCurators: ({ members }) => members.filter(member => member.isCurator()),
+  isCurator: ({ members }) => uuid =>
+    members.filter(member => member.uuid === uuid && member.isCurator())
+      .length > 0,
 };

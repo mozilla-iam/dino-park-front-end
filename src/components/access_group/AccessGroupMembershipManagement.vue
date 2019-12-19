@@ -27,7 +27,7 @@
       <span class="secondary-data-row__focus">will expire</span> after
       <span class="secondary-data-row__focus">{{ expiry }}</span>
     </p>
-    <footer class="action-row">
+    <footer class="action-row" v-if="showEdit">
       <RouterLink
         class="membership-management__add-more button--secondary button button--action"
         type="button"
@@ -37,7 +37,6 @@
             section: 'invitations',
           },
         }"
-        v-on:click="handleAddMembers"
       >
         <Icon id="plus" :width="16" :height="16" />Add Members
       </RouterLink>
@@ -62,6 +61,7 @@ export default {
       invitationCount: 'accessGroup/getInvitationCount',
       renewalCount: 'accessGroup/getRenewalCount',
       expiration: 'accessGroup/getExpiration',
+      isCurator: 'accessGroup/isCurator',
     }),
     totalPendingInvitations() {
       return this.invitationCount;
@@ -84,10 +84,8 @@ export default {
     expiry() {
       return expiryText(this.expiration);
     },
-  },
-  methods: {
-    handleAddMembers() {
-      console.log('Adding members');
+    showEdit() {
+      return this.isCurator(this.$store.state.user.uuid.value);
     },
   },
 };

@@ -39,7 +39,7 @@ export default class AccessGroups {
     });
   }
 
-  async updateAccessGroupDetails(groupName, updateData) {
+  async updatesGroupDetails(groupName, updateData) {
     try {
       return await this.groupsApi.put(groupName, updateData);
     } catch (e) {
@@ -47,6 +47,7 @@ export default class AccessGroups {
       throw new Error(e.message);
     }
   }
+
   async updateAccessGroupExpiration(groupName, expiration) {
     return new Promise((res, rej) => {
       res('Expiration has been updated');
@@ -95,6 +96,7 @@ export default class AccessGroups {
       throw new Error(e.message);
     }
   }
+
   async deleteCurator(groupName, uuid) {
     return new Promise((res, rej) => {
       const { members } = accessGroupMembers;
@@ -131,12 +133,6 @@ export default class AccessGroups {
       console.log(e.message);
       throw new Error(e.message);
     }
-  }
-
-  async removeMembers(groupName, curators) {
-    return new Promise((res, rej) => {
-      res('members have been removed');
-    }); //this.fetcher.fetch('');
   }
 
   async renewMember(groupName, memberUuid, expiration) {

@@ -13,7 +13,7 @@
           </Tooltip>
         </div>
         <EditButton
-          v-if="editable"
+          v-if="editable && showEdit"
           :sendTo="{
             name: 'Edit Access Group',
             query: {
@@ -76,6 +76,7 @@ export default {
     ...mapGetters({
       accessGroup: 'accessGroup/getGroup',
       memberCount: 'accessGroup/memberCount',
+      isCurator: 'accessGroup/isCurator',
     }),
     membersCountText() {
       let fullText = '';
@@ -88,6 +89,9 @@ export default {
     },
     descriptionDisplay() {
       return parseMarkdown(this.accessGroup.description);
+    },
+    showEdit() {
+      return this.isCurator(this.$store.state.user.uuid.value);
     },
   },
   data() {
