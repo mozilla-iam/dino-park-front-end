@@ -77,6 +77,7 @@ export default {
       accessGroup: 'accessGroup/getGroup',
       memberCount: 'accessGroup/memberCount',
       isCurator: 'accessGroup/isCurator',
+      isAdmin: 'accessGroup/isAdmin',
     }),
     membersCountText() {
       let fullText = '';
@@ -91,7 +92,10 @@ export default {
       return parseMarkdown(this.accessGroup.description);
     },
     showEdit() {
-      return this.isCurator(this.$store.state.user.uuid.value);
+      return (
+        this.isCurator(this.$store.state.user.uuid.value) ||
+        this.isAdmin(this.$store.state.user.uuid.value)
+      );
     },
   },
   data() {

@@ -34,6 +34,7 @@ export default {
     renewalCount: 0,
     expiration: null,
     invitationConfig: null,
+    loading: false,
   },
   actions: {
     ...accessGroupInvitationsActions,
@@ -41,8 +42,10 @@ export default {
     ...termsActions,
     async fetchGroup({ commit }, groupName) {
       try {
-        const data = await accessGroupsService.getAccessGroup(groupName);
+        commit('setLoading', true);
+        const data = await accessGroupsService.getGroup(groupName);
         commit('setGroup', data);
+        commit('setLoading', false);
         return data;
       } catch (e) {
         throw new Error(e.message);
@@ -54,7 +57,7 @@ export default {
           ...state.group,
           [field]: value,
         });
-        const result = await accessGroupsService.updateAccessGroupDetails(
+        const result = await accessGroupsService.updateGroupDetails(
           state.group.name,
           updateData
         );
@@ -92,14 +95,14 @@ export default {
     },
     async closeGroup({ state }) {
       try {
-        return await accessGroupsService.closeAccessGroup(state.group.name);
+        return await accessGroupsService.closeGroup(state.group.name);
       } catch (e) {
         throw new Error(e.message);
       }
     },
     async createGroup(context, form) {
       try {
-        return await accessGroupsService.createAccessGroup(form);
+        return await accessGroupsService.createGroup(form);
       } catch (e) {
         throw new Error(e.message);
       }
@@ -122,6 +125,9 @@ export default {
         throw new Error(e.message);
       }
     },
+    setLoading(state, loading) {
+      state.loading = loading;
+    },
   },
   getters: {
     ...accessGroupInvitationsGetters,
@@ -135,5 +141,6 @@ export default {
     getExpiration: ({ group }) => (group ? group.expiration : 0),
     getInvitationConfig: ({ invitationConfig }) =>
       invitationConfig ? invitationConfig.content : null,
+    getLoading: ({ loading }) => loading,
   },
 };

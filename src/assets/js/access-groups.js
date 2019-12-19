@@ -26,7 +26,7 @@ export default class AccessGroups {
   /**
    * Access Group Methods
    */
-  async getAccessGroup(groupName) {
+  async getGroup(groupName) {
     return new Promise((res, rej) => {
       this.groupsApi
         .get(groupName)
@@ -41,19 +41,13 @@ export default class AccessGroups {
     });
   }
 
-  async updatesGroupDetails(groupName, updateData) {
+  async updateGroupDetails(groupName, updateData) {
     try {
       return await this.groupsApi.put(groupName, updateData);
     } catch (e) {
       console.log(e.message);
       throw new Error(e.message);
     }
-  }
-
-  async updateAccessGroupExpiration(groupName, expiration) {
-    return new Promise((res, rej) => {
-      res('Expiration has been updated');
-    }); //this.fetcher.fetch('');
   }
 
   async leaveGroup(groupName) {
@@ -65,7 +59,7 @@ export default class AccessGroups {
     }
   }
 
-  async createAccessGroup(form) {
+  async createGroup(form) {
     try {
       return await this.groupsApi.create(form);
     } catch (e) {
@@ -74,7 +68,7 @@ export default class AccessGroups {
     }
   }
 
-  async closeAccessGroup(groupName) {
+  async closeGroup(groupName) {
     try {
       return await this.groupsApi.delete(groupName);
     } catch (e) {

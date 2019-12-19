@@ -62,6 +62,7 @@ export default {
       renewalCount: 'accessGroup/getRenewalCount',
       expiration: 'accessGroup/getExpiration',
       isCurator: 'accessGroup/isCurator',
+      isAdmin: 'accessGroup/isAdmin',
     }),
     totalPendingInvitations() {
       return this.invitationCount;
@@ -85,7 +86,10 @@ export default {
       return expiryText(this.expiration);
     },
     showEdit() {
-      return this.isCurator(this.$store.state.user.uuid.value);
+      return (
+        this.isCurator(this.$store.state.user.uuid.value) ||
+        this.isAdmin(this.$store.state.user.uuid.value)
+      );
     },
   },
 };

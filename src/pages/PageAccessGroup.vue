@@ -1,5 +1,5 @@
 <template>
-  <RouterView v-if="showAccessGroup" />
+  <RouterView v-if="!loading" />
   <LoadingSpinner v-else />
 </template>
 
@@ -12,7 +12,7 @@ export default {
   components: { LoadingSpinner },
   computed: {
     ...mapGetters({
-      accessGroup: 'accessGroup/getGroup',
+      loading: 'accessGroup/getLoading',
     }),
     showAccessGroup() {
       return this.accessGroup;
