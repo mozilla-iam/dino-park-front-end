@@ -1,12 +1,13 @@
 <template>
   <main class="group-edit">
-    <a
+    <RouterLink
       class="button group-edit__back-action"
-      :href="backUrl"
-      @click="handleBackClicked"
+      :to="{
+        name: 'Access Group',
+      }"
     >
       <Icon id="chevron-left" :width="17" :height="17" />Back to group
-    </a>
+    </RouterLink>
     <section class="edit-container">
       <nav class="edit-container__tabs">
         <ul class="tabs-container">
@@ -82,9 +83,6 @@ export default {
     }
   },
   methods: {
-    handleBackClicked() {
-      console.log('Back clicked');
-    },
     handleTabClick(tab) {
       this.$router.push({
         name: 'Edit Access Group',
@@ -101,9 +99,6 @@ export default {
     },
   },
   computed: {
-    backUrl() {
-      return this.$route.path.substr(0, this.$route.path.lastIndexOf('/'));
-    },
     currentTabView() {
       const defaultTab = 0;
       if (!this.$route.query.section) {

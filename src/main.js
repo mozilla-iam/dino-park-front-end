@@ -5,6 +5,7 @@ import router, {
   ACCESS_GROUP_TOS_PAGE,
   ACCESS_GROUP_EDIT_PAGE,
   ACCESS_GROUP_CREATE_PAGE,
+  ACCESS_GROUP_PAGE,
 } from './router';
 import { ACCESS_GROUP_TYPES } from '@/view_models/AccessGroupViewModel.js';
 
@@ -79,35 +80,54 @@ store.dispatch('userV2/fetchProfile').then(function() {
 router.beforeEach((to, from, next) => {
   const promises = [];
   const resolvers = [];
-  if (to.name === ACCESS_GROUP_CREATE_PAGE) {
+
+  // Don't try to load data
+  if (
+    // cond: if you're on the create page
+    to.name === ACCESS_GROUP_CREATE_PAGE ||
+    // cond: if you're just changing tabs on the edit page
+    (to.name === ACCESS_GROUP_EDIT_PAGE &&
+      from.name === ACCESS_GROUP_EDIT_PAGE &&
+      to.query.section &&
+      from.query.section &&
+      to.query.section !== from.query.section) ||
+    // cond: if you're going from the edit page to the view page
+    (to.name === ACCESS_GROUP_PAGE && from.name === ACCESS_GROUP_EDIT_PAGE) ||
+    // cond: if you're going from the view page to the edit page
+    (to.name === ACCESS_GROUP_EDIT_PAGE && from.name === ACCESS_GROUP_PAGE)
+  ) {
     next();
     return;
   }
+
   if (to.meta.key === 'access-group') {
     // eslint-disable-next-line
     promises.push(() =>
       store.dispatch('accessGroup/fetchGroup', to.params.groupname)
     );
     resolvers.push(data => {});
-  }
-  if (to.meta.key === 'access-group' && to.name !== ACCESS_GROUP_TOS_PAGE) {
-    // eslint-disable-next-line
-    promises.push(() =>
-      store.dispatch('accessGroup/fetchMembers', to.params.groupname)
-    );
+    if (to.name !== ACCESS_GROUP_TOS_PAGE) {
+      promises.push(() =>
+        store.dispatch('accessGroup/fetchMembers', to.params.groupname)
+      );
 
-    resolvers.push(data => {});
+      resolvers.push(data => {});
+    }
+    if (
+      to.name === ACCESS_GROUP_TOS_PAGE ||
+      to.name === ACCESS_GROUP_EDIT_PAGE
+    ) {
+      promises.push(() => store.dispatch('accessGroup/fetchTerms'));
+      resolvers.push(data => {
+        console.log('Fetched terms: ', data);
+      });
+    }
+    if (to.name === ACCESS_GROUP_EDIT_PAGE) {
+      promises.push(() => store.dispatch('accessGroup/fetchInvitations'));
+      resolvers.push(data => {});
+    }
   }
-  if (to.name === ACCESS_GROUP_TOS_PAGE || to.name === ACCESS_GROUP_EDIT_PAGE) {
-    promises.push(() => store.dispatch('accessGroup/fetchTerms'));
-    resolvers.push(data => {
-      console.log('Fetched terms: ', data);
-    });
-  }
-  if (to.name === ACCESS_GROUP_EDIT_PAGE) {
-    promises.push(() => store.dispatch('accessGroup/fetchInvitations'));
-    resolvers.push(data => {});
-  }
+
   resolvePromisesSerially(promises, resolvers)
     .then(() => {
       next();
