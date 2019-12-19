@@ -138,6 +138,15 @@ export default class AccessGroups {
     }); //this.fetcher.fetch('');
   }
 
+  async renewMember(groupName, memberUuid, expiration) {
+    try {
+      return await this.membersApi.renew(groupName, memberUuid, expiration);
+    } catch (e) {
+      console.log(e.message);
+      throw new Error(e.message);
+    }
+  }
+
   async getUserInvitations() {
     try {
       return await this.selfInvitationsApi.get();

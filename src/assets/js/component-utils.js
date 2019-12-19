@@ -47,3 +47,13 @@ export function parseMarkdown(text) {
   }
   return insane(marked(text, { gfm: true }));
 }
+
+export function expiryText(expiration) {
+  if (expiration % 7 === 0 && expiration !== 0 && expiration !== null) {
+    const weekNum = expiration / 7;
+    const weekLabel = weekNum === 1 ? 'week' : 'weeks';
+    return `${weekNum} ${weekLabel}`;
+  }
+  const dayLabel = expiration === 1 ? 'day' : 'days';
+  return `${expiration} ${dayLabel}`;
+}

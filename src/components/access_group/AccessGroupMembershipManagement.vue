@@ -48,6 +48,7 @@
 <script>
 import Icon from '@/components/ui/Icon.vue';
 import Button from '@/components/ui/Button.vue';
+import { expiryText } from '@/assets/js/component-utils';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -60,6 +61,7 @@ export default {
     ...mapGetters({
       invitationCount: 'accessGroup/getInvitationCount',
       renewalCount: 'accessGroup/getRenewalCount',
+      expiration: 'accessGroup/getExpiration',
     }),
     totalPendingInvitations() {
       return this.invitationCount;
@@ -79,17 +81,14 @@ export default {
       }
       return 'pending renewal';
     },
+    expiry() {
+      return expiryText(this.expiration);
+    },
   },
   methods: {
     handleAddMembers() {
       console.log('Adding members');
     },
-  },
-  data() {
-    return {
-      // TODO: Figure out this data
-      expiry: '1 week',
-    };
   },
 };
 </script>

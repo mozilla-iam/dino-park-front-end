@@ -92,7 +92,7 @@ export class DisplayMemberViewModel {
     this.email = '';
     this.isStaff = false;
     this.since = '';
-    this.expiration = '';
+    this.expiration = 0;
     [, , this.role] = DISPLAY_MEMBER_ROLES;
     this.added_by = {};
     this.error = false;
@@ -123,9 +123,7 @@ export class DisplayMemberViewModel {
       this.email = data.email;
       this.isStaff = data.isStaff;
       this.since = !data.since ? '' : new Date(data.since).toLocaleDateString();
-      this.expiration = !data.group_expiration
-        ? ''
-        : new Date(data.group_expiration).toLocaleDateString();
+      this.expiration = !data.expiration ? 0 : data.expiration;
       this.role = DISPLAY_MEMBER_ROLES.includes(data.role) ? data.role : null;
       this.added_by = new AbbDisplayMemberViewModel(data.host);
     } catch (e) {

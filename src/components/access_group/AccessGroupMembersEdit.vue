@@ -51,7 +51,9 @@
                 </td>
                 <td v-if="!member.pendingRemoval">{{ member.role }}</td>
                 <!-- Turn this into "x days" -->
-                <td v-if="!member.pendingRemoval">{{ member.expiration }}</td>
+                <td v-if="!member.pendingRemoval">
+                  {{ expiry(member.expiration) }}
+                </td>
                 <td class="row-actions" v-if="!member.pendingRemoval">
                   <Button
                     class="button--secondary"
@@ -135,6 +137,7 @@ import TagSelector from '@/components/ui/TagSelector.vue';
 import NumberScrollerInput from '@/components/ui/NumberScrollerInput.vue';
 import ProfileApi from '@/assets/js/profile-api';
 import { DisplayMemberViewModel } from '@/view_models/AccessGroupViewModel';
+import { expiryText } from '@/assets/js/component-utils';
 import AccessGroups from '@/assets/js/access-groups';
 
 const accessGroups = new AccessGroups();
@@ -204,6 +207,7 @@ export default {
       addCurators: 'accessGroup/addCurators',
       removeCurators: 'accessGroup/removeCurators',
       updateGroup: 'accessGroup/updateGroup',
+      renewMember: 'accessGroup/renewMember',
     }),
     refreshMembersList() {
       this.allMembersList = this.allMembers.map(member => {
@@ -216,7 +220,15 @@ export default {
     searchFormHandler(search) {},
     clearSearchHandler() {},
     handleRenewClick(member) {
-      member.pendingRemoval = true;
+      this.renewMember({
+        memberUuid: member.uuid,
+        expiration: member.expiration,
+      }).then(result => {
+        this.refreshMembersList();
+        this.$root.$emit('toast', {
+          content: `${memberName} was renewed`,
+        });
+      });
     },
     handleCancelClick(member) {
       member.pendingRemoval = false;
@@ -227,7 +239,7 @@ export default {
     },
     handleRemoveConfirmClick(member) {
       const memberName = member.name;
-      this.$store.dispatch('removeMember', member).then(result => {
+      this.removeMember(member).then(result => {
         this.refreshMembersList();
         this.$root.$emit('toast', {
           content: `${memberName} was removed from the group`,
@@ -283,6 +295,9 @@ export default {
           content: `Access Group expiration has been successfully updated`,
         });
       });
+    },
+    expiry(expiration) {
+      return expiryText(expiration);
     },
   },
   computed: mapGetters({
@@ -348,6 +363,8 @@ export default {
   display: inline-block;
   font-weight: bold;
   margin-right: 1em;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .row-member-leave-confirm .button {

@@ -40,6 +40,18 @@ export const membersActions = {
       throw new Error(e.message);
     }
   },
+  async renewMember({ state, dispatch }, { memberUuid, expiration }) {
+    try {
+      const result = await accessGroupsService.renewMember(
+        state.group.name,
+        memberUuid,
+        expiration
+      );
+      return await dispatch('fetchMembers');
+    } catch (e) {
+      throw new Error(e.message);
+    }
+  },
   async addCurators({ state, dispatch }, curators) {
     try {
       const result = await accessGroupsService.addCurators(
