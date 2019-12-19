@@ -70,9 +70,12 @@
           :key="`group-${group}`"
           icon="moz"
         >
-          <ExternalLink
-            :href="`https://mozillians.org/group/${encodeURIComponent(group)}`"
-            >{{ group }}</ExternalLink
+          <RouterLink
+            target="_blank"
+            :to="{
+              path: `/a/${encodeURIComponent(group)}`,
+            }"
+            >{{ group }}</RouterLink
           >
         </IconBlock>
       </IconBlockList>
