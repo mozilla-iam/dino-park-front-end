@@ -30,7 +30,10 @@
         >
       </template>
     </AccessGroupEditPanel>
-    <AccessGroupEditPanel title="Group type">
+    <AccessGroupEditPanel
+      title="Group type"
+      v-if="getFeature('edit-group-type')"
+    >
       <template v-slot:content>
         <div class="content-area__row">
           <div

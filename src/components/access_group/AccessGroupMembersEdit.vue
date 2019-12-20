@@ -175,7 +175,7 @@ export default {
         this.groupExpirationDirty = true;
       }
       if (!value) {
-        this.groupExpiration = null;
+        this.groupExpiration = 0;
       }
     },
   },
@@ -194,7 +194,7 @@ export default {
       addedCurators: [],
       removedCurators: [],
       curatorsListDirty: false,
-      membershipCanExpire: accessGroupExpiration !== null,
+      membershipCanExpire: accessGroupExpiration > 0,
       groupExpirationDirty: false,
       allMembersList: accessGroupMembers.map(member => {
         return {
