@@ -79,6 +79,12 @@ export default {
   margin-top: 2em;
 }
 
+.edit-panel__footer .button--action[disabled='disabled'] {
+  border: 1px solid var(--gray-40);
+  color: var(--black);
+  background: var(--white);
+}
+
 .content-area__row .content-area__label {
   color: var(--gray-40);
   height: 1.5em;

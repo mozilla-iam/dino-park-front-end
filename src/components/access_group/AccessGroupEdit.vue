@@ -6,7 +6,7 @@
         name: 'Access Group',
       }"
     >
-      <Icon id="chevron-left" :width="17" :height="17" />Back to group
+      <Icon id="chevron-left" :width="17" :height="17" />{{ groupName }} group
     </RouterLink>
     <section class="edit-container">
       <nav class="edit-container__tabs">
@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import Icon from '@/components/ui/Icon.vue';
 import Button from '@/components/ui/Button.vue';
 import AccessGroupInformationEdit from '@/components/access_group/AccessGroupInformationEdit.vue';
@@ -99,6 +100,9 @@ export default {
     },
   },
   computed: {
+    ...mapGetters({
+      groupName: 'accessGroup/getGroupName',
+    }),
     currentTabView() {
       const defaultTab = 0;
       if (!this.$route.query.section) {
@@ -134,6 +138,11 @@ export default {
   background-color: var(--gray-30);
   color: var(--black);
   display: inline-block;
+}
+
+.group-edit .group-edit__back-action > svg {
+  display: inline-block;
+  vertical-align: bottom;
 }
 
 .group-edit .edit-container {

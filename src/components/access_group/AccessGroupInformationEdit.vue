@@ -355,4 +355,10 @@ export default {
 .edit-information-section .edit-information-section__footer .button {
   margin-top: 2em;
 }
+
+.close-group-container .button--primary[disabled='disabled'] {
+  border: 1px solid var(--gray-40);
+  color: var(--black);
+  background: var(--white);
+}
 </style>
