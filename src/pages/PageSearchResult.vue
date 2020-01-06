@@ -21,10 +21,11 @@
         <h2>This page isn't available</h2>
         <p>An error occured while trying to load the search results</p>
         <p>
-          <small
-            >Please submit all bugs or issues to the project's GitHub issue
-            repository (link in footer).</small
-          >
+          <small>
+            Please submit all bugs or issues to
+            <a :href="globalLinks.githubIssues">the project's GitHub issue
+            repository</a>.
+          </small>
         </p>
       </template>
     </Error>
@@ -83,6 +84,7 @@ import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 import SearchResultList from '@/components/search/SearchResultList.vue';
 import SearchToggle from '@/components/search/SearchToggle.vue';
 import Fetcher from '@/assets/js/fetcher';
+import LinksMixin from '@/components/_mixins/LinksMixin.vue';
 
 const fetcher = new Fetcher({
   isError: (e) =>
@@ -91,6 +93,7 @@ const fetcher = new Fetcher({
 
 export default {
   name: 'PageSearchResult',
+  mixins: [LinksMixin],
   components: {
     Icon,
     Button,

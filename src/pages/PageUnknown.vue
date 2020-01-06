@@ -21,10 +21,11 @@
           >Go to homepage</RouterLink
         >
         <p>
-          <small
-            >Please submit all bugs or issues to the project's GitHub issue
-            repository (link in footer).</small
-          >
+          <small>
+            Please submit all bugs or issues to
+            <a :href="globalLinks.githubIssues">the project's GitHub issue
+            repository</a>.
+          </small>
         </p>
       </template>
     </Error>
@@ -33,9 +34,11 @@
 
 <script>
 import Error from '@/components/ui/Error.vue';
+import LinksMixin from '@/components/_mixins/LinksMixin.vue';
 
 export default {
   name: 'Page404',
+  mixins: [LinksMixin],
   components: {
     Error,
   },
