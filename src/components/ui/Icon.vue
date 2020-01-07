@@ -6,6 +6,7 @@
     focusable="false"
     :width="width"
     :height="height"
+    class="icon"
   >
     <template v-if="id === 'self-avatar'">
       <image
@@ -16,6 +17,26 @@
         width="24"
         height="24"
       />
+    </template>
+    <template v-else>
+      <use
+        :href="
+          '#' +
+            require(`!svg-sprite-loader?extract=false!image-webpack-loader?${`{
+              svgo: {
+                plugins: [
+                  { removeXMLNS: true },
+                  {
+                    removeAttributesBySelector: {
+                      selector: 'svg[class]',
+                      attributes: 'class'
+                    }
+                  },
+                ]
+              }
+            }`.replace(/\n/g, '')}!@/assets/svg/${id}.svg`).default.id
+        "
+      ></use>
     </template>
   </svg>
 </template>
@@ -56,3 +77,9 @@ export default {
   },
 };
 </script>
+
+<style>
+.icon {
+  fill: currentColor;
+}
+</style>
