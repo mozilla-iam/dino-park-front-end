@@ -73,8 +73,6 @@ const apolloProvider = new VueApollo({
   errorHandler,
 });
 
-const fluent = new Fluent();
-
 Vue.use(VueApollo);
 Vue.use(Vuex);
 
@@ -108,20 +106,19 @@ const store = new Vuex.Store({
   },
 });
 
-Vue.mixin({
-  methods: {
-    fluent(...args) {
-      return fluent.get(...args);
+Promise.all([store.dispatch('fetchUser'), Fluent.init()]).then(([, fluent]) => {
+  Vue.mixin({
+    methods: {
+      fluent(...args) {
+        return fluent.get(...args);
+      },
     },
-  },
-  computed: {
-    scope() {
-      return this.$store.state.scope;
+    computed: {
+      scope() {
+        return this.$store.state.scope;
+      },
     },
-  },
-});
-// eslint-disable-next-line
-store.dispatch('fetchUser').then(function() {
+  });
   new Vue({
     router,
     apolloProvider,

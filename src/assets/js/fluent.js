@@ -1,20 +1,79 @@
 import { FluentBundle, FluentResource } from '@fluent/bundle';
 import insane from 'insane';
-import Strings from '@/locales/en-US/strings.ftl';
+import USStrings from '@/locales/en-US/strings.ftl';
+
+const languages = [['en-US', 'English']];
 
 const whitelistedTags = ['i'];
 const whitelistedAttributes = ['title', 'aria-label'];
 
 class Fluent {
-  constructor(locale = 'en-US') {
-    const resource = new FluentResource(Strings);
-    const bundle = new FluentBundle(locale);
-    const errors = bundle.addResource(resource);
-    if (errors.length) {
-      console.error(errors);
-    }
+  constructor(locale = 'en-US', resources = []) {
+    this.usBundle = Fluent.constructBundle(new FluentBundle(locale), [
+      USStrings,
+    ]);
 
-    this.bundle = bundle;
+    if (resources.length > 0) {
+      this.bundle = Fluent.constructBundle(new FluentBundle(locale), resources);
+    }
+  }
+
+  static constructBundle(bundle, resources = []) {
+    resources.forEach((r) => {
+      const errors = bundle.addResource(new FluentResource(r), {
+        allowOverrides: true,
+      });
+      if (errors.length) {
+        console.error(errors);
+      }
+    });
+    return bundle;
+  }
+
+  static init(requested = navigator.languages) {
+    this.locales = this.resolveLocale(requested);
+    return this.load(...this.locales);
+  }
+
+  static resolveLocale(
+    requested,
+    available = languages,
+    localStorage = window.localStorage,
+  ) {
+    const locales = available.map((x) => x[0]);
+    const storedLocale = localStorage.locale;
+    if (storedLocale) {
+      requested = [storedLocale];
+    }
+    // eslint-disable-next-line no-restricted-syntax
+    for (const requestedTag of requested) {
+      if (locales.includes(requestedTag)) {
+        return [requestedTag, requestedTag];
+      }
+      const parent = requestedTag.match(/[A-Za-z]*/)[0];
+      const regex = RegExp(`^${parent}(-|$)`);
+      const foundTag = locales.find((l) => regex.test(l));
+      if (foundTag) {
+        return [requestedTag, foundTag];
+      }
+    }
+    return [requested[0], locales[0]];
+  }
+
+  static async load(locale, stringsLocale) {
+    try {
+      const strings = await import(
+        /* webpackChunkName: "i18n.[request]" */ `@/locales/${stringsLocale}/strings.ftl`
+      );
+      return new Fluent(locale, [strings.default]);
+    } catch (e) {
+      console.error(e);
+    }
+    return new Fluent(locale);
+  }
+
+  static languages() {
+    return languages;
   }
 
   get(...parameters) {
@@ -71,27 +130,33 @@ class Fluent {
     );
   }
 
-  getMessage(id, attr = null, args = {}) {
-    const parentMessage = this.bundle.getMessage(id);
+  getMessage(id, attr = null, args = {}, bundle = this.bundle, us = false) {
+    const parentMessage = bundle ? bundle.getMessage(id) : undefined;
     let message;
 
     if (!parentMessage) {
-      console.error(`string ${id} doesn't exist`);
-      return `[${id}${attr ? `.${attr}` : ''}]`;
+      if (us) {
+        console.error(`string ${id} doesn't exist`);
+        return `[${id}${attr ? `.${attr}` : ''}]`;
+      }
+      return this.getMessage(id, attr, args, this.usBundle, true);
     }
 
     if (attr) {
       message = parentMessage.attributes[attr];
       if (!message) {
-        console.error(`string ${id} with ${attr} attribute doesn't exist`);
-        return `[${id}.${attr}]`;
+        if (us) {
+          console.error(`string ${id} with ${attr} attribute doesn't exist`);
+          return `[${id}.${attr}]`;
+        }
+        return this.getMessage(id, attr, args, this.usBundle, true);
       }
     } else if (parentMessage.value) {
       message = parentMessage.value;
     }
 
     const errors = [];
-    const formatted = this.bundle.formatPattern(message, args, errors);
+    const formatted = bundle.formatPattern(message, args, errors);
     if (errors.length) {
       console.error(errors);
     }
