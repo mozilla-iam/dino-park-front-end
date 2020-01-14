@@ -83,4 +83,50 @@ describe('Fluent', () => {
       }),
     ).toEqual('lorem <i>ipsum</i>');
   });
+
+  it("resolves to en-US when localised strings don't exist", () => {
+    Fluent.init(['abc']).then((fluent) => {
+      expect(fluent.get('localised')).toEqual('localised');
+      expect(fluent.get('string')).toEqual('simple string');
+      expect(fluent.get('missing')).toEqual('[missing]');
+    });
+  });
+
+  it("resolves to en-US when localised attributes don't exist", () => {
+    Fluent.init(['abc']).then((fluent) => {
+      expect(fluent.get('localised', 'localised')).toEqual('localised');
+      expect(fluent.get('localised', 'not-localised')).toEqual(
+        "but this isn't",
+      );
+      expect(fluent.get('missing', 'missing')).toEqual('[missing.missing]');
+    });
+  });
+
+  describe('resolveLocale', () => {
+    it('uses a more generic version of a requested lanauge', () => {
+      expect(Fluent.resolveLocale(['a-a'], [['a'], ['b']])).toEqual([
+        'a-a',
+        'a',
+      ]);
+    });
+
+    it('uses a different variant of a requested language', () => {
+      expect(Fluent.resolveLocale(['a-a'], [['a-b'], ['b']])).toEqual([
+        'a-a',
+        'a-b',
+      ]);
+    });
+
+    it('defaults to the first listed language', () => {
+      expect(Fluent.resolveLocale(['a'], [['b'], ['c']])).toEqual(['a', 'b']);
+    });
+
+    it('resolves from localstorage first', () => {
+      expect(
+        Fluent.resolveLocale(['en'], [['en-GB'], ['en-US']], {
+          locale: 'en-CA',
+        }),
+      ).toEqual(['en-CA', 'en-GB']);
+    });
+  });
 });

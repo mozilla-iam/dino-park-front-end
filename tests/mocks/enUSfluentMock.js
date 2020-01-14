@@ -10,4 +10,7 @@ html =
 whitelisted = lorem <i>ipsum</i>
   .attributes = lorem <i href="http://example.com">ipsum</i>
   .stealing = lorem <i data-l10n-name="one" onclick="alert('oops')">ipsum</i>
+localised = this string is localised
+  .localised = so is this attribute
+  .not-localised = but this isn't
 `;

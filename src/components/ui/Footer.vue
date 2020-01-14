@@ -14,12 +14,22 @@
       </abbr>
       {{ !single.abbr ? single.label : '' }}
     </a>
+    <select v-if="languages.length > 1" v-on:change="updateLocale">
+      <option
+        v-for="[locale, language] in languages"
+        :key="locale"
+        :value="locale"
+        :selected="locale === currentLocale ? true : false"
+        >{{ language }}</option
+      >
+    </select>
   </footer>
 </template>
 
 <script>
 import Icon from '@/components/ui/Icon.vue';
 import LinksMixin from '@/components/_mixins/LinksMixin.vue';
+import Fluent from '@/assets/js/fluent';
 
 export default {
   name: 'Footer',
@@ -60,6 +70,18 @@ export default {
           label: 'Privacy',
         },
       ];
+    },
+    languages() {
+      return Fluent.languages();
+    },
+    currentLocale() {
+      return Fluent.locales[1];
+    },
+  },
+  methods: {
+    updateLocale(e) {
+      window.localStorage.locale = e.target.selectedOptions[0].value;
+      window.location.reload(false);
     },
   },
 };
