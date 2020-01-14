@@ -95,6 +95,7 @@
 <script>
 import CompanyMixin from '@/components/_mixins/CompanyMixin.vue';
 import OfficesMixin from '@/components/_mixins/OfficesMixin.vue';
+import SkeletonMixin from '@/components/_mixins/SkeletonMixin.vue';
 import ContactMe from '@/components/ui/ContactMe.vue';
 import EditButton from '@/components/profile/edit/EditButton.vue';
 import Icon from '@/components/ui/Icon.vue';
@@ -108,7 +109,7 @@ import ProfileTeamLocation from '../ProfileTeamLocation.vue';
 import DataClassification from '../DataClassification.vue';
 
 export default {
-  mixins: [CompanyMixin, OfficesMixin],
+  mixins: [CompanyMixin, OfficesMixin, SkeletonMixin],
   name: 'ViewPersonalInfo',
   props: {
     alternativeName: Object,
@@ -150,25 +151,6 @@ export default {
     currentUser() {
       return this.$store.state.user;
     },
-  },
-  mounted() {
-    this.$nextTick(() => {
-      this.nextSkeletonHeight = getComputedStyle(this.$el).getPropertyValue(
-        'height',
-      );
-    });
-  },
-  updated() {
-    this.$nextTick(() => {
-      if (this.skeleton) {
-        this.$el.style.height = this.nextSkeletonHeight;
-      } else {
-        this.$el.style.height = null;
-        this.nextSkeletonHeight = getComputedStyle(this.$el).getPropertyValue(
-          'height',
-        );
-      }
-    });
   },
 };
 </script>

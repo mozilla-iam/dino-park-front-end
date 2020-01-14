@@ -39,11 +39,13 @@
         :query="previewProfileQuery"
         :variables="{ username }"
         :tag="null"
+        :notifyOnNetworkStatusChange="true"
       >
-        <template slot-scope="{ result: { data } }">
+        <template slot-scope="{ result: { loading, data } }">
           <div class="org-chart__preview">
+            <ProfilePreview v-if="loading" :skeleton="true"></ProfilePreview>
             <ProfilePreview
-              v-if="data && desktopView"
+              v-else-if="data && desktopView"
               v-bind="data.profile"
               :desktopView="desktopView"
               @close="closeProfile"
@@ -428,9 +430,6 @@ export default {
 </script>
 
 <style>
-.org-chart-main {
-  width: auto;
-}
 .org-chart-buttons {
   display: flex;
   justify-content: center;
@@ -489,7 +488,7 @@ export default {
   .org-chart {
     padding: 2em;
     display: grid;
-    grid-template-columns: minmax(25em, 45em) auto;
+    grid-template-columns: 1fr auto;
     grid-template-rows: auto 1fr;
     align-items: start;
     grid-gap: 2em;
@@ -508,6 +507,7 @@ export default {
   .org-chart__preview {
     grid-row: 1 / 2;
     grid-column: 2 / 3;
+    max-width: 30em;
   }
 }
 @media (min-height: 36em) and (min-width: 57.5em) {
@@ -520,7 +520,6 @@ export default {
 
 .org-root {
   width: 100%;
-  max-width: 45em;
   background-image: linear-gradient(
     var(--gray-10) 0,
     var(--gray-10) 50%,
