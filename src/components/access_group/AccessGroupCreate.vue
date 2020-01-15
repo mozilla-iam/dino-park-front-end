@@ -31,7 +31,7 @@
           </div>
         </template>
       </AccessGroupEditPanel>
-      <AccessGroupEditPanel title="Group type">
+      <!-- <AccessGroupEditPanel title="Group type">
         <template v-slot:content>
           <div class="content-area__row">
             <div
@@ -64,7 +64,7 @@
             </p>
           </div>
         </template>
-      </AccessGroupEditPanel>
+      </AccessGroupEditPanel>-->
       <footer class="group-create__footer">
         <Button
           class="button--primary"
