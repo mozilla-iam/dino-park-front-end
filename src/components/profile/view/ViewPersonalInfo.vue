@@ -1,5 +1,12 @@
 <template>
-  <div class="profile__intro">
+  <div v-if="skeleton" class="profile__intro">
+    <div class="profile__intro-photo">
+      <div class="profile__headshot">
+        <UserPicture :avatar="{ picture: 'empty:' }" :size="264"></UserPicture>
+      </div>
+    </div>
+  </div>
+  <div v-else class="profile__intro">
     <EditButton
       v-if="userOnOwnProfile && editable"
       section="personal info"
@@ -88,6 +95,7 @@
 <script>
 import CompanyMixin from '@/components/_mixins/CompanyMixin.vue';
 import OfficesMixin from '@/components/_mixins/OfficesMixin.vue';
+import SkeletonMixin from '@/components/_mixins/SkeletonMixin.vue';
 import ContactMe from '@/components/ui/ContactMe.vue';
 import EditButton from '@/components/profile/edit/EditButton.vue';
 import Icon from '@/components/ui/Icon.vue';
@@ -101,7 +109,7 @@ import ProfileTeamLocation from '../ProfileTeamLocation.vue';
 import DataClassification from '../DataClassification.vue';
 
 export default {
-  mixins: [CompanyMixin, OfficesMixin],
+  mixins: [CompanyMixin, OfficesMixin, SkeletonMixin],
   name: 'ViewPersonalInfo',
   props: {
     alternativeName: Object,
@@ -124,6 +132,7 @@ export default {
     userOnOwnProfile: Boolean,
     editable: Boolean,
     accessInformation: Object,
+    skeleton: Boolean,
   },
   components: {
     ContactMe,
