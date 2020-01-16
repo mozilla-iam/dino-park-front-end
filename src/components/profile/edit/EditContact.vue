@@ -2,14 +2,14 @@
   <EditMutationWrapper
     :editVariables="editVariables"
     :novalidate="true"
-    formName="Edit contact information"
+    :formName="fluent('profile_contact', 'edit')"
   >
     <header class="profile__section-header" ref="header" tabindex="-1">
       <h2>{{ fluent('profile_contact') }}</h2>
     </header>
     <div class="edit-contact">
       <div class="edit-contact__header">
-        <h3>Email</h3>
+        <h3>{{ fluent('profile_email') }}</h3>
       </div>
       <div class="edit-contact__item">
         <div class="edit-contact__label">
@@ -37,18 +37,18 @@
           type="email"
           id="field-email-primary-value"
           :value="primaryEmail.value"
-          placeholder="Email address"
+          :placeholder="fluent('profile_email', 'placeholder')"
           disabled
         />
         <PrivacySetting
-          label="Primary email address privacy settings"
+          :label="fluent('profile_email_primary', 'privacy')"
           id="field-email-primary-privacy"
           profileFieldName="primaryEmail"
           :profileFieldObject="primaryEmail"
         />
         <Checkbox
           :checked="true"
-          label="Show in Contact Me button"
+          :label="fluent('profile_contact-me', 'show-in')"
           class="edit-contact__set-as-contact"
           :disabled="true"
         />
@@ -60,7 +60,9 @@
           v-on:click="removeSecondaryEmail"
         >
           <Icon id="x" :width="17" :height="17"></Icon>
-          <span class="visually-hidden">Remove secondary email</span>
+          <span class="visually-hidden">{{
+            fluent('profile_email_secondary', 'remove')
+          }}</span>
         </Button>
         <div class="edit-contact__label">
           <label for="field-email-secondary-value">{{
@@ -79,17 +81,19 @@
           id="field-email-secondary-value"
           class="edit-contact__input-w-error"
           v-model="editSecondaryEmail.value"
-          placeholder="Email address"
+          :placeholder="fluent('profile_email', 'placeholder')"
         />
-        <span class="edit-contact__error-msg">Enter a valid email address</span>
+        <span class="edit-contact__error-msg">{{
+          fluent('profile_email', 'error-invalid')
+        }}</span>
         <PrivacySetting
-          label="Secondary email address privacy settings"
+          :label="fluent('profile_email_secondary', 'privacy')"
           id="field-email-secondary-privacy"
           profileFieldName="editSecondaryEmail"
           :profileFieldObject="editSecondaryEmail"
         />
         <Checkbox
-          label="Show in Contact Me button"
+          :label="fluent('profile_contact-me', 'show-in')"
           class="edit-contact__set-as-contact"
           @input="(newValue) => toggleSecondaryEmailContactMe(newValue)"
           :checked="secondaryEmailContactMe"
@@ -101,13 +105,15 @@
         class="edit-contact__add-more button--secondary button--action"
         v-if="!hasSecondaryEmail"
         v-on:click="addSecondaryEmail"
-        ><Icon id="plus" :width="16" :height="16" />Add Secondary Email</Button
+        ><Icon id="plus" :width="16" :height="16" />{{
+          fluent('profile_email_secondary', 'add')
+        }}</Button
       >
       <div class="edit-contact__header">
-        <h3>Phone</h3>
+        <h3>{{ fluent('profile_phone') }}</h3>
         <PrivacySetting
           class="privacy-select--large"
-          label="Phone number 1 privacy settings"
+          :label="fluent('profile_phone', 'privacy')"
           id="field-phone-number-1-privacy"
           profileFieldName="phoneNumbers"
           :profileFieldObject="phoneNumbers"
@@ -124,7 +130,9 @@
           v-on:click="() => deletePhoneNumber(index)"
         >
           <Icon id="x" :width="17" :height="17"></Icon>
-          <span class="visually-hidden">Remove phone number</span>
+          <span class="visually-hidden">{{
+            fluent('profile_phone', 'remove')
+          }}</span>
         </Button>
         <Select
           class="options--chevron"
@@ -133,22 +141,28 @@
           :options="phoneNumberLabels(k, index)"
           v-model="phoneNumbers.values[index].k"
         />
-        <label :for="`field-phone-${index}-value`" class="visually-hidden"
-          >Phone number {{ `${index + 1}` }}</label
-        >
+        <label :for="`field-phone-${index}-value`" class="visually-hidden">{{
+          fluent({
+            id: 'profile_phone',
+            attr: 'label',
+            args: { index: index + 1 },
+          })
+        }}</label>
         <input
           :id="`field-phone-${index}-value`"
           class="edit-contact__input-w-error"
           type="tel"
           pattern="\+[1-9][0-9 \-]*"
-          placeholder="+1 163 7826 3789 (Phone number)"
+          :placeholder="fluent('profile_phone', 'placeholder')"
           v-model="phoneNumbers.values[index].v"
         />
-        <span class="edit-contact__error-msg">Enter country code +[1-9]</span>
+        <span class="edit-contact__error-msg">{{
+          fluent('profile_phone', 'error')
+        }}</span>
         <Checkbox
           @input="(newValue) => togglePhoneNumberContactMe(newValue, index)"
           :checked="destructPhoneKey(k).contact"
-          label="Show in Contact Me button"
+          :label="fluent('profile_contact-me', 'show-in')"
           class="edit-contact__set-as-contact"
         />
         <hr role="presentation" />
@@ -158,7 +172,9 @@
         class="edit-contact__add-more button--secondary button--action"
         :disabled="phoneNumbers.values.length >= MAX_NUMBERS"
         v-on:click="addPhoneNumber"
-        ><Icon id="plus" :width="16" :height="16" />Add Phone</Button
+        ><Icon id="plus" :width="16" :height="16" />{{
+          fluent('profile_phone', 'add')
+        }}</Button
       >
     </div>
   </EditMutationWrapper>
@@ -269,11 +285,14 @@ export default {
       const names = allOptions.filter((name) => name !== current);
       const options = names.map((label) => {
         return {
-          label,
+          label: this.fluent('profile_phone', label.toLowerCase()),
           value: construct({ view: label, num: index }),
         };
       });
-      options.push({ label: current, value: k });
+      options.push({
+        label: this.fluent('profile_phone', current.toLowerCase()),
+        value: k,
+      });
       return options;
     },
     phoneNumberLabels(k, index) {

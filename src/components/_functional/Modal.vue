@@ -9,7 +9,7 @@
             @click="$emit('close')"
             class="modal__close"
           >
-            <span class="visually-hidden">Close</span>
+            <span class="visually-hidden">{{ fluent('close') }}</span>
             <Icon id="x" :width="30" :height="30"></Icon>
           </button>
           <h1 v-if="heading">{{ heading }}</h1>

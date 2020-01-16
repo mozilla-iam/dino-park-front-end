@@ -5,29 +5,31 @@
         type="button"
         @click="expandAll"
         class="org-chart-buttons__row-left org-chart-buttons__control button--icon-only button"
-        title="Expand all"
+        :title="fluent('orgchart_expand-all')"
       >
         <Icon id="expand" :width="18" :height="18" />
-        <span class="visually-hidden">Expand all</span>
+        <span class="visually-hidden">{{ fluent('orgchart_expand-all') }}</span>
       </button>
       <button
         type="button"
         @click="collapseAll"
         class="org-chart-buttons__row-right org-chart-buttons__control button--icon-only button"
-        title="Collapse all"
+        :title="fluent('orgchart_collapse-all')"
       >
         <Icon id="collapse" :width="18" :height="18" />
-        <span class="visually-hidden">Collapse all</span>
+        <span class="visually-hidden">{{
+          fluent('orgchart_collapse-all')
+        }}</span>
       </button>
       <button
         :disabled="!dirty"
         type="button"
         @click="expandFirst"
         class="org-chart-buttons__reset org-chart-buttons__control button--icon-only button"
-        title="Reset to default view"
+        :title="fluent('orgchart_reset')"
       >
         <Icon id="rotate" :width="18" :height="18" />
-        <span class="visually-hidden">Reset to default view</span>
+        <span class="visually-hidden">{{ fluent('orgchart_reset') }}</span>
       </button>
     </div>
     <div class="org-chart">
@@ -161,7 +163,7 @@ function renderNode(node, level = 1) {
   return li;
 }
 
-function renderOrgchart(orgchart) {
+function renderOrgchart(orgchart, fluent) {
   const forrest = document.createElement('div');
   forrest.className = 'org-root org-root--forrest';
   const forrestInner = document.createElement('ul');
@@ -171,8 +173,9 @@ function renderOrgchart(orgchart) {
   );
   const loose = document.createElement('div');
   loose.className = 'org-root org-root--loose';
-  loose.innerHTML =
-    '<h2 class="org-root__heading">People who do not have a manager set</h2>';
+  loose.innerHTML = `<h2 class="org-root__heading">${fluent(
+    'orgchart_no-manager',
+  )}</h2>`;
   const looseInner = document.createElement('ul');
   loose.appendChild(looseInner);
   orgchart.loose.forEach((root) => looseInner.appendChild(renderNode(root)));
@@ -245,7 +248,7 @@ export default {
         }
         const [f, t] = chartFromStore
           ? this.$store.state.org.nodes
-          : renderOrgchart(orgchart);
+          : renderOrgchart(orgchart, this.fluent);
         this.dirty = chartFromStore ? this.$store.state.org.dirty : false;
         orgChartRoot.innerHTML = '';
         orgChartRoot.appendChild(f);
@@ -362,12 +365,12 @@ export default {
       if (shouldExpand) {
         expander.classList.add('org-node__expander--expanded');
         button.setAttribute('aria-expanded', 'true');
-        button.setAttribute('aria-label', 'Collapse');
+        button.setAttribute('aria-label', this.fluent('orgchart_collapse'));
         button.style.transform = '';
       } else {
         expander.classList.remove('org-node__expander--expanded');
         button.setAttribute('aria-expanded', 'false');
-        button.setAttribute('aria-label', 'Expand');
+        button.setAttribute('aria-label', this.fluent('orgchart_expand'));
         button.style.transform = 'rotateZ(-90deg)';
       }
       this.dirty = true;

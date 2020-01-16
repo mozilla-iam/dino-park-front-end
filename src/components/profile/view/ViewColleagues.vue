@@ -1,7 +1,7 @@
 <template>
   <div class="colleagues">
     <header class="profile__section-header">
-      <h2>Colleagues</h2>
+      <h2>{{ fluent('profile_colleagues') }}</h2>
       <div v-if="canShowColleaguesToggle" class="colleagues__toggle">
         <button
           type="button"
@@ -14,7 +14,9 @@
           "
         >
           <Icon id="list" :width="18" :height="18" />
-          <span class="visually-hidden">List</span>
+          <span class="visually-hidden">{{
+            fluent('profile_colleagues_list')
+          }}</span>
         </button>
         <button
           type="button"
@@ -27,7 +29,9 @@
           "
         >
           <Icon id="grid" :width="18" :height="18" />
-          <span class="visually-hidden">View as grid</span>
+          <span class="visually-hidden">{{
+            fluent('profile_colleagues_grid')
+          }}</span>
         </button>
       </div>
       <RouterLink
@@ -37,7 +41,7 @@
         }"
         class="button button--secondary button--small"
       >
-        <Icon id="org-chart" :width="16" :height="16" />Org Chart
+        <Icon id="org-chart" :width="16" :height="16" />{{ fluent('orgchart') }}
         <Icon id="chevron-right" :width="18" :height="18" />
       </RouterLink>
     </header>

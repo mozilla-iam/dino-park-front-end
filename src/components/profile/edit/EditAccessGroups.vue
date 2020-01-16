@@ -4,7 +4,7 @@
       accessInformationMozilliansorgDisplay: editMozilliansorgGroups.display,
       accessInformationLdapDisplay: editLdapGroups.display,
     }"
-    formName="Edit access groups"
+    :formName="fluent('profile_access-groups', 'edit')"
   >
     <header class="profile__section-header" ref="header" tabindex="-1">
       <h2>{{ fluent('profile_access-groups') }}</h2>
@@ -22,7 +22,7 @@
           >
           <PrivacySetting
             class="privacy-select--large"
-            label="LDAP access groups privacy levels"
+            :label="fluent('profile_access-groups_ldap', 'privacy')"
             id="section-access-groups-ldap-privacy"
             profileFieldName="accessInformation.ldap"
             :profileFieldObject="editLdapGroups"
@@ -55,7 +55,7 @@
         >
         <PrivacySetting
           class="privacy-select--large"
-          label="Mozillians.org access groups privacy levels"
+          :label="fluent('profile_access-groups_mozillians', 'privacy')"
           id="section-access-groups-mozillians-privacy"
           profileFieldName="accessInformation.mozilliansorg"
           :profileFieldObject="editMozilliansorgGroups"
@@ -88,7 +88,7 @@
         rel="noreferrer noopener"
       >
         <Icon id="external" :width="18" :height="18" />
-        Manage at mozillians.org
+        {{ fluent('profile_access-groups_mozillians', 'edit') }}
       </a>
     </div>
   </EditMutationWrapper>

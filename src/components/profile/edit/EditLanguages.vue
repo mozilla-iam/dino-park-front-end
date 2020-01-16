@@ -3,7 +3,7 @@
     :editVariables="{
       languages,
     }"
-    formName="Edit languages"
+    :formName="fluent('profile_languages', 'edit')"
     class="add-languages"
   >
     <header class="profile__section-header" ref="header" tabindex="-1">
@@ -17,7 +17,7 @@
       </div>
       <PrivacySetting
         class="privacy-select--large"
-        label="Languages privacy levels"
+        :label="fluent('profile_languages', 'privacy')"
         id="section-languages-privacy"
         profileFieldName="languages"
         :profileFieldObject="languages"
@@ -49,11 +49,11 @@
     >
       <template v-if="addingLanguage && newLanguage.length > 0">
         <Icon id="check" :width="18" :height="18" />
-        Submit
+        {{ fluent('submit') }}
       </template>
       <template v-else>
         <Icon id="plus" :width="18" :height="18" />
-        Add Language
+        {{ fluent('profile_languages', 'add') }}
       </template>
     </button>
   </EditMutationWrapper>

@@ -20,8 +20,8 @@
       />
       <ShowMore
         v-if="this.collection.length > this.initiallyShown"
-        buttonText="Show More"
-        alternateButtonText="Show Less"
+        :buttonText="fluent('more')"
+        :alternateButtonText="fluent('less')"
         class="reporting-structure__show-more"
         buttonClass="button button--text-only button--less-padding reporting-structure__show-more-button"
         :closeOnUpdate="true"

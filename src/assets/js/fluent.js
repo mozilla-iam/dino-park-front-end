@@ -1,10 +1,15 @@
+import Vue from 'vue';
 import { FluentBundle, FluentResource } from '@fluent/bundle';
 import insane from 'insane';
 import USStrings from '@/locales/en-US/strings.ftl';
 
-const languages = [['en-US', 'English']];
+const languages = [
+  ...(Vue.config.devtools ? [['__ids', 'Show IDs']] : []),
+  ['en-US', 'English'],
+  ['en-GB', 'English (British)'],
+];
 
-const whitelistedTags = ['i'];
+const whitelistedTags = ['i', 'strong'];
 const whitelistedAttributes = ['title', 'aria-label'];
 
 class Fluent {
@@ -14,7 +19,10 @@ class Fluent {
     ]);
 
     if (resources.length > 0) {
-      this.bundle = Fluent.constructBundle(new FluentBundle(locale), resources);
+      this.bundle = Fluent.constructBundle(new FluentBundle(locale), [
+        USStrings,
+        ...resources,
+      ]);
     }
   }
 
@@ -30,8 +38,8 @@ class Fluent {
     return bundle;
   }
 
-  static init(requested = navigator.languages) {
-    this.locales = this.resolveLocale(requested);
+  static init(requested = navigator.languages, available) {
+    this.locales = this.resolveLocale(requested, available);
     return this.load(...this.locales);
   }
 
@@ -133,6 +141,10 @@ class Fluent {
   getMessage(id, attr = null, args = {}, bundle = this.bundle, us = false) {
     const parentMessage = bundle ? bundle.getMessage(id) : undefined;
     let message;
+
+    if (Fluent.locales && Fluent.locales[1] === '__ids') {
+      return `[${id}${attr ? `.${attr}` : ''}]`;
+    }
 
     if (!parentMessage) {
       if (us) {

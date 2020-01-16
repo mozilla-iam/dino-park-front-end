@@ -1,7 +1,7 @@
 <template>
   <div class="profile__access-groups">
     <template v-if="accessInformation.ldap.values">
-      <h3>LDAP</h3>
+      <h3>{{ fluent('profile_access-groups_ldap') }}</h3>
       <IconBlockList class="icon-block-list--multi-col">
         <IconBlock
           v-for="[group] in Object.entries(accessInformation.ldap.values)"
@@ -13,7 +13,7 @@
       </IconBlockList>
     </template>
     <template v-if="accessInformation.mozilliansorg.values">
-      <h3>mozillians.org</h3>
+      <h3>{{ fluent('profile_access-groups_mozillians') }}</h3>
       <IconBlockList class="icon-block-list--multi-col">
         <IconBlock
           v-for="[group] in Object.entries(
@@ -29,7 +29,7 @@
         </IconBlock>
       </IconBlockList>
       <p class="view-access-groups__mozillians-footer">
-        Mozillians access groups are currently managed at mozillians.org
+        {{ fluent('profile_access-groups_mozillians', 'footer') }}
       </p>
     </template>
   </div>

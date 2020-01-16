@@ -1,13 +1,14 @@
 <template>
   <aside class="preview-as">
     <Button v-if="viewAsActive" class="preview-as__button" @click="deactivate">
-      <Icon id="chevron-left" :width="17" :height="17"></Icon>Back
+      <Icon id="chevron-left" :width="17" :height="17"></Icon
+      >{{ fluent('profile_preview_back') }}
     </Button>
     <div v-if="viewAsActive" class="preview-as__select-container">
-      <span>Previewing profile as</span>
+      <span>{{ fluent('profile_preview_active') }}</span>
       <Select
         class="privacy-select privacy-select--blue privacy-select--large"
-        :label="'Preview Profile As'"
+        :label="fluent('profile_preview_active')"
         :id="'preview-profile-selection'"
         v-model="viewAs"
         :options="viewAsOptions"
@@ -22,7 +23,7 @@
       class="preview-as__button preview-as__activate-button"
     >
       <Icon id="eye" :width="17" :height="17"></Icon>
-      <span>Preview As</span>
+      <span>{{ fluent('profile_preview') }}</span>
       <Icon id="chevron-right" :width="17" :height="17"></Icon>
     </Button>
   </aside>
@@ -79,7 +80,7 @@ export default {
       viewAsOptions: [
         {
           ...DISPLAY_LEVELS.private,
-          label: 'Myself',
+          label: this.fluent('profile_preview_myself'),
           icon: 'self-avatar',
         },
         DISPLAY_LEVELS.staff,

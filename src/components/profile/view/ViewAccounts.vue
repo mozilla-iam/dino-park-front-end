@@ -1,7 +1,7 @@
 <template>
   <div class="profile__external-accounts">
     <div v-if="accounts.mozilla.length">
-      <h3>Mozilla</h3>
+      <h3>{{ fluent('mozilla') }}</h3>
       <IconBlockList>
         <IconBlock
           v-for="(acc, index) in accounts.mozilla"
@@ -21,7 +21,7 @@
       </IconBlockList>
     </div>
     <div v-if="accounts.other.length">
-      <h3>Elsewhere</h3>
+      <h3>{{ fluent('profile_accounts_elsewhere') }}</h3>
       <IconBlockList>
         <IconBlock
           v-for="(acc, index) in accounts.other"

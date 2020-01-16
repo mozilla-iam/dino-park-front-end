@@ -29,9 +29,9 @@
               })
             "
           >
-            Cancel
+            {{ fluent('cancel') }}
           </button>
-          <button type="submit" class="button">Save</button>
+          <button type="submit" class="button">{{ fluent('save') }}</button>
         </div>
       </form>
       <LoadingSpinner v-if="loading"></LoadingSpinner>

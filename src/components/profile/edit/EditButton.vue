@@ -10,11 +10,11 @@
     }"
   >
     <Icon id="pencil" :width="20" :height="20"></Icon>
-    <span class="visually-hidden">Edit {{ section }}</span>
+    <span class="visually-hidden">{{ fluent('edit', { section }) }}</span>
   </RouterLink>
   <button type="button" v-else class="edit-button" v-on:click="saveOrDiscard">
     <Icon id="pencil" :width="20" :height="20"></Icon>
-    <span class="visually-hidden">Edit {{ section }}</span>
+    <span class="visually-hidden">{{ fluent('edit', { section }) }}</span>
   </button>
 </template>
 

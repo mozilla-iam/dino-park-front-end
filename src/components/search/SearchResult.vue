@@ -34,7 +34,9 @@
           fill-rule="nonzero"
         />
       </svg>
-      <span class="visually-hidden">View {{ username }} in org chart</span>
+      <span class="visually-hidden">{{
+        fluent('search_result_orgchart', { username })
+      }}</span>
     </RouterLink>
   </li>
 </template>

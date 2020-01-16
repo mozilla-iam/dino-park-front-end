@@ -16,7 +16,10 @@
         @click="copyKey"
       >
         <Icon id="copy" :width="16" :height="16" />
-        Copy <span class="visually-hidden">key {{ title }}</span>
+        <span aria-hidden="true">{{ fluent('copy') }}</span>
+        <span class="visually-hidden">{{
+          fluent({ id: 'profile_keys', attr: 'copy', args: { title } })
+        }}</span>
       </button>
     </dt>
     <dd class="key__content" ref="keyContent">{{ content }}</dd>

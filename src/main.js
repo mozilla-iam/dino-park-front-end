@@ -4,7 +4,7 @@ import VueApollo from 'vue-apollo';
 import { InMemoryCache, defaultDataIdFromObject } from 'apollo-cache-inmemory';
 import Vuex from 'vuex';
 import App from './App.vue';
-import router from './router';
+import constructRouter from './router';
 import { DISPLAY_PROFILE } from './queries/profile';
 import Scope from './assets/js/scope';
 import Fluent from './assets/js/fluent';
@@ -120,7 +120,7 @@ Promise.all([store.dispatch('fetchUser'), Fluent.init()]).then(([, fluent]) => {
     },
   });
   new Vue({
-    router,
+    router: constructRouter(fluent),
     apolloProvider,
     render: (h) => h(App),
     store,

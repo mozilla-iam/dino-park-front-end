@@ -6,7 +6,9 @@
       @click="$emit('removeTag')"
     >
       <Icon id="x" :width="16" :height="16"></Icon
-      ><span class="visually-hidden">Remove {{ tag }}</span></Button
+      ><span class="visually-hidden">{{
+        fluent({ id: 'profile_tags', attr: 'remove', args: { tag } })
+      }}</span></Button
     >{{ tag }}</span
   >
 </template>

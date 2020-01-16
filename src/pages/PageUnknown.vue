@@ -11,20 +11,22 @@
         />
       </template>
       <template slot="message">
-        <h1 class="visually-hidden">Error</h1>
-        <h2>This page isn't available</h2>
+        <h1 class="visually-hidden">{{ fluent('error') }}</h1>
+        <h2>{{ fluent('error_404') }}</h2>
         <p>
-          Sorry, the link you followed may be broken or the page may have been
-          removed.
+          {{ fluent('error_404', 'description') }}
         </p>
-        <RouterLink :to="{ name: 'Home' }" class="button"
-          >Go to homepage</RouterLink
-        >
+        <RouterLink :to="{ name: 'Home' }" class="button">{{
+          fluent('error_404', 'link')
+        }}</RouterLink>
         <p>
           <small>
-            Please submit all bugs or issues to
-            <a :href="globalLinks.githubIssues">the project's GitHub issue
-            repository</a>.
+            <Fluent
+              id="error_issues"
+              :tags="{
+                github: { tag: 'a', href: globalLinks.githubIssues },
+              }"
+            />
           </small>
         </p>
       </template>
@@ -35,12 +37,14 @@
 <script>
 import Error from '@/components/ui/Error.vue';
 import LinksMixin from '@/components/_mixins/LinksMixin.vue';
+import Fluent from '@/components/Fluent.vue';
 
 export default {
   name: 'Page404',
   mixins: [LinksMixin],
   components: {
     Error,
+    Fluent,
   },
 };
 </script>

@@ -6,24 +6,31 @@
       :alternateButtonText="'Close ' + label + ' info'"
     >
       {{ infoText }}<br />
-      This was determined from profile information visible to you.<br />
-      Read more about data classification
-      <a
-        href="https://wiki.mozilla.org/Security/Data_Classification"
-        target="_blank"
-        >on the wiki</a
-      >.
+      {{ fluent('classification_info', 'how') }}<br />
+      <Fluent
+        id="classification_info"
+        attr="wiki"
+        :tags="{
+          wiki: {
+            tag: 'a',
+            target: '_blank',
+            href: 'https://wiki.mozilla.org/Security/Data_Classification',
+          },
+        }"
+      />
     </Tooltip>
   </div>
 </template>
 
 <script>
 import Tooltip from '@/components/ui/Tooltip.vue';
+import Fluent from '@/components/Fluent.vue';
 
 export default {
   name: 'DataClassification',
   components: {
     Tooltip,
+    Fluent,
   },
   props: {
     staffInformation: Object,
@@ -55,11 +62,11 @@ export default {
     infoText() {
       switch (this.classification) {
         case 'staff':
-          return 'This person has the highest level of access - Mozilla confidential - Staff only.';
+          return this.fluent('classification_info', 'staff');
         case 'confidential':
-          return 'This person has access to data that can be shared with all of Mozilla staff and NDA’d contributors.';
+          return this.fluent('classification_info', 'confidential');
         default:
-          return 'This person has access to data classified as Public.';
+          return this.fluent('classification_info');
       }
     },
   },
