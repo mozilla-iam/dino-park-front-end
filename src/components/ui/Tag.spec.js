@@ -13,6 +13,6 @@ describe('Tag.vue', () => {
       { tag: 'test', removable: true },
       '.visually-hidden',
     );
-    expect(vis).toBe('Remove test');
+    expect(vis).toBe('Remove \u2068test\u2069');
   });
 });

@@ -15,7 +15,7 @@
       staffInformationOfficeLocationDisplay:
         staffInformationOfficeLocation.display,
     }"
-    formName="Edit personal information"
+    :formName="fluent('profile_primary', 'edit')"
   >
     <EditPictureModal
       v-if="showPictureModal"
@@ -28,7 +28,7 @@
       @close="showPictureModal = false"
     />
     <header class="profile__section-header" ref="header" tabindex="-1">
-      <h2>Primary Info</h2>
+      <h2>{{ fluent('profile_primary') }}</h2>
     </header>
     <div class="edit-personal-info">
       <div class="edit-personal-info__picture">
@@ -39,10 +39,12 @@
           @click="showPictureModal = true"
         >
           <Icon id="pencil" :width="17" :height="17"></Icon>
-          <span class="visually-hidden">Edit Picture</span>
+          <span class="visually-hidden">{{
+            fluent('profile_picture', 'edit')
+          }}</span>
         </button>
         <PrivacySetting
-          label="Profile picture privacy levels"
+          :label="fluent('profile_picture', 'privacy')"
           id="field-picture-privacy"
           profileFieldName="picture"
           :profileFieldObject="picture"
@@ -53,14 +55,14 @@
       <div class="edit-personal-info__label">
         <label for="field-username">{{ fluent('profile_username') }}</label>
         <Tooltip
-          buttonText="Open username info"
-          alternateButtonText="Close username info"
+          :buttonText="fluent('profile_username', 'tooltip-open')"
+          :alternateButtonText="fluent('profile_username', 'tooltip-close')"
           >{{ fluent('profile_username', 'tooltip') }}</Tooltip
         >
       </div>
       <input type="text" id="field-username" v-model="primaryUsername.value" />
       <PrivacySetting
-        label="Username privacy levels"
+        :label="fluent('profile_username', 'privacy')"
         id="field-username-privacy"
         profileFieldName="primaryUsername"
         :profileFieldObject="primaryUsername"
@@ -72,8 +74,8 @@
       <div class="edit-personal-info__label">
         <label for="field-first-name">{{ fluent('profile_first-name') }}</label
         ><Tooltip
-          buttonText="Open first name info"
-          alternateButtonText="Close first name info"
+          :buttonText="fluent('profile_first-name', 'tooltip-open')"
+          :alternateButtonText="fluent('profile_first-name', 'tooltip-close')"
           >{{
             fluent(
               'profile_first-name',
@@ -84,7 +86,7 @@
       </div>
       <input type="text" id="field-first-name" v-model="firstName.value" />
       <PrivacySetting
-        label="First name privacy levels"
+        :label="fluent('profile_first-name', 'privacy')"
         id="field-first-name-privacy"
         profileFieldName="firstName"
         :profileFieldObject="firstName"
@@ -97,7 +99,7 @@
       </div>
       <input type="text" id="field-last-name" v-model="lastName.value" />
       <PrivacySetting
-        label="Last name privacy levels"
+        :label="fluent('profile_last-name', 'privacy')"
         id="field-last-name-privacy"
         profileFieldName="lastName"
         :profileFieldObject="lastName"
@@ -108,20 +110,20 @@
       <div class="edit-personal-info__label">
         <label for="field-pronouns">{{ fluent('profile_pronouns') }}</label>
         <Tooltip
-          buttonText="Open pronouns info"
-          alternateButtonText="Close pronouns info"
+          :buttonText="fluent('profile_pronouns', 'tooltip-open')"
+          :alternateButtonText="fluent('profile_pronouns', 'tooltip-close')"
           >{{ fluent('profile_pronouns', 'tooltip') }}</Tooltip
         >
       </div>
       <Combobox
         id="field-pronouns"
         v-model="pronouns.value"
-        placeholder="Choose a pronoun or type your own"
+        :placeholder="fluent('profile_pronouns', 'placeholder')"
         :source="['he/him', 'she/her', 'they/them']"
       >
       </Combobox>
       <PrivacySetting
-        label="Pronoun privacy levels"
+        :label="fluent('profile_pronouns', 'privacy')"
         id="field-pronoun-privacy"
         profileFieldName="pronouns"
         :profileFieldObject="pronouns"
@@ -132,8 +134,8 @@
       <div class="edit-personal-info__label">
         <label for="field-alt-name">{{ fluent('profile_alt-name') }}</label
         ><Tooltip
-          buttonText="Open Alternate Name info"
-          alternateButtonText="Close Alternate Name info"
+          :buttonText="fluent('profile_alt-name', 'tooltip-open')"
+          :alternateButtonText="fluent('profile_alt-name', 'tooltip-close')"
           >{{ fluent('profile_alt-name', 'tooltip') }}</Tooltip
         >
       </div>
@@ -144,7 +146,7 @@
         v-model="alternativeName.value"
       />
       <PrivacySetting
-        label="Alternate Name privacy levels"
+        :label="fluent('profile_alt-name', 'privacy')"
         id="field-alt-name-privacy"
         profileFieldName="alternativeName"
         :profileFieldObject="alternativeName"
@@ -158,8 +160,10 @@
             fluent('profile_official-job-title')
           }}</label
           ><Tooltip
-            buttonText="Open official job title info"
-            alternateButtonText="Close official job title info"
+            :buttonText="fluent('profile_official-job-title', 'tooltip-open')"
+            :alternateButtonText="
+              fluent('profile_official-job-title', 'tooltip-close')
+            "
             ><Fluent
               id="profile_official-job-title"
               attr="tooltip"
@@ -175,7 +179,7 @@
           :value="staffInformationTitle.value"
         />
         <PrivacySetting
-          label="Title privacy levels"
+          :label="fluent('profile_official-job-title', 'privacy')"
           id="field-title-privacy"
           profileFieldName="staffInformation.title"
           :profileFieldObject="staffInformationTitle"
@@ -189,8 +193,10 @@
           fluent('profile_fun-job-title')
         }}</label>
         <Tooltip
-          buttonText="Open Tagline info"
-          alternateButtonText="Close Tagline info"
+          :buttonText="fluent('profile_fun-job-title', 'tooltip-open')"
+          :alternateButtonText="
+            fluent('profile_fun-job-title', 'tooltip-close')
+          "
           >{{
             fluent(
               'profile_fun-job-title',
@@ -206,7 +212,7 @@
         :maxlength="90"
       />
       <PrivacySetting
-        label="Tagline privacy levels"
+        :label="fluent('profile_fun-job-title', 'privacy')"
         id="field-fun-title-privacy"
         profileFieldName="funTitle"
         :profileFieldObject="funTitle"
@@ -217,8 +223,8 @@
       <div class="edit-personal-info__label">
         <label for="field-location">{{ fluent('profile_location') }}</label>
         <Tooltip
-          buttonText="Open Location info"
-          alternateButtonText="Close Location info"
+          :buttonText="fluent('profile_location', 'tooltip-open')"
+          :alternateButtonText="fluent('profile_location', 'tooltip-close')"
           >{{ fluent('profile_location', 'tooltip') }}
         </Tooltip>
       </div>
@@ -232,7 +238,7 @@
       >
       </Combobox>
       <PrivacySetting
-        label="Location privacy levels"
+        :label="fluent('profile_location', 'privacy')"
         id="field-location-privacy"
         profileFieldName="location"
         :profileFieldObject="location"
@@ -246,8 +252,10 @@
             fluent('profile_office-location')
           }}</label>
           <Tooltip
-            buttonText="Open office location info"
-            alternateButtonText="Close office location info"
+            :buttonText="fluent('profile_office-location', 'tooltip-open')"
+            :alternateButtonText="
+              fluent('profile_office-location', 'tooltip-close')
+            "
             ><Fluent
               id="profile_office-location"
               attr="tooltip"
@@ -264,7 +272,7 @@
           :value="staffInformationOfficeLocation.value"
         />
         <PrivacySetting
-          label="Office location privacy levels"
+          :label="fluent('profile_office-location', 'privacy')"
           id="field-office-location-privacy"
           profileFieldName="staffInformation.officeLocation"
           :profileFieldObject="staffInformationOfficeLocation"
@@ -276,14 +284,14 @@
       <div class="edit-personal-info__label">
         <label for="field-timezone">{{ fluent('profile_timezone') }}</label>
         <Tooltip
-          buttonText="Open Timezone info"
-          alternateButtonText="Close Timezone info"
+          :buttonText="fluent('profile_timezone', 'tooltip-open')"
+          :alternateButtonText="fluent('profile_timezone', 'tooltip-close')"
           >{{ fluent('profile_timezone', 'tooltip') }}</Tooltip
         >
       </div>
       <input type="text" id="field-timezone" disabled :value="timezone.value" />
       <PrivacySetting
-        label="Timezone privacy levels"
+        :label="fluent('profile_timezone', 'privacy')"
         id="field-timezone-privacy"
         profileFieldName="timezone"
         :profileFieldObject="timezone"
@@ -297,8 +305,10 @@
             fluent('profile_worker-type')
           }}</label>
           <Tooltip
-            buttonText="Open Worker Type info"
-            alternateButtonText="Close Worker Type info"
+            :buttonText="fluent('profile_worker-type', 'tooltip-open')"
+            :alternateButtonText="
+              fluent('profile_worker-type', 'tooltip-close')
+            "
             ><Fluent
               id="profile_worker-type"
               attr="tooltip"
@@ -314,7 +324,7 @@
           :value="staffInformation.workerType.value"
         />
         <PrivacySetting
-          label="Worker type privacy levels"
+          :label="fluent('profile_worker-type', 'privacy')"
           id="field-worker-type-privacy"
           profileFieldName="staffInformation.workerType"
           :profileFieldObject="staffInformation.workerType"
@@ -328,8 +338,10 @@
             fluent('profile_cost-center')
           }}</label>
           <Tooltip
-            buttonText="Open cost center info"
-            alternateButtonText="Close cost center info"
+            :buttonText="fluent('profile_cost-center', 'tooltip-open')"
+            :alternateButtonText="
+              fluent('profile_cost-center', 'tooltip-close')
+            "
             ><Fluent
               id="profile_cost-center"
               attr="tooltip"
@@ -345,7 +357,7 @@
           :value="staffInformation.costCenter.value"
         />
         <PrivacySetting
-          label="Cost center privacy levels"
+          :label="fluent('profile_cost-center', 'privacy')"
           id="field-cost-center-privacy"
           profileFieldName="staffInformation.costCenter"
           :profileFieldObject="staffInformation.costCenter"
@@ -359,8 +371,10 @@
             fluent('profile_desk-number')
           }}</label>
           <Tooltip
-            buttonText="Open desk number info"
-            alternateButtonText="Close desk number info"
+            :buttonText="fluent('profile_desk-number', 'tooltip-open')"
+            :alternateButtonText="
+              fluent('profile_desk-number', 'tooltip-close')
+            "
             ><Fluent
               id="profile_desk-number"
               attr="tooltip"
@@ -376,7 +390,7 @@
           :value="staffInformation.wprDeskNumber.value"
         />
         <PrivacySetting
-          label="Desk numnber privacy levels"
+          :label="fluent('profile_desk-number', 'privacy')"
           id="field-desk-number-privacy"
           profileFieldName="staffInformation.wprDeskNumber"
           :profileFieldObject="staffInformation.wprDeskNumber"
@@ -388,8 +402,8 @@
         <div class="edit-personal-info__label">
           <label for="field-team">{{ fluent('profile_team') }}</label>
           <Tooltip
-            buttonText="Open team info"
-            alternateButtonText="Close team info"
+            :buttonText="fluent('profile_team', 'tooltip-open')"
+            :alternateButtonText="fluent('profile_team', 'tooltip-close')"
             ><Fluent
               id="profile_team"
               attr="tooltip"
@@ -405,7 +419,7 @@
           :value="staffInformation.team.value"
         />
         <PrivacySetting
-          label="Team privacy levels"
+          :label="fluent('profile_team', 'privacy')"
           id="field-team-privacy"
           profileFieldName="staffInformation.team"
           :profileFieldObject="staffInformation.team"
@@ -418,8 +432,8 @@
       <div class="edit-personal-info__label">
         <label for="field-bio">{{ fluent('profile_bio') }}</label>
         <Tooltip
-          buttonText="Open Bio info"
-          alternateButtonText="Close Bio info"
+          :buttonText="fluent('profile_bio', 'tooltip-open')"
+          :alternateButtonText="fluent('profile_bio', 'tooltip-close')"
         >
           <Fluent
             id="profile_bio"
@@ -443,7 +457,7 @@
         :rows="10"
       ></TextArea>
       <PrivacySetting
-        label="Bio privacy levels"
+        :label="fluent('profile_bio', 'privacy')"
         id="field-bio-privacy"
         profileFieldName="description"
         :profileFieldObject="description"

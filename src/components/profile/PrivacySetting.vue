@@ -5,7 +5,7 @@
     :id="id"
     v-bind="privacySettings"
     v-model="profileFieldObject.display"
-    :options="displayLevelsFor(profileFieldName, scope)"
+    :options="fluentDisplayLevelsFor(profileFieldName, scope)"
     :nonOption="currentDisplayOption()"
     :disabled="disabled"
     @input="$emit('input', $event)"
@@ -19,7 +19,7 @@
         "
         target="_blank"
         rel="noopener noreferrer"
-        >What do these mean?</a
+        >{{ fluent('privacy-setting_help') }}</a
       ></template
     >
   </Select>
@@ -48,7 +48,14 @@ export default {
     disabled: Boolean,
   },
   methods: {
-    displayLevelsFor,
+    fluentDisplayLevelsFor(...args) {
+      return displayLevelsFor(...args).map((x) => {
+        return {
+          ...x,
+          label: this.fluent(`display-levels_${x.value.toLowerCase()}`),
+        };
+      });
+    },
     currentDisplayOption() {
       return (
         Object.values(DISPLAY_LEVELS).find(

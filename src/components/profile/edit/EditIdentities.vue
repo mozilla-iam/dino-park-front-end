@@ -6,7 +6,7 @@
         bugzilla: bugzillaIdentityUpdate,
       },
     }"
-    formName="Edit identities"
+    :formName="fluent('profile_identities_edit')"
   >
     <header class="profile__section-header" ref="header" tabindex="-1">
       <div class="profile__section-header__title-info">
@@ -28,15 +28,19 @@
         :disabled="adding"
       >
         <Icon id="x" :width="17" :height="17"></Icon>
-        <span class="visually-hidden">Remove GitHub identity</span>
+        <span class="visually-hidden">{{
+          fluent('profile_identities_github', 'remove')
+        }}</span>
       </Button>
-      <span class="edit-identity__item-label">GitHub</span>
+      <span class="edit-identity__item-label">{{
+        fluent('profile_identities_github')
+      }}</span>
       <span class="edit-identity__item-identity">
         {{ githubUsername }}
-        <span>Verified</span>
+        <span>{{ fluent('profile_identities_verified') }}</span>
       </span>
       <PrivacySetting
-        label="GitHub identity privacy settings"
+        :label="fluent('profile_identities_github', 'privacy')"
         id="field-github-privacy"
         :profileFieldObject="githubIdentityUpdate"
       />
@@ -52,15 +56,19 @@
         :disabled="adding"
       >
         <Icon id="x" :width="17" :height="17"></Icon>
-        <span class="visually-hidden">Remove Bugzilla identity</span>
+        <span class="visually-hidden">{{
+          fluent('profile_identities_bugzilla', 'remove')
+        }}</span>
       </Button>
-      <span class="edit-identity__item-label">Bugzilla</span>
+      <span class="edit-identity__item-label">{{
+        fluent('profile_identities_bugzilla')
+      }}</span>
       <span class="edit-identity__item-identity">
         {{ identities.bugzillaEmail() }}
-        <span>Verified</span>
+        <span>{{ fluent('profile_identities_verified') }}</span>
       </span>
       <PrivacySetting
-        label="Bugzilla identity privacy settings"
+        :label="fluent('profile_identities_bugzilla', 'privacy')"
         id="field-bugzilla-privacy"
         :profileFieldObject="bugzillaIdentityUpdate"
       />
@@ -69,22 +77,24 @@
     <div v-if="adding" class="edit-identity__item">
       <Button class="button--icon-only" v-on:click="cancelAdding">
         <Icon id="x" :width="17" :height="17"></Icon>
-        <span class="visually-hidden">Cancel adding new identity</span>
+        <span class="visually-hidden">{{
+          fluent('profile_identities_add', 'cancel')
+        }}</span>
       </Button>
       <Select
         ref="new_identity"
         class="options--chevron"
-        label="New identity"
+        :label="fluent('profile_identities_add', 'new')"
         id="field-bugzilla-type"
         v-model="newIdentity"
         :options="identities.available().map((x) => identities.label(x))"
       />
       <label for="field-bugzilla-value" class="visually-hidden"
-        >New identity {{ newIdentity }}</label
+        >{{ fluent('profile_identities_add', 'new') }} {{ newIdentity }}</label
       >
       <div class="edit-identities__verify">
         <a v-bind:href="redirect(newIdentity)">
-          Verify
+          {{ fluent('profile_identities_add', 'verify') }}
         </a>
       </div>
       <hr role="presentation" />
@@ -123,15 +133,15 @@ export default {
   computed: {
     addButtonText() {
       if (this.adding) {
-        return 'Verify Added Identity First';
+        return this.fluent('profile_identities_add', 'adding');
       }
       if (this.deleting) {
-        return 'Save Changes First';
+        return this.fluent('profile_identities_add', 'deleting');
       }
       if (this.identities.noIdentitiesLeft()) {
-        return 'All Identities Added';
+        return this.fluent('profile_identities_add', 'done');
       }
-      return 'Add Identity';
+      return this.fluent('profile_identities');
     },
   },
   methods: {

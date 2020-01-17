@@ -1,0 +1,12 @@
+profile_first-name = First Name
+  .tooltip = Pro tip: If first and last names don’t work for you, we have you covered, please use alternative name instead.
+profile_alt-name = Alternative Name
+  .tooltip-open = Open alternative name info
+  .tooltip-close = Close alternative name info
+  .tooltip = This field allows you to enter an additional or alternative name to your profile.
+  .privacy = Alternative name privacy levels
+profile_cost-center = Cost Centre
+  .tooltip-open = Open cost centre info
+  .tooltip-close = Close cost centre info
+  .tooltip = This is your cost centre as provided by our HR Team (Workday). {-staff-not-editable}
+  .privacy = Cost centre privacy levels

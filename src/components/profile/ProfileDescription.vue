@@ -1,6 +1,6 @@
 <template>
   <div v-if="parsedDescription" class="profile-description">
-    <strong>Biography</strong>
+    <strong>{{ fluent('profile_bio') }}</strong>
     <p v-html="parsedDescription"></p>
   </div>
 </template>

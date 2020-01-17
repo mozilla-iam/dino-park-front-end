@@ -69,8 +69,8 @@
       :title="fluent('profile_identities')"
       :userOnOwnProfile="userOnOwnProfile"
       :empty="!identitiesWrapper.anyIdentity()"
-      message="No identities have been added yet."
-      messageOwn="You haven't added any identities yet."
+      :message="fluent('profile_identities_none')"
+      :messageOwn="fluent('profile_identities_none', 'self')"
       :editing="editing === 'identities'"
       :editable="!viewAs"
     >
@@ -89,8 +89,8 @@
       :title="fluent('profile_contact')"
       :userOnOwnProfile="userOnOwnProfile"
       :empty="!sections.contact"
-      message="No contact details have been added yet."
-      messageOwn="You haven't added any contact details yet."
+      :message="fluent('profile_contact_none')"
+      :messageOwn="fluent('profile_contact_none', 'self')"
       :editing="editing === 'contact'"
       :editable="!viewAs"
     >
@@ -117,8 +117,8 @@
       :title="fluent('profile_accounts')"
       :userOnOwnProfile="userOnOwnProfile"
       :empty="!sections.accounts"
-      message="No accounts have been added yet."
-      messageOwn="You haven't added any accounts yet."
+      :message="fluent('profile_accounts_none')"
+      :messageOwn="fluent('profile_accounts_none', 'self')"
       :editing="editing === 'accounts'"
       :editable="!viewAs"
     >
@@ -140,8 +140,8 @@
       :title="fluent('profile_languages')"
       :userOnOwnProfile="userOnOwnProfile"
       :empty="!sections.languages"
-      message="No languages have been added yet."
-      messageOwn="You haven't added any languages yet."
+      :message="fluent('profile_languages_none')"
+      :messageOwn="fluent('profile_languages_none', 'self')"
       :editing="editing === 'languages'"
       :editable="!viewAs"
     >
@@ -163,8 +163,8 @@
       :title="fluent('profile_tags')"
       :userOnOwnProfile="userOnOwnProfile"
       :empty="!sections.tags"
-      message="No tags have been added yet."
-      messageOwn="You haven't added any tags yet."
+      :message="fluent('profile_tags_none')"
+      :messageOwn="fluent('profile_tags_none', 'self')"
       :editing="editing === 'tags'"
       :editable="!viewAs"
     >
@@ -190,8 +190,8 @@
           0 && Object.keys(accessInformation.ldap.values || {}).length === 0
       "
       :editable="!viewAs"
-      message="Not a member of any access group."
-      messageOwn="You are not a member of any access group."
+      :message="fluent('profile_access-groups_none')"
+      :messageOwn="fluent('profile_access-groups_none', 'self')"
       :editing="editing === 'access-groups'"
     >
       <template v-slot:edit>
@@ -211,9 +211,9 @@
       :title="fluent('profile_keys')"
       :userOnOwnProfile="userOnOwnProfile"
       :empty="!sections.keys"
-      message="No keys have been added yet."
-      messageOwn="You haven't added any keys yet."
-      messageNoLdap="Adding keys currently requires an LDAP account."
+      :message="fluent('profile_keys_none')"
+      :messageOwn="fluent('profile_keys_none', 'self')"
+      :messageNoLdap="fluent('profile_keys_none', 'no-ldap')"
       :isLdap="scope.isLdap"
       :editing="editing === 'keys'"
       :editable="!viewAs"
@@ -354,16 +354,16 @@ export default {
       let content = null;
       switch (this.$route.query.identityAdded) {
         case 'github':
-          content = 'Saved GitHub identity';
+          content = this.fluent('profile_identities_github', 'saved');
           break;
         case 'bugzilla':
-          content = 'Saved Bugzilla identity';
+          content = this.fluent('profile_identities_bugzilla', 'saved');
           break;
         case 'error':
-          content = 'Failed to verify identity';
+          content = this.fluent('profile_identities_add', 'failed');
           break;
         default:
-          content = 'Unkown error while verifying an identity';
+          content = this.fluent('profile_identities_add', 'unknown');
       }
       this.$router.push({
         name: 'Profile',
@@ -386,43 +386,43 @@ export default {
         {
           id: 'nav-relations',
           iconId: 'org-chart',
-          label: 'Colleagues',
+          label: this.fluent('profile_colleagues'),
           staffOnly: true,
         },
         {
           id: 'nav-identities',
           iconId: 'chain',
-          label: 'Identities',
+          label: this.fluent('profile_identities'),
         },
         {
           id: 'nav-contact',
           iconId: 'envelope',
-          label: 'Contact',
+          label: this.fluent('profile_contact'),
         },
         {
           id: 'nav-accounts',
           iconId: 'at-sign',
-          label: 'Accounts',
+          label: this.fluent('profile_accounts'),
         },
         {
           id: 'nav-languages',
           iconId: 'world',
-          label: 'Languages',
+          label: this.fluent('profile_languages'),
         },
         {
           id: 'nav-tags',
           iconId: 'bookmark',
-          label: 'Tags',
+          label: this.fluent('profile_tags'),
         },
         {
           id: 'nav-access-groups',
           iconId: 'lock',
-          label: 'Access Groups',
+          label: this.fluent('profile_access-groups'),
         },
         {
           id: 'nav-keys',
           iconId: 'keys',
-          label: 'Keys',
+          label: this.fluent('profile_keys'),
         },
       ],
     };

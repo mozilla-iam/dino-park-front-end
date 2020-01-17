@@ -2,7 +2,7 @@
   <div class="user-menu" ref="userMenuEl">
     <div class="user-menu__header">
       <button class="user-menu__close-avatar" type="button">
-        <span class="visually-hidden">Close user menu</span>
+        <span class="visually-hidden">{{ fluent('user-menu_close') }}</span>
         <UserPicture
           :avatar="{
             picture: user.picture.value,
@@ -61,13 +61,13 @@
             params: { username: user.primaryUsername.value },
           }"
         >
-          <span>My Profile</span>
+          <span>{{ fluent('user-menu_my-profile') }}</span>
           <Icon id="user" :width="24" :height="24" />
         </RouterLink>
       </li>
       <li>
         <a href="https://sso.mozilla.com" id="link-usermenu-sso-dashboard">
-          <span>Dashboard</span>
+          <span>{{ fluent('user-menu_dashboard') }}</span>
           <Icon id="dashboard" :width="24" :height="24" />
         </a>
       </li>
@@ -76,19 +76,19 @@
           href="https://sso.mozilla.com/notifications"
           id="link-usermenu-sso-dashboard"
         >
-          <span>Notifications</span>
+          <span>{{ fluent('user-menu_notifications') }}</span>
           <Icon id="bell" :width="24" :height="24" />
         </a>
       </li>
       <li>
         <span class="user-menu__faux-link">
-          <span>Manage Auto-Login</span>
+          <span>{{ fluent('user-menu_auto-login') }}</span>
           <Icon id="sliders" :width="24" :height="24" />
         </span>
       </li>
     </ul>
     <a href="/oauth/logout?redirect=/logbackin.html" class="user-menu__log-out">
-      <span>Log Out</span>
+      <span>{{ fluent('user-menu_logout') }}</span>
       <Icon id="log-out" :width="24" :height="24" />
     </a>
   </div>

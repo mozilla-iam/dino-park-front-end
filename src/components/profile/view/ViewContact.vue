@@ -1,19 +1,19 @@
 <template>
   <div>
-    <h3 class="visually-hidden">Contact options</h3>
+    <h3 class="visually-hidden">{{ fluent('profile_contact', 'options') }}</h3>
     <IconBlockList class="icon-block-list--multi-col">
       <IconBlock
         v-if="primaryEmail.value"
-        heading="Email"
-        subHeading="primary"
+        :heading="fluent('profile_email')"
+        :subHeading="fluent('profile_email_primary')"
         icon="email"
       >
         <a :href="`mailto:${primaryEmail.value}`">{{ primaryEmail.value }}</a>
       </IconBlock>
       <IconBlock
         v-if="secondaryEmail"
-        heading="Email"
-        subHeading="secondary"
+        :heading="fluent('profile_email')"
+        :subHeading="fluent('profile_email_secondary')"
         icon="email"
       >
         <a :href="`mailto:${secondaryEmail}`">{{ secondaryEmail }}</a>
@@ -21,8 +21,10 @@
       <IconBlock
         v-for="[key, value] in Object.entries(phoneNumbers.values || {})"
         :key="`phoneNumber-${key}`"
-        heading="Phone"
-        :subHeading="destructPhoneKey(key).view"
+        :heading="fluent('profile_phone')"
+        :subHeading="
+          fluent('profile_phone', destructPhoneKey(key).view.toLowerCase())
+        "
         icon="phone"
       >
         <a :href="`tel:${value}`">{{ value }}</a>

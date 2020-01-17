@@ -1,7 +1,7 @@
 <template>
   <Toggle
     id="search-who-form"
-    label="Set who to search for"
+    :label="fluent('search_toggle')"
     :action="
       this.$router.resolve({
         name: 'Search',
@@ -51,17 +51,17 @@ export default {
       choices: [
         {
           id: 'search-who-all',
-          label: 'All',
+          label: this.fluent('search_toggle', 'all'),
           value: 'all',
         },
         {
           id: 'search-who-staff',
-          label: 'Staff',
+          label: this.fluent('search_toggle', 'staff'),
           value: 'staff',
         },
         {
           id: 'search-who-contributors',
-          label: 'Contributors',
+          label: this.fluent('search_toggle', 'contributors'),
           value: 'contributors',
         },
       ],

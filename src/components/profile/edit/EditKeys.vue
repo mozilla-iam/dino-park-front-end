@@ -14,10 +14,10 @@
       v-if="pgpPublicKeys && Object.keys(pgpPublicKeys.values || {}).length > 0"
     >
       <div class="edit-keys__header">
-        <h3>PGP keys</h3>
+        <h3>{{ fluent('profile_keys_pgp') }}</h3>
         <PrivacySetting
           class="privacy-select--large"
-          label="PGP keys privacy levels"
+          :label="fluent('profile_keys_pgp', 'privacy')"
           id="section-pgp-keys-privacy"
           profileFieldName="pgpPublicKeys"
           :profileFieldObject="{ display: pgpPublicKeys.metadata.display }"
@@ -38,10 +38,10 @@
       v-if="sshPublicKeys && Object.keys(sshPublicKeys.values || {}).length > 0"
     >
       <div class="edit-keys__header">
-        <h3>SSH keys</h3>
+        <h3>{{ fluent('profile_keys_ssh') }}</h3>
         <PrivacySetting
           class="privacy-select--large"
-          label="SSH keys privacy levels"
+          :label="fluent('profile_keys_ssh', 'privacy')"
           id="section-ssh-keys-privacy"
           profileFieldName="sshPublicKeys"
           :profileFieldObject="{ display: sshPublicKeys.metadata.display }"
@@ -64,7 +64,7 @@
         href="https://login.mozilla.com"
       >
         <Icon id="external" :width="18" :height="18" />
-        Add / Remove
+        {{ fluent('profile_keys', 'edit') }}
       </a>
     </div>
     <div class="button-bar">
@@ -80,7 +80,7 @@
           })
         "
       >
-        Cancel
+        {{ fluent('cancel') }}
       </button>
     </div>
   </div>

@@ -1,9 +1,9 @@
 <template>
   <main class="search-results" ref="searchResultsContainer" tabindex="-1">
-    <h1 class="visually-hidden">Search results</h1>
+    <h1 class="visually-hidden">{{ fluent('search_results') }}</h1>
     <SearchToggle />
     <template v-if="!this.$route.query.query">
-      <p>You have not searched.</p>
+      <p>{{ fluent('search_none') }}</p>
     </template>
     <LoadingSpinner v-else-if="loading && !more"></LoadingSpinner>
     <Error v-else-if="error">
@@ -17,14 +17,17 @@
         />
       </template>
       <template slot="message">
-        <h1 class="visually-hidden">Error</h1>
-        <h2>This page isn't available</h2>
-        <p>An error occured while trying to load the search results</p>
+        <h1 class="visually-hidden">{{ fluent('error') }}</h1>
+        <h2>{{ fluent('error_404') }}</h2>
+        <p>{{ fluent('search_error') }}</p>
         <p>
           <small>
-            Please submit all bugs or issues to
-            <a :href="globalLinks.githubIssues">the project's GitHub issue
-            repository</a>.
+            <Fluent
+              id="error_issues"
+              :tags="{
+                github: { tag: 'a', href: globalLinks.githubIssues },
+              }"
+            />
           </small>
         </p>
       </template>
@@ -43,23 +46,32 @@
           />
         </template>
         <template slot="message">
-          <h1 class="visually-hidden">Error</h1>
+          <h1 class="visually-hidden">{{ fluent('error') }}</h1>
           <h2>
-            No results found for <strong>{{ this.$route.query.query }}</strong>
+            <Fluent
+              id="search_no-results"
+              :args="{ query: this.$route.query.query }"
+            />
           </h2>
-          <p>Some suggestions include:</p>
+          <p>{{ fluent('search_suggestions') }}</p>
           <ul>
-            <li>Make sure that all words are spelled correctly.</li>
-            <li>Try using different keywords or more general keywords.</li>
-            <li>Try fewer keywords.</li>
+            <li>{{ fluent('search_suggestions', 'spelling') }}</li>
+            <li>{{ fluent('search_suggestions', 'different') }}</li>
+            <li>{{ fluent('search_suggestions', 'fewer') }}</li>
           </ul>
         </template>
       </Error>
     </template>
     <template v-else-if="this.$route.query.query && results">
       <p>
-        {{ results.total }} results for
-        <strong>{{ this.$route.query.query }}</strong>
+        <Fluent
+          id="search_results"
+          attr="total"
+          :args="{
+            total: results.total,
+            query: this.$route.query.query,
+          }"
+        />
       </p>
       <SearchResultList :dinos="results.dinos"></SearchResultList>
       <LoadingSpinner v-if="loading"></LoadingSpinner>
@@ -70,7 +82,7 @@
         @click="fetchMore"
       >
         <Icon id="chevron-down" :width="24" :height="24" />
-        <span>Show More</span>
+        <span>{{ fluent('search_results', 'more') }}</span>
       </Button>
     </template>
   </main>
@@ -85,6 +97,7 @@ import SearchResultList from '@/components/search/SearchResultList.vue';
 import SearchToggle from '@/components/search/SearchToggle.vue';
 import Fetcher from '@/assets/js/fetcher';
 import LinksMixin from '@/components/_mixins/LinksMixin.vue';
+import Fluent from '@/components/Fluent.vue';
 
 const fetcher = new Fetcher({
   isError: (e) =>
@@ -101,6 +114,7 @@ export default {
     LoadingSpinner,
     SearchResultList,
     SearchToggle,
+    Fluent,
   },
   data() {
     return {

@@ -1,8 +1,8 @@
 <template>
   <ShowMore
     v-if="notEmpty"
-    buttonText="Contact Me"
-    alternateButtonText="Contact Me"
+    :buttonText="fluent('profile_contact-me')"
+    :alternateButtonText="fluent('profile_contact-me')"
     buttonClass="button button--icon-end contact-me__button"
     :transition="false"
     :closeWhenClickedOutside="true"
@@ -56,12 +56,24 @@
           >
             <Icon :id="uri.icon" :width="24" :height="24" />
             <span class="contact-me__value">{{ uri.value }}</span>
-            <span class="visually-hidden">on {{ uri.text }}</span>
+            <span class="visually-hidden">{{
+              fluent({
+                id: 'profile_contact-me',
+                attr: 'on',
+                args: { service: uri.text },
+              })
+            }}</span>
           </a>
           <span v-else class="contact-me__pair" :title="uri.text">
             <Icon :id="uri.icon" :width="24" :height="24" />
             <span class="contact-me__value">{{ uri.value }}</span>
-            <span class="visually-hidden">on {{ uri.text }}</span>
+            <span class="visually-hidden">{{
+              fluent({
+                id: 'profile_contact-me',
+                attr: 'on',
+                args: { service: uri.text },
+              })
+            }}</span>
           </span>
         </div>
       </Popover>

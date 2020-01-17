@@ -1,7 +1,7 @@
 <template>
   <div class="profile__team-location">
     <div v-if="showTeam" class="profile__team-section profile__team">
-      <h3 class="visually-hidden">Team</h3>
+      <h3 class="visually-hidden">{{ fluent('profile_team') }}</h3>
       <strong>
         <RouterLink
           v-if="team && teamManager"
@@ -16,7 +16,7 @@
       <span>{{ entity }}</span>
     </div>
     <div v-if="showLocation" class="profile__team-section profile__location">
-      <h3 class="visually-hidden">Location</h3>
+      <h3 class="visually-hidden">{{ fluent('profile_location') }}</h3>
       <span class="profile-team-location-links" v-if="location">
         <RouterLink
           :to="{
@@ -60,8 +60,8 @@
         <span class="timezone-diff">{{ timezoneDiff }}</span>
         <Tooltip
           v-if="hasTimezoneOffset"
-          buttonText="Open timezone info"
-          alternateButtonText="Close timezone info"
+          :buttonText="fluent('profile_timezone', 'tooltip-open')"
+          :alternateButtonText="fluent('profile_timezone', 'tooltip-close')"
           >{{
             hasBrowserTimezone ? hasTimezoneInfoText : hasNoTimezoneInfoText
           }}</Tooltip
@@ -128,9 +128,10 @@ export default {
     timezoneWithTime() {
       // Return final string
       if (this.timezone) {
-        return `${this.getLocaltime()} local time (${getTimezoneName(
-          this.timezone,
-        )})`;
+        return this.fluent('profile_timezone_localtime', {
+          time: this.getLocaltime(),
+          timezone: getTimezoneName(this.timezone),
+        });
       }
       return null;
     },
@@ -177,9 +178,10 @@ export default {
         validBrowserHoursDiff =
           browserHoursDiff !== null && browserHoursDiff !== 0;
         if (validBrowserHoursDiff) {
-          printedBrowserOffset = `${decimalToHours(
-            browserHoursDiff,
-          )}hrs to your current time`;
+          printedBrowserOffset = this.fluent(
+            'profile_timezone_offset_current',
+            { difference: decimalToHours(browserHoursDiff) },
+          );
         }
       }
 
@@ -188,9 +190,9 @@ export default {
       const validHoursDiff = hoursDiff !== null && hoursDiff !== 0;
       let printedLocalOffset = '';
       if (validHoursDiff) {
-        printedLocalOffset = `${decimalToHours(
-          hoursDiff,
-        )}hrs to your local time`;
+        printedLocalOffset = this.fluent('profile_timezone_offset_local', {
+          difference: decimalToHours(hoursDiff),
+        });
       }
 
       // Return appropriate text
@@ -242,10 +244,14 @@ export default {
     return {
       localtime: new Date(),
       currentTimezone: this.$store.state.user.timezone.value,
-      hasTimezoneInfoText:
-        'Since your browser location and profile timezone are different, we get this from your browser',
-      hasNoTimezoneInfoText:
-        'We get this from what you set up in your profile as your primary location',
+      hasTimezoneInfoText: this.fluent(
+        'profile_timezone_offset_current',
+        'tooltip',
+      ),
+      hasNoTimezoneInfoText: this.fluent(
+        'profile_timezone_offset_local',
+        'tooltip',
+      ),
     };
   },
 };

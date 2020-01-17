@@ -19,8 +19,8 @@
           Object.entries(pgpPublicKeys.values || {}).length >
             this.initiallyShown
         "
-        buttonText="Show More"
-        alternateButtonText="Show Less"
+        :buttonText="fluent('more')"
+        :alternateButtonText="fluent('less')"
         class="keys__show-more"
         buttonClass="button button--text-only button--less-padding keys__show-more-button"
         :transition="true"
@@ -63,8 +63,8 @@
           Object.entries(sshPublicKeys.values || {}).length >
             this.initiallyShown
         "
-        buttonText="Show More"
-        alternateButtonText="Show Less"
+        :buttonText="fluent('more')"
+        :alternateButtonText="fluent('less')"
         class="keys__show-more"
         buttonClass="button button--text-only button--less-padding keys__show-more-button"
         :transition="true"

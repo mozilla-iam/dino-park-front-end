@@ -3,7 +3,7 @@
     :editVariables="{
       tags,
     }"
-    formName="Edit tags"
+    :formName="fluent('profile_tags', 'edit')"
     class="add-tags"
   >
     <header class="profile__section-header" ref="header" tabindex="-1">
@@ -17,7 +17,7 @@
       </div>
       <PrivacySetting
         class="privacy-select--large"
-        label="Tags privacy level"
+        :label="fluent('profile_tags', 'privacy')"
         id="section-tags-privacy"
         profileFieldName="tags"
         :profileFieldObject="tags"
@@ -49,11 +49,11 @@
     >
       <template v-if="addingTag && newTag.length > 0">
         <Icon id="check" :width="18" :height="18" />
-        Submit
+        {{ fluent('submit') }}
       </template>
       <template v-else>
         <Icon id="plus" :width="18" :height="18" />
-        Add Tag
+        {{ fluent('profile_tags', 'add') }}
       </template>
     </button>
   </EditMutationWrapper>

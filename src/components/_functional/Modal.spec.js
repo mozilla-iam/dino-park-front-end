@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Modal from './Modal.vue';
-import getRenderedText from '../../../tests/utils/getRenderedText.js';
+import getRenderedText from '@/../tests/utils/getRenderedText.js';
 
 describe('Modal', () => {
   const Constructor = Vue.extend(Modal);

@@ -5,7 +5,7 @@
       @click="$emit('close')"
       class="button button--icon-only button--secondary profile-preview__close"
     >
-      <span class="visually-hidden">Close profile</span>
+      <span class="visually-hidden">{{ fluent('profile_preview_close') }}</span>
       <svg
         aria-hidden="true"
         role="presentation"
@@ -72,7 +72,7 @@
         :to="{ name: 'Profile', params: { username: primaryUsername.value } }"
         class="button button--text-only"
       >
-        View full profile
+        {{ fluent('orgchart_full-profile') }}
         <svg
           aria-hidden="true"
           role="presentation"

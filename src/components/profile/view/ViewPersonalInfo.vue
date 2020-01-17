@@ -51,20 +51,19 @@
         :timezone="timezone.value"
       ></ProfileTeamLocation>
       <MetaList>
-        <h3 class="visually-hidden">Meta</h3>
-        <MetaItem metaKey="Access to">
+        <MetaItem :metaKey="fluent('profile_access-to')">
           <DataClassification
             :staffInformation="staffInformation"
             :accessInformation="accessInformation"
           />
         </MetaItem>
         <MetaItem
-          metaKey="Worker type"
+          :metaKey="fluent('profile_worker-type')"
           v-if="staffInformation.workerType.value"
           :metaValue="staffInformation.workerType.value"
         />
         <MetaItem
-          metaKey="Desk number"
+          :metaKey="fluent('profile_desk-number')"
           v-if="staffInformation.wprDeskNumber.value"
           :metaValue="staffInformation.wprDeskNumber.value"
           :link="
@@ -72,7 +71,7 @@
           "
         />
         <MetaItem
-          metaKey="Cost center"
+          :metaKey="fluent('profile_cost-center')"
           v-if="staffInformation.costCenter.value"
           :metaValue="
             staffInformation.costCenter.value &&

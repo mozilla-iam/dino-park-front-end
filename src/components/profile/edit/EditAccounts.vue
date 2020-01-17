@@ -3,7 +3,7 @@
     :editVariables="{
       uris,
     }"
-    formName="Edit accounts"
+    :formName="fluent('profile_accounts', 'edit')"
   >
     <header class="profile__section-header" ref="header" tabindex="-1">
       <div class="profile__section-header__title-info">
@@ -16,7 +16,7 @@
       </div>
       <PrivacySetting
         class="privacy-select--large"
-        label="Accounts privacy levels"
+        :label="fluent('profile_accounts', 'privacy')"
         id="section-accounts-privacy"
         profileFieldName="uris"
         :profileFieldObject="uris"
@@ -34,7 +34,9 @@
         v-on:click="() => deleteUri(index)"
       >
         <Icon id="x" :width="17" :height="17"></Icon>
-        <span class="visually-hidden">Remove Account</span>
+        <span class="visually-hidden">{{
+          fluent('profile_accounts', 'remove')
+        }}</span>
       </Button>
       <Select
         class="options--chevron"
@@ -46,10 +48,11 @@
         ]"
         v-model="uris.values[index].k"
       />
-      <label :for="`field-account-${index}-username`" class="visually-hidden"
-        >Username on
-        {{ `${EXTERNAL_ACCOUNTS[destructUriKey(k).name].text}` }}</label
-      >
+      <label :for="`field-account-${index}-username`" class="visually-hidden">{{
+        fluent('profile_accounts_username-on', {
+          service: EXTERNAL_ACCOUNTS[destructUriKey(k).name].text,
+        })
+      }}</label>
       <input
         :id="`field-account-${index}-username`"
         type="text"
@@ -62,7 +65,7 @@
       <Checkbox
         @input="(newValue) => toggleUriContactMe(newValue, index)"
         :checked="destructUriKey(k).contact"
-        label="Show in Contact Me button"
+        :label="fluent('profile_contact-me', 'show-in')"
         class="edit-contact__set-as-contact"
       />
       <hr role="presentation" />
@@ -72,7 +75,9 @@
       type="button"
       :disabled="noAccountsLeft"
       v-on:click="addUri"
-      ><Icon id="plus" :width="16" :height="16" />Add Account</Button
+      ><Icon id="plus" :width="16" :height="16" />{{
+        fluent('profile_accounts', 'add')
+      }}</Button
     >
   </EditMutationWrapper>
 </template>

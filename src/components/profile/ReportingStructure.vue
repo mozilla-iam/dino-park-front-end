@@ -6,19 +6,19 @@
       :isSingle="true"
       :person="this.related.manager"
       :viewAs="this.viewAs"
-      :heading="'Reports to: '"
+      :heading="fluent('profile_colleagues_reports')"
     />
     <ReportingStructureGroup
       :collection="this.related.directs"
       :collectionName="'directs'"
       :viewAs="this.viewAs"
-      :heading="'Manages: '"
+      :heading="fluent('profile_colleagues_manages')"
     />
     <ReportingStructureGroup
       :collection="this.related.peers"
       :collectionName="'peers'"
       :viewAs="this.viewAs"
-      :heading="'Peers: '"
+      :heading="fluent('profile_colleagues_peers')"
     />
   </div>
 </template>

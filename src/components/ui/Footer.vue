@@ -43,8 +43,8 @@ export default {
         {
           link: this.globalLinks.participationGuidelines,
           icon: 'cpg',
-          label: 'CPG',
-          abbr: 'Community Participation Guidelines',
+          label: this.fluent('footer_cpg'),
+          abbr: this.fluent('footer_cpg', 'abbr'),
         },
         {
           link:
@@ -52,22 +52,22 @@ export default {
               ? this.globalLinks.faqNda
               : this.globalLinks.faqPublic,
           icon: 'faq',
-          label: 'FAQ',
+          label: this.fluent('footer_faq'),
         },
         {
           link: this.globalLinks.githubIssues,
           icon: 'github',
-          label: 'GitHub',
+          label: this.fluent('footer_github'),
         },
         {
           link: this.globalLinks.legal,
           icon: 'check',
-          label: 'Legal',
+          label: this.fluent('footer_legal'),
         },
         {
           link: this.globalLinks.privacy,
           icon: 'lock',
-          label: 'Privacy',
+          label: this.fluent('footer_privacy'),
         },
       ];
     },

@@ -84,16 +84,21 @@ describe('Fluent', () => {
     ).toEqual('lorem <i>ipsum</i>');
   });
 
-  it("resolves to en-US when localised strings don't exist", () => {
-    Fluent.init(['abc']).then((fluent) => {
+  it("resolves to en-US when localised strings don't exist", async () => {
+    expect.assertions(4);
+    return Fluent.init(['abc'], [['abc']]).then((fluent) => {
       expect(fluent.get('localised')).toEqual('localised');
-      expect(fluent.get('string')).toEqual('simple string');
+      expect(fluent.get('simple')).toEqual('simple string');
       expect(fluent.get('missing')).toEqual('[missing]');
+      expect(fluent.get('localised_with_placeable')).toEqual(
+        `this is ${FSI}localised${PDI}, but this isn't: ${FSI}simple string${PDI}`,
+      );
     });
   });
 
-  it("resolves to en-US when localised attributes don't exist", () => {
-    Fluent.init(['abc']).then((fluent) => {
+  it("resolves to en-US when localised attributes don't exist", async () => {
+    expect.assertions(3);
+    return Fluent.init(['abc'], [['abc']]).then((fluent) => {
       expect(fluent.get('localised', 'localised')).toEqual('localised');
       expect(fluent.get('localised', 'not-localised')).toEqual(
         "but this isn't",

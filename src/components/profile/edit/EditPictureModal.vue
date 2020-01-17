@@ -1,6 +1,6 @@
 <template>
   <Modal
-    heading="Edit Profile Picture"
+    :heading="fluent('profile_picture', 'edit')"
     class="edit-picture-modal"
     :initiallyOpen="true"
     :closeButton="true"
@@ -10,7 +10,7 @@
       <label
         class="edit-picture-modal__add-picture-button button button--secondary"
       >
-        Add New Photo
+        {{ fluent('profile_picture', 'add') }}
         <input
           type="file"
           accept="image/*"
@@ -24,7 +24,7 @@
         :disabled="deleteDisabled"
         @click="deleteImg"
       >
-        Delete Photo
+        {{ fluent('profile_picture', 'delete') }}
       </button>
     </div>
 
@@ -51,6 +51,18 @@
           rel="noopener noreferrer"
           >privacy policy</a
         >.
+        <Fluent
+          id="profile_picture"
+          attr="privacy-policy"
+          :tags="{
+            privacy: {
+              tag: 'a',
+              href: 'https://www.mozilla.org/en-US/privacy/',
+              target: '_blank',
+              rel: 'noopener noreferrer',
+            },
+          }"
+        />
       </div>
     </label>
 
@@ -60,7 +72,7 @@
         class="edit-picture-modal__cancel-button button button--secondary"
         @click="$emit('close')"
       >
-        Cancel
+        {{ fluent('cancel') }}
       </button>
       <button
         type="button"
@@ -68,7 +80,7 @@
         :disabled="!privacyAgreed"
         @click="select()"
       >
-        Select
+        {{ fluent('select') }}
       </button>
     </div>
     <LoadingSpinner v-if="loading"></LoadingSpinner>
@@ -80,6 +92,7 @@ import Modal from '@/components/_functional/Modal.vue';
 import UserPicture from '@/components/ui/UserPicture.vue';
 import Fetcher from '@/assets/js/fetcher';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
+import Fluent from '@/components/Fluent.vue';
 
 const fetcher = new Fetcher();
 
@@ -107,6 +120,7 @@ export default {
     Modal,
     UserPicture,
     LoadingSpinner,
+    Fluent,
   },
   data() {
     return {

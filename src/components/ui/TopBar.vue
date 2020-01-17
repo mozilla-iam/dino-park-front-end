@@ -4,12 +4,12 @@
       <RouterLink
         :to="{ name: 'Home' }"
         class="top-bar__link top-bar__link--logo"
-        ><img src="@/assets/images/mozilla.svg" alt="Mozilla logo"
+        ><img src="@/assets/images/mozilla.svg" :alt="fluent('mozilla')"
       /></RouterLink>
       <SearchForm class="hide-mobile"></SearchForm>
       <ShowMore
-        buttonText="Open search"
-        alternateButtonText="Close search"
+        :buttonText="fluent('search', 'open')"
+        :alternateButtonText="fluent('search', 'close')"
         buttonClass="hide-desktop top-bar__search-toggle"
         :closeWhenClickedOutside="true"
         ref="showMoreSearch"
@@ -52,7 +52,7 @@
           xmlns:xlink="http://www.w3.org/1999/xlink"
           aria-labelledby="org=chart-link-icon-title"
         >
-          <title id="org-chart-link-icon-title">Org chart</title>
+          <title id="org-chart-link-icon-title">{{ fluent('orgchart') }}</title>
           <path
             d="M11.5 12a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm0 2a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7zm7 8a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7zm0-2a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM3.5 7a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7zm0-2a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM3 7h1v1H3V7zm0 2h1v1H3V9zm1 3h-.5a.5.5 0 0 1-.5-.5V11h1v1zm1 0v-1h1v1H5zm2 0v-1h1v1H7zm4 2h1v1h-1v-1zm0 2h1v1h-1v-1zm1 3h-.5a.5.5 0 0 1-.5-.5V18h1v1zm1 0v-1h1v1h-1z"
             fill="currentColor"
@@ -62,8 +62,8 @@
       </RouterLink>
       <template v-if="user">
         <ShowMore
-          buttonText="Open user menu"
-          alternateButtonText="Close user menu"
+          :buttonText="fluent('user-menu_open')"
+          :alternateButtonText="fluent('user-menu_close')"
           buttonClass="top-bar__user-menu-toggle"
           :closeWhenClickedOutside="true"
           :buttonTextVisuallyHidden="true"

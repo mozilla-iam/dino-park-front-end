@@ -3,8 +3,8 @@
     <IconBlockList class="icon-block-list--multi-col">
       <IconBlock
         v-if="identities.hasGithub()"
-        heading="GitHub"
-        :subHeading="githubUsername && 'Verified'"
+        :heading="fluent('profile_identities_github')"
+        :subHeading="githubUsername && fluent('profile_identities_verified')"
         icon="github"
       >
         <a :href="githubLink" target="_blank" rel="noreferrer noopener">
@@ -13,8 +13,8 @@
       </IconBlock>
       <IconBlock
         v-if="identities.hasBugzilla()"
-        heading="Bugzilla"
-        subHeading="Verified"
+        :heading="fluent('profile_identities_bugzilla')"
+        :subHeading="fluent('profile_identities_verified')"
         icon="moz"
       >
         <a

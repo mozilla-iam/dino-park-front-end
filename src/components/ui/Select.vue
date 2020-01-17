@@ -11,7 +11,7 @@
       :aria-controls="`option-list-${id}`"
       :disabled="disabled"
     >
-      <span class="visually-hidden">Open {{ label }}</span>
+      <span class="visually-hidden">{{ fluent('open_label', { label }) }}</span>
       <template v-if="collapsedShowLabel">{{ selectedLabel }}</template>
       <span v-else class="visually-hidden">{{ selectedLabel }}</span>
       <Icon
