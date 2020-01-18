@@ -1,5 +1,5 @@
 import AccessGroups from '@/assets/js/access-groups';
-import { DisplayMemberViewModel } from '@/view_models/AccessGroupViewModel.js';
+import { DisplayMemberViewModel } from '@/view_models/AccessGroupViewModel';
 
 const accessGroupsService = new AccessGroups();
 

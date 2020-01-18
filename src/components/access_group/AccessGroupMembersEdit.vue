@@ -178,7 +178,7 @@ export default {
         this.groupExpiration = 0;
       }
     },
-    allMembers(value) {
+    allMembers() {
       this.allMembersList = this.$store.getters['accessGroup/getMembers'].map(
         member => {
           return {

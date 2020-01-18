@@ -67,7 +67,7 @@ export const membersMutations = {
   setMembers(state, memberData) {
     try {
       state.members = [];
-      for (let aMember of memberData) {
+      for (const aMember of memberData) {
         state.members.push(new DisplayMemberViewModel(aMember));
       }
     } catch (e) {
