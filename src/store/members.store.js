@@ -23,19 +23,7 @@ export const membersActions = {
         groupName,
         member.uuid
       );
-      return await dispatch('fetchMembers');
-    } catch (e) {
-      throw new Error(e.message);
-    }
-  },
-  async addMembers({ state, dispatch }, { invites, expiration }) {
-    try {
-      const result = await accessGroupsService.addMembers(
-        state.group.name,
-        invites,
-        expiration
-      );
-      return await dispatch('fetchMembers');
+      return await dispatch('fetchMembers', groupName);
     } catch (e) {
       throw new Error(e.message);
     }
@@ -47,7 +35,7 @@ export const membersActions = {
         memberUuid,
         expiration
       );
-      return await dispatch('fetchMembers');
+      return await dispatch('fetchMembers', state.group.name);
     } catch (e) {
       throw new Error(e.message);
     }
@@ -58,7 +46,7 @@ export const membersActions = {
         state.group.name,
         curators
       );
-      return await dispatch('fetchMembers');
+      return await dispatch('fetchMembers', state.group.name);
     } catch (e) {
       throw new Error(e.message);
     }
@@ -69,7 +57,7 @@ export const membersActions = {
         state.group.name,
         curators
       );
-      return await dispatch('fetchMembers');
+      return await dispatch('fetchMembers', state.group.name);
     } catch (e) {
       throw new Error(e.message);
     }

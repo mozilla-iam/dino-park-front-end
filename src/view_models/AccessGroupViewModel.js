@@ -125,7 +125,7 @@ export class DisplayMemberViewModel {
       this.since = !data.since ? '' : new Date(data.since).toLocaleDateString();
       this.expiration = !data.expiration ? 0 : data.expiration;
       this.role = DISPLAY_MEMBER_ROLES.includes(data.role) ? data.role : null;
-      this.added_by = new AbbDisplayMemberViewModel(data.host);
+      this.added_by = new AbbDisplayMemberViewModel(data.host || data.added_by);
     } catch (e) {
       this.error = e.message;
       console.error('Display Member error: ', e.message);

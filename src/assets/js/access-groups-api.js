@@ -74,6 +74,26 @@ export class GroupInvitationsApi extends Api {
       throw new Error(e.message);
     }
   }
+  async post(groupName, uuid, invitationExpiration, groupExpiration) {
+    try {
+      return await this.fetcher.post(`${this.endpoint}/${groupName}`, {
+        user_uuid: uuid,
+        invitation_expiration: invitationExpiration,
+        group_expiration: groupExpiration,
+      });
+    } catch (e) {
+      console.error(e.message);
+      throw new Error(e.message);
+    }
+  }
+  async delete(groupName, uuid) {
+    try {
+      return await this.fetcher.delete(`${this.endpoint}/${groupName}/${uuid}`);
+    } catch (e) {
+      console.error(e.message);
+      throw new Error(e.message);
+    }
+  }
 }
 
 export class MembersApi extends Api {

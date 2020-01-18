@@ -5,7 +5,7 @@
         <ul class="pending-invitations-container">
           <li
             class="pending-invitations-container__item"
-            v-for="(invitation, idx) in invitationList"
+            v-for="(invitation, idx) in groupInvitations"
             :key="idx"
           >
             <AccessGroupMemberListDisplay :member="invitation" />
@@ -17,7 +17,7 @@
               >
               <Button
                 class="tertiary-action delete"
-                @click="handleRemoveClicked(idx)"
+                @click="handleRemoveClicked(invitation)"
               >
                 <Icon id="x" :width="16" :height="16" />
               </Button>
@@ -113,11 +113,7 @@ export default {
     const invitationConfig = this.$store.getters[
       'accessGroup/getInvitationConfig'
     ];
-    const accessGroupInvitations = this.$store.getters[
-      'accessGroup/getInvitations'
-    ];
     return {
-      invitationList: accessGroupInvitations,
       newInvites: [],
       newInvitesDirty: false,
       emailInviteTextEnabled: invitationConfig !== null,
@@ -141,7 +137,8 @@ export default {
   methods: {
     ...mapActions({
       resendInvitation: 'accessGroup/resendInvitation',
-      addMembers: 'accessGroup/addMembers',
+      deleteInvitation: 'accessGroup/deleteInvitation',
+      sendInvitations: 'accessGroup/sendInvitations',
       updateInviteText: 'accessGroup/updateInviteText',
     }),
     handleResendClicked(invitation) {
@@ -151,7 +148,13 @@ export default {
         });
       });
     },
-    handleRemoveClicked(idx) {},
+    handleRemoveClicked(invitation) {
+      this.deleteInvitation(invitation).then(result => {
+        this.$root.$emit('toast', {
+          content: 'Invitation deleted',
+        });
+      });
+    },
     getTagLabel(curator) {
       return curator.name;
     },
@@ -165,7 +168,7 @@ export default {
       });
     },
     handleAddNewInvitesClicked() {
-      this.addMembers({
+      this.sendInvitations({
         invites: this.newInvites,
         expiration: this.groupExpiration,
       }).then(result => {
@@ -188,6 +191,7 @@ export default {
   computed: mapGetters({
     getScope: 'scopeV2/get',
     groupExpiration: 'accessGroup/getExpiration',
+    groupInvitations: 'accessGroup/getInvitations',
   }),
 };
 </script>

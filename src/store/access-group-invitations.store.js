@@ -20,7 +20,31 @@ export const accessGroupInvitationsActions = {
       throw new Error(e.message);
     }
   },
+  async sendInvitations({ state, dispatch }, { invites, expiration }) {
+    try {
+      const result = await accessGroupsService.sendInvitations(
+        state.group.name,
+        invites,
+        expiration
+      );
+      return await dispatch('fetchInvitations', state.group.name);
+    } catch (e) {
+      throw new Error(e.message);
+    }
+  },
+  async deleteInvitation({ state, dispatch }, invitation) {
+    try {
+      const result = await accessGroupsService.deleteInvitation(
+        state.group.name,
+        invitation.uuid
+      );
+      return await dispatch('fetchInvitations', state.group.name);
+    } catch (e) {
+      throw new Error(e.message);
+    }
+  },
 };
+
 export const accessGroupInvitationsMutations = {
   setInvitations(state, invitations) {
     try {

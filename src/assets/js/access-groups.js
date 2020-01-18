@@ -11,6 +11,8 @@ import {
 import accessGroupMembers from '@/accessgroupmembers.json';
 import accessGroupCurators from '@/accessgroupcurators.json';
 
+const defaultGroupInvitationExpiration = 5;
+
 export default class AccessGroups {
   constructor() {
     this.groupsApi = new GroupsApi();
@@ -125,18 +127,6 @@ export default class AccessGroups {
     }); //this.fetcher.fetch('');
   }
 
-  async addMembers(groupName, members, expiration) {
-    try {
-      for (const member of members) {
-        await this.membersApi.post(groupName, member.uuid, expiration);
-      }
-      return 200;
-    } catch (e) {
-      console.log(e.message);
-      throw new Error(e.message);
-    }
-  }
-
   async renewMember(groupName, memberUuid, expiration) {
     try {
       return await this.membersApi.renew(groupName, memberUuid, expiration);
@@ -149,6 +139,40 @@ export default class AccessGroups {
   async getUserInvitations() {
     try {
       return await this.selfInvitationsApi.get();
+    } catch (e) {
+      console.log(e.message);
+      throw new Error(e.message);
+    }
+  }
+
+  async sendInvitations(groupName, members, expiration) {
+    try {
+      let results = [];
+      for (const member of members) {
+        results.push(
+          await this.groupInvitationsApi.post(
+            groupName,
+            member.uuid,
+            defaultGroupInvitationExpiration,
+            expiration
+          )
+        );
+      }
+      const errors = results.filter(code => code !== 200);
+      if (errors.length) {
+        throw new Error('Send invitation errors');
+      }
+      return 200;
+    } catch (e) {
+      console.log(e.message);
+      throw new Error(e.message);
+    }
+  }
+
+  async deleteInvitation(groupName, uuid) {
+    try {
+      await this.groupInvitationsApi.delete(groupName, uuid);
+      return 200;
     } catch (e) {
       console.log(e.message);
       throw new Error(e.message);
