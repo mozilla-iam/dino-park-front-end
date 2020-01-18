@@ -20,7 +20,7 @@
             </thead>
             <tbody class="members-table__content">
               <tr
-                v-for="(member, idx) in allMembersList"
+                v-for="(member, idx) in filterMemberList()"
                 :key="idx"
                 :class="{
                   'members-table__row': true,
@@ -206,6 +206,7 @@ export default {
       curatorsListDirty: false,
       membershipCanExpire: accessGroupExpiration > 0,
       groupExpirationDirty: false,
+      memberListFilter: '',
       allMembersList: accessGroupMembers.map(member => {
         return {
           ...member,
@@ -230,8 +231,12 @@ export default {
         };
       });
     },
-    searchFormHandler(search) {},
-    clearSearchHandler() {},
+    searchFormHandler(search) {
+      this.memberListFilter = search;
+    },
+    clearSearchHandler() {
+      this.memberListFilter = '';
+    },
     handleRenewClick(member) {
       this.renewMember({
         memberUuid: member.uuid,
@@ -311,6 +316,14 @@ export default {
     },
     expiry(expiration) {
       return expiryText(expiration);
+    },
+    filterMemberList() {
+      return this.allMembersList.filter(
+        member =>
+          member.name
+            .toLowerCase()
+            .indexOf(this.memberListFilter.toLowerCase()) !== -1
+      );
     },
   },
   computed: mapGetters({
