@@ -169,10 +169,9 @@ export class CuratorsApi extends Api {
 
   async post(groupName, member_uuid) {
     try {
-      const result = await this.fetcher.post(`${this.endpoint}/${groupName}`, {
+      return await this.fetcher.post(`${this.endpoint}/${groupName}`, {
         member_uuid,
       });
-      return await result.json();
     } catch (e) {
       console.error(e.message);
       throw new Error(e.message);

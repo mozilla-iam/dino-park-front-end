@@ -178,6 +178,16 @@ export default {
         this.groupExpiration = 0;
       }
     },
+    allMembers(value) {
+      this.allMembersList = this.$store.getters['accessGroup/getMembers'].map(
+        member => {
+          return {
+            ...member,
+            pendingRemoval: false,
+          };
+        }
+      );
+    },
   },
   data() {
     const accessGroupExpiration = this.$store.getters[
