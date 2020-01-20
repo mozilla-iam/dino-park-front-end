@@ -38,6 +38,7 @@
     "babel-jest": "^22.4.3",
     "eslint-config-prettier": "^6.0.0",
     "husky": "^2.7.0",
+    "i18n-lint": "github:jwarby/i18n-lint",
     "jest-raw-loader": "^1.0.1",
     "prettier": "^1.18.2",
     "pretty-quick": "^1.11.1",
@@ -47,7 +48,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged"
+      "pre-commit": "i18n-lint -t '{{,}}' \"src/**/*.vue\" && pretty-quick --staged"
     }
   },
   "browserslist": [

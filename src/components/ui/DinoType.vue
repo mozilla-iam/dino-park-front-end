@@ -1,5 +1,9 @@
 <template>
-  <img src="@/assets/images/mozilla-m.svg" class="dino-type" alt="Mozilla" />
+  <img
+    src="@/assets/images/mozilla-m.svg"
+    class="dino-type"
+    :alt="fluent('display-levels_staff')"
+  />
 </template>
 
 <style>

@@ -12,6 +12,7 @@ close = Close
 edit = Edit
   .section = Edit {$section}
 open_label = Open {$label}
+loading = Loading
 
 # titles
 
@@ -316,6 +317,7 @@ profile_access-groups_mozillians = mozillians.org
   .edit = Manage at mozillians.org
   .footer = Mozillians access groups are currently managed at mozillians.org
   .privacy = Mozillians.org access groups privacy levels
+  .none = You have not joined any mozillians.org access groups.
 
 profile_keys = Keys
   .tooltip-open = Open keys info

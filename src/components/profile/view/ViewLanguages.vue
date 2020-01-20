@@ -7,7 +7,7 @@
       :key="`language-${index}`"
     >
     </Tag>
-    <p v-else>You have not added any languages yet.</p>
+    <p v-else>{{ fluent('profile_languages_none', 'self') }}</p>
   </div>
 </template>
 
