@@ -44,13 +44,6 @@
         class="edit-picture-modal__privacy-checkbox"
       />
       <div>
-        I'm okay with you handling this info as you explain in Mozilla's
-        <a
-          href="https://www.mozilla.org/en-US/privacy/"
-          target="_blank"
-          rel="noopener noreferrer"
-          >privacy policy</a
-        >.
         <Fluent
           id="profile_picture"
           attr="privacy-policy"

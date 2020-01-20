@@ -22,9 +22,7 @@
         v-for="[key, value] in Object.entries(phoneNumbers.values || {})"
         :key="`phoneNumber-${key}`"
         :heading="fluent('profile_phone')"
-        :subHeading="
-          fluent('profile_phone', destructPhoneKey(key).view.toLowerCase())
-        "
+        :subHeading="getTranslatedLabel(destructPhoneKey(key).view)"
         icon="phone"
       >
         <a :href="`tel:${value}`">{{ value }}</a>

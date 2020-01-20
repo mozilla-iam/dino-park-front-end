@@ -285,12 +285,12 @@ export default {
       const names = allOptions.filter((name) => name !== current);
       const options = names.map((label) => {
         return {
-          label: this.fluent('profile_phone', label.toLowerCase()),
+          label: this.getTranslatedLabel(label),
           value: construct({ view: label, num: index }),
         };
       });
       options.push({
-        label: this.fluent('profile_phone', current.toLowerCase()),
+        label: this.getTranslatedLabel(current),
         value: k,
       });
       return options;
@@ -301,7 +301,7 @@ export default {
         index,
         this.destructPhoneKey,
         this.constructPhoneKey,
-        ['Primary', 'Personal', 'Work', 'Home'],
+        this.allOptions(),
       );
     },
   },

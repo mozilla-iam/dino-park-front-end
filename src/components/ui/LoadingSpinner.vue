@@ -9,7 +9,7 @@
       xmlns="http://www.w3.org/2000/svg"
       stroke="currentColor"
     >
-      <title id="loading__spinner__title">Loading...</title>
+      <title id="loading__spinner__title">{{ fluent('loading') }}</title>
       <g fill="none" fill-rule="evenodd">
         <g transform="translate(1 1)" stroke-width="2">
           <circle stroke-opacity=".5" cx="18" cy="18" r="18" />

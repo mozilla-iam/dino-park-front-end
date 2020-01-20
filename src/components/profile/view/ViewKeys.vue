@@ -3,7 +3,7 @@
     <template
       v-if="pgpPublicKeys && Object.keys(pgpPublicKeys.values || {}).length > 0"
     >
-      <h4 class="visually-hidden">PGP</h4>
+      <h4 class="visually-hidden">{{ fluent('profile_keys_pgp') }}</h4>
       <Key
         v-for="[key, value] in Object.entries(pgpPublicKeys.values || {}).slice(
           0,
@@ -47,7 +47,7 @@
     <template
       v-if="sshPublicKeys && Object.keys(sshPublicKeys.values || {}).length > 0"
     >
-      <h4 class="visually-hidden">SSH</h4>
+      <h4 class="visually-hidden">{{ fluent('profile_keys_ssh') }}</h4>
       <Key
         v-for="[key, value] in Object.entries(sshPublicKeys.values || {}).slice(
           0,

@@ -1,14 +1,6 @@
 <template>
   <div class="banner">
-    <p>
-      This is a beta version,
-      <a
-        v-bind:href="globalLinks.feedback"
-        target="_blank"
-        rel="noopener noreferrer"
-        >let us know what you think</a
-      >.
-    </p>
+    <p></p>
     <button @click="$emit('close')">
       <span class="visually-hidden">{{ fluent('close') }}</span>
       <svg

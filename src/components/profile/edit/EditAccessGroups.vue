@@ -78,7 +78,7 @@
         </IconBlock>
       </IconBlockList>
       <p v-else>
-        You have not joined any mozilliansorg access group.
+        {{ fluent('profile_access-groups_mozillians', 'none') }}
       </p>
       <a
         id="access-information__external-link"
