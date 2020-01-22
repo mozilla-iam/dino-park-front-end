@@ -52,7 +52,7 @@ export default {
         this.$root.$emit('toast', {
           content: `You have left the ${this.groupName} group`,
         });
-        this.$router.push({
+        this.$router.replace({
           name: 'Access Group',
         });
       });
@@ -80,6 +80,11 @@ export default {
 .leave-confirmation-notification-container
   .leave-confirmation-notification__icon {
   color: var(--blue-60);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 7%;
+  text-align: left;
 }
 .leave-confirmation-notification-container
   .leave-confirmation-notification__description {

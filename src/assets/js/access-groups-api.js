@@ -235,8 +235,7 @@ export class SelfApi extends Api {
 
   async delete(groupName) {
     try {
-      const result = await this.fetcher.delete(`${this.endpoint}/${groupName}`);
-      return await result.json();
+      return await this.fetcher.delete(`${this.endpoint}/${groupName}`);
     } catch (e) {
       console.error(e.message);
       throw new Error(e.message);

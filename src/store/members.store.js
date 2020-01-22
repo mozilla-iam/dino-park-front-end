@@ -82,4 +82,6 @@ export const membersGetters = {
   isCurator: ({ members }) => uuid =>
     members.filter(member => member.uuid === uuid && member.isCurator())
       .length > 0,
+  isMember: ({ members }) => uuid =>
+    members.filter(member => member.uuid === uuid).length > 0,
 };

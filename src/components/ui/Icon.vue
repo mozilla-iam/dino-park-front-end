@@ -657,7 +657,7 @@
       <defs>
         <path
           d="M15.9,10 C15.9,12.6 12.6,13.8 12.2,13.9 C12.1,14 12,14 11.9,14 C11.5,14 11.1,13.7 11,13.3 C10.8,12.8 11.1,12.2 11.6,12 C12.2,11.8 13.9,11 13.9,9.9 C13.9,9 13.4,8.3 12.6,8 C11.6,7.6 10.4,8.2 10,9.2 C9.8,9.7 9.2,10 8.7,9.8 C8.2,9.8 8,9.2 8.1,8.7 C8.8,6.6 11.1,5.5 13.2,6.3 C14.8,6.8 15.9,8.3 15.9,10 Z M23,12 C23,18.1 18.1,23 12,23 C5.9,23 1,18.1 1,12 C1,5.9 5.9,1 12,1 C18.1,1 23,5.9 23,12 Z M21,12 C21,7 17,3 12,3 C7,3 3,7 3,12 C3,17 7,21 12,21 C17,21 21,17 21,12 Z M12.7,16.3 C12.7,16.3 12.6,16.2 12.5,16.2 C12.4,16.2 12.4,16.1 12.3,16.1 C12.2,16.1 12.2,16.1 12.1,16 C11.9,16 11.7,16 11.5,16.1 C11.4,16.1 11.3,16.2 11.2,16.3 C11.1,16.4 11,16.5 11,16.6 C11,16.7 10.9,16.8 10.9,17 C10.9,17.3 11,17.5 11.2,17.7 C11.4,17.9 11.6,18 11.9,18 C12.2,18 12.4,17.9 12.6,17.7 C12.8,17.5 12.9,17.3 12.9,17 C12.9,16.9 12.9,16.7 12.8,16.6 C12.9,16.5 12.8,16.4 12.7,16.3 Z"
-          id="path-1"
+          id="path-qmc"
         />
       </defs>
       <g
@@ -673,23 +673,14 @@
             transform="translate(2948.000000, 2364.000000)"
           >
             <mask id="mask-2" fill="white">
-              <use xlink:href="#path-1" />
+              <use xlink:href="#path-qmc" />
             </mask>
             <use
               id="Mask"
               fill="#000000"
               fill-rule="nonzero"
-              xlink:href="#path-1"
+              xlink:href="#path-qmc"
             />
-            <g
-              id="Icon-🎨"
-              stroke-width="1"
-              fill-rule="evenodd"
-              mask="url(#mask-2)"
-              fill="currentColor"
-            >
-              <rect id="Shape" x="0" y="0" width="24" height="24" />
-            </g>
           </g>
         </g>
       </g>
@@ -721,17 +712,17 @@ export default {
         this.avatarUrl = avatarUrl(
           this.$store.state.user.picture.value,
           40,
-          true,
+          true
         );
       } else {
         generateIdenticon(
           this.$store.state.user.primaryUsername.value,
-          40,
-        ).then((a) => {
+          40
+        ).then(a => {
           this.avatarUrl = a;
         });
       }
-    }
+    },
   },
   data() {
     return {

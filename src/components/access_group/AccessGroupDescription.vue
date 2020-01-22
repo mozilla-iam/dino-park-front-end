@@ -29,7 +29,10 @@
     <section class="description-container-area description-content">
       <div class="description-content__main" v-html="descriptionDisplay"></div>
     </section>
-    <footer class="description-container-area description-footer">
+    <footer
+      class="description-container-area description-footer"
+      v-if="showLeave"
+    >
       <RouterLink
         class="button primary-action"
         :to="{
@@ -77,6 +80,7 @@ export default {
       accessGroup: 'accessGroup/getGroup',
       memberCount: 'accessGroup/memberCount',
       isCurator: 'accessGroup/isCurator',
+      isMember: 'accessGroup/isMember',
     }),
     membersCountText() {
       let fullText = '';
@@ -92,6 +96,9 @@ export default {
     },
     showEdit() {
       return this.isCurator(this.$store.state.user.uuid.value);
+    },
+    showLeave() {
+      return this.isMember(this.$store.state.user.uuid.value);
     },
   },
   data() {

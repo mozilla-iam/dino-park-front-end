@@ -130,10 +130,7 @@ export default {
       invitations: 'userV2/getActiveInvitations',
     }),
     showInvitations() {
-      return (
-        this.$route.name !== ACCESS_GROUP_TOS_PAGE &&
-        this.$route.name !== ACCESS_GROUP_LEAVE_CONFIRMATION_PAGE
-      );
+      return this.$route.name !== ACCESS_GROUP_TOS_PAGE;
     },
   },
   data() {

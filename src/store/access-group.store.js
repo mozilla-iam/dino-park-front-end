@@ -82,12 +82,13 @@ export default {
         throw new Error(e.message);
       }
     },
-    async leaveGroup({ state, rootState }) {
+    async leaveGroup({ state, rootState, dispatch }) {
       try {
-        return await accessGroupsService.leaveGroup(
+        await accessGroupsService.leaveGroup(
           state.group.name,
           rootState.user.uuid.value
         );
+        return await dispatch('fetchGroup', state.group.name);
       } catch (e) {
         throw new Error(e.message);
       }
