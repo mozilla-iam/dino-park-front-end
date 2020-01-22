@@ -6,10 +6,17 @@
     <span class="leave-confirmation-notification__icon">
       <Icon id="question-mark-circle" :width="32" :height="32" />
     </span>
-    <p class="leave-confirmation-notification__description">
+    <p
+      class="leave-confirmation-notification__description"
+      v-if="canLeaveGroup"
+    >
       Are you sure you wish to leave the {{ groupName }} group?
     </p>
-    <div class="leave-confirmation-notification__actions">
+    <p class="leave-confirmation-notification__description" v-else>
+      In order to leave {{ groupName }} you must add another curator, or delete
+      this group.
+    </p>
+    <div class="leave-confirmation-notification__actions" v-if="canLeaveGroup">
       <Button class="primary-action" v-on:click="handleLeaveClick()"
         >Leave</Button
       >
@@ -38,9 +45,13 @@ export default {
     ...mapGetters({
       accessGroup: 'accessGroup/getGroup',
       groupName: 'accessGroup/getGroupName',
+      getCurators: 'accessGroup/getCurators',
     }),
     showLeaveConfirmationNotification() {
       return this.$route.name === ACCESS_GROUP_LEAVE_CONFIRMATION_PAGE;
+    },
+    canLeaveGroup() {
+      return this.getCurators.length > 1;
     },
   },
   methods: {
