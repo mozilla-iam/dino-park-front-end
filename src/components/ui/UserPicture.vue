@@ -131,6 +131,7 @@ export default {
   position: absolute;
   right: 0;
   bottom: 0;
+  height: auto;
 }
 .user-picture--small {
   width: 2.85em;
@@ -138,7 +139,6 @@ export default {
 }
 .user-picture--small .dino-type {
   width: 1em;
-  height: 1em;
 }
 .user-picture--medium {
   width: 6.25em;
@@ -146,7 +146,6 @@ export default {
 }
 .user-picture--medium .dino-type {
   width: 2em;
-  height: 2em;
 }
 .user-picture--large /* the 'large' UserPicture is actually medium on small screens */ {
   width: 6.25em;
@@ -154,7 +153,6 @@ export default {
 }
 .user-picture--large .dino-type {
   width: 2em;
-  height: 2em;
 }
 @media (min-width: 57.5em) {
   .user-picture--large {
@@ -163,7 +161,6 @@ export default {
   }
   .user-picture--large .dino-type {
     width: 5em;
-    height: 5em;
   }
 }
 </style>
