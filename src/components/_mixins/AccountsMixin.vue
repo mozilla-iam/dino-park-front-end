@@ -1,5 +1,5 @@
 <script>
-const ENABLED_ACCOUNTS = ['SLACK', 'ZOOM', 'DISCOURSE', 'IRC', 'MOZMATRIX'];
+const ENABLED_ACCOUNTS = ['SLACK', 'ZOOM', 'DISCOURSE', 'IRC'];
 const EXTERNAL_ACCOUNTS = {
   AIM: { moz: false, text: 'AIM', icon: 'aim' },
   BITBUCKET: { moz: false, text: 'Bitbucket', icon: 'bitbucket' },
@@ -16,11 +16,6 @@ const EXTERNAL_ACCOUNTS = {
     text: 'Mozilla Discourse',
     icon: 'discourse',
     uri: 'https://discourse.mozilla.org/u/@@@',
-  },
-  MOZMATRIX: {
-    moz: true,
-    text: 'Mozilla Matrix',
-    icon: 'matrix',
   },
   MOZPHAB: { moz: true, text: 'Mozilla Phabricator', icon: 'mozphab' },
   MOZILLAPONTOON: {
