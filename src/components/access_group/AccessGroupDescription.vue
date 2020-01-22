@@ -40,7 +40,6 @@
         }"
         >Leave</RouterLink
       >
-      <!-- <Button class="primary-action" v-on:click="handleLeaveClick">Leave</Button> -->
     </footer>
   </article>
 </template>
@@ -66,9 +65,6 @@ export default {
     },
   },
   methods: {
-    handleLeaveClick() {
-      console.log('Leave clicked');
-    },
     // TODO: This needs to be done in the vuex model
     formatDate(dateString) {
       return new Date(dateString).toLocaleDateString('en-US');
