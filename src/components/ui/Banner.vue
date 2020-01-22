@@ -3,21 +3,31 @@
     <p></p>
     <button @click="$emit('close')">
       <span class="visually-hidden">{{ fluent('close') }}</span>
-      <Icon id="x" :width="20" :height="20" />
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="white"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <line x1="18" y1="6" x2="6" y2="18" />
+        <line x1="6" y1="6" x2="18" y2="18" />
+      </svg>
     </button>
   </div>
 </template>
 
 <script>
 import LinksMixin from '@/components/_mixins/LinksMixin.vue';
-import Icon from '@/components/ui/Icon.vue';
 
 export default {
   name: 'Banner',
   mixins: [LinksMixin],
-  components: {
-    Icon,
-  },
 };
 </script>
 
@@ -39,7 +49,6 @@ export default {
 .banner button {
   border: none;
   background: none;
-  color: inherit;
 }
 .banner button:focus {
   outline: 1px solid white;
