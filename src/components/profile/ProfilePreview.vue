@@ -6,23 +6,7 @@
       class="button button--icon-only button--secondary profile-preview__close"
     >
       <span class="visually-hidden">{{ fluent('profile_preview_close') }}</span>
-      <svg
-        aria-hidden="true"
-        role="presentation"
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        focusable="false"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <line x1="18" y1="6" x2="6" y2="18" />
-        <line x1="6" y1="6" x2="18" y2="18" />
-      </svg>
+      <Icon id="x" :width="24" :height="24" />
     </button>
     <div class="profile-preview__image">
       <UserPicture
@@ -73,22 +57,7 @@
         class="button button--text-only"
       >
         {{ fluent('orgchart_full-profile') }}
-        <svg
-          aria-hidden="true"
-          role="presentation"
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          focusable="false"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <polyline points="9 18 15 12 9 6" />
-        </svg>
+        <Icon id="chevron-right" :width="16" :height="16" />
       </RouterLink>
     </div>
   </div>
@@ -102,6 +71,7 @@ import ProfileDescription from './ProfileDescription.vue';
 import ProfileName from './ProfileName.vue';
 import ProfileTitle from './ProfileTitle.vue';
 import ProfileTeamLocation from './ProfileTeamLocation.vue';
+import Icon from '@/components/ui/Icon.vue';
 
 export default {
   mixins: [CompanyMixin],
@@ -130,6 +100,7 @@ export default {
     ProfileName,
     ProfileTitle,
     ProfileTeamLocation,
+    Icon,
   },
   deactivated() {
     this.lastActive.focus();
