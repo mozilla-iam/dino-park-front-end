@@ -11,9 +11,8 @@
         <div class="member-view__info">
           <p class="info-header">{{ member.name }}</p>
           <p class="info-sub">
-            <Icon v-if="isCurator" id="crown-fill" :width="16" :height="16" />{{
-              member.role
-            }}
+            <Icon v-if="isCurator" id="crown-fill" :width="16" :height="16" />
+            {{ member.role }}
           </p>
         </div>
       </div>
@@ -27,11 +26,11 @@
     <aside class="list-item__expandable" v-if="showExpandable">
       <p class="expandable-row">
         <span class="expandable-row__label">Member since</span>
-        <span class="expandable-row__content">{{
-          formatDate(member.since)
-        }}</span>
+        <span class="expandable-row__content">
+          {{ formatDate(member.since) }}
+        </span>
       </p>
-      <p class="expandable-row">
+      <p class="expandable-row" v-if="!member.added_by.isAnonymous()">
         <span class="expandable-row__label">Added by</span>
         <span class="expandable-row__content">{{ member.added_by.name }}</span>
       </p>

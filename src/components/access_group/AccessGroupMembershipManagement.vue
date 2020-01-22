@@ -11,9 +11,9 @@
         }"
         >{{ pendingInvitationsText }}</RouterLink
       >
-      <span class="primary-data-row__direct" v-else>{{
-        pendingInvitationsText
-      }}</span>
+      <span class="primary-data-row__direct" v-else>
+        {{ pendingInvitationsText }}
+      </span>
     </p>
     <p class="primary-data-row">
       <span class="primary-data-row__count">{{ totalPendingRenewals }}</span>
@@ -26,9 +26,9 @@
         }"
         >{{ pendingRenewalsText }}</RouterLink
       >
-      <span class="primary-data-row__direct" v-else>{{
-        pendingRenewalsText
-      }}</span>
+      <span class="primary-data-row__direct" v-else>
+        {{ pendingRenewalsText }}
+      </span>
     </p>
     <p class="secondary-data-row">
       Memberships that
@@ -70,10 +70,9 @@ export default {
       renewalCount: 'accessGroup/getRenewalCount',
       expiration: 'accessGroup/getExpiration',
       isCurator: 'accessGroup/isCurator',
-      isAdmin: 'accessGroup/isAdmin',
     }),
     totalPendingInvitations() {
-      return this.invitationCount;
+      return !this.invitationCount ? 0 : this.invitationCount;
     },
     pendingInvitationsText() {
       if (this.invitationCount > 1) {
@@ -82,7 +81,7 @@ export default {
       return 'pending invitation';
     },
     totalPendingRenewals() {
-      return this.renewalCount;
+      return !this.renewalCount ? 0 : this.renewalCount;
     },
     pendingRenewalsText() {
       if (this.renewalCount > 1) {
@@ -94,10 +93,7 @@ export default {
       return expiryText(this.expiration);
     },
     showEdit() {
-      return (
-        this.isCurator(this.$store.state.user.uuid.value) ||
-        this.isAdmin(this.$store.state.user.uuid.value)
-      );
+      return this.isCurator(this.$store.state.user.uuid.value);
     },
   },
 };

@@ -259,6 +259,32 @@ export class SelfInvitationsApi extends Api {
       throw new Error(e.message);
     }
   }
+  async post(groupName) {
+    try {
+      return await this.fetcher.post(`${this.endpoint}/${groupName}`, {
+        text: data,
+      });
+    } catch (e) {
+      console.error(e.message);
+      throw new Error(e.message);
+    }
+  }
+}
+
+export class SelfJoinApi extends Api {
+  constructor() {
+    super();
+    this.endpoint = `${API_PREFIX}self/join`;
+  }
+
+  async post(groupName) {
+    try {
+      return await this.fetcher.post(`${this.endpoint}/${groupName}`);
+    } catch (e) {
+      console.error(e.message);
+      throw new Error(e.message);
+    }
+  }
 }
 
 export class UsersApi extends Api {

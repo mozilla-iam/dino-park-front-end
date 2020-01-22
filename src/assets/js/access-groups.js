@@ -4,6 +4,7 @@ import {
   GroupInvitationsApi,
   TermsApi,
   SelfInvitationsApi,
+  SelfJoinApi,
   CuratorsApi,
   UsersApi,
   SelfApi,
@@ -23,6 +24,7 @@ export default class AccessGroups {
     this.curatorsApi = new CuratorsApi();
     this.usersApi = new UsersApi();
     this.selfApi = new SelfApi();
+    this.selfJoinApi = new SelfJoinApi();
   }
 
   /**
@@ -180,9 +182,12 @@ export default class AccessGroups {
   }
 
   async acceptInvitation(groupName) {
-    return new Promise((res, rej) => {
-      res('Accepted invitation');
-    }); //this.fetcher.fetch('');
+    try {
+      return await this.selfJoinApi.post(groupName);
+    } catch (e) {
+      console.log(e.message);
+      throw new Error(e.message);
+    }
   }
 
   async rejectInvitation(groupName, uuid) {

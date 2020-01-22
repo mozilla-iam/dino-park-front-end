@@ -32,7 +32,6 @@ export default {
     memberCount: 0,
     invitationCount: 0,
     renewalCount: 0,
-    expiration: null,
     invitationConfig: null,
     loading: false,
   },
@@ -115,10 +114,15 @@ export default {
     setGroup(state, accessGroup) {
       try {
         state.group = new GroupViewModel(accessGroup.group);
-        state.memberCount = accessGroup.member_count;
-        state.invitationCount = accessGroup.invitation_count;
-        state.renewalCount = accessGroup.renewal_count;
-        state.expiration = accessGroup.group_expiration;
+        state.memberCount = !accessGroup.member_count
+          ? 0
+          : accessGroup.member_count;
+        state.invitationCount = !accessGroup.invitation_count
+          ? 0
+          : accessGroup.invitation_count;
+        state.renewalCount = !accessGroup.renewal_count
+          ? 0
+          : accessGroup.renewal_count;
         state.invitationConfig = accessGroup.invitation;
       } catch (e) {
         state.error = e.message;
@@ -138,7 +142,8 @@ export default {
     getMemberCount: ({ memberCount }) => memberCount,
     getInvitationCount: ({ invitationCount }) => invitationCount,
     getRenewalCount: ({ renewalCount }) => renewalCount,
-    getExpiration: ({ group }) => (group ? group.expiration : 0),
+    getExpiration: ({ group }) =>
+      group && group.expiration ? group.expiration : 0,
     getInvitationConfig: ({ invitationConfig }) =>
       invitationConfig ? invitationConfig.content : null,
     getLoading: ({ loading }) => loading,

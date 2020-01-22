@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import Button from '@/components/ui/Button.vue';
 import Icon from '@/components/ui/Icon.vue';
 import LinksMixin from '@/components/_mixins/LinksMixin.vue';
@@ -68,6 +68,10 @@ export default {
   mixins: [LinksMixin],
   props: {},
   methods: {
+    ...mapActions({
+      acceptInvitation: 'userV2/acceptInvitation',
+      deleteInvitation: 'accessGroup/deleteInvitation',
+    }),
     handleAcceptClick(idx) {
       const currentInvitation = this.invitations[idx];
       if (currentInvitation.requires_tos) {
@@ -79,7 +83,7 @@ export default {
           },
         });
       } else {
-        this.$store.dispatch('userV2/acceptInvitation', idx).then(() => {
+        this.acceptInvitation(currentInvitation.group_name).then(() => {
           this.$router.push({
             name: 'Access Group',
             params: { groupname: currentInvitation.group_name },
@@ -93,7 +97,7 @@ export default {
     handleRejectClick(idx) {
       const currentInvitation = this.invitations[idx];
       if (currentInvitation.state === PENDING_REJECTION) {
-        this.$store.dispatch('userV2/rejectInvitation', idx).then(() => {
+        this.deleteInvitation(currentInvitation).then(result => {
           this.$root.$emit('toast', {
             content: `You rejected the invite for group ${currentInvitation.group_name}.`,
           });

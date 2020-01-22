@@ -5,6 +5,7 @@ export const INVITATION_STATE = {
 export class GroupInvitationViewModel {
   constructor(data) {
     this.group_name = '';
+    this.user_uuid = '';
     this.requires_tos = false;
     this.accepted_tos = false;
     this.state = '';
@@ -16,6 +17,7 @@ export class GroupInvitationViewModel {
     try {
       this.group_name = data.group_name;
       this.requires_tos = data.terms;
+      this.user_uuid = data.user_uuid;
       if ('state' in data) {
         this.state = data.state;
       }
@@ -55,6 +57,8 @@ export class TypeValueViewModel {
   }
 }
 
+const defaultUserName = 'Anonymous User';
+
 export class AbbDisplayMemberViewModel {
   constructor(data) {
     this.uuid = '';
@@ -68,7 +72,10 @@ export class AbbDisplayMemberViewModel {
   processData(data) {
     try {
       this.uuid = data.user_uuid;
-      this.name = `${data.first_name} ${data.last_name}`;
+      this.name =
+        !data.first_name && !data.last_name
+          ? defaultUserName
+          : `${data.first_name} ${data.last_name}`;
       this.username = data.username;
       this.email = data.email;
     } catch (e) {
@@ -76,13 +83,16 @@ export class AbbDisplayMemberViewModel {
       console.error('Abbreviated Display Member error: ', e.message);
     }
   }
+
+  isAnonymous() {
+    return this.username === 'anonymous';
+  }
 }
 export const MEMBER_IDEX = {
-  Admin: 0,
-  Curator: 1,
-  Member: 2,
+  Curator: 0,
+  Member: 1,
 };
-export const DISPLAY_MEMBER_ROLES = ['Admin', 'Curator', 'Member'];
+export const DISPLAY_MEMBER_ROLES = ['Curator', 'Member'];
 export class DisplayMemberViewModel {
   constructor(data) {
     this.uuid = '';
@@ -118,22 +128,25 @@ export class DisplayMemberViewModel {
     try {
       this.uuid = data.user_uuid;
       this.picture = data.picture;
-      this.name = `${data.first_name} ${data.last_name}`;
+      this.name =
+        !data.first_name && !data.last_name
+          ? defaultUserName
+          : `${data.first_name} ${data.last_name}`;
       this.username = data.username;
       this.email = data.email;
       this.isStaff = data.isStaff;
       this.since = !data.since ? '' : new Date(data.since).toLocaleDateString();
       this.expiration = !data.expiration ? 0 : data.expiration;
-      this.role = DISPLAY_MEMBER_ROLES.includes(data.role) ? data.role : null;
+      if (data.role === 'Admin') {
+        this.role = DISPLAY_MEMBER_ROLES[MEMBER_IDEX.Curator];
+      } else {
+        this.role = DISPLAY_MEMBER_ROLES.includes(data.role) ? data.role : null;
+      }
       this.added_by = new AbbDisplayMemberViewModel(data.host || data.added_by);
     } catch (e) {
       this.error = e.message;
       console.error('Display Member error: ', e.message);
     }
-  }
-
-  isAdmin() {
-    return this.role === DISPLAY_MEMBER_ROLES[MEMBER_IDEX.Admin];
   }
 
   isCurator() {
