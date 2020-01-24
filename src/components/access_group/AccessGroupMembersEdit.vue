@@ -333,7 +333,13 @@ export default {
 
 <style>
 .edit-members-container {
-  padding: 1em;
+  padding: 0;
+}
+
+@media (min-width: 57.5em) {
+  .edit-members-container {
+    padding: 1em;
+  }
 }
 
 .edit-members-container .edit-members-section__header {

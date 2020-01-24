@@ -6,10 +6,12 @@
         name: 'Access Group',
       }"
     >
-      <Icon id="chevron-left" :width="17" :height="17" />{{ groupName }} group
+      <Icon id="chevron-left" :width="17" :height="17" />
+      {{ groupName }} group
     </RouterLink>
     <section class="edit-container">
       <nav class="edit-container__tabs">
+        <p class="tabs-heading">{{ currentTab.label }}</p>
         <ul class="tabs-container">
           <li
             :class="{ 'tab-item': true, active: isActive(tab) }"
@@ -25,7 +27,7 @@
         </ul>
       </nav>
       <section class="edit-container__content">
-        <component v-bind:is="currentTabView"></component>
+        <component v-bind:is="currentTab.component"></component>
       </section>
     </section>
   </main>
@@ -74,6 +76,20 @@ export default {
     groupname: String,
   },
   mounted() {
+    window.addEventListener('scroll', e => {
+      const topBarHeight = document.querySelector('.top-bar__bar').offsetHeight;
+      const contentOffset = this.$el.querySelector('.edit-container__content')
+        .offsetTop;
+      if (window.scrollY + topBarHeight > contentOffset) {
+        document
+          .querySelector('.edit-container__tabs')
+          .classList.add('scrolling');
+      } else {
+        document
+          .querySelector('.edit-container__tabs')
+          .classList.remove('scrolling');
+      }
+    });
     if (this.getFeature('history-tab')) {
       tabs.concat({
         key: 'history',
@@ -103,7 +119,7 @@ export default {
     ...mapGetters({
       groupName: 'accessGroup/getGroupName',
     }),
-    currentTabView() {
+    currentTab() {
       const defaultTab = 0;
       if (!this.$route.query.section) {
         return defaultTab;
@@ -112,9 +128,9 @@ export default {
         tab => tab.key === this.$route.query.section
       );
       if (currentTab) {
-        return currentTab.component;
+        return currentTab;
       }
-      return tabs[defaultTab].component;
+      return defaultTab;
     },
   },
   data() {
@@ -126,6 +142,11 @@ export default {
 </script>
 
 <style>
+.access-group-container .container {
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+}
 @media (min-width: 57.5em) {
   .access-group-container .container {
     max-width: 70em;
@@ -138,6 +159,13 @@ export default {
   background-color: var(--gray-30);
   color: var(--black);
   display: inline-block;
+  margin-left: 1em;
+}
+
+@media (min-width: 57.5em) {
+  .group-edit .group-edit__back-action {
+    margin: 0;
+  }
 }
 
 .group-edit .group-edit__back-action > svg {
@@ -157,21 +185,64 @@ export default {
   box-shadow: var(--shadowCard);
 }
 
-.edit-container__content {
+.edit-container .edit-container__tabs {
+  margin: 0 1em;
+}
+
+.edit-container .edit-container__tabs.scrolling {
+  background: var(--white);
+  position: fixed;
+  top: 6.5em;
+  width: calc(100% - 2em);
+  z-index: 1;
+}
+
+@media (min-width: 57.5em) {
+  .edit-container .edit-container__tabs {
+    margin: 0;
+  }
+
+  .edit-container .edit-container__tabs.scrolling {
+    position: relative;
+    top: 0;
+    width: auto;
+  }
+}
+
+.edit-container .edit-container__content {
   margin-top: 1em;
   /* enable tag selector dropdown */
   overflow: visible;
+  z-index: 0;
 }
 
 .edit-container__tabs .tabs-container {
   list-style-type: none;
-  margin: 0;
   padding: 0;
+  margin: 0;
   display: flex;
   flex-direction: row;
   width: 100%;
   align-items: stretch;
   justify-content: space-between;
+}
+
+@media (min-width: 57.5em) {
+  .edit-container__tabs .tabs-container {
+    margin: 0;
+  }
+}
+
+.edit-container__tabs .tabs-heading {
+  text-align: center;
+  padding-top: 1em;
+  color: var(--blue-60);
+}
+
+@media (min-width: 57.5em) {
+  .edit-container__tabs .tabs-heading {
+    display: none;
+  }
 }
 
 .tab-item {
@@ -191,5 +262,24 @@ export default {
   display: flex;
   align-items: center;
   margin-right: 1em;
+  justify-content: center;
+  flex: 1;
+}
+
+@media (min-width: 57.5em) {
+  .item__icon {
+    justify-content: flex-start;
+    flex: none;
+  }
+}
+
+.item__label {
+  display: none;
+}
+
+@media (min-width: 57.5em) {
+  .item__label {
+    display: inline-block;
+  }
 }
 </style>
