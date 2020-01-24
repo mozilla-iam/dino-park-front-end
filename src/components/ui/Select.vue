@@ -182,7 +182,7 @@ export default {
   }
 }
 .options--chevron .options__toggle {
-  background-image: url('../../assets/svg/chevron-down.svg');
+  background-image: url('~@/assets/svg/chevron-down.svg');
   background-repeat: no-repeat;
   background-position: center right 0.75em;
   background-size: 1.25em;
@@ -271,7 +271,7 @@ export default {
   padding: 1em 3em 1em 2em;
   color: var(--black);
   border-radius: 2.5em;
-  background-image: url('../../assets/svg/chevron-down.svg');
+  background-image: url('~@/assets/svg/chevron-down.svg');
   background-repeat: no-repeat;
   background-position: center right 1em;
   background-size: 1.25em;
@@ -280,19 +280,19 @@ export default {
   background-color: var(--blue-60);
   color: var(--white);
   border-color: transparent;
-  background-image: url('../../assets/images/chevron-down-white.svg');
+  background-image: url('~@/assets/images/chevron-down-white.svg');
 }
 .privacy-select--large .options__toggle:not([disabled]):hover {
   background-color: var(--black);
   color: var(--white);
   border-color: transparent;
-  background-image: url('../../assets/images/chevron-down-white.svg');
+  background-image: url('~@/assets/images/chevron-down-white.svg');
 }
 .privacy-select--blue .options__toggle:not([disabled]):hover {
   background-color: var(--white);
   border-color: var(--blue-60);
   color: var(--blue-60);
-  background-image: url('../../assets/images/chevron-down-blue-60.svg');
+  background-image: url('~@/assets/images/chevron-down-blue-60.svg');
 }
 .privacy-select--large .options__toggle svg {
   order: -1;

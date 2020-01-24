@@ -1,5 +1,4 @@
 const fs = require('fs');
-const SpriteLoaderPlugin = require('svg-sprite-loader/plugin');
 
 const BASE_URL = process.env.DP_BASE_URL || '/';
 const HTTPS_KEY = process.env.DP_HTTPS_KEY || false;
@@ -16,7 +15,17 @@ module.exports = {
   publicPath: BASE_URL,
   chainWebpack: (config) => {
     const svgRule = config.module.rule('svg');
-    svgRule.uses.clear().end();
+    svgRule
+      .use('image-webpack-loader')
+      .loader('image-webpack-loader')
+      .tap((options) => {
+        return {
+          svgo: {
+            plugins: [],
+          },
+        };
+      })
+      .end();
   },
   configureWebpack: {
     resolve: {
@@ -35,32 +44,8 @@ module.exports = {
           test: /\.ftl$/,
           use: 'raw-loader',
         },
-        {
-          test: /\.svg$/,
-          include: /src\/assets\//,
-          use: [
-            {
-              loader: 'svg-sprite-loader',
-              options: {
-                extract: true,
-                esModule: false,
-                publicPath: '/img/',
-                spriteFilename: 'sprite.[hash:8].svg',
-              },
-            },
-            {
-              loader: 'image-webpack-loader',
-              options: {
-                svgo: {
-                  plugins: [],
-                },
-              },
-            },
-          ],
-        },
       ],
     },
-    plugins: [new SpriteLoaderPlugin()],
   },
   devServer: {
     https: HTTPS,
