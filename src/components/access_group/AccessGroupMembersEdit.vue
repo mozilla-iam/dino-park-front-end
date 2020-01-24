@@ -55,11 +55,7 @@
                   {{ expiry(member.expiration) }}
                 </td>
                 <td class="row-actions" v-if="!member.pendingRemoval">
-                  <Button
-                    class="button--secondary"
-                    @click="handleRenewClick(member)"
-                    >Renew</Button
-                  >
+                  <!-- <Button class="button--secondary" @click="handleRenewClick(member)">Renew</Button> -->
                   <Button
                     class="tertiary-action delete"
                     @click="handleRemoveClick(idx)"
@@ -135,7 +131,6 @@ import SearchForm from '@/components/ui/SearchForm.vue';
 import AccessGroupMemberListDisplay from '@/components/access_group/AccessGroupMemberListDisplay.vue';
 import TagSelector from '@/components/ui/TagSelector.vue';
 import NumberScrollerInput from '@/components/ui/NumberScrollerInput.vue';
-import ProfileApi from '@/assets/js/profile-api';
 import { DisplayMemberViewModel } from '@/view_models/AccessGroupViewModel';
 import { expiryText } from '@/assets/js/component-utils';
 import AccessGroups from '@/assets/js/access-groups';
@@ -437,10 +432,10 @@ export default {
   color: #ff0039;
   padding-right: 0;
   display: inline-block;
-  position: absolute;
+  /* position: absolute;
   right: 0;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-50%); */
 }
 
 .edit-members-container .edit-members__load-more {

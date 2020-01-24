@@ -74,6 +74,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import EditButton from '@/components/ui/EditButton.vue';
 import AccessGroupMemberItem from '@/components/access_group/AccessGroupMemberItem.vue';
 import SearchForm from '@/components/ui/SearchForm.vue';
@@ -120,7 +121,16 @@ export default {
       return this.activeTab === tab.key;
     },
   },
+  watch: {
+    getMembers(value) {
+      this.filteredList = value.slice(0);
+      this.memberList = value.slice(0);
+    },
+  },
   computed: {
+    ...mapGetters({
+      getMembers: 'accessGroup/getMembers',
+    }),
     filteredListTwoColumnDisplay() {
       return getTwoColumnGridArraySplitFromArray(this.filteredListDisplay);
     },

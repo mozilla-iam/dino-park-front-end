@@ -35,10 +35,10 @@ export const accessGroupInvitationsActions = {
   async deleteInvitation({ state, dispatch }, invitation) {
     try {
       const result = await accessGroupsService.deleteInvitation(
-        invitation.group_name,
-        invitation.user_uuid
+        state.group.name,
+        invitation.uuid
       );
-      return await dispatch('fetchInvitations', invitation.group_name);
+      return await dispatch('fetchInvitations', invitation.name);
     } catch (e) {
       throw new Error(e.message);
     }

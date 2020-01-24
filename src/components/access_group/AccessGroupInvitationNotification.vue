@@ -55,10 +55,7 @@ import Button from '@/components/ui/Button.vue';
 import Icon from '@/components/ui/Icon.vue';
 import LinksMixin from '@/components/_mixins/LinksMixin.vue';
 import { INVITATION_STATE } from '@/view_models/AccessGroupViewModel';
-import {
-  ACCESS_GROUP_TOS_PAGE,
-  ACCESS_GROUP_LEAVE_CONFIRMATION_PAGE,
-} from '@/router';
+import { ACCESS_GROUP_TOS_PAGE } from '@/router';
 
 const PENDING_REJECTION = 'PENDING_REJECTION';
 
@@ -70,7 +67,8 @@ export default {
   methods: {
     ...mapActions({
       acceptInvitation: 'userV2/acceptInvitation',
-      deleteInvitation: 'accessGroup/deleteInvitation',
+      rejectInvitation: 'userV2/rejectInvitation',
+      fetchMembers: 'accessGroup/fetchMembers',
     }),
     handleAcceptClick(idx) {
       const currentInvitation = this.invitations[idx];
@@ -83,7 +81,12 @@ export default {
           },
         });
       } else {
-        this.acceptInvitation(currentInvitation.group_name).then(() => {
+        this.acceptInvitation(currentInvitation).then(() => {
+          // This is a bit of a hack in place of actually reloading the page if you're already on the access group
+          // TODO: Remove this once a better solution is figured out
+          if (this.$route.name === 'Access Group') {
+            this.fetchMembers(currentInvitation.group_name);
+          }
           this.$router.push({
             name: 'Access Group',
             params: { groupname: currentInvitation.group_name },
@@ -97,7 +100,7 @@ export default {
     handleRejectClick(idx) {
       const currentInvitation = this.invitations[idx];
       if (currentInvitation.state === PENDING_REJECTION) {
-        this.deleteInvitation(currentInvitation).then(result => {
+        this.rejectInvitation(currentInvitation).then(result => {
           this.$root.$emit('toast', {
             content: `You rejected the invite for group ${currentInvitation.group_name}.`,
           });

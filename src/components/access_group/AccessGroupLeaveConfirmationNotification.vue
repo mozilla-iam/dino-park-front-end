@@ -46,12 +46,22 @@ export default {
       accessGroup: 'accessGroup/getGroup',
       groupName: 'accessGroup/getGroupName',
       getCurators: 'accessGroup/getCurators',
+      getProfile: 'userV2/getProfile',
     }),
     showLeaveConfirmationNotification() {
       return this.$route.name === ACCESS_GROUP_LEAVE_CONFIRMATION_PAGE;
     },
     canLeaveGroup() {
-      return this.getCurators.length > 1;
+      if (!this.getCurators.length) {
+        return false;
+      }
+      const matches = this.getCurators.filter(
+        curator => curator.uuid === this.getProfile.uuid
+      );
+      if (this.getCurators.length === 1 && matches.length === 1) {
+        return false;
+      }
+      return true;
     },
   },
   methods: {

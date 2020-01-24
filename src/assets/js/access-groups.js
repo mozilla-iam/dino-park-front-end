@@ -4,7 +4,6 @@ import {
   GroupInvitationsApi,
   TermsApi,
   SelfInvitationsApi,
-  SelfJoinApi,
   CuratorsApi,
   UsersApi,
   SelfApi,
@@ -24,7 +23,6 @@ export default class AccessGroups {
     this.curatorsApi = new CuratorsApi();
     this.usersApi = new UsersApi();
     this.selfApi = new SelfApi();
-    this.selfJoinApi = new SelfJoinApi();
   }
 
   /**
@@ -138,15 +136,6 @@ export default class AccessGroups {
     }
   }
 
-  async getUserInvitations() {
-    try {
-      return await this.selfInvitationsApi.get();
-    } catch (e) {
-      console.log(e.message);
-      throw new Error(e.message);
-    }
-  }
-
   async sendInvitations(groupName, members, expiration) {
     try {
       let results = [];
@@ -181,19 +170,31 @@ export default class AccessGroups {
     }
   }
 
-  async acceptInvitation(groupName) {
+  async getUserInvitations() {
     try {
-      return await this.selfJoinApi.post(groupName);
+      return await this.selfInvitationsApi.get();
     } catch (e) {
       console.log(e.message);
       throw new Error(e.message);
     }
   }
 
-  async rejectInvitation(groupName, uuid) {
-    return new Promise((res, rej) => {
-      res('Rejected invitation');
-    }); //this.fetcher.fetch('');
+  async acceptInvitation(groupName) {
+    try {
+      return await this.selfInvitationsApi.post(groupName);
+    } catch (e) {
+      console.log(e.message);
+      throw new Error(e.message);
+    }
+  }
+
+  async rejectInvitation(groupName) {
+    try {
+      return await this.selfInvitationsApi.delete(groupName);
+    } catch (e) {
+      console.log(e.message);
+      throw new Error(e.message);
+    }
   }
 
   async getAccessGroupMemberInvitations(groupName) {

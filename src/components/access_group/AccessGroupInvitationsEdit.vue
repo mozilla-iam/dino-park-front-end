@@ -11,11 +11,6 @@
             <AccessGroupMemberListDisplay :member="invitation" />
             <div class="pending-invitations-container__actions">
               <Button
-                class="secondary-button"
-                @click="handleResendClicked(invitation)"
-                >Resend invite</Button
-              >
-              <Button
                 class="tertiary-action delete"
                 @click="handleRemoveClicked(invitation)"
               >
@@ -160,7 +155,7 @@ export default {
     },
     updateAutoCompleteList(search) {
       return new Promise((res, rej) => {
-        accessGroups.getUsers(search, this.getScope).then(results => {
+        accessGroups.getUsers(search, 'Public').then(results => {
           res(
             results.map(profile => DisplayMemberViewModel.fromUserData(profile))
           );

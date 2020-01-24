@@ -68,7 +68,9 @@ export default {
       }
     },
     acceptTerms() {
-      this.acceptInvitation(this.$route.params.groupname).then(() => {
+      this.acceptInvitation(
+        this.getInvitationByName(this.$route.params.groupname)
+      ).then(() => {
         this.$router.push({
           name: 'Access Group',
           query: {
@@ -81,8 +83,9 @@ export default {
       });
     },
     doNotAcceptTerms() {
-      const { groupname } = this.$route.params;
-      this.rejectInvitation(groupname).then(() => {
+      this.rejectInvitation(
+        this.getInvitationByName(this.$route.params.groupname)
+      ).then(() => {
         this.$router.go(-1);
         this.$root.$emit('toast', {
           content: `You rejected the invite for group ${groupname}.`,
@@ -99,7 +102,7 @@ export default {
     ...mapGetters({
       accessGroup: 'accessGroup/getGroup',
       termsContent: 'accessGroup/getTerms',
-      getInvitationByName: 'userV2/getInvitationsByName',
+      getInvitationByName: 'userV2/getInvitationByName',
     }),
     groupInvitation() {
       return this.getInvitationByName(this.accessGroup.name);

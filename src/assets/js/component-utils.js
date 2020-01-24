@@ -49,11 +49,18 @@ export function parseMarkdown(text) {
 }
 
 export function expiryText(expiration) {
-  if (expiration % 7 === 0 && expiration !== 0 && expiration !== null) {
-    const weekNum = expiration / 7;
+  const expiryDate = new Date(expiration);
+  const currentDate = new Date();
+  const difference = expiryDate.getTime() - currentDate.getTime();
+  if (difference <= 0) {
+    return '0 days';
+  }
+  const expDiffDays = Math.ceil(difference / (1000 * 3600 * 24));
+  if (expDiffDays % 7 === 0 && expDiffDays !== 0 && expDiffDays !== null) {
+    const weekNum = expDiffDays / 7;
     const weekLabel = weekNum === 1 ? 'week' : 'weeks';
     return `${weekNum} ${weekLabel}`;
   }
-  const dayLabel = expiration === 1 ? 'day' : 'days';
-  return `${expiration} ${dayLabel}`;
+  const dayLabel = expDiffDays === 1 ? 'day' : 'days';
+  return `${expDiffDays} ${dayLabel}`;
 }
