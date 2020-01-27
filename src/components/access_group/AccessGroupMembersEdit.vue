@@ -66,6 +66,30 @@
               </tr>
             </tbody>
           </table>
+          <div class="edit-members__list">
+            <div
+              class="list__row"
+              v-for="(member, idx) in filterMemberList()"
+              :key="idx"
+            >
+              <div class="list__row--upper">
+                <AccessGroupMemberListDisplay
+                  :member="member"
+                  class="upper__primary"
+                />
+                <Button
+                  class="upper__action delete"
+                  @click="handleRemoveClick(idx)"
+                >
+                  <Icon id="x" :width="16" :height="16" />
+                </Button>
+              </div>
+              <div class="list__row--lower">
+                <p class="lower__primary">{{ member.role }}</p>
+                <p class="lower__secondary">{{ expiry(member.expiration) }}</p>
+              </div>
+            </div>
+          </div>
           <Button class="edit-members__load-more">Load more members</Button>
         </div>
       </template>
@@ -348,12 +372,83 @@ export default {
 }
 
 .members-list-container .edit-members__search {
-  margin: 0 auto 1em;
+  margin: 0 2em 1em;
+}
+
+@media (min-width: 57.5em) {
+  .edit-members-container .edit-members-section__header {
+    margin-left: 0;
+  }
+  .members-list-container .edit-members__search {
+    margin: 0 auto 1em;
+    width: auto;
+  }
 }
 
 .edit-members__table {
-  border-collapse: collapse;
-  width: 100%;
+  display: none;
+}
+
+.edit-members__list .list__row {
+  padding-left: 2em;
+  padding-bottom: 1em;
+}
+
+.edit-members__list .list__row:nth-child(even) {
+  background: var(--gray-20);
+}
+
+.edit-members__list .list__row--upper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.list__row--upper .upper__primary {
+  flex: 9;
+}
+
+.list__row--upper .upper__action {
+  flex: 1;
+  background: transparent;
+  color: var(--neon-red);
+  text-align: center;
+}
+
+.list__row--upper .upper__action:hover {
+  border: none;
+}
+
+.edit-members__list .list__row--lower {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.list__row--lower .lower__primary,
+.list__row--lower .lower__secondary {
+  margin: 0;
+}
+
+.list__row--lower .lower__primary {
+  flex: 5;
+}
+.list__row--lower .lower__secondary {
+  color: var(--neon-red);
+  flex: 1;
+}
+
+@media (min-width: 57.5em) {
+  .edit-members__table {
+    display: table;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  .edit-members__list {
+    display: none;
+  }
 }
 
 .edit-members__table .members-table__header {

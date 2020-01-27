@@ -38,6 +38,10 @@ export default {
   padding: 3em 2em 1em;
 }
 
+.edit-panel-container.full {
+  padding: 3em 0 1em;
+}
+
 @media (min-width: 57.5em) {
   .edit-panel-container {
     width: 70%;
@@ -45,12 +49,27 @@ export default {
 
   .edit-panel-container.full {
     width: 100%;
+    padding: 3em 2em 1em;
+  }
+
+  .edit-panel-container.full .edit-panel__header {
+    margin-left: 0;
   }
 }
 
 .edit-panel-container .edit-panel__header {
   font-size: 2em;
   font-weight: normal;
+}
+
+.edit-panel-container.full .edit-panel__header {
+  margin-left: 1em;
+}
+
+@media (min-width: 57.5em) {
+  .edit-panel-container.full .edit-panel__header {
+    margin-left: 0;
+  }
 }
 
 .edit-panel__content .content-area__row {
