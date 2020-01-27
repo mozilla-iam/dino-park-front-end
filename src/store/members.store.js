@@ -51,11 +51,12 @@ export const membersActions = {
       throw new Error(e.message);
     }
   },
-  async removeCurators({ state, dispatch }, curators) {
+  async removeCurators({ state, dispatch }, { curators, expiration }) {
     try {
       const result = await accessGroupsService.removeCurators(
         state.group.name,
-        curators
+        curators,
+        expiration
       );
       return await dispatch('fetchMembers', state.group.name);
     } catch (e) {

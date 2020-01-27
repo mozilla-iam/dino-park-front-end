@@ -55,7 +55,6 @@
                   {{ expiry(member.expiration) }}
                 </td>
                 <td class="row-actions" v-if="!member.pendingRemoval">
-                  <!-- <Button class="button--secondary" @click="handleRenewClick(member)">Renew</Button> -->
                   <Button
                     class="tertiary-action delete"
                     @click="handleRemoveClick(idx)"
@@ -80,13 +79,30 @@
                 <Button
                   class="upper__action delete"
                   @click="handleRemoveClick(idx)"
+                  v-if="!member.pendingRemoval"
                 >
                   <Icon id="x" :width="16" :height="16" />
                 </Button>
               </div>
-              <div class="list__row--lower">
+              <div class="list__row--lower" v-if="!member.pendingRemoval">
                 <p class="lower__primary">{{ member.role }}</p>
                 <p class="lower__secondary">{{ expiry(member.expiration) }}</p>
+              </div>
+              <div
+                class="list__row--lower row-member-leave-confirm"
+                v-if="member.pendingRemoval"
+              >
+                <p class="lower__primary">Confirm remove?</p>
+                <Button
+                  class="lower__action primary-button"
+                  @click="handleRemoveConfirmClick(member)"
+                  >Remove</Button
+                >
+                <Button
+                  class="lower__action secondary-button"
+                  @click="handleCancelClick(member)"
+                  >Cancel</Button
+                >
               </div>
             </div>
           </div>
@@ -177,6 +193,9 @@ export default {
   props: [],
   mounted() {},
   watch: {
+    accessGroupCurators(value) {
+      this.curatorsList = value;
+    },
     curatorsList(value) {
       this.curatorsListDirty =
         JSON.stringify(value) === JSON.stringify(this.accessGroupCurators);
@@ -307,7 +326,12 @@ export default {
         promises.concat(this.addCurators(this.addedCurators));
       }
       if (this.removedCurators.length > 0) {
-        promises.concat(this.removeCurators(this.removedCurators));
+        promises.concat(
+          this.removeCurators({
+            curators: this.removedCurators,
+            expiration: this.accessGroupExpiration,
+          })
+        );
       }
       Promise.all(promises)
         .then(results => {
@@ -438,6 +462,27 @@ export default {
 .list__row--lower .lower__secondary {
   color: var(--neon-red);
   flex: 1;
+}
+
+.list__row--lower.row-member-leave-confirm {
+  display: flex;
+  justify-content: space-between;
+}
+
+.list__row--lower.row-member-leave-confirm .lower__primary {
+  font-weight: bold;
+  flex: 2;
+}
+
+.list__row--lower.row-member-leave-confirm .lower__action {
+  flex: 1;
+  border: 1px solid var(--black);
+  border-radius: 5em;
+}
+
+.list__row--lower.row-member-leave-confirm .primary-button {
+  border-color: var(--neon-red);
+  color: var(--neon-red);
 }
 
 @media (min-width: 57.5em) {

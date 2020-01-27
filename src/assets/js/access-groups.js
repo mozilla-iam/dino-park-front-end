@@ -121,10 +121,16 @@ export default class AccessGroups {
     }
   }
 
-  async removeCurators(groupName, curators) {
-    return new Promise((res, rej) => {
-      res('curators have been removed');
-    }); //this.fetcher.fetch('');
+  async removeCurators(groupName, curators, expiration) {
+    try {
+      for (const curator of curators) {
+        await this.curatorsApi.downgrade(groupName, curator.uuid, expiration);
+      }
+      return 200;
+    } catch (e) {
+      console.log(e.message);
+      throw new Error(e.message);
+    }
   }
 
   async renewMember(groupName, memberUuid, expiration) {

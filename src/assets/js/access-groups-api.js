@@ -177,6 +177,20 @@ export class CuratorsApi extends Api {
       throw new Error(e.message);
     }
   }
+
+  async downgrade(groupName, memberUuid, groupExpiration) {
+    try {
+      return await this.fetcher.post(
+        `${this.endpoint}/${groupName}/${memberUuid}/downgrade`,
+        {
+          group_expiration: groupExpiration,
+        }
+      );
+    } catch (e) {
+      console.error(e.message);
+      throw new Error(e.message);
+    }
+  }
 }
 
 export class TermsApi extends Api {
