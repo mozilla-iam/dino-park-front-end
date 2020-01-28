@@ -150,11 +150,17 @@ export default {
   border: 1px solid var(--blue-60);
   border-radius: var(--formElementRadius);
   text-align: center;
-  padding: 0.5em 1em;
+  padding: 1em;
   margin: 1em 0;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+}
+
+@media (min-width: 57.5em) {
+  .invitation-notification-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0.5em 1em;
+  }
 }
 
 .invitation-notification-item:first-child {
@@ -167,21 +173,54 @@ export default {
 
 .invitation-notification-container .invitation-notification__icon {
   color: var(--blue-60);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 7%;
+  display: inline-block;
+  width: 3em;
   text-align: left;
+  margin-right: 0.5em;
+}
+
+@media (min-width: 57.5em) {
+  .invitation-notification-container .invitation-notification__icon {
+    width: 7%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 0;
+  }
 }
 
 .invitation-notification-container .invitation-notification__description {
   margin: 0;
-  flex: 1;
   text-align: left;
-  padding-left: 1em;
+  width: calc(100% - 5em);
+  display: inline-block;
+  vertical-align: top;
+}
+
+@media (min-width: 57.5em) {
+  .invitation-notification-container .invitation-notification__description {
+    margin: 0;
+    flex: 1;
+    text-align: left;
+    padding-left: 1em;
+    width: auto;
+  }
 }
 
 .invitation-notification-container .invitation-notification__actions {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1em;
+}
+
+@media (min-width: 57.5em) {
+  .invitation-notification-container .invitation-notification__actions {
+    width: auto;
+    margin-top: 0;
+  }
 }
 
 .invitation-notification-container .invitation-notification__actions .button {

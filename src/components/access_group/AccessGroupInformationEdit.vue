@@ -279,10 +279,16 @@ export default {
 }
 
 .content-area__row.markdown-outer-container .markdown-guide-container {
-  position: absolute;
-  left: calc(100% + 1em);
-  top: 2.9em;
-  width: 20.5em;
+  width: 100%;
+}
+
+@media (min-width: 57.5em) {
+  .content-area__row.markdown-outer-container .markdown-guide-container {
+    position: absolute;
+    left: calc(100% + 1em);
+    top: 2.9em;
+    width: 20.5em;
+  }
 }
 
 .content-area__row .radio-control {
