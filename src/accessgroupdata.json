@@ -1,0 +1,118 @@
+{
+  "members": {
+    "members": [
+      {
+        "user_uuid": "34a33a8e-d035-4051-acac-497a79235e73",
+        "picture": "https://picture.api.dev.sso.allizom.org/avatar/get/id/MzI0ZjAwMzA5Yzc1ZGYxYmIzYjdjMGE1NWZmMDc3OGY3NGJjYjAzMjc0NDVhZmI2YWViODBmMzIzOGNhYzM3NyNzdGFmZiMxNTcyODYyNzM3.png",
+        "name": "Hans Knall",
+        "username": "hans",
+        "email": "hans@knall.org",
+        "isStaff": true,
+        "since": "2014-11-28T12:45:59Z",
+        "expiration": "2014-11-28T12:45:59Z",
+        "role": "Curator",
+        "added_by": {
+          "user_uuid": "34a33a8e-d035-4051-acac-497a79235e73",
+          "name": "Hans Knall",
+          "username": "hans",
+          "email": "hans@knall.org"
+        }
+      },
+      {
+        "picture": "https://picture.api.dev.sso.allizom.org/avatar/get/id/MzI0ZjAwMzA5Yzc1ZGYxYmIzYjdjMGE1NWZmMDc3OGY3NGJjYjAzMjc0NDVhZmI2YWViODBmMzIzOGNhYzM3NyNzdGFmZiMxNTcyODYyNzM3.png",
+        "name": "Bruce Wayne",
+        "username": "batman",
+        "email": "batman@gotham.com",
+        "isStaff": true,
+        "role": "Member",
+        "since": "2014-11-28T12:45:59Z",
+        "expiration": "2014-11-28T12:45:59Z",
+        "added_by": {
+          "user_uuid": "34a33a8e-d035-4051-acac-497a79235e73",
+          "name": "Andrew Sunada",
+          "username": "batman",
+          "email": "batman@mozilla.org"
+        }
+      },
+      {
+        "picture": "https://picture.api.dev.sso.allizom.org/avatar/get/id/MzI0ZjAwMzA5Yzc1ZGYxYmIzYjdjMGE1NWZmMDc3OGY3NGJjYjAzMjc0NDVhZmI2YWViODBmMzIzOGNhYzM3NyNzdGFmZiMxNTcyODYyNzM3.png",
+        "name": "Dick Grayson",
+        "username": "nightwing",
+        "email": "nightwing@gotham.com",
+        "isStaff": true,
+        "role": "Member",
+        "since": "2014-11-28T12:45:59Z",
+        "expiration": "2014-11-28T12:45:59Z",
+        "added_by": {
+          "user_uuid": "34a33a8e-d035-4051-acac-497a79235e73",
+          "name": "Batman",
+          "username": "batman",
+          "email": "batman@mozilla.org"
+        }
+      },
+      {
+        "picture": "https://picture.api.dev.sso.allizom.org/avatar/get/id/MzI0ZjAwMzA5Yzc1ZGYxYmIzYjdjMGE1NWZmMDc3OGY3NGJjYjAzMjc0NDVhZmI2YWViODBmMzIzOGNhYzM3NyNzdGFmZiMxNTcyODYyNzM3.png",
+        "name": "Jason Todd",
+        "username": "redhood",
+        "email": "redhood@gotham.com",
+        "isStaff": true,
+        "role": "Member",
+        "since": "2014-11-28T12:45:59Z",
+        "expiration": "2014-11-28T12:45:59Z",
+        "added_by": {
+          "user_uuid": "34a33a8e-d035-4051-acac-497a79235e73",
+          "name": "Batman",
+          "username": "batman",
+          "email": "batman@mozilla.org"
+        }
+      }
+    ],
+    "next": 20
+  },
+  "curators": {
+    "members": [
+      {
+        "user_uuid": "34a33a8e-d035-4051-acac-497a79235e73",
+        "picture": "https://picture.api.dev.sso.allizom.org/avatar/get/id/MzI0ZjAwMzA5Yzc1ZGYxYmIzYjdjMGE1NWZmMDc3OGY3NGJjYjAzMjc0NDVhZmI2YWViODBmMzIzOGNhYzM3NyNzdGFmZiMxNTcyODYyNzM3.png",
+        "name": "Hans Knall",
+        "username": "hans",
+        "email": "hans@knall.org",
+        "isStaff": true,
+        "since": "2014-11-28T12:45:59Z",
+        "expiration": "2014-11-28T12:45:59Z",
+        "role": "Curator",
+        "added_by": {
+          "user_uuid": "34a33a8e-d035-4051-acac-497a79235e73",
+          "name": "Hans Knall",
+          "username": "hans",
+          "email": "hans@knall.org"
+        }
+      }
+    ],
+    "next": 20
+  },
+  "group": {
+    "id": 1337,
+    "name": "dinopark-test",
+    "type": "closed",
+    "description": "**bold** <br/> some fance description in markdown",
+    "terms": true,
+    "history": [
+      {
+        "privilege": "OI Google Drive Access",
+        "date_added": "12 September 2019 00:00:00 GMT"
+      },
+      {
+        "privilege": "OI Google Group Access",
+        "date_added": "6 April 2019 00:00:00 GMT"
+      }
+    ]
+  },
+  "member_count": 50,
+  "invitation_count": 2,
+  "renewal_count": 3,
+  "expiration": 30,
+  "invitation": {
+    "content": ""
+  }
+}

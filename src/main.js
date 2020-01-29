@@ -1,19 +1,34 @@
 import Vue from 'vue';
-import ApolloClient from 'apollo-boost';
 import VueApollo from 'vue-apollo';
-import { InMemoryCache, defaultDataIdFromObject } from 'apollo-cache-inmemory';
-import Vuex from 'vuex';
 import App from './App.vue';
-import constructRouter from './router';
-import { DISPLAY_PROFILE } from './queries/profile';
-import Scope from './assets/js/scope';
+import router, {
+  ACCESS_GROUP_TOS_PAGE,
+  ACCESS_GROUP_EDIT_PAGE,
+  ACCESS_GROUP_CREATE_PAGE,
+  ACCESS_GROUP_PAGE,
+  constructRouter,
+} from './router';
+import { ACCESS_GROUP_TYPES } from '@/view_models/AccessGroupViewModel.js';
+
+import { apolloProvider } from './server';
+import store from '@/store';
+import Features from '@/features.js';
 import Fluent from './assets/js/fluent';
-import reload from '@/assets/js/reload';
+
+async function resolvePromisesSerially(promises, resolvers) {
+  try {
+    for (let i = 0, len = promises.length; i < len; i += 1) {
+      resolvers[i](await promises[i]());
+    }
+  } catch (e) {
+    throw new Error(e.message);
+  }
+}
 
 // polyfill/fallback adapted from MDN (https://developer.mozilla.org/en-US/docs/Web/API/Background_Tasks_API#Falling_back_to_setTimeout)
 window.requestIdleCallback =
   window.requestIdleCallback ||
-  ((handler) => {
+  (handler => {
     const startTime = Date.now();
 
     return setTimeout(() => {
@@ -26,103 +41,100 @@ window.requestIdleCallback =
     }, 1);
   });
 
-function errorHandler(error) {
-  const failoverOn = [302];
-  const { networkError } = error;
-  if (
-    networkError &&
-    ((networkError instanceof TypeError &&
-      networkError.message.startsWith('NetworkError')) ||
-      failoverOn.includes(networkError.statusCode))
-  ) {
-    reload();
-  }
-}
-
-const cache = new InMemoryCache({
-  dataIdFromObject: (object) => {
-    // eslint-disable-next-line no-underscore-dangle
-    switch (object.__typename) {
-      case 'Profile':
-        return object.uuid.value;
-      default:
-        // TODO: do we neet to pass here?
-        return defaultDataIdFromObject(object);
-    }
-  },
-});
-
-const client = new ApolloClient({
-  uri: '/api/v4/graphql',
-  cache,
-  onError: errorHandler,
-});
-
-const mutationClient = new ApolloClient({
-  uri: '/api/v4/graphql',
-  cache,
-  onError: errorHandler,
-});
-
-const apolloProvider = new VueApollo({
-  clients: {
-    default: client,
-    mutationClient,
-  },
-  defaultClient: client,
-  errorHandler,
-});
-
 Vue.use(VueApollo);
-Vue.use(Vuex);
 
-const store = new Vuex.Store({
-  state: {
-    user: null,
-    scope: new Scope(),
-    org: null,
-    personViewPreference: 'list',
-  },
-  actions: {
-    async fetchUser({ commit }) {
-      const { data } = await client.query({
-        query: DISPLAY_PROFILE,
-        variables: { username: null },
-      });
-      commit('setUser', data.profile);
+const fluent = new Fluent();
+Vue.mixin({
+  computed: {
+    scope() {
+      return this.$store.state.scope;
+    },
+    groupTypes() {
+      return ACCESS_GROUP_TYPES.filter(type => type !== 'Open');
     },
   },
-  mutations: {
-    setUser(state, user) {
-      state.user = user;
-      state.scope.update(user);
+  methods: {
+    getFeature(featureName) {
+      return Features.get(featureName);
     },
-    setOrg(state, org) {
-      state.org = org;
-    },
-    setPersonViewPreference(state, preference) {
-      state.personViewPreference = preference;
+    fluent(...args) {
+      return fluent.get(...args);
     },
   },
 });
 
-Promise.all([store.dispatch('fetchUser'), Fluent.init()]).then(([, fluent]) => {
-  Vue.mixin({
-    methods: {
-      fluent(...args) {
-        return fluent.get(...args);
-      },
-    },
-    computed: {
-      scope() {
-        return this.$store.state.scope;
-      },
-    },
-  });
+// eslint-disable-next-line
+store.dispatch('fetchUser').then(function() {
   new Vue({
     router: constructRouter(fluent),
     apolloProvider,
-    render: (h) => h(App),
+    render: h => h(App),
     store,
   }).$mount('#app');
+});
+
+// TODO: After using these for testing, replace the old actions with these
+store.dispatch('userV2/fetchProfile').then(function() {
+  store.dispatch('userV2/fetchInvitations').then(function() {});
+});
+
+router.beforeEach((to, from, next) => {
+  const promises = [];
+  const resolvers = [];
+
+  // Don't try to load data
+  if (
+    // cond: if you're on the create page
+    to.name === ACCESS_GROUP_CREATE_PAGE ||
+    // cond: if you're just changing tabs on the edit page
+    (to.name === ACCESS_GROUP_EDIT_PAGE &&
+      from.name === ACCESS_GROUP_EDIT_PAGE &&
+      to.query.section &&
+      from.query.section &&
+      to.query.section !== from.query.section) ||
+    // cond: if you're going from the edit page to the view page
+    (to.name === ACCESS_GROUP_PAGE && from.name === ACCESS_GROUP_EDIT_PAGE) ||
+    // cond: if you're going from the view page to the edit page
+    (to.name === ACCESS_GROUP_EDIT_PAGE && from.name === ACCESS_GROUP_PAGE)
+  ) {
+    next();
+    return;
+  }
+
+  if (to.meta.key === 'access-group') {
+    // eslint-disable-next-line
+    promises.push(() =>
+      store.dispatch('accessGroup/fetchGroup', to.params.groupname)
+    );
+    resolvers.push(data => {});
+    if (to.name !== ACCESS_GROUP_TOS_PAGE) {
+      promises.push(() =>
+        store.dispatch('accessGroup/fetchMembers', to.params.groupname)
+      );
+
+      resolvers.push(data => {});
+    }
+    if (
+      to.name === ACCESS_GROUP_TOS_PAGE ||
+      to.name === ACCESS_GROUP_EDIT_PAGE
+    ) {
+      promises.push(() => store.dispatch('accessGroup/fetchTerms'));
+      resolvers.push(data => {
+        console.log('Fetched terms: ', data);
+      });
+    }
+    if (to.name === ACCESS_GROUP_EDIT_PAGE) {
+      promises.push(() => store.dispatch('accessGroup/fetchInvitations'));
+      resolvers.push(data => {});
+    }
+  }
+
+  resolvePromisesSerially(promises, resolvers)
+    .then(() => {
+      next();
+    })
+    .catch(e => {
+      console.error('Caught dispatch error: ', e);
+      next(`/error?message=${e}`);
+    });
 });

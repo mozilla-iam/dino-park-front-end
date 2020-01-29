@@ -1,20 +1,21 @@
 import Vue from 'vue';
 import Modal from './Modal.vue';
 import getRenderedText from '@/../tests/utils/getRenderedText.js';
-
+import MockStore from '../../../tests/mocks/mockStore';
+import getMountedComponentWithStore from '../../../tests/utils/getMountedComponentWithStore';
 describe('Modal', () => {
   const Constructor = Vue.extend(Modal);
 
   it('should exist', () => {
-    const component = new Constructor();
+    const component = new Constructor(MockStore);
     expect(component).toBeInstanceOf(Vue);
   });
 
   it('should show close button if props.closeButton is true', () => {
-    const component = new Constructor({
+    const wrapper = getMountedComponentWithStore(Modal, {
       propsData: { closeButton: true },
-    }).$mount();
-    const closeButton = component.$el.querySelector('.modal__close');
+    });
+    const closeButton = wrapper.vm.$el.querySelector('.modal__close');
     expect(closeButton).toBeTruthy();
   });
 
@@ -23,14 +24,14 @@ describe('Modal', () => {
     const text = getRenderedText(
       Modal,
       { heading: msg },
-      '.modal__header > h1',
+      '.modal__header > h1'
     );
     expect(text).toEqual(msg);
   });
 
   it('should html passed in as children', () => {
     const msg = 'test';
-    const component = new Constructor();
+    const component = new Constructor(MockStore);
     const newHtml = component.$createElement('article', msg);
     component.$slots.default = [newHtml];
     component.$mount();

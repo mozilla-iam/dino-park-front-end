@@ -20,6 +20,7 @@
     "graphql": "^14.4.2",
     "identicon.js": "^2.3.3",
     "insane": "^2.6.2",
+    "lodash": "^4.17.15",
     "marked": "^0.7.0",
     "object.pick": "^1.3.0",
     "preact": "^8.4.2",
@@ -47,7 +48,8 @@
     "raw-loader": "^3.1.0",
     "svg-sprite-loader": "^4.1.6",
     "vue-axe": "^1.0.7",
-    "vue-template-compiler": "^2.6.10"
+    "vue-template-compiler": "^2.6.10",
+    "vue-test-utils-helpers": "git+https://github.com/AmpleOrganics/vue-test-utils-helpers.git#1.0.3"
   },
   "husky": {
     "hooks": {
