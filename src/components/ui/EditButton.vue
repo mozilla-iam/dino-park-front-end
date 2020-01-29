@@ -1,14 +1,5 @@
 <template>
-  <RouterLink
-    v-if="noEditCardOpen()"
-    class="edit-button"
-    :to="{
-      name: 'Edit Profile',
-      query: {
-        section: sectionId,
-      },
-    }"
-  >
+  <RouterLink v-if="noEditCardOpen()" class="edit-button" :to="sendTo">
     <Icon id="pencil" :width="20" :height="20"></Icon>
     <span class="visually-hidden">{{ fluent('edit', { section }) }}</span>
   </RouterLink>
@@ -27,6 +18,7 @@ export default {
   props: {
     section: String,
     sectionId: String,
+    sendTo: Object,
   },
   components: {
     Icon,
@@ -52,15 +44,5 @@ export default {
 }
 .edit-button:hover {
   color: var(--blue-60);
-}
-.profile__section-header .edit-button {
-  position: absolute;
-  top: 1.5em;
-  right: 1.5em;
-}
-.profile__intro .edit-button {
-  position: absolute;
-  top: 1em;
-  right: 0;
 }
 </style>

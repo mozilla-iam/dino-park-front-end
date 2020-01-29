@@ -132,4 +132,8 @@ export default {
 .colleagues__toggle-button--current {
   background-color: var(--gray-20);
 }
+
+.colleagues .profile__section-header h2 {
+  width: auto;
+}
 </style>

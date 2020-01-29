@@ -53,22 +53,29 @@ export default {
     id: String,
   },
   mounted() {
-    if (this.id === 'self-avatar') {
+    generateIdenticon(this.$store.state.user.primaryUsername.value, 40).then(
+      a => {
+        this.generatedAvatarUrl = a;
+      }
+    );
+  },
+  computed: {
+    computedAvatarUrl() {
       if (this.$store.state.user.picture.value) {
         this.avatarUrl = avatarUrl(
           this.$store.state.user.picture.value,
           40,
-          true,
+          true
         );
       } else {
         generateIdenticon(
           this.$store.state.user.primaryUsername.value,
-          40,
-        ).then((a) => {
+          40
+        ).then(a => {
           this.avatarUrl = a;
         });
       }
-    }
+    },
   },
   data() {
     return {

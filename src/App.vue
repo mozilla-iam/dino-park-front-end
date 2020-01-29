@@ -1,7 +1,8 @@
 <template>
-  <div id="app" class="app-container">
+  <div id="app" :class="['app-container', containerCSS]">
     <Banner v-if="showBanner" @close="showBanner = false" ref="banner" />
     <TopBar></TopBar>
+    <GlobalNotifications class="container" />
     <RouterView class="container" />
     <Footer></Footer>
   </div>
@@ -11,6 +12,7 @@
 import Banner from '@/components/ui/Banner.vue';
 import TopBar from '@/components/ui/TopBar.vue';
 import Footer from '@/components/ui/Footer.vue';
+import GlobalNotifications from '@/components/ui/GlobalNotifications.vue';
 
 export default {
   name: 'PageHome',
@@ -18,10 +20,16 @@ export default {
     Banner,
     TopBar,
     Footer,
+    GlobalNotifications,
+  },
+  computed: {
+    containerCSS() {
+      return `${this.$route.meta.key}-container`;
+    },
   },
   methods: {
     awaitTabbing() {
-      document.addEventListener('keydown', (e) => {
+      document.addEventListener('keydown', e => {
         if (e.key === 'Tab') {
           document.body.classList.add('focus-styles');
         }
@@ -168,10 +176,11 @@ abbr {
   padding: 0 1em;
   width: 100%;
 }
+
 @media (min-width: 57.5em) {
   .container {
+    margin: 2em auto 0 auto;
     max-width: 74em;
-    margin: 0 auto;
   }
 }
 
@@ -183,6 +192,10 @@ abbr {
 }
 .app-container > .container {
   flex: 1;
+}
+
+.app-container > .container.global-notifications-container {
+  flex: 0;
 }
 
 .visually-hidden {
