@@ -11,6 +11,7 @@
         <label for="search-query" class="visually-hidden">{{
           this.fluent('search_input')
         }}</label>
+        <!-- TODO: fix placeholder fluent. search 'searchFormLabel' and replace with fluent in all code -->
         <input
           type="text"
           id="search-query"
@@ -18,7 +19,7 @@
           v-model="searchQuery"
           class="search-form__input"
           ref="searchQueryField"
-          :placeholder="this.fluent('search_input', searchFormLabel)"
+          :placeholder="this.fluent('search_input', 'placeholder')"
         />
         <button
           type="button"

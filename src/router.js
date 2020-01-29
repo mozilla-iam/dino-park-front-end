@@ -29,7 +29,7 @@ function showUsername(username) {
  * Since we are using the url to hold the state of the page, this is a field to denote which general page we are on
  */
 // TODO: Add fluent translations the the rest of the pages here
-function constructRouter(fluent) {
+export function constructRouter(fluent) {
   const router = new Router({
     base: process.env.BASE_URL,
     mode: 'history',
@@ -192,5 +192,3 @@ function constructRouter(fluent) {
 
   return router;
 }
-
-export default constructRouter;
