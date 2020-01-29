@@ -21,7 +21,15 @@
           :key="`group-${group}`"
           icon="moz"
         >
-          <ExternalLink :href="`/a/${group}`">{{ group }}</ExternalLink>
+          <RouterLink
+            :to="{
+              name: 'Access Group',
+              params: {
+                groupname: group,
+              },
+            }"
+            >{{ group }}</RouterLink
+          >
         </IconBlock>
       </IconBlockList>
       <p class="view-access-groups__mozillians-footer">
