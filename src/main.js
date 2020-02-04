@@ -25,6 +25,10 @@ async function resolvePromisesSerially(promises, resolvers) {
   }
 }
 
+function getFeature(featureName) {
+  return Features.get(featureName);
+}
+
 // polyfill/fallback adapted from MDN (https://developer.mozilla.org/en-US/docs/Web/API/Background_Tasks_API#Falling_back_to_setTimeout)
 window.requestIdleCallback =
   window.requestIdleCallback ||
@@ -46,67 +50,71 @@ Vue.use(VueApollo);
 // eslint-disable-next-line
 Promise.all([store.dispatch('fetchUser'), Fluent.init()]).then(([, fluent]) => {
   const router = constructRouter(fluent);
+  if (getFeature('access-groups-toggle')) {
+    router.beforeEach((to, from, next) => {
+      const promises = [];
+      const resolvers = [];
 
-  router.beforeEach((to, from, next) => {
-    const promises = [];
-    const resolvers = [];
-
-    // Don't try to load data
-    if (
-      // cond: if you're on the create page
-      to.name === ACCESS_GROUP_CREATE_PAGE ||
-      // cond: if you're just changing tabs on the edit page
-      (to.name === ACCESS_GROUP_EDIT_PAGE &&
-        from.name === ACCESS_GROUP_EDIT_PAGE &&
-        to.query.section &&
-        from.query.section &&
-        to.query.section !== from.query.section) ||
-      // cond: if you're going from the edit page to the view page
-      (to.name === ACCESS_GROUP_PAGE && from.name === ACCESS_GROUP_EDIT_PAGE) ||
-      // cond: if you're going from the view page to the edit page
-      (to.name === ACCESS_GROUP_EDIT_PAGE && from.name === ACCESS_GROUP_PAGE)
-    ) {
-      next();
-      return;
-    }
-
-    if (to.meta.key === 'access-group') {
-      // eslint-disable-next-line
-      promises.push(() =>
-        store.dispatch('accessGroup/fetchGroup', to.params.groupname)
-      );
-      resolvers.push(data => {});
-      if (to.name !== ACCESS_GROUP_TOS_PAGE) {
-        promises.push(() =>
-          store.dispatch('accessGroup/fetchMembers', to.params.groupname)
-        );
-
-        resolvers.push(data => {});
-      }
+      // Don't try to load data
       if (
-        to.name === ACCESS_GROUP_TOS_PAGE ||
-        to.name === ACCESS_GROUP_EDIT_PAGE
+        // cond: if you're on the create page
+        to.name === ACCESS_GROUP_CREATE_PAGE ||
+        // cond: if you're just changing tabs on the edit page
+        (to.name === ACCESS_GROUP_EDIT_PAGE &&
+          from.name === ACCESS_GROUP_EDIT_PAGE &&
+          to.query.section &&
+          from.query.section &&
+          to.query.section !== from.query.section) ||
+        // cond: if you're going from the edit page to the view page
+        (to.name === ACCESS_GROUP_PAGE &&
+          from.name === ACCESS_GROUP_EDIT_PAGE) ||
+        // cond: if you're going from the view page to the edit page
+        (to.name === ACCESS_GROUP_EDIT_PAGE && from.name === ACCESS_GROUP_PAGE)
       ) {
-        promises.push(() => store.dispatch('accessGroup/fetchTerms'));
-        resolvers.push(data => {
-          console.log('Fetched terms: ', data);
-        });
-      }
-      if (to.name === ACCESS_GROUP_EDIT_PAGE) {
-        promises.push(() => store.dispatch('accessGroup/fetchInvitations'));
-        resolvers.push(data => {});
-      }
-    }
-
-    resolvePromisesSerially(promises, resolvers)
-      .then(() => {
         next();
-      })
-      .catch(e => {
-        console.error('Caught dispatch error: ', e);
-        next(`/error?message=${e}`);
-      });
-  });
+        return;
+      }
+      // TODO: After using these for testing, replace the old actions with these
+      promises.push(() => store.dispatch('userV2/fetchProfile'));
+      resolvers.push(() => store.dispatch('userV2/fetchInvitations'));
+      if (to.meta.key === 'access-group') {
+        // eslint-disable-next-line
+        promises.push(() =>
+          store.dispatch('accessGroup/fetchGroup', to.params.groupname)
+        );
+        resolvers.push(data => {});
+        if (to.name !== ACCESS_GROUP_TOS_PAGE) {
+          promises.push(() =>
+            store.dispatch('accessGroup/fetchMembers', to.params.groupname)
+          );
+
+          resolvers.push(data => {});
+        }
+        if (
+          to.name === ACCESS_GROUP_TOS_PAGE ||
+          to.name === ACCESS_GROUP_EDIT_PAGE
+        ) {
+          promises.push(() => store.dispatch('accessGroup/fetchTerms'));
+          resolvers.push(data => {
+            console.log('Fetched terms: ', data);
+          });
+        }
+        if (to.name === ACCESS_GROUP_EDIT_PAGE) {
+          promises.push(() => store.dispatch('accessGroup/fetchInvitations'));
+          resolvers.push(data => {});
+        }
+      }
+
+      resolvePromisesSerially(promises, resolvers)
+        .then(() => {
+          next();
+        })
+        .catch(e => {
+          console.error('Caught dispatch error: ', e);
+          next(`/error?message=${e}`);
+        });
+    });
+  }
 
   Vue.mixin({
     computed: {
@@ -118,9 +126,7 @@ Promise.all([store.dispatch('fetchUser'), Fluent.init()]).then(([, fluent]) => {
       },
     },
     methods: {
-      getFeature(featureName) {
-        return Features.get(featureName);
-      },
+      getFeature,
       fluent(...args) {
         return fluent.get(...args);
       },
@@ -132,9 +138,4 @@ Promise.all([store.dispatch('fetchUser'), Fluent.init()]).then(([, fluent]) => {
     render: h => h(App),
     store,
   }).$mount('#app');
-});
-
-// TODO: After using these for testing, replace the old actions with these
-store.dispatch('userV2/fetchProfile').then(function() {
-  store.dispatch('userV2/fetchInvitations').then(function() {});
 });

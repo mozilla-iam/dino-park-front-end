@@ -175,8 +175,6 @@ import { DisplayMemberViewModel } from '@/view_models/AccessGroupViewModel';
 import { expiryText } from '@/assets/js/component-utils';
 import AccessGroups from '@/assets/js/access-groups';
 
-const accessGroups = new AccessGroups();
-
 export default {
   name: 'AccessGroupInformationEdit',
   components: {
@@ -307,7 +305,7 @@ export default {
     },
     updateAutoCompleteList(search) {
       return new Promise((res, rej) => {
-        accessGroups.getUsers(search, this.getScope).then(results => {
+        AccessGroups.getUsers(search, this.getScope).then(results => {
           res(
             results.map(profile => DisplayMemberViewModel.fromUserData(profile))
           );

@@ -21,7 +21,6 @@ export default class AccessGroups {
     this.termsApi = new TermsApi();
     this.selfInvitationsApi = new SelfInvitationsApi();
     this.curatorsApi = new CuratorsApi();
-    this.usersApi = new UsersApi();
     this.selfApi = new SelfApi();
   }
 
@@ -260,9 +259,10 @@ export default class AccessGroups {
     }); //this.fetcher.fetch('');
   }
 
-  async getUsers(q, scope) {
+  static async getUsers(q, scope) {
     try {
-      let users = await this.usersApi.get(q, scope);
+      const usersApi = new UsersApi();
+      let users = await usersApi.get(q, scope);
       // TODO: Replace this with: users = users.filter(({ email }) => email !== null);
       users = users.filter(({ first_name }) => first_name !== null);
       return users;

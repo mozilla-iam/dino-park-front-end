@@ -11,6 +11,7 @@ import AccessGroupEdit from './components/access_group/AccessGroupEdit.vue';
 import AccessGroupView from './components/access_group/AccessGroupView.vue';
 import AccessGroupCreate from './components/access_group/AccessGroupCreate.vue';
 import scrolling from './assets/js/scrolling';
+import Features from '@/features';
 
 Vue.use(Router);
 export const ACCESS_GROUP_CREATE_PAGE = 'Create Access Group';
@@ -24,12 +25,68 @@ function showUsername(username) {
   return username && !username.startsWith('r--');
 }
 
+const ACCESS_GROUP_ROUTES = [
+  {
+    path: '/a/create',
+    name: ACCESS_GROUP_CREATE_PAGE,
+    component: AccessGroupCreate,
+    props: true,
+    meta: { key: 'access-group' },
+  },
+  {
+    path: '/a/:groupname',
+    component: PageAccessGroup,
+    props: true,
+    children: [
+      {
+        path: '',
+        name: ACCESS_GROUP_PAGE,
+        component: AccessGroupView,
+        props: true,
+        meta: { key: 'access-group' },
+      },
+      {
+        path: 'edit',
+        name: ACCESS_GROUP_EDIT_PAGE,
+        component: AccessGroupEdit,
+        query: {
+          section: ':section?',
+        },
+        props: true,
+        meta: { key: 'access-group' },
+      },
+      {
+        path: 'tos',
+        name: ACCESS_GROUP_TOS_PAGE,
+        component: AccessGroupTerms,
+        query: {
+          accept: ':accept?',
+        },
+        props: true,
+        meta: { key: 'access-group' },
+      },
+      {
+        path: 'leave',
+        name: ACCESS_GROUP_LEAVE_CONFIRMATION_PAGE,
+        component: AccessGroupView,
+        props: true,
+        meta: { key: 'access-group', leave: true },
+      },
+    ],
+  },
+];
+
 /**
  * We are using the "meta: {key: ''}" field here to denote class name and page.
  * Since we are using the url to hold the state of the page, this is a field to denote which general page we are on
  */
 // TODO: Add fluent translations the the rest of the pages here
 export function constructRouter(fluent) {
+  // Features.get(featureName);
+  let featureEnabledRoutes = [];
+  if (Features.get('access-groups-toggle')) {
+    featureEnabledRoutes = [...featureEnabledRoutes, ...ACCESS_GROUP_ROUTES];
+  }
   const router = new Router({
     base: process.env.BASE_URL,
     mode: 'history',
@@ -91,54 +148,7 @@ export function constructRouter(fluent) {
         props: true,
         meta: { key: 'search', title: fluent.get('title_search') },
       },
-      {
-        path: '/a/create',
-        name: ACCESS_GROUP_CREATE_PAGE,
-        component: AccessGroupCreate,
-        props: true,
-        meta: { key: 'access-group' },
-      },
-      {
-        path: '/a/:groupname',
-        component: PageAccessGroup,
-        props: true,
-        children: [
-          {
-            path: '',
-            name: ACCESS_GROUP_PAGE,
-            component: AccessGroupView,
-            props: true,
-            meta: { key: 'access-group' },
-          },
-          {
-            path: 'edit',
-            name: ACCESS_GROUP_EDIT_PAGE,
-            component: AccessGroupEdit,
-            query: {
-              section: ':section?',
-            },
-            props: true,
-            meta: { key: 'access-group' },
-          },
-          {
-            path: 'tos',
-            name: ACCESS_GROUP_TOS_PAGE,
-            component: AccessGroupTerms,
-            query: {
-              accept: ':accept?',
-            },
-            props: true,
-            meta: { key: 'access-group' },
-          },
-          {
-            path: 'leave',
-            name: ACCESS_GROUP_LEAVE_CONFIRMATION_PAGE,
-            component: AccessGroupView,
-            props: true,
-            meta: { key: 'access-group', leave: true },
-          },
-        ],
-      },
+      ...featureEnabledRoutes,
     ],
     scrollBehavior(to, from) {
       if (to.hash) {
