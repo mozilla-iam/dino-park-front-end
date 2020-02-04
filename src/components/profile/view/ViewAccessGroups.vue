@@ -22,6 +22,7 @@
           icon="moz"
         >
           <RouterLink
+            v-if="getFeature('access-groups-toggle')"
             :to="{
               name: 'Access Group',
               params: {
@@ -29,6 +30,11 @@
               },
             }"
             >{{ group }}</RouterLink
+          >
+          <ExternalLink
+            v-else
+            :href="`https://mozillians.org/group/${encodeURIComponent(group)}`"
+            >{{ group }}</ExternalLink
           >
         </IconBlock>
       </IconBlockList>

@@ -89,8 +89,6 @@ import AccessGroups from '@/assets/js/access-groups';
 import { DisplayMemberViewModel } from '@/view_models/AccessGroupViewModel';
 import AccessGroupMemberListDisplay from '@/components/access_group/AccessGroupMemberListDisplay.vue';
 
-const accessGroups = new AccessGroups();
-
 export default {
   name: 'AccessGroupInvitationsEdit',
   components: {
@@ -155,7 +153,7 @@ export default {
     },
     updateAutoCompleteList(search) {
       return new Promise((res, rej) => {
-        accessGroups.getUsers(search, 'Public').then(results => {
+        AccessGroups.getUsers(search, 'Public').then(results => {
           res(
             results.map(profile => DisplayMemberViewModel.fromUserData(profile))
           );
