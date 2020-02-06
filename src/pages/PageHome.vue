@@ -1,7 +1,11 @@
 <template>
   <main class="home">
     <div class="home__intro">
-      <img v-if="scope.isStaff" src="@/assets/images/laptop-phone-kang.png" />
+      <img
+        v-if="scope.isStaff"
+        src="@/assets/images/laptop-phone.png"
+        srcset="@/assets/images/laptop-phone@2x.png 2x"
+      />
       <img
         v-else
         src="@/assets/images/laptop-phone-community.png"
