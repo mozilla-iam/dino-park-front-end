@@ -57,6 +57,13 @@ export default {
       });
     },
     currentDisplayOption() {
+      if (this.profileFieldObject.display === null) {
+        const { value: defaultLevel = null } = displayLevelsFor(
+          this.profileFieldName,
+          this.scope,
+        )[0];
+        this.profileFieldObject.display = defaultLevel;
+      }
       return (
         Object.values(DISPLAY_LEVELS).find(
           (v) => v.value === this.profileFieldObject.display,
