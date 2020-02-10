@@ -1,5 +1,4 @@
 import Fetcher from '@/assets/js/fetcher';
-import { DISPLAY_LEVELS } from '@/assets/js/display-levels';
 
 const EMPTY_IDENTITIES = {
   githubIdV3: { value: null, metadata: { display: null } },
@@ -49,16 +48,11 @@ class Identities {
   }
 
   bugzillaDisplay() {
-    return (
-      this.identities.bugzillaMozillaOrgId.metadata.display ||
-      DISPLAY_LEVELS.private
-    );
+    return this.identities.bugzillaMozillaOrgId.metadata.display;
   }
 
   githubDisplay() {
-    return (
-      this.identities.githubIdV3.metadata.display || DISPLAY_LEVELS.private
-    );
+    return this.identities.githubIdV3.metadata.display;
   }
 
   bugzillaEmail() {
