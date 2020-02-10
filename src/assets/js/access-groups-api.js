@@ -1,9 +1,131 @@
 import Fetcher from '@/assets/js/fetcher';
+import apiConfig from './access-groups-api.config';
 
 const API_PREFIX = '/groups/api/v1/';
-class Api {
+const getEndpoint = (endpoint, groupName) => `${endpoint}/${groupName}`;
+export class Api {
   constructor() {
     this.fetcher = new Fetcher({ failoverOn: [302] });
+  }
+  async handleGet(getConfig, endpointArguments) {
+    try {
+      let endpoint = '';
+      if (getConfig === true) {
+        endpoint = getEndpoint(...endpointArguments);
+      } else {
+        endpoint = getConfig(...endpointArguments);
+      }
+      const result = await this.fetcher.fetch(endpoint);
+      return await result.json();
+    } catch (e) {
+      console.error(e.message);
+      throw new Error(e.message);
+    }
+  }
+  async handleDelete(deleteConfig, endpointArguments) {
+    try {
+      let endpoint = '';
+      if (deleteConfig === true) {
+        endpoint = getEndpoint(...endpointArguments);
+      } else {
+        endpoint = deleteConfig(...endpointArguments);
+      }
+      return await this.fetcher.delete(endpoint);
+    } catch (e) {
+      console.error(e.message);
+      throw new Error(e.message);
+    }
+  }
+  async handlePost(
+    postEndpointGetter,
+    endpointArguments,
+    postDataGetter,
+    dataArguments
+  ) {
+    try {
+      let endpoint = '';
+      if (postEndpointGetter === true) {
+        endpoint = getEndpoint(...endpointArguments);
+      } else {
+        endpoint = postEndpointGetter(...endpointArguments);
+      }
+      return await this.fetcher.post(endpoint, postDataGetter(dataArguments));
+    } catch (e) {
+      console.error(e.message);
+      throw new Error(e.message);
+    }
+  }
+  async handlePut(
+    putEndpointGetter,
+    endpointArguments,
+    putDataGetter,
+    dataArguments
+  ) {
+    try {
+      let endpoint = '';
+      if (putEndpointGetter === true) {
+        endpoint = getEndpoint(...endpointArguments);
+      } else {
+        endpoint = putEndpointGetter(...endpointArguments);
+      }
+      return await this.fetcher.put(endpoint, putDataGetter(dataArguments));
+    } catch (e) {
+      console.error(e.message);
+      throw new Error(e.message);
+    }
+  }
+  async execute({ path, endpointArguments = [], dataArguments = {} }) {
+    try {
+      let [scope, restMethod] = path.split('/');
+      if (!(restMethod in apiConfig[scope])) {
+        throw new Error('unmapped path executed');
+      }
+      // Hold onto the original method for mapping use
+      let mappedMethod = restMethod;
+
+      // If the map method is not named as a REST method, the optional method 3rd argument in the REST getter will contain a REST method
+      if (!['get', 'post', 'delete', 'put'].includes(mappedMethod)) {
+        restMethod = apiConfig[scope][mappedMethod][2];
+      }
+
+      endpointArguments = [apiConfig[scope].endpoint, ...endpointArguments];
+      switch (restMethod) {
+        case 'get':
+          return await this.handleGet(
+            apiConfig[scope][restMethod],
+            endpointArguments
+          );
+        case 'post':
+          const [postEndpointGetter, postDataGetter] = apiConfig[scope][
+            mappedMethod
+          ];
+          return await this.handlePost(
+            postEndpointGetter,
+            endpointArguments,
+            postDataGetter,
+            dataArguments
+          );
+        case 'put':
+          const [putEndpointGetter, putDataGetter] = apiConfig[scope][
+            mappedMethod
+          ];
+          return await this.handlePut(
+            putEndpointGetter,
+            endpointArguments,
+            putDataGetter,
+            dataArguments
+          );
+        case 'delete':
+          return await this.handleDelete(
+            apiConfig[scope][restMethod],
+            endpointArguments
+          );
+        default:
+          throw new Error('Invalid method: ' + restMethod);
+      }
+    } catch (e) {
+      throw new Error('Execute error: ' + e.message);
+    }
   }
 }
 export class GroupsApi extends Api {
@@ -102,34 +224,6 @@ export class MembersApi extends Api {
     this.endpoint = `${API_PREFIX}members`;
   }
 
-  async get(groupName) {
-    try {
-      const result = await this.fetcher.fetch(`${this.endpoint}/${groupName}`);
-      return await result.json();
-    } catch (e) {
-      console.error(e.message);
-      throw new Error(e.message);
-    }
-  }
-
-  async post(groupName, memberUuid, groupExpiration) {
-    try {
-      const result = await this.fetcher.post(
-        `${this.endpoint}/${groupName}/${memberUuid}`,
-        {
-          group_expiration: groupExpiration,
-        }
-      );
-      if (Number.isInteger(result)) {
-        throw new Error('Member post error: ' + result);
-      }
-      return await result.json();
-    } catch (e) {
-      console.error(e.message);
-      throw new Error(e.message);
-    }
-  }
-
   async renew(groupName, memberUuid, groupExpiration) {
     try {
       const result = await this.fetcher.post(
@@ -142,114 +236,6 @@ export class MembersApi extends Api {
         throw new Error('Member post error: ' + result);
       }
       return await result.json();
-    } catch (e) {
-      console.error(e.message);
-      throw new Error(e.message);
-    }
-  }
-
-  async delete(groupName, memberUuid) {
-    try {
-      const result = await this.fetcher.delete(
-        `${this.endpoint}/${groupName}/${memberUuid}`
-      );
-      return await result.status;
-    } catch (e) {
-      console.error(e.message);
-      throw new Error(e.message);
-    }
-  }
-}
-
-export class CuratorsApi extends Api {
-  constructor() {
-    super();
-    this.endpoint = `${API_PREFIX}curators`;
-  }
-
-  async post(groupName, member_uuid) {
-    try {
-      return await this.fetcher.post(`${this.endpoint}/${groupName}`, {
-        member_uuid,
-      });
-    } catch (e) {
-      console.error(e.message);
-      throw new Error(e.message);
-    }
-  }
-
-  async downgrade(groupName, memberUuid, groupExpiration) {
-    try {
-      return await this.fetcher.post(
-        `${this.endpoint}/${groupName}/${memberUuid}/downgrade`,
-        {
-          group_expiration: groupExpiration,
-        }
-      );
-    } catch (e) {
-      console.error(e.message);
-      throw new Error(e.message);
-    }
-  }
-}
-
-export class TermsApi extends Api {
-  constructor() {
-    super();
-    this.endpoint = `${API_PREFIX}terms`;
-  }
-
-  async get(groupName) {
-    try {
-      const result = await this.fetcher.fetch(`${this.endpoint}/${groupName}`);
-      return await result.json();
-    } catch (e) {
-      console.error(e.message);
-      throw new Error(e.message);
-    }
-  }
-
-  async put(groupName, data) {
-    try {
-      return await this.fetcher.put(`${this.endpoint}/${groupName}`, {
-        text: data,
-      });
-    } catch (e) {
-      console.error(e.message);
-      throw new Error(e.message);
-    }
-  }
-
-  async post(groupName, data) {
-    try {
-      return await this.fetcher.post(`${this.endpoint}/${groupName}`, {
-        text: data,
-      });
-    } catch (e) {
-      console.error(e.message);
-      throw new Error(e.message);
-    }
-  }
-
-  async delete(groupName) {
-    try {
-      return await this.fetcher.delete(`${this.endpoint}/${groupName}`);
-    } catch (e) {
-      console.error(e.message);
-      throw new Error(e.message);
-    }
-  }
-}
-
-export class SelfApi extends Api {
-  constructor() {
-    super();
-    this.endpoint = `${API_PREFIX}self`;
-  }
-
-  async delete(groupName) {
-    try {
-      return await this.fetcher.delete(`${this.endpoint}/${groupName}`);
     } catch (e) {
       console.error(e.message);
       throw new Error(e.message);
@@ -285,25 +271,6 @@ export class SelfInvitationsApi extends Api {
   async delete(groupName) {
     try {
       return await this.fetcher.delete(`${this.endpoint}/${groupName}`);
-    } catch (e) {
-      console.error(e.message);
-      throw new Error(e.message);
-    }
-  }
-}
-
-export class UsersApi extends Api {
-  constructor() {
-    super();
-    this.endpoint = `${API_PREFIX}users`;
-  }
-
-  async get(q, scope) {
-    try {
-      const result = await this.fetcher.fetch(
-        `${this.endpoint}?q=${q}&t=${scope}`
-      );
-      return await result.json();
     } catch (e) {
       console.error(e.message);
       throw new Error(e.message);
