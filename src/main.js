@@ -95,9 +95,7 @@ Promise.all([store.dispatch('fetchUser'), Fluent.init()]).then(([, fluent]) => {
           to.name === ACCESS_GROUP_EDIT_PAGE
         ) {
           promises.push(() => store.dispatch('accessGroup/fetchTerms'));
-          resolvers.push(data => {
-            console.log('Fetched terms: ', data);
-          });
+          resolvers.push(data => {});
         }
         if (to.name === ACCESS_GROUP_EDIT_PAGE) {
           promises.push(() => store.dispatch('accessGroup/fetchInvitations'));
