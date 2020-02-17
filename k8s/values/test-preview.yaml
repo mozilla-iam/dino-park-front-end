@@ -1,1 +1,3 @@
 name: dino-park-front-end-preview
+features:
+  access-groups-toggle: true
