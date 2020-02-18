@@ -1,4 +1,18 @@
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: front-end-features
+  namespace: {{ .Values.namespace }}
+data:
+  features.json: |
+    {
+    {{- range $key, $value := .Values.features }}
+      "{{ $key | trimPrefix "env_" }}": {{ $value }},
+    {{- end }}
+      "json-end": true
+    }
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -34,3 +48,11 @@ spec:
           env:
             - name: FORCE_UPDATE
               value: "{{ .Values.force_update | default 0 }}"
+          volumeMounts:
+            - name: front-end-features
+              mountPath: /config
+              readOnly: true
+      volumes:
+        - name: front-end-features
+          configMap:
+            name: front-end-features
