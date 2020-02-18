@@ -8,9 +8,11 @@
     <fieldset>
       <legend class="visually-hidden">{{ this.fluent('search') }}</legend>
       <div class="search-form__fields">
-        <label for="search-query" class="visually-hidden">{{
+        <label for="search-query" class="visually-hidden">
+          {{
           this.fluent('search_input')
-        }}</label>
+          }}
+        </label>
         <!-- TODO: fix placeholder fluent. search 'searchFormLabel' and replace with fluent in all code -->
         <input
           type="text"
@@ -19,7 +21,7 @@
           v-model="searchQuery"
           class="search-form__input"
           ref="searchQueryField"
-          :placeholder="this.fluent('search_input', 'placeholder')"
+          :placeholder="searchFormLabel"
         />
         <button
           type="button"
@@ -28,9 +30,11 @@
           class="search-form__clear-button"
         >
           <Icon id="x" :width="20" :height="20" />
-          <span class="visually-hidden">{{
+          <span class="visually-hidden">
+            {{
             this.fluent('search_input', 'clear')
-          }}</span>
+            }}
+          </span>
         </button>
         <button type="submit" class="search-form__submit">
           <Icon id="search" :width="18" :height="18" />

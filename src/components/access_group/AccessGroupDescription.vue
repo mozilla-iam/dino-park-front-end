@@ -3,13 +3,19 @@
     <header class="description-container-area description-header">
       <div class="description-container__meta">
         <div class="label-container">
-          <p class="label-container__text">Access Group</p>
+          <p class="label-container__text">
+            {{ fluent('access-group_description') }}
+          </p>
           <Tooltip
-            buttonText="Access group info"
-            alternateButtonText="Close access group info"
+            :buttonText="fluent('access-group_description', 'tooltip-open')"
+            :alternateButtonText="
+              fluent('access-group_description', 'tooltip-close')
+            "
           >
-            You can learn more about Access Groups on
-            <a href="#">Access Groups wiki page</a>
+            {{ fluent('access-group_description', 'tooltip') }}
+            <a href="#">
+              {{ fluent('access-group_description', 'tooltip_link') }}</a
+            >
           </Tooltip>
         </div>
         <EditButton
@@ -38,20 +44,20 @@
         :to="{
           name: 'Access Group Confirm Leave',
         }"
-        >Leave</RouterLink
+        >{{ fluent('access-group_leave') }}</RouterLink
       >
     </footer>
   </article>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import EditButton from '@/components/ui/EditButton.vue';
 import Button from '@/components/ui/Button.vue';
 import Icon from '@/components/ui/Icon.vue';
 import Tooltip from '@/components/ui/Tooltip.vue';
 import LinksMixin from '@/components/_mixins/LinksMixin.vue';
 import { parseMarkdown } from '@/assets/js/component-utils';
-import { mapGetters } from 'vuex';
 
 export default {
   name: 'AccessGroupDescription',

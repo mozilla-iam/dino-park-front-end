@@ -1,13 +1,13 @@
 <template>
   <section class="edit-information-container">
-    <AccessGroupEditPanel title="Group details">
+    <AccessGroupEditPanel :title="fluent('access-group_edit-details')">
       <template v-slot:content>
         <div class="content-area__row">
-          <label class="content-area__label">Group name</label>
+          <label class="content-area__label">{{ fluent('access-group_edit-details', 'name')}}</label>
           <p class="content-area__value">{{ groupName }}</p>
         </div>
         <div class="content-area__row multi-line markdown-outer-container">
-          <label class="content-area__label">Group description</label>
+          <label class="content-area__label">{{ fluent('access-group_edit-details', 'description')}}</label>
           <TextArea
             :rows="5"
             :maxlength="5000"
@@ -15,8 +15,11 @@
             class="content-area__value"
           ></TextArea>
           <p class="content-area__value-description">
-            Use
-            <a href="#">Markdown</a> for bold, italics, lists, and links.
+            {{ fluent('access-group_markdown', 'intro-part-1')}}
+            <a
+              href="#"
+            >{{ fluent('access-group_markdown', 'intro-part-link')}}</a>
+            {{ fluent('access-group_markdown', 'intro-part-2')}}
           </p>
           <AccessGroupMarkdownGuide />
         </div>
@@ -26,44 +29,27 @@
           :disabled="!groupDescriptionDirty"
           class="button--secondary button--action row-primary-action"
           @click="handleDescriptionUpdateClicked"
-          >Update details</Button
-        >
+        >{{ fluent('access-group_edit-details', 'update-details')}}</Button>
       </template>
     </AccessGroupEditPanel>
     <AccessGroupEditPanel
-      title="Group type"
+      :title="fluent('access-group_edit-type')"
       v-if="getFeature('edit-group-type')"
     >
       <template v-slot:content>
         <div class="content-area__row">
-          <div
-            class="radio-control"
-            v-for="(type, idx) in groupTypes"
-            :key="idx"
-          >
+          <div class="radio-control" v-for="(type, idx) in groupTypes" :key="idx">
             <input type="radio" :value="type" v-model="groupTypeData" />
             {{ type }}
           </div>
         </div>
         <div class="content-area__row radio-control__description">
-          <label class="description-label">Reviewed</label>
-          <p class="description-content">
-            When a group is set to "Reviewed", Mozillians are presented with a
-            "Request to Join" button on the group page. Once clicked, Group
-            Curators will receive a pending rquest notification, prompting them
-            to review and accept or deny the membership. Group Curators can
-            invite and/or remove people from the group if needed.
-          </p>
+          <label class="description-label">{{ fluent('access-group_edit-type', 'reviewed-heading')}}</label>
+          <p class="description-content">{{ fluent('access-group_edit-type', 'reviewed-content')}}</p>
         </div>
         <div class="content-area__row radio-control__description">
-          <label class="description-label">Closed</label>
-          <p class="description-content">
-            "Closed" groups provide more tight control over a group. Mozillians
-            cannot request membership, and can only be invited to join the group
-            by Group Curators. Group Curators can, of course, remove people from
-            the group if needed. Avoid using this group type unless you are
-            absolutely sure it is necessary.
-          </p>
+          <label class="description-label">{{ fluent('access-group_edit-type', 'closed-heading')}}</label>
+          <p class="description-content">{{ fluent('access-group_edit-type', 'closed-content')}}</p>
         </div>
       </template>
       <template v-slot:footer>
@@ -71,23 +57,22 @@
           :disabled="!groupTypeDirty"
           class="button--secondary button--action row-primary-action"
           @click="handleTypeUpdateClicked()"
-          >Update type</Button
-        >
+        >{{ fluent('access-group_edit-type', 'update-type')}}</Button>
       </template>
     </AccessGroupEditPanel>
-    <AccessGroupEditPanel title="Membership terms">
+    <AccessGroupEditPanel :title="fluent('access-group_edit-terms')">
       <template v-slot:content>
         <div class="content-area__row">
           <div class="radio-control">
             <input type="checkbox" v-model="groupTermsRequiredData" />
-            New members should accept terms
+            {{ fluent('access-group_edit-terms', 'terms-required')}}
           </div>
         </div>
         <div
           class="content-area__row multi-line markdown-outer-container"
           v-if="groupTermsRequiredData"
         >
-          <label class="content-area__label">Terms and conditions text</label>
+          <label class="content-area__label">{{ fluent('access-group_edit-terms', 'terms-intro')}}</label>
           <TextArea
             :rows="5"
             :maxlength="5000"
@@ -95,8 +80,11 @@
             class="content-area__value"
           ></TextArea>
           <p class="content-area__value-description">
-            Use
-            <a href="#">Markdown</a> for bold, italics, lists, and links.
+            {{ fluent('access-group_markdown', 'intro-part-1')}}
+            <a
+              href="#"
+            >{{ fluent('access-group_markdown', 'intro-part-link')}}</a>
+            {{ fluent('access-group_markdown', 'intro-part-2')}}
           </p>
           <AccessGroupMarkdownGuide />
         </div>
@@ -106,31 +94,32 @@
           :disabled="!groupTermsDirty"
           class="button--secondary button--action row-primary-action"
           @click="handleTermsUpdateClicked()"
-          >Update terms</Button
-        >
+        >{{ fluent('access-group_edit-terms', 'update-terms')}}</Button>
       </template>
     </AccessGroupEditPanel>
-    <AccessGroupEditPanel title="Close group">
+    <AccessGroupEditPanel :title="fluent('access-group_close-group')">
       <template v-slot:content>
         <div class="content-area__row">
           <p class="content-area__description">
-            This action will completely delete the access group and remove all
-            members. To continue, please check the box labelled
-            <span class="focus">I understand</span> and then click the
-            <span class="focus">Close group</span> button.
+            {{fluent('access-group_close-group', 'part-1')}}
+            <span
+              class="focus"
+            >{{fluent('access-group_close-group', 'part-2')}}</span>
+            {{fluent('access-group_close-group', 'part-3')}}
+            <span
+              class="focus"
+            >{{fluent('access-group_close-group', 'part-4')}}</span>
+            {{fluent('access-group_close-group', 'part-5')}}
           </p>
         </div>
         <div class="content-area__row close-group-container">
           <input type="checkbox" v-model="closeGroupConfirmed" />
-          <label class="content-area__label"
-            >I understand this action will delete the entire group</label
-          >
+          <label class="content-area__label">{{fluent('access-group_close-group', 'confirm-text')}}</label>
           <Button
             :disabled="!closeGroupConfirmed"
-            class="button--primary primary-action"
+            class="button--primary primary-actdion"
             @click="handleCloseGroupClicked"
-            >Close group</Button
-          >
+          >{{fluent('access-group_close-group', 'confirm-close')}}</Button>
         </div>
       </template>
     </AccessGroupEditPanel>

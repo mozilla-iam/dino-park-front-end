@@ -1,36 +1,36 @@
 <template>
   <aside class="markdown-guide-container">
-    <h4
-      :class="{ 'markdown-guide__header': true, collapsed }"
-      @click="toggleCollapsed"
-    >
-      <span class="markdown-arrow"></span>Markdown Quick Guide
+    <h4 :class="{ 'markdown-guide__header': true, collapsed }" @click="toggleCollapsed">
+      <span class="markdown-arrow"></span>
+      {{fluent('access-group_markdown')}}
     </h4>
     <div class="markdown-guide__content" v-if="!collapsed">
       <div class="markdown-guide__row">
-        <p class="explanation">**Bold text**</p>
-        <p class="bold-example">Bold text</p>
+        <p class="explanation">**{{fluent('access-group_markdown', 'bold')}}**</p>
+        <p class="bold-example">{{fluent('access-group_markdown', 'bold')}}</p>
       </div>
       <div class="markdown-guide__row">
-        <p class="explanation">__Italicized text__</p>
-        <p class="italicized-example">Italicized text</p>
+        <p class="explanation">__{{fluent('access-group_markdown', 'italic')}}__</p>
+        <p class="italicized-example">{{fluent('access-group_markdown', 'italic')}}</p>
       </div>
       <div class="markdown-guide__row">
-        <p class="explanation">[Web link](https://www.mozilla.org/)</p>
+        <p
+          class="explanation"
+        >[{{fluent('access-group_markdown', 'web-link')}}](https://www.mozilla.org/)</p>
         <p class="link-example">
-          <a href="#">Web link</a>
+          <a href="#">{{fluent('access-group_markdown', 'web-link')}}</a>
         </p>
       </div>
       <div class="markdown-guide__row">
         <p class="explanation list">
-          <span>- First item</span>
-          <span>- Second item</span>
-          <span>- Third item</span>
+          <span>- {{fluent('access-group_markdown', 'list-first')}}</span>
+          <span>- {{fluent('access-group_markdown', 'list-second')}}</span>
+          <span>- {{fluent('access-group_markdown', 'list-third')}}</span>
         </p>
         <ul class="list-example">
-          <li>First item</li>
-          <li>Second item</li>
-          <li>Third item</li>
+          <li>{{fluent('access-group_markdown', 'list-first')}}</li>
+          <li>{{fluent('access-group_markdown', 'list-second')}}</li>
+          <li>{{fluent('access-group_markdown', 'list-third')}}</li>
         </ul>
       </div>
     </div>

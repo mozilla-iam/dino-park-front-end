@@ -1,20 +1,12 @@
-import {
-  Api,
-  GroupsApi,
-  MembersApi,
-  GroupInvitationsApi,
-  SelfInvitationsApi,
-} from './access-groups-api.js';
+import { Api, MembersApi } from './access-groups-api';
 
 const defaultGroupInvitationExpiration = 5;
 
 export default class AccessGroups {
   constructor() {
     this.api = new Api();
-    this.groupsApi = new GroupsApi();
+    // TODO: Remove this once we can confirm the new members work
     this.membersApi = new MembersApi();
-    this.groupInvitationsApi = new GroupInvitationsApi();
-    this.selfInvitationsApi = new SelfInvitationsApi();
   }
 
   /**
@@ -158,16 +150,8 @@ export default class AccessGroups {
 
   async sendInvitations(groupName, members, expiration) {
     try {
-      let results = [];
+      const results = [];
       for (const member of members) {
-        // results.push(
-        //   await this.groupInvitationsApi.post(
-        //     groupName,
-        //     member.uuid,
-        //     defaultGroupInvitationExpiration,
-        //     expiration
-        //   )
-        // );
         results.push(
           await this.api.execute({
             path: 'groupInvitations/post',
@@ -193,7 +177,6 @@ export default class AccessGroups {
 
   async deleteInvitation(groupName, uuid) {
     try {
-      // await this.groupInvitationsApi.delete(groupName, uuid);
       await this.api.execute({
         path: 'groupInvitations/delete',
         endpointArguments: [groupName, uuid],
@@ -207,7 +190,6 @@ export default class AccessGroups {
 
   async getUserInvitations() {
     try {
-      // return await? this.selfInvitationsApi.get();
       return await this.api.execute({
         path: 'selfInvitations/get',
       });
@@ -219,7 +201,6 @@ export default class AccessGroups {
 
   async acceptInvitation(groupName) {
     try {
-      // return await this.selfInvitationsApi.post(groupName);
       return await this.api.execute({
         path: 'selfInvitations/post',
         endpointArguments: [groupName],
@@ -232,7 +213,6 @@ export default class AccessGroups {
 
   async rejectInvitation(groupName) {
     try {
-      // return await this.selfInvitationsApi.delete(groupName);
       return await this.api.execute({
         path: 'selfInvitations/delete',
         endpointArguments: [groupName],
@@ -245,7 +225,6 @@ export default class AccessGroups {
 
   async getAccessGroupMemberInvitations(groupName) {
     try {
-      // return await this.groupInvitationsApi.get(groupName);
       return await this.api.execute({
         path: 'groupInvitations/get',
         endpointArguments: [groupName],
@@ -310,22 +289,30 @@ export default class AccessGroups {
   async updateInviteText(text) {
     return new Promise((res, rej) => {
       res('text updated');
-    }); //this.fetcher.fetch('');
+    });
   }
 
   // TODO: This method is one that will eventually be built but are not supported right now
   async resendInvitation(text) {
     return new Promise((res, rej) => {
       res('invitation resent');
-    }); //this.fetcher.fetch('');
+    });
   }
 
-  static async getUsers(q, scope) {
+  static getAccessGroupUpdateData(data) {
+    return {
+      typ: 'type' in data ? data.type : '',
+      description: 'description' in data ? data.description : '',
+      group_expiration: 'expiration' in data ? data.expiration : 0,
+    };
+  }
+
+  static async getUsers(q, groupName) {
     try {
       const api = new Api();
       let users = await api.execute({
         path: 'users/get',
-        endpointArguments: [q, scope],
+        endpointArguments: [q, groupName],
       });
       // TODO: Replace this with: users = users.filter(({ email }) => email !== null);
       users = users.filter(({ first_name }) => first_name !== null);

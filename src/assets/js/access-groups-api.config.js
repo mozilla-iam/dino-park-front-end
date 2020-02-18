@@ -33,7 +33,7 @@ export default {
     get: true,
     delete: (endpoint, groupName, uuid) => `${endpoint}/${groupName}/${uuid}`,
     renew: [
-      (groupName, uuid) => `${endpoint}/${groupName}/${uuid}/renew`,
+      (endpoint, groupName, uuid) => `${endpoint}/${groupName}/${uuid}/renew`,
       ({ groupExpiration }) => ({ group_expiration: groupExpiration }),
       'post',
     ],
@@ -70,6 +70,7 @@ export default {
   },
   users: {
     endpoint: `${API_PREFIX}users`,
-    get: (endpoint, q, scope) => `${endpoint}?q=${q}&t=${scope}`,
+    get: (endpoint, q, groupName) =>
+      `${endpoint}?q=${q}&g=${groupName}&t=Public`,
   },
 };

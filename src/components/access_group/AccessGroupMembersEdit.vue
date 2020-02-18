@@ -1,21 +1,21 @@
 <template>
   <section class="edit-members-container">
-    <AccessGroupEditPanel title="Members" :full="true">
+    <AccessGroupEditPanel :title="fluent('access-group_members')" :full="true">
       <template v-slot:content>
         <div class="members-list-container">
           <SearchForm
             class="edit-members__search"
             v-on:clear-query="clearSearchHandler"
             :searchFormHandler="searchFormHandler"
-            searchFormLabel="Search Members by Name"
+            :searchFormLabel="fluent('access-group_members', 'edit-members__search')"
           ></SearchForm>
           <table class="edit-members__table">
             <thead class="members-table__header">
               <tr>
-                <th>Member</th>
-                <th>Status</th>
-                <th>Expiry</th>
-                <th>Actions</th>
+                <th>{{fluent('access-group_members', 'members-table__header-1')}}</th>
+                <th>{{fluent('access-group_members', 'members-table__header-2')}}</th>
+                <th>{{fluent('access-group_members', 'members-table__header-3')}}</th>
+                <th>{{fluent('access-group_members', 'members-table__header-4')}}</th>
               </tr>
             </thead>
             <tbody class="members-table__content">
@@ -30,35 +30,24 @@
                 <td class="row-member-display">
                   <AccessGroupMemberListDisplay :member="member" />
                 </td>
-                <td
-                  v-if="member.pendingRemoval"
-                  colspan="3"
-                  class="row-member-leave-confirm"
-                >
-                  <p class="leave-confirm__description">
-                    Confirm removal from the group?
-                  </p>
+                <td v-if="member.pendingRemoval" colspan="3" class="row-member-leave-confirm">
+                  <p
+                    class="leave-confirm__description"
+                  >{{fluent('access-group_members', 'remove-confirm')}}</p>
                   <Button
                     class="primary-button"
                     @click="handleRemoveConfirmClick(member)"
-                    >Remove</Button
-                  >
+                  >{{fluent('access-group_members', 'remove-action')}}</Button>
                   <Button
                     class="secondary-button"
                     @click="handleCancelClick(member)"
-                    >Cancel</Button
-                  >
+                  >{{fluent('access-group_members', 'remove-cancel')}}</Button>
                 </td>
                 <td v-if="!member.pendingRemoval">{{ member.role }}</td>
                 <!-- Turn this into "x days" -->
-                <td v-if="!member.pendingRemoval">
-                  {{ expiry(member.expiration) }}
-                </td>
+                <td v-if="!member.pendingRemoval">{{ expiry(member.expiration) }}</td>
                 <td class="row-actions" v-if="!member.pendingRemoval">
-                  <Button
-                    class="tertiary-action delete"
-                    @click="handleRemoveClick(idx)"
-                  >
+                  <Button class="tertiary-action delete" @click="handleRemoveClick(idx)">
                     <Icon id="x" :width="16" :height="16" />
                   </Button>
                 </td>
@@ -66,16 +55,9 @@
             </tbody>
           </table>
           <div class="edit-members__list">
-            <div
-              class="list__row"
-              v-for="(member, idx) in filterMemberList()"
-              :key="idx"
-            >
+            <div class="list__row" v-for="(member, idx) in filterMemberList()" :key="idx">
               <div class="list__row--upper">
-                <AccessGroupMemberListDisplay
-                  :member="member"
-                  class="upper__primary"
-                />
+                <AccessGroupMemberListDisplay :member="member" class="upper__primary" />
                 <Button
                   class="upper__action delete"
                   @click="handleRemoveClick(idx)"
@@ -88,29 +70,26 @@
                 <p class="lower__primary">{{ member.role }}</p>
                 <p class="lower__secondary">{{ expiry(member.expiration) }}</p>
               </div>
-              <div
-                class="list__row--lower row-member-leave-confirm"
-                v-if="member.pendingRemoval"
-              >
-                <p class="lower__primary">Confirm remove?</p>
+              <div class="list__row--lower row-member-leave-confirm" v-if="member.pendingRemoval">
+                <p
+                  class="lower__primary"
+                >{{fluent('access-group_members', 'remove-confirm-mobile')}}</p>
                 <Button
                   class="lower__action primary-button"
                   @click="handleRemoveConfirmClick(member)"
-                  >Remove</Button
-                >
+                >{{fluent('access-group_members', 'remove-action')}}</Button>
                 <Button
                   class="lower__action secondary-button"
                   @click="handleCancelClick(member)"
-                  >Cancel</Button
-                >
+                >{{fluent('access-group_members', 'remove-cancel')}}</Button>
               </div>
             </div>
           </div>
-          <Button class="edit-members__load-more">Load more members</Button>
+          <Button class="edit-members__load-more">{{fluent('access-group_members', 'load-more')}}</Button>
         </div>
       </template>
     </AccessGroupEditPanel>
-    <AccessGroupEditPanel title="Curators">
+    <AccessGroupEditPanel :title="fluent('access-group_curators')">
       <template v-slot:content>
         <div class="members-list-container">
           <TagSelector
@@ -127,23 +106,22 @@
           :disabled="!curatorsListDirty"
           class="button--secondary button--action row-primary-action"
           @click="handleCuratorsUpdateClicked()"
-          >Update curators</Button
-        >
+        >{{fluent('access-group_curators', 'update-curators')}}</Button>
       </template>
     </AccessGroupEditPanel>
-    <AccessGroupEditPanel title="Expiration">
+    <AccessGroupEditPanel :title="fluent('access-group_expiration')">
       <template v-slot:content>
         <div class="members-expiration-container">
           <div class="content-area__row">
             <div class="radio-control">
-              <input type="checkbox" v-model="membershipCanExpire" />Membership
-              can expire
+              <input type="checkbox" v-model="membershipCanExpire" />
+              {{fluent('access-group_expiration', 'checkbox')}}
             </div>
           </div>
           <div class="content-area__row" v-if="membershipCanExpire">
-            <label class="content-area__label"
-              >Membership will expire after how many days</label
-            >
+            <label
+              class="content-area__label"
+            >{{fluent('access-group_expiration', 'expiration-description')}}</label>
             <NumberScrollerInput v-model="groupExpiration" />
           </div>
         </div>
@@ -153,8 +131,7 @@
           :disabled="!groupExpirationDirty"
           class="button--secondary button--action row-primary-action"
           @click="handleUpdateExpirationClicked"
-          >Update expiration</Button
-        >
+        >{{fluent('access-group_expiration', 'update-expiration')}}</Button>
       </template>
     </AccessGroupEditPanel>
   </section>

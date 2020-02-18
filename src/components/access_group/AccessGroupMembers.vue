@@ -6,14 +6,8 @@
         id="access-group-members-search"
         v-on:clear-query="clearSearchHandler"
         :searchFormHandler="searchFormHandler"
-        searchFormLabel="Search Members"
+        :searchFormLabel="fluent('access-group_members', 'search')"
       ></SearchForm>
-      <Tooltip
-        class="members-container__tooltip"
-        buttonText="Member search info"
-        alternateButtonText="Close member search info"
-        >You can search by name, username and email</Tooltip
-      >
     </header>
     <nav class="members-container__tabs">
       <ul class="tabs-container">
@@ -22,9 +16,7 @@
           v-for="(tab, idx) in tabList"
           :key="idx"
           @click="handleTabClick(tab)"
-        >
-          {{ tab.label }}
-        </li>
+        >{{ tab.label }}</li>
       </ul>
     </nav>
     <template v-if="filteredListDisplay.length > 0">
@@ -35,30 +27,23 @@
           class="list-column-container"
         >
           <ul class="members-container__list-column">
-            <li
-              v-for="(member, idx2) in column"
-              :key="idx2"
-              class="list-item-container"
-            >
+            <li v-for="(member, idx2) in column" :key="idx2" class="list-item-container">
               <AccessGroupMemberItem :member="member" />
             </li>
           </ul>
         </li>
       </ul>
       <ul class="members-container__list">
-        <li
-          v-for="(member, idx) in filteredListDisplay"
-          :key="idx"
-          class="list-item-container"
-        >
+        <li v-for="(member, idx) in filteredListDisplay" :key="idx" class="list-item-container">
           <AccessGroupMemberItem :member="member" />
         </li>
       </ul>
     </template>
     <template v-else>
       <p class="members-container__empty">
-        There are no members in this group.
-        <br />Why not
+        {{fluent('access-group_members', 'empty-line1')}}
+        <br />
+        {{fluent('access-group_members', 'empty-line2')}}
         <RouterLink
           :to="{
             name: 'Edit Access Group',
@@ -66,8 +51,7 @@
               section: 'invitations',
             },
           }"
-          >invite some</RouterLink
-        >?
+        >{{fluent('access-group_members', 'empty-action')}}</RouterLink>?
       </p>
     </template>
   </article>
@@ -151,9 +135,27 @@ export default {
       filteredList: fullMemberList.slice(0),
       memberList: fullMemberList.slice(0),
       tabList: [
-        { key: 'all', label: 'All' },
-        { key: 'curators', label: 'Curators' },
-        { key: 'members', label: 'Members' },
+        {
+          key: 'all',
+          label: this.fluent(
+            'access-group_members',
+            'tabs-container__item-all'
+          ),
+        },
+        {
+          key: 'curators',
+          label: this.fluent(
+            'access-group_members',
+            'tabs-container__item-curators'
+          ),
+        },
+        {
+          key: 'members',
+          label: this.fluent(
+            'access-group_members',
+            'tabs-container__item-members'
+          ),
+        },
       ],
       activeTab: defaultTab,
     };

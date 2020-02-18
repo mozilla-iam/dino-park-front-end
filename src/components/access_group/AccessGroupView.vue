@@ -8,12 +8,12 @@
         ></AccessGroupDescription>
       </section>
       <aside class="primary-area__control">
-        <PanelSection title="Membership Management">
+        <PanelSection :title="fluent('access-group_membership-management')">
           <template v-slot:content>
             <AccessGroupMembershipManagement></AccessGroupMembershipManagement>
           </template>
         </PanelSection>
-        <PanelSection title="Group Details">
+        <PanelSection :title="fluent('access-group_details')">
           <template v-slot:content>
             <AccessGroupDetails></AccessGroupDetails>
           </template>

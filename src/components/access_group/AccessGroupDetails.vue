@@ -1,9 +1,9 @@
 <template>
   <div class="membership-management-container">
     <p class="primary-data-row">{{ membersCountText }}</p>
-    <a class="primary-data-row" v-if="group.terms" :href="tosUrl"
-      >Group Terms</a
-    >
+    <a class="primary-data-row" v-if="group.terms" :href="tosUrl">{{
+      fluent('access-group_details', 'terms')
+    }}</a>
   </div>
 </template>
 
@@ -32,9 +32,12 @@ export default {
     membersCountText() {
       let fullText = '';
       if (this.memberCount === 1) {
-        fullText += '1 member';
+        fullText += `1 ${this.fluent('access-group_details', 'member')}`;
       } else {
-        fullText += `${this.memberCount} members`;
+        fullText += `${this.memberCount} ${this.fluent(
+          'access-group_details',
+          'members'
+        )}`;
       }
       return fullText;
     },
