@@ -1,6 +1,6 @@
 {
   "custom-invitation-text": false,
   "history-tab": false,
-  "edit-group-type": false,
+  "edit-group-type": true,
   "access-groups-toggle": true
 }

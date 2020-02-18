@@ -1,14 +1,12 @@
 <template>
   <header class="top-bar" :style="{ marginBottom: extraPadding + 'px' }">
     <div class="top-bar__bar">
-      <RouterLink
-        :to="{ name: 'Home' }"
-        class="top-bar__link top-bar__link--logo"
-        ><img src="@/assets/images/mozilla.svg" :alt="fluent('mozilla')"
-      /></RouterLink>
+      <RouterLink :to="{ name: 'Home' }" class="top-bar__link top-bar__link--logo">
+        <img src="@/assets/images/mozilla.svg" :alt="fluent('mozilla')" />
+      </RouterLink>
       <SearchForm
         :searchFormHandler="searchFormHandler"
-        searchFormLabel="Search People by Name"
+        :searchFormLabel="fluent('search_input', 'placeholder')"
         class="hide-mobile"
       ></SearchForm>
       <ShowMore
@@ -23,7 +21,7 @@
         <template slot="overflow">
           <SearchForm
             :searchFormHandler="searchFormHandler"
-            searchFormLabel="Search People by Name"
+            :searchFormLabel="fluent('search_input', 'placeholder')"
             class="search-form--small hide-desktop"
             id="mobile-search"
             v-on:close-search-form="closeMobileSearchForm()"
@@ -66,18 +64,12 @@
           </template>
         </ShowMore>
       </template>
-      <template v-else>
-        …
-      </template>
-      <Toast
-        ref="toast"
-        :content="toastContent"
-        @reset-toast="toastContent = ''"
-      ></Toast>
+      <template v-else>…</template>
+      <Toast ref="toast" :content="toastContent" @reset-toast="toastContent = ''"></Toast>
     </div>
     <SearchForm
       class="search-form--small hide-desktop"
-      searchFormLabel="Search People by Name"
+      :searchFormLabel="fluent('search_input', 'placeholder')"
       :searchFormHandler="searchFormHandler"
       v-if="showMobileSearch"
       id="mobile-search"

@@ -1,6 +1,6 @@
 <template>
   <section class="edit-invitations-container">
-    <AccessGroupEditPanel title="Pending Invitations">
+    <AccessGroupEditPanel :title="fluent('access-group_pending-invitations')">
       <template v-slot:content>
         <ul class="pending-invitations-container">
           <li
@@ -10,10 +10,7 @@
           >
             <AccessGroupMemberListDisplay :member="invitation" />
             <div class="pending-invitations-container__actions">
-              <Button
-                class="tertiary-action delete"
-                @click="handleRemoveClicked(invitation)"
-              >
+              <Button class="tertiary-action delete" @click="handleRemoveClicked(invitation)">
                 <Icon id="x" :width="16" :height="16" />
               </Button>
             </div>
@@ -21,7 +18,7 @@
         </ul>
       </template>
     </AccessGroupEditPanel>
-    <AccessGroupEditPanel title="Invite new member">
+    <AccessGroupEditPanel :title="fluent('access-group_invite-member')">
       <template v-slot:content>
         <div class="members-list-container">
           <TagSelector
@@ -36,27 +33,26 @@
           :disabled="!newInvitesDirty"
           class="button--secondary button--action row-primary-action"
           @click="handleAddNewInvitesClicked()"
-          >Invite</Button
-        >
+        >{{fluent('access-group_invite-member', 'invite')}}</Button>
       </template>
     </AccessGroupEditPanel>
     <AccessGroupEditPanel
-      title="Additional email invite text"
+      :title="fluent('access-group_email-invite-text')"
       v-if="getFeature('custom-invitation-text')"
     >
       <template v-slot:content>
         <div class="members-expiration-container">
           <div class="content-area__row">
             <div class="radio-control">
-              <input type="checkbox" v-model="emailInviteTextEnabled" />Custom
-              invitation text
+              <input type="checkbox" v-model="emailInviteTextEnabled" />
+              {{fluent('access-group_email-invite-text', 'checkbox')}}
             </div>
           </div>
         </div>
         <div class="content-area__row multi-line" v-if="emailInviteTextEnabled">
-          <label class="content-area__label"
-            >Please enter any additional text for the invitation email</label
-          >
+          <label
+            class="content-area__label"
+          >{{fluent('access-group_email-invite-text', 'description')}}</label>
           <TextArea
             :rows="5"
             :maxlength="5000"
@@ -70,8 +66,7 @@
           :disabled="!emailInviteTextDirty"
           @click="handleUpdateInviteTextClicked"
           class="button--secondary button--action row-primary-action"
-          >Update invite text</Button
-        >
+        >{{fluent('access-group_email-invite-text', 'update-invite-text')}}</Button>
       </template>
     </AccessGroupEditPanel>
   </section>
@@ -153,7 +148,7 @@ export default {
     },
     updateAutoCompleteList(search) {
       return new Promise((res, rej) => {
-        AccessGroups.getUsers(search, 'Public').then(results => {
+        AccessGroups.getUsers(search, this.groupName).then(results => {
           res(
             results.map(profile => DisplayMemberViewModel.fromUserData(profile))
           );
@@ -182,7 +177,7 @@ export default {
     },
   },
   computed: mapGetters({
-    getScope: 'scopeV2/get',
+    groupName: 'accessGroup/getGroupName',
     groupExpiration: 'accessGroup/getExpiration',
     groupInvitations: 'accessGroup/getInvitations',
   }),

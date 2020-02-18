@@ -31,8 +31,11 @@
       </span>
     </p>
     <p class="secondary-data-row">
-      Memberships that
-      <span class="secondary-data-row__focus">will expire</span> after
+      {{ fluent('access-group_membership-management', 'expire-first') }}
+      <span class="secondary-data-row__focus">{{
+        fluent('access-group_membership-management', 'expire-second')
+      }}</span>
+      {{ fluent('access-group_membership-management', 'expire-third') }}
       <span class="secondary-data-row__focus">{{ expiry }}</span>
     </p>
     <footer class="action-row" v-if="showEdit">
@@ -76,18 +79,30 @@ export default {
     },
     pendingInvitationsText() {
       if (this.invitationCount > 1) {
-        return 'pending invitations';
+        return this.fluent(
+          'access-group_membership-management',
+          'pending-invitations'
+        );
       }
-      return 'pending invitation';
+      return this.fluent(
+        'access-group_membership-management',
+        'pending-invitation'
+      );
     },
     totalPendingRenewals() {
       return !this.renewalCount ? 0 : this.renewalCount;
     },
     pendingRenewalsText() {
       if (this.renewalCount > 1) {
-        return 'pending renewals';
+        return this.fluent(
+          'access-group_membership-management',
+          'pending-renewals'
+        );
       }
-      return 'pending renewal';
+      return this.fluent(
+        'access-group_membership-management',
+        'pending-renewal'
+      );
     },
     expiry() {
       return expiryText(this.expiration);

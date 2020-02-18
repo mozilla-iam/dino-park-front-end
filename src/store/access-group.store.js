@@ -1,6 +1,5 @@
-import { GroupViewModel } from '@/view_models/AccessGroupViewModel.js';
+import { GroupViewModel } from '@/view_models/AccessGroupViewModel';
 import AccessGroups from '@/assets/js/access-groups';
-import { GroupsApi } from '@/assets/js/access-groups-api';
 import {
   accessGroupInvitationsState,
   accessGroupInvitationsActions,
@@ -52,7 +51,7 @@ export default {
     },
     async updateGroup({ dispatch, state }, { field, value }) {
       try {
-        const updateData = GroupsApi.getUpdateObject({
+        const updateData = AccessGroups.getAccessGroupUpdateData({
           ...state.group,
           [field]: value,
         });

@@ -7,11 +7,11 @@
       }"
     >
       <Icon id="chevron-left" :width="17" :height="17" />
-      {{ groupName }} group
+      {{ `${groupName} ${fluent('access-group_nav-back')}`}}
     </RouterLink>
     <section class="edit-container">
       <nav class="edit-container__tabs">
-        <p class="tabs-heading">{{ currentTab.label }}</p>
+        <p class="tabs-heading">{{ fluent(currentTab.fluentLabel) }}</p>
         <ul class="tabs-container">
           <li
             :class="{ 'tab-item': true, active: isActive(tab) }"
@@ -22,7 +22,7 @@
             <span class="item__icon">
               <Icon :id="tab.icon" :width="24" :height="24" />
             </span>
-            <p class="item__label">{{ tab.label }}</p>
+            <p class="item__label">{{ fluent(tab.fluentLabel) }}</p>
           </li>
         </ul>
       </nav>
@@ -45,19 +45,19 @@ import AccessGroupHistoryEdit from '@/components/access_group/AccessGroupHistory
 const tabs = [
   {
     key: 'information',
-    label: 'Information',
+    fluentLabel: 'access-group-information-tab',
     icon: 'info',
     component: 'AccessGroupInformationEdit',
   },
   {
     key: 'members',
-    label: 'Members',
+    fluentLabel: 'access-group-members-tab',
     icon: 'users',
     component: 'AccessGroupMembersEdit',
   },
   {
     key: 'invitations',
-    label: 'Invitations',
+    fluentLabel: 'access-group-invitations-tab',
     icon: 'mail-outline',
     component: 'AccessGroupInvitationsEdit',
   },
