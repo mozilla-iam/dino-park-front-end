@@ -71,6 +71,6 @@ export default {
   users: {
     endpoint: `${API_PREFIX}users`,
     get: (endpoint, q, groupName) =>
-      `${endpoint}?q=${q}&g=${groupName}&t=Public`,
+      `${endpoint}?q=${q}&g=${groupName}`,
   },
 };
