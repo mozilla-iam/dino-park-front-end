@@ -282,7 +282,7 @@ export default {
     },
     updateAutoCompleteList(search) {
       return new Promise((res, rej) => {
-        AccessGroups.getUsers(search, this.getScope).then(results => {
+        AccessGroups.getUsers(search, this.groupName).then(results => {
           res(
             results.map(profile => DisplayMemberViewModel.fromUserData(profile))
           );
@@ -346,6 +346,7 @@ export default {
   },
   computed: mapGetters({
     group: 'accessGroup/getGroup',
+    groupName: 'accessGroup/getGroupName',
     accessGroupCurators: 'accessGroup/getCurators',
     accessGroupExpiration: 'accessGroup/getExpiration',
     allMembers: 'accessGroup/getMembers',
