@@ -2,3 +2,8 @@ name: dino-park-front-end
 namespace: dino-park
 rev: latest
 replicas: 1
+features:
+  custom-invitation-text: false
+  history-tab: false
+  edit-group-type: false
+  access-groups-toggle: false
