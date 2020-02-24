@@ -12,7 +12,7 @@ export default {
   components: { LoadingSpinner },
   computed: {
     ...mapGetters({
-      loading: 'accessGroup/getLoading',
+      loading: 'getLoading',
     }),
     showAccessGroup() {
       return this.accessGroup;

@@ -38,7 +38,7 @@
     </AccessGroupEditPanel>
     <AccessGroupEditPanel
       :title="fluent('access-group_email-invite-text')"
-      v-if="getFeature('custom-invitation-text')"
+      v-if="getFeature('customInvitationText')"
     >
       <template v-slot:content>
         <div class="members-expiration-container">

@@ -18,8 +18,7 @@
             :alternateButtonText="
               fluent('profile_access-groups_ldap', 'tooltip-close')
             "
-            >{{ fluent('profile_access-groups_ldap', 'tooltip') }}</Tooltip
-          >
+          >{{ fluent('profile_access-groups_ldap', 'tooltip') }}</Tooltip>
           <PrivacySetting
             class="privacy-select--large"
             :label="fluent('profile_access-groups_ldap', 'privacy')"
@@ -36,8 +35,7 @@
             )"
             :key="`group-${group}`"
             icon="idcard"
-            >{{ group }}</IconBlock
-          >
+          >{{ group }}</IconBlock>
         </IconBlockList>
         <hr role="presentation" />
       </template>
@@ -50,8 +48,7 @@
           :alternateButtonText="
             fluent('profile_access-groups_mozillians', 'tooltip-close')
           "
-          >{{ fluent('profile_access-groups_mozillians', 'tooltip') }}</Tooltip
-        >
+        >{{ fluent('profile_access-groups_mozillians', 'tooltip') }}</Tooltip>
         <PrivacySetting
           class="privacy-select--large"
           :label="fluent('profile_access-groups_mozillians', 'privacy')"
@@ -61,28 +58,19 @@
           :collapsedShowLabel="true"
         />
       </div>
-      <IconBlockList
-        v-if="mozilliansorgGroups.length > 0"
-        class="icon-block-list--multi-col"
-      >
-        <IconBlock
-          v-for="[group] in mozilliansorgGroups"
-          :key="`group-${group}`"
-          icon="moz"
-        >
+      <IconBlockList v-if="mozilliansorgGroups.length > 0" class="icon-block-list--multi-col">
+        <IconBlock v-for="[group] in mozilliansorgGroups" :key="`group-${group}`" icon="moz">
           <RouterLink
-            v-if="getFeature('access-groups-toggle')"
+            v-if="getFeature('accessGroupsToggle')"
             target="_blank"
             :to="{
               path: `/a/${encodeURIComponent(group)}`,
             }"
-            >{{ group }}</RouterLink
-          >
+          >{{ group }}</RouterLink>
           <ExternalLink
             v-else
             :href="`https://mozillians.org/group/${encodeURIComponent(group)}`"
-            >{{ group }}</ExternalLink
-          >
+          >{{ group }}</ExternalLink>
         </IconBlock>
       </IconBlockList>
       <p v-else>{{ fluent('profile_access-groups_mozillians', 'none') }}</p>
@@ -94,7 +82,7 @@
             name: 'Create Access Group',
           }"
           rel="noreferrer noopener"
-          v-if="getFeature('access-groups-toggle')"
+          v-if="getFeature('accessGroupsToggle')"
         >
           <Icon id="plus" :width="18" :height="18" />Create Access Group
         </RouterLink>
@@ -106,8 +94,9 @@
           rel="noreferrer noopener"
           v-else
         >
-          <Icon id="external" :width="18" :height="18" />{{
-            fluent('profile_access-groups_mozillians', 'edit')
+          <Icon id="external" :width="18" :height="18" />
+          {{
+          fluent('profile_access-groups_mozillians', 'edit')
           }}
         </a>
       </div>

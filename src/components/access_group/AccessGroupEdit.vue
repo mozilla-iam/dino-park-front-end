@@ -90,7 +90,7 @@ export default {
           .classList.remove('scrolling');
       }
     });
-    if (this.getFeature('history-tab')) {
+    if (this.getFeature('historyTab')) {
       tabs.concat({
         key: 'history',
         label: 'History',

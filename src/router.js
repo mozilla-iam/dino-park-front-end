@@ -11,7 +11,6 @@ import AccessGroupEdit from './components/access_group/AccessGroupEdit.vue';
 import AccessGroupView from './components/access_group/AccessGroupView.vue';
 import AccessGroupCreate from './components/access_group/AccessGroupCreate.vue';
 import scrolling from './assets/js/scrolling';
-import Features from '@/features';
 
 Vue.use(Router);
 export const ACCESS_GROUP_CREATE_PAGE = 'Create Access Group';
@@ -23,6 +22,16 @@ export const ACCESS_GROUP_LEAVE_CONFIRMATION_PAGE =
 
 function showUsername(username) {
   return username && !username.startsWith('r--');
+}
+
+async function resolvePromisesSerially(promises, resolvers) {
+  try {
+    for (let i = 0, len = promises.length; i < len; i += 1) {
+      resolvers[i](await promises[i]());
+    }
+  } catch (e) {
+    throw new Error(e.message);
+  }
 }
 
 const ACCESS_GROUP_ROUTES = [
@@ -76,21 +85,78 @@ const ACCESS_GROUP_ROUTES = [
   },
 ];
 
-/**
- * We are using the "meta: {key: ''}" field here to denote class name and page.
- * Since we are using the url to hold the state of the page, this is a field to denote which general page we are on
- */
-// TODO: Add fluent translations the the rest of the pages here
-export function constructRouter(fluent) {
-  // Features.get(featureName);
-  let featureEnabledRoutes = [];
-  if (Features.get('access-groups-toggle')) {
-    featureEnabledRoutes = [...featureEnabledRoutes, ...ACCESS_GROUP_ROUTES];
+export default class DPRouter {
+  /**
+   * We are using the "meta: {key: ''}" field here to denote class name and page.
+   * Since we are using the url to hold the state of the page, this is a field to denote which general page we are on
+   */
+  // TODO: Add fluent translations the the rest of the pages here
+  constructor(features, fluent) {
+    this.fluent = fluent;
+    this.router = new Router({
+      base: process.env.BASE_URL,
+      mode: 'history',
+      routes: this.getRoutes(features),
+      scrollBehavior(to, from) {
+        if (to.hash) {
+          return { selector: to.hash };
+        }
+        if (
+          scrolling.toEdit(to) ||
+          scrolling.fromEditToSelf(to, from, router.app)
+        ) {
+          return { selector: `#nav-${to.query.section}` };
+        }
+        if (scrolling.toProfile(to, from)) {
+          return { x: 0, y: 0 };
+        }
+        return {};
+      },
+    });
   }
-  const router = new Router({
-    base: process.env.BASE_URL,
-    mode: 'history',
-    routes: [
+  get vueRouter() {
+    return this.router;
+  }
+  processRoutes() {
+    this.router.beforeEach((to, from, next) => {
+      const {
+        params: { username },
+        name,
+      } = to;
+      switch (name) {
+        // TODO: Add fluent translations the the rest of the pages here
+        case 'OrgchartHighlight':
+          document.title = showUsername(username)
+            ? this.fluent.get('title_orgchart_highlight', { username })
+            : this.fluent.get('title_orgchart');
+          break;
+        case 'Orgchart':
+          document.title = 'Org chart - Mozilla People Directory';
+          break;
+        case 'Profile':
+          document.title = showUsername(username)
+            ? this.fluent.get('title_profile_username', { username })
+            : this.fluent.get('title_profile');
+          break;
+        case 'Edit Profile':
+          document.title = `Edit - Profile - Mozilla People Directory`;
+          break;
+        case ACCESS_GROUP_TOS_PAGE:
+          document.title =
+            'Access Group Terms of Service - Mozilla People Directory';
+          break;
+        default:
+          document.title = `${name} - Mozilla People Directory`;
+      }
+      next();
+    });
+  }
+  getRoutes(features) {
+    let featureEnabledRoutes = [];
+    if (features['accessGroupsToggle']) {
+      featureEnabledRoutes = [...featureEnabledRoutes, ...ACCESS_GROUP_ROUTES];
+    }
+    return [
       {
         path: '*',
         name: 'Unknown',
@@ -98,13 +164,13 @@ export function constructRouter(fluent) {
         query: {
           message: ':message?',
         },
-        meta: { title: fluent.get('title_unknown'), key: 'unknown' },
+        meta: { title: this.fluent.get('title_unknown'), key: 'unknown' },
       },
       {
         path: '/',
         name: 'Home',
         component: PageHome,
-        meta: { key: 'home', title: fluent.get('title_home') },
+        meta: { key: 'home', title: this.fluent.get('title_home') },
       },
       {
         path: '/p/:username',
@@ -121,7 +187,7 @@ export function constructRouter(fluent) {
           section: ':section?',
         },
         props: true,
-        meta: { key: 'profile', title: fluent.get('title_profile_edit') },
+        meta: { key: 'profile', title: this.fluent.get('title_profile_edit') },
       },
       {
         path: '/o/highlight/:username/',
@@ -135,7 +201,7 @@ export function constructRouter(fluent) {
         name: 'Orgchart',
         component: PageOrgchart,
         props: true,
-        meta: { key: 'orgchart', title: fluent.get('title_orgchart') },
+        meta: { key: 'orgchart', title: this.fluent.get('title_orgchart') },
       },
       {
         path: '/s',
@@ -146,59 +212,72 @@ export function constructRouter(fluent) {
         name: 'Search',
         component: PageSearchResult,
         props: true,
-        meta: { key: 'search', title: fluent.get('title_search') },
+        meta: { key: 'search', title: this.fluent.get('title_search') },
       },
       ...featureEnabledRoutes,
-    ],
-    scrollBehavior(to, from) {
-      if (to.hash) {
-        return { selector: to.hash };
-      }
+    ];
+  }
+  async runFetches(store) {
+    await this.router.beforeEach(async (to, from, next) => {
+      const promises = [];
+      const resolvers = [];
+
+      // Don't try to load data
       if (
-        scrolling.toEdit(to) ||
-        scrolling.fromEditToSelf(to, from, router.app)
+        // cond: if you're on the create page
+        to.name === ACCESS_GROUP_CREATE_PAGE ||
+        // cond: if you're just changing tabs on the edit page
+        (to.name === ACCESS_GROUP_EDIT_PAGE &&
+          from.name === ACCESS_GROUP_EDIT_PAGE &&
+          to.query.section &&
+          from.query.section &&
+          to.query.section !== from.query.section) ||
+        // cond: if you're going from the edit page to the view page
+        (to.name === ACCESS_GROUP_PAGE &&
+          from.name === ACCESS_GROUP_EDIT_PAGE) ||
+        // cond: if you're going from the view page to the edit page
+        (to.name === ACCESS_GROUP_EDIT_PAGE && from.name === ACCESS_GROUP_PAGE)
       ) {
-        return { selector: `#nav-${to.query.section}` };
+        next();
+        return;
       }
-      if (scrolling.toProfile(to, from)) {
-        return { x: 0, y: 0 };
+      // TODO: After using these for testing, replace the old actions with these
+      promises.push(() => store.dispatch('userV2/fetchProfile'));
+      resolvers.push(() => store.dispatch('userV2/fetchInvitations'));
+      if (to.meta.key === 'access-group') {
+        // eslint-disable-next-line
+        promises.push(() =>
+          store.dispatch('accessGroup/fetchGroup', to.params.groupname)
+        );
+        resolvers.push(data => {});
+        if (to.name !== ACCESS_GROUP_TOS_PAGE) {
+          promises.push(() =>
+            store.dispatch('accessGroup/fetchMembers', to.params.groupname)
+          );
+
+          resolvers.push(data => {});
+        }
+        if (
+          to.name === ACCESS_GROUP_TOS_PAGE ||
+          to.name === ACCESS_GROUP_EDIT_PAGE
+        ) {
+          promises.push(() => store.dispatch('accessGroup/fetchTerms'));
+          resolvers.push(data => {});
+        }
+        if (to.name === ACCESS_GROUP_EDIT_PAGE) {
+          promises.push(() => store.dispatch('accessGroup/fetchInvitations'));
+          resolvers.push(data => {});
+        }
       }
-      return {};
-    },
-  });
-
-  router.beforeEach((to, from, next) => {
-    const {
-      params: { username },
-      name,
-    } = to;
-    switch (name) {
-      // TODO: Add fluent translations the the rest of the pages here
-      case 'OrgchartHighlight':
-        document.title = showUsername(username)
-          ? fluent.get('title_orgchart_highlight', { username })
-          : fluent.get('title_orgchart');
-        break;
-      case 'Orgchart':
-        document.title = 'Org chart - Mozilla People Directory';
-        break;
-      case 'Profile':
-        document.title = showUsername(username)
-          ? fluent.get('title_profile_username', { username })
-          : fluent.get('title_profile');
-        break;
-      case 'Edit Profile':
-        document.title = `Edit - Profile - Mozilla People Directory`;
-        break;
-      case ACCESS_GROUP_TOS_PAGE:
-        document.title =
-          'Access Group Terms of Service - Mozilla People Directory';
-        break;
-      default:
-        document.title = `${name} - Mozilla People Directory`;
-    }
-    next();
-  });
-
-  return router;
+      try {
+        await resolvePromisesSerially(promises, resolvers);
+        store.dispatch('completeLoading');
+        next();
+      } catch (e) {
+        store.dispatch('completeLoading');
+        console.error('Caught dispatch error: ', e);
+        next(`/error?message=${e}`);
+      }
+    });
+  }
 }

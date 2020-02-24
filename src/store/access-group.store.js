@@ -40,10 +40,8 @@ export default {
     ...termsActions,
     async fetchGroup({ commit }, groupName) {
       try {
-        commit('setLoading', true);
         const data = await accessGroupsService.getGroup(groupName);
         commit('setGroup', data);
-        commit('setLoading', false);
         return data;
       } catch (e) {
         throw new Error(e.message);
@@ -129,9 +127,6 @@ export default {
         throw new Error(e.message);
       }
     },
-    setLoading(state, loading) {
-      state.loading = loading;
-    },
   },
   getters: {
     ...accessGroupInvitationsGetters,
@@ -146,6 +141,5 @@ export default {
       group && group.expiration ? group.expiration : 0,
     getInvitationConfig: ({ invitationConfig }) =>
       invitationConfig ? invitationConfig.content : null,
-    getLoading: ({ loading }) => loading,
   },
 };

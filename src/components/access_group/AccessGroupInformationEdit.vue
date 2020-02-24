@@ -34,7 +34,7 @@
     </AccessGroupEditPanel>
     <AccessGroupEditPanel
       :title="fluent('access-group_edit-type')"
-      v-if="getFeature('edit-group-type')"
+      v-if="getFeature('editGroupType')"
     >
       <template v-slot:content>
         <div class="content-area__row">

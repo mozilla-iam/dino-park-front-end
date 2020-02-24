@@ -1,34 +1,14 @@
 import Vue from 'vue';
 import VueApollo from 'vue-apollo';
-import App from './App.vue';
-import {
-  ACCESS_GROUP_TOS_PAGE,
-  ACCESS_GROUP_EDIT_PAGE,
-  ACCESS_GROUP_CREATE_PAGE,
-  ACCESS_GROUP_PAGE,
-  constructRouter,
-} from './router';
-import { ACCESS_GROUP_TYPES } from '@/view_models/AccessGroupViewModel.js';
+import { mapGetters } from 'vuex';
 
-import { apolloProvider } from './server';
 import store from '@/store';
-import Features from '@/features.js';
+import { ACCESS_GROUP_TYPES } from '@/view_models/AccessGroupViewModel';
+import App from './App.vue';
+import DPRouter from './router';
 import Fluent from './assets/js/fluent';
-
-async function resolvePromisesSerially(promises, resolvers) {
-  try {
-    for (let i = 0, len = promises.length; i < len; i += 1) {
-      resolvers[i](await promises[i]());
-    }
-  } catch (e) {
-    throw new Error(e.message);
-  }
-}
-
-function getFeature(featureName) {
-  return Features.get(featureName);
-}
-
+import { apolloProvider } from './server';
+let router;
 // polyfill/fallback adapted from MDN (https://developer.mozilla.org/en-US/docs/Web/API/Background_Tasks_API#Falling_back_to_setTimeout)
 window.requestIdleCallback =
   window.requestIdleCallback ||
@@ -47,75 +27,26 @@ window.requestIdleCallback =
 
 Vue.use(VueApollo);
 
+store.dispatch('setLoading');
 // eslint-disable-next-line
-Promise.all([store.dispatch('fetchUser'), Fluent.init()]).then(([, fluent]) => {
-  const router = constructRouter(fluent);
-  if (getFeature('access-groups-toggle')) {
-    router.beforeEach((to, from, next) => {
-      const promises = [];
-      const resolvers = [];
 
-      // Don't try to load data
-      if (
-        // cond: if you're on the create page
-        to.name === ACCESS_GROUP_CREATE_PAGE ||
-        // cond: if you're just changing tabs on the edit page
-        (to.name === ACCESS_GROUP_EDIT_PAGE &&
-          from.name === ACCESS_GROUP_EDIT_PAGE &&
-          to.query.section &&
-          from.query.section &&
-          to.query.section !== from.query.section) ||
-        // cond: if you're going from the edit page to the view page
-        (to.name === ACCESS_GROUP_PAGE &&
-          from.name === ACCESS_GROUP_EDIT_PAGE) ||
-        // cond: if you're going from the view page to the edit page
-        (to.name === ACCESS_GROUP_EDIT_PAGE && from.name === ACCESS_GROUP_PAGE)
-      ) {
-        next();
-        return;
-      }
-      // TODO: After using these for testing, replace the old actions with these
-      promises.push(() => store.dispatch('userV2/fetchProfile'));
-      resolvers.push(() => store.dispatch('userV2/fetchInvitations'));
-      if (to.meta.key === 'access-group') {
-        // eslint-disable-next-line
-        promises.push(() =>
-          store.dispatch('accessGroup/fetchGroup', to.params.groupname)
-        );
-        resolvers.push(data => {});
-        if (to.name !== ACCESS_GROUP_TOS_PAGE) {
-          promises.push(() =>
-            store.dispatch('accessGroup/fetchMembers', to.params.groupname)
-          );
-
-          resolvers.push(data => {});
-        }
-        if (
-          to.name === ACCESS_GROUP_TOS_PAGE ||
-          to.name === ACCESS_GROUP_EDIT_PAGE
-        ) {
-          promises.push(() => store.dispatch('accessGroup/fetchTerms'));
-          resolvers.push(data => {});
-        }
-        if (to.name === ACCESS_GROUP_EDIT_PAGE) {
-          promises.push(() => store.dispatch('accessGroup/fetchInvitations'));
-          resolvers.push(data => {});
-        }
-      }
-
-      resolvePromisesSerially(promises, resolvers)
-        .then(() => {
-          next();
-        })
-        .catch(e => {
-          console.error('Caught dispatch error: ', e);
-          next(`/error?message=${e}`);
-        });
-    });
+Promise.all([
+  store.dispatch('features/fetch'),
+  store.dispatch('fetchUser'),
+  Fluent.init(),
+]).then(async ([features, , fluent]) => {
+  let router = new DPRouter(features, fluent);
+  if (features.accessGroupsToggle) {
+    await router.runFetches(store);
+  } else {
+    store.dispatch('completeLoading');
   }
 
   Vue.mixin({
     computed: {
+      ...mapGetters({
+        getFeature: 'features/get',
+      }),
       scope() {
         return this.$store.state.scope;
       },
@@ -124,14 +55,13 @@ Promise.all([store.dispatch('fetchUser'), Fluent.init()]).then(([, fluent]) => {
       },
     },
     methods: {
-      getFeature,
       fluent(...args) {
         return fluent.get(...args);
       },
     },
   });
   new Vue({
-    router,
+    router: router.vueRouter,
     apolloProvider,
     render: h => h(App),
     store,

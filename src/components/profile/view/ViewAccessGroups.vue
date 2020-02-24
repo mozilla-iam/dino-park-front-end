@@ -7,8 +7,7 @@
           v-for="[group] in Object.entries(accessInformation.ldap.values)"
           :key="`group-${group}`"
           icon="idcard"
-          >{{ group }}</IconBlock
-        >
+        >{{ group }}</IconBlock>
       </IconBlockList>
     </template>
     <template v-if="accessInformation.mozilliansorg.values">
@@ -22,25 +21,23 @@
           icon="moz"
         >
           <RouterLink
-            v-if="getFeature('access-groups-toggle')"
+            v-if="getFeature('accessGroupsToggle')"
             :to="{
               name: 'Access Group',
               params: {
                 groupname: group,
               },
             }"
-            >{{ group }}</RouterLink
-          >
+          >{{ group }}</RouterLink>
           <ExternalLink
             v-else
             :href="`https://mozillians.org/group/${encodeURIComponent(group)}`"
-            >{{ group }}</ExternalLink
-          >
+          >{{ group }}</ExternalLink>
         </IconBlock>
       </IconBlockList>
-      <p class="view-access-groups__mozillians-footer">
-        {{ fluent('profile_access-groups_mozillians', 'footer') }}
-      </p>
+      <p
+        class="view-access-groups__mozillians-footer"
+      >{{ fluent('profile_access-groups_mozillians', 'footer') }}</p>
     </template>
   </div>
 </template>

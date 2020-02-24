@@ -3,29 +3,25 @@ import Vue from 'vue';
 import { DISPLAY_PROFILE } from '@/queries/profile';
 import Scope from '@/assets/js/scope';
 import { client } from '@/server';
-import Features from '@/features';
 import user from './user.store';
 import scope from './scope.store';
 import accessGroup from './access-group.store';
+import features from './features.store';
 
-let modules = {
-  userV2: user,
-  scopeV2: scope,
-};
-if (Features.get('access-groups-toggle')) {
-  modules = {
-    ...modules,
-    accessGroup,
-  };
-}
 Vue.use(Vuex);
 export default new Vuex.Store({
-  modules,
+  modules: {
+    userV2: user,
+    scopeV2: scope,
+    features,
+    accessGroup,
+  },
   state: {
     user: null,
     scope: new Scope(),
     org: null,
     error: false,
+    loading: false,
   },
   actions: {
     // TODO: Create error handling for this action
@@ -36,15 +32,28 @@ export default new Vuex.Store({
       });
       commit('setUser', data.profile);
     },
+    setLoading({ commit }) {
+      commit('setLoading', true);
+    },
+    completeLoading({ commit }) {
+      commit('setLoading', false);
+    },
   },
   mutations: {
-    setUser(state, user) {
-      state.user = user;
-      state.scope.update(user);
+    setUser(state, userContent) {
+      state.user = userContent;
+      state.scope.update(userContent);
     },
     setOrg(state, org) {
       state.org = org;
     },
+    setLoading(state, loadingState) {
+      state.loading = loadingState;
+    },
   },
-  getters: {},
+  getters: {
+    getLoading(state) {
+      return state.loading;
+    },
+  },
 });
