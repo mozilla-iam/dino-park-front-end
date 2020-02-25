@@ -246,6 +246,9 @@ export default {
   flex-direction: column;
   text-align: left;
   align-items: flex-start;
+}
+
+.group-create .content-area__row.multi-line {
   height: 27em;
 }
 
