@@ -165,6 +165,12 @@ export default {
 </script>
 
 <style>
+.group-create .edit-panel-container {
+  padding: 2em 0 1em;
+  margin-left: 2em;
+  margin-right: 2em;
+  width: 65%;
+}
 .group-create .group-create__back-action {
   background-color: var(--gray-30);
   color: var(--black);
@@ -240,6 +246,7 @@ export default {
   flex-direction: column;
   text-align: left;
   align-items: flex-start;
+  height: 27em;
 }
 
 .content-area .content-area__label {
@@ -258,15 +265,17 @@ export default {
 .content-area .content-area__row.multi-line .content-area__value {
   width: 100%;
   margin-top: 1em;
+  flex: 10;
 }
 
 .content-area .content-area__value-description {
   color: var(--gray-40);
+  flex: 10;
 }
 
 .group-create .group-create__footer {
   display: flex;
-  width: 70%;
+  width: 65%;
   flex-direction: row-reverse;
   border-top: 1px solid var(--gray-40);
   margin: 1em 0 2em 2em;

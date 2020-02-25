@@ -7,15 +7,33 @@
             class="edit-members__search"
             v-on:clear-query="clearSearchHandler"
             :searchFormHandler="searchFormHandler"
-            :searchFormLabel="fluent('access-group_members', 'edit-members__search')"
+            :searchFormLabel="
+              fluent('access-group_members', 'edit-members__search')
+            "
           ></SearchForm>
           <table class="edit-members__table">
             <thead class="members-table__header">
               <tr>
-                <th>{{fluent('access-group_members', 'members-table__header-1')}}</th>
-                <th>{{fluent('access-group_members', 'members-table__header-2')}}</th>
-                <th>{{fluent('access-group_members', 'members-table__header-3')}}</th>
-                <th>{{fluent('access-group_members', 'members-table__header-4')}}</th>
+                <th>
+                  {{
+                    fluent('access-group_members', 'members-table__header-1')
+                  }}
+                </th>
+                <th>
+                  {{
+                    fluent('access-group_members', 'members-table__header-2')
+                  }}
+                </th>
+                <th>
+                  {{
+                    fluent('access-group_members', 'members-table__header-3')
+                  }}
+                </th>
+                <th>
+                  {{
+                    fluent('access-group_members', 'members-table__header-4')
+                  }}
+                </th>
               </tr>
             </thead>
             <tbody class="members-table__content">
@@ -30,24 +48,39 @@
                 <td class="row-member-display">
                   <AccessGroupMemberListDisplay :member="member" />
                 </td>
-                <td v-if="member.pendingRemoval" colspan="3" class="row-member-leave-confirm">
-                  <p
-                    class="leave-confirm__description"
-                  >{{fluent('access-group_members', 'remove-confirm')}}</p>
+                <td
+                  v-if="member.pendingRemoval"
+                  colspan="3"
+                  class="row-member-leave-confirm"
+                >
+                  <p class="leave-confirm__description">
+                    {{ fluent('access-group_members', 'remove-confirm') }}
+                  </p>
                   <Button
                     class="primary-button"
                     @click="handleRemoveConfirmClick(member)"
-                  >{{fluent('access-group_members', 'remove-action')}}</Button>
+                    >{{
+                      fluent('access-group_members', 'remove-action')
+                    }}</Button
+                  >
                   <Button
                     class="secondary-button"
                     @click="handleCancelClick(member)"
-                  >{{fluent('access-group_members', 'remove-cancel')}}</Button>
+                    >{{
+                      fluent('access-group_members', 'remove-cancel')
+                    }}</Button
+                  >
                 </td>
                 <td v-if="!member.pendingRemoval">{{ member.role }}</td>
                 <!-- Turn this into "x days" -->
-                <td v-if="!member.pendingRemoval">{{ expiry(member.expiration) }}</td>
+                <td v-if="!member.pendingRemoval">
+                  {{ expiry(member.expiration) }}
+                </td>
                 <td class="row-actions" v-if="!member.pendingRemoval">
-                  <Button class="tertiary-action delete" @click="handleRemoveClick(idx)">
+                  <Button
+                    class="tertiary-action delete"
+                    @click="handleRemoveClick(idx)"
+                  >
                     <Icon id="x" :width="16" :height="16" />
                   </Button>
                 </td>
@@ -55,9 +88,16 @@
             </tbody>
           </table>
           <div class="edit-members__list">
-            <div class="list__row" v-for="(member, idx) in filterMemberList()" :key="idx">
+            <div
+              class="list__row"
+              v-for="(member, idx) in filterMemberList()"
+              :key="idx"
+            >
               <div class="list__row--upper">
-                <AccessGroupMemberListDisplay :member="member" class="upper__primary" />
+                <AccessGroupMemberListDisplay
+                  :member="member"
+                  class="upper__primary"
+                />
                 <Button
                   class="upper__action delete"
                   @click="handleRemoveClick(idx)"
@@ -70,22 +110,29 @@
                 <p class="lower__primary">{{ member.role }}</p>
                 <p class="lower__secondary">{{ expiry(member.expiration) }}</p>
               </div>
-              <div class="list__row--lower row-member-leave-confirm" v-if="member.pendingRemoval">
-                <p
-                  class="lower__primary"
-                >{{fluent('access-group_members', 'remove-confirm-mobile')}}</p>
+              <div
+                class="list__row--lower row-member-leave-confirm"
+                v-if="member.pendingRemoval"
+              >
+                <p class="lower__primary">
+                  {{ fluent('access-group_members', 'remove-confirm-mobile') }}
+                </p>
                 <Button
                   class="lower__action primary-button"
                   @click="handleRemoveConfirmClick(member)"
-                >{{fluent('access-group_members', 'remove-action')}}</Button>
+                  >{{ fluent('access-group_members', 'remove-action') }}</Button
+                >
                 <Button
                   class="lower__action secondary-button"
                   @click="handleCancelClick(member)"
-                >{{fluent('access-group_members', 'remove-cancel')}}</Button>
+                  >{{ fluent('access-group_members', 'remove-cancel') }}</Button
+                >
               </div>
             </div>
           </div>
-          <Button class="edit-members__load-more">{{fluent('access-group_members', 'load-more')}}</Button>
+          <Button class="edit-members__load-more">{{
+            fluent('access-group_members', 'load-more')
+          }}</Button>
         </div>
       </template>
     </AccessGroupEditPanel>
@@ -106,7 +153,8 @@
           :disabled="!curatorsListDirty"
           class="button--secondary button--action row-primary-action"
           @click="handleCuratorsUpdateClicked()"
-        >{{fluent('access-group_curators', 'update-curators')}}</Button>
+          >{{ fluent('access-group_curators', 'update-curators') }}</Button
+        >
       </template>
     </AccessGroupEditPanel>
     <AccessGroupEditPanel :title="fluent('access-group_expiration')">
@@ -115,13 +163,13 @@
           <div class="content-area__row">
             <div class="radio-control">
               <input type="checkbox" v-model="membershipCanExpire" />
-              {{fluent('access-group_expiration', 'checkbox')}}
+              {{ fluent('access-group_expiration', 'checkbox') }}
             </div>
           </div>
           <div class="content-area__row" v-if="membershipCanExpire">
-            <label
-              class="content-area__label"
-            >{{fluent('access-group_expiration', 'expiration-description')}}</label>
+            <label class="content-area__label">{{
+              fluent('access-group_expiration', 'expiration-description')
+            }}</label>
             <NumberScrollerInput v-model="groupExpiration" />
           </div>
         </div>
@@ -131,7 +179,8 @@
           :disabled="!groupExpirationDirty"
           class="button--secondary button--action row-primary-action"
           @click="handleUpdateExpirationClicked"
-        >{{fluent('access-group_expiration', 'update-expiration')}}</Button>
+          >{{ fluent('access-group_expiration', 'update-expiration') }}</Button
+        >
       </template>
     </AccessGroupEditPanel>
   </section>
@@ -235,6 +284,8 @@ export default {
       removeCurators: 'accessGroup/removeCurators',
       updateGroup: 'accessGroup/updateGroup',
       renewMember: 'accessGroup/renewMember',
+      setLoading: 'setLoading',
+      completeLoading: 'completeLoading',
     }),
     refreshMembersList() {
       this.allMembersList = this.allMembers.map(member => {
@@ -308,6 +359,7 @@ export default {
           })
         );
       }
+      this.setLoading();
       Promise.all(promises)
         .then(results => {
           this.$root.$emit('toast', {
@@ -316,9 +368,11 @@ export default {
           this.addedCurators = [];
           this.removedCurators = [];
           this.curatorsListDirty = false;
+          this.completeLoading();
         })
         .catch(e => {
           console.error(e);
+          this.completeLoading();
         });
     },
     handleUpdateExpirationClicked() {
