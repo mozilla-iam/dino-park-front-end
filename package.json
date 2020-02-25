@@ -49,7 +49,8 @@
     "svg-sprite-loader": "^4.1.6",
     "vue-axe": "^1.0.7",
     "vue-template-compiler": "^2.6.10",
-    "vue-test-utils-helpers": "git+https://github.com/AmpleOrganics/vue-test-utils-helpers.git#1.0.3"
+    "vue-test-utils-helpers": "git+https://github.com/AmpleOrganics/vue-test-utils-helpers.git#1.0.3",
+    "yaml": "^1.7.2"
   },
   "husky": {
     "hooks": {
