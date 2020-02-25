@@ -93,7 +93,7 @@ export default class DPRouter {
   // TODO: Add fluent translations the the rest of the pages here
   constructor(features, fluent) {
     this.fluent = fluent;
-    this.router = new Router({
+    const initRouter = new Router({
       base: process.env.BASE_URL,
       mode: 'history',
       routes: this.getRoutes(features),
@@ -103,7 +103,7 @@ export default class DPRouter {
         }
         if (
           scrolling.toEdit(to) ||
-          scrolling.fromEditToSelf(to, from, router.app)
+          scrolling.fromEditToSelf(to, from, initRouter)
         ) {
           return { selector: `#nav-${to.query.section}` };
         }
@@ -113,6 +113,7 @@ export default class DPRouter {
         return {};
       },
     });
+    this.router = initRouter;
   }
   get vueRouter() {
     return this.router;
