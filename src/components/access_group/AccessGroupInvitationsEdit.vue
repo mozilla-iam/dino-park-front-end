@@ -1,6 +1,12 @@
 <template>
   <section class="edit-invitations-container">
-    <AccessGroupEditPanel :title="fluent('access-group_pending-invitations')">
+    <AccessGroupEditPanel
+      :title="
+        `${fluent(
+          'access-group_pending-invitations'
+        )} (${totalInvitationsAndRequests})`
+      "
+    >
       <template v-slot:content>
         <ul class="pending-invitations-container">
           <li
@@ -10,7 +16,10 @@
           >
             <AccessGroupMemberListDisplay :member="invitation" />
             <div class="pending-invitations-container__actions">
-              <Button class="tertiary-action delete" @click="handleRemoveClicked(invitation)">
+              <Button
+                class="tertiary-action delete"
+                @click="handleRemoveClicked(invitation)"
+              >
                 <Icon id="x" :width="16" :height="16" />
               </Button>
             </div>
@@ -33,7 +42,8 @@
           :disabled="!newInvitesDirty"
           class="button--secondary button--action row-primary-action"
           @click="handleAddNewInvitesClicked()"
-        >{{fluent('access-group_invite-member', 'invite')}}</Button>
+          >{{ fluent('access-group_invite-member', 'invite') }}</Button
+        >
       </template>
     </AccessGroupEditPanel>
     <AccessGroupEditPanel
@@ -45,14 +55,14 @@
           <div class="content-area__row">
             <div class="radio-control">
               <input type="checkbox" v-model="emailInviteTextEnabled" />
-              {{fluent('access-group_email-invite-text', 'checkbox')}}
+              {{ fluent('access-group_email-invite-text', 'checkbox') }}
             </div>
           </div>
         </div>
         <div class="content-area__row multi-line" v-if="emailInviteTextEnabled">
-          <label
-            class="content-area__label"
-          >{{fluent('access-group_email-invite-text', 'description')}}</label>
+          <label class="content-area__label">{{
+            fluent('access-group_email-invite-text', 'description')
+          }}</label>
           <TextArea
             :rows="5"
             :maxlength="5000"
@@ -66,7 +76,10 @@
           :disabled="!emailInviteTextDirty"
           @click="handleUpdateInviteTextClicked"
           class="button--secondary button--action row-primary-action"
-        >{{fluent('access-group_email-invite-text', 'update-invite-text')}}</Button>
+          >{{
+            fluent('access-group_email-invite-text', 'update-invite-text')
+          }}</Button
+        >
       </template>
     </AccessGroupEditPanel>
   </section>
@@ -176,11 +189,17 @@ export default {
       });
     },
   },
-  computed: mapGetters({
-    groupName: 'accessGroup/getGroupName',
-    groupExpiration: 'accessGroup/getExpiration',
-    groupInvitations: 'accessGroup/getInvitations',
-  }),
+  computed: {
+    ...mapGetters({
+      groupName: 'accessGroup/getGroupName',
+      groupExpiration: 'accessGroup/getExpiration',
+      groupInvitations: 'accessGroup/getInvitations',
+    }),
+    // TODO: Eventually include request numbers in this number
+    totalInvitationsAndRequests() {
+      return this.groupInvitations.length;
+    },
+  },
 };
 </script>
 

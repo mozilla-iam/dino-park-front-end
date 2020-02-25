@@ -14,7 +14,7 @@
           }}</label>
           <TextArea
             :rows="5"
-            :maxlength="5000"
+            :maxlength="450"
             v-model="groupDescriptionData"
             class="content-area__value"
           ></TextArea>

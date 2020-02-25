@@ -182,9 +182,6 @@ export default {
 @media (min-width: 57.5em) {
   .edit-container .edit-container__tabs {
     margin: 0;
-    position: relative;
-    top: 0;
-    left: 0;
   }
 }
 

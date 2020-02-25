@@ -1,6 +1,9 @@
 <template>
   <section class="edit-members-container">
-    <AccessGroupEditPanel :title="fluent('access-group_members')" :full="true">
+    <AccessGroupEditPanel
+      :title="`${fluent('access-group_members')} (${allMembers.length})`"
+      :full="true"
+    >
       <template v-slot:content>
         <div class="members-list-container">
           <SearchForm
