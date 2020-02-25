@@ -17,7 +17,9 @@
           {{ fluent('error_404', 'description') }}
         </p>
         <!-- TODO: Add this error message to fluent -->
-        <p v-if="errorMessage">Error message: {{ errorMessage }}</p>
+        <p v-if="errorMessage">
+          {{ `${fluent('access-group_error')} ${errorMessage}` }}
+        </p>
         <RouterLink :to="{ name: 'Home' }" class="button">{{
           fluent('error_404', 'link')
         }}</RouterLink>

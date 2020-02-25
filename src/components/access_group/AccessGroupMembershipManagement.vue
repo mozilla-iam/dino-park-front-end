@@ -49,7 +49,9 @@
           },
         }"
       >
-        <Icon id="plus" :width="16" :height="16" />Add Members
+        <Icon id="plus" :width="16" :height="16" />{{
+          fluent('access-group_membership-management', 'add-members')
+        }}
       </RouterLink>
     </footer>
   </div>

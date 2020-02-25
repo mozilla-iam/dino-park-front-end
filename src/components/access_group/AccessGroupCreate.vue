@@ -1,14 +1,21 @@
 <template>
   <main class="group-create">
     <Button class="button group-create__back-action" @click="handleBackClicked">
-      <Icon id="chevron-left" :width="17" :height="17" />Back
+      <Icon id="chevron-left" :width="17" :height="17" />{{
+        fluent('access-group_create', 'group-create__back-action')
+      }}
     </Button>
     <section class="primary-area">
-      <h1>Create Access Group</h1>
-      <AccessGroupEditPanel class="details-container" title="Group details">
+      <h1>{{ fluent('access-group_create') }}</h1>
+      <AccessGroupEditPanel
+        class="details-container"
+        :title="fluent('access-group_details')"
+      >
         <template v-slot:content>
           <div class="content-area__row">
-            <label class="content-area__label">Group name</label>
+            <label class="content-area__label">{{
+              fluent('access-group_details', 'name')
+            }}</label>
             <TextInput
               type="text"
               v-model="groupName"
@@ -16,8 +23,10 @@
               class="content-area__value"
             />
           </div>
-          <div class="content-area__row multi-line">
-            <label class="content-area__label">Group description</label>
+          <div class="content-area__row multi-line markdown-outer-container">
+            <label class="content-area__label">{{
+              fluent('access-group_details', 'description')
+            }}</label>
             <TextArea
               :rows="5"
               :maxlength="5000"
@@ -25,13 +34,20 @@
               class="content-area__value"
             ></TextArea>
             <p class="content-area__value-description">
-              Use
-              <a href="#">Markdown</a> for bold, italics, lists, and links.
+              {{ fluent('access-group_markdown', 'intro-part-1') }}
+              <a href="#">{{
+                fluent('access-group_markdown', 'intro-part-link')
+              }}</a>
+              {{ fluent('access-group_markdown', 'intro-part-2') }}
             </p>
+            <AccessGroupMarkdownGuide />
           </div>
         </template>
       </AccessGroupEditPanel>
-      <!-- <AccessGroupEditPanel title="Group type">
+      <AccessGroupEditPanel
+        :title="fluent('access-group_type')"
+        v-if="getFeature('editGroupType')"
+      >
         <template v-slot:content>
           <div class="content-area__row">
             <div
@@ -44,38 +60,34 @@
             </div>
           </div>
           <div class="content-area__row radio-control__description">
-            <label class="description-label">Reviewed</label>
+            <label class="description-label">{{
+              fluent('access-group_type', 'reviewed-heading')
+            }}</label>
             <p class="description-content">
-              When a group is set to "Reviewed", Mozillians are presented with a
-              "Request to Join" button on the group page. Once clicked, Group
-              Curators will receive a pending rquest notification, prompting
-              them to review and accept or deny the membership. Group Curators
-              can invite and/or remove people from the group if needed.
+              {{ fluent('access-group_type', 'reviewed-content') }}
             </p>
           </div>
           <div class="content-area__row radio-control__description">
-            <label class="description-label">Closed</label>
+            <label class="description-label">{{
+              fluent('access-group_type', 'closed-heading')
+            }}</label>
             <p class="description-content">
-              "Closed" groups provide more tight control over a group.
-              Mozillians cannot request membership, and can only be invited to
-              join the group by Group Curators. Group Curators can, of course,
-              remove people from the group if needed. Avoid using this group
-              type unless you are absolutely sure it is necessary.
+              {{ fluent('access-group_type', 'closed-content') }}
             </p>
           </div>
         </template>
-      </AccessGroupEditPanel>-->
+      </AccessGroupEditPanel>
       <footer class="group-create__footer">
         <Button
           class="button--primary"
           @click="handleCreateClicked"
           :disabled="!createEnabled"
-          >Create Access Group</Button
+          >{{ fluent('access-group_create', 'create-action') }}</Button
         >
         <Button
           class="button button--secondary button--action"
           @click="handleBackClicked"
-          >Leave</Button
+          >{{ fluent('access-group_create', 'leave-action') }}</Button
         >
       </footer>
     </section>
@@ -89,6 +101,7 @@ import TextArea from '@/components/ui/TextArea.vue';
 import Button from '@/components/ui/Button.vue';
 import Icon from '@/components/ui/Icon.vue';
 import AccessGroupEditPanel from '@/components/access_group/AccessGroupEditPanel.vue';
+import AccessGroupMarkdownGuide from '@/components/access_group/AccessGroupMarkdownGuide.vue';
 import { ACCESS_GROUP_PAGE } from '@/router.js';
 import {
   TYPE_INDEX,
@@ -97,7 +110,14 @@ import {
 
 export default {
   name: 'AccessGroupInformationEdit',
-  components: { TextInput, TextArea, Button, Icon, AccessGroupEditPanel },
+  components: {
+    TextInput,
+    TextArea,
+    Button,
+    Icon,
+    AccessGroupEditPanel,
+    AccessGroupMarkdownGuide,
+  },
   props: [],
   mounted() {},
   data() {
@@ -164,6 +184,19 @@ export default {
 }
 .primary-area .details-container {
   margin-top: 0;
+}
+
+.content-area__row.markdown-outer-container .markdown-guide-container {
+  width: 100%;
+}
+
+@media (min-width: 57.5em) {
+  .content-area__row.markdown-outer-container .markdown-guide-container {
+    position: absolute;
+    left: calc(100% + 1em);
+    top: 2.9em;
+    width: 20.5em;
+  }
 }
 
 .content-area__row {

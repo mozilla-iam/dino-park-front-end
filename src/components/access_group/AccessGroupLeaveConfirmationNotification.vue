@@ -10,22 +10,21 @@
       class="leave-confirmation-notification__description"
       v-if="canLeaveGroup"
     >
-      Are you sure you wish to leave the {{ groupName }} group?
+      {{ confirmLeaveText }}
     </p>
     <p class="leave-confirmation-notification__description" v-else>
-      In order to leave {{ groupName }} you must add another curator, or delete
-      this group.
+      {{ leaveAlertText }}
     </p>
     <div class="leave-confirmation-notification__actions" v-if="canLeaveGroup">
-      <Button class="primary-action" v-on:click="handleLeaveClick()"
-        >Leave</Button
-      >
+      <Button class="primary-action" v-on:click="handleLeaveClick()">{{
+        fluent('access-group_notifications', 'leave-action')
+      }}</Button>
       <RouterLink
         class="button secondary-action button--secondary button--action"
         :to="{
           name: 'Access Group',
         }"
-        >Cancel</RouterLink
+        >{{ fluent('access-group_notifications', 'cancel-action') }}</RouterLink
       >
     </div>
   </article>
@@ -62,6 +61,18 @@ export default {
         return false;
       }
       return true;
+    },
+    confirmLeaveText() {
+      return this.fluent('access-group_notifications', 'leave-confirm').replace(
+        '[]',
+        this.groupName
+      );
+    },
+    leaveAlertText() {
+      return this.fluent('access-group_notifications', 'leave-alert').replace(
+        '[]',
+        this.groupName
+      );
     },
   },
   methods: {

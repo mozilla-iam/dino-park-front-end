@@ -15,33 +15,37 @@
         class="invitation-notification__description"
         v-if="isInvitationInitial(notification)"
       >
-        You've been invited to join {{ notification.group_name }} group
+        {{ getInvitationText(notification) }}
       </p>
       <p
         class="invitation-notification__description"
         v-else-if="isInvitationPendingRejection(notification)"
       >
-        Are you sure you wish to reject this invitation?
+        {{ fluent('access-group_notifications', 'rejection') }}
       </p>
       <div class="invitation-notification__actions">
         <template v-if="isInvitationInitial(notification)">
-          <Button class="primary-action" v-on:click="handleAcceptClick(idx)"
-            >Continue</Button
-          >
+          <Button class="primary-action" v-on:click="handleAcceptClick(idx)">{{
+            fluent('access-group_notifications', 'continue-action')
+          }}</Button>
           <Button
             class="secondary-action button--secondary button--action"
             v-on:click="handleRejectClick(idx)"
-            >Reject</Button
+            >{{ fluent('access-group_notifications', 'reject-action') }}</Button
           >
         </template>
         <template v-if="isInvitationPendingRejection(notification)">
           <Button
             class="secondary-action button--secondary button--action"
             v-on:click="handleRejectClick(idx)"
-            >Confirm</Button
+            >{{
+              fluent('access-group_notifications', 'confirm-action')
+            }}</Button
           >
-          <Button class="primary-action" v-on:click="handleInvitationBack(idx)"
-            >Back</Button
+          <Button
+            class="primary-action"
+            v-on:click="handleInvitationBack(idx)"
+            >{{ fluent('access-group_notifications', 'back-action') }}</Button
           >
         </template>
       </div>
@@ -126,6 +130,12 @@ export default {
     },
     getInvitationIcon(invitation) {
       return invitation.state === '' ? 'user-plus' : 'question-mark-circle';
+    },
+    getInvitationText(invitation) {
+      return this.fluent('access-group_notifications', 'invitation').replace(
+        '[]',
+        invitation.group_name
+      );
     },
   },
   computed: {

@@ -7,7 +7,7 @@
       <Icon id="info" :width="32" :height="32" />
     </span>
     <p class="acceptance-notification__description">
-      Membership requires acceptance of the terms below
+      {{ fluent('access-group_notifications', 'tos-accept_message') }}
     </p>
   </article>
 </template>

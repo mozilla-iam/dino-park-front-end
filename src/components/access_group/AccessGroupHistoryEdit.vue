@@ -1,7 +1,7 @@
 <template>
   <section class="edit-history-container">
-    <AccessGroupEditPanel title="History log" :full="true">
-      <template v-slot:content>
+    <AccessGroupEditPanel :title="fluent('access-group_history')" :full="true">
+      <!-- <template v-slot:content>
         <div class="history-log-container">
           <SearchForm
             class="history-log__search"
@@ -45,7 +45,7 @@
           </table>
           <Button class="history-log__load-more">Load more entries</Button>
         </div>
-      </template>
+      </template> -->
     </AccessGroupEditPanel>
   </section>
 </template>

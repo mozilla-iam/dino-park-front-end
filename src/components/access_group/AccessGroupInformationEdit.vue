@@ -1,13 +1,17 @@
 <template>
   <section class="edit-information-container">
-    <AccessGroupEditPanel :title="fluent('access-group_edit-details')">
+    <AccessGroupEditPanel :title="fluent('access-group_details')">
       <template v-slot:content>
         <div class="content-area__row">
-          <label class="content-area__label">{{ fluent('access-group_edit-details', 'name')}}</label>
+          <label class="content-area__label">{{
+            fluent('access-group_details', 'name')
+          }}</label>
           <p class="content-area__value">{{ groupName }}</p>
         </div>
         <div class="content-area__row multi-line markdown-outer-container">
-          <label class="content-area__label">{{ fluent('access-group_edit-details', 'description')}}</label>
+          <label class="content-area__label">{{
+            fluent('access-group_details', 'description')
+          }}</label>
           <TextArea
             :rows="5"
             :maxlength="5000"
@@ -15,11 +19,11 @@
             class="content-area__value"
           ></TextArea>
           <p class="content-area__value-description">
-            {{ fluent('access-group_markdown', 'intro-part-1')}}
-            <a
-              href="#"
-            >{{ fluent('access-group_markdown', 'intro-part-link')}}</a>
-            {{ fluent('access-group_markdown', 'intro-part-2')}}
+            {{ fluent('access-group_markdown', 'intro-part-1') }}
+            <a href="#">{{
+              fluent('access-group_markdown', 'intro-part-link')
+            }}</a>
+            {{ fluent('access-group_markdown', 'intro-part-2') }}
           </p>
           <AccessGroupMarkdownGuide />
         </div>
@@ -29,27 +33,40 @@
           :disabled="!groupDescriptionDirty"
           class="button--secondary button--action row-primary-action"
           @click="handleDescriptionUpdateClicked"
-        >{{ fluent('access-group_edit-details', 'update-details')}}</Button>
+          >{{ fluent('access-group_details', 'update-details') }}</Button
+        >
       </template>
     </AccessGroupEditPanel>
     <AccessGroupEditPanel
-      :title="fluent('access-group_edit-type')"
+      :title="fluent('access-group_type')"
       v-if="getFeature('editGroupType')"
     >
       <template v-slot:content>
         <div class="content-area__row">
-          <div class="radio-control" v-for="(type, idx) in groupTypes" :key="idx">
+          <div
+            class="radio-control"
+            v-for="(type, idx) in groupTypes"
+            :key="idx"
+          >
             <input type="radio" :value="type" v-model="groupTypeData" />
             {{ type }}
           </div>
         </div>
         <div class="content-area__row radio-control__description">
-          <label class="description-label">{{ fluent('access-group_edit-type', 'reviewed-heading')}}</label>
-          <p class="description-content">{{ fluent('access-group_edit-type', 'reviewed-content')}}</p>
+          <label class="description-label">{{
+            fluent('access-group_type', 'reviewed-heading')
+          }}</label>
+          <p class="description-content">
+            {{ fluent('access-group_type', 'reviewed-content') }}
+          </p>
         </div>
         <div class="content-area__row radio-control__description">
-          <label class="description-label">{{ fluent('access-group_edit-type', 'closed-heading')}}</label>
-          <p class="description-content">{{ fluent('access-group_edit-type', 'closed-content')}}</p>
+          <label class="description-label">{{
+            fluent('access-group_type', 'closed-heading')
+          }}</label>
+          <p class="description-content">
+            {{ fluent('access-group_type', 'closed-content') }}
+          </p>
         </div>
       </template>
       <template v-slot:footer>
@@ -57,22 +74,25 @@
           :disabled="!groupTypeDirty"
           class="button--secondary button--action row-primary-action"
           @click="handleTypeUpdateClicked()"
-        >{{ fluent('access-group_edit-type', 'update-type')}}</Button>
+          >{{ fluent('access-group_type', 'update-type') }}</Button
+        >
       </template>
     </AccessGroupEditPanel>
-    <AccessGroupEditPanel :title="fluent('access-group_edit-terms')">
+    <AccessGroupEditPanel :title="fluent('access-group_terms')">
       <template v-slot:content>
         <div class="content-area__row">
           <div class="radio-control">
             <input type="checkbox" v-model="groupTermsRequiredData" />
-            {{ fluent('access-group_edit-terms', 'terms-required')}}
+            {{ fluent('access-group_terms', 'terms-required') }}
           </div>
         </div>
         <div
           class="content-area__row multi-line markdown-outer-container"
           v-if="groupTermsRequiredData"
         >
-          <label class="content-area__label">{{ fluent('access-group_edit-terms', 'terms-intro')}}</label>
+          <label class="content-area__label">{{
+            fluent('access-group_terms', 'terms-intro')
+          }}</label>
           <TextArea
             :rows="5"
             :maxlength="5000"
@@ -80,11 +100,11 @@
             class="content-area__value"
           ></TextArea>
           <p class="content-area__value-description">
-            {{ fluent('access-group_markdown', 'intro-part-1')}}
-            <a
-              href="#"
-            >{{ fluent('access-group_markdown', 'intro-part-link')}}</a>
-            {{ fluent('access-group_markdown', 'intro-part-2')}}
+            {{ fluent('access-group_markdown', 'intro-part-1') }}
+            <a href="#">{{
+              fluent('access-group_markdown', 'intro-part-link')
+            }}</a>
+            {{ fluent('access-group_markdown', 'intro-part-2') }}
           </p>
           <AccessGroupMarkdownGuide />
         </div>
@@ -94,32 +114,36 @@
           :disabled="!groupTermsDirty"
           class="button--secondary button--action row-primary-action"
           @click="handleTermsUpdateClicked()"
-        >{{ fluent('access-group_edit-terms', 'update-terms')}}</Button>
+          >{{ fluent('access-group_terms', 'update-terms') }}</Button
+        >
       </template>
     </AccessGroupEditPanel>
     <AccessGroupEditPanel :title="fluent('access-group_close-group')">
       <template v-slot:content>
         <div class="content-area__row">
           <p class="content-area__description">
-            {{fluent('access-group_close-group', 'part-1')}}
-            <span
-              class="focus"
-            >{{fluent('access-group_close-group', 'part-2')}}</span>
-            {{fluent('access-group_close-group', 'part-3')}}
-            <span
-              class="focus"
-            >{{fluent('access-group_close-group', 'part-4')}}</span>
-            {{fluent('access-group_close-group', 'part-5')}}
+            {{ fluent('access-group_close-group', 'part-1') }}
+            <span class="focus">{{
+              fluent('access-group_close-group', 'part-2')
+            }}</span>
+            {{ fluent('access-group_close-group', 'part-3') }}
+            <span class="focus">{{
+              fluent('access-group_close-group', 'part-4')
+            }}</span>
+            {{ fluent('access-group_close-group', 'part-5') }}
           </p>
         </div>
         <div class="content-area__row close-group-container">
           <input type="checkbox" v-model="closeGroupConfirmed" />
-          <label class="content-area__label">{{fluent('access-group_close-group', 'confirm-text')}}</label>
+          <label class="content-area__label">{{
+            fluent('access-group_close-group', 'confirm-text')
+          }}</label>
           <Button
             :disabled="!closeGroupConfirmed"
             class="button--primary primary-actdion"
             @click="handleCloseGroupClicked"
-          >{{fluent('access-group_close-group', 'confirm-close')}}</Button>
+            >{{ fluent('access-group_close-group', 'confirm-close') }}</Button
+          >
         </div>
       </template>
     </AccessGroupEditPanel>

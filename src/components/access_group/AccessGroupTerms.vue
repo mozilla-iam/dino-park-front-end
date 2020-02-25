@@ -6,10 +6,14 @@
       @click="handleBackClicked"
       v-if="!invitationShowTOSAccept"
     >
-      <Icon id="chevron-left" :width="17" :height="17" />Back to group
+      <Icon id="chevron-left" :width="17" :height="17" />{{
+        fluent('access-group_terms', 'back-action')
+      }}
     </a>
     <section class="primary-area">
-      <h1 class="group-terms__header">Terms and Conditions</h1>
+      <h1 class="group-terms__header">
+        {{ fluent('access-group_terms', 'heading') }}
+      </h1>
       <p>{{ termsContent }}</p>
       <footer class="group-terms__form" v-if="invitationShowTOSAccept">
         <div class="form-action-row">
@@ -19,7 +23,7 @@
             :value="true"
             v-model="termsAccepted"
           />
-          I do accept these terms
+          {{ fluent('access-group_terms', 'do-accept') }}
         </div>
         <div class="form-action-row">
           <input
@@ -28,11 +32,11 @@
             :value="false"
             v-model="termsAccepted"
           />
-          I do not accept these terms
+          {{ fluent('access-group_terms', 'do-not-accept') }}
         </div>
-        <Button class="button--primary" @click="handleSubmitClicked"
-          >Submit</Button
-        >
+        <Button class="button--primary" @click="handleSubmitClicked">{{
+          fluent('access-group_terms', 'submit-changes')
+        }}</Button>
       </footer>
     </section>
   </main>
