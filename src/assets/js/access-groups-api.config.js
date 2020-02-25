@@ -70,7 +70,6 @@ export default {
   },
   users: {
     endpoint: `${API_PREFIX}users`,
-    get: (endpoint, q, groupName) =>
-      `${endpoint}?q=${q}&g=${groupName}`,
+    get: (endpoint, q, groupName) => `${endpoint}?q=${q}&g=${groupName}&c=true`,
   },
 };

@@ -24,7 +24,7 @@ export class Api {
   }
   async handleDelete(deleteConfig, endpointArguments) {
     try {
-      let endpoint = '';
+      let endpoint;
       if (deleteConfig === true) {
         endpoint = getEndpoint(...endpointArguments);
       } else {
@@ -124,10 +124,10 @@ export class Api {
             endpointArguments
           );
         default:
-          throw new Error('Invalid method: ' + restMethod);
+          throw new Error(`Invalid method: ${restMethod}`);
       }
     } catch (e) {
-      throw new Error('Execute error: ' + e.message);
+      throw new Error(`Execute error: ${e.message}`);
     }
   }
 }
@@ -147,7 +147,7 @@ export class MembersApi extends Api {
         }
       );
       if (Number.isInteger(result)) {
-        throw new Error('Member post error: ' + result);
+        throw new Error(`Member post error: ${result}`);
       }
       return await result.json();
     } catch (e) {

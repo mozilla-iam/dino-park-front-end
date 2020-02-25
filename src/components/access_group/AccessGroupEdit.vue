@@ -7,7 +7,7 @@
       }"
     >
       <Icon id="chevron-left" :width="17" :height="17" />
-      {{ `${groupName} ${fluent('access-group_nav-back')}`}}
+      {{ `${groupName} ${fluent('access-group_nav-back')}` }}
     </RouterLink>
     <section class="edit-container">
       <nav class="edit-container__tabs">
@@ -17,12 +17,20 @@
             :class="{ 'tab-item': true, active: isActive(tab) }"
             v-for="(tab, idx) in tabs"
             :key="idx"
-            @click="handleTabClick(tab)"
           >
-            <span class="item__icon">
-              <Icon :id="tab.icon" :width="24" :height="24" />
-            </span>
-            <p class="item__label">{{ fluent(tab.fluentLabel) }}</p>
+            <RouterLink
+              :to="{
+                name: 'Edit Access Group',
+                query: {
+                  section: tab.key,
+                },
+              }"
+            >
+              <span class="item__icon">
+                <Icon :id="tab.icon" :width="24" :height="24" />
+              </span>
+              <p class="item__label">{{ fluent(tab.fluentLabel) }}</p>
+            </RouterLink>
           </li>
         </ul>
       </nav>
@@ -76,20 +84,6 @@ export default {
     groupname: String,
   },
   mounted() {
-    window.addEventListener('scroll', e => {
-      const topBarHeight = document.querySelector('.top-bar__bar').offsetHeight;
-      const contentOffset = this.$el.querySelector('.edit-container__content')
-        .offsetTop;
-      if (window.scrollY + topBarHeight > contentOffset) {
-        document
-          .querySelector('.edit-container__tabs')
-          .classList.add('scrolling');
-      } else {
-        document
-          .querySelector('.edit-container__tabs')
-          .classList.remove('scrolling');
-      }
-    });
     if (this.getFeature('historyTab')) {
       tabs.concat({
         key: 'history',
@@ -100,14 +94,6 @@ export default {
     }
   },
   methods: {
-    handleTabClick(tab) {
-      this.$router.push({
-        name: 'Edit Access Group',
-        query: {
-          section: tab.key,
-        },
-      });
-    },
     isActive(tab) {
       if (!this.$route.query.section) {
         return false;
@@ -187,25 +173,18 @@ export default {
 
 .edit-container .edit-container__tabs {
   margin: 0 1em;
-}
-
-.edit-container .edit-container__tabs.scrolling {
-  background: var(--white);
-  position: fixed;
+  position: sticky;
   top: 6.5em;
-  width: calc(100% - 2em);
+  left: 0;
   z-index: 1;
 }
 
 @media (min-width: 57.5em) {
   .edit-container .edit-container__tabs {
     margin: 0;
-  }
-
-  .edit-container .edit-container__tabs.scrolling {
     position: relative;
     top: 0;
-    width: auto;
+    left: 0;
   }
 }
 
@@ -254,22 +233,35 @@ export default {
 }
 
 .tab-item.active {
-  color: var(--blue-60);
   border-bottom: 2px solid var(--blue-60);
+}
+
+.tab-item a {
+  color: var(--black);
+  text-align: center;
+  flex: 1;
+}
+
+.tab-item.active a {
+  color: var(--blue-60);
 }
 
 .item__icon {
   display: flex;
   align-items: center;
-  margin-right: 1em;
   justify-content: center;
   flex: 1;
 }
 
 @media (min-width: 57.5em) {
+  .tab-item a {
+    display: flex;
+    text-decoration: none;
+  }
   .item__icon {
     justify-content: flex-start;
     flex: none;
+    margin-right: 1em;
   }
 }
 
@@ -280,6 +272,7 @@ export default {
 @media (min-width: 57.5em) {
   .item__label {
     display: inline-block;
+    text-decoration: none;
   }
 }
 </style>
