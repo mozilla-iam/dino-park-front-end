@@ -1,5 +1,7 @@
 <template>
-  <div :class="{ 'list-item': true, primary: isCurator }">
+  <div
+    :class="{ 'list-item': true, primary: isCurator, expanded: showExpandable }"
+  >
     <article class="list-item__main">
       <div class="member-view">
         <UserPicture
@@ -87,6 +89,13 @@ export default {
   width: 100%;
   box-shadow: var(--shadowCard);
   background: var(--white);
+  height: 5.5em;
+  display: flex;
+  flex-direction: column;
+}
+
+.list-item.expanded {
+  height: auto;
 }
 
 .list-item .list-item__main {
@@ -147,7 +156,7 @@ export default {
 }
 
 .list-item__expandable {
-  margin: 1em;
+  margin: 0 1em 1em;
 }
 .expandable-row {
   display: block;

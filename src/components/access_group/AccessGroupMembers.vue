@@ -16,34 +16,23 @@
           v-for="(tab, idx) in tabList"
           :key="idx"
           @click="handleTabClick(tab)"
-        >{{ tab.label }}</li>
+        >
+          {{ tab.label }}
+        </li>
       </ul>
     </nav>
     <template v-if="filteredListDisplay.length > 0">
-      <ul class="members-container__list columned">
-        <li
-          v-for="(column, idx) in filteredListTwoColumnDisplay"
-          :key="idx"
-          class="list-column-container"
-        >
-          <ul class="members-container__list-column">
-            <li v-for="(member, idx2) in column" :key="idx2" class="list-item-container">
-              <AccessGroupMemberItem :member="member" />
-            </li>
-          </ul>
-        </li>
-      </ul>
       <ul class="members-container__list">
-        <li v-for="(member, idx) in filteredListDisplay" :key="idx" class="list-item-container">
-          <AccessGroupMemberItem :member="member" />
+        <li v-for="(member, idx) in filteredListDisplay" :key="idx">
+          <AccessGroupMemberItem class="list-item-container" :member="member" />
         </li>
       </ul>
     </template>
     <template v-else>
       <p class="members-container__empty">
-        {{fluent('access-group_members', 'empty-line1')}}
+        {{ fluent('access-group_members', 'empty-line1') }}
         <br />
-        {{fluent('access-group_members', 'empty-line2')}}
+        {{ fluent('access-group_members', 'empty-line2') }}
         <RouterLink
           :to="{
             name: 'Edit Access Group',
@@ -51,7 +40,8 @@
               section: 'invitations',
             },
           }"
-        >{{fluent('access-group_members', 'empty-action')}}</RouterLink>?
+          >{{ fluent('access-group_members', 'empty-action') }}</RouterLink
+        >?
       </p>
     </template>
   </article>
@@ -256,25 +246,14 @@ export default {
   padding: 0;
   width: 100%;
 }
-.members-container__list:not(.columned) {
-  display: flex;
-  flex-direction: column;
-}
 
-.members-container__list.columned {
-  display: none;
-}
 @media (min-width: 57.5em) {
-  .members-container__list.columned {
+  .members-container__list {
     display: grid;
     grid-template-columns: calc(50% - 0.5em) calc(50% - 0.5em);
     grid-row-gap: 1em;
     grid-column-gap: 1em;
     grid-auto-rows: min-content;
-  }
-
-  .members-container__list:not(.columned) {
-    display: none;
   }
 }
 
@@ -293,11 +272,6 @@ export default {
   .members-container__list-column {
     display: flex;
     flex-direction: column;
-  }
-  .members-container__list .list-item-container {
-    float: left;
-    display: flex;
-    margin-top: 1em;
   }
 
   .members-container__list .list-item-container:first-child {
