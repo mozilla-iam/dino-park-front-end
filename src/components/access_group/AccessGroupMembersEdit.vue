@@ -407,7 +407,6 @@ export default {
     accessGroupCurators: 'accessGroup/getCurators',
     accessGroupExpiration: 'accessGroup/getExpiration',
     allMembers: 'accessGroup/getMembers',
-    getScope: 'scopeV2/get',
   }),
 };
 </script>
