@@ -4,11 +4,13 @@
       class="button group-terms__back-action"
       :href="backUrl"
       @click="handleBackClicked"
-      v-if="!invitationShowTOSAccept"
     >
-      <Icon id="chevron-left" :width="17" :height="17" />{{
-        fluent('access-group_terms', 'back-action')
-      }}
+      <Icon
+        class="group-terms__back-icon"
+        id="chevron-left"
+        :width="17"
+        :height="17"
+      />{{ fluent('access-group_terms', 'back-action') }}
     </a>
     <section class="primary-area">
       <h1 class="group-terms__header">
@@ -60,9 +62,11 @@ export default {
     ...mapActions({
       acceptInvitation: 'userV2/acceptInvitation',
       rejectInvitation: 'userV2/rejectInvitation',
+      setLoading: 'setLoading',
+      completeLoading: 'completeLoading',
     }),
     handleBackClicked() {
-      console.log('Back clicked');
+      this.$router.go(-1);
     },
     handleSubmitClicked() {
       if (this.termsAccepted) {
@@ -72,6 +76,7 @@ export default {
       }
     },
     acceptTerms() {
+      this.setLoading();
       this.acceptInvitation(
         this.getInvitationByName(this.$route.params.groupname)
       ).then(() => {
@@ -81,19 +86,18 @@ export default {
             groupname: this.$route.query.groupname,
           },
         });
-        this.$root.$emit('toast', {
-          content: 'You accepted the terms for this group.',
-        });
+        this.tinyNotification('access-group-terms-accepted');
+        this.completeLoading();
       });
     },
     doNotAcceptTerms() {
+      this.setLoading();
       this.rejectInvitation(
         this.getInvitationByName(this.$route.params.groupname)
       ).then(() => {
         this.$router.go(-1);
-        this.$root.$emit('toast', {
-          content: `You rejected the invite for group ${groupname}.`,
-        });
+        this.tinyNotification('access-group-terms-rejected', groupname);
+        this.completeLoading();
       });
     },
   },
@@ -140,6 +144,10 @@ export default {
   color: var(--black);
   display: inline-block;
   margin-bottom: 2em;
+}
+
+.group-terms .group-terms__back-icon {
+  vertical-align: bottom;
 }
 
 .group-terms .primary-area {

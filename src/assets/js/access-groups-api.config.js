@@ -5,10 +5,10 @@ export default {
     get: (endpoint, groupName) => `${endpoint}/${groupName}/details`,
     put: [
       true,
-      ({ typ, description, groupExpiration }) => ({
-        typ,
+      ({ type, description, expiration }) => ({
+        type: type.toLowerCase(),
         description,
-        group_expiration: groupExpiration,
+        group_expiration: expiration,
       }),
     ],
     delete: true,

@@ -7,14 +7,13 @@ export class Api {
   constructor() {
     this.fetcher = new Fetcher({ failoverOn: [302] });
   }
-  async handleGet(getConfig, endpointArguments) {
+  async handleGet(endpointGetter, endpointArguments) {
     try {
-      let endpoint = '';
-      if (getConfig === true) {
-        endpoint = getEndpoint(...endpointArguments);
-      } else {
-        endpoint = getConfig(...endpointArguments);
-      }
+      const endpoint =
+        endpointGetter === true
+          ? getEndpoint(...endpointArguments)
+          : endpointGetter(...endpointArguments);
+
       const result = await this.fetcher.fetch(endpoint);
       return await result.json();
     } catch (e) {
@@ -22,14 +21,12 @@ export class Api {
       throw new Error(e.message);
     }
   }
-  async handleDelete(deleteConfig, endpointArguments) {
+  async handleDelete(endpointGetter, endpointArguments) {
     try {
-      let endpoint;
-      if (deleteConfig === true) {
-        endpoint = getEndpoint(...endpointArguments);
-      } else {
-        endpoint = deleteConfig(...endpointArguments);
-      }
+      const endpoint =
+        endpointGetter === true
+          ? getEndpoint(...endpointArguments)
+          : endpointGetter(...endpointArguments);
       return await this.fetcher.delete(endpoint);
     } catch (e) {
       console.error(e.message);
@@ -37,18 +34,16 @@ export class Api {
     }
   }
   async handlePost(
-    postEndpointGetter,
+    endpointGetter,
     endpointArguments,
     postDataGetter,
     dataArguments
   ) {
     try {
-      let endpoint = '';
-      if (postEndpointGetter === true) {
-        endpoint = getEndpoint(...endpointArguments);
-      } else {
-        endpoint = postEndpointGetter(...endpointArguments);
-      }
+      const endpoint =
+        endpointGetter === true
+          ? getEndpoint(...endpointArguments)
+          : endpointGetter(...endpointArguments);
       if (typeof postDataGetter === 'function') {
         return await this.fetcher.post(endpoint, postDataGetter(dataArguments));
       }
@@ -59,18 +54,16 @@ export class Api {
     }
   }
   async handlePut(
-    putEndpointGetter,
+    endpointGetter,
     endpointArguments,
     putDataGetter,
     dataArguments
   ) {
     try {
-      let endpoint = '';
-      if (putEndpointGetter === true) {
-        endpoint = getEndpoint(...endpointArguments);
-      } else {
-        endpoint = putEndpointGetter(...endpointArguments);
-      }
+      const endpoint =
+        endpointGetter === true
+          ? getEndpoint(...endpointArguments)
+          : endpointGetter(...endpointArguments);
       return await this.fetcher.put(endpoint, putDataGetter(dataArguments));
     } catch (e) {
       console.error(e.message);

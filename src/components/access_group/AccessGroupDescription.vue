@@ -85,13 +85,9 @@ export default {
       isMember: 'accessGroup/isMember',
     }),
     membersCountText() {
-      let fullText = '';
-      if (this.memberCount === 1) {
-        fullText += '1 member';
-      } else {
-        fullText += `${this.memberCount} members`;
-      }
-      return fullText;
+      return this.memberCount === 1
+        ? '1 member'
+        : `${this.memberCount} members`;
     },
     descriptionDisplay() {
       return parseMarkdown(this.accessGroup.description);

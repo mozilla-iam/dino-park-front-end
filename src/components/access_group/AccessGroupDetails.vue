@@ -30,16 +30,12 @@ export default {
       memberCount: 'accessGroup/getMemberCount',
     }),
     membersCountText() {
-      let fullText = '';
-      if (this.memberCount === 1) {
-        fullText += `1 ${this.fluent('access-group_details', 'member')}`;
-      } else {
-        fullText += `${this.memberCount} ${this.fluent(
-          'access-group_details',
-          'members'
-        )}`;
-      }
-      return fullText;
+      return this.memberCount === 1
+        ? `1 ${this.fluent('access-group_details', 'member')}`
+        : `${this.memberCount} ${this.fluent(
+            'access-group_details',
+            'members'
+          )}`;
     },
   },
 };

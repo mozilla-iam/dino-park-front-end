@@ -9,6 +9,7 @@
         <p class="tag-container__text" v-if="getLabel">{{ getLabel(tag) }}</p>
         <p class="tag-container__text" v-else>{{ tag }}</p>
         <Icon
+          v-if="canBeRemoved(tag)"
           @click.native="tagActionClicked(idx)"
           class="tag-container__action"
           id="x"
@@ -55,6 +56,10 @@ export default {
     value: Array,
     getLabel: Function,
     updateAutoComplete: Function,
+    canBeRemoved: {
+      type: Function,
+      default: () => true,
+    },
   },
   components: {
     Icon,

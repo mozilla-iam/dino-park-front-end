@@ -138,22 +138,24 @@ export default {
   methods: {
     ...mapActions({
       createGroup: 'accessGroup/createGroup',
+      setLoading: 'setLoading',
+      completeLoading: 'completeLoading',
     }),
     handleCreateClicked() {
+      this.setLoading();
       this.createGroup({
         name: this.groupName,
         type: this.groupType,
         description: this.groupDescription,
       }).then(() => {
-        this.$root.$emit('toast', {
-          content: `Access Group ${this.groupName} created`,
-        });
+        this.tinyNotification('access-group-created', this.groupName);
         this.$router.push({
           name: ACCESS_GROUP_PAGE,
           params: {
             groupname: this.groupName,
           },
         });
+        this.completeLoading();
       });
     },
     handleBackClicked() {

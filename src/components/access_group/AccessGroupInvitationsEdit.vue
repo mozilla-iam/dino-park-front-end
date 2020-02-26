@@ -144,16 +144,12 @@ export default {
     }),
     handleResendClicked(invitation) {
       this.resendInvitation(invitation).then(result => {
-        this.$root.$emit('toast', {
-          content: 'Invite email resent',
-        });
+        this.tinyNotification('access-group-invite-email-resent');
       });
     },
     handleRemoveClicked(invitation) {
       this.deleteInvitation(invitation).then(result => {
-        this.$root.$emit('toast', {
-          content: 'Invitation deleted',
-        });
+        this.tinyNotification('access-group-invite-deleted');
       });
     },
     getTagLabel(curator) {
@@ -173,18 +169,14 @@ export default {
         invites: this.newInvites,
         expiration: this.groupExpiration,
       }).then(result => {
-        this.$root.$emit('toast', {
-          content: 'Members successfully invited',
-        });
+        this.tinyNotification('access-group-members-invite-success');
         this.newInvites = [];
         this.newInvitesDirty = false;
       });
     },
     handleUpdateInviteTextClicked() {
       this.updateInviteText(this.newInvites).then(result => {
-        this.$root.$emit('toast', {
-          content: 'Invitation text successfully updated',
-        });
+        this.tinyNotification('access-group-invitation-text-updated');
         this.emailInviteTextDirty = false;
       });
     },

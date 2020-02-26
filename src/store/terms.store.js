@@ -23,7 +23,7 @@ export const termsActions = {
         state.group.name,
         text
       );
-      dispatch('fetchTerms');
+      await dispatch('fetchTerms');
       return result;
     } catch (e) {
       throw new Error(e.message);
@@ -35,7 +35,10 @@ export const termsActions = {
         state.group.name,
         text
       );
-      dispatch('fetchTerms');
+      await dispatch('fetchTerms');
+      await dispatch('accessGroup/fetchGroup', state.group.name, {
+        root: true,
+      });
       return result;
     } catch (e) {
       throw new Error(e.message);
@@ -46,7 +49,10 @@ export const termsActions = {
       const result = await accessGroupsService.deleteAccessGroupTOS(
         state.group.name
       );
-      dispatch('fetchTerms');
+      await dispatch('fetchTerms');
+      await dispatch('accessGroup/fetchGroup', state.group.name, {
+        root: true,
+      });
       return result;
     } catch (e) {
       throw new Error(e.message);

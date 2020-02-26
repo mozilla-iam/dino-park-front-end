@@ -63,6 +63,7 @@ export default {
   flex-direction: row;
   align-items: center;
   margin-top: 0.25em;
+  color: var(--gray-60);
 }
 
 .member-list-description .member-list-description__sub svg {

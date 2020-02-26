@@ -58,6 +58,15 @@ Promise.all([
       fluent(...args) {
         return fluent.get(...args);
       },
+      // Currently only works with one variable replace
+      tinyNotification(fluentSelector, args = '') {
+        this.$root.$emit('toast', {
+          content: this.fluent('tiny-notification', fluentSelector).replace(
+            '[]',
+            args
+          ),
+        });
+      },
     },
   });
   new Vue({

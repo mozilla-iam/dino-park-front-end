@@ -63,7 +63,7 @@
         "
       />
       <Checkbox
-        @input="(newValue) => toggleUriContactMe(newValue, index)"
+        @input="newValue => toggleUriContactMe(newValue, index)"
         :checked="destructUriKey(k).contact"
         :label="fluent('profile_contact-me', 'show-in')"
         class="edit-contact__set-as-contact"
@@ -147,11 +147,11 @@ export default {
   computed: {
     remainingAccounts() {
       const selectedUris = this.uris.values.map(
-        ({ k }) => this.destructUriKey(k).name,
+        ({ k }) => this.destructUriKey(k).name
       );
       return this.availableAccounts
-        .filter((account) => !selectedUris.includes(account))
-        .map((account) => {
+        .filter(account => !selectedUris.includes(account))
+        .map(account => {
           const label = this.EXTERNAL_ACCOUNTS[account].text;
           return { label, value: this.constructUriKey({ name: account }) };
         });
@@ -178,6 +178,15 @@ export default {
 </script>
 
 <style>
+.profile__section-header__title-info {
+  display: flex;
+  align-items: center;
+}
+
+.profile__section-header__title-info .tooltip {
+  margin-left: 1em;
+}
+
 .edit-accounts__add-more {
   margin-left: auto;
 }

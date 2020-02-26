@@ -49,10 +49,10 @@ export default {
     },
     async updateGroup({ dispatch, state }, { field, value }) {
       try {
-        const updateData = AccessGroups.getAccessGroupUpdateData({
+        const updateData = {
           ...state.group,
           [field]: value,
-        });
+        };
         const result = await accessGroupsService.updateGroupDetails(
           state.group.name,
           updateData

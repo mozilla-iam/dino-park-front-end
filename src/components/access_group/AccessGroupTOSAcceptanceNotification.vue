@@ -24,13 +24,14 @@ export default {
   computed: {
     ...mapGetters({
       accessGroup: 'accessGroup/getGroup',
-      getInvitationsByName: 'userV2/getInvitationsByName',
+      getInvitationByName: 'userV2/getInvitationByName',
     }),
     showTOSAcceptanceNotification() {
       if (!this.$route.query.accept) {
+        ``;
         return false;
       }
-      const { requires_tos } = this.getInvitationsByName(this.accessGroup.name);
+      const { requires_tos } = this.getInvitationByName(this.accessGroup.name);
       return this.$route.name === ACCESS_GROUP_TOS_PAGE && requires_tos;
     },
     showInvitations() {

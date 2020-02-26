@@ -159,7 +159,7 @@ export default class AccessGroups {
             dataArguments: {
               uuid: member.uuid,
               invitationExpiration: defaultGroupInvitationExpiration,
-              groupExpiration: expiration,
+              groupExpiration: parseInt(expiration),
             },
           })
         );
@@ -300,6 +300,7 @@ export default class AccessGroups {
   }
 
   static getAccessGroupUpdateData(data) {
+    console.log('getting data: ', data);
     return {
       typ: 'type' in data ? data.type : '',
       description: 'description' in data ? data.description : '',

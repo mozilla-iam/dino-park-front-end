@@ -82,6 +82,7 @@
                 <td class="row-actions" v-if="!member.pendingRemoval">
                   <Button
                     class="tertiary-action delete"
+                    v-if="canMemberBeRemoved(member)"
                     @click="handleRemoveClick(idx)"
                   >
                     <Icon id="x" :width="16" :height="16" />
@@ -104,7 +105,7 @@
                 <Button
                   class="upper__action delete"
                   @click="handleRemoveClick(idx)"
-                  v-if="!member.pendingRemoval"
+                  v-if="!member.pendingRemoval || canMemberBeRemoved(member)"
                 >
                   <Icon id="x" :width="16" :height="16" />
                 </Button>
@@ -141,14 +142,38 @@
     </AccessGroupEditPanel>
     <AccessGroupEditPanel :title="fluent('access-group_curators')">
       <template v-slot:content>
-        <div class="members-list-container">
+        <div class="members-list-container tags-selector">
           <TagSelector
+            class="tags-selector__value"
             v-on:tag:remove="handleCuratorRemoved"
             v-on:tag:add="handleCuratorAdded"
             v-model="curatorsList"
             :getLabel="getTagLabel"
             :updateAutoComplete="updateAutoCompleteList"
+            :canBeRemoved="canMemberBeRemoved"
           />
+          <p class="tags-selector__description">
+            {{ fluent('access-group_curators', 'tags-selector__description') }}
+          </p>
+          <aside class="container-info">
+            <Icon
+              id="info"
+              class="container-info__icon"
+              :width="24"
+              :height="24"
+            />
+            <p class="container-info__description">
+              {{
+                fluent('access-group_curators', 'container-info__description-1')
+              }}
+              <strong>{{
+                fluent('access-group_curators', 'container-info__description-2')
+              }}</strong>
+              {{
+                fluent('access-group_curators', 'container-info__description-3')
+              }}
+            </p>
+          </aside>
         </div>
       </template>
       <template v-slot:footer>
@@ -164,17 +189,48 @@
       <template v-slot:content>
         <div class="members-expiration-container">
           <div class="content-area__row">
-            <div class="radio-control">
-              <input type="checkbox" v-model="membershipCanExpire" />
-              {{ fluent('access-group_expiration', 'checkbox') }}
-            </div>
-          </div>
-          <div class="content-area__row" v-if="membershipCanExpire">
             <label class="content-area__label">{{
               fluent('access-group_expiration', 'expiration-description')
             }}</label>
-            <NumberScrollerInput v-model="groupExpiration" />
+            <Select
+              class="options--chevron expiration-select"
+              :options="expirationOptions"
+              v-model="selectedExpiration"
+            />
+            <NumberScrollerInput
+              v-if="expirationIsCustom"
+              class="expiration-select--custom"
+              v-model="groupExpiration"
+            />
           </div>
+          <aside class="container-info">
+            <Icon
+              id="info"
+              class="container-info__icon"
+              :width="24"
+              :height="24"
+            />
+            <p class="container-info__description">
+              {{
+                fluent(
+                  'access-group_expiration',
+                  'container-info__description-1'
+                )
+              }}
+              <strong>{{
+                fluent(
+                  'access-group_expiration',
+                  'container-info__description-2'
+                )
+              }}</strong>
+              {{
+                fluent(
+                  'access-group_expiration',
+                  'container-info__description-3'
+                )
+              }}
+            </p>
+          </aside>
         </div>
       </template>
       <template v-slot:footer>
@@ -195,6 +251,7 @@ import TextInput from '@/components/ui/TextInput.vue';
 import TextArea from '@/components/ui/TextArea.vue';
 import Button from '@/components/ui/Button.vue';
 import Icon from '@/components/ui/Icon.vue';
+import Select from '@/components/ui/Select.vue';
 import AccessGroupEditPanel from '@/components/access_group/AccessGroupEditPanel.vue';
 import SearchForm from '@/components/ui/SearchForm.vue';
 import AccessGroupMemberListDisplay from '@/components/access_group/AccessGroupMemberListDisplay.vue';
@@ -215,6 +272,7 @@ export default {
     SearchForm,
     AccessGroupMemberListDisplay,
     TagSelector,
+    Select,
     NumberScrollerInput,
   },
   props: [],
@@ -232,17 +290,6 @@ export default {
         this.groupExpirationDirty = true;
       }
     },
-    membershipCanExpire(value) {
-      if (
-        (value && this.accessGroupExpiration === null) ||
-        (!value && this.accessGroupExpiration !== null)
-      ) {
-        this.groupExpirationDirty = true;
-      }
-      if (!value) {
-        this.groupExpiration = 0;
-      }
-    },
     allMembers() {
       this.allMembersList = this.$store.getters['accessGroup/getMembers'].map(
         member => {
@@ -253,13 +300,26 @@ export default {
         }
       );
     },
+    selectedExpiration(value) {
+      if (value === 'custom') {
+        this.groupExpiration = 0;
+      } else {
+        this.groupExpiration = value;
+      }
+    },
   },
   data() {
     const accessGroupExpiration = this.$store.getters[
       'accessGroup/getExpiration'
-    ];
+    ].toString();
     const accessGroupCurators = this.$store.getters['accessGroup/getCurators'];
     const accessGroupMembers = this.$store.getters['accessGroup/getMembers'];
+    let selectedExpiration =
+      accessGroupExpiration === '360' ||
+      accessGroupExpiration === '720' ||
+      accessGroupExpiration === '0'
+        ? accessGroupExpiration
+        : 'custom';
     return {
       groupExpiration: !accessGroupExpiration ? 0 : accessGroupExpiration,
       groupData: '',
@@ -269,7 +329,6 @@ export default {
       addedCurators: [],
       removedCurators: [],
       curatorsListDirty: false,
-      membershipCanExpire: accessGroupExpiration > 0,
       groupExpirationDirty: false,
       memberListFilter: '',
       allMembersList: accessGroupMembers.map(member => {
@@ -278,6 +337,13 @@ export default {
           pendingRemoval: false,
         };
       }),
+      expirationOptions: [
+        { label: '1 year', value: '360' },
+        { label: '2 years', value: '720' },
+        { label: 'Does not expire', value: '0' },
+        { label: 'Custom', value: 'custom' },
+      ],
+      selectedExpiration,
     };
   },
   methods: {
@@ -290,6 +356,18 @@ export default {
       setLoading: 'setLoading',
       completeLoading: 'completeLoading',
     }),
+    canMemberBeRemoved(member) {
+      if (!this.allMembersList.length) {
+        return false;
+      }
+      if (
+        this.accessGroupCurators.length === 1 &&
+        member.uuid === this.accessGroupCurators[0].uuid
+      ) {
+        return false;
+      }
+      return true;
+    },
     refreshMembersList() {
       this.allMembersList = this.allMembers.map(member => {
         return {
@@ -310,9 +388,7 @@ export default {
         expiration: member.expiration,
       }).then(result => {
         this.refreshMembersList();
-        this.$root.$emit('toast', {
-          content: `${memberName} was renewed`,
-        });
+        this.tinyNotification('access-group-member-renewed', memberName);
       });
     },
     handleCancelClick(member) {
@@ -324,11 +400,11 @@ export default {
     },
     handleRemoveConfirmClick(member) {
       const memberName = member.name;
+      this.setLoading();
       this.removeMember(member).then(result => {
         this.refreshMembersList();
-        this.$root.$emit('toast', {
-          content: `${memberName} was removed from the group`,
-        });
+        this.tinyNotification('access-group-member-removed', memberName);
+        this.completeLoading();
       });
     },
     getTagLabel(curator) {
@@ -365,9 +441,7 @@ export default {
       this.setLoading();
       Promise.all(promises)
         .then(results => {
-          this.$root.$emit('toast', {
-            content: 'Curators successfully updated',
-          });
+          this.tinyNotification('access-group-curators-updated');
           this.addedCurators = [];
           this.removedCurators = [];
           this.curatorsListDirty = false;
@@ -379,14 +453,14 @@ export default {
         });
     },
     handleUpdateExpirationClicked() {
+      this.setLoading();
       this.updateGroup({
         field: 'expiration',
-        value: this.groupExpiration,
+        value: parseInt(this.groupExpiration),
       }).then(result => {
         this.groupExpirationDirty = false;
-        this.$root.$emit('toast', {
-          content: `Access Group expiration has been successfully updated`,
-        });
+        this.tinyNotification('access-group-expiration-updated');
+        this.completeLoading();
       });
     },
     expiry(expiration) {
@@ -401,13 +475,18 @@ export default {
       );
     },
   },
-  computed: mapGetters({
-    group: 'accessGroup/getGroup',
-    groupName: 'accessGroup/getGroupName',
-    accessGroupCurators: 'accessGroup/getCurators',
-    accessGroupExpiration: 'accessGroup/getExpiration',
-    allMembers: 'accessGroup/getMembers',
-  }),
+  computed: {
+    ...mapGetters({
+      group: 'accessGroup/getGroup',
+      groupName: 'accessGroup/getGroupName',
+      accessGroupCurators: 'accessGroup/getCurators',
+      accessGroupExpiration: 'accessGroup/getExpiration',
+      allMembers: 'accessGroup/getMembers',
+    }),
+    expirationIsCustom() {
+      return this.selectedExpiration === 'custom';
+    },
+  },
 };
 </script>
 
@@ -610,10 +689,6 @@ export default {
   color: #ff0039;
   padding-right: 0;
   display: inline-block;
-  /* position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%); */
 }
 
 .edit-members-container .edit-members__load-more {
@@ -622,7 +697,38 @@ export default {
   color: var(--black);
 }
 
+.tags-selector .tags-selector__description {
+  color: var(--gray-40);
+}
+
+.members-expiration-container .content-area__row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
 .members-expiration-container .content-area__row .content-area__label {
+  margin-right: 1em;
+  flex: initial;
+}
+
+.members-expiration-container .content-area__row .expiration-select {
+  margin-right: 1em;
+}
+
+.members-expiration-container .content-area__row .expiration-select--custom {
+  height: 1.36em;
+}
+
+.container-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.container-info__icon {
+  width: 7%;
   margin-right: 1em;
 }
 </style>

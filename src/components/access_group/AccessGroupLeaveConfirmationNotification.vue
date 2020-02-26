@@ -50,13 +50,16 @@ export default {
     showLeaveConfirmationNotification() {
       return this.$route.name === ACCESS_GROUP_LEAVE_CONFIRMATION_PAGE;
     },
+    // Determine if the the user is allowed to leave the group, in case they are the last one in the group and the only curator
     canLeaveGroup() {
       if (!this.getCurators.length) {
         return false;
       }
+      // Check to see if the current user is in the list of curators
       const matches = this.getCurators.filter(
         curator => curator.uuid === this.getProfile.uuid
       );
+      // Return false if the current user is both the last curator and the last member of this group
       if (this.getCurators.length === 1 && matches.length === 1) {
         return false;
       }
@@ -78,15 +81,17 @@ export default {
   methods: {
     ...mapActions({
       leaveGroup: 'accessGroup/leaveGroup',
+      setLoading: 'setLoading',
+      completeLoading: 'completeLoading',
     }),
     handleLeaveClick() {
+      this.setLoading();
       this.leaveGroup().then(() => {
-        this.$root.$emit('toast', {
-          content: `You have left the ${this.groupName} group`,
-        });
+        this.tinyNotification('access-group-left-group', this.groupName);
         this.$router.replace({
           name: 'Access Group',
         });
+        this.completeLoading();
       });
     },
     handleCancelClick() {

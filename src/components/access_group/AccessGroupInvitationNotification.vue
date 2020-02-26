@@ -73,6 +73,8 @@ export default {
       acceptInvitation: 'userV2/acceptInvitation',
       rejectInvitation: 'userV2/rejectInvitation',
       fetchMembers: 'accessGroup/fetchMembers',
+      setLoading: 'setLoading',
+      completeLoading: 'completeLoading',
     }),
     handleAcceptClick(idx) {
       const currentInvitation = this.invitations[idx];
@@ -85,19 +87,19 @@ export default {
           },
         });
       } else {
-        this.acceptInvitation(currentInvitation).then(() => {
+        this.setLoading();
+        this.acceptInvitation(currentInvitation).then(async () => {
           // This is a bit of a hack in place of actually reloading the page if you're already on the access group
           // TODO: Remove this once a better solution is figured out
           if (this.$route.name === 'Access Group') {
-            this.fetchMembers(currentInvitation.group_name);
+            await this.fetchMembers(currentInvitation.group_name);
           }
           this.$router.push({
             name: 'Access Group',
             params: { groupname: currentInvitation.group_name },
           });
-          this.$root.$emit('toast', {
-            content: 'You accepted the terms for this group.',
-          });
+          this.tinyNotification('access-group-terms-accepted');
+          this.completeLoading();
         });
       }
     },
@@ -105,9 +107,10 @@ export default {
       const currentInvitation = this.invitations[idx];
       if (currentInvitation.state === PENDING_REJECTION) {
         this.rejectInvitation(currentInvitation).then(result => {
-          this.$root.$emit('toast', {
-            content: `You rejected the invite for group ${currentInvitation.group_name}.`,
-          });
+          this.tinyNotification(
+            'access-group-terms-rejected',
+            currentInvitation.group_name
+          );
         });
       } else if (currentInvitation.state === '') {
         currentInvitation.state = PENDING_REJECTION;

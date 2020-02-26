@@ -206,6 +206,8 @@ export default {
       updateTerms: 'accessGroup/updateTerms',
       addTerms: 'accessGroup/addTerms',
       closeGroup: 'accessGroup/closeGroup',
+      setLoading: 'setLoading',
+      completeLoading: 'completeLoading',
     }),
     handleDescriptionUpdateClicked(e) {
       e.preventDefault();
@@ -214,9 +216,7 @@ export default {
         value: this.groupDescriptionData,
       }).then(() => {
         this.groupDescriptionDirty = false;
-        this.$root.$emit('toast', {
-          content: 'Group description updated',
-        });
+        this.tinyNotification('access-group-description-updated');
       });
       return false;
     },
@@ -224,45 +224,39 @@ export default {
       this.updateGroup({ field: 'type', value: this.groupTypeData }).then(
         () => {
           this.groupTypeDirty = false;
-          this.$root.$emit('toast', {
-            content: 'Group type updated',
-          });
+          this.tinyNotification('access-group-type-updated');
         }
       );
     },
     handleTermsUpdateClicked() {
+      this.setLoading();
+      let termsPromise;
+      let tinyFluentSelector;
       if (!this.groupTermsRequiredData && this.accessGroup.terms) {
-        this.deleteTerms().then(() => {
-          this.groupTermsDirty = false;
-          this.$root.$emit('toast', {
-            content: 'Group terms of service removed',
-          });
-        });
+        termsPromise = this.deleteTerms();
+        tinyFluentSelector = 'access-group-terms-removed';
       } else if (!this.accessGroup.terms && this.groupTermsData.length > 0) {
-        this.addTerms(this.groupTermsData).then(() => {
-          this.groupTermsDirty = false;
-          this.$root.$emit('toast', {
-            content: 'Group terms of service updated',
-          });
-        });
+        termsPromise = this.addTerms(this.groupTermsData);
+        tinyFluentSelector = 'access-group-terms-updated';
       } else {
-        this.updateTerms(this.groupTermsData).then(() => {
-          this.groupTermsDirty = false;
-          this.$root.$emit('toast', {
-            content: 'Group terms of service updated',
-          });
-        });
+        termsPromise = this.updateTerms(this.groupTermsData);
+        tinyFluentSelector = 'access-group-terms-updated';
       }
+      termsPromise.then(() => {
+        this.groupTermsDirty = false;
+        this.tinyNotification(tinyFluentSelector);
+        this.completeLoading();
+      });
     },
     handleCloseGroupClicked() {
       const groupName = this.accessGroup.name;
+      this.setLoading();
       this.closeGroup().then(() => {
-        this.$root.$emit('toast', {
-          content: `Access group ${groupName} has been closed`,
-        });
+        this.tinyNotification('access-group-closed', groupName);
         this.$router.push({
           path: '/',
         });
+        this.completeLoading();
       });
     },
   },
