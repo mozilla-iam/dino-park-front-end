@@ -48,19 +48,21 @@ export function parseMarkdown(text) {
   return insane(marked(text, { gfm: true }));
 }
 
-export function expiryText(expiration) {
+export function expiryText(fluent, expiration) {
   const expiryDate = new Date(expiration);
   const currentDate = new Date();
   const difference = expiryDate.getTime() - currentDate.getTime();
   if (difference <= 0) {
-    return '0 days';
+    return `0 ${fluent('date-day', 'plural')}`;
   }
   const expDiffDays = Math.ceil(difference / (1000 * 3600 * 24));
   if (expDiffDays % 7 === 0 && expDiffDays !== 0 && expDiffDays !== null) {
     const weekNum = expDiffDays / 7;
-    const weekLabel = weekNum === 1 ? 'week' : 'weeks';
+    const weekLabel =
+      weekNum === 1 ? fluent('date-week') : fluent('date-week', 'plural');
     return `${weekNum} ${weekLabel}`;
   }
-  const dayLabel = expDiffDays === 1 ? 'day' : 'days';
+  const dayLabel =
+    expDiffDays === 1 ? fluent('date-day') : fluent('date-day', 'plural');
   return `${expDiffDays} ${dayLabel}`;
 }

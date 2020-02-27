@@ -464,7 +464,7 @@ export default {
       });
     },
     expiry(expiration) {
-      return expiryText(expiration);
+      return expiryText(this.fluent, expiration);
     },
     filterMemberList() {
       return this.allMembersList.filter(

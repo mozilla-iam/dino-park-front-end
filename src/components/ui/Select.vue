@@ -59,7 +59,10 @@ import Popover from '@/components/ui/Popover.vue';
 export default {
   name: 'Select',
   props: {
-    label: String,
+    label: {
+      type: String,
+      default: '',
+    },
     id: String,
     value: String,
     options: Array,
@@ -147,7 +150,7 @@ export default {
     selectedOption() {
       const { options, value } = this.$props;
       return (
-        options.find((o) => o.value === value) || this.nonOption || options[0]
+        options.find(o => o.value === value) || this.nonOption || options[0]
       );
     },
     selectedLabel() {

@@ -503,3 +503,8 @@ tiny-notification = Hello World
   .access-group-member-removed = [] was removed from the group
   .access-group-curators-updated = Curators successfully updated
   .access-group-expiration-updated = Access Group expiration has been successfully updated
+
+date-week = week
+  .plural = weeks
+date-day = day
+  .plural = days

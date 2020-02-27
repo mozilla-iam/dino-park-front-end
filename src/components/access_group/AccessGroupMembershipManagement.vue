@@ -58,10 +58,10 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import Icon from '@/components/ui/Icon.vue';
 import Button from '@/components/ui/Button.vue';
 import { expiryText } from '@/assets/js/component-utils';
-import { mapGetters } from 'vuex';
 
 export default {
   name: 'AccessGroupMembershipManagement',
@@ -107,7 +107,7 @@ export default {
       );
     },
     expiry() {
-      return expiryText(this.expiration);
+      return expiryText(this.fluent, this.expiration);
     },
     showEdit() {
       return this.isCurator(this.$store.state.user.uuid.value);
