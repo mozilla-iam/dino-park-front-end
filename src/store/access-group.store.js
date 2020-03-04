@@ -7,6 +7,12 @@ import {
   accessGroupInvitationsGetters,
 } from './access-group-invitations.store';
 import {
+  accessGroupRequestsState,
+  accessGroupRequestsActions,
+  accessGroupRequestsMutations,
+  accessGroupRequestsGetters,
+} from './access-group-requests.store';
+import {
   membersState,
   membersActions,
   membersMutations,
@@ -25,6 +31,7 @@ export default {
   namespaced: true,
   state: {
     ...accessGroupInvitationsState,
+    ...accessGroupRequestsState,
     ...membersState,
     ...termsState,
     group: null,
@@ -36,6 +43,7 @@ export default {
   },
   actions: {
     ...accessGroupInvitationsActions,
+    ...accessGroupRequestsActions,
     ...membersActions,
     ...termsActions,
     async fetchGroup({ commit }, groupName) {
@@ -107,6 +115,7 @@ export default {
   },
   mutations: {
     ...accessGroupInvitationsMutations,
+    ...accessGroupRequestsMutations,
     ...membersMutations,
     ...termsMutations,
     setGroup(state, accessGroup) {
@@ -130,6 +139,7 @@ export default {
   },
   getters: {
     ...accessGroupInvitationsGetters,
+    ...accessGroupRequestsGetters,
     ...membersGetters,
     ...termsGetters,
     getGroup: ({ group }) => group,

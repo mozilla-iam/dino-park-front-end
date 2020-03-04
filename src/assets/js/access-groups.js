@@ -89,6 +89,18 @@ export default class AccessGroups {
     }
   }
 
+  async getMembersFromOptions(groupName, options) {
+    try {
+      return await this.api.execute({
+        path: 'members/get',
+        endpointArguments: [groupName, options],
+      });
+    } catch (e) {
+      console.log(e.message);
+      throw new Error(e.message);
+    }
+  }
+
   async deleteMember(groupName, uuid) {
     try {
       return await this.api.execute({
@@ -175,12 +187,43 @@ export default class AccessGroups {
     }
   }
 
+  async sendRequest(groupName, members, expiration) {
+    try {
+      // await this.api.execute({
+      //   path: 'groupInvitations/post',
+      //   endpointArguments: [groupName],
+      //   dataArguments: {
+      //     uuid: member.uuid,
+      //     invitationExpiration: defaultGroupInvitationExpiration,
+      //     groupExpiration: parseInt(expiration),
+      //   },
+      // });
+      return 200;
+    } catch (e) {
+      console.log(e.message);
+      throw new Error(e.message);
+    }
+  }
+
   async deleteInvitation(groupName, uuid) {
     try {
       await this.api.execute({
         path: 'groupInvitations/delete',
         endpointArguments: [groupName, uuid],
       });
+      return 200;
+    } catch (e) {
+      console.log(e.message);
+      throw new Error(e.message);
+    }
+  }
+
+  async rejectRequest(groupName, uuid) {
+    try {
+      // await this.api.execute({
+      //   path: 'groupInvitations/delete',
+      //   endpointArguments: [groupName, uuid],
+      // });
       return 200;
     } catch (e) {
       console.log(e.message);
@@ -229,6 +272,19 @@ export default class AccessGroups {
         path: 'groupInvitations/get',
         endpointArguments: [groupName],
       });
+    } catch (e) {
+      console.log(e.message);
+      throw new Error(e.message);
+    }
+  }
+
+  async getAccessGroupMemberRequests(groupName) {
+    try {
+      // return await this.api.execute({
+      //   path: 'groupInvitations/get',
+      //   endpointArguments: [groupName],
+      // });
+      return [];
     } catch (e) {
       console.log(e.message);
       throw new Error(e.message);

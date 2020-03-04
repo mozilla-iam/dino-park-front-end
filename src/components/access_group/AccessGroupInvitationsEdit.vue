@@ -6,35 +6,87 @@
           'access-group_pending-invitations'
         )} (${totalInvitationsAndRequests})`
       "
+      :full="true"
     >
       <template v-slot:content>
-        <ul class="pending-invitations-container">
-          <li
-            class="pending-invitations-container__item"
-            v-for="(invitation, idx) in groupInvitations"
-            :key="idx"
-          >
-            <AccessGroupMemberListDisplay :member="invitation" />
-            <div class="pending-invitations-container__actions">
-              <Button
-                class="tertiary-action delete"
-                @click="handleRemoveClicked(invitation)"
-              >
-                <Icon id="x" :width="16" :height="16" />
-              </Button>
-            </div>
-          </li>
-        </ul>
+        <AccessGroupMembersTable
+          :data="groupInvitations"
+          :columns="invitationColumns"
+          :showHeaders="false"
+        >
+          <div slot="row-confirm" slot-scope="{ member }">
+            <p class="leave-confirm__description">
+              {{ fluent('access-group_members', 'remove-confirm') }}
+            </p>
+            <Button
+              class="primary-button"
+              @click="handleRemoveConfirmClick(member)"
+              >{{ fluent('access-group_members', 'remove-action') }}</Button
+            >
+            <Button
+              class="secondary-button"
+              @click="handleCancelClick(member)"
+              >{{ fluent('access-group_members', 'remove-cancel') }}</Button
+            >
+          </div>
+          <div slot="row-actions" slot-scope="{ member }">
+            <Button
+              class="tertiary-action delete"
+              @click="handleRemoveClicked(member)"
+            >
+              <Icon id="x" :width="16" :height="16" />
+            </Button>
+          </div>
+        </AccessGroupMembersTable>
       </template>
     </AccessGroupEditPanel>
     <AccessGroupEditPanel :title="fluent('access-group_invite-member')">
       <template v-slot:content>
-        <div class="members-list-container">
+        <div class="members-invite-container tags-selector">
           <TagSelector
+            class="tags-selector__value"
             v-model="newInvites"
             :getLabel="getTagLabel"
             :updateAutoComplete="updateAutoCompleteList"
           />
+          <p class="tags-selector__description">
+            {{
+              fluent('access-group_invite-member', 'tags-selector__description')
+            }}
+          </p>
+          <div class="content-area__row invite-expiration">
+            <div class="radio-control invite-expiration__toggle">
+              <input type="checkbox" v-model="newInvitesExpirationEnabled" />
+              {{
+                fluent(
+                  'access-group_invite-member',
+                  'invite-expiration__toggle'
+                )
+              }}
+            </div>
+          </div>
+          <div
+            class="new-invites-expiration"
+            v-if="newInvitesExpirationEnabled"
+          >
+            <label class="new-invites-expiration__label">
+              {{
+                fluent('access-group_invite-member', 'invite-expiration__label')
+              }}
+            </label>
+            <SelectCustom
+              class="new-invites-expiration__value"
+              :options="expirationOptions"
+              :isCustom="isExpirationCustom"
+              v-model="newInvitesExpiration"
+              :customUnits="
+                fluent(
+                  'access-group_invite-member',
+                  'invite-expiration__custom-unit'
+                )
+              "
+            />
+          </div>
         </div>
       </template>
       <template v-slot:footer>
@@ -60,9 +112,9 @@
           </div>
         </div>
         <div class="content-area__row multi-line" v-if="emailInviteTextEnabled">
-          <label class="content-area__label">{{
-            fluent('access-group_email-invite-text', 'description')
-          }}</label>
+          <label class="content-area__label">
+            {{ fluent('access-group_email-invite-text', 'description') }}
+          </label>
           <TextArea
             :rows="5"
             :maxlength="5000"
@@ -76,10 +128,9 @@
           :disabled="!emailInviteTextDirty"
           @click="handleUpdateInviteTextClicked"
           class="button--secondary button--action row-primary-action"
-          >{{
-            fluent('access-group_email-invite-text', 'update-invite-text')
-          }}</Button
         >
+          {{ fluent('access-group_email-invite-text', 'update-invite-text') }}
+        </Button>
       </template>
     </AccessGroupEditPanel>
   </section>
@@ -91,11 +142,14 @@ import TextInput from '@/components/ui/TextInput.vue';
 import TextArea from '@/components/ui/TextArea.vue';
 import Button from '@/components/ui/Button.vue';
 import Icon from '@/components/ui/Icon.vue';
+import SelectCustom from '@/components/ui/SelectCustom.vue';
 import AccessGroupEditPanel from '@/components/access_group/AccessGroupEditPanel.vue';
 import TagSelector from '@/components/ui/TagSelector.vue';
 import AccessGroups from '@/assets/js/access-groups';
 import { DisplayMemberViewModel } from '@/view_models/AccessGroupViewModel';
 import AccessGroupMemberListDisplay from '@/components/access_group/AccessGroupMemberListDisplay.vue';
+import AccessGroupMembersTable from '@/components/access_group/AccessGroupMembersTable.vue';
+import { expiryText } from '@/assets/js/component-utils';
 
 export default {
   name: 'AccessGroupInvitationsEdit',
@@ -107,6 +161,8 @@ export default {
     AccessGroupEditPanel,
     TagSelector,
     AccessGroupMemberListDisplay,
+    AccessGroupMembersTable,
+    SelectCustom,
   },
   props: [],
   mounted() {},
@@ -114,12 +170,54 @@ export default {
     const invitationConfig = this.$store.getters[
       'accessGroup/getInvitationConfig'
     ];
+    const groupExpiration = this.$store.getters['accessGroup/getExpiration'];
     return {
       newInvites: [],
       newInvitesDirty: false,
       emailInviteTextEnabled: invitationConfig !== null,
       emailInviteText: invitationConfig,
       emailInviteTextDirty: false,
+      newInvitesExpirationEnabled: false,
+      newInvitesExpiration: groupExpiration,
+      expirationOptions: [
+        {
+          label: this.fluent('access-group_expiration', 'one-year'),
+          value: 360,
+        },
+        {
+          label: this.fluent('access-group_expiration', 'two-years'),
+          value: 720,
+        },
+        {
+          label: this.fluent('access-group_expiration', 'no-expire'),
+          value: 0,
+        },
+        {
+          label: this.fluent('access-group_expiration', 'custom'),
+          value: 'custom',
+        },
+      ],
+      invitationColumns: [
+        {
+          header: null,
+        },
+        {
+          header: null,
+          // TODO: This should be either invitation or request once request happens
+          contentHandler: member => 'Invitation',
+        },
+        {
+          header: null,
+          contentHandler: member =>
+            `${fluent(
+              'access-group_invite-member',
+              'table-row-text'
+            )} ${this.expiry(member.expiration)}`,
+        },
+        {
+          header: null,
+        },
+      ],
     };
   },
   watch: {
@@ -142,6 +240,12 @@ export default {
       sendInvitations: 'accessGroup/sendInvitations',
       updateInviteText: 'accessGroup/updateInviteText',
     }),
+    expiry(expiration) {
+      return expiryText(this.fluent, expiration);
+    },
+    isExpirationCustom(optionValue) {
+      return optionValue === 'custom';
+    },
     handleResendClicked(invitation) {
       this.resendInvitation(invitation).then(result => {
         this.tinyNotification('access-group-invite-email-resent');
@@ -167,7 +271,7 @@ export default {
     handleAddNewInvitesClicked() {
       this.sendInvitations({
         invites: this.newInvites,
-        expiration: this.groupExpiration,
+        expiration: this.newInvitesExpiration,
       }).then(result => {
         this.tinyNotification('access-group-members-invite-success');
         this.newInvites = [];
@@ -186,6 +290,7 @@ export default {
       groupName: 'accessGroup/getGroupName',
       groupExpiration: 'accessGroup/getExpiration',
       groupInvitations: 'accessGroup/getInvitations',
+      groupRequests: 'accessGroup/getRequests',
     }),
     // TODO: Eventually include request numbers in this number
     totalInvitationsAndRequests() {
@@ -244,5 +349,21 @@ export default {
 .content-area__row.multi-line .content-area__value {
   width: 100%;
   margin-top: 1em;
+}
+
+.tags-selector .tags-selector__description {
+  color: var(--gray-40);
+}
+
+.new-invites-expiration {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.new-invites-expiration .new-invites-expiration__label {
+  color: var(--gray-40);
+  margin-right: 1em;
 }
 </style>

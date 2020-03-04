@@ -9,8 +9,7 @@
     <div class="member-list-description">
       <p class="member-list-description__header">{{ member.name }}</p>
       <p class="member-list-description__sub">
-        <Icon id="crown" :width="16" :height="16" v-if="isCurator" />
-        {{ member.added_by.name }}
+        {{ subText }}
       </p>
     </div>
   </div>
@@ -28,17 +27,22 @@ export default {
   },
   props: {
     member: Object,
-    isCurator: {
-      type: Boolean,
-      default: false,
-    },
   },
   mounted() {},
   data() {
     return {};
   },
   methods: {},
-  computed: {},
+  computed: {
+    subText() {
+      if (this.member.added_by.uuid === null) {
+        return ' ';
+      }
+      return `${this.fluent('member-list-description__sub')} ${
+        this.member.added_by.name
+      }`;
+    },
+  },
 };
 </script>
 

@@ -1,17 +1,25 @@
 <template>
-  <div class="membership-management-container">
+  <div class="group-details">
     <p class="primary-data-row">{{ membersCountText }}</p>
     <a class="primary-data-row" v-if="group.terms" :href="tosUrl">{{
       fluent('access-group_details', 'terms')
     }}</a>
+    <p class="primary-data-row">
+      {{
+        `${fluent(
+          'access-group_details',
+          'create-date-text'
+        )} ${groupCreatedDate}`
+      }}
+    </p>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import Icon from '@/components/ui/Icon.vue';
 import LinksMixin from '@/components/_mixins/LinksMixin.vue';
 import UserPicture from '@/components/ui/UserPicture.vue';
-import { mapGetters } from 'vuex';
 
 export default {
   name: 'AccessGroupDetails',
@@ -37,8 +45,29 @@ export default {
             'members'
           )}`;
     },
+    groupCreatedDate() {
+      const date = new Date(this.group.created);
+      return `${date.getDate()} ${date.toLocaleString('default', {
+        month: 'long',
+      })} ${date.getFullYear()}`;
+    },
   },
 };
 </script>
 
-<style></style>
+<style>
+.group-details {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.group-details .primary-data-row {
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+
+.group-details .primary-data-row:last-child {
+  margin-bottom: 0;
+}
+</style>

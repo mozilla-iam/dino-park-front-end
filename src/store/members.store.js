@@ -16,6 +16,18 @@ export const membersActions = {
       throw new Error(e.message);
     }
   },
+  async fetchMembersWithOptions({ commit }, { groupName, options }) {
+    try {
+      const { members } = await accessGroupsService.getMembersFromOptions(
+        groupName,
+        options
+      );
+      commit('setMembers', members);
+      return members;
+    } catch (e) {
+      throw new Error(e.message);
+    }
+  },
   async removeMember({ state, dispatch }, member) {
     const groupName = state.group.name;
     try {

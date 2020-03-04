@@ -69,9 +69,10 @@ export class AbbDisplayMemberViewModel {
     this.processData(data);
   }
 
+  // TODO: We need to come up with a better, more reliable way to determine whether someone has been "added by" no one
   processData(data) {
     try {
-      this.uuid = data.user_uuid;
+      this.uuid = !data.first_name && !data.last_name ? null : data.user_uuid;
       this.name =
         !data.first_name && !data.last_name
           ? defaultUserName
@@ -174,6 +175,7 @@ export class GroupViewModel {
     this.history = [];
     this.expiration = 0;
     this.error = false;
+    this.created = '';
     this.processData(data);
   }
 
@@ -185,6 +187,7 @@ export class GroupViewModel {
       this.description = data.description;
       this.terms = data.terms;
       this.expiration = data.expiration;
+      this.created = data.created;
     } catch (e) {
       this.error = e.message;
       console.error('Group data error: ', e.message);

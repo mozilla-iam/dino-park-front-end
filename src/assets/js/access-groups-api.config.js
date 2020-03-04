@@ -1,4 +1,10 @@
 const API_PREFIX = '/groups/api/v1/';
+const SORT_KEYS = {
+  'role-asc': 'RoleAsc',
+  'role-desc': 'RoleDesc',
+  'expiration-asc': 'ExpirationAsc',
+  'expiration-desc': 'ExpirationDesc',
+};
 export default {
   groups: {
     endpoint: `${API_PREFIX}groups`,
@@ -30,7 +36,26 @@ export default {
   },
   members: {
     endpoint: `${API_PREFIX}members`,
-    get: true,
+    get: (endpoint, groupName, options = {}) => {
+      const qsArray = [];
+      if (options.hasOwnProperty('search') && options.search) {
+        qsArray.push(`q=${options.search}`);
+      }
+      if (options.hasOwnProperty('numResults') && options.numResults) {
+        qsArray.push(`s=${options.numResults}`);
+      }
+      if (
+        options.hasOwnProperty('sort') &&
+        options.sort &&
+        SORT_KEYS.hasOwnProperty(options.sort)
+      ) {
+        qsArray.push(`by=${SORT_KEYS[options.sort]}`);
+      }
+      if (!qsArray.length) {
+        return `${endpoint}/${groupName}`;
+      }
+      return `${endpoint}/${groupName}?${qsArray.join('&')}`;
+    },
     delete: (endpoint, groupName, uuid) => `${endpoint}/${groupName}/${uuid}`,
     renew: [
       (endpoint, groupName, uuid) => `${endpoint}/${groupName}/${uuid}/renew`,

@@ -267,6 +267,8 @@ export default class DPRouter {
         }
         if (to.name === ACCESS_GROUP_EDIT_PAGE) {
           promises.push(() => store.dispatch('accessGroup/fetchInvitations'));
+          promises.push(() => store.dispatch('accessGroup/fetchRequests'));
+          resolvers.push(data => {});
           resolvers.push(data => {});
         }
       }

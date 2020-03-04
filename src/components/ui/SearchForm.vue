@@ -9,9 +9,7 @@
       <legend class="visually-hidden">{{ this.fluent('search') }}</legend>
       <div class="search-form__fields">
         <label for="search-query" class="visually-hidden">
-          {{
-          this.fluent('search_input')
-          }}
+          {{ this.fluent('search_input') }}
         </label>
         <!-- TODO: fix placeholder fluent. search 'searchFormLabel' and replace with fluent in all code -->
         <input
@@ -31,9 +29,7 @@
         >
           <Icon id="x" :width="20" :height="20" />
           <span class="visually-hidden">
-            {{
-            this.fluent('search_input', 'clear')
-            }}
+            {{ this.fluent('search_input', 'clear') }}
           </span>
         </button>
         <button type="submit" class="search-form__submit">
@@ -63,9 +59,9 @@ export default {
       if (!this.searchQuery.length > 0) {
         this.$refs.searchQueryField.focus();
       } else {
-        this.searchFormHandler(this.searchQuery, this.who);
         this.$emit('close-search-form');
       }
+      this.searchFormHandler(this.searchQuery, this.who);
     },
     clearQuery() {
       this.searchQuery = '';
