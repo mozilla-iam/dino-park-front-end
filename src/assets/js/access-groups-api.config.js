@@ -107,6 +107,7 @@ export default {
   },
   users: {
     endpoint: `${API_PREFIX}users`,
-    get: (endpoint, q, groupName) => `${endpoint}?q=${q}&g=${groupName}&c=true`,
+    get: (endpoint, q, groupName, includeCurators = false) =>
+      `${endpoint}?q=${q}&g=${groupName}&c=${includeCurators}`,
   },
 };

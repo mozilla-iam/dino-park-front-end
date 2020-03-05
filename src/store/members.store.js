@@ -10,7 +10,9 @@ export const membersActions = {
   async fetchMembers({ commit }, groupName) {
     try {
       // Change this later
-      const { members } = await accessGroupsService.getAllMembers(groupName);
+      const { members } = await accessGroupsService.getInitialMembers(
+        groupName
+      );
       commit('setMembers', members);
       commit('setCurators', members);
       return members;

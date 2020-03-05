@@ -77,7 +77,7 @@ export default class AccessGroups {
    * Members Methods
    */
 
-  async getAllMembers(groupName) {
+  async getInitialMembers(groupName) {
     try {
       return await this.api.execute({
         path: 'members/get',
@@ -356,7 +356,6 @@ export default class AccessGroups {
   }
 
   static getAccessGroupUpdateData(data) {
-    console.log('getting data: ', data);
     return {
       typ: 'type' in data ? data.type : '',
       description: 'description' in data ? data.description : '',
@@ -364,15 +363,13 @@ export default class AccessGroups {
     };
   }
 
-  static async getUsers(q, groupName) {
+  static async getUsers(q, groupName, includeCurators = false) {
     try {
       const api = new Api();
       let users = await api.execute({
         path: 'users/get',
-        endpointArguments: [q, groupName],
+        endpointArguments: [q, groupName, includeCurators],
       });
-      // TODO: Replace this with: users = users.filter(({ email }) => email !== null);
-      users = users.filter(({ first_name }) => first_name !== null);
       return users;
     } catch (e) {
       console.log(e.message);
