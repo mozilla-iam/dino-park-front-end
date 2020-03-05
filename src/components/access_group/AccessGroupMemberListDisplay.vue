@@ -8,9 +8,7 @@
     />
     <div class="member-list-description">
       <p class="member-list-description__header">{{ member.name }}</p>
-      <p class="member-list-description__sub">
-        {{ subText }}
-      </p>
+      <p class="member-list-description__sub">{{ subText }}</p>
     </div>
   </div>
 </template>
@@ -35,7 +33,10 @@ export default {
   methods: {},
   computed: {
     subText() {
-      if (this.member.added_by.uuid === null) {
+      if (
+        !this.member.added_by.hasOwnProperty('uuid') ||
+        this.member.added_by.uuid === null
+      ) {
         return ' ';
       }
       return `${this.fluent('member-list-description__sub')} ${

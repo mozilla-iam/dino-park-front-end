@@ -13,9 +13,9 @@
             "
           >
             {{ fluent('access-group_description', 'tooltip') }}
-            <a href="#">
-              {{ fluent('access-group_description', 'tooltip_link') }}</a
-            >
+            <a href="#">{{
+              fluent('access-group_description', 'tooltip_link')
+            }}</a>
           </Tooltip>
         </div>
         <EditButton
@@ -82,7 +82,6 @@ export default {
       accessGroup: 'accessGroup/getGroup',
       memberCount: 'accessGroup/memberCount',
       isCurator: 'accessGroup/isCurator',
-      isMember: 'accessGroup/isMember',
     }),
     membersCountText() {
       return this.memberCount === 1
@@ -96,12 +95,15 @@ export default {
       return this.isCurator(this.$store.state.user.uuid.value);
     },
     showLeave() {
-      return this.isMember(this.$store.state.user.uuid.value);
+      return this.isMember;
     },
   },
   data() {
     return {
       section: 'information',
+      isMember: this.$store.getters['accessGroup/isMember'](
+        this.$store.state.user.uuid.value
+      ),
     };
   },
 };

@@ -239,6 +239,17 @@ export default class DPRouter {
         // cond: if you're going from the view page to the edit page
         (to.name === ACCESS_GROUP_EDIT_PAGE && from.name === ACCESS_GROUP_PAGE)
       ) {
+        if (
+          store.getters['accessGroup/getMemberCount'] !==
+          store.getters['accessGroup/getMembers'].length
+        ) {
+          promises.push(() =>
+            store.dispatch('accessGroup/fetchMembers', to.params.groupname)
+          );
+          resolvers.push(data => {});
+          await resolvePromisesSerially(promises, resolvers);
+          store.dispatch('completeLoading');
+        }
         next();
         return;
       }

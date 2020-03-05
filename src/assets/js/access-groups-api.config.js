@@ -5,6 +5,11 @@ const SORT_KEYS = {
   'expiration-asc': 'ExpirationAsc',
   'expiration-desc': 'ExpirationDesc',
 };
+const ROLE_KEYS = {
+  all: 'Any',
+  curators: 'Curator',
+  members: 'Member',
+};
 export default {
   groups: {
     endpoint: `${API_PREFIX}groups`,
@@ -50,6 +55,13 @@ export default {
         SORT_KEYS.hasOwnProperty(options.sort)
       ) {
         qsArray.push(`by=${SORT_KEYS[options.sort]}`);
+      }
+      if (
+        options.hasOwnProperty('role') &&
+        options.role &&
+        ROLE_KEYS.hasOwnProperty(options.role)
+      ) {
+        qsArray.push(`r=${ROLE_KEYS[options.role]}`);
       }
       if (!qsArray.length) {
         return `${endpoint}/${groupName}`;

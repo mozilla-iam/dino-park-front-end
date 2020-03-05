@@ -4,6 +4,7 @@ import AccessGroups from '@/assets/js/access-groups';
 const accessGroupsService = new AccessGroups();
 export const membersState = {
   members: null,
+  curators: null,
 };
 export const membersActions = {
   async fetchMembers({ commit }, groupName) {
@@ -11,6 +12,7 @@ export const membersActions = {
       // Change this later
       const { members } = await accessGroupsService.getAllMembers(groupName);
       commit('setMembers', members);
+      commit('setCurators', members);
       return members;
     } catch (e) {
       throw new Error(e.message);
@@ -88,13 +90,26 @@ export const membersMutations = {
       throw new Error(e.message);
     }
   },
+  setCurators(state, memberData) {
+    try {
+      state.curators = [];
+      for (const aMember of memberData) {
+        const member = new DisplayMemberViewModel(aMember);
+        if (member.isCurator()) {
+          state.curators.push(member);
+        }
+      }
+    } catch (e) {
+      state.error = e.message;
+      throw new Error(e.message);
+    }
+  },
 };
 export const membersGetters = {
   getMembers: ({ members }) => members,
-  getCurators: ({ members }) => members.filter(member => member.isCurator()),
-  isCurator: ({ members }) => uuid =>
-    members.filter(member => member.uuid === uuid && member.isCurator())
-      .length > 0,
+  getCurators: ({ curators }) => curators,
+  isCurator: ({ curators }) => uuid =>
+    curators.filter(curator => curator.uuid === uuid).length > 0,
   isMember: ({ members }) => uuid =>
     members.filter(member => member.uuid === uuid).length > 0,
 };

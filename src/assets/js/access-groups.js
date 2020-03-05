@@ -81,7 +81,7 @@ export default class AccessGroups {
     try {
       return await this.api.execute({
         path: 'members/get',
-        endpointArguments: [groupName],
+        endpointArguments: [groupName, { sort: 'role-asc' }],
       });
     } catch (e) {
       console.log(e.message);

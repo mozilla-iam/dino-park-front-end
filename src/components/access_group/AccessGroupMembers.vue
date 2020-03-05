@@ -16,14 +16,15 @@
           v-for="(tab, idx) in tabList"
           :key="idx"
           @click="handleTabClick(tab)"
+          tabindex="0"
         >
           {{ tab.label }}
         </li>
       </ul>
     </nav>
-    <template v-if="filteredListDisplay.length > 0">
+    <template v-if="getMembers.length > 0">
       <ul class="members-container__list">
-        <li v-for="(member, idx) in filteredListDisplay" :key="idx">
+        <li v-for="(member, idx) in getMembers" :key="idx">
           <AccessGroupMemberItem class="list-item-container" :member="member" />
         </li>
       </ul>
@@ -48,7 +49,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import EditButton from '@/components/ui/EditButton.vue';
 import AccessGroupMemberItem from '@/components/access_group/AccessGroupMemberItem.vue';
 import SearchForm from '@/components/ui/SearchForm.vue';
@@ -72,24 +73,31 @@ export default {
     title: String,
   },
   methods: {
+    ...mapActions({
+      getMembersWithOptions: 'accessGroup/fetchMembersWithOptions',
+    }),
     // eslint-disable-next-line
     searchFormHandler(searchQuery, scope) {
-      if (searchQuery === '') {
-        this.filteredList = this.memberList;
-        return searchQuery;
-      }
-      this.filteredList = this.memberList.filter(member => {
-        return (
-          member.name.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1
-        );
+      this.memberListOptions.search = searchQuery;
+      this.getMembersWithOptions({
+        groupName: this.groupName,
+        options: this.memberListOptions,
       });
-      return searchQuery;
     },
     handleTabClick(tab) {
       this.activeTab = tab.key;
+      this.memberListOptions.role = tab.key;
+      this.getMembersWithOptions({
+        groupName: this.groupName,
+        options: this.memberListOptions,
+      });
     },
     clearSearchHandler() {
-      this.filteredList = this.memberList;
+      this.memberListOptions.search = '';
+      this.getMembersWithOptions({
+        groupName: this.groupName,
+        options: this.memberListOptions,
+      });
     },
     isTabActive(tab) {
       return this.activeTab === tab.key;
@@ -104,26 +112,18 @@ export default {
   computed: {
     ...mapGetters({
       getMembers: 'accessGroup/getMembers',
+      groupName: 'accessGroup/getGroupName',
     }),
-    filteredListTwoColumnDisplay() {
-      return getTwoColumnGridArraySplitFromArray(this.filteredListDisplay);
-    },
-    filteredListDisplay() {
-      return this.filteredList.filter(
-        member =>
-          (this.activeTab === 'curators' && member.isCurator()) ||
-          (this.activeTab === 'members' && member.isMember()) ||
-          this.activeTab === 'all'
-      );
-    },
   },
   data() {
     const fullMemberList = this.$store.getters['accessGroup/getMembers'];
     return {
-      search: '',
+      memberListOptions: {
+        search: '',
+        role: defaultTab,
+        sort: 'role-asc',
+      },
       filter: '',
-      filteredList: fullMemberList.slice(0),
-      memberList: fullMemberList.slice(0),
       tabList: [
         {
           key: 'all',
