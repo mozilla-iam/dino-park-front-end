@@ -65,7 +65,7 @@ export default {
     },
     // TODO: This needs to be done in the vuex model
     formatDate(dateString) {
-      return new Date(dateString).toLocaleDateString('en-US');
+      return new Date(dateString).toLocaleDateString();
     },
   },
   computed: {
