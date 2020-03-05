@@ -1,17 +1,13 @@
 <template>
   <main class="group-terms">
-    <a
-      class="button group-terms__back-action"
-      :href="backUrl"
-      @click="handleBackClicked"
-    >
+    <RouterLink class="button group-terms__back-action" :to="-1">
       <Icon
         class="group-terms__back-icon"
         id="chevron-left"
         :width="17"
         :height="17"
       />{{ fluent('access-group_terms', 'back-action') }}
-    </a>
+    </RouterLink>
     <section class="primary-area">
       <h1 class="group-terms__header">
         {{ fluent('access-group_terms', 'heading') }}
@@ -65,9 +61,6 @@ export default {
       setLoading: 'setLoading',
       completeLoading: 'completeLoading',
     }),
-    handleBackClicked() {
-      this.$router.go(-1);
-    },
     handleSubmitClicked() {
       if (this.termsAccepted) {
         this.acceptTerms();
