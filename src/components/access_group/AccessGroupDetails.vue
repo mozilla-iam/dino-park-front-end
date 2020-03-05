@@ -1,9 +1,18 @@
 <template>
   <div class="group-details">
     <p class="primary-data-row">{{ membersCountText }}</p>
-    <a class="primary-data-row" v-if="group.terms" :href="tosUrl">{{
-      fluent('access-group_details', 'terms')
-    }}</a>
+    <RouterLink
+      class="primary-data-row"
+      v-if="group.terms"
+      :to="{
+        name: tosName,
+        params: {
+          groupname: groupName,
+        },
+      }"
+    >
+      {{ fluent('access-group_details', 'terms') }}
+    </RouterLink>
     <p class="primary-data-row">
       {{
         `${fluent(
@@ -20,6 +29,7 @@ import { mapGetters } from 'vuex';
 import Icon from '@/components/ui/Icon.vue';
 import LinksMixin from '@/components/_mixins/LinksMixin.vue';
 import UserPicture from '@/components/ui/UserPicture.vue';
+import { ACCESS_GROUP_TOS_PAGE } from '@/router';
 
 export default {
   name: 'AccessGroupDetails',
@@ -32,10 +42,16 @@ export default {
       default: true,
     },
   },
+  data() {
+    return {
+      tosName: ACCESS_GROUP_TOS_PAGE,
+    };
+  },
   computed: {
     ...mapGetters({
       group: 'accessGroup/getGroup',
       memberCount: 'accessGroup/getMemberCount',
+      groupName: 'accessGroup/getGroupName',
     }),
     membersCountText() {
       return this.memberCount === 1

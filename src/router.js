@@ -45,6 +45,9 @@ const ACCESS_GROUP_ROUTES = [
   {
     path: '/a/:groupname',
     component: PageAccessGroup,
+    params: {
+      groupname: ':groupname',
+    },
     props: true,
     children: [
       {
