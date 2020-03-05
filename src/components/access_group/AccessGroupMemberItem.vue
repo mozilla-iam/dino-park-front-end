@@ -3,7 +3,15 @@
     :class="{ 'list-item': true, primary: isCurator, expanded: showExpandable }"
   >
     <article class="list-item__main">
-      <div class="member-view">
+      <RouterLink
+        :to="{
+          name: 'Profile',
+          params: {
+            username: member.username,
+          },
+        }"
+        class="member-view"
+      >
         <UserPicture
           :avatar="{ picture: member.picture, username: member.username }"
           class="member-view__image"
@@ -17,13 +25,15 @@
             {{ member.role }}
           </p>
         </div>
+      </RouterLink>
+      <div class="member-action-container">
+        <button
+          :class="{ 'member-action': true, expanded: showExpandable }"
+          v-on:click="toggleExpandable"
+        >
+          <Icon id="info" :width="24" :height="24" />
+        </button>
       </div>
-      <button
-        :class="{ 'member-action': true, expanded: showExpandable }"
-        v-on:click="toggleExpandable"
-      >
-        <Icon id="info" :width="24" :height="24" />
-      </button>
     </article>
     <aside class="list-item__expandable" v-if="showExpandable">
       <p class="expandable-row">
@@ -38,7 +48,16 @@
         <span class="expandable-row__label">{{
           fluent('access-group_members', 'member-expandable_added-by')
         }}</span>
-        <span class="expandable-row__content">{{ member.added_by.name }}</span>
+        <RouterLink
+          class="expandable-row__content"
+          :to="{
+            name: 'Profile',
+            params: {
+              username: member.added_by.username,
+            },
+          }"
+          >{{ member.added_by.name }}</RouterLink
+        >
       </p>
     </aside>
   </div>
@@ -97,14 +116,19 @@ export default {
 
 .list-item .list-item__main {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   width: 100%;
 }
 
 .list-item__main .member-view {
   display: flex;
+  flex: 6;
+  text-decoration: none;
 }
 
+.list-item__main .member-view:hover {
+  background: #ffcccc;
+}
 .member-view .member-view__image {
   margin: 1em;
   width: 3.5em;
@@ -138,14 +162,29 @@ export default {
   margin-right: 0.25em;
 }
 
+.list-item__main .member-action-container {
+  flex: 1;
+}
+
+.list-item__main .member-action-container:hover {
+  background: #ffcccc;
+}
+
 .list-item__main .member-action {
   width: 7em;
-  margin: 0.5em;
-  background: var(--white);
+  margin: 0.5em 0.5em 0.5em 0;
+  background: transparent;
   border-left: 2px solid var(--gray-20);
   border-right: none;
   border-top: none;
   border-bottom: none;
+  width: 100%;
+  height: calc(100% - 1em);
+  display: block;
+}
+
+.list-item__main .member-action-container:hover .member-action {
+  border-left: 2px solid transparent;
 }
 
 .list-item__main .member-action.expanded svg {
