@@ -1,17 +1,5 @@
 <script>
 export default {
-  computed: {
-    tosUrl() {
-      if (this.$route.path) {
-        let tosPath = '/tos';
-        if (this.$route.path.charAt(this.$route.path.length - 1) === '/') {
-          tosPath = 'tos';
-        }
-        return `${this.$route.path}${tosPath}`;
-      }
-      return '';
-    },
-  },
   data() {
     return {
       globalLinks: {

@@ -5,7 +5,7 @@
     <article class="list-item__main">
       <div class="member-view">
         <UserPicture
-          :avatar="{ picture: member.picture, username: member.name }"
+          :avatar="{ picture: member.picture, username: member.username }"
           class="member-view__image"
           :size="40"
           :isStaff="true"
@@ -69,9 +69,6 @@ export default {
     },
   },
   computed: {
-    addedByProfile() {
-      return `/p/${this.member.addedByMemberId}`;
-    },
     isCurator() {
       return this.member.role === DISPLAY_MEMBER_ROLES[MEMBER_IDEX.Curator];
     },

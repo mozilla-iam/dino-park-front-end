@@ -242,7 +242,10 @@ export default class DPRouter {
         // cond: if you're going from the view page to the edit page
         (to.name === ACCESS_GROUP_EDIT_PAGE && from.name === ACCESS_GROUP_PAGE)
       ) {
-        if (
+        if (to.name === ACCESS_GROUP_CREATE_PAGE) {
+          next();
+          return;
+        } else if (
           store.getters['accessGroup/getMemberCount'] !==
           store.getters['accessGroup/getMembers'].length
         ) {

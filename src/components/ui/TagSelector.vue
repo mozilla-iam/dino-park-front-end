@@ -45,7 +45,7 @@
 <script>
 import Icon from '@/components/ui/Icon.vue';
 import AccessGroupMemberListDisplay from '@/components/access_group/AccessGroupMemberListDisplay.vue';
-import _ from 'lodash';
+import throttle from 'lodash.throttle';
 
 /**
  * TODO: Make this more general of a component once this works for the access group component
@@ -108,7 +108,7 @@ export default {
       this.tagsDisplay.splice(idx, 1);
       this.$emit('input', this.tagsDisplay);
     },
-    onInput: _.throttle(function(e) {
+    onInput: throttle(function(e) {
       if (!e || e.target.value === '') {
         if (e.target.value === '') {
           this.autoCompleteList = [];

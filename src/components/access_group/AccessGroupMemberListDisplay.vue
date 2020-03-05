@@ -1,7 +1,7 @@
 <template>
   <div class="member-list-display">
     <UserPicture
-      :avatar="{ picture: member.picture, username: member.name }"
+      :avatar="{ picture: member.picture, username: member.username }"
       class="curator-image"
       :size="24"
       :isStaff="false"
