@@ -26,28 +26,26 @@
           </p>
         </div>
       </RouterLink>
-      <div class="member-action-container">
-        <button
-          :class="{ 'member-action': true, expanded: showExpandable }"
-          v-on:click="toggleExpandable"
-        >
-          <Icon id="info" :width="24" :height="24" />
-        </button>
-      </div>
+      <button
+        :class="{ 'member-action': true, expanded: showExpandable }"
+        v-on:click="toggleExpandable"
+      >
+        <Icon id="info" :width="24" :height="24" />
+      </button>
     </article>
     <aside class="list-item__expandable" v-if="showExpandable">
       <p class="expandable-row">
-        <span class="expandable-row__label">{{
-          fluent('access-group_members', 'member-expandable_member-since')
-        }}</span>
-        <span class="expandable-row__content">
-          {{ formatDate(member.since) }}
+        <span class="expandable-row__label">
+          {{ fluent('access-group_members', 'member-expandable_member-since') }}
         </span>
+        <span class="expandable-row__content">{{
+          formatDate(member.since)
+        }}</span>
       </p>
       <p class="expandable-row" v-if="!member.added_by.isAnonymous()">
-        <span class="expandable-row__label">{{
-          fluent('access-group_members', 'member-expandable_added-by')
-        }}</span>
+        <span class="expandable-row__label">
+          {{ fluent('access-group_members', 'member-expandable_added-by') }}
+        </span>
         <RouterLink
           class="expandable-row__content"
           :to="{
@@ -110,6 +108,11 @@ export default {
   flex-direction: column;
 }
 
+.list-item:hover {
+  box-shadow: 0 0 0.1em 0.25em #b3d3fc;
+  border-radius: var(--cardRadius);
+}
+
 .list-item.expanded {
   height: auto;
 }
@@ -126,9 +129,6 @@ export default {
   text-decoration: none;
 }
 
-.list-item__main .member-view:hover {
-  background: #ffcccc;
-}
 .member-view .member-view__image {
   margin: 1em;
   width: 3.5em;
@@ -147,6 +147,10 @@ export default {
   color: var(--black);
 }
 
+.list-item:hover .info-header {
+  color: var(--blue-60);
+}
+
 .member-view__info .info-sub {
   margin-top: 0;
 }
@@ -162,14 +166,6 @@ export default {
   margin-right: 0.25em;
 }
 
-.list-item__main .member-action-container {
-  flex: 1;
-}
-
-.list-item__main .member-action-container:hover {
-  background: #ffcccc;
-}
-
 .list-item__main .member-action {
   width: 7em;
   margin: 0.5em 0.5em 0.5em 0;
@@ -178,8 +174,6 @@ export default {
   border-right: none;
   border-top: none;
   border-bottom: none;
-  width: 100%;
-  height: calc(100% - 1em);
   display: block;
 }
 
