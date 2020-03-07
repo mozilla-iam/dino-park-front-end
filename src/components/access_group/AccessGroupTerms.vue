@@ -1,12 +1,17 @@
 <template>
   <main class="group-terms">
-    <RouterLink class="button group-terms__back-action" :to="-1">
+    <RouterLink
+      class="button group-terms__back-action"
+      v-on:click.native="goBack"
+      to="#"
+    >
       <Icon
         class="group-terms__back-icon"
         id="chevron-left"
         :width="17"
         :height="17"
-      />{{ fluent('access-group_terms', 'back-action') }}
+      />
+      {{ fluent('access-group_terms', 'back-action') }}
     </RouterLink>
     <section class="primary-area">
       <h1 class="group-terms__header">
@@ -32,9 +37,9 @@
           />
           {{ fluent('access-group_terms', 'do-not-accept') }}
         </div>
-        <Button class="button--primary" @click="handleSubmitClicked">{{
-          fluent('access-group_terms', 'submit-changes')
-        }}</Button>
+        <Button class="button--primary" @click="handleSubmitClicked">
+          {{ fluent('access-group_terms', 'submit-changes') }}
+        </Button>
       </footer>
     </section>
   </main>
@@ -53,6 +58,9 @@ export default {
   },
   props: {
     groupname: String,
+  },
+  mounted() {
+    console.log('router from: ', this.$router, this.$route);
   },
   methods: {
     ...mapActions({
@@ -89,9 +97,15 @@ export default {
         this.getInvitationByName(this.$route.params.groupname)
       ).then(() => {
         this.$router.go(-1);
-        this.tinyNotification('access-group-terms-rejected', groupname);
+        this.tinyNotification(
+          'access-group-terms-rejected',
+          this.$route.params.groupname
+        );
         this.completeLoading();
       });
+    },
+    goBack() {
+      this.$router.go(-1);
     },
   },
   data() {
