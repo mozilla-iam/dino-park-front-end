@@ -209,7 +209,7 @@ export default {
         {
           header: null,
           contentHandler: member =>
-            `${fluent(
+            `${this.fluent(
               'access-group_invite-member',
               'table-row-text'
             )} ${this.expiry(member.expiration)}`,
