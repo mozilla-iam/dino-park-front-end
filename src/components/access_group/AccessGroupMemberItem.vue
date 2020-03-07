@@ -19,7 +19,7 @@
           :isStaff="true"
         />
         <div class="member-view__info">
-          <p class="info-header">{{ member.name }}</p>
+          <p class="info-header">{{ member.displayName }}</p>
           <p class="info-sub">
             <Icon v-if="isCurator" id="crown-fill" :width="16" :height="16" />
             {{ member.role }}
@@ -35,17 +35,17 @@
     </article>
     <aside class="list-item__expandable" v-if="showExpandable">
       <p class="expandable-row">
-        <span class="expandable-row__label">
-          {{ fluent('access-group_members', 'member-expandable_member-since') }}
-        </span>
-        <span class="expandable-row__content">{{
-          formatDate(member.since)
+        <span class="expandable-row__label">{{
+          fluent('access-group_members', 'member-expandable_member-since')
         }}</span>
+        <span class="expandable-row__content">
+          {{ formatDate(member.since) }}
+        </span>
       </p>
       <p class="expandable-row" v-if="!member.added_by.isAnonymous()">
-        <span class="expandable-row__label">
-          {{ fluent('access-group_members', 'member-expandable_added-by') }}
-        </span>
+        <span class="expandable-row__label">{{
+          fluent('access-group_members', 'member-expandable_added-by')
+        }}</span>
         <RouterLink
           class="expandable-row__content"
           :to="{
@@ -54,7 +54,7 @@
               username: member.added_by.username,
             },
           }"
-          >{{ member.added_by.name }}</RouterLink
+          >{{ member.added_by.displayName }}</RouterLink
         >
       </p>
     </aside>

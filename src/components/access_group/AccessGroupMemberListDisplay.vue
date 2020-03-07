@@ -7,7 +7,7 @@
       :isStaff="false"
     />
     <div class="member-list-description">
-      <p class="member-list-description__header">{{ member.name }}</p>
+      <p class="member-list-description__header">{{ member.displayName }}</p>
       <p class="member-list-description__sub">{{ subText }}</p>
     </div>
   </div>
@@ -40,7 +40,7 @@ export default {
         return ' ';
       }
       return `${this.fluent('member-list-description__sub')} ${
-        this.member.added_by.name
+        this.member.added_by.displayName
       }`;
     },
   },

@@ -29,7 +29,11 @@
               >{{ fluent('access-group_members', 'remove-cancel') }}</Button
             >
           </div>
-          <div slot="row-actions" slot-scope="{ member }">
+          <div
+            slot="row-actions"
+            slot-scope="{ member }"
+            class="pending-invitations-container__actions"
+          >
             <Button
               class="tertiary-action delete"
               @click="handleRemoveClicked(member)"
@@ -112,9 +116,9 @@
           </div>
         </div>
         <div class="content-area__row multi-line" v-if="emailInviteTextEnabled">
-          <label class="content-area__label">
-            {{ fluent('access-group_email-invite-text', 'description') }}
-          </label>
+          <label class="content-area__label">{{
+            fluent('access-group_email-invite-text', 'description')
+          }}</label>
           <TextArea
             :rows="5"
             :maxlength="5000"
@@ -128,9 +132,10 @@
           :disabled="!emailInviteTextDirty"
           @click="handleUpdateInviteTextClicked"
           class="button--secondary button--action row-primary-action"
+          >{{
+            fluent('access-group_email-invite-text', 'update-invite-text')
+          }}</Button
         >
-          {{ fluent('access-group_email-invite-text', 'update-invite-text') }}
-        </Button>
       </template>
     </AccessGroupEditPanel>
   </section>
@@ -257,7 +262,7 @@ export default {
       });
     },
     getTagLabel(curator) {
-      return curator.name;
+      return curator.displayName;
     },
     updateAutoCompleteList(search) {
       return new Promise((res, rej) => {
@@ -323,10 +328,11 @@ export default {
   background: var(--gray-20);
 }
 
-.pending-invitations-container__item .pending-invitations-container__actions {
+.pending-invitations-container__actions {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: flex-end;
 }
 
 .pending-invitations-container__actions .secondary-button {
@@ -344,6 +350,7 @@ export default {
   color: #ff0039;
   padding-right: 0;
   display: inline-block;
+  margin-right: 1em;
 }
 
 .content-area__row.multi-line .content-area__value {

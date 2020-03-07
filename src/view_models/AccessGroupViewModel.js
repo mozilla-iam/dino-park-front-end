@@ -62,7 +62,7 @@ const defaultUserName = 'Anonymous User';
 export class AbbDisplayMemberViewModel {
   constructor(data) {
     this.uuid = '';
-    this.name = '';
+    this.displayName = '';
     this.username = '';
     this.email = '';
     this.error = false;
@@ -73,7 +73,7 @@ export class AbbDisplayMemberViewModel {
   processData(data) {
     try {
       this.uuid = !data.first_name && !data.last_name ? null : data.user_uuid;
-      this.name =
+      this.displayName =
         !data.first_name && !data.last_name
           ? defaultUserName
           : `${data.first_name} ${data.last_name}`;
@@ -98,7 +98,7 @@ export class DisplayMemberViewModel {
   constructor(data) {
     this.uuid = '';
     this.picture = '';
-    this.name = '';
+    this.displayName = '';
     this.username = '';
     this.email = '';
     this.isStaff = false;
@@ -117,7 +117,7 @@ export class DisplayMemberViewModel {
   static fromUserData(user) {
     const member = new DisplayMemberViewModel();
     member.uuid = user.user_uuid;
-    member.name = `${user.first_name} ${user.last_name}`;
+    member.displayName = `${user.first_name} ${user.last_name}`;
     member.picture = user.picture;
     member.email = user.email;
     member.username = user.username;
@@ -129,7 +129,7 @@ export class DisplayMemberViewModel {
     try {
       this.uuid = data.user_uuid;
       this.picture = data.picture;
-      this.name =
+      this.displayName =
         !data.first_name && !data.last_name
           ? defaultUserName
           : `${data.first_name} ${data.last_name}`;
@@ -191,34 +191,6 @@ export class GroupViewModel {
     } catch (e) {
       this.error = e.message;
       console.error('Group data error: ', e.message);
-    }
-  }
-}
-
-export class AccessGroupDetailsViewModel {
-  constructor(data) {
-    this.members = [];
-    this.curators = [];
-    this.group = {};
-    this.member_count = 0;
-    this.invitation_count = 0;
-    this.renewal_count = 0;
-    this.error = false;
-    this.processData(data);
-  }
-
-  processData(data) {
-    if (!data) {
-      throw new Error('Invalid data format');
-    }
-    try {
-      this.group = new GroupViewModel(data.group);
-      this.member_count = data.member_count;
-      this.invitation_count = data.invitation_count;
-      this.renewal_count = data.renewal_count;
-    } catch (e) {
-      this.error = e.message;
-      console.error('Access group details data error: ', e.message);
     }
   }
 }

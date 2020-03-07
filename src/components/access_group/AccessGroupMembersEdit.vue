@@ -32,9 +32,9 @@
                 @click="handleRemoveConfirmClick(member)"
                 >{{ fluent('access-group_members', 'remove-action') }}</Button
               >
-              <Button class="secondary-button" @click="togglePending(false)">{{
-                fluent('access-group_members', 'remove-cancel')
-              }}</Button>
+              <Button class="secondary-button" @click="togglePending(false)">
+                {{ fluent('access-group_members', 'remove-cancel') }}
+              </Button>
             </div>
             <div
               slot="row-actions"
@@ -50,9 +50,9 @@
               </Button>
             </div>
           </AccessGroupMembersTable>
-          <Button class="edit-members__load-more" @click="loadMoreHandler">
-            {{ fluent('access-group_members', 'load-more') }}
-          </Button>
+          <Button class="edit-members__load-more" @click="loadMoreHandler">{{
+            fluent('access-group_members', 'load-more')
+          }}</Button>
         </div>
       </template>
     </AccessGroupEditPanel>
@@ -110,9 +110,9 @@
       <template v-slot:content>
         <div class="members-expiration-container">
           <div class="content-area__row">
-            <label class="content-area__label expiration__description">
-              {{ fluent('access-group_expiration', 'expiration__description') }}
-            </label>
+            <label class="content-area__label expiration__description">{{
+              fluent('access-group_expiration', 'expiration__description')
+            }}</label>
             <SelectCustom
               class="expiration__value"
               :options="expirationOptions"
@@ -354,7 +354,7 @@ export default {
       });
     },
     handleRemoveConfirmClick(member) {
-      const memberName = member.name;
+      const memberName = member.displayName;
       this.setLoading();
       this.removeMember(member).then(result => {
         this.tinyNotification('access-group-member-removed', memberName);
@@ -362,7 +362,7 @@ export default {
       });
     },
     getTagLabel(curator) {
-      return curator.name;
+      return curator.displayName;
     },
     updateAutoCompleteList(search) {
       return new Promise((res, rej) => {

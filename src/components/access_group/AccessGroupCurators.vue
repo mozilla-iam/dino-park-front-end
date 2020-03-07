@@ -6,12 +6,12 @@
       :key="idx"
     >
       <UserPicture
-        :avatar="{ picture: curator.picture, username: curator.name }"
+        :avatar="{ picture: curator.picture, username: curator.username }"
         class="curator-image"
         :size="40"
         :isStaff="true"
       />
-      <p class="curator-name">{{ curator.name }}</p>
+      <p class="curator-name">{{ curator.displayName }}</p>
       <a :href="`mailto:${curator.email}`" class="curator-email">
         <Icon id="email" :width="16" :height="16" />
       </a>
