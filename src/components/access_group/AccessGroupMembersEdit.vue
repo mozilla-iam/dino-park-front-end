@@ -14,11 +14,16 @@
               fluent('access-group_members', 'edit-members__search')
             "
           ></SearchForm>
-          <AccessGroupMembersTable
-            :data="allMembers"
-            :columns="membersColumns"
-            :handleHeaderClicked="handleMembersTableHeaderClicked"
+          <Select
+            class="options--chevron options--large sort-select"
+            label="Sort"
+            id="member-list-sort"
+            v-model="selectedSort"
+            :options="sortOptions"
+            :nonOption="defaultSort"
           >
+          </Select>
+          <AccessGroupMembersTable :data="allMembers" :columns="membersColumns">
             <div
               slot="row-confirm"
               slot-scope="{ member, togglePending }"
@@ -177,6 +182,7 @@ import TextArea from '@/components/ui/TextArea.vue';
 import Button from '@/components/ui/Button.vue';
 import Icon from '@/components/ui/Icon.vue';
 import SelectCustom from '@/components/ui/SelectCustom.vue';
+import Select from '@/components/ui/Select.vue';
 import AccessGroupEditPanel from '@/components/access_group/AccessGroupEditPanel.vue';
 import SearchForm from '@/components/ui/SearchForm.vue';
 import AccessGroupMembersTable from '@/components/access_group/AccessGroupMembersTable.vue';
@@ -197,6 +203,7 @@ export default {
     AccessGroupMembersTable,
     TagSelector,
     SelectCustom,
+    Select,
   },
   props: [],
   mounted() {},
@@ -219,6 +226,9 @@ export default {
       } else {
         this.groupExpiration = value;
       }
+    },
+    selectedSort(value) {
+      this.handleSortUpdated(value);
     },
   },
   data() {
@@ -248,6 +258,17 @@ export default {
         sort: '',
         numResults: 20,
       },
+      defaultSort: {
+        value: '',
+        label: 'Sort',
+      },
+      selectedSort: '',
+      sortOptions: [
+        { value: 'role-asc', label: 'Role Asc' },
+        { value: 'role-desc', label: 'Role Desc' },
+        { value: 'expiration-asc', label: 'Expiration Asc' },
+        { value: 'expiration-desc', label: 'Expiration Desc' },
+      ],
       membersColumns: [
         {
           header: this.fluent(
@@ -262,7 +283,6 @@ export default {
             'members-table__header-2'
           ),
           contentHandler: ({ role }) => role,
-          clickedHandler: () => 'role',
         },
         {
           header: this.fluent(
@@ -270,7 +290,6 @@ export default {
             'members-table__header-3'
           ),
           contentHandler: ({ expiration }) => this.expiry(expiration),
-          clickedHandler: () => 'expiration',
         },
         {
           header: this.fluent(
@@ -423,24 +442,8 @@ export default {
     isExpirationCustom(optionValue) {
       return optionValue === 'custom';
     },
-    handleMembersTableHeaderClicked(columnData) {
-      if (!columnData.clickedHandler) {
-        return;
-      }
-      const key = columnData.clickedHandler();
-      if (key === 'role') {
-        if (this.memberListOptions.sort === 'role-asc') {
-          this.memberListOptions.sort = 'role-desc';
-        } else {
-          this.memberListOptions.sort = 'role-asc';
-        }
-      } else if (key === 'expiration') {
-        if (this.memberListOptions.sort === 'expiration-asc') {
-          this.memberListOptions.sort = 'expiration-desc';
-        } else {
-          this.memberListOptions.sort = 'expiration-asc';
-        }
-      }
+    handleSortUpdated(value) {
+      this.memberListOptions.sort = value;
       this.getMembersWithOptions({
         groupName: this.groupName,
         options: this.memberListOptions,
@@ -466,6 +469,7 @@ export default {
 <style>
 .edit-members-container {
   padding: 0;
+  overflow: visible;
 }
 
 @media (min-width: 57.5em) {
@@ -479,6 +483,10 @@ export default {
   font-weight: normal;
 }
 
+.members-list-container {
+  position: relative;
+}
+
 .members-list-container .edit-members__search {
   margin: 0 2em 1em;
 }
@@ -488,9 +496,16 @@ export default {
     margin-left: 0;
   }
   .members-list-container .edit-members__search {
-    margin: 0 auto 1em;
+    margin: 0 auto 2em;
     width: auto;
+    padding-top: 0.5em;
   }
+}
+
+.sort-select {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 .edit-members__table {

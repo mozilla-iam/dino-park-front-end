@@ -179,6 +179,18 @@ export default {
   border-color: var(--blue-60);
 }
 
+.options--large .options__toggle {
+  background-color: white;
+  border-color: var(--gray-50);
+  padding: 1em 3em 1em 2em;
+  color: var(--black);
+  border-radius: 2.5em;
+  background-image: url('~@/assets/svg/chevron-down.svg');
+  background-repeat: no-repeat;
+  background-position: center right 1em;
+  background-size: 1.25em;
+}
+
 @media (min-width: 57.5em) {
   .options--chevron {
     z-index: var(--layerAboveNav);
@@ -252,6 +264,9 @@ export default {
   z-index: var(--layerTwo);
   box-shadow: var(--focusOutlineShadow);
 }
+/**
+ * TODO: Refactor this out of the select component
+ */
 .privacy-select {
   position: relative;
 }

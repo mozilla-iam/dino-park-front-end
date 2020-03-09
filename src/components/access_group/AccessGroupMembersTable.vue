@@ -5,13 +5,8 @@
         :class="{ 'heading-container': true, primary: columnData.primary }"
         v-for="(columnData, idx) in columns"
         :key="idx"
-        @click="handleHeaderClicked(columnData)"
       >
         {{ columnData.header }}
-        <span class="sort-arrows" v-if="columnData.clickedHandler">
-          <span class="sort-arrows__up"></span>
-          <span class="sort-arrows__down"></span>
-        </span>
       </div>
     </header>
     <div
@@ -59,10 +54,6 @@ export default {
     showHeaders: {
       type: Boolean,
       default: true,
-    },
-    handleHeaderClicked: {
-      type: Function,
-      default: () => {},
     },
   },
   methods: {

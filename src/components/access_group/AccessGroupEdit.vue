@@ -176,7 +176,7 @@ export default {
   position: sticky;
   top: 6.5em;
   left: 0;
-  z-index: 1;
+  z-index: var(--layerPopover);
 }
 
 @media (min-width: 57.5em) {
