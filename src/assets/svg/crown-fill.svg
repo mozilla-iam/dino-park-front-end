@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <path d="M1,17 L1,7.13504161 C1,6.58275686 1.44771525,6.13504161 2,6.13504161 C2.23393651,6.13504161 2.4604694,6.21705783 2.6401844,6.36682033 L7,10 L11.2928932,5.70710678 C11.6834175,5.31658249 12.3165825,5.31658249 12.7071068,5.70710678 L17,10 L21.3598156,6.36682033 C21.7840925,6.01325625 22.4146572,6.07058032 22.7682213,6.49485721 C22.9179838,6.67457221 23,6.90110511 23,7.13504161 L23,17 C23,18.1045695 22.1045695,19 21,19 L3,19 C1.8954305,19 1,18.1045695 1,17 Z" id="path-crown-fill" />
+  </defs>
+  <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+    <g id="icon-/-crown-fill" transform="translate(-1.000000, 0)">
+      <mask id="mask-2" fill="white">
+        <use xlink:href="#path-crown-fill" />
+      </mask>
+      <use id="Path-2" fill="currentColor" fill-rule="nonzero" xlink:href="#path-crown-fill" />
+    </g>
+  </g>
+</svg>

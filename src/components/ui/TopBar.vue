@@ -1,12 +1,14 @@
 <template>
   <header class="top-bar" :style="{ marginBottom: extraPadding + 'px' }">
     <div class="top-bar__bar">
-      <RouterLink
-        :to="{ name: 'Home' }"
-        class="top-bar__link top-bar__link--logo"
-        ><img src="@/assets/images/mozilla.svg" :alt="fluent('mozilla')"
-      /></RouterLink>
-      <SearchForm class="hide-mobile"></SearchForm>
+      <RouterLink :to="{ name: 'Home' }" class="top-bar__link top-bar__link--logo">
+        <img src="@/assets/images/mozilla.svg" :alt="fluent('mozilla')" />
+      </RouterLink>
+      <SearchForm
+        :searchFormHandler="searchFormHandler"
+        :searchFormLabel="fluent('search_input', 'placeholder')"
+        class="hide-mobile"
+      ></SearchForm>
       <ShowMore
         :buttonText="fluent('search', 'open')"
         :alternateButtonText="fluent('search', 'close')"
@@ -18,6 +20,8 @@
       >
         <template slot="overflow">
           <SearchForm
+            :searchFormHandler="searchFormHandler"
+            :searchFormLabel="fluent('search_input', 'placeholder')"
             class="search-form--small hide-desktop"
             id="mobile-search"
             v-on:close-search-form="closeMobileSearchForm()"
@@ -60,17 +64,13 @@
           </template>
         </ShowMore>
       </template>
-      <template v-else>
-        …
-      </template>
-      <Toast
-        ref="toast"
-        :content="toastContent"
-        @reset-toast="toastContent = ''"
-      ></Toast>
+      <template v-else>…</template>
+      <Toast ref="toast" :content="toastContent" @reset-toast="toastContent = ''"></Toast>
     </div>
     <SearchForm
       class="search-form--small hide-desktop"
+      :searchFormLabel="fluent('search_input', 'placeholder')"
+      :searchFormHandler="searchFormHandler"
       v-if="showMobileSearch"
       id="mobile-search"
       v-on:close-search-form="closeMobileSearchForm()"
@@ -103,6 +103,15 @@ export default {
     showToast(data) {
       this.toastContent = data.content;
     },
+    searchFormHandler(searchQuery, scope) {
+      this.$router.push({
+        name: 'Search',
+        query: {
+          query: searchQuery,
+          who: scope,
+        },
+      });
+    },
   },
   data() {
     return {
@@ -120,7 +129,7 @@ export default {
   mounted() {
     window.addEventListener('resize', this.updatePadding);
 
-    this.$root.$on('toast', (data) => this.showToast(data));
+    this.$root.$on('toast', data => this.showToast(data));
   },
 };
 </script>

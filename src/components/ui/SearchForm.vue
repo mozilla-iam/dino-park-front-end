@@ -8,9 +8,10 @@
     <fieldset>
       <legend class="visually-hidden">{{ this.fluent('search') }}</legend>
       <div class="search-form__fields">
-        <label for="search-query" class="visually-hidden">{{
-          this.fluent('search_input')
-        }}</label>
+        <label for="search-query" class="visually-hidden">
+          {{ this.fluent('search_input') }}
+        </label>
+        <!-- TODO: fix placeholder fluent. search 'searchFormLabel' and replace with fluent in all code -->
         <input
           type="text"
           id="search-query"
@@ -18,7 +19,7 @@
           v-model="searchQuery"
           class="search-form__input"
           ref="searchQueryField"
-          :placeholder="this.fluent('search_input', 'placeholder')"
+          :placeholder="searchFormLabel"
         />
         <button
           type="button"
@@ -27,9 +28,9 @@
           class="search-form__clear-button"
         >
           <Icon id="x" :width="20" :height="20" />
-          <span class="visually-hidden">{{
-            this.fluent('search_input', 'clear')
-          }}</span>
+          <span class="visually-hidden">
+            {{ this.fluent('search_input', 'clear') }}
+          </span>
         </button>
         <button type="submit" class="search-form__submit">
           <Icon id="search" :width="18" :height="18" />
@@ -45,29 +46,27 @@ import Icon from '@/components/ui/Icon.vue';
 
 export default {
   name: 'SearchForm',
+  props: {
+    searchFormLabel: String,
+    searchFormHandler: Function,
+  },
   components: {
     Icon,
   },
   methods: {
     handleSubmit(event) {
       event.preventDefault();
-
       if (!this.searchQuery.length > 0) {
         this.$refs.searchQueryField.focus();
       } else {
-        this.$router.push({
-          name: 'Search',
-          query: {
-            query: this.searchQuery,
-            who: this.who,
-          },
-        });
         this.$emit('close-search-form');
       }
+      this.searchFormHandler(this.searchQuery, this.who);
     },
     clearQuery() {
-      this.searchQuery = null;
+      this.searchQuery = '';
       this.$refs.searchQueryField.focus();
+      this.$emit('clear-query');
     },
   },
   computed: {
@@ -131,7 +130,7 @@ export default {
   -webkit-appearance: none;
   appearance: none;
   border-radius: 0;
-  padding: 0.5em 3em;
+  padding: 0.5em 1.75em 0.5em 3em;
 }
 .search-form__input::placeholder {
   text-align: center;
@@ -162,12 +161,18 @@ export default {
   background-color: var(--white);
   position: absolute;
   border: 0;
-  top: 1px;
+  top: 3px;
   right: 1px;
   bottom: 1px;
-  width: 3em;
+  width: 2em;
   padding: 0;
   line-height: 1;
+}
+
+@media (min-width: 57.5em) {
+  .search-form__clear-button {
+    width: 3em;
+  }
 }
 .search-form__clear-button:hover {
   color: var(--blue-60);

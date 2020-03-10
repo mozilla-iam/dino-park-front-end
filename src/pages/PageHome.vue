@@ -15,9 +15,7 @@
       <p v-if="scope.isStaff">
         {{ fluent('home_welcome', 'description-staff') }}
       </p>
-      <p v-else>
-        {{ fluent('home_welcome', 'description') }}
-      </p>
+      <p v-else>{{ fluent('home_welcome', 'description') }}</p>
       <p>
         <RouterLink
           :to="{
@@ -26,9 +24,9 @@
           }"
           class="button"
         >
-          <span class="button-text">{{
-            fluent('home_welcome', 'my-profile')
-          }}</span>
+          <span class="button-text">
+            {{ fluent('home_welcome', 'my-profile') }}
+          </span>
           <Icon id="chevron-right" :width="24" :height="24" />
         </RouterLink>
       </p>

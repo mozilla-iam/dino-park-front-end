@@ -32,13 +32,12 @@
         <IconBlockList class="icon-block-list--multi-col">
           <IconBlock
             v-for="[group] in Object.entries(
-              initialAccessInformation.ldap.values,
+              initialAccessInformation.ldap.values
             )"
             :key="`group-${group}`"
             icon="idcard"
+            >{{ group }}</IconBlock
           >
-            {{ group }}
-          </IconBlock>
         </IconBlockList>
         <hr role="presentation" />
       </template>
@@ -71,25 +70,48 @@
           :key="`group-${group}`"
           icon="moz"
         >
+          <RouterLink
+            v-if="getFeature('accessGroupsToggle')"
+            target="_blank"
+            :to="{
+              path: `/a/${encodeURIComponent(group)}`,
+            }"
+            >{{ group }}</RouterLink
+          >
           <ExternalLink
+            v-else
             :href="`https://mozillians.org/group/${encodeURIComponent(group)}`"
             >{{ group }}</ExternalLink
           >
         </IconBlock>
       </IconBlockList>
-      <p v-else>
-        {{ fluent('profile_access-groups_mozillians', 'none') }}
-      </p>
-      <a
-        id="access-information__external-link"
-        class="button button--secondary button--action"
-        href="https://mozillians.org/user/edit/#mygroups"
-        target="_blank"
-        rel="noreferrer noopener"
-      >
-        <Icon id="external" :width="18" :height="18" />
-        {{ fluent('profile_access-groups_mozillians', 'edit') }}
-      </a>
+      <p v-else>{{ fluent('profile_access-groups_mozillians', 'none') }}</p>
+      <div class="access-information__actions">
+        <RouterLink
+          id="access-information__create-link"
+          class="button button--secondary button--action"
+          :to="{
+            name: 'Create Access Group',
+          }"
+          rel="noreferrer noopener"
+          v-if="getFeature('accessGroupsToggle')"
+        >
+          <Icon id="plus" :width="18" :height="18" />{{
+            fluent('profile_access-groups_mozillians', 'create-access-groups')
+          }}
+        </RouterLink>
+        <a
+          id="access-information__external-link"
+          class="button button--secondary button--action"
+          href="https://mozillians.org/user/edit/#mygroups"
+          target="_blank"
+          rel="noreferrer noopener"
+          v-else
+        >
+          <Icon id="external" :width="18" :height="18" />
+          {{ fluent('profile_access-groups_mozillians', 'edit') }}
+        </a>
+      </div>
     </div>
   </EditMutationWrapper>
 </template>
@@ -152,16 +174,13 @@ export default {
 </script>
 
 <style>
-#access-information__external-link {
-  margin-left: auto;
-  max-width: max-content;
-}
 .edit-profile__access-groups h3 {
   margin-top: auto;
   margin-bottom: auto;
   padding-top: 1em;
   padding-bottom: 1em;
 }
+
 .edit-access-groups__header:first-child {
   margin-top: unset;
 }
@@ -184,5 +203,15 @@ export default {
 }
 .edit-profile__access-groups .icon-block {
   color: var(--gray-50);
+}
+
+.access-information__actions {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.access-information__actions .button--action {
+  max-width: max-content;
+  margin-left: 1em;
 }
 </style>

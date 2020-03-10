@@ -1,0 +1,56 @@
+{
+  "members": [
+    {
+      "user_uuid": "34a33a8e-d035-4051-acac-497a79235e74",
+      "picture": "https://picture.api.dev.sso.allizom.org/avatar/get/id/MzI0ZjAwMzA5Yzc1ZGYxYmIzYjdjMGE1NWZmMDc3OGY3NGJjYjAzMjc0NDVhZmI2YWViODBmMzIzOGNhYzM3NyNzdGFmZiMxNTcyODYyNzM3.png",
+      "name": "Bruce Wayne",
+      "username": "batman",
+      "email": "batman@gotham.com",
+      "isStaff": true,
+      "role": "Member",
+      "since": "2014-11-28T12:45:59Z",
+      "expiration": "2014-11-28T12:45:59Z",
+      "added_by": {
+        "user_uuid": "34a33a8e-d035-4051-acac-497a79235e73",
+        "name": "Andrew Sunada",
+        "username": "batman",
+        "email": "batman@mozilla.org"
+      }
+    },
+    {
+      "user_uuid": "34a33a8e-d035-4051-acac-497a79235e75",
+      "picture": "https://picture.api.dev.sso.allizom.org/avatar/get/id/MzI0ZjAwMzA5Yzc1ZGYxYmIzYjdjMGE1NWZmMDc3OGY3NGJjYjAzMjc0NDVhZmI2YWViODBmMzIzOGNhYzM3NyNzdGFmZiMxNTcyODYyNzM3.png",
+      "name": "Dick Grayson",
+      "username": "nightwing",
+      "email": "nightwing@gotham.com",
+      "isStaff": true,
+      "role": "Member",
+      "since": "2014-11-28T12:45:59Z",
+      "expiration": "2014-11-28T12:45:59Z",
+      "added_by": {
+        "user_uuid": "34a33a8e-d035-4051-acac-497a79235e73",
+        "name": "Batman",
+        "username": "batman",
+        "email": "batman@mozilla.org"
+      }
+    },
+    {
+      "user_uuid": "34a33a8e-d035-4051-acac-497a79235e76",
+      "picture": "https://picture.api.dev.sso.allizom.org/avatar/get/id/MzI0ZjAwMzA5Yzc1ZGYxYmIzYjdjMGE1NWZmMDc3OGY3NGJjYjAzMjc0NDVhZmI2YWViODBmMzIzOGNhYzM3NyNzdGFmZiMxNTcyODYyNzM3.png",
+      "name": "Jason Todd",
+      "username": "redhood",
+      "email": "redhood@gotham.com",
+      "isStaff": true,
+      "role": "Member",
+      "since": "2014-11-28T12:45:59Z",
+      "expiration": "2014-11-28T12:45:59Z",
+      "added_by": {
+        "user_uuid": "34a33a8e-d035-4051-acac-497a79235e73",
+        "name": "Batman",
+        "username": "batman",
+        "email": "batman@mozilla.org"
+      }
+    }
+  ],
+  "next": 20
+}

@@ -97,12 +97,12 @@ export default {
 .preview-as {
   display: flex;
   flex-wrap: wrap;
-  padding: 2em 1em 0em 1em;
+  padding: 0em 1em 2em 1em;
   justify-content: space-between;
 }
 @media (min-width: 57.5em) {
   .preview-as {
-    padding: 2em 3em 0em 3em;
+    padding: 0em 0em 2em 3em;
   }
 }
 .preview-as__button {
