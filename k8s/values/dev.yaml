@@ -1,2 +1,4 @@
 env: dev
 namespace: dinopark-dev
+features:
+  accessGroupsToggle: true
