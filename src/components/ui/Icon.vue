@@ -63,6 +63,11 @@ export default {
       this.$emit('click', e);
     },
   },
+  methods: {
+    handleIconClicked(e) {
+      this.$emit('click', e);
+    },
+  },
   computed: {
     computedAvatarUrl() {
       if (

@@ -17,19 +17,47 @@
         :key="idx"
         :member="member"
         :columns="columns"
+        ref="table-row"
       >
         <template slot="row-confirm" slot-scope="{ togglePending }">
           <slot
             :member="member"
-            :togglePending="togglePending"
+            :toggleExpand="togglePending"
             name="row-confirm"
           ></slot>
         </template>
-        <template slot="row-actions" slot-scope="{ togglePending }">
+        <template v-if="hasExpandedContent">
+          <template slot="row-expandable-content" slot-scope="{ toggleExpand }">
+            <slot
+              :member="member"
+              :toggleExpand="toggleExpand"
+              name="row-expandable-content"
+            ></slot>
+          </template>
+        </template>
+        <template slot="row-expandable-actions" slot-scope="{ toggleExpand }">
           <slot
             :member="member"
+            :toggleExpand="toggleExpand"
+            name="row-expandable-actions"
+          ></slot>
+        </template>
+        <template
+          slot="row-actions"
+          slot-scope="{ toggleExpand, togglePending }"
+        >
+          <slot
+            :member="member"
+            :toggleExpand="() => toggleTable(toggleExpand, idx)"
             :togglePending="togglePending"
             name="row-actions"
+          ></slot>
+        </template>
+        <template slot="row-actions-expanded" slot-scope="{ toggleExpand }">
+          <slot
+            :member="member"
+            :toggleExpand="toggleExpand"
+            name="row-actions-expanded"
           ></slot>
         </template>
       </AccessGroupMembersTableRow>
@@ -55,10 +83,32 @@ export default {
       type: Boolean,
       default: true,
     },
+    toggleExpand: Function,
+  },
+  computed: {
+    hasExpandedContent() {
+      if (this.$scopedSlots.hasOwnProperty('row-expandable-content')) {
+        return true;
+      }
+      return false;
+    },
   },
   methods: {
     getSecondaryColumns(member) {
       return this.columns.filter(column => 'contentHandler' in column);
+    },
+    /**
+     * This is the function that should run whenever an expand is clicked
+     * It should go through and toggle each of the rows off that are not the one that is passed in
+     */
+    toggleTable(toggleRow, idx) {
+      this.$refs['table-row'].forEach((row, rowIdx) => {
+        if (idx === rowIdx) {
+          row.toggleExpand(true);
+        } else {
+          row.toggleExpand(false);
+        }
+      });
     },
   },
 };
@@ -88,7 +138,6 @@ export default {
   padding: 1.5em 1em;
   text-align: left;
   flex: 1;
-  cursor: pointer;
 }
 
 .members-table__header .heading-container.primary {

@@ -53,7 +53,7 @@ export function expiryText(fluent, expiration) {
   const currentDate = new Date();
   const difference = expiryDate.getTime() - currentDate.getTime();
   if (difference <= 0) {
-    return `0 ${fluent('date-day', 'plural')}`;
+    return `No expiration`;
   }
   const expDiffDays = Math.ceil(difference / (1000 * 3600 * 24));
   if (expDiffDays % 7 === 0 && expDiffDays !== 0 && expDiffDays !== null) {

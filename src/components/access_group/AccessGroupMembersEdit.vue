@@ -5,6 +5,12 @@
       :full="true"
     >
       <template v-slot:content>
+        <p class="edit-members-meta">
+          {{ fluent('access-group_members', 'edit-members-meta') }}
+          <output class="edit-members-meta__focus">{{
+            expirationMetaText
+          }}</output>
+        </p>
         <div class="members-list-container">
           <SearchForm
             class="edit-members__search"
@@ -27,41 +33,85 @@
             :columns="membersColumns"
           >
             <div
-              slot="row-confirm"
-              slot-scope="{ member, togglePending }"
-              class="confirm-container"
+              slot="row-expandable-content"
+              slot-scope="{ member, toggleExpand }"
+              class="expandable-content-container"
+              v-if="isMemberUpForRenewal(member)"
             >
-              <p class="leave-confirm__description">
-                {{ fluent('access-group_members', 'remove-confirm') }}
+              <p class="expandable-content-container__first-row">
+                {{ getRowExpirationIntroText(member) }}
               </p>
+              <div class="expandable-content-container__second-row">
+                <RadioSelect
+                  class="expiration-select"
+                  :options="expirationOptions"
+                  v-model="selectedRowExpiration"
+                />
+                <div class="expiration-actions">
+                  <Button
+                    class="primary-button renew"
+                    @click="
+                      handleRenewClick(member, {
+                        expiration: selectedRowExpiration,
+                      })
+                    "
+                    >{{
+                      fluent('access-group_members', 'renew-action')
+                    }}</Button
+                  >
+                </div>
+              </div>
+            </div>
+            <div
+              slot="row-expandable-actions"
+              slot-scope="{ member, toggleExpand }"
+              class="expandable-actions-container"
+            >
               <Button
-                class="primary-button"
+                class="primary-button delete"
                 @click="handleRemoveConfirmClick(member)"
                 >{{ fluent('access-group_members', 'remove-action') }}</Button
               >
-              <Button class="secondary-button" @click="togglePending(false)">
-                {{ fluent('access-group_members', 'remove-cancel') }}
-              </Button>
+              <p class="member-email" v-if="member.email">
+                {{ fluent('access-group_members', 'expandable-email') }}
+                <a :href="`mailto:${member.email}`">{{ member.email }}</a>
+              </p>
             </div>
             <div
               slot="row-actions"
-              slot-scope="{ member, togglePending }"
+              slot-scope="{ member, toggleExpand }"
               class="member-actions"
             >
               <Button
-                class="tertiary-action delete"
-                v-if="canMemberBeRemoved(member)"
-                @click="togglePending(true)"
+                class="primary-action renew"
+                @click="handleRenewClick(member)"
+                v-if="isMemberUpForRenewal(member)"
               >
-                <Icon id="x" :width="16" :height="16" />
+                {{ fluent('access-group_members', 'renew-action') }}
+              </Button>
+              <Button
+                class="tertiary-action expand"
+                @click="toggleExpand(true)"
+              >
+                <Icon id="chevron-down" :width="32" :height="32" />
+              </Button>
+            </div>
+            <div
+              slot="row-actions-expanded"
+              slot-scope="{ member, toggleExpand }"
+              class="member-actions"
+            >
+              <Button
+                class="tertiary-action expand"
+                @click="toggleExpand(false)"
+              >
+                <Icon id="chevron-up" :width="32" :height="32" />
               </Button>
             </div>
           </AccessGroupMembersTable>
-          <Button
-            class="edit-members__load-more"
-            @click="loadMoreHandler"
-            v-if="showLoadMore"
-            >{{ fluent('access-group_members', 'load-more') }}</Button
+          <Button class="edit-members__load-more" @click="loadMoreHandler">
+            <Icon id="chevron-down" :width="24" :height="24" />
+            {{ fluent('access-group_members', 'load-more') }}</Button
           >
         </div>
       </template>
@@ -185,6 +235,7 @@ import RadioSelect from '@/components/ui/RadioSelect.vue';
 import Select from '@/components/ui/Select.vue';
 import AccessGroupEditPanel from '@/components/access_group/AccessGroupEditPanel.vue';
 import SearchForm from '@/components/ui/SearchForm.vue';
+import RadioSelect from '@/components/ui/RadioSelect.vue';
 import AccessGroupMembersTable from '@/components/access_group/AccessGroupMembersTable.vue';
 import TagSelector from '@/components/ui/TagSelector.vue';
 import MembersListMixin from '@/components/_mixins/MembersListMixin.vue';
@@ -211,6 +262,7 @@ export default {
     SelectCustom,
     RadioSelect,
     Select,
+    RadioSelect,
   },
   mixins: [MembersListMixin],
   watch: {
@@ -258,6 +310,16 @@ export default {
       removedCurators: [],
       curatorsListDirty: false,
       groupExpirationDirty: false,
+      selectedRowExpiration: selectedExpiration,
+      memberListOptions: {
+        search: '',
+        sort: '',
+        numResults: 20,
+      },
+      defaultSort: {
+        value: '',
+        label: 'Sort',
+      },
       selectedSort: '',
       sortOptions: [
         { value: 'role-asc', label: 'Role Asc' },
@@ -351,19 +413,26 @@ export default {
     loadMoreHandler() {
       this.loadMoreMembers();
     },
-    handleRenewClick(member) {
+    handleRenewClick(member, options = {}) {
       this.renewMember({
         memberUuid: member.uuid,
-        expiration: member.expiration,
+        expiration: options.hasOwnProperty('expiration')
+          ? options.expiration
+          : this.accessGroupExpiration,
       }).then((result) => {
-        this.tinyNotification('access-group-member-renewed', memberName);
+        this.tinyNotification(
+          'access-group-member-renewed',
+          member.displayName,
+        );
       });
     },
     handleRemoveConfirmClick(member) {
-      const memberName = member.displayName;
       this.setLoading();
       this.removeMember(member).then((result) => {
-        this.tinyNotification('access-group-member-removed', memberName);
+        this.tinyNotification(
+          'access-group-member-removed',
+          member.displayName,
+        );
         this.completeLoading();
       });
     },
@@ -431,6 +500,25 @@ export default {
     isExpirationCustom(optionValue) {
       return optionValue === 'custom';
     },
+    handleSortUpdated(value) {
+      this.memberListOptions.sort = value;
+      this.getMembersWithOptions({
+        groupName: this.groupName,
+        options: this.memberListOptions,
+      });
+    },
+    getRowExpirationIntroText(member) {
+      return this.fluent(
+        'access-group_members',
+        'expandable-content-container__first-row',
+      ).replace('[]', member.displayName);
+    },
+    isMemberUpForRenewal(member) {
+      if (!member.expiration) {
+        return false;
+      }
+      return true;
+    },
   },
   computed: {
     ...mapGetters({
@@ -444,8 +532,23 @@ export default {
     expirationIsCustom() {
       return this.selectedExpiration === 'custom';
     },
-    showLoadMore() {
-      return this.membersNext;
+    expirationMetaText() {
+      if (this.accessGroupExpiration === 360) {
+        return `1 ${this.fluent('date-year')}`;
+      }
+      if (this.accessGroupExpiration === 720) {
+        return `2 ${this.fluent('date-year', 'plural')}`;
+      }
+      if (this.accessGroupExpiration === 1) {
+        return `1 ${this.fluent('date-day')}`;
+      }
+      if (this.accessGroupExpiration === 0) {
+        return `not expire`;
+      }
+      return `${this.accessGroupExpiration} ${this.fluent(
+        'date-day',
+        'plural',
+      )}`;
     },
   },
 };
@@ -470,6 +573,10 @@ export default {
 
 .members-list-container {
   position: relative;
+}
+
+.edit-members-container .edit-members-meta__focus {
+  font-weight: bold;
 }
 
 .members-list-container .edit-members__search {
@@ -549,23 +656,64 @@ export default {
   padding-bottom: 0.25em;
   height: 2em;
 }
+.member-actions .primary-action {
+  margin-right: 1em;
+}
+
 .member-actions .tertiary-action {
-  border: none;
+  border: 1px solid var(--gray-40);
+  border-radius: 5em;
   background: none;
-  color: #ff0039;
+  color: var(--black);
   padding-right: 0;
-  display: inline-block;
+  padding: 0.5em;
+  display: flex;
+  margin-right: 1em;
+}
+
+.member-actions .tertiary-action .icon {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.expandable-actions-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0 1em;
+}
+
+.expandable-actions-container .primary-button {
+  background: var(--neon-red);
+}
+
+.expandable-content-container .expandable-content-container__first-row {
+  margin-top: 0;
+}
+
+.expandable-content-container .expandable-content-container__second-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.expandable-content-container__second-row .expiration-select {
+  flex: 9;
+}
+
+.expandable-content-container__second-row .expiration-actions {
+  flex: 1;
 }
 
 .edit-members-container .edit-members__load-more {
   margin: 1em auto;
-  background-color: transparent;
-  color: var(--black);
+  background-color: var(--white);
+  color: var(--gray-50);
 }
 
 .tags-selector .tags-selector__description {
   color: var(--gray-40);
-}
 
 .container-info {
   display: flex;
