@@ -110,7 +110,7 @@ export default {
       return expiryText(this.fluent, this.expiration);
     },
     showEdit() {
-      return this.isCurator(this.$store.state.user.uuid.value);
+      return this.isCurator;
     },
   },
 };

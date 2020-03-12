@@ -8,7 +8,10 @@
         ></AccessGroupDescription>
       </section>
       <aside class="primary-area__control">
-        <PanelSection :title="fluent('access-group_membership-management')">
+        <PanelSection
+          v-if="isCurator"
+          :title="fluent('access-group_membership-management')"
+        >
           <template v-slot:content>
             <AccessGroupMembershipManagement></AccessGroupMembershipManagement>
           </template>
@@ -27,6 +30,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import Icon from '@/components/ui/Icon.vue';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 import EditButton from '@/components/ui/EditButton.vue';
@@ -54,6 +58,9 @@ export default {
     groupname: String,
   },
   computed: {
+    ...mapGetters({
+      isCurator: 'accessGroup/isCurator',
+    }),
     editing() {
       if (
         this.$route.name === 'Edit Access Group' &&
