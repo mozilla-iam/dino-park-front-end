@@ -18,6 +18,7 @@
         :member="member"
         :columns="columns"
         ref="table-row"
+        :hasExpandedContent="rowHasExpandedContent"
       >
         <template slot="row-confirm" slot-scope="{ togglePending }">
           <slot
@@ -26,14 +27,12 @@
             name="row-confirm"
           ></slot>
         </template>
-        <template v-if="hasExpandedContent">
-          <template slot="row-expandable-content" slot-scope="{ toggleExpand }">
-            <slot
-              :member="member"
-              :toggleExpand="toggleExpand"
-              name="row-expandable-content"
-            ></slot>
-          </template>
+        <template slot="row-expandable-content" slot-scope="{ toggleExpand }">
+          <slot
+            :member="member"
+            :toggleExpand="toggleExpand"
+            name="row-expandable-content"
+          ></slot>
         </template>
         <template slot="row-expandable-actions" slot-scope="{ toggleExpand }">
           <slot
@@ -84,13 +83,9 @@ export default {
       default: true,
     },
     toggleExpand: Function,
-  },
-  computed: {
-    hasExpandedContent() {
-      if (this.$scopedSlots.hasOwnProperty('row-expandable-content')) {
-        return true;
-      }
-      return false;
+    rowHasExpandedContent: {
+      default: member => false,
+      type: Function,
     },
   },
   methods: {

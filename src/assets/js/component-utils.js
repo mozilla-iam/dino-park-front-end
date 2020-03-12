@@ -56,12 +56,21 @@ export function expiryText(fluent, expiration) {
     return `No expiration`;
   }
   const expDiffDays = Math.ceil(difference / (1000 * 3600 * 24));
-  if (expDiffDays % 7 === 0 && expDiffDays !== 0 && expDiffDays !== null) {
-    const weekNum = expDiffDays / 7;
-    const weekLabel =
-      weekNum === 1 ? fluent('date-week') : fluent('date-week', 'plural');
-    return `${weekNum} ${weekLabel}`;
+  if (expDiffDays !== 0 && expDiffDays !== null) {
+    if (expDiffDays % 360 === 0) {
+      const yearNum = expDiffDays / 360;
+      const yearLabel =
+        yearNum === 1 ? fluent('date-year') : fluent('date-year', 'plural');
+      return `${yearNum} ${yearLabel}`;
+    }
+    if (expDiffDays % 7 === 0) {
+      const weekNum = expDiffDays / 7;
+      const weekLabel =
+        weekNum === 1 ? fluent('date-week') : fluent('date-week', 'plural');
+      return `${weekNum} ${weekLabel}`;
+    }
   }
+
   const dayLabel =
     expDiffDays === 1 ? fluent('date-day') : fluent('date-day', 'plural');
   return `${expDiffDays} ${dayLabel}`;

@@ -7,9 +7,9 @@
       <template v-slot:content>
         <p class="edit-members-meta">
           {{ fluent('access-group_members', 'edit-members-meta') }}
-          <output class="edit-members-meta__focus">{{
-            expirationMetaText
-          }}</output>
+          <output class="edit-members-meta__focus">
+            {{ expirationMetaText }}
+          </output>
         </p>
         <div class="members-list-container">
           <SearchForm
@@ -31,12 +31,12 @@
           <AccessGroupMembersTable
             :data="membersList"
             :columns="membersColumns"
+            :rowHasExpandedContent="membersRowHasExpandedContent"
           >
             <div
               slot="row-expandable-content"
               slot-scope="{ member, toggleExpand }"
               class="expandable-content-container"
-              v-if="isMemberUpForRenewal(member)"
             >
               <p class="expandable-content-container__first-row">
                 {{ getRowExpirationIntroText(member) }}
@@ -44,6 +44,7 @@
               <div class="expandable-content-container__second-row">
                 <RadioSelect
                   class="expiration-select"
+                  :isCustom="isExpirationCustom"
                   :options="expirationOptions"
                   v-model="selectedRowExpiration"
                 />
@@ -55,10 +56,9 @@
                         expiration: selectedRowExpiration,
                       })
                     "
-                    >{{
-                      fluent('access-group_members', 'renew-action')
-                    }}</Button
                   >
+                    {{ fluent('access-group_members', 'renew-action') }}
+                  </Button>
                 </div>
               </div>
             </div>
@@ -86,9 +86,8 @@
                 class="primary-action renew"
                 @click="handleRenewClick(member)"
                 v-if="isMemberUpForRenewal(member)"
+                >{{ fluent('access-group_members', 'renew-action') }}</Button
               >
-                {{ fluent('access-group_members', 'renew-action') }}
-              </Button>
               <Button
                 class="tertiary-action expand"
                 @click="toggleExpand(true)"
@@ -111,8 +110,8 @@
           </AccessGroupMembersTable>
           <Button class="edit-members__load-more" @click="loadMoreHandler">
             <Icon id="chevron-down" :width="24" :height="24" />
-            {{ fluent('access-group_members', 'load-more') }}</Button
-          >
+            {{ fluent('access-group_members', 'load-more') }}
+          </Button>
         </div>
       </template>
     </AccessGroupEditPanel>
@@ -248,6 +247,8 @@ import {
 import { expiryText } from '@/assets/js/component-utils';
 import AccessGroups from '@/assets/js/access-groups';
 
+const memberRenewalThreshold = 14;
+
 export default {
   name: 'AccessGroupMembersEdit',
   components: {
@@ -353,6 +354,7 @@ export default {
             }
             return this.expiry(expiration);
           },
+          isAlert: (member) => this.isMemberUpForRenewal(member),
         },
         {
           header: this.fluent(
@@ -414,12 +416,14 @@ export default {
       this.loadMoreMembers();
     },
     handleRenewClick(member, options = {}) {
+      this.setLoading();
       this.renewMember({
         memberUuid: member.uuid,
         expiration: options.hasOwnProperty('expiration')
           ? options.expiration
           : this.accessGroupExpiration,
       }).then((result) => {
+        this.completeLoading();
         this.tinyNotification(
           'access-group-member-renewed',
           member.displayName,
@@ -517,7 +521,18 @@ export default {
       if (!member.expiration) {
         return false;
       }
-      return true;
+      const today = new Date().getTime();
+      const memberExpiration = new Date(member.expiration).getTime();
+      const difference = Math.floor(
+        (memberExpiration - today) / (1000 * 3600 * 24),
+      );
+      if (difference <= memberRenewalThreshold) {
+        return true;
+      }
+      return false;
+    },
+    membersRowHasExpandedContent(member) {
+      return this.isMemberUpForRenewal(member);
     },
   },
   computed: {
@@ -627,8 +642,8 @@ export default {
 }
 
 .confirm-container .primary-button {
-  border: 1px solid #ff0039;
-  color: #ff0039;
+  border: 1px solid var(--neon-red);
+  color: var(--neon-red);
   padding-top: 0.25em;
   padding-bottom: 0.25em;
   height: 2em;
@@ -689,6 +704,11 @@ export default {
   background: var(--neon-red);
 }
 
+.expandable-actions-container .primary-button:hover {
+  color: var(--white);
+  border-color: var(--neon-red);
+}
+
 .expandable-content-container .expandable-content-container__first-row {
   margin-top: 0;
 }
@@ -714,6 +734,23 @@ export default {
 
 .tags-selector .tags-selector__description {
   color: var(--gray-40);
+}
+
+.members-expiration-container .content-area__row {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.members-expiration-container .content-area__row .content-area__label {
+  margin-bottom: 1em;
+  flex: initial;
+}
+
+.members-expiration-container .content-area__row .expiration__value {
+  width: 100%;
+}
 
 .container-info {
   display: flex;

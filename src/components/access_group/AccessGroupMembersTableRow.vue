@@ -21,7 +21,10 @@
         ></slot>
       </div>
       <div
-        class="row-member__item"
+        :class="{
+          'row-member__item': true,
+          alert: isMemberItemOnAlert(column),
+        }"
         v-for="(column, idx) in getSecondaryColumns(member)"
         :key="idx"
       >
@@ -49,10 +52,13 @@
       v-if="expanded"
       :class="{
         'row-member__expanded': true,
-        'content-empty': !hasExpandedContent,
+        'content-empty': !hasExpandedContent(member),
       }"
     >
-      <div class="row-member__expanded-content" v-if="hasExpandedContent">
+      <div
+        class="row-member__expanded-content"
+        v-if="hasExpandedContent(member)"
+      >
         <slot
           :member="member"
           :toggleExpand="toggleExpand"
@@ -76,20 +82,16 @@ export default {
   props: {
     member: Object,
     columns: Array,
+    hasExpandedContent: {
+      type: Function,
+      default: member => false,
+    },
   },
   data() {
     return {
       expanded: false,
       pendingAction: false,
     };
-  },
-  computed: {
-    hasExpandedContent() {
-      if (this.$scopedSlots.hasOwnProperty('row-expandable-content')) {
-        return true;
-      }
-      return false;
-    },
   },
   methods: {
     getSecondaryColumns(member) {
@@ -108,10 +110,23 @@ export default {
         this.pendingAction = status;
       }
     },
+    isMemberItemOnAlert(column) {
+      if (!column.hasOwnProperty('isAlert')) {
+        return false;
+      }
+      return column.isAlert(this.member);
+    },
   },
 };
 </script>
 <style scoped>
+.members-table__row {
+  border: 0.5em solid transparent;
+}
+.members-table__row.active {
+  border: 0.5em solid var(--blue-60);
+}
+
 .members-table__row .row-member__main {
   display: flex;
   flex-direction: row;
@@ -125,6 +140,10 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.members-table__row .row-member__main .row-member__item.alert {
+  color: var(--neon-red);
 }
 
 .members-table__row .row-member__main .row-member__item.row-member__display {

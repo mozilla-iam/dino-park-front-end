@@ -137,7 +137,6 @@ import TextInput from '@/components/ui/TextInput.vue';
 import TextArea from '@/components/ui/TextArea.vue';
 import Button from '@/components/ui/Button.vue';
 import Icon from '@/components/ui/Icon.vue';
-import SelectCustom from '@/components/ui/SelectCustom.vue';
 import RadioSelect from '@/components/ui/RadioSelect.vue';
 import AccessGroupEditPanel from '@/components/access_group/AccessGroupEditPanel.vue';
 import TagSelector from '@/components/ui/TagSelector.vue';
@@ -163,7 +162,6 @@ export default {
     TagSelector,
     AccessGroupMemberListDisplay,
     AccessGroupMembersTable,
-    SelectCustom,
     RadioSelect,
   },
   props: [],
@@ -366,12 +364,15 @@ export default {
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 100%;
 }
 
 .new-invites-expiration .new-invites-expiration__label {
   color: var(--gray-40);
   margin-bottom: 1em;
+}
+
+.new-invites-expiration .new-invites-expiration__value {
+  width: 100%;
 }
 
 .new-invites-expiration .new-invites-expiration__value {
