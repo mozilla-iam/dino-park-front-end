@@ -6,16 +6,10 @@
     <span class="leave-confirmation-notification__icon">
       <Icon id="question-mark-circle" :width="32" :height="32" />
     </span>
-    <p
-      class="leave-confirmation-notification__description"
-      v-if="canLeaveGroup"
-    >
+    <p class="leave-confirmation-notification__description">
       {{ confirmLeaveText }}
     </p>
-    <p class="leave-confirmation-notification__description" v-else>
-      {{ leaveAlertText }}
-    </p>
-    <div class="leave-confirmation-notification__actions" v-if="canLeaveGroup">
+    <div class="leave-confirmation-notification__actions">
       <Button class="primary-action" v-on:click="handleLeaveClick()">{{
         fluent('access-group_notifications', 'leave-action')
       }}</Button>

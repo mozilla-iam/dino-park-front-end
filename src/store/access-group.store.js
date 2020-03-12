@@ -40,6 +40,8 @@ export default {
     renewalCount: 0,
     invitationConfig: null,
     loading: false,
+    isCurator: false,
+    isMember: false,
   },
   actions: {
     ...accessGroupInvitationsActions,
@@ -131,6 +133,8 @@ export default {
           ? 0
           : accessGroup.renewal_count;
         state.invitationConfig = accessGroup.invitation;
+        state.isCurator = Boolean(accessGroup.curator);
+        state.isMember = Boolean(accessGroup.member);
       } catch (e) {
         state.error = e.message;
         throw new Error(e.message);
@@ -151,5 +155,7 @@ export default {
       group && group.expiration ? group.expiration : 0,
     getInvitationConfig: ({ invitationConfig }) =>
       invitationConfig ? invitationConfig.content : null,
+    isCurator: ({ isCurator }) => isCurator,
+    isMember: ({ isMember }) => isMember,
   },
 };

@@ -82,6 +82,7 @@ export default {
       accessGroup: 'accessGroup/getGroup',
       memberCount: 'accessGroup/memberCount',
       isCurator: 'accessGroup/isCurator',
+      isMember: 'accessGroup/isMember',
     }),
     membersCountText() {
       return this.memberCount === 1
@@ -92,7 +93,7 @@ export default {
       return parseMarkdown(this.accessGroup.description);
     },
     showEdit() {
-      return this.isCurator(this.$store.state.user.uuid.value);
+      return this.isCurator;
     },
     showLeave() {
       return this.isMember;
@@ -101,9 +102,6 @@ export default {
   data() {
     return {
       section: 'information',
-      isMember: this.$store.getters['accessGroup/isMember'](
-        this.$store.state.user.uuid.value
-      ),
     };
   },
 };
