@@ -109,13 +109,13 @@ export default {
     hasBrowserTimezone() {
       const profileDate = getFormattedDateWithTimezone(
         this.localtime,
-        this.timezone,
+        this.timezone
       );
       const browserTimezone = getBrowserTimezone();
       if (browserTimezone && browserTimezone !== this.currentTimezone) {
         const currentBrowserDate = getFormattedDateWithTimezone(
           this.localtime,
-          browserTimezone,
+          browserTimezone
         );
         const browserHoursDiff = getHoursDiff(profileDate, currentBrowserDate);
         return browserHoursDiff !== null && browserHoursDiff !== 0;
@@ -149,13 +149,13 @@ export default {
       // Get viewed profile timezone
       const profileDate = getFormattedDateWithTimezone(
         this.localtime,
-        this.timezone,
+        this.timezone
       );
 
       // Get logged in profile timezone
       const currentLocalDate = getFormattedDateWithTimezone(
         this.localtime,
-        this.currentTimezone,
+        this.currentTimezone
       );
 
       // Get browser timezone
@@ -172,7 +172,7 @@ export default {
       if (browserTimezone && browserTimezone !== this.currentTimezone) {
         currentBrowserDate = getFormattedDateWithTimezone(
           this.localtime,
-          browserTimezone,
+          browserTimezone
         );
         browserHoursDiff = getHoursDiff(profileDate, currentBrowserDate);
         validBrowserHoursDiff =
@@ -180,7 +180,7 @@ export default {
         if (validBrowserHoursDiff) {
           printedBrowserOffset = this.fluent(
             'profile_timezone_offset_current',
-            { difference: decimalToHours(browserHoursDiff) },
+            { difference: decimalToHours(browserHoursDiff) }
           );
         }
       }
@@ -241,16 +241,18 @@ export default {
     },
   },
   data() {
+    const { timezone: { value: timezone = null } = {} } =
+      this.$store.state.user || {};
     return {
       localtime: new Date(),
-      currentTimezone: this.$store.state.user.timezone.value,
+      currentTimezone: timezone,
       hasTimezoneInfoText: this.fluent(
         'profile_timezone_offset_current',
-        'tooltip',
+        'tooltip'
       ),
       hasNoTimezoneInfoText: this.fluent(
         'profile_timezone_offset_local',
-        'tooltip',
+        'tooltip'
       ),
     };
   },

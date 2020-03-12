@@ -53,25 +53,23 @@ export default {
     id: String,
   },
   mounted() {
-    generateIdenticon(this.$store.state.user.primaryUsername.value, 40).then(
-      a => {
-        this.generatedAvatarUrl = a;
-      }
-    );
+    generateIdenticon(this.$store.state.scope.username, 40).then(a => {
+      this.generatedAvatarUrl = a;
+    });
   },
   computed: {
     computedAvatarUrl() {
-      if (this.$store.state.user.picture.value) {
+      if (
+        this.$store.state.scope.isLoggedIn &&
+        this.$store.state.user.picture.value
+      ) {
         this.avatarUrl = avatarUrl(
           this.$store.state.user.picture.value,
           40,
           true
         );
       } else {
-        generateIdenticon(
-          this.$store.state.user.primaryUsername.value,
-          40
-        ).then(a => {
+        generateIdenticon(this.$store.state.scope.username, 40).then(a => {
           this.avatarUrl = a;
         });
       }

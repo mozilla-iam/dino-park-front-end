@@ -35,7 +35,7 @@ Promise.all([
   store.dispatch('fetchUser'),
   Fluent.init(),
 ]).then(async ([features, , fluent]) => {
-  let router = new DPRouter(features, fluent);
+  let router = new DPRouter(features, fluent, store);
   if (features.accessGroupsToggle) {
     await router.runFetches(store);
   } else {

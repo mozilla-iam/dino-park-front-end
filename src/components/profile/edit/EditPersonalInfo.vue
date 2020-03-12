@@ -22,7 +22,7 @@
       v-bind="{
         picture,
         pictureData,
-        username: loggedInUser.primaryUsername,
+        username: loggedInUsername,
         staffInformation,
       }"
       @close="showPictureModal = false"
@@ -79,7 +79,7 @@
           >{{
             fluent(
               'profile_first-name',
-              scope.isStaff ? 'tooltip-staff' : 'tooltip',
+              scope.isStaff ? 'tooltip-staff' : 'tooltip'
             )
           }}</Tooltip
         >
@@ -200,7 +200,7 @@
           >{{
             fluent(
               'profile_fun-job-title',
-              scope.isStaff ? 'tooltip' : 'tooltip-contributor',
+              scope.isStaff ? 'tooltip' : 'tooltip-contributor'
             )
           }}</Tooltip
         >
@@ -503,13 +503,13 @@ export default {
     Fluent,
   },
   computed: {
-    loggedInUser() {
-      return this.$store.state.user;
+    loggedInUsername() {
+      return this.$store.state.scope.username;
     },
     avatar() {
       return {
         picture: this.pictureData.value,
-        username: this.loggedInUser.primaryUsername.value,
+        username: this.loggedInUsername,
       };
     },
   },
@@ -527,7 +527,7 @@ export default {
               value,
               metadata: { display },
             },
-          ],
+          ]
         ) => {
           obj[key] = {
             value: value || '',
@@ -535,7 +535,7 @@ export default {
           };
           return obj;
         },
-        {},
+        {}
       ),
       staffInformationTitle: {
         value: this.staffInformation.title.value,
@@ -560,11 +560,11 @@ export default {
       }
       try {
         const res = await fetcher.fetch(
-          `/world/suggest?s=${encodeURIComponent(query)}`,
+          `/world/suggest?s=${encodeURIComponent(query)}`
         );
         const json = await res.json();
         const locations = new Map(
-          json.map((l) => [`${l.city}, ${l.region}, ${l.country}`, l]),
+          json.map(l => [`${l.city}, ${l.region}, ${l.country}`, l])
         );
         this.locations = [...locations.entries()].map(([display, item]) => {
           return { display, item };
