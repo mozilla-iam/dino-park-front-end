@@ -36,14 +36,7 @@
                 v-model="groupDescription"
                 class="content-area__value"
               ></TextArea>
-              <p class="content-area__value-description">
-                {{ fluent('access-group_markdown', 'intro-part-1') }}
-                <a href="#">{{
-                  fluent('access-group_markdown', 'intro-part-link')
-                }}</a>
-                {{ fluent('access-group_markdown', 'intro-part-2') }}
-              </p>
-              <AccessGroupMarkdownGuide :isCollapsed="true" />
+              <AccessGroupMarkdownGuide />
             </div>
           </template>
         </AccessGroupEditPanel>
@@ -152,13 +145,6 @@
                 v-model="groupTermsData"
                 class="content-area__value"
               ></TextArea>
-              <p class="content-area__value-description">
-                {{ fluent('access-group_markdown', 'intro-part-1') }}
-                <a href="#">{{
-                  fluent('access-group_markdown', 'intro-part-link')
-                }}</a>
-                {{ fluent('access-group_markdown', 'intro-part-2') }}
-              </p>
               <AccessGroupMarkdownGuide :isCollapsed="true" />
             </div>
           </template>
