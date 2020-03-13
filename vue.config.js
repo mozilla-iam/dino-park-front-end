@@ -11,6 +11,7 @@ const HTTPS = HTTPS_CERT &&
   };
 
 module.exports = {
+  lintOnSave: false,
   productionSourceMap: false,
   filenameHashing: true,
   publicPath: BASE_URL,
