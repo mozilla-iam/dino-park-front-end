@@ -1,183 +1,189 @@
 <template>
-  <main class="group-create">
-    <Button class="button group-create__back-action" @click="handleBackClicked">
-      <Icon id="chevron-left" :width="17" :height="17" />
-      {{ fluent('access-group_create', 'group-create__back-action') }}
-    </Button>
-    <section class="primary-area">
-      <h1>{{ fluent('access-group_create') }}</h1>
-      <AccessGroupEditPanel
-        class="details-container"
-        :title="fluent('access-group_details')"
+  <section class="group-create-container">
+    <main class="group-create" v-if="!loading">
+      <Button
+        class="button group-create__back-action"
+        @click="handleBackClicked"
       >
-        <template v-slot:content>
-          <div class="content-area__row">
-            <label class="content-area__label">
-              {{ fluent('access-group_details', 'name') }}
-            </label>
-            <TextInput
-              type="text"
-              v-model="groupName"
-              :maxlength="50"
-              class="content-area__value"
-            />
-          </div>
-          <div class="content-area__row multi-line markdown-outer-container">
-            <label class="content-area__label">
-              {{ fluent('access-group_details', 'description') }}
-            </label>
-            <TextArea
-              :rows="5"
-              :maxlength="450"
-              v-model="groupDescription"
-              class="content-area__value"
-            ></TextArea>
-            <p class="content-area__value-description">
-              {{ fluent('access-group_markdown', 'intro-part-1') }}
-              <a href="#">
-                {{ fluent('access-group_markdown', 'intro-part-link') }}
-              </a>
-              {{ fluent('access-group_markdown', 'intro-part-2') }}
-            </p>
-            <AccessGroupMarkdownGuide :isCollapsed="true" />
-          </div>
-        </template>
-      </AccessGroupEditPanel>
-      <AccessGroupEditPanel
-        :title="fluent('access-group_type')"
-        v-if="getFeature('editGroupType')"
-      >
-        <template v-slot:content>
-          <div class="content-area__row">
-            <div
-              class="radio-control"
-              v-for="(type, idx) in groupTypes"
-              :key="idx"
-            >
-              <input type="radio" :value="type" v-model="groupType" />
-              {{ type }}
-            </div>
-          </div>
-          <div class="content-area__row radio-control__description">
-            <label class="description-label">
-              {{ fluent('access-group_type', 'reviewed-heading') }}
-            </label>
-            <p class="description-content">
-              {{ fluent('access-group_type', 'reviewed-content') }}
-            </p>
-          </div>
-          <div class="content-area__row radio-control__description">
-            <label class="description-label">
-              {{ fluent('access-group_type', 'closed-heading') }}
-            </label>
-            <p class="description-content">
-              {{ fluent('access-group_type', 'closed-content') }}
-            </p>
-          </div>
-        </template>
-      </AccessGroupEditPanel>
-      <AccessGroupEditPanel :title="fluent('access-group_expiration')">
-        <template v-slot:content>
-          <div class="content-area__row group-expiration">
-            <label class="description-label">
-              {{ fluent('access-group_expiration', 'expiration__description') }}
-            </label>
-            <RadioSelect
-              :options="expirationOptions"
-              v-model="selectedExpiration"
-              :isCustom="isExpirationCustom"
-            />
-            <aside class="container-info">
-              <Icon
-                id="info"
-                class="container-info__icon"
-                :width="24"
-                :height="24"
+        <Icon id="chevron-left" :width="17" :height="17" />
+        {{ fluent('access-group_create', 'group-create__back-action') }}
+      </Button>
+      <section class="primary-area">
+        <h1>{{ fluent('access-group_create') }}</h1>
+        <AccessGroupEditPanel
+          class="details-container"
+          :title="fluent('access-group_details')"
+        >
+          <template v-slot:content>
+            <div class="content-area__row">
+              <label class="content-area__label">{{
+                fluent('access-group_details', 'name')
+              }}</label>
+              <TextInput
+                type="text"
+                v-model="groupName"
+                :maxlength="50"
+                class="content-area__value"
               />
-              <p class="container-info__description">
-                {{
-                  fluent(
-                    'access-group_expiration',
-                    'create-info__description-1'
-                  )
-                }}
-                <strong>
+            </div>
+            <div class="content-area__row multi-line markdown-outer-container">
+              <label class="content-area__label">{{
+                fluent('access-group_details', 'description')
+              }}</label>
+              <TextArea
+                :rows="5"
+                :maxlength="450"
+                v-model="groupDescription"
+                class="content-area__value"
+              ></TextArea>
+              <p class="content-area__value-description">
+                {{ fluent('access-group_markdown', 'intro-part-1') }}
+                <a href="#">{{
+                  fluent('access-group_markdown', 'intro-part-link')
+                }}</a>
+                {{ fluent('access-group_markdown', 'intro-part-2') }}
+              </p>
+              <AccessGroupMarkdownGuide :isCollapsed="true" />
+            </div>
+          </template>
+        </AccessGroupEditPanel>
+        <AccessGroupEditPanel
+          :title="fluent('access-group_type')"
+          v-if="getFeature('editGroupType')"
+        >
+          <template v-slot:content>
+            <div class="content-area__row">
+              <div
+                class="radio-control"
+                v-for="(type, idx) in groupTypes"
+                :key="idx"
+              >
+                <input type="radio" :value="type" v-model="groupType" />
+                {{ type }}
+              </div>
+            </div>
+            <div class="content-area__row radio-control__description">
+              <label class="description-label">{{
+                fluent('access-group_type', 'reviewed-heading')
+              }}</label>
+              <p class="description-content">
+                {{ fluent('access-group_type', 'reviewed-content') }}
+              </p>
+            </div>
+            <div class="content-area__row radio-control__description">
+              <label class="description-label">{{
+                fluent('access-group_type', 'closed-heading')
+              }}</label>
+              <p class="description-content">
+                {{ fluent('access-group_type', 'closed-content') }}
+              </p>
+            </div>
+          </template>
+        </AccessGroupEditPanel>
+        <AccessGroupEditPanel :title="fluent('access-group_expiration')">
+          <template v-slot:content>
+            <div class="content-area__row group-expiration">
+              <label class="description-label">{{
+                fluent('access-group_expiration', 'expiration__description')
+              }}</label>
+              <RadioSelect
+                :options="expirationOptions"
+                v-model="selectedExpiration"
+                :isCustom="isExpirationCustom"
+              />
+              <aside class="container-info">
+                <Icon
+                  id="info"
+                  class="container-info__icon"
+                  :width="24"
+                  :height="24"
+                />
+                <p class="container-info__description">
                   {{
                     fluent(
                       'access-group_expiration',
-                      'create-info__description-2'
+                      'create-info__description-1'
                     )
                   }}
-                </strong>
-                {{
-                  fluent(
-                    'access-group_expiration',
-                    'create-info__description-3'
-                  )
-                }}
-                <br />
-                {{
-                  fluent(
-                    'access-group_expiration',
-                    'create-info__description-4'
-                  )
-                }}
-              </p>
-            </aside>
-          </div>
-        </template>
-      </AccessGroupEditPanel>
-      <AccessGroupEditPanel :title="fluent('access-group_terms')">
-        <template v-slot:content>
-          <div class="content-area__row">
-            <div class="radio-control">
-              <input type="checkbox" v-model="groupTermsRequiredData" />
-              {{ fluent('access-group_terms', 'terms-required') }}
+                  <strong>
+                    {{
+                      fluent(
+                        'access-group_expiration',
+                        'create-info__description-2'
+                      )
+                    }}
+                  </strong>
+                  {{
+                    fluent(
+                      'access-group_expiration',
+                      'create-info__description-3'
+                    )
+                  }}
+                  <br />
+                  {{
+                    fluent(
+                      'access-group_expiration',
+                      'create-info__description-4'
+                    )
+                  }}
+                </p>
+              </aside>
             </div>
-          </div>
-          <div
-            class="content-area__row multi-line markdown-outer-container"
-            v-if="groupTermsRequiredData"
+          </template>
+        </AccessGroupEditPanel>
+        <AccessGroupEditPanel :title="fluent('access-group_terms')">
+          <template v-slot:content>
+            <div class="content-area__row">
+              <div class="radio-control">
+                <input type="checkbox" v-model="groupTermsRequiredData" />
+                {{ fluent('access-group_terms', 'terms-required') }}
+              </div>
+            </div>
+            <div
+              class="content-area__row multi-line markdown-outer-container"
+              v-if="groupTermsRequiredData"
+            >
+              <label class="content-area__label">{{
+                fluent('access-group_terms', 'terms-intro')
+              }}</label>
+              <TextArea
+                :rows="5"
+                :maxlength="5000"
+                v-model="groupTermsData"
+                class="content-area__value"
+              ></TextArea>
+              <p class="content-area__value-description">
+                {{ fluent('access-group_markdown', 'intro-part-1') }}
+                <a href="#">{{
+                  fluent('access-group_markdown', 'intro-part-link')
+                }}</a>
+                {{ fluent('access-group_markdown', 'intro-part-2') }}
+              </p>
+              <AccessGroupMarkdownGuide :isCollapsed="true" />
+            </div>
+          </template>
+        </AccessGroupEditPanel>
+        <footer class="group-create__footer">
+          <Button
+            class="button--primary"
+            @click="handleCreateClicked"
+            :disabled="!createEnabled"
+            >{{ fluent('access-group_create', 'create-action') }}</Button
           >
-            <label class="content-area__label">
-              {{ fluent('access-group_terms', 'terms-intro') }}
-            </label>
-            <TextArea
-              :rows="5"
-              :maxlength="5000"
-              v-model="groupTermsData"
-              class="content-area__value"
-            ></TextArea>
-            <p class="content-area__value-description">
-              {{ fluent('access-group_markdown', 'intro-part-1') }}
-              <a href="#">
-                {{ fluent('access-group_markdown', 'intro-part-link') }}
-              </a>
-              {{ fluent('access-group_markdown', 'intro-part-2') }}
-            </p>
-            <AccessGroupMarkdownGuide :isCollapsed="true" />
-          </div>
-        </template>
-      </AccessGroupEditPanel>
-      <footer class="group-create__footer">
-        <Button
-          class="button--primary"
-          @click="handleCreateClicked"
-          :disabled="!createEnabled"
-          >{{ fluent('access-group_create', 'create-action') }}</Button
-        >
-        <Button
-          class="button button--secondary button--action"
-          @click="handleBackClicked"
-          >{{ fluent('access-group_create', 'leave-action') }}</Button
-        >
-      </footer>
-    </section>
-  </main>
+          <Button
+            class="button button--secondary button--action"
+            @click="handleBackClicked"
+            >{{ fluent('access-group_create', 'leave-action') }}</Button
+          >
+        </footer>
+      </section>
+    </main>
+    <LoadingSpinner v-else></LoadingSpinner>
+  </section>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import TextInput from '@/components/ui/TextInput.vue';
 import TextArea from '@/components/ui/TextArea.vue';
 import Button from '@/components/ui/Button.vue';
@@ -185,6 +191,7 @@ import Icon from '@/components/ui/Icon.vue';
 import RadioSelect from '@/components/ui/RadioSelect.vue';
 import AccessGroupEditPanel from '@/components/access_group/AccessGroupEditPanel.vue';
 import AccessGroupMarkdownGuide from '@/components/access_group/AccessGroupMarkdownGuide.vue';
+import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 import { ACCESS_GROUP_PAGE } from '@/router.js';
 import {
   TYPE_INDEX,
@@ -201,6 +208,7 @@ export default {
     RadioSelect,
     AccessGroupEditPanel,
     AccessGroupMarkdownGuide,
+    LoadingSpinner,
   },
   props: [],
   mounted() {},
@@ -229,6 +237,9 @@ export default {
     };
   },
   computed: {
+    ...mapGetters({
+      loading: 'getLoading',
+    }),
     createEnabled() {
       return this.groupName.length > 0;
     },

@@ -48,7 +48,7 @@ export default {
       this.selectedRadio = 'custom';
       this.$emit(
         'input',
-        this.customValue === '' ? 'custom' : this.customValue
+        this.customValue === '' ? 'custom' : Number(this.customValue)
       );
     },
     optionIsCustom(option) {
@@ -65,7 +65,7 @@ export default {
       }
     },
     customValue(value) {
-      this.$emit('input', value);
+      this.$emit('input', Number(value));
     },
   },
   data() {
