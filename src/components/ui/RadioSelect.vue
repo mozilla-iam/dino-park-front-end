@@ -4,22 +4,15 @@
       class="radio-select__option"
       v-for="(radio, idx) in options"
       :key="idx"
+      @click="e => handleRadioClicked(e, radio)"
     >
       <input
-        type="checkbox"
+        type="radio"
         :name="radio.value"
         v-model="selectedRadio"
         :value="radio.value"
-        class="visually-hidden"
+        class="radio-select__value"
       />
-      <Icon
-        v-if="radio.value !== selectedRadio"
-        id="circle"
-        :width="20"
-        :height="20"
-        @click="() => handleRadioClicked(radio)"
-      />
-      <Icon v-else id="circle-fill" :width="20" :height="20" />
       <TextInput
         @focus="handleCustomInputFocus"
         class="custom-value"
@@ -46,9 +39,10 @@ export default {
     emitChange(event) {
       this.$emit('input', event.target.checked);
     },
-    handleRadioClicked(radioOption) {
+    handleRadioClicked(event, radioOption) {
       this.selectedRadio = radioOption.value;
       this.$emit('input', radioOption.value);
+      event.stopPropagation();
     },
     handleCustomInputFocus() {
       this.selectedRadio = 'custom';
@@ -91,6 +85,11 @@ export default {
 .radio-select {
   display: flex;
   flex-direction: row;
+}
+
+.radio-select .radio-select__value {
+  display: inline-block;
+  margin-right: 1em;
 }
 
 .radio-select .radio-select__option {
