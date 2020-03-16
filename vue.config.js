@@ -51,6 +51,7 @@ module.exports = {
   },
   devServer: {
     https: HTTPS,
+    host: 'localhost',
     before(app) {
       app.get('/config/features.json', (_, res) => {
         res.json(yaml.parse(fs.readFileSync('./features-local.yaml', 'utf8')));
