@@ -1,46 +1,66 @@
 <template>
   <aside class="markdown-guide-container">
-    <h4 :class="{ 'markdown-guide__header': true, collapsed }" @click="toggleCollapsed">
+    <h4
+      :class="{ 'markdown-guide__header': true, collapsed }"
+      @click="toggleCollapsed"
+    >
       <span class="markdown-arrow"></span>
-      {{fluent('access-group_markdown')}}
+      {{ fluent('access-group_markdown') }}
     </h4>
     <div class="markdown-guide__content" v-if="!collapsed">
       <div class="markdown-guide__row">
-        <p class="explanation">**{{fluent('access-group_markdown', 'bold')}}**</p>
-        <p class="bold-example">{{fluent('access-group_markdown', 'bold')}}</p>
+        <p class="explanation">
+          **{{ fluent('access-group_markdown', 'bold') }}**
+        </p>
+        <p class="bold-example">
+          {{ fluent('access-group_markdown', 'bold') }}
+        </p>
       </div>
       <div class="markdown-guide__row">
-        <p class="explanation">__{{fluent('access-group_markdown', 'italic')}}__</p>
-        <p class="italicized-example">{{fluent('access-group_markdown', 'italic')}}</p>
+        <p class="explanation">
+          __{{ fluent('access-group_markdown', 'italic') }}__
+        </p>
+        <p class="italicized-example">
+          {{ fluent('access-group_markdown', 'italic') }}
+        </p>
       </div>
       <div class="markdown-guide__row">
-        <p
-          class="explanation"
-        >[{{fluent('access-group_markdown', 'web-link')}}](https://www.mozilla.org/)</p>
+        <p class="explanation">
+          [{{
+            fluent('access-group_markdown', 'web-link')
+          }}](https://www.mozilla.org/)
+        </p>
         <p class="link-example">
-          <a href="#">{{fluent('access-group_markdown', 'web-link')}}</a>
+          <a href="#">{{ fluent('access-group_markdown', 'web-link') }}</a>
         </p>
       </div>
       <div class="markdown-guide__row">
         <p class="explanation list">
-          <span>- {{fluent('access-group_markdown', 'list-first')}}</span>
-          <span>- {{fluent('access-group_markdown', 'list-second')}}</span>
-          <span>- {{fluent('access-group_markdown', 'list-third')}}</span>
+          <span>- {{ fluent('access-group_markdown', 'list-first') }}</span>
+          <span>- {{ fluent('access-group_markdown', 'list-second') }}</span>
+          <span>- {{ fluent('access-group_markdown', 'list-third') }}</span>
         </p>
         <ul class="list-example">
-          <li>{{fluent('access-group_markdown', 'list-first')}}</li>
-          <li>{{fluent('access-group_markdown', 'list-second')}}</li>
-          <li>{{fluent('access-group_markdown', 'list-third')}}</li>
+          <li>{{ fluent('access-group_markdown', 'list-first') }}</li>
+          <li>{{ fluent('access-group_markdown', 'list-second') }}</li>
+          <li>{{ fluent('access-group_markdown', 'list-third') }}</li>
         </ul>
       </div>
     </div>
+    <footer class="markdown-guide__footer">
+      <ExternalLink href="/#test">{{
+        fluent('access-group_markdown', 'footer-link')
+      }}</ExternalLink>
+    </footer>
   </aside>
 </template>
 
 <script>
+import ExternalLink from '@/components/ui/ExternalLink.vue';
+
 export default {
   name: 'AccessGroupMarkdownGuide',
-  components: {},
+  components: { ExternalLink },
   props: {
     isCollapsed: {
       type: Boolean,
@@ -129,6 +149,12 @@ export default {
 
 .markdown-guide-container .markdown-guide__content {
   padding: 1em;
+}
+
+.markdown-guide-container .markdown-guide__footer {
+  margin: 0 1em 1em;
+  border-top: 1px solid #ddedfd;
+  padding-top: 1em;
 }
 
 @media (min-width: 35em) {
