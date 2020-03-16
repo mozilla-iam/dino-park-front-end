@@ -31,6 +31,12 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import store, {
+  fetchBase,
+  fetchMembers,
+  fetchAccessGroup,
+  resolvePromisesSerially,
+} from '@/store';
 import Icon from '@/components/ui/Icon.vue';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 import EditButton from '@/components/ui/EditButton.vue';
@@ -56,6 +62,20 @@ export default {
   },
   props: {
     groupname: String,
+  },
+  beforeRouteEnter(to, from, next) {
+    const { groupname } = to.params;
+    store.dispatch('setLoading');
+    const [membersPromises, membersResolvers] = fetchMembers(store, groupname);
+    const [agPromises, agResolvers] = fetchAccessGroup(store, groupname);
+    resolvePromisesSerially(
+      [...membersPromises, ...agPromises],
+      [...membersResolvers, ...agResolvers],
+    ).then(() => {
+      store.dispatch('completeLoading');
+      console.log('Complete accessgroup component route loading');
+      next();
+    });
   },
   computed: {
     ...mapGetters({

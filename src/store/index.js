@@ -57,3 +57,55 @@ export default new Vuex.Store({
     },
   },
 });
+
+export function fetchBase(store) {
+  return [
+    [() => store.dispatch('features/fetch'), () => store.dispatch('fetchUser')],
+    [() => {}, () => {}],
+  ];
+}
+
+export function fetchMembers(store, groupname) {
+  return [
+    [() => store.dispatch('accessGroup/fetchMembers', groupname)],
+    [(data) => {}],
+  ];
+}
+
+export function fetchProfile(store) {
+  return [
+    [() => store.dispatch('userV2/fetchProfile')],
+    [() => store.dispatch('userV2/fetchInvitations')],
+  ];
+}
+
+export function fetchAccessGroup(store, groupname) {
+  return [
+    [() => store.dispatch('accessGroup/fetchGroup', groupname)],
+    [(data) => {}],
+  ];
+}
+
+export function fetchTerms(store) {
+  return [[() => store.dispatch('accessGroup/fetchTerms')], [(data) => {}]];
+}
+
+export function fetchInvitationsAndRequests(store) {
+  return [
+    [
+      () => store.dispatch('accessGroup/fetchInvitations'),
+      () => store.dispatch('accessGroup/fetchRequests'),
+    ],
+    [(data) => {}, (data) => {}],
+  ];
+}
+
+export async function resolvePromisesSerially(promises, resolvers) {
+  try {
+    for (let i = 0, len = promises.length; i < len; i += 1) {
+      resolvers[i](await promises[i]());
+    }
+  } catch (e) {
+    throw new Error(e.message);
+  }
+}
