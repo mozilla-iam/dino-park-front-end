@@ -7,6 +7,7 @@
       :maxlength="maxlength"
       :value="value ? value : ''"
       @input="$emit('input', $event.target.value)"
+      @focus="onFocus"
     />
     <span v-if="maxlength">{{ value.length }}/{{ maxlength }}</span>
   </div>
@@ -22,6 +23,11 @@ export default {
     maxlength: Number,
     input: String,
     value: String,
+  },
+  methods: {
+    onFocus() {
+      this.$emit('focus');
+    },
   },
 };
 </script>

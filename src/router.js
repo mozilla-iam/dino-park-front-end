@@ -243,6 +243,7 @@ export default class DPRouter {
         (to.name === ACCESS_GROUP_EDIT_PAGE && from.name === ACCESS_GROUP_PAGE)
       ) {
         if (to.name === ACCESS_GROUP_CREATE_PAGE) {
+          store.dispatch('completeLoading');
           next();
           return;
         } else if (

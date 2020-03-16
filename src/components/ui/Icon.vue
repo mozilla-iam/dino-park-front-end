@@ -7,6 +7,7 @@
     :width="width"
     :height="height"
     class="icon"
+    @click="handleIconClicked"
   >
     <template v-if="id === 'self-avatar'">
       <image
@@ -36,7 +37,7 @@
               }
             }`.replace(/\n/g, '')}!@/assets/svg/${id}.svg`).default.id
         "
-      ></use>
+      />
     </template>
   </svg>
 </template>
@@ -58,6 +59,11 @@ export default {
         this.generatedAvatarUrl = a;
       }
     );
+  },
+  methods: {
+    handleIconClicked(e) {
+      this.$emit('click', e);
+    },
   },
   computed: {
     computedAvatarUrl() {
