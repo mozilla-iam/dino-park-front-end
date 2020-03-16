@@ -163,7 +163,7 @@ export const TYPE_INDEX = {
   reviewed: 1,
   open: 2,
 };
-export const ACCESS_GROUP_TYPES = ['Reviewed', 'Closed', 'Open'];
+export const ACCESS_GROUP_TYPES = ['Closed', 'Reviewed', 'Open'];
 export class GroupViewModel {
   constructor(data) {
     this.id = '';
