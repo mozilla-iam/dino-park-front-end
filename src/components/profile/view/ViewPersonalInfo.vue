@@ -143,11 +143,6 @@ export default {
     UserPicture,
     DataClassification,
   },
-  computed: {
-    currentUser() {
-      return this.$store.state.user;
-    },
-  },
   data() {
     return {
       section: 'personal info',

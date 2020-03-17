@@ -49,10 +49,7 @@ export default {
   },
   computed: {
     variables() {
-      if (
-        this.$route.params.username ===
-        this.$store.state.user.primaryUsername.value
-      ) {
+      if (this.$route.params.username === this.$store.state.scope.username) {
         const viewAsActive = Boolean(this.$route.query.pa);
         return {
           username: null,

@@ -94,7 +94,7 @@
             name: 'Create Access Group',
           }"
           rel="noreferrer noopener"
-          v-if="getFeature('accessGroupsToggle')"
+          v-if="getFeature('accessGroupsToggle') && showEditAccessGroups"
         >
           <Icon id="plus" :width="18" :height="18" />{{
             fluent('profile_access-groups_mozillians', 'create-access-groups')
@@ -106,7 +106,6 @@
           href="https://mozillians.org/user/edit/#mygroups"
           target="_blank"
           rel="noreferrer noopener"
-          v-else
         >
           <Icon id="external" :width="18" :height="18" />
           {{ fluent('profile_access-groups_mozillians', 'edit') }}
@@ -147,6 +146,11 @@ export default {
   },
   mounted() {
     this.$refs.header.focus();
+  },
+  computed: {
+    showEditAccessGroups() {
+      return this.$store.state.scope.isGroupCreator;
+    },
   },
   data() {
     const {

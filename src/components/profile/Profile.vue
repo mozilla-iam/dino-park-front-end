@@ -339,11 +339,11 @@ export default {
         keys:
           this.editing === 'keys' ||
           Object.entries(this.pgpPublicKeys.values || {}).length > 0 ||
-            Object.entries(this.sshPublicKeys.values || {}).length > 0,
+          Object.entries(this.sshPublicKeys.values || {}).length > 0,
       };
     },
     userOnOwnProfile() {
-      return this.$store.state.user.uuid.value === this.uuid.value;
+      return this.$store.state.scope.uuid === this.uuid.value;
     },
     identitiesWrapper() {
       return new Identities(this.identities);
@@ -367,7 +367,7 @@ export default {
       }
       this.$router.push({
         name: 'Profile',
-        params: { username: this.$store.state.user.primaryUsername.value },
+        params: { username: this.$store.state.scope.username },
         hash: '#nav-identities',
       });
       this.$root.$emit('toast', { content });

@@ -94,7 +94,7 @@ export default class DPRouter {
    * Since we are using the url to hold the state of the page, this is a field to denote which general page we are on
    */
   // TODO: Add fluent translations the the rest of the pages here
-  constructor(features, fluent) {
+  constructor(features, fluent, store) {
     this.fluent = fluent;
     const initRouter = new Router({
       base: process.env.BASE_URL,
@@ -104,11 +104,8 @@ export default class DPRouter {
         if (to.hash) {
           return { selector: to.hash };
         }
-        if (
-          scrolling.toEdit(to) ||
-          scrolling.fromEditToSelf(to, from, initRouter)
-        ) {
-          return { selector: `#nav-${to.query.section}` };
+        if (scrolling.toEdit(to) || scrolling.fromEditToSelf(to, from, store)) {
+          return { selector: `#nav-${from.query.section}` };
         }
         if (scrolling.toProfile(to, from)) {
           return { x: 0, y: 0 };
