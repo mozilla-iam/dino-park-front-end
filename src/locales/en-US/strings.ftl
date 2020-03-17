@@ -368,6 +368,10 @@ error_issues = Please submit all bugs or issues to <a data-l10n-name="github">th
 
 ## Access Groups
 
+access-group_list = Access Groups
+  .summary-area__summary = test
+  .summary-area__action = Create Access Group
+  .search = Find a Group
 access-group_description = Access Group
   .tooltip = You can learn more about Access Groups on
   .tooltip_link = Access Groups wiki page
