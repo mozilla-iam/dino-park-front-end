@@ -68,7 +68,7 @@ export default {
         this.avatar.picture.startsWith('https://s3.amazonaws.com/')
       ) {
         this.identicon = true;
-        generateIdenticon(this.avatar.username, this.size).then((i) => {
+        generateIdenticon(this.avatar.username, this.size).then(i => {
           this.src = i;
         });
       } else {
@@ -84,15 +84,13 @@ export default {
           this.src = avatarUrl(
             this.avatar.picture,
             this.slot,
-            this.ownPicture(),
+            this.ownPicture()
           );
         }
       }
     },
     ownPicture() {
-      return (
-        this.avatar.username === this.$store.state.user.primaryUsername.value
-      );
+      return this.avatar.username === this.$store.state.scope.username;
     },
   },
   created() {

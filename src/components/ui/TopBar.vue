@@ -1,15 +1,20 @@
 <template>
   <header class="top-bar" :style="{ marginBottom: extraPadding + 'px' }">
     <div class="top-bar__bar">
-      <RouterLink :to="{ name: 'Home' }" class="top-bar__link top-bar__link--logo">
+      <RouterLink
+        :to="{ name: 'Home' }"
+        class="top-bar__link top-bar__link--logo"
+      >
         <img src="@/assets/images/mozilla.svg" :alt="fluent('mozilla')" />
       </RouterLink>
       <SearchForm
+        v-if="loggedIn"
         :searchFormHandler="searchFormHandler"
         :searchFormLabel="fluent('search_input', 'placeholder')"
         class="hide-mobile"
       ></SearchForm>
       <ShowMore
+        v-if="loggedIn"
         :buttonText="fluent('search', 'open')"
         :alternateButtonText="fluent('search', 'close')"
         buttonClass="hide-desktop top-bar__search-toggle"
@@ -40,7 +45,7 @@
         <title id="org-chart-link-icon-title">{{ fluent('orgchart') }}</title>
         <Icon id="org-chart" :width="24" :height="24" />
       </RouterLink>
-      <template v-if="user">
+      <template v-if="loggedIn">
         <ShowMore
           :buttonText="fluent('user-menu_open')"
           :alternateButtonText="fluent('user-menu_close')"
@@ -64,8 +69,14 @@
           </template>
         </ShowMore>
       </template>
-      <template v-else>…</template>
-      <Toast ref="toast" :content="toastContent" @reset-toast="toastContent = ''"></Toast>
+      <template v-else
+        >…</template
+      >
+      <Toast
+        ref="toast"
+        :content="toastContent"
+        @reset-toast="toastContent = ''"
+      ></Toast>
     </div>
     <SearchForm
       class="search-form--small hide-desktop"
@@ -122,6 +133,9 @@ export default {
     };
   },
   computed: {
+    loggedIn() {
+      return this.$store.state.scope.isLoggedIn;
+    },
     user() {
       return this.$store.state.user;
     },
