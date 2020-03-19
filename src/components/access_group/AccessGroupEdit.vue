@@ -272,4 +272,22 @@ export default {
     text-decoration: none;
   }
 }
+
+/* Expiration styles */
+.expiration-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.expiration-container .expiration-container__label {
+  color: var(--gray-40);
+  margin-bottom: 1em;
+}
+
+.expiration-container .expiration-container__value {
+  width: 100%;
+}
 </style>

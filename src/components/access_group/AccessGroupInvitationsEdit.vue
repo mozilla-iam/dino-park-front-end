@@ -69,26 +69,17 @@
               }}
             </div>
           </div>
-          <div
-            class="new-invites-expiration"
-            v-if="newInvitesExpirationEnabled"
-          >
-            <label class="new-invites-expiration__label">
+          <div class="expiration-container" v-if="newInvitesExpirationEnabled">
+            <label class="expiration-container__label">
               {{
                 fluent('access-group_invite-member', 'invite-expiration__label')
               }}
             </label>
-            <SelectCustom
-              class="new-invites-expiration__value"
+            <RadioSelect
+              class="expiration-container__value"
               :options="expirationOptions"
-              :isCustom="isExpirationCustom"
               v-model="newInvitesExpiration"
-              :customUnits="
-                fluent(
-                  'access-group_invite-member',
-                  'invite-expiration__custom-unit'
-                )
-              "
+              :isCustom="isExpirationCustom"
             />
           </div>
         </div>
@@ -148,6 +139,7 @@ import TextArea from '@/components/ui/TextArea.vue';
 import Button from '@/components/ui/Button.vue';
 import Icon from '@/components/ui/Icon.vue';
 import SelectCustom from '@/components/ui/SelectCustom.vue';
+import RadioSelect from '@/components/ui/RadioSelect.vue';
 import AccessGroupEditPanel from '@/components/access_group/AccessGroupEditPanel.vue';
 import TagSelector from '@/components/ui/TagSelector.vue';
 import AccessGroups from '@/assets/js/access-groups';
@@ -168,6 +160,7 @@ export default {
     AccessGroupMemberListDisplay,
     AccessGroupMembersTable,
     SelectCustom,
+    RadioSelect,
   },
   props: [],
   mounted() {},
@@ -362,15 +355,20 @@ export default {
   color: var(--gray-40);
 }
 
-.new-invites-expiration {
+/* .new-invites-expiration {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
+  width: 100%;
 }
 
 .new-invites-expiration .new-invites-expiration__label {
   color: var(--gray-40);
-  margin-right: 1em;
+  margin-bottom: 1em;
 }
+
+.new-invites-expiration .new-invites-expiration__value {
+  width: 100%;
+} */
 </style>

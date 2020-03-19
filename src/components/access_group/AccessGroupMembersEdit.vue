@@ -114,21 +114,15 @@
     <AccessGroupEditPanel :title="fluent('access-group_expiration')">
       <template v-slot:content>
         <div class="members-expiration-container">
-          <div class="content-area__row">
-            <label class="content-area__label expiration__description">{{
+          <div class="content-area__row expiration-container">
+            <label class="content-area__label expiration-container__label">{{
               fluent('access-group_expiration', 'expiration__description')
             }}</label>
-            <SelectCustom
-              class="expiration__value"
+            <RadioSelect
+              class="expiration-container__value"
               :options="expirationOptions"
-              :isCustom="isExpirationCustom"
               v-model="groupExpiration"
-              :customUnits="
-                fluent(
-                  'access-group_expiration',
-                  'expiration__value-custom-unit'
-                )
-              "
+              :isCustom="isExpirationCustom"
             />
           </div>
           <aside class="container-info">
@@ -182,6 +176,7 @@ import TextArea from '@/components/ui/TextArea.vue';
 import Button from '@/components/ui/Button.vue';
 import Icon from '@/components/ui/Icon.vue';
 import SelectCustom from '@/components/ui/SelectCustom.vue';
+import RadioSelect from '@/components/ui/RadioSelect.vue';
 import Select from '@/components/ui/Select.vue';
 import AccessGroupEditPanel from '@/components/access_group/AccessGroupEditPanel.vue';
 import SearchForm from '@/components/ui/SearchForm.vue';
@@ -203,6 +198,7 @@ export default {
     AccessGroupMembersTable,
     TagSelector,
     SelectCustom,
+    RadioSelect,
     Select,
   },
   props: [],
@@ -580,17 +576,6 @@ export default {
 
 .tags-selector .tags-selector__description {
   color: var(--gray-40);
-}
-
-.members-expiration-container .content-area__row {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-}
-
-.members-expiration-container .content-area__row .content-area__label {
-  margin-right: 1em;
-  flex: initial;
 }
 
 .container-info {
