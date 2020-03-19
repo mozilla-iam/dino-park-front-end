@@ -3,25 +3,27 @@
     <main class="group-index">
       <section class="summary-area">
         <h1 class="access-group__header">{{ fluent('access-group_list') }}</h1>
-        <p class="summary-area__summary">
-          {{ fluent('access-group_list', 'summary-area__summary--1') }}
-          <br />
-          {{ fluent('access-group_list', 'summary-area__summary--2') }}
-          <ExternalLink href="/#help">{{
-            fluent('access-group_list', 'summary-area__summary--3')
-          }}</ExternalLink>
-          {{ fluent('access-group_list', 'summary-area__summary--4') }}
-        </p>
-        <RouterLink
-          class="button summary-area__action"
-          v-if="canCreateGroup"
-          :to="{
-            name: 'Create Access Group',
-          }"
-        >
-          <Icon id="plus" :width="24" :height="24" />
-          {{ fluent('access-group_list', 'summary-area__action') }}
-        </RouterLink>
+        <div class="summary-area__bottom">
+          <p class="summary-area__summary">
+            {{ fluent('access-group_list', 'summary-area__summary--1') }}
+            <br />
+            {{ fluent('access-group_list', 'summary-area__summary--2') }}
+            <ExternalLink href="/#help">
+              {{ fluent('access-group_list', 'summary-area__summary--3') }}
+            </ExternalLink>
+            {{ fluent('access-group_list', 'summary-area__summary--4') }}
+          </p>
+          <RouterLink
+            class="button summary-area__action"
+            v-if="canCreateGroup"
+            :to="{
+              name: 'Create Access Group',
+            }"
+          >
+            <Icon id="plus" :width="24" :height="24" />
+            {{ fluent('access-group_list', 'summary-area__action') }}
+          </RouterLink>
+        </div>
       </section>
       <AccessGroupList />
     </main>
@@ -66,6 +68,9 @@ export default {
 </script>
 
 <style>
+.group-index-container {
+  overflow: visible;
+}
 .group-index {
   display: flex;
   flex-direction: column;
@@ -83,6 +88,18 @@ export default {
 
   .group-index .summary-area {
     padding: 0;
+    margin-bottom: 3em;
+  }
+
+  .group-index .summary-area .summary-area__summary {
+    margin-bottom: 0;
+  }
+
+  .group-index .summary-area .summary-area__bottom {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
   }
 }
 

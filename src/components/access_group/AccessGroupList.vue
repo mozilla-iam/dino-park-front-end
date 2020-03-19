@@ -122,6 +122,12 @@ export default {
   box-shadow: var(--shadowCard);
 }
 
+@media (min-width: 57.5em) {
+  .list-container {
+    background: transparent;
+  }
+}
+
 .list-container__control-bar {
   margin: 0;
   position: relative;
@@ -131,9 +137,20 @@ export default {
   justify-content: center;
 }
 
+@media (min-width: 57.5em) {
+  .list-container__control-bar {
+    background: var(--white);
+    margin-bottom: 1em;
+  }
+}
+
 .list-container__control-bar .group-select {
   align-self: center;
   margin-top: 1em;
+}
+
+.list-container__control-bar .group-select .options__toggle {
+  border: 1px solid var(--gray-30);
 }
 
 .search-container {
@@ -143,6 +160,13 @@ export default {
 @media (min-width: 57.5em) {
   .list-container__control-bar {
     justify-content: initial;
+    position: relative;
+  }
+
+  .list-container__control-bar .group-select {
+    position: absolute;
+    top: 0;
+    right: 1em;
   }
 }
 
@@ -175,7 +199,7 @@ export default {
 @media (min-width: 57.5em) {
   .list-container__list {
     display: grid;
-    grid-template-columns: calc(50% - 0.5em) calc(50% - 0.5em);
+    grid-template-columns: 1fr 1fr;
     grid-row-gap: 1em;
     grid-column-gap: 1em;
     grid-auto-rows: min-content;
@@ -189,6 +213,14 @@ export default {
 
 .list-container__list .list-item-container:nth-child(even) {
   background: var(--gray-20);
+}
+@media (min-width: 57.5em) {
+  .list-container__list .list-item-container {
+    background: var(--white);
+  }
+  .list-container__list .list-item-container:nth-child(even) {
+    background: var(--white);
+  }
 }
 
 .list-container__list-column {
