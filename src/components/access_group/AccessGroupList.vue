@@ -2,36 +2,55 @@
   <article class="list-container">
     <header class="list-container__control-bar">
       <SearchForm
-        class="control-bar__search"
+        class="search-container"
         id="access-group-list-search"
         v-on:clear-query="clearSearchHandler"
         :searchFormHandler="searchFormHandler"
         :searchFormLabel="fluent('access-group_list', 'search')"
       ></SearchForm>
+      <Select
+        class="options--chevron options--large group-select"
+        label="Sort"
+        id="member-list-sort"
+        v-model="selectedSort"
+        :options="sortOptions"
+        :nonOption="defaultSort"
+      ></Select>
     </header>
     <ul class="list-container__list">
-      <li v-for="(member, idx) in getMembers" :key="idx">
-        <AccessGroupListtem class="list-item-container" :member="member" />
+      <li
+        v-for="(group, idx) in groupList"
+        :key="idx"
+        class="list-item-container"
+      >
+        <AccessGroupListItem :group="group" />
       </li>
     </ul>
+    <footer class="list-container__actions" v-if="canShowMore">
+      <Button class="show-more" @click="handleShowMoreClicked">
+        <Icon id="chevron-down" :width="24" :height="24"></Icon>
+        {{ fluent('access-group_list', 'show-more') }}
+      </Button>
+    </footer>
   </article>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import EditButton from '@/components/ui/EditButton.vue';
+import Button from '@/components/ui/Button.vue';
 import AccessGroupListItem from '@/components/access_group/AccessGroupListItem.vue';
 import SearchForm from '@/components/ui/SearchForm.vue';
 import Select from '@/components/ui/Select.vue';
 import Tooltip from '@/components/ui/Tooltip.vue';
 import Icon from '@/components/ui/Icon.vue';
-import { getTwoColumnGridArraySplitFromArray } from '@/assets/js/component-utils';
 
-const defaultTab = 'all';
+const resultsStep = 20;
 export default {
   name: 'AccessGroupList',
   components: {
     EditButton,
+    Button,
     Icon,
     SearchForm,
     Select,
@@ -43,94 +62,82 @@ export default {
   },
   methods: {
     ...mapActions({
-      getMembersWithOptions: 'accessGroup/fetchMembersWithOptions',
+      fetchList: 'accessGroups/fetch',
     }),
     // eslint-disable-next-line
     searchFormHandler(searchQuery, scope) {
-      this.memberListOptions.search = searchQuery;
-      this.getMembersWithOptions({
-        groupName: this.groupName,
-        options: this.memberListOptions,
-      });
-    },
-    handleTabClick(tab) {
-      this.activeTab = tab.key;
-      this.memberListOptions.role = tab.key;
-      this.getMembersWithOptions({
-        groupName: this.groupName,
-        options: this.memberListOptions,
-      });
+      this.listOptions.search = searchQuery;
+      this.fetchList(this.listOptions);
     },
     clearSearchHandler() {
-      this.memberListOptions.search = '';
-      this.getMembersWithOptions({
-        groupName: this.groupName,
-        options: this.memberListOptions,
-      });
+      this.listOptions.search = '';
+      this.fetchList(this.listOptions);
     },
-    isTabActive(tab) {
-      return this.activeTab === tab.key;
-    },
-  },
-  watch: {
-    getMembers(value) {
-      this.filteredList = value.slice(0);
-      this.memberList = value.slice(0);
+    handleShowMoreClicked() {
+      this.listOptions.numResults += resultsStep;
+      this.fetchList(this.listOptions);
     },
   },
   computed: {
     ...mapGetters({
-      getMembers: 'accessGroup/getMembers',
-      groupName: 'accessGroup/getGroupName',
+      groupList: 'accessGroups/list',
     }),
+    canShowMore() {
+      return this.groupList.length > resultsStep;
+    },
+  },
+  watch: {
+    selectedSort(value) {
+      this.listOptions.sort = value;
+      this.fetchList(this.listOptions);
+    },
   },
   data() {
-    const fullMemberList = this.$store.getters['accessGroup/getMembers'];
     return {
-      memberListOptions: {
+      listOptions: {
         search: '',
-        role: defaultTab,
-        sort: 'role-asc',
+        sort: 'name-asc',
+        numResults: resultsStep,
       },
-      filter: '',
-      tabList: [
-        {
-          key: 'all',
-          label: this.fluent(
-            'access-group_members',
-            'tabs-container__item-all',
-          ),
-        },
-        {
-          key: 'curators',
-          label: this.fluent(
-            'access-group_members',
-            'tabs-container__item-curators',
-          ),
-        },
-        {
-          key: 'members',
-          label: this.fluent(
-            'access-group_members',
-            'tabs-container__item-members',
-          ),
-        },
+      selectedSort: '',
+      sortOptions: [
+        { value: 'name-desc', label: 'Name A-Z' },
+        { value: 'name-asc', label: 'Name Z-A' },
+        { value: 'member-count-desc', label: 'Most members' },
+        { value: 'member-count-asc', label: 'Fewest members' },
       ],
-      activeTab: defaultTab,
+      defaultSort: {
+        value: '',
+        label: 'Sort',
+      },
     };
   },
 };
 </script>
 
 <style>
-.list-container__control-bar {
+.list-container {
+  width: 100%;
   background: var(--white);
   box-shadow: var(--shadowCard);
+}
+
+.list-container__control-bar {
   margin: 0;
   position: relative;
   padding: 1.5em;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.list-container__control-bar .group-select {
+  align-self: center;
+  margin-top: 1em;
+}
+
+.search-container {
+  margin: 0 auto;
 }
 
 @media (min-width: 57.5em) {
@@ -178,7 +185,10 @@ export default {
 .list-container__list .list-item-container {
   width: 100%;
   display: flex;
-  margin-top: 1em;
+}
+
+.list-container__list .list-item-container:nth-child(even) {
+  background: var(--gray-20);
 }
 
 .list-container__list-column {
@@ -197,10 +207,6 @@ export default {
   }
 }
 
-.list-container__list .list-item:first-child {
-  margin-left: 0;
-}
-
 .list-container__top-bar .top-bar__search {
   margin: 0 auto;
   width: 15em;
@@ -215,5 +221,21 @@ export default {
 .list-container .list-container__empty {
   text-align: center;
   margin: 3em auto;
+}
+
+.list-container .list-container__actions {
+  background: var(--gray-20);
+  display: flex;
+  justify-content: center;
+  padding: 1em;
+}
+
+.list-container .list-container__actions .show-more {
+  background: transparent;
+  color: var(--gray-40);
+}
+
+.list-container .list-container__actions .show-more:hover {
+  border: 1px solid transparent;
 }
 </style>

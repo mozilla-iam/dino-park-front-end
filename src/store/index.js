@@ -6,6 +6,7 @@ import { client } from '@/server';
 import user from './user.store';
 import scope from './scope.store';
 import accessGroup from './access-group.store';
+import accessGroups from './access-groups.store';
 import features from './features.store';
 
 Vue.use(Vuex);
@@ -15,6 +16,7 @@ export default new Vuex.Store({
     scopeV2: scope,
     features,
     accessGroup,
+    accessGroups,
   },
   state: {
     user: null,
@@ -85,7 +87,9 @@ export function fetchAccessGroup(store, groupname) {
     [(data) => {}],
   ];
 }
-
+export function fetchAccessGroups(store) {
+  return [[() => store.dispatch('accessGroups/fetch')], [(data) => {}]];
+}
 export function fetchTerms(store) {
   return [[() => store.dispatch('accessGroup/fetchTerms')], [(data) => {}]];
 }

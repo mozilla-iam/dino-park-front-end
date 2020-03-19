@@ -15,7 +15,7 @@ export default class AccessGroups {
   async getGroup(groupName) {
     try {
       return await this.api.execute({
-        path: 'groups/get',
+        path: 'group/get',
         endpointArguments: [groupName],
       });
     } catch (e) {
@@ -27,7 +27,7 @@ export default class AccessGroups {
   async updateGroupDetails(groupName, updateData) {
     try {
       return await this.api.execute({
-        path: 'groups/put',
+        path: 'group/put',
         endpointArguments: [groupName],
         dataArguments: updateData,
       });
@@ -52,7 +52,7 @@ export default class AccessGroups {
   async createGroup(form) {
     try {
       return await this.api.execute({
-        path: 'groups/post',
+        path: 'group/post',
         dataArguments: form,
       });
     } catch (e) {
@@ -64,8 +64,23 @@ export default class AccessGroups {
   async closeGroup(groupName) {
     try {
       return await this.api.execute({
-        path: 'groups/delete',
+        path: 'group/delete',
         endpointArguments: [groupName],
+      });
+    } catch (e) {
+      console.log(e.message);
+      throw new Error(e.message);
+    }
+  }
+
+  /**
+   * Access Groups Methods
+   */
+  async getGroups(options = {}) {
+    try {
+      return await this.api.execute({
+        path: 'groups/get',
+        endpointArguments: [options],
       });
     } catch (e) {
       console.log(e.message);
@@ -173,10 +188,10 @@ export default class AccessGroups {
               invitationExpiration: defaultGroupInvitationExpiration,
               groupExpiration: parseInt(expiration),
             },
-          })
+          }),
         );
       }
-      const errors = results.filter(code => code !== 200);
+      const errors = results.filter((code) => code !== 200);
       if (errors.length) {
         throw new Error('Send invitation errors');
       }
