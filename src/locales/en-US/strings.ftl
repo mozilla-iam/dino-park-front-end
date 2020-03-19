@@ -516,7 +516,7 @@ tiny-notification = Hello World
   .access-group-invitation-text-updated = Invitation text successfully updated
   .access-group-member-renewed = [] was renewed
   .access-group-member-removed = [] was removed from the group
-  .access-group-curators-updated = Curators successfully updated
+  .access-group-curators-updated = The curators list has been successfully updated
   .access-group-expiration-updated = Access Group expiration has been successfully updated
 
 date-week = week
