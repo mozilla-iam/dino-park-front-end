@@ -125,6 +125,7 @@ export default {
 @media (min-width: 57.5em) {
   .list-container {
     background: transparent;
+    box-shadow: none;
   }
 }
 
