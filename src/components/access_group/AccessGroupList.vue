@@ -101,8 +101,8 @@ export default {
       },
       selectedSort: '',
       sortOptions: [
-        { value: 'name-desc', label: 'Name A-Z' },
-        { value: 'name-asc', label: 'Name Z-A' },
+        { value: 'name-asc', label: 'Name A-Z' },
+        { value: 'name-desc', label: 'Name Z-A' },
         { value: 'member-count-desc', label: 'Most members' },
         { value: 'member-count-asc', label: 'Fewest members' },
       ],
