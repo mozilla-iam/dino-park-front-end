@@ -31,7 +31,11 @@
           <AccessGroupMembersTable
             :data="membersList"
             :columns="membersColumns"
+            :totalRows="memberCount"
+            :rowsPerLoad="memberRowsDisplay"
             :rowHasExpandedContent="membersRowHasExpandedContent"
+            :loadMoreHandler="loadMoreHandler"
+            :loadMoreText="fluent('access-group_members', 'load-more')"
           >
             <div
               slot="row-expandable-content"
@@ -108,10 +112,6 @@
               </Button>
             </div>
           </AccessGroupMembersTable>
-          <Button class="edit-members__load-more" @click="loadMoreHandler">
-            <Icon id="chevron-down" :width="24" :height="24" />
-            {{ fluent('access-group_members', 'load-more') }}
-          </Button>
         </div>
       </template>
     </AccessGroupEditPanel>
@@ -248,6 +248,7 @@ import { expiryText } from '@/assets/js/component-utils';
 import AccessGroups from '@/assets/js/access-groups';
 
 const memberRenewalThreshold = 14;
+const memberRowsDisplay = 20;
 
 export default {
   name: 'AccessGroupMembersEdit',
@@ -302,6 +303,7 @@ export default {
         ? accessGroupExpiration
         : 'custom';
     return {
+      memberRowsDisplay,
       groupExpiration: !accessGroupExpiration ? 0 : accessGroupExpiration,
       groupData: '',
       groupDescriptionData: '',

@@ -61,6 +61,12 @@
         </template>
       </AccessGroupMembersTableRow>
     </div>
+    <footer class="members-table__footer" v-if="showFooter">
+      <Button class="load-more" @click="handleLoadMoreClicked">
+        <Icon id="chevron-down" :width="24" :height="24" />
+        {{ loadMoreText }}
+      </Button>
+    </footer>
   </article>
 </template>
 <script>
@@ -78,14 +84,32 @@ export default {
   props: {
     data: Array,
     columns: Array,
+    totalRows: Number,
+    toggleExpand: Function,
+    rowsPerLoad: {
+      default: 20,
+      type: Number,
+    },
     showHeaders: {
       type: Boolean,
       default: true,
     },
-    toggleExpand: Function,
     rowHasExpandedContent: {
       default: member => false,
       type: Function,
+    },
+    loadMoreText: {
+      type: String,
+      default: 'Load more',
+    },
+    loadMoreHandler: {
+      type: Function,
+      default: () => {},
+    },
+  },
+  computed: {
+    showFooter() {
+      return this.data.length < this.totalRows;
     },
   },
   methods: {
@@ -104,6 +128,9 @@ export default {
           row.toggleExpand(false);
         }
       });
+    },
+    handleLoadMoreClicked() {
+      this.loadMoreHandler();
     },
   },
 };
@@ -169,5 +196,25 @@ export default {
 
 .members-table__body.including-headers .members-table__row:nth-child(even) {
   background: var(--gray-20);
+}
+
+.members-table__footer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1em 0;
+}
+
+.members-table__footer .load-more {
+  display: inline-block;
+  background: transparent;
+  border-color: transparent;
+  color: var(--gray-40);
+}
+
+.members-table__footer .load-more:hover {
+  border-color: transparent;
+  color: var(--gray-40);
 }
 </style>

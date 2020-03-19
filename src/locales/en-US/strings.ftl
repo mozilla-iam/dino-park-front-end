@@ -494,6 +494,7 @@ access-group_close-group = Close group
   .confirm-text = I understand this action will delete the entire group
   .confirm-close = Close group
 access-group_pending-invitations = Pending Invitations and Requests
+  .load-more-text = Load more invitations and requests
 access-group_invite-member = Invite new member
   .invite = Invite
   .tags-selector__description = Start typing the name/email/username of the Mozillian
