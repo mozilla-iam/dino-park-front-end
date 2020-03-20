@@ -465,10 +465,10 @@ export default {
     handleCuratorsUpdateClicked() {
       let promises = [];
       if (this.addedCurators.length > 0) {
-        promises.concat(this.addCurators(this.addedCurators));
+        promises = promises.concat(this.addCurators(this.addedCurators));
       }
       if (this.removedCurators.length > 0) {
-        promises.concat(
+        promises = promises.concat(
           this.removeCurators({
             curators: this.removedCurators,
             expiration: this.accessGroupExpiration,
