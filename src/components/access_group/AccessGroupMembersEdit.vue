@@ -21,8 +21,7 @@
             v-model="selectedSort"
             :options="sortOptions"
             :nonOption="defaultSort"
-          >
-          </Select>
+          ></Select>
           <AccessGroupMembersTable :data="allMembers" :columns="membersColumns">
             <div
               slot="row-confirm"
@@ -37,9 +36,9 @@
                 @click="handleRemoveConfirmClick(member)"
                 >{{ fluent('access-group_members', 'remove-action') }}</Button
               >
-              <Button class="secondary-button" @click="togglePending(false)">
-                {{ fluent('access-group_members', 'remove-cancel') }}
-              </Button>
+              <Button class="secondary-button" @click="togglePending(false)">{{
+                fluent('access-group_members', 'remove-cancel')
+              }}</Button>
             </div>
             <div
               slot="row-actions"
@@ -55,9 +54,9 @@
               </Button>
             </div>
           </AccessGroupMembersTable>
-          <Button class="edit-members__load-more" @click="loadMoreHandler">{{
-            fluent('access-group_members', 'load-more')
-          }}</Button>
+          <Button class="edit-members__load-more" @click="loadMoreHandler">
+            {{ fluent('access-group_members', 'load-more') }}
+          </Button>
         </div>
       </template>
     </AccessGroupEditPanel>
@@ -91,7 +90,7 @@
                 {{
                   fluent(
                     'access-group_curators',
-                    'container-info__description-2'
+                    'container-info__description-2',
                   )
                 }}
               </strong>
@@ -136,21 +135,21 @@
               {{
                 fluent(
                   'access-group_expiration',
-                  'container-info__description-1'
+                  'container-info__description-1',
                 )
               }}
               <strong>
                 {{
                   fluent(
                     'access-group_expiration',
-                    'container-info__description-2'
+                    'container-info__description-2',
                   )
                 }}
               </strong>
               {{
                 fluent(
                   'access-group_expiration',
-                  'container-info__description-3'
+                  'container-info__description-3',
                 )
               }}
             </p>
@@ -269,28 +268,28 @@ export default {
         {
           header: this.fluent(
             'access-group_members',
-            'members-table__header-1'
+            'members-table__header-1',
           ),
           primary: true,
         },
         {
           header: this.fluent(
             'access-group_members',
-            'members-table__header-2'
+            'members-table__header-2',
           ),
           contentHandler: ({ role }) => role,
         },
         {
           header: this.fluent(
             'access-group_members',
-            'members-table__header-3'
+            'members-table__header-3',
           ),
           contentHandler: ({ expiration }) => this.expiry(expiration),
         },
         {
           header: this.fluent(
             'access-group_members',
-            'members-table__header-4'
+            'members-table__header-4',
           ),
         },
       ],
@@ -364,14 +363,14 @@ export default {
       this.renewMember({
         memberUuid: member.uuid,
         expiration: member.expiration,
-      }).then(result => {
+      }).then((result) => {
         this.tinyNotification('access-group-member-renewed', memberName);
       });
     },
     handleRemoveConfirmClick(member) {
       const memberName = member.displayName;
       this.setLoading();
-      this.removeMember(member).then(result => {
+      this.removeMember(member).then((result) => {
         this.tinyNotification('access-group-member-removed', memberName);
         this.completeLoading();
       });
@@ -381,9 +380,11 @@ export default {
     },
     updateAutoCompleteList(search) {
       return new Promise((res, rej) => {
-        AccessGroups.getUsers(search, this.groupName, true).then(results => {
+        AccessGroups.getUsers(search, this.groupName, true).then((results) => {
           res(
-            results.map(profile => DisplayMemberViewModel.fromUserData(profile))
+            results.map((profile) =>
+              DisplayMemberViewModel.fromUserData(profile),
+            ),
           );
         });
       });
@@ -404,19 +405,19 @@ export default {
           this.removeCurators({
             curators: this.removedCurators,
             expiration: this.accessGroupExpiration,
-          })
+          }),
         );
       }
       this.setLoading();
       Promise.all(promises)
-        .then(results => {
+        .then((results) => {
           this.tinyNotification('access-group-curators-updated');
           this.addedCurators = [];
           this.removedCurators = [];
           this.curatorsListDirty = false;
           this.completeLoading();
         })
-        .catch(e => {
+        .catch((e) => {
           console.error(e);
           this.completeLoading();
         });
@@ -426,7 +427,7 @@ export default {
       this.updateGroup({
         field: 'expiration',
         value: parseInt(this.groupExpiration),
-      }).then(result => {
+      }).then((result) => {
         this.groupExpirationDirty = false;
         this.tinyNotification('access-group-expiration-updated');
         this.completeLoading();

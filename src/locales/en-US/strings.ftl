@@ -368,6 +368,16 @@ error_issues = Please submit all bugs or issues to <a data-l10n-name="github">th
 
 ## Access Groups
 
+access-group_list = Access Groups
+  .summary-area__summary--1 = Discover access groups across the organisation.
+  .summary-area__summary--2 = Visit the
+  .summary-area__summary--3 = Access Groups wiki page
+  .summary-area__summary--4 = to learn more.
+  .summary-area__action = Create Access Group
+  .search = Find a Group
+  .info-sub = member
+  .info-sub--plural = members
+  .show-more = Show more
 access-group_description = Access Group
   .tooltip = You can learn more about Access Groups on
   .tooltip_link = Access Groups wiki page
@@ -516,7 +526,7 @@ tiny-notification = Hello World
   .access-group-invitation-text-updated = Invitation text successfully updated
   .access-group-member-renewed = [] was renewed
   .access-group-member-removed = [] was removed from the group
-  .access-group-curators-updated = Curators successfully updated
+  .access-group-curators-updated = The curators list has been successfully updated
   .access-group-expiration-updated = Access Group expiration has been successfully updated
 
 date-week = week

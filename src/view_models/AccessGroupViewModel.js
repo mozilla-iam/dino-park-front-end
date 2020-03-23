@@ -158,12 +158,36 @@ export class DisplayMemberViewModel {
     return this.role === DISPLAY_MEMBER_ROLES[MEMBER_IDEX.Member];
   }
 }
+
 export const TYPE_INDEX = {
   closed: 0,
   reviewed: 1,
   open: 2,
 };
 export const ACCESS_GROUP_TYPES = ['Closed', 'Reviewed', 'Open'];
+
+export class AbbGroupViewModel {
+  constructor(data) {
+    this.name = '';
+    [this.type] = ACCESS_GROUP_TYPES;
+    this.access = '';
+    this.memberCount = 0;
+    this.processData(data);
+  }
+
+  processData(data) {
+    try {
+      this.name = data.name;
+      this.type = ACCESS_GROUP_TYPES.includes(data.typ) ? data.typ : null;
+      this.access = data.trust;
+      this.memberCount = data.member_count;
+    } catch (e) {
+      this.error = e.message;
+      console.error('Abbreviated group data error: ', e.message);
+    }
+  }
+}
+
 export class GroupViewModel {
   constructor(data) {
     this.id = '';

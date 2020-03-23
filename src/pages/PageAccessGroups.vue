@@ -8,7 +8,7 @@ import { mapGetters } from 'vuex';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 
 export default {
-  name: 'AccessGroup',
+  name: 'AccessGroups',
   components: { LoadingSpinner },
   computed: {
     ...mapGetters({

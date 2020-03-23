@@ -43,6 +43,13 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import store, {
+  fetchBase,
+  fetchMembers,
+  fetchAccessGroup,
+  resolvePromisesSerially,
+  fetchInvitationsAndRequests,
+} from '@/store';
 import Icon from '@/components/ui/Icon.vue';
 import Button from '@/components/ui/Button.vue';
 import AccessGroupInformationEdit from '@/components/access_group/AccessGroupInformationEdit.vue';
@@ -83,6 +90,20 @@ export default {
   props: {
     groupname: String,
   },
+  beforeRouteEnter(to, from, next) {
+    const { groupname } = to.params;
+    store.dispatch('setLoading');
+    const [membersPromises, membersResolvers] = fetchMembers(store, groupname);
+    const [agPromises, agResolvers] = fetchAccessGroup(store, groupname);
+    const [iarPromises, iarResolvers] = fetchInvitationsAndRequests(store);
+    resolvePromisesSerially(
+      [...membersPromises, ...agPromises, ...iarPromises],
+      [...membersResolvers, ...agResolvers, ...iarResolvers],
+    ).then(() => {
+      store.dispatch('completeLoading');
+      next();
+    });
+  },
   mounted() {
     if (this.getFeature('historyTab')) {
       tabs.concat({
@@ -111,7 +132,7 @@ export default {
         return defaultTab;
       }
       const [currentTab] = tabs.filter(
-        tab => tab.key === this.$route.query.section
+        (tab) => tab.key === this.$route.query.section,
       );
       if (currentTab) {
         return currentTab;
