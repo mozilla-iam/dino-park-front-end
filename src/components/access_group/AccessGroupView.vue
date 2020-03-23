@@ -73,7 +73,6 @@ export default {
       [...membersResolvers, ...agResolvers],
     ).then(() => {
       store.dispatch('completeLoading');
-      console.log('Complete accessgroup component route loading');
       next();
     });
   },

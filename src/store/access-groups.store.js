@@ -34,7 +34,6 @@ export default {
   },
   getters: {
     list: ({ list }) => {
-      console.log('found list: ', list);
       return list;
     },
   },
