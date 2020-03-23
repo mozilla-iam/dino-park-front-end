@@ -368,6 +368,16 @@ error_issues = Please submit all bugs or issues to <a data-l10n-name="github">th
 
 ## Access Groups
 
+access-group_list = Access Groups
+  .summary-area__summary--1 = Discover access groups across the organisation.
+  .summary-area__summary--2 = Visit the
+  .summary-area__summary--3 = Access Groups wiki page
+  .summary-area__summary--4 = to learn more.
+  .summary-area__action = Create Access Group
+  .search = Find a Group
+  .info-sub = member
+  .info-sub--plural = members
+  .show-more = Show more
 access-group_description = Access Group
   .tooltip = You can learn more about Access Groups on
   .tooltip_link = Access Groups wiki page

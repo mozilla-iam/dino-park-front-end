@@ -1,5 +1,11 @@
 const API_PREFIX = '/groups/api/v1/';
-const SORT_KEYS = {
+const GROUPS_SORT_KEYS = {
+  'name-asc': 'NameAsc',
+  'name-desc': 'NameDesc',
+  'member-count-asc': 'MemberCountAsc',
+  'member-count-desc': 'MemberCountDesc',
+};
+const MEMBERS_SORT_KEYS = {
   'role-asc': 'RoleAsc',
   'role-desc': 'RoleDesc',
   'expiration-asc': 'ExpirationAsc',
@@ -11,7 +17,7 @@ const ROLE_KEYS = {
   members: 'Member',
 };
 export default {
-  groups: {
+  group: {
     endpoint: `${API_PREFIX}groups`,
     get: (endpoint, groupName) => `${endpoint}/${groupName}/details`,
     put: [
@@ -24,7 +30,30 @@ export default {
     ],
     delete: true,
     // Clean this up
-    post: [endpoint => endpoint, data => data],
+    post: [(endpoint) => endpoint, (data) => data],
+  },
+  groups: {
+    endpoint: `${API_PREFIX}groups`,
+    get: (endpoint, options = {}) => {
+      const qsArray = [];
+      if (options.hasOwnProperty('numResults') && options.numResults) {
+        qsArray.push(`s=${options.numResults}`);
+      } else {
+        qsArray.push(`s=20`);
+      }
+      if (options.hasOwnProperty('search') && options.search) {
+        qsArray.push(`f=${options.search}`);
+      }
+
+      if (
+        options.hasOwnProperty('sort') &&
+        options.sort &&
+        GROUPS_SORT_KEYS.hasOwnProperty(options.sort)
+      ) {
+        qsArray.push(`by=${GROUPS_SORT_KEYS[options.sort]}`);
+      }
+      return `${endpoint}?${qsArray.join('&')}`;
+    },
   },
   groupInvitations: {
     endpoint: `${API_PREFIX}invitations`,
@@ -52,9 +81,9 @@ export default {
       if (
         options.hasOwnProperty('sort') &&
         options.sort &&
-        SORT_KEYS.hasOwnProperty(options.sort)
+        MEMBERS_SORT_KEYS.hasOwnProperty(options.sort)
       ) {
-        qsArray.push(`by=${SORT_KEYS[options.sort]}`);
+        qsArray.push(`by=${MEMBERS_SORT_KEYS[options.sort]}`);
       }
       if (
         options.hasOwnProperty('role') &&
@@ -91,9 +120,9 @@ export default {
   terms: {
     endpoint: `${API_PREFIX}terms`,
     get: true,
-    post: [true, text => ({ text })],
+    post: [true, (text) => ({ text })],
     delete: true,
-    put: [true, text => ({ text })],
+    put: [true, (text) => ({ text })],
   },
   self: {
     endpoint: `${API_PREFIX}self`,
@@ -101,7 +130,7 @@ export default {
   },
   selfInvitations: {
     endpoint: `${API_PREFIX}self/invitations`,
-    get: endpoint => endpoint,
+    get: (endpoint) => endpoint,
     post: [true],
     delete: true,
   },

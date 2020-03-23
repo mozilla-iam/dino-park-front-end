@@ -47,6 +47,11 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import store, {
+  fetchAccessGroup,
+  fetchTerms,
+  resolvePromisesSerially,
+} from '@/store';
 import Icon from '@/components/ui/Icon.vue';
 import Button from '@/components/ui/Button.vue';
 
@@ -59,8 +64,19 @@ export default {
   props: {
     groupname: String,
   },
-  mounted() {
-    console.log('router from: ', this.$router, this.$route);
+  mounted() {},
+  beforeRouteEnter(to, from, next) {
+    store.dispatch('setLoading');
+    const { groupname } = to.params;
+    const [agPromises, agResolvers] = fetchAccessGroup(store, groupname);
+    const [termsPromises, termsResolvers] = fetchTerms(store);
+    resolvePromisesSerially(
+      [...agPromises, ...termsPromises],
+      [...agResolvers, ...termsResolvers],
+    ).then(() => {
+      store.dispatch('completeLoading');
+      next();
+    });
   },
   methods: {
     ...mapActions({
@@ -79,7 +95,7 @@ export default {
     acceptTerms() {
       this.setLoading();
       this.acceptInvitation(
-        this.getInvitationByName(this.$route.params.groupname)
+        this.getInvitationByName(this.$route.params.groupname),
       ).then(() => {
         this.$router.push({
           name: 'Access Group',
@@ -94,12 +110,12 @@ export default {
     doNotAcceptTerms() {
       this.setLoading();
       this.rejectInvitation(
-        this.getInvitationByName(this.$route.params.groupname)
+        this.getInvitationByName(this.$route.params.groupname),
       ).then(() => {
         this.$router.go(-1);
         this.tinyNotification(
           'access-group-terms-rejected',
-          this.$route.params.groupname
+          this.$route.params.groupname,
         );
         this.completeLoading();
       });
