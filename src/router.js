@@ -5,7 +5,9 @@ import PageProfile from './pages/PageProfile.vue';
 import PageOrgchart from './pages/PageOrgchart.vue';
 import PageSearchResult from './pages/PageSearchResult.vue';
 import PageUnknown from './pages/PageUnknown.vue';
-import PageAccessGroup from './pages/PageAccessGroup.vue';
+import PageAccessGroups from './pages/PageAccessGroups.vue';
+import AccessGroup from './components/access_group/AccessGroup.vue';
+import AccessGroupIndex from './components/access_group/AccessGroupIndex.vue';
 import AccessGroupTerms from './components/access_group/AccessGroupTerms.vue';
 import AccessGroupEdit from './components/access_group/AccessGroupEdit.vue';
 import AccessGroupView from './components/access_group/AccessGroupView.vue';
@@ -13,6 +15,7 @@ import AccessGroupCreate from './components/access_group/AccessGroupCreate.vue';
 import scrolling from './assets/js/scrolling';
 
 Vue.use(Router);
+export const ACCESS_GROUP_INDEX_PAGE = 'Create Index Group';
 export const ACCESS_GROUP_CREATE_PAGE = 'Create Access Group';
 export const ACCESS_GROUP_EDIT_PAGE = 'Edit Access Group';
 export const ACCESS_GROUP_TOS_PAGE = 'Access Group TOS';
@@ -36,53 +39,68 @@ async function resolvePromisesSerially(promises, resolvers) {
 
 const ACCESS_GROUP_ROUTES = [
   {
-    path: '/a/create',
-    name: ACCESS_GROUP_CREATE_PAGE,
-    component: AccessGroupCreate,
+    path: '/a',
     props: true,
+    component: PageAccessGroups,
     meta: { key: 'access-group' },
-  },
-  {
-    path: '/a/:groupname',
-    component: PageAccessGroup,
-    params: {
-      groupname: ':groupname',
-    },
-    props: true,
     children: [
       {
-        path: '',
-        name: ACCESS_GROUP_PAGE,
-        component: AccessGroupView,
+        path: 'create',
+        name: ACCESS_GROUP_CREATE_PAGE,
+        component: AccessGroupCreate,
         props: true,
         meta: { key: 'access-group' },
       },
       {
-        path: 'edit',
-        name: ACCESS_GROUP_EDIT_PAGE,
-        component: AccessGroupEdit,
-        query: {
-          section: ':section?',
+        path: ':groupname',
+        component: AccessGroup,
+        params: {
+          groupname: ':groupname',
         },
         props: true,
-        meta: { key: 'access-group' },
+        children: [
+          {
+            path: '',
+            name: ACCESS_GROUP_PAGE,
+            component: AccessGroupView,
+            props: true,
+            meta: { key: 'access-group' },
+          },
+          {
+            path: 'edit',
+            name: ACCESS_GROUP_EDIT_PAGE,
+            component: AccessGroupEdit,
+            query: {
+              section: ':section?',
+            },
+            props: true,
+            meta: { key: 'access-group' },
+          },
+          {
+            path: 'tos',
+            name: ACCESS_GROUP_TOS_PAGE,
+            component: AccessGroupTerms,
+            query: {
+              accept: ':accept?',
+            },
+            props: true,
+            meta: { key: 'access-group' },
+          },
+          {
+            path: 'leave',
+            name: ACCESS_GROUP_LEAVE_CONFIRMATION_PAGE,
+            component: AccessGroupView,
+            props: true,
+            meta: { key: 'access-group', leave: true },
+          },
+        ],
       },
       {
-        path: 'tos',
-        name: ACCESS_GROUP_TOS_PAGE,
-        component: AccessGroupTerms,
-        query: {
-          accept: ':accept?',
-        },
+        path: '/',
+        name: ACCESS_GROUP_INDEX_PAGE,
+        component: AccessGroupIndex,
         props: true,
         meta: { key: 'access-group' },
-      },
-      {
-        path: 'leave',
-        name: ACCESS_GROUP_LEAVE_CONFIRMATION_PAGE,
-        component: AccessGroupView,
-        props: true,
-        meta: { key: 'access-group', leave: true },
       },
     ],
   },
@@ -94,7 +112,7 @@ export default class DPRouter {
    * Since we are using the url to hold the state of the page, this is a field to denote which general page we are on
    */
   // TODO: Add fluent translations the the rest of the pages here
-  constructor(features, fluent) {
+  constructor(features, fluent, store) {
     this.fluent = fluent;
     const initRouter = new Router({
       base: process.env.BASE_URL,
@@ -104,11 +122,8 @@ export default class DPRouter {
         if (to.hash) {
           return { selector: to.hash };
         }
-        if (
-          scrolling.toEdit(to) ||
-          scrolling.fromEditToSelf(to, from, initRouter)
-        ) {
-          return { selector: `#nav-${to.query.section}` };
+        if (scrolling.toEdit(to) || scrolling.fromEditToSelf(to, from, store)) {
+          return { selector: `#nav-${from.query.section}` };
         }
         if (scrolling.toProfile(to, from)) {
           return { x: 0, y: 0 };
@@ -220,85 +235,5 @@ export default class DPRouter {
       },
       ...featureEnabledRoutes,
     ];
-  }
-  async runFetches(store) {
-    await this.router.beforeEach(async (to, from, next) => {
-      const promises = [];
-      const resolvers = [];
-
-      // Don't try to load data
-      if (
-        // cond: if you're on the create page
-        to.name === ACCESS_GROUP_CREATE_PAGE ||
-        // cond: if you're just changing tabs on the edit page
-        (to.name === ACCESS_GROUP_EDIT_PAGE &&
-          from.name === ACCESS_GROUP_EDIT_PAGE &&
-          to.query.section &&
-          from.query.section &&
-          to.query.section !== from.query.section) ||
-        // cond: if you're going from the edit page to the view page
-        (to.name === ACCESS_GROUP_PAGE &&
-          from.name === ACCESS_GROUP_EDIT_PAGE) ||
-        // cond: if you're going from the view page to the edit page
-        (to.name === ACCESS_GROUP_EDIT_PAGE && from.name === ACCESS_GROUP_PAGE)
-      ) {
-        if (to.name === ACCESS_GROUP_CREATE_PAGE) {
-          store.dispatch('completeLoading');
-          next();
-          return;
-        } else if (
-          store.getters['accessGroup/getMemberCount'] !==
-          store.getters['accessGroup/getMembers'].length
-        ) {
-          promises.push(() =>
-            store.dispatch('accessGroup/fetchMembers', to.params.groupname)
-          );
-          resolvers.push(data => {});
-          await resolvePromisesSerially(promises, resolvers);
-          store.dispatch('completeLoading');
-        }
-        next();
-        return;
-      }
-      // TODO: After using these for testing, replace the old actions with these
-      promises.push(() => store.dispatch('userV2/fetchProfile'));
-      resolvers.push(() => store.dispatch('userV2/fetchInvitations'));
-      if (to.meta.key === 'access-group') {
-        // eslint-disable-next-line
-        promises.push(() =>
-          store.dispatch('accessGroup/fetchGroup', to.params.groupname)
-        );
-        resolvers.push(data => {});
-        if (to.name !== ACCESS_GROUP_TOS_PAGE) {
-          promises.push(() =>
-            store.dispatch('accessGroup/fetchMembers', to.params.groupname)
-          );
-
-          resolvers.push(data => {});
-        }
-        if (
-          to.name === ACCESS_GROUP_TOS_PAGE ||
-          to.name === ACCESS_GROUP_EDIT_PAGE
-        ) {
-          promises.push(() => store.dispatch('accessGroup/fetchTerms'));
-          resolvers.push(data => {});
-        }
-        if (to.name === ACCESS_GROUP_EDIT_PAGE) {
-          promises.push(() => store.dispatch('accessGroup/fetchInvitations'));
-          promises.push(() => store.dispatch('accessGroup/fetchRequests'));
-          resolvers.push(data => {});
-          resolvers.push(data => {});
-        }
-      }
-      try {
-        await resolvePromisesSerially(promises, resolvers);
-        store.dispatch('completeLoading');
-        next();
-      } catch (e) {
-        store.dispatch('completeLoading');
-        console.error('Caught dispatch error: ', e);
-        next(`/error?message=${e}`);
-      }
-    });
   }
 }

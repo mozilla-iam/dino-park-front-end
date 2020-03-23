@@ -12,7 +12,7 @@ import { apolloProvider } from './server';
 // polyfill/fallback adapted from MDN (https://developer.mozilla.org/en-US/docs/Web/API/Background_Tasks_API#Falling_back_to_setTimeout)
 window.requestIdleCallback =
   window.requestIdleCallback ||
-  (handler => {
+  ((handler) => {
     const startTime = Date.now();
 
     return setTimeout(() => {
@@ -29,18 +29,13 @@ Vue.use(VueApollo);
 
 store.dispatch('setLoading');
 // eslint-disable-next-line
-
 Promise.all([
   store.dispatch('features/fetch'),
   store.dispatch('fetchUser'),
   Fluent.init(),
-]).then(async ([features, , fluent]) => {
-  let router = new DPRouter(features, fluent);
-  if (features.accessGroupsToggle) {
-    await router.runFetches(store);
-  } else {
-    store.dispatch('completeLoading');
-  }
+]).then(([features, , fluent]) => {
+  let router = new DPRouter(features, fluent, store);
+  store.dispatch('completeLoading');
 
   Vue.mixin({
     computed: {
@@ -51,7 +46,7 @@ Promise.all([
         return this.$store.state.scope;
       },
       groupTypes() {
-        return ACCESS_GROUP_TYPES.filter(type => type !== 'Open');
+        return ACCESS_GROUP_TYPES.filter((type) => type !== 'Open');
       },
     },
     methods: {
@@ -63,7 +58,7 @@ Promise.all([
         this.$root.$emit('toast', {
           content: this.fluent('tiny-notification', fluentSelector).replace(
             '[]',
-            args
+            args,
           ),
         });
       },
@@ -72,7 +67,7 @@ Promise.all([
   new Vue({
     router: router.vueRouter,
     apolloProvider,
-    render: h => h(App),
+    render: (h) => h(App),
     store,
   }).$mount('#app');
 });

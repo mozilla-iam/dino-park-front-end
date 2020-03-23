@@ -1,9 +1,9 @@
 export default {
-  fromEditToSelf(to, from, vm) {
+  fromEditToSelf(to, from, store) {
     return (
       to.name === 'Profile' &&
       from.name === 'Edit Profile' &&
-      to.params.username === vm.$store.state.user.primaryUsername.value
+      to.params.username === store.state.scope.username
     );
   },
   toEdit(to) {

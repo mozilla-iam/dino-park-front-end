@@ -9,13 +9,12 @@ const HTTPS = HTTPS_CERT &&
     key: fs.readFileSync(HTTPS_KEY),
     cert: fs.readFileSync(HTTPS_CERT),
   };
-
 module.exports = {
   lintOnSave: false,
   productionSourceMap: false,
   filenameHashing: true,
   publicPath: BASE_URL,
-  chainWebpack: config => {
+  chainWebpack: (config) => {
     const svgRule = config.module.rule('svg');
     svgRule
       .use('image-webpack-loader')
@@ -51,6 +50,9 @@ module.exports = {
   },
   devServer: {
     https: HTTPS,
+    host: 'localhost',
+    port: 8080,
+    disableHostCheck: true,
     before(app) {
       app.get('/config/features.json', (_, res) => {
         res.json(yaml.parse(fs.readFileSync('./features-local.yaml', 'utf8')));

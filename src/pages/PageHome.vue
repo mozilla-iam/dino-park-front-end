@@ -16,7 +16,7 @@
         {{ fluent('home_welcome', 'description-staff') }}
       </p>
       <p v-else>{{ fluent('home_welcome', 'description') }}</p>
-      <p>
+      <p v-if="loggedIn">
         <RouterLink
           :to="{
             name: 'Profile',
@@ -68,8 +68,11 @@ export default {
     LoadingSpinner,
   },
   computed: {
+    loggedIn() {
+      return this.$store.state.scope.isLoggedIn;
+    },
     username() {
-      return this.$store.state.user.primaryUsername.value;
+      return this.$store.state.scope.username;
     },
     cards() {
       const privacyLink =

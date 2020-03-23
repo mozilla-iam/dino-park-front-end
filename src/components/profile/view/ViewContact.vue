@@ -49,11 +49,6 @@ export default {
     IconBlock,
     IconBlockList,
   },
-  computed: {
-    currentUser() {
-      return this.$store.state.user;
-    },
-  },
   data() {
     return {
       secondaryEmail:

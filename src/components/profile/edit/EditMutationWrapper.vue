@@ -12,7 +12,7 @@
         class="mutation-form"
         action=""
         :novalidate="novalidate"
-        v-on:submit.prevent="(ev) => check(mutate, ev)"
+        v-on:submit.prevent="ev => check(mutate, ev)"
         :aria-label="formName"
       >
         <slot></slot>
@@ -93,7 +93,7 @@ export default {
       store,
       {
         data: { profile },
-      },
+      }
     ) {
       const data = store.readQuery({
         query: DISPLAY_PROFILE,
@@ -125,7 +125,7 @@ export default {
   },
   computed: {
     loggedInUser() {
-      return this.$store.state.user.primaryUsername.value;
+      return this.$store.state.scope.username;
     },
   },
   data() {
