@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     awaitTabbing() {
-      document.addEventListener('keydown', e => {
+      document.addEventListener('keydown', (e) => {
         if (e.key === 'Tab') {
           document.body.classList.add('focus-styles');
         }
@@ -59,7 +59,7 @@ export default {
   --green-80: #006504;
   --white: #fff;
   --black: #000;
-
+  --light-red: #f5d8e1;
   --neon-red: #ff0039;
 
   --lightBlue: #f2fcfd;

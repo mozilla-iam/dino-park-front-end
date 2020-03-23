@@ -95,28 +95,28 @@
                   {{
                     fluent(
                       'access-group_expiration',
-                      'create-info__description-1'
+                      'create-info__description-1',
                     )
                   }}
                   <strong>
                     {{
                       fluent(
                         'access-group_expiration',
-                        'create-info__description-2'
+                        'create-info__description-2',
                       )
                     }}
                   </strong>
                   {{
                     fluent(
                       'access-group_expiration',
-                      'create-info__description-3'
+                      'create-info__description-3',
                     )
                   }}
                   <br />
                   {{
                     fluent(
                       'access-group_expiration',
-                      'create-info__description-4'
+                      'create-info__description-4',
                     )
                   }}
                 </p>
@@ -230,7 +230,7 @@ export default {
       return this.groupName.length > 0;
     },
     groupTypes() {
-      return ACCESS_GROUP_TYPES.filter(type => type !== 'Open');
+      return ACCESS_GROUP_TYPES.filter((type) => type !== 'Open');
     },
   },
   methods: {
@@ -246,16 +246,21 @@ export default {
         type: this.groupType,
         description: this.groupDescription,
         group_expiration: this.selectedExpiration,
-      }).then(() => {
-        this.tinyNotification('access-group-created', this.groupName);
-        this.$router.push({
-          name: ACCESS_GROUP_PAGE,
-          params: {
-            groupname: this.groupName,
-          },
+      })
+        .then(() => {
+          this.tinyNotification('access-group-created', this.groupName);
+          this.$router.push({
+            name: ACCESS_GROUP_PAGE,
+            params: {
+              groupname: this.groupName,
+            },
+          });
+          this.completeLoading();
+        })
+        .catch((e) => {
+          this.completeLoading();
+          this.tinyNotificationError(e.message);
         });
-        this.completeLoading();
-      });
     },
     handleBackClicked() {
       this.$router.go(-1);
@@ -268,7 +273,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .group-create .edit-panel-container {
   padding: 2em 0 1em;
   margin-left: 2em;
@@ -375,7 +380,7 @@ export default {
 }
 
 .content-area .content-area__value {
-  width: 70%;
+  width: 100%;
 }
 
 .content-area p.content-area__value {

@@ -1,8 +1,10 @@
 <template>
   <div class="toast" role="alert">
-    <span v-if="displayedContent" class="toast__content">{{
-      displayedContent
-    }}</span>
+    <span
+      v-if="displayedContent"
+      :class="{ toast__content: true, 'toast__content--error': isToastBurning }"
+      >{{ displayedContent }}</span
+    >
   </div>
 </template>
 
@@ -10,26 +12,33 @@
 export default {
   name: 'Toast',
   props: {
-    content: String,
     time: {
       type: Number,
       default: 3000,
     },
   },
-  watch: {
-    content() {
-      this.displayedContent = this.content;
-
-      if (this.content.length > 0) {
+  methods: {
+    showToast(data) {
+      if (data.hasOwnProperty('error') && data.error) {
+        this.isToastBurning = true;
+      }
+      this.displayedContent = data.content;
+      if (this.displayedContent.length > 0) {
         window.setTimeout(() => {
           this.$emit('reset-toast');
+          this.isToastBurning = false;
+          this.displayedContent = '';
         }, this.time);
       }
     },
   },
+  mounted() {
+    this.$root.$on('toast', (data) => this.showToast(data));
+  },
   data() {
     return {
       displayedContent: '',
+      isToastBurning: false,
     };
   },
 };
@@ -54,6 +63,13 @@ export default {
   z-index: var(--layerModal);
   text-align: center;
 }
+
+.toast__content--error {
+  background-color: var(--light-red);
+  border: 1px solid var(--neon-red);
+  color: var(--black);
+}
+
 .toast__content a {
   color: inherit;
 }

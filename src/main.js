@@ -62,6 +62,12 @@ Promise.all([
           ),
         });
       },
+      tinyNotificationError(message) {
+        this.$root.$emit('toast', {
+          error: true,
+          content: message,
+        });
+      },
     },
   });
   new Vue({
