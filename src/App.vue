@@ -253,6 +253,10 @@ abbr {
   box-shadow: none;
 }
 
+.focus {
+  font-weight: bold;
+}
+
 .actions ul {
   display: grid;
   grid-gap: 1em;

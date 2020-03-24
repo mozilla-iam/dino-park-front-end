@@ -38,6 +38,11 @@ Promise.all([
   store.dispatch('completeLoading');
 
   Vue.mixin({
+    data() {
+      return {
+        administratorEmail: 'fiji@mozilla.com',
+      };
+    },
     computed: {
       ...mapGetters({
         getFeature: 'features/get',
