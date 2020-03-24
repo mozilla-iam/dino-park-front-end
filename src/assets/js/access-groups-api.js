@@ -37,7 +37,7 @@ export class Api {
     endpointGetter,
     endpointArguments,
     postDataGetter,
-    dataArguments
+    dataArguments,
   ) {
     try {
       const endpoint =
@@ -57,7 +57,7 @@ export class Api {
     endpointGetter,
     endpointArguments,
     putDataGetter,
-    dataArguments
+    dataArguments,
   ) {
     try {
       const endpoint =
@@ -89,7 +89,7 @@ export class Api {
         case 'get':
           return await this.handleGet(
             apiConfig[scope][restMethod],
-            endpointArguments
+            endpointArguments,
           );
         case 'post':
           const [postEndpointGetter, postDataGetter] = apiConfig[scope][
@@ -99,8 +99,9 @@ export class Api {
             postEndpointGetter,
             endpointArguments,
             postDataGetter,
-            dataArguments
+            dataArguments,
           );
+
         case 'put':
           const [putEndpointGetter, putDataGetter] = apiConfig[scope][
             mappedMethod
@@ -109,18 +110,18 @@ export class Api {
             putEndpointGetter,
             endpointArguments,
             putDataGetter,
-            dataArguments
+            dataArguments,
           );
         case 'delete':
           return await this.handleDelete(
             apiConfig[scope][restMethod],
-            endpointArguments
+            endpointArguments,
           );
         default:
           throw new Error(`Invalid method: ${restMethod}`);
       }
     } catch (e) {
-      throw new Error(`Execute error: ${e.message}`);
+      throw new Error(e.message);
     }
   }
 }
@@ -137,7 +138,7 @@ export class MembersApi extends Api {
         `${this.endpoint}/${groupName}/${memberUuid}/renew`,
         {
           group_expiration: groupExpiration,
-        }
+        },
       );
       if (Number.isInteger(result)) {
         throw new Error(`Member post error: ${result}`);

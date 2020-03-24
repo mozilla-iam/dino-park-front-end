@@ -65,7 +65,7 @@ export default {
         };
         const result = await accessGroupsService.updateGroupDetails(
           state.group.name,
-          updateData
+          updateData,
         );
         return await dispatch('fetchGroup', state.group.name);
       } catch (e) {
@@ -93,7 +93,7 @@ export default {
       try {
         await accessGroupsService.leaveGroup(
           state.group.name,
-          rootState.user.uuid.value
+          rootState.user.uuid.value,
         );
         return await dispatch('fetchGroup', state.group.name);
       } catch (e) {

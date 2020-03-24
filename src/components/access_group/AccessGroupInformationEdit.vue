@@ -211,7 +211,7 @@ export default {
         () => {
           this.groupTypeDirty = false;
           this.tinyNotification('access-group-type-updated');
-        }
+        },
       );
     },
     handleTermsUpdateClicked() {
@@ -258,7 +258,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .edit-information {
   padding: 1em;
 }

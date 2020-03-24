@@ -72,11 +72,7 @@
       <template v-else
         >…</template
       >
-      <Toast
-        ref="toast"
-        :content="toastContent"
-        @reset-toast="toastContent = ''"
-      ></Toast>
+      <Toast />
     </div>
     <SearchForm
       class="search-form--small hide-desktop"
@@ -111,9 +107,6 @@ export default {
     closeMobileSearchForm() {
       this.showMobileSearch = false;
     },
-    showToast(data) {
-      this.toastContent = data.content;
-    },
     searchFormHandler(searchQuery, scope) {
       this.$router.push({
         name: 'Search',
@@ -129,7 +122,6 @@ export default {
       showMobileSearch: false,
       showBanner: true,
       extraPadding: 0,
-      toastContent: '',
     };
   },
   computed: {
@@ -142,8 +134,6 @@ export default {
   },
   mounted() {
     window.addEventListener('resize', this.updatePadding);
-
-    this.$root.$on('toast', data => this.showToast(data));
   },
 };
 </script>
