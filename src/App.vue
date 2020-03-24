@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     awaitTabbing() {
-      document.addEventListener('keydown', e => {
+      document.addEventListener('keydown', (e) => {
         if (e.key === 'Tab') {
           document.body.classList.add('focus-styles');
         }
@@ -251,6 +251,10 @@ abbr {
     large elements that people would not expect to
     have focus. */
   box-shadow: none;
+}
+
+.focus {
+  font-weight: bold;
 }
 
 .actions ul {

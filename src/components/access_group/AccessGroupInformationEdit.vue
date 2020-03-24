@@ -109,27 +109,10 @@
         <div class="content-area__row">
           <p class="content-area__description">
             {{ fluent('access-group_close-group', 'part-1') }}
-            <span class="focus">
-              {{ fluent('access-group_close-group', 'part-2') }}
-            </span>
-            {{ fluent('access-group_close-group', 'part-3') }}
-            <span class="focus">
-              {{ fluent('access-group_close-group', 'part-4') }}
-            </span>
-            {{ fluent('access-group_close-group', 'part-5') }}
+            <br />
+            {{ fluent('access-group_close-group', 'part-2') }}
+            <a :href="administratorEmail">{{ administratorEmail }}</a>
           </p>
-        </div>
-        <div class="content-area__row close-group-container">
-          <input type="checkbox" v-model="closeGroupConfirmed" />
-          <label class="content-area__label">
-            {{ fluent('access-group_close-group', 'confirm-text') }}
-          </label>
-          <Button
-            :disabled="!closeGroupConfirmed"
-            class="button--primary primary-actdion"
-            @click="handleCloseGroupClicked"
-            >{{ fluent('access-group_close-group', 'confirm-close') }}</Button
-          >
         </div>
       </template>
     </AccessGroupEditPanel>
@@ -168,7 +151,6 @@ export default {
       groupTermsDirty: false,
       groupTypeData: accessGroup.type,
       groupTypeDirty: false,
-      closeGroupConfirmed: false,
     };
   },
   watch: {
@@ -211,7 +193,7 @@ export default {
         () => {
           this.groupTypeDirty = false;
           this.tinyNotification('access-group-type-updated');
-        }
+        },
       );
     },
     handleTermsUpdateClicked() {
@@ -231,17 +213,6 @@ export default {
       termsPromise.then(() => {
         this.groupTermsDirty = false;
         this.tinyNotification(tinyFluentSelector);
-        this.completeLoading();
-      });
-    },
-    handleCloseGroupClicked() {
-      const groupName = this.accessGroup.name;
-      this.setLoading();
-      this.closeGroup().then(() => {
-        this.tinyNotification('access-group-closed', groupName);
-        this.$router.push({
-          path: '/',
-        });
         this.completeLoading();
       });
     },
