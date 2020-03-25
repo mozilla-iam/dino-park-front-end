@@ -38,6 +38,11 @@ Promise.all([
   store.dispatch('completeLoading');
 
   Vue.mixin({
+    data() {
+      return {
+        administratorEmail: 'fiji@mozilla.com',
+      };
+    },
     computed: {
       ...mapGetters({
         getFeature: 'features/get',
@@ -60,6 +65,12 @@ Promise.all([
             '[]',
             args,
           ),
+        });
+      },
+      tinyNotificationError(message) {
+        this.$root.$emit('toast', {
+          error: true,
+          content: message,
         });
       },
     },

@@ -52,14 +52,14 @@ class Fetcher {
         },
         body: JSON.stringify(data),
       });
-      return res.status;
-    } catch (e) {
-      console.log('error: ', e);
-      if (this.failOnError && this.isError(e)) {
-        console.log(`got error → failing over`);
-        // reload();
+      const responseObject = await res.json();
+      if (res.status >= 200 && res.status < 300) {
+        return responseObject;
+      } else {
+        throw new Error(responseObject.error);
       }
-      throw e;
+    } catch (e) {
+      throw new Error(e.message);
     }
   }
 

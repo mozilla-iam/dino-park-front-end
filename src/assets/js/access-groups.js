@@ -56,8 +56,7 @@ export default class AccessGroups {
         dataArguments: form,
       });
     } catch (e) {
-      console.log(e.message);
-      throw new Error(e.message);
+      throw new Error(e.error || e.message);
     }
   }
 
