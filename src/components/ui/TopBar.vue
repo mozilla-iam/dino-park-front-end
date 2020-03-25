@@ -37,7 +37,7 @@
         </template>
       </ShowMore>
       <RouterLink
-        v-if="scope.isStaff"
+        v-if="showAccessGroupNav"
         :to="{ name: indexPageName }"
         class="top-bar__link"
         exact-active-class="top-bar__link--current"
@@ -149,6 +149,10 @@ export default {
     },
     user() {
       return this.$store.state.user;
+    },
+    showAccessGroupNav() {
+      const { isNdaed, isStaff } = this.$store.state.scope;
+      return isNdaed || isStaff;
     },
   },
   mounted() {
