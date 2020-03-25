@@ -388,6 +388,7 @@ access-group-information-tab = Information
 access-group-members-tab = Members
 access-group-invitations-tab = Invites and Requests
 access-group_leave = Leave
+access-group-nav-bar = Access Groups
 access-group_membership-management = Membership Management
   .pending-invitations = pending invitations
   .pending-invitation = pending invitation

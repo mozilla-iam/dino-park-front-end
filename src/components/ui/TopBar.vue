@@ -37,6 +37,15 @@
         </template>
       </ShowMore>
       <RouterLink
+        v-if="showAccessGroupNav"
+        :to="{ name: indexPageName }"
+        class="top-bar__link"
+        exact-active-class="top-bar__link--current"
+        :title="fluent('access-group-nav-bar')"
+      >
+        <Icon id="users-outline" :width="24" :height="24" />
+      </RouterLink>
+      <RouterLink
         v-if="scope.isStaff"
         :to="{ name: 'Orgchart' }"
         class="top-bar__link"
@@ -86,6 +95,7 @@
 </template>
 
 <script>
+import { ACCESS_GROUP_INDEX_PAGE } from '@/router';
 import ShowMore from '@/components/_functional/ShowMore.vue';
 import Toast from '@/components/ui/Toast.vue';
 import SearchForm from './SearchForm.vue';
@@ -122,6 +132,7 @@ export default {
       showMobileSearch: false,
       showBanner: true,
       extraPadding: 0,
+      indexPageName: ACCESS_GROUP_INDEX_PAGE,
     };
   },
   computed: {
@@ -130,6 +141,10 @@ export default {
     },
     user() {
       return this.$store.state.user;
+    },
+    showAccessGroupNav() {
+      const { isNdaed, isStaff } = this.$store.state.scope;
+      return isNdaed || isStaff;
     },
   },
   mounted() {
