@@ -284,7 +284,12 @@ export default {
             'access-group_members',
             'members-table__header-3',
           ),
-          contentHandler: ({ expiration }) => this.expiry(expiration),
+          contentHandler: ({ expiration }) => {
+            if (!expiration) {
+              return this.fluent('access-group_members', 'no-expiration');
+            }
+            return this.expiry(expiration);
+          },
         },
         {
           header: this.fluent(

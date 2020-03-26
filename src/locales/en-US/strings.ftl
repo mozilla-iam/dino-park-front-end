@@ -408,6 +408,7 @@ access-group_details = Group Details
   .update-details = Update details
 access-group_members = Members
   .search = Search Members
+  .no-expiration = -
   .empty-line1 = There are no members in this group.
   .empty-line2 = Why not
   .empty-action = invite some
