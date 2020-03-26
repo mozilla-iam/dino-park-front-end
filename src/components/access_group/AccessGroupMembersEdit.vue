@@ -576,7 +576,7 @@ export default {
 
 .edit-members-container .edit-members__load-more {
   margin: 1em auto;
-  background-color: var(--gray-30);
+  background-color: transparent;
   color: var(--black);
 }
 
