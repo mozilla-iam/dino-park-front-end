@@ -1,28 +1,42 @@
 <template>
   <footer class="footer">
-    <a
-      v-for="(single, index) in links"
-      v-bind:key="index"
-      v-bind:href="single.link"
-      class="footer__link"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <Icon v-bind:id="single.icon" :width="12" :height="12" />
-      <abbr v-if="single.abbr" v-bind:title="single.abbr">
-        {{ single.label }}
-      </abbr>
-      {{ !single.abbr ? single.label : '' }}
-    </a>
-    <select v-if="languages.length > 1" v-on:change="updateLocale">
-      <option
-        v-for="[locale, language] in languages"
-        :key="locale"
-        :value="locale"
-        :selected="locale === currentLocale ? true : false"
-        >{{ language }}</option
+    <section class="footer__contribute" v-if="!loggedIn">
+      <h1>{{ fluent('contribute_header') }}</h1>
+      <img src="@/assets/images/crowd.png" />
+      <p>{{ fluent('contribute_text') }}</p>
+      <ExternalButtonLink
+        class="footer__contribute__link button--invert"
+        href="https://www.mozilla.org/contribute/"
+        iconRight="chevron-right"
+        :text="fluent('contribute')"
       >
-    </select>
+      </ExternalButtonLink>
+    </section>
+    <section class="footer__links">
+      <a
+        v-for="(single, index) in links"
+        v-bind:key="index"
+        v-bind:href="single.link"
+        class="footer__link"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Icon v-bind:id="single.icon" :width="12" :height="12" />
+        <abbr v-if="single.abbr" v-bind:title="single.abbr">
+          {{ single.label }}
+        </abbr>
+        {{ !single.abbr ? single.label : '' }}
+      </a>
+      <select v-if="languages.length > 1" v-on:change="updateLocale">
+        <option
+          v-for="[locale, language] in languages"
+          :key="locale"
+          :value="locale"
+          :selected="locale === currentLocale ? true : false"
+          >{{ language }}</option
+        >
+      </select>
+    </section>
   </footer>
 </template>
 
@@ -30,12 +44,14 @@
 import Icon from '@/components/ui/Icon.vue';
 import LinksMixin from '@/components/_mixins/LinksMixin.vue';
 import Fluent from '@/assets/js/fluent';
+import ExternalButtonLink from '@/components/ui/ExternalButtonLink.vue';
 
 export default {
   name: 'Footer',
   mixins: [LinksMixin],
   components: {
     Icon,
+    ExternalButtonLink,
   },
   computed: {
     links() {
@@ -89,10 +105,42 @@ export default {
 
 <style>
 .footer {
+  margin-top: 2em;
+}
+.footer__contribute {
+  padding: 2em;
+  background-color: var(--white);
+  display: grid;
+  grid-template-columns: 1fr;
+}
+.footer__contribute > h1 {
+  font-size: 2.5em;
+}
+.footer__contribute__link {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+.footer__contribute > img {
+  grid-column: 1;
+  grid-row: 4;
+}
+@media (min-width: 50em) {
+  .footer__contribute {
+    --contribute-pad: calc(((100% - 74em) / 2) + 4em);
+    padding: 1em max(4em, var(--contribute-pad));
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 0 2em;
+  }
+  .footer__contribute > img {
+    justify-self: center;
+    grid-column: 1;
+    grid-row: 1/4;
+  }
+}
+.footer__links {
   background-color: var(--black);
   color: var(--white);
   text-align: center;
-  margin-top: 2em;
   padding: 2em 0;
 }
 .footer__link {

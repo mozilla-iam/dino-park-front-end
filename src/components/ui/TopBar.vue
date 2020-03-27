@@ -78,9 +78,14 @@
           </template>
         </ShowMore>
       </template>
-      <template v-else
-        >…</template
+      <ExternalButtonLink
+        v-else
+        href="/_/login"
+        class="top-bar__login"
+        iconRight="chevron-right"
+        :text="fluent('log_in')"
       >
+      </ExternalButtonLink>
       <Toast />
     </div>
     <SearchForm
@@ -98,10 +103,11 @@
 import { ACCESS_GROUP_INDEX_PAGE } from '@/router';
 import ShowMore from '@/components/_functional/ShowMore.vue';
 import Toast from '@/components/ui/Toast.vue';
+import Icon from '@/components/ui/Icon.vue';
+import ExternalButtonLink from '@/components/ui/ExternalButtonLink.vue';
 import SearchForm from './SearchForm.vue';
 import UserMenu from './UserMenu.vue';
 import UserPicture from './UserPicture.vue';
-import Icon from '@/components/ui/Icon.vue';
 
 export default {
   name: 'TopBar',
@@ -112,6 +118,7 @@ export default {
     UserMenu,
     UserPicture,
     Icon,
+    ExternalButtonLink,
   },
   methods: {
     closeMobileSearchForm() {
@@ -260,5 +267,9 @@ export default {
 .top-bar__user-menu-toggle img,
 .top-bar__search-toggle svg {
   margin-right: 0;
+}
+.top-bar__login {
+  margin-left: 1em;
+  margin-right: 1em;
 }
 </style>
