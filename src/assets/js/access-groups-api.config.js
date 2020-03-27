@@ -72,6 +72,9 @@ export default {
     endpoint: `${API_PREFIX}members`,
     get: (endpoint, groupName, options = {}) => {
       const qsArray = [];
+      if (options.hasOwnProperty('next') && options.next) {
+        qsArray.push(`n=${options.next}`);
+      }
       if (options.hasOwnProperty('search') && options.search) {
         qsArray.push(`q=${options.search}`);
       }

@@ -54,7 +54,11 @@
               </Button>
             </div>
           </AccessGroupMembersTable>
-          <Button class="edit-members__load-more" @click="loadMoreHandler">
+          <Button
+            class="edit-members__load-more"
+            @click="loadMoreHandler"
+            v-if="showLoadMore"
+          >
             {{ fluent('access-group_members', 'load-more') }}
           </Button>
         </div>
@@ -252,6 +256,7 @@ export default {
         search: '',
         sort: '',
         numResults: 20,
+        next: null,
       },
       defaultSort: {
         value: '',
@@ -358,6 +363,7 @@ export default {
       });
     },
     loadMoreHandler() {
+      this.memberListOptions.next = this.membersNext;
       this.memberListOptions.numResults += 20;
       this.getMembersWithOptions({
         groupName: this.groupName,
@@ -460,9 +466,13 @@ export default {
       accessGroupExpiration: 'accessGroup/getExpiration',
       allMembers: 'accessGroup/getMembers',
       memberCount: 'accessGroup/getMemberCount',
+      membersNext: 'accessGroup/getMembersNext',
     }),
     expirationIsCustom() {
       return this.selectedExpiration === 'custom';
+    },
+    showLoadMore() {
+      return this.membersNext;
     },
   },
 };

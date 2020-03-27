@@ -425,6 +425,7 @@ access-group_members = Members
   .remove-action = Remove
   .remove-cancel = Cancel
   .load-more = Load more members
+  .members-container__load-more = Load more entries
   .member-expandable_member-since = Member since
   .member-expandable_added-by = Added by
 access-group_curators = Curators

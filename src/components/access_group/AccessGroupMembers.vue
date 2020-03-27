@@ -28,6 +28,14 @@
           <AccessGroupMemberItem class="list-item-container" :member="member" />
         </li>
       </ul>
+      <div class="members-container__load-more">
+        <Button class="load-more" v-if="showLoadMore" @click="loadMoreHandler">
+          <Icon id="chevron-down" />
+          {{
+            fluent('access-group_members', 'members-container__load-more')
+          }}</Button
+        >
+      </div>
     </template>
     <template v-else>
       <p class="members-container__empty">
@@ -51,6 +59,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import EditButton from '@/components/ui/EditButton.vue';
+import Button from '@/components/ui/Button.vue';
 import AccessGroupMemberItem from '@/components/access_group/AccessGroupMemberItem.vue';
 import SearchForm from '@/components/ui/SearchForm.vue';
 import Select from '@/components/ui/Select.vue';
@@ -63,6 +72,7 @@ export default {
   name: 'AccessGroupMembers',
   components: {
     EditButton,
+    Button,
     Icon,
     SearchForm,
     Select,
@@ -102,6 +112,14 @@ export default {
     isTabActive(tab) {
       return this.activeTab === tab.key;
     },
+    loadMoreHandler() {
+      this.memberListOptions.next = this.membersNext;
+      this.memberListOptions.numResults += 20;
+      this.getMembersWithOptions({
+        groupName: this.groupName,
+        options: this.memberListOptions,
+      });
+    },
   },
   watch: {
     getMembers(value) {
@@ -111,9 +129,14 @@ export default {
   },
   computed: {
     ...mapGetters({
+      totalMembers: 'accessGroup/getMemberCount',
       getMembers: 'accessGroup/getMembers',
       groupName: 'accessGroup/getGroupName',
+      membersNext: 'accessGroup/getMembersNext',
     }),
+    showLoadMore() {
+      return this.membersNext;
+    },
   },
   data() {
     const fullMemberList = this.$store.getters['accessGroup/getMembers'];
@@ -121,33 +144,36 @@ export default {
       memberListOptions: {
         search: '',
         role: defaultTab,
-        sort: 'role-asc',
       },
-      filter: '',
       tabList: [
         {
           key: 'all',
           label: this.fluent(
             'access-group_members',
-            'tabs-container__item-all'
+            'tabs-container__item-all',
           ),
         },
         {
           key: 'curators',
           label: this.fluent(
             'access-group_members',
-            'tabs-container__item-curators'
+            'tabs-container__item-curators',
           ),
         },
         {
           key: 'members',
           label: this.fluent(
             'access-group_members',
-            'tabs-container__item-members'
+            'tabs-container__item-members',
           ),
         },
       ],
       activeTab: defaultTab,
+      memberListOptions: {
+        search: '',
+        sort: '',
+        numResults: 20,
+      },
     };
   },
 };
@@ -297,5 +323,17 @@ export default {
 .members-container .members-container__empty {
   text-align: center;
   margin: 3em auto;
+}
+
+.members-container__load-more {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.members-container__load-more .load-more {
+  margin: 1em auto;
+  background-color: transparent;
+  color: var(--black);
 }
 </style>

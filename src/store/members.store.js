@@ -5,16 +5,18 @@ const accessGroupsService = new AccessGroups();
 export const membersState = {
   members: null,
   curators: null,
+  next: null,
 };
 export const membersActions = {
   async fetchMembers({ commit }, groupName) {
     try {
       // Change this later
-      const { members } = await accessGroupsService.getInitialMembers(
-        groupName
+      const { members, next } = await accessGroupsService.getInitialMembers(
+        groupName,
       );
       commit('setMembers', members);
       commit('setCurators', members);
+      commit('setMembersNext', next);
       return members;
     } catch (e) {
       throw new Error(e.message);
@@ -22,11 +24,13 @@ export const membersActions = {
   },
   async fetchMembersWithOptions({ commit }, { groupName, options }) {
     try {
-      const { members } = await accessGroupsService.getMembersFromOptions(
+      const { members, next } = await accessGroupsService.getMembersFromOptions(
         groupName,
-        options
+        options,
       );
       commit('setMembers', members);
+      commit('setCurators', members);
+      commit('setMembersNext', next);
       return members;
     } catch (e) {
       throw new Error(e.message);
@@ -37,7 +41,7 @@ export const membersActions = {
     try {
       const result = await accessGroupsService.deleteMember(
         groupName,
-        member.uuid
+        member.uuid,
       );
       return await dispatch('fetchMembers', groupName);
     } catch (e) {
@@ -49,7 +53,7 @@ export const membersActions = {
       const result = await accessGroupsService.renewMember(
         state.group.name,
         memberUuid,
-        expiration
+        expiration,
       );
       return await dispatch('fetchMembers', state.group.name);
     } catch (e) {
@@ -60,7 +64,7 @@ export const membersActions = {
     try {
       const result = await accessGroupsService.addCurators(
         state.group.name,
-        curators
+        curators,
       );
       return await dispatch('fetchMembers', state.group.name);
     } catch (e) {
@@ -72,7 +76,7 @@ export const membersActions = {
       const result = await accessGroupsService.removeCurators(
         state.group.name,
         curators,
-        expiration
+        expiration,
       );
       return await dispatch('fetchMembers', state.group.name);
     } catch (e) {
@@ -106,8 +110,17 @@ export const membersMutations = {
       throw new Error(e.message);
     }
   },
+  setMembersNext(state, nextVal) {
+    try {
+      state.next = nextVal;
+    } catch (e) {
+      state.error = e.message;
+      throw new Error(e.message);
+    }
+  },
 };
 export const membersGetters = {
   getMembers: ({ members }) => members,
   getCurators: ({ curators }) => curators,
+  getMembersNext: ({ next }) => next,
 };
