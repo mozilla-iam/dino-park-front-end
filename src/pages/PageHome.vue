@@ -33,7 +33,10 @@
     </div>
     <div class="home__intro" v-else>
       <h1>{{ fluent('home_welcome') }}</h1>
-      <img src="@/assets/images/people-dots.png" />
+      <img
+        src="@/assets/images/people-dots.png"
+        srcset="@/assets/images/people-dots@2x.png 2x"
+      />
       <p>{{ fluent('home_welcome', 'description-public') }}</p>
       <ExternalButtonLink
         href="/_/login"
@@ -59,6 +62,12 @@
         <p v-html="card.description"></p>
       </Card>
     </CardRow>
+    <p class="home__paragraph" v-else>
+      {{ fluent('home_paragraph') }}
+      <a target="_blank" rel="noopener noreferrer" :href="globalLinks.iamFaq">
+        {{ fluent('home_paragraph', 'link') }}
+      </a>
+    </p>
   </main>
 </template>
 
@@ -170,9 +179,15 @@ export default {
 .home__intro p:last-child {
   margin-bottom: 0;
 }
+
+.home__paragraph {
+  padding: 0em 3em 3em;
+  color: var(--gray-50);
+}
+
 @media (min-width: 50em) {
   .home__intro {
-    grid-template-columns: 3fr 2fr;
+    grid-template-columns: 1fr 1fr;
     grid-gap: 0 2em;
     width: 100%;
     padding: 4em 4em 2em;
@@ -184,6 +199,9 @@ export default {
   .home__intro > img {
     grid-column: 2;
     grid-row: 1/4;
+  }
+  .home__paragraph {
+    max-width: 50%;
   }
 }
 </style>

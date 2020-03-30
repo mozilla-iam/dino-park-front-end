@@ -3,7 +3,10 @@
     <section class="footer__contribute" v-if="!loggedIn">
       <h1>{{ fluent('contribute_header') }}</h1>
       <div class="footer__contribute-img">
-        <img src="@/assets/images/crowd.png" />
+        <img
+          src="@/assets/images/crowd.png"
+          srcset="@/assets/images/crowd@2x.png 2x"
+        />
       </div>
       <p>{{ fluent('contribute_text') }}</p>
       <ExternalButtonLink
@@ -56,6 +59,9 @@ export default {
     ExternalButtonLink,
   },
   computed: {
+    loggedIn() {
+      return this.$store.state.scope.isLoggedIn;
+    },
     links() {
       return [
         {

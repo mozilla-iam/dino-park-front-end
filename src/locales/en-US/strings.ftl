@@ -91,6 +91,8 @@ home_links_updates = Recent Additions
   .description-groups-announcement = LDAP and Mozillians.org access groups are now displayed under the <i>Access groups</i> section. Read more about this and all newly added functionality in our <a data-l10n-name="discourse">Discourse post</a>.
   .description-ldap-contributor-announcement = Contributors with a volunteer LDAP account can now access PMO. Read all about it in our <a data-l10n-name="discourse">Discourse post</a>.
 
+home_paragraph = Mozilla profiles are part of the Identity and Access Management (IAM) initiative.
+  .link = Learn more
 ## Org Chart
 
 orgchart = Org chart
