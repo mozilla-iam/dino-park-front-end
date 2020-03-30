@@ -22,7 +22,10 @@
             :options="sortOptions"
             :nonOption="defaultSort"
           ></Select>
-          <AccessGroupMembersTable :data="allMembers" :columns="membersColumns">
+          <AccessGroupMembersTable
+            :data="membersList"
+            :columns="membersColumns"
+          >
             <div
               slot="row-confirm"
               slot-scope="{ member, togglePending }"
@@ -36,9 +39,9 @@
                 @click="handleRemoveConfirmClick(member)"
                 >{{ fluent('access-group_members', 'remove-action') }}</Button
               >
-              <Button class="secondary-button" @click="togglePending(false)">{{
-                fluent('access-group_members', 'remove-cancel')
-              }}</Button>
+              <Button class="secondary-button" @click="togglePending(false)">
+                {{ fluent('access-group_members', 'remove-cancel') }}
+              </Button>
             </div>
             <div
               slot="row-actions"
@@ -58,9 +61,8 @@
             class="edit-members__load-more"
             @click="loadMoreHandler"
             v-if="showLoadMore"
+            >{{ fluent('access-group_members', 'load-more') }}</Button
           >
-            {{ fluent('access-group_members', 'load-more') }}
-          </Button>
         </div>
       </template>
     </AccessGroupEditPanel>
@@ -118,9 +120,9 @@
       <template v-slot:content>
         <div class="members-expiration-container">
           <div class="content-area__row expiration-container">
-            <label class="content-area__label expiration-container__label">{{
-              fluent('access-group_expiration', 'expiration__description')
-            }}</label>
+            <label class="content-area__label expiration-container__label">
+              {{ fluent('access-group_expiration', 'expiration__description') }}
+            </label>
             <RadioSelect
               class="expiration-container__value"
               :options="expirationOptions"
@@ -185,6 +187,7 @@ import AccessGroupEditPanel from '@/components/access_group/AccessGroupEditPanel
 import SearchForm from '@/components/ui/SearchForm.vue';
 import AccessGroupMembersTable from '@/components/access_group/AccessGroupMembersTable.vue';
 import TagSelector from '@/components/ui/TagSelector.vue';
+import MembersListMixin from '@/components/_mixins/MembersListMixin.vue';
 import { DisplayMemberViewModel } from '@/view_models/AccessGroupViewModel';
 import { expiryText } from '@/assets/js/component-utils';
 import AccessGroups from '@/assets/js/access-groups';
@@ -204,8 +207,7 @@ export default {
     RadioSelect,
     Select,
   },
-  props: [],
-  mounted() {},
+  mixins: [MembersListMixin],
   watch: {
     accessGroupCurators(value) {
       this.curatorsList = value;
@@ -227,7 +229,7 @@ export default {
       }
     },
     selectedSort(value) {
-      this.handleSortUpdated(value);
+      this.updateSort(value);
     },
   },
   data() {
@@ -235,7 +237,6 @@ export default {
       'accessGroup/getExpiration'
     ];
     const accessGroupCurators = this.$store.getters['accessGroup/getCurators'];
-    const accessGroupMembers = this.$store.getters['accessGroup/getMembers'];
     let selectedExpiration =
       accessGroupExpiration === 360 ||
       accessGroupExpiration === 720 ||
@@ -252,16 +253,6 @@ export default {
       removedCurators: [],
       curatorsListDirty: false,
       groupExpirationDirty: false,
-      memberListOptions: {
-        search: '',
-        sort: '',
-        numResults: 20,
-        next: null,
-      },
-      defaultSort: {
-        value: '',
-        label: 'Sort',
-      },
       selectedSort: '',
       sortOptions: [
         { value: 'role-asc', label: 'Role Asc' },
@@ -303,7 +294,6 @@ export default {
           ),
         },
       ],
-      allMembersList: accessGroupMembers,
       expirationOptions: [
         {
           label: this.fluent('access-group_expiration', 'one-year'),
@@ -327,7 +317,6 @@ export default {
   },
   methods: {
     ...mapActions({
-      getMembersWithOptions: 'accessGroup/fetchMembersWithOptions',
       removeMember: 'accessGroup/removeMember',
       addCurators: 'accessGroup/addCurators',
       removeCurators: 'accessGroup/removeCurators',
@@ -337,7 +326,7 @@ export default {
       completeLoading: 'completeLoading',
     }),
     canMemberBeRemoved(member) {
-      if (!this.allMembersList.length) {
+      if (!this.membersList.length) {
         return false;
       }
       if (
@@ -349,26 +338,13 @@ export default {
       return true;
     },
     searchFormHandler(search) {
-      this.memberListOptions.search = search;
-      this.getMembersWithOptions({
-        groupName: this.groupName,
-        options: this.memberListOptions,
-      });
+      this.updateSearch(search);
     },
     clearSearchHandler() {
-      this.memberListOptions.search = '';
-      this.getMembersWithOptions({
-        groupName: this.groupName,
-        options: this.memberListOptions,
-      });
+      this.clearSearch();
     },
     loadMoreHandler() {
-      this.memberListOptions.next = this.membersNext;
-      this.memberListOptions.numResults += 20;
-      this.getMembersWithOptions({
-        groupName: this.groupName,
-        options: this.memberListOptions,
-      });
+      this.loadMoreMembers();
     },
     handleRenewClick(member) {
       this.renewMember({
@@ -450,13 +426,6 @@ export default {
     isExpirationCustom(optionValue) {
       return optionValue === 'custom';
     },
-    handleSortUpdated(value) {
-      this.memberListOptions.sort = value;
-      this.getMembersWithOptions({
-        groupName: this.groupName,
-        options: this.memberListOptions,
-      });
-    },
   },
   computed: {
     ...mapGetters({
@@ -464,7 +433,6 @@ export default {
       groupName: 'accessGroup/getGroupName',
       accessGroupCurators: 'accessGroup/getCurators',
       accessGroupExpiration: 'accessGroup/getExpiration',
-      allMembers: 'accessGroup/getMembers',
       memberCount: 'accessGroup/getMemberCount',
       membersNext: 'accessGroup/getMembersNext',
     }),

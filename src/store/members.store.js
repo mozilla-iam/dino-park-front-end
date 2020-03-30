@@ -36,6 +36,18 @@ export const membersActions = {
       throw new Error(e.message);
     }
   },
+  async fetchMembersWithOptionsNext({ commit, state }, { groupName, options }) {
+    try {
+      const { members, next } = await accessGroupsService.getMembersFromOptions(
+        groupName,
+        { ...options, next: state.next },
+      );
+      commit('setMembersNext', next);
+      return members.map((member) => new DisplayMemberViewModel(member));
+    } catch (e) {
+      throw new Error(e.message);
+    }
+  },
   async removeMember({ state, dispatch }, member) {
     const groupName = state.group.name;
     try {
