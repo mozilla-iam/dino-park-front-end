@@ -2,7 +2,9 @@
   <footer class="footer">
     <section class="footer__contribute" v-if="!loggedIn">
       <h1>{{ fluent('contribute_header') }}</h1>
-      <img src="@/assets/images/crowd.png" />
+      <div class="footer__contribute-img">
+        <img src="@/assets/images/crowd.png" />
+      </div>
       <p>{{ fluent('contribute_text') }}</p>
       <ExternalButtonLink
         class="footer__contribute__link button--invert"
@@ -108,7 +110,7 @@ export default {
   margin-top: 2em;
 }
 .footer__contribute {
-  padding: 2em;
+  padding: 2em 2em 0em;
   background-color: var(--white);
   display: grid;
   grid-template-columns: 1fr;
@@ -118,23 +120,39 @@ export default {
 }
 .footer__contribute__link {
   margin-top: 1em;
-  margin-bottom: 1em;
+  margin-bottom: 4em;
 }
-.footer__contribute > img {
+.footer__contribute-img {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
   grid-column: 1;
   grid-row: 4;
+  background-image: url(~@/assets/images/skewed-triangle.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top 2em left 0em;
+}
+
+.footer__contribute-img > img {
+  padding-bottom: 3em;
 }
 @media (min-width: 50em) {
   .footer__contribute {
     --contribute-pad: calc(((100% - 74em) / 2) + 4em);
-    padding: 1em max(4em, var(--contribute-pad));
+    padding: 1em max(4em, var(--contribute-pad)) 0em;
     grid-template-columns: 1fr 1fr;
     grid-gap: 0 2em;
   }
-  .footer__contribute > img {
+  .footer__contribute-img {
     justify-self: center;
+    justify-content: center;
     grid-column: 1;
     grid-row: 1/4;
+  }
+  .footer__contribute-img > img {
+    padding-bottom: 0em;
   }
 }
 .footer__links {
