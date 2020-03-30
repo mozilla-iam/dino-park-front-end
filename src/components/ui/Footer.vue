@@ -1,6 +1,6 @@
 <template>
   <footer class="footer">
-    <section class="footer__contribute" v-if="!loggedIn">
+    <section class="footer__contribute" v-if="showContribute">
       <h1>{{ fluent('contribute_header') }}</h1>
       <div class="footer__contribute-img">
         <img
@@ -59,8 +59,8 @@ export default {
     ExternalButtonLink,
   },
   computed: {
-    loggedIn() {
-      return this.$store.state.scope.isLoggedIn;
+    showContribute() {
+      return !this.$store.state.scope.isLoggedIn && this.$route.name === 'Home';
     },
     links() {
       return [

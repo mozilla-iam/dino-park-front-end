@@ -8,13 +8,11 @@
         <img src="@/assets/images/mozilla.svg" :alt="fluent('mozilla')" />
       </RouterLink>
       <SearchForm
-        v-if="loggedIn"
         :searchFormHandler="searchFormHandler"
         :searchFormLabel="fluent('search_input', 'placeholder')"
         class="hide-mobile"
       ></SearchForm>
       <ShowMore
-        v-if="loggedIn"
         :buttonText="fluent('search', 'open')"
         :alternateButtonText="fluent('search', 'close')"
         buttonClass="hide-desktop top-bar__search-toggle"
