@@ -27,6 +27,7 @@ export default {
   },
   mounted() {
     this.fetchMembers(this.groupName);
+    this.membersListOptions = defaultOptions;
   },
   methods: {
     ...mapActions({
