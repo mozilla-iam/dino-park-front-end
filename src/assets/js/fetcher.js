@@ -52,9 +52,12 @@ class Fetcher {
         },
         body: JSON.stringify(data),
       });
-      const responseObject = await res.json();
       if (res.status >= 200 && res.status < 300) {
-        return responseObject;
+        try {
+          return await res.json();
+        } catch (e) {
+          return res.status;
+        }
       } else {
         throw new Error(responseObject.error);
       }
