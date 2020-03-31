@@ -8,9 +8,9 @@
             {{ fluent('access-group_list', 'summary-area__summary--1') }}
             <br />
             {{ fluent('access-group_list', 'summary-area__summary--2') }}
-            <ExternalLink href="/#help">
-              {{ fluent('access-group_list', 'summary-area__summary--3') }}
-            </ExternalLink>
+            <ExternalLink href="/#help">{{
+              fluent('access-group_list', 'summary-area__summary--3')
+            }}</ExternalLink>
             {{ fluent('access-group_list', 'summary-area__summary--4') }}
           </p>
           <RouterLink

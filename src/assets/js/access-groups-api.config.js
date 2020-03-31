@@ -41,10 +41,12 @@ export default {
       } else {
         qsArray.push(`s=20`);
       }
+      if (options.hasOwnProperty('next') && options.next) {
+        qsArray.push(`n=${options.next}`);
+      }
       if (options.hasOwnProperty('search') && options.search) {
         qsArray.push(`f=${options.search}`);
       }
-
       if (
         options.hasOwnProperty('sort') &&
         options.sort &&
