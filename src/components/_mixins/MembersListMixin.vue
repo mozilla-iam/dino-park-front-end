@@ -2,14 +2,15 @@
 import { mapGetters, mapActions } from 'vuex';
 
 const defaultRole = 'all';
-const defaultSort = {
+const defaultSort = 'role-asc';
+const defaultComponentSort = {
   value: '',
   label: 'Sort',
 };
 const defaultOptions = {
   search: '',
   role: defaultRole,
-  sort: '',
+  sort: defaultSort,
   numResults: 20,
 };
 
@@ -91,7 +92,7 @@ export default {
   },
   data() {
     return {
-      defaultSort,
+      defaultSort: defaultComponentSort,
       hasLoadedMore: false,
       membersListOptions: defaultOptions,
       membersList: [],
