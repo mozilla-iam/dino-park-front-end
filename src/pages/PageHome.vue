@@ -1,6 +1,6 @@
 <template>
   <main class="home">
-    <div v-if="loggedIn" class="home__intro home__intro_23">
+    <div v-if="loggedIn" class="home__intro intro--23">
       <img
         v-if="scope.isStaff"
         src="@/assets/images/laptop-phone.png"
@@ -192,7 +192,7 @@ export default {
     width: 100%;
     padding: 4em 4em 2em;
   }
-  .home__intro_23 {
+  .intro--23 {
     grid-template-columns: 2fr 3fr;
     grid-gap: 0 4em;
   }

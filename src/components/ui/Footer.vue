@@ -2,7 +2,7 @@
   <footer class="footer">
     <section class="footer__contribute" v-if="showContribute">
       <h1>{{ fluent('contribute_header') }}</h1>
-      <div class="footer__contribute-img">
+      <div class="contribute__image">
         <img
           src="@/assets/images/crowd.png"
           srcset="@/assets/images/crowd@2x.png 2x"
@@ -10,7 +10,7 @@
       </div>
       <p>{{ fluent('contribute_text') }}</p>
       <ExternalButtonLink
-        class="footer__contribute__link button--invert"
+        class="contribute__link button--invert"
         href="https://www.mozilla.org/contribute/"
         iconRight="chevron-right"
         :text="fluent('contribute')"
@@ -124,11 +124,11 @@ export default {
 .footer__contribute > h1 {
   font-size: 2.5em;
 }
-.footer__contribute__link {
+.contribute__link {
   margin-top: 1em;
   margin-bottom: 4em;
 }
-.footer__contribute-img {
+.contribute__image {
   width: 100%;
   display: flex;
   justify-content: end;
@@ -141,7 +141,7 @@ export default {
   background-position: top 2em left 0em;
 }
 
-.footer__contribute-img > img {
+.contribute__image > img {
   padding-bottom: 3em;
 }
 @media (min-width: 50em) {
@@ -151,13 +151,13 @@ export default {
     grid-template-columns: 1fr 1fr;
     grid-gap: 0 2em;
   }
-  .footer__contribute-img {
+  .contribute__image {
     justify-self: center;
     justify-content: center;
     grid-column: 1;
     grid-row: 1/4;
   }
-  .footer__contribute-img > img {
+  .contribute__image > img {
     padding-bottom: 0em;
   }
 }
