@@ -13,6 +13,7 @@ const defaultOptions = {
   sort: defaultSort,
   numResults: 20,
 };
+const getDefaultOptions = () => Object.assign({}, defaultOptions);
 
 export default {
   computed: {
@@ -28,7 +29,7 @@ export default {
   },
   mounted() {
     this.fetchMembers(this.groupName);
-    this.membersListOptions = defaultOptions;
+    this.membersListOptions = getDefaultOptions();
   },
   methods: {
     ...mapActions({
@@ -87,14 +88,14 @@ export default {
       });
     },
     resetOptions() {
-      this.membersListOptions = defaultOptions;
+      this.membersListOptions = getDefaultOptions();
     },
   },
   data() {
     return {
       defaultSort: defaultComponentSort,
       hasLoadedMore: false,
-      membersListOptions: defaultOptions,
+      membersListOptions: getDefaultOptions(),
       membersList: [],
     };
   },
