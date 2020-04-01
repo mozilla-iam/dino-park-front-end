@@ -1,5 +1,5 @@
 <template>
-  <a class="button button_link" :href="href">
+  <a class="button button--link" :href="href">
     <Icon v-if="iconLeft" :id="iconLeft" :width="24" :height="24" />
     <span v-if="text">{{ text }}</span>
     <Icon v-if="iconRight" :id="iconRight" :width="24" :height="24" />
@@ -22,18 +22,18 @@ export default {
 </script>
 
 <style>
-.button_link {
+.button--link {
   width: max-content;
   height: max-content;
   display: inline-flex;
 }
-.button_link > svg + span {
+.button--link > svg + span {
   margin-left: 0.5em;
 }
-.button_link > span + svg {
+.button--link > span + svg {
   margin-left: 0.5em;
 }
-.button_link > svg {
+.button--link > svg {
   margin-right: 0;
 }
 </style>
