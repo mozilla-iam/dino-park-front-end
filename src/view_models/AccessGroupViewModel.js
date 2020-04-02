@@ -89,6 +89,10 @@ export class AbbDisplayMemberViewModel {
     return this.username === 'anonymous';
   }
 }
+
+export const MEMBER_EXPIRATION_NONE = 0;
+export const MEMBER_EXPIRATION_ONE_YEAR = 365;
+export const MEMBER_EXPIRATION_TWO_YEARS = MEMBER_EXPIRATION_ONE_YEAR * 2;
 export const MEMBER_IDEX = {
   Curator: 0,
   Member: 1,
@@ -103,7 +107,7 @@ export class DisplayMemberViewModel {
     this.email = '';
     this.isStaff = false;
     this.since = '';
-    this.expiration = 0;
+    this.expiration = MEMBER_EXPIRATION_NONE;
     [, , this.role] = DISPLAY_MEMBER_ROLES;
     this.added_by = {};
     this.error = false;
@@ -137,7 +141,9 @@ export class DisplayMemberViewModel {
       this.email = data.email;
       this.isStaff = data.is_staff;
       this.since = !data.since ? '' : new Date(data.since).toLocaleDateString();
-      this.expiration = !data.expiration ? 0 : data.expiration;
+      this.expiration = !data.expiration
+        ? MEMBER_EXPIRATION_NONE
+        : data.expiration;
       if (data.role === 'Admin') {
         this.role = DISPLAY_MEMBER_ROLES[MEMBER_IDEX.Curator];
       } else {
@@ -197,7 +203,7 @@ export class GroupViewModel {
     this.terms = false;
     this.links = [];
     this.history = [];
-    this.expiration = 0;
+    this.expiration = MEMBER_EXPIRATION_NONE;
     this.error = false;
     this.created = '';
     this.processData(data);

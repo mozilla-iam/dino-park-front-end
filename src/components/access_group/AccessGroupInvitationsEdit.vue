@@ -3,7 +3,7 @@
     <AccessGroupEditPanel
       :title="
         `${fluent(
-          'access-group_pending-invitations'
+          'access-group_pending-invitations',
         )} (${totalInvitationsAndRequests})`
       "
       :full="true"
@@ -64,7 +64,7 @@
               {{
                 fluent(
                   'access-group_invite-member',
-                  'invite-expiration__toggle'
+                  'invite-expiration__toggle',
                 )
               }}
             </div>
@@ -107,9 +107,9 @@
           </div>
         </div>
         <div class="content-area__row multi-line" v-if="emailInviteTextEnabled">
-          <label class="content-area__label">{{
-            fluent('access-group_email-invite-text', 'description')
-          }}</label>
+          <label class="content-area__label">
+            {{ fluent('access-group_email-invite-text', 'description') }}
+          </label>
           <TextArea
             :rows="5"
             :maxlength="5000"
@@ -123,10 +123,9 @@
           :disabled="!emailInviteTextDirty"
           @click="handleUpdateInviteTextClicked"
           class="button--secondary button--action row-primary-action"
-          >{{
-            fluent('access-group_email-invite-text', 'update-invite-text')
-          }}</Button
         >
+          {{ fluent('access-group_email-invite-text', 'update-invite-text') }}
+        </Button>
       </template>
     </AccessGroupEditPanel>
   </section>
@@ -143,7 +142,12 @@ import RadioSelect from '@/components/ui/RadioSelect.vue';
 import AccessGroupEditPanel from '@/components/access_group/AccessGroupEditPanel.vue';
 import TagSelector from '@/components/ui/TagSelector.vue';
 import AccessGroups from '@/assets/js/access-groups';
-import { DisplayMemberViewModel } from '@/view_models/AccessGroupViewModel';
+import {
+  DisplayMemberViewModel,
+  MEMBER_EXPIRATION_NONE,
+  MEMBER_EXPIRATION_ONE_YEAR,
+  MEMBER_EXPIRATION_TWO_YEARS,
+} from '@/view_models/AccessGroupViewModel';
 import AccessGroupMemberListDisplay from '@/components/access_group/AccessGroupMemberListDisplay.vue';
 import AccessGroupMembersTable from '@/components/access_group/AccessGroupMembersTable.vue';
 import { expiryText } from '@/assets/js/component-utils';
@@ -180,15 +184,15 @@ export default {
       expirationOptions: [
         {
           label: this.fluent('access-group_expiration', 'one-year'),
-          value: 360,
+          value: MEMBER_EXPIRATION_ONE_YEAR,
         },
         {
           label: this.fluent('access-group_expiration', 'two-years'),
-          value: 720,
+          value: MEMBER_EXPIRATION_TWO_YEARS,
         },
         {
           label: this.fluent('access-group_expiration', 'no-expire'),
-          value: 0,
+          value: MEMBER_EXPIRATION_NONE,
         },
         {
           label: this.fluent('access-group_expiration', 'custom'),
@@ -202,14 +206,14 @@ export default {
         {
           header: null,
           // TODO: This should be either invitation or request once request happens
-          contentHandler: member => 'Invitation',
+          contentHandler: (member) => 'Invitation',
         },
         {
           header: null,
-          contentHandler: member =>
+          contentHandler: (member) =>
             `${this.fluent(
               'access-group_invite-member',
-              'table-row-text'
+              'table-row-text',
             )} ${this.expiry(member.expiration)}`,
         },
         {
@@ -245,12 +249,12 @@ export default {
       return optionValue === 'custom';
     },
     handleResendClicked(invitation) {
-      this.resendInvitation(invitation).then(result => {
+      this.resendInvitation(invitation).then((result) => {
         this.tinyNotification('access-group-invite-email-resent');
       });
     },
     handleRemoveClicked(invitation) {
-      this.deleteInvitation(invitation).then(result => {
+      this.deleteInvitation(invitation).then((result) => {
         this.tinyNotification('access-group-invite-deleted');
       });
     },
@@ -259,9 +263,11 @@ export default {
     },
     updateAutoCompleteList(search) {
       return new Promise((res, rej) => {
-        AccessGroups.getUsers(search, this.groupName).then(results => {
+        AccessGroups.getUsers(search, this.groupName).then((results) => {
           res(
-            results.map(profile => DisplayMemberViewModel.fromUserData(profile))
+            results.map((profile) =>
+              DisplayMemberViewModel.fromUserData(profile),
+            ),
           );
         });
       });
@@ -270,14 +276,14 @@ export default {
       this.sendInvitations({
         invites: this.newInvites,
         expiration: this.newInvitesExpiration,
-      }).then(result => {
+      }).then((result) => {
         this.tinyNotification('access-group-members-invite-success');
         this.newInvites = [];
         this.newInvitesDirty = false;
       });
     },
     handleUpdateInviteTextClicked() {
-      this.updateInviteText(this.newInvites).then(result => {
+      this.updateInviteText(this.newInvites).then((result) => {
         this.tinyNotification('access-group-invitation-text-updated');
         this.emailInviteTextDirty = false;
       });
