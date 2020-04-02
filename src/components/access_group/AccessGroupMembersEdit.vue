@@ -39,9 +39,9 @@
                 @click="handleRemoveConfirmClick(member)"
                 >{{ fluent('access-group_members', 'remove-action') }}</Button
               >
-              <Button class="secondary-button" @click="togglePending(false)">{{
-                fluent('access-group_members', 'remove-cancel')
-              }}</Button>
+              <Button class="secondary-button" @click="togglePending(false)">
+                {{ fluent('access-group_members', 'remove-cancel') }}
+              </Button>
             </div>
             <div
               slot="row-actions"
@@ -120,9 +120,9 @@
       <template v-slot:content>
         <div class="members-expiration-container">
           <div class="content-area__row expiration-container">
-            <label class="content-area__label expiration-container__label">{{
-              fluent('access-group_expiration', 'expiration__description')
-            }}</label>
+            <label class="content-area__label expiration-container__label">
+              {{ fluent('access-group_expiration', 'expiration__description') }}
+            </label>
             <RadioSelect
               class="expiration-container__value"
               :options="expirationOptions"
@@ -188,7 +188,12 @@ import SearchForm from '@/components/ui/SearchForm.vue';
 import AccessGroupMembersTable from '@/components/access_group/AccessGroupMembersTable.vue';
 import TagSelector from '@/components/ui/TagSelector.vue';
 import MembersListMixin from '@/components/_mixins/MembersListMixin.vue';
-import { DisplayMemberViewModel } from '@/view_models/AccessGroupViewModel';
+import {
+  DisplayMemberViewModel,
+  MEMBER_EXPIRATION_NONE,
+  MEMBER_EXPIRATION_ONE_YEAR,
+  MEMBER_EXPIRATION_TWO_YEARS,
+} from '@/view_models/AccessGroupViewModel';
 import { expiryText } from '@/assets/js/component-utils';
 import AccessGroups from '@/assets/js/access-groups';
 
@@ -223,7 +228,7 @@ export default {
     },
     selectedExpiration(value) {
       if (value === 'custom') {
-        this.groupExpiration = 0;
+        this.groupExpiration = MEMBER_EXPIRATION_NONE;
       } else {
         this.groupExpiration = value;
       }
@@ -238,9 +243,9 @@ export default {
     ];
     const accessGroupCurators = this.$store.getters['accessGroup/getCurators'];
     let selectedExpiration =
-      accessGroupExpiration === 360 ||
-      accessGroupExpiration === 720 ||
-      accessGroupExpiration === 0
+      accessGroupExpiration === MEMBER_EXPIRATION_ONE_YEAR ||
+      accessGroupExpiration === MEMBER_EXPIRATION_TWO_YEARS ||
+      accessGroupExpiration === MEMBER_EXPIRATION_NONE
         ? accessGroupExpiration
         : 'custom';
     return {
@@ -297,15 +302,15 @@ export default {
       expirationOptions: [
         {
           label: this.fluent('access-group_expiration', 'one-year'),
-          value: 360,
+          value: MEMBER_EXPIRATION_ONE_YEAR,
         },
         {
           label: this.fluent('access-group_expiration', 'two-years'),
-          value: 720,
+          value: MEMBER_EXPIRATION_TWO_YEARS,
         },
         {
           label: this.fluent('access-group_expiration', 'no-expire'),
-          value: 0,
+          value: MEMBER_EXPIRATION_NONE,
         },
         {
           label: this.fluent('access-group_expiration', 'custom'),
