@@ -16,7 +16,7 @@
           :avatar="{ picture: member.picture, username: member.username }"
           class="member-view__image"
           :size="40"
-          :isStaff="true"
+          :showLabel="member.isStaff"
         />
         <div class="member-view__info">
           <p class="info-header">{{ member.displayName }}</p>

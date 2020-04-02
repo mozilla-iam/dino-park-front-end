@@ -135,7 +135,7 @@ export class DisplayMemberViewModel {
           : `${data.first_name} ${data.last_name}`;
       this.username = data.username;
       this.email = data.email;
-      this.isStaff = data.isStaff;
+      this.isStaff = data.is_staff;
       this.since = !data.since ? '' : new Date(data.since).toLocaleDateString();
       this.expiration = !data.expiration ? 0 : data.expiration;
       if (data.role === 'Admin') {

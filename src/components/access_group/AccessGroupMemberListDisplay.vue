@@ -4,7 +4,7 @@
       :avatar="{ picture: member.picture, username: member.username }"
       class="curator-image"
       :size="24"
-      :isStaff="false"
+      :showLabel="member.isStaff"
     />
     <div class="member-list-description">
       <p class="member-list-description__header">{{ member.displayName }}</p>
