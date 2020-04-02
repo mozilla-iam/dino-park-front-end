@@ -22,7 +22,10 @@
             :options="sortOptions"
             :nonOption="defaultSort"
           ></Select>
-          <AccessGroupMembersTable :data="allMembers" :columns="membersColumns">
+          <AccessGroupMembersTable
+            :data="membersList"
+            :columns="membersColumns"
+          >
             <div
               slot="row-confirm"
               slot-scope="{ member, togglePending }"
@@ -54,9 +57,12 @@
               </Button>
             </div>
           </AccessGroupMembersTable>
-          <Button class="edit-members__load-more" @click="loadMoreHandler">
-            {{ fluent('access-group_members', 'load-more') }}
-          </Button>
+          <Button
+            class="edit-members__load-more"
+            @click="loadMoreHandler"
+            v-if="showLoadMore"
+            >{{ fluent('access-group_members', 'load-more') }}</Button
+          >
         </div>
       </template>
     </AccessGroupEditPanel>
@@ -181,12 +187,13 @@ import AccessGroupEditPanel from '@/components/access_group/AccessGroupEditPanel
 import SearchForm from '@/components/ui/SearchForm.vue';
 import AccessGroupMembersTable from '@/components/access_group/AccessGroupMembersTable.vue';
 import TagSelector from '@/components/ui/TagSelector.vue';
+import MembersListMixin from '@/components/_mixins/MembersListMixin.vue';
 import { DisplayMemberViewModel } from '@/view_models/AccessGroupViewModel';
 import { expiryText } from '@/assets/js/component-utils';
 import AccessGroups from '@/assets/js/access-groups';
 
 export default {
-  name: 'AccessGroupInformationEdit',
+  name: 'AccessGroupMembersEdit',
   components: {
     TextInput,
     TextArea,
@@ -200,8 +207,7 @@ export default {
     RadioSelect,
     Select,
   },
-  props: [],
-  mounted() {},
+  mixins: [MembersListMixin],
   watch: {
     accessGroupCurators(value) {
       this.curatorsList = value;
@@ -223,7 +229,7 @@ export default {
       }
     },
     selectedSort(value) {
-      this.handleSortUpdated(value);
+      this.updateSort(value);
     },
   },
   data() {
@@ -231,7 +237,6 @@ export default {
       'accessGroup/getExpiration'
     ];
     const accessGroupCurators = this.$store.getters['accessGroup/getCurators'];
-    const accessGroupMembers = this.$store.getters['accessGroup/getMembers'];
     let selectedExpiration =
       accessGroupExpiration === 360 ||
       accessGroupExpiration === 720 ||
@@ -248,15 +253,6 @@ export default {
       removedCurators: [],
       curatorsListDirty: false,
       groupExpirationDirty: false,
-      memberListOptions: {
-        search: '',
-        sort: '',
-        numResults: 20,
-      },
-      defaultSort: {
-        value: '',
-        label: 'Sort',
-      },
       selectedSort: '',
       sortOptions: [
         { value: 'role-asc', label: 'Role Asc' },
@@ -284,7 +280,12 @@ export default {
             'access-group_members',
             'members-table__header-3',
           ),
-          contentHandler: ({ expiration }) => this.expiry(expiration),
+          contentHandler: ({ expiration }) => {
+            if (!expiration) {
+              return this.fluent('access-group_members', 'no-expiration');
+            }
+            return this.expiry(expiration);
+          },
         },
         {
           header: this.fluent(
@@ -293,7 +294,6 @@ export default {
           ),
         },
       ],
-      allMembersList: accessGroupMembers,
       expirationOptions: [
         {
           label: this.fluent('access-group_expiration', 'one-year'),
@@ -317,7 +317,6 @@ export default {
   },
   methods: {
     ...mapActions({
-      getMembersWithOptions: 'accessGroup/fetchMembersWithOptions',
       removeMember: 'accessGroup/removeMember',
       addCurators: 'accessGroup/addCurators',
       removeCurators: 'accessGroup/removeCurators',
@@ -327,7 +326,7 @@ export default {
       completeLoading: 'completeLoading',
     }),
     canMemberBeRemoved(member) {
-      if (!this.allMembersList.length) {
+      if (!this.membersList.length) {
         return false;
       }
       if (
@@ -339,25 +338,13 @@ export default {
       return true;
     },
     searchFormHandler(search) {
-      this.memberListOptions.search = search;
-      this.getMembersWithOptions({
-        groupName: this.groupName,
-        options: this.memberListOptions,
-      });
+      this.updateSearch(search);
     },
     clearSearchHandler() {
-      this.memberListOptions.search = '';
-      this.getMembersWithOptions({
-        groupName: this.groupName,
-        options: this.memberListOptions,
-      });
+      this.clearSearch();
     },
     loadMoreHandler() {
-      this.memberListOptions.numResults += 20;
-      this.getMembersWithOptions({
-        groupName: this.groupName,
-        options: this.memberListOptions,
-      });
+      this.loadMoreMembers();
     },
     handleRenewClick(member) {
       this.renewMember({
@@ -439,13 +426,6 @@ export default {
     isExpirationCustom(optionValue) {
       return optionValue === 'custom';
     },
-    handleSortUpdated(value) {
-      this.memberListOptions.sort = value;
-      this.getMembersWithOptions({
-        groupName: this.groupName,
-        options: this.memberListOptions,
-      });
-    },
   },
   computed: {
     ...mapGetters({
@@ -453,11 +433,14 @@ export default {
       groupName: 'accessGroup/getGroupName',
       accessGroupCurators: 'accessGroup/getCurators',
       accessGroupExpiration: 'accessGroup/getExpiration',
-      allMembers: 'accessGroup/getMembers',
       memberCount: 'accessGroup/getMemberCount',
+      membersNext: 'accessGroup/getMembersNext',
     }),
     expirationIsCustom() {
       return this.selectedExpiration === 'custom';
+    },
+    showLoadMore() {
+      return this.membersNext;
     },
   },
 };
@@ -571,7 +554,7 @@ export default {
 
 .edit-members-container .edit-members__load-more {
   margin: 1em auto;
-  background-color: var(--gray-30);
+  background-color: transparent;
   color: var(--black);
 }
 

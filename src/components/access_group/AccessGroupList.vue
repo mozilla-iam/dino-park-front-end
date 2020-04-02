@@ -46,6 +46,11 @@ import Tooltip from '@/components/ui/Tooltip.vue';
 import Icon from '@/components/ui/Icon.vue';
 
 const resultsStep = 20;
+const defaultListOptions = {
+  search: '',
+  sort: 'name-asc',
+  numResults: resultsStep,
+};
 export default {
   name: 'AccessGroupList',
   components: {
@@ -62,10 +67,14 @@ export default {
   },
   methods: {
     ...mapActions({
-      fetchList: 'accessGroups/fetch',
+      fetchList: 'accessGroups/fetchList',
+      fetchNext: 'accessGroups/fetchNext',
     }),
     // eslint-disable-next-line
     searchFormHandler(searchQuery, scope) {
+      if (this.nextClicked) {
+        this.resetOptions();
+      }
       this.listOptions.search = searchQuery;
       this.fetchList(this.listOptions);
     },
@@ -73,32 +82,41 @@ export default {
       this.listOptions.search = '';
       this.fetchList(this.listOptions);
     },
-    handleShowMoreClicked() {
-      this.listOptions.numResults += resultsStep;
-      this.fetchList(this.listOptions);
+    async handleShowMoreClicked() {
+      this.nextClicked = true;
+      const nextList = await this.fetchNext(this.listOptions);
+      this.groupList = this.groupList.concat(nextList);
+    },
+    resetOptions() {
+      this.listOptions = defaultListOptions;
     },
   },
   computed: {
     ...mapGetters({
-      groupList: 'accessGroups/list',
+      rawList: 'accessGroups/getList',
+      groupNext: 'accessGroups/getNext',
     }),
     canShowMore() {
-      return this.groupList.length > resultsStep;
+      return this.groupNext;
     },
   },
   watch: {
     selectedSort(value) {
+      if (this.nextClicked) {
+        this.resetOptions();
+      }
       this.listOptions.sort = value;
       this.fetchList(this.listOptions);
+    },
+    rawList(value) {
+      this.groupList = value;
     },
   },
   data() {
     return {
-      listOptions: {
-        search: '',
-        sort: 'name-asc',
-        numResults: resultsStep,
-      },
+      nextClicked: false,
+      groupList: this.$store.getters['accessGroups/getList'],
+      listOptions: defaultListOptions,
       selectedSort: '',
       sortOptions: [
         { value: 'name-asc', label: 'Name A-Z' },
