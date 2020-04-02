@@ -6,7 +6,7 @@
       "name": "Hans Knall",
       "username": "hans",
       "email": "hans@knall.org",
-      "isStaff": true,
+      "is_staff": true,
       "since": "2014-11-28T12:45:59Z",
       "expiration": "2014-11-28T12:45:59Z",
       "role": "Curator",
