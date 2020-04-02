@@ -88,7 +88,7 @@ export function fetchAccessGroup(store, groupname) {
   ];
 }
 export function fetchAccessGroups(store) {
-  return [[() => store.dispatch('accessGroups/fetch')], [(data) => {}]];
+  return [[() => store.dispatch('accessGroups/fetchList')], [(data) => {}]];
 }
 export function fetchTerms(store) {
   return [[() => store.dispatch('accessGroup/fetchTerms')], [(data) => {}]];

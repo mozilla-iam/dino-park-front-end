@@ -22,12 +22,18 @@
         </li>
       </ul>
     </nav>
-    <template v-if="getMembers.length > 0">
+    <template v-if="membersList.length > 0">
       <ul class="members-container__list">
-        <li v-for="(member, idx) in getMembers" :key="idx">
+        <li v-for="(member, idx) in membersList" :key="idx">
           <AccessGroupMemberItem class="list-item-container" :member="member" />
         </li>
       </ul>
+      <div class="members-container__load-more">
+        <Button class="load-more" v-if="showLoadMore" @click="loadMoreHandler">
+          <Icon id="chevron-down" />
+          {{ fluent('access-group_members', 'members-container__load-more') }}
+        </Button>
+      </div>
     </template>
     <template v-else>
       <p class="members-container__empty">
@@ -51,11 +57,13 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import EditButton from '@/components/ui/EditButton.vue';
+import Button from '@/components/ui/Button.vue';
 import AccessGroupMemberItem from '@/components/access_group/AccessGroupMemberItem.vue';
 import SearchForm from '@/components/ui/SearchForm.vue';
 import Select from '@/components/ui/Select.vue';
 import Tooltip from '@/components/ui/Tooltip.vue';
 import Icon from '@/components/ui/Icon.vue';
+import MembersListMixin from '@/components/_mixins/MembersListMixin.vue';
 import { getTwoColumnGridArraySplitFromArray } from '@/assets/js/component-utils';
 
 const defaultTab = 'all';
@@ -63,87 +71,66 @@ export default {
   name: 'AccessGroupMembers',
   components: {
     EditButton,
+    Button,
     Icon,
     SearchForm,
     Select,
     Tooltip,
     AccessGroupMemberItem,
   },
+  mixins: [MembersListMixin],
   props: {
     title: String,
   },
   methods: {
-    ...mapActions({
-      getMembersWithOptions: 'accessGroup/fetchMembersWithOptions',
-    }),
     // eslint-disable-next-line
-    searchFormHandler(searchQuery, scope) {
-      this.memberListOptions.search = searchQuery;
-      this.getMembersWithOptions({
-        groupName: this.groupName,
-        options: this.memberListOptions,
-      });
+    searchFormHandler(searchQuery) {
+      this.updateSearch(searchQuery);
     },
     handleTabClick(tab) {
+      this.updateRole(tab.key);
       this.activeTab = tab.key;
-      this.memberListOptions.role = tab.key;
-      this.getMembersWithOptions({
-        groupName: this.groupName,
-        options: this.memberListOptions,
-      });
     },
     clearSearchHandler() {
-      this.memberListOptions.search = '';
-      this.getMembersWithOptions({
-        groupName: this.groupName,
-        options: this.memberListOptions,
-      });
+      this.clearSearch();
     },
     isTabActive(tab) {
       return this.activeTab === tab.key;
     },
-  },
-  watch: {
-    getMembers(value) {
-      this.filteredList = value.slice(0);
-      this.memberList = value.slice(0);
+    loadMoreHandler() {
+      this.loadMoreMembers();
     },
   },
   computed: {
     ...mapGetters({
-      getMembers: 'accessGroup/getMembers',
-      groupName: 'accessGroup/getGroupName',
+      membersNext: 'accessGroup/getMembersNext',
     }),
+    showLoadMore() {
+      return this.membersNext;
+    },
   },
   data() {
-    const fullMemberList = this.$store.getters['accessGroup/getMembers'];
     return {
-      memberListOptions: {
-        search: '',
-        role: defaultTab,
-        sort: 'role-asc',
-      },
-      filter: '',
       tabList: [
         {
           key: 'all',
           label: this.fluent(
             'access-group_members',
-            'tabs-container__item-all'
+            'tabs-container__item-all',
           ),
         },
         {
           key: 'curators',
           label: this.fluent(
             'access-group_members',
-            'tabs-container__item-curators'
+            'tabs-container__item-curators',
           ),
         },
         {
           key: 'members',
           label: this.fluent(
             'access-group_members',
-            'tabs-container__item-members'
+            'tabs-container__item-members',
           ),
         },
       ],
@@ -297,5 +284,17 @@ export default {
 .members-container .members-container__empty {
   text-align: center;
   margin: 3em auto;
+}
+
+.members-container__load-more {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.members-container__load-more .load-more {
+  margin: 1em auto;
+  background-color: transparent;
+  color: var(--black);
 }
 </style>

@@ -295,7 +295,7 @@ export default {
 }
 
 /* Expiration styles */
-.expiration-container {
+.access-group-container .group-edit .expiration-container {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -303,12 +303,12 @@ export default {
   width: 100%;
 }
 
-.expiration-container .expiration-container__label {
+.group-edit .expiration-container .expiration-container__label {
   color: var(--gray-40);
   margin-bottom: 1em;
 }
 
-.expiration-container .expiration-container__value {
+.group-edit .expiration-container .expiration-container__value {
   width: 100%;
 }
 </style>
