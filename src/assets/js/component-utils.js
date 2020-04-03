@@ -1,5 +1,9 @@
 import marked from 'marked';
 import insane from 'insane';
+import {
+  MEMBER_EXPIRATION_ONE_WEEK,
+  MEMBER_EXPIRATION_ONE_YEAR,
+} from '../../view_models/AccessGroupViewModel';
 
 // eslint-disable-next-line
 export function getTwoColumnGridArraySplitFromArray(list) {
@@ -12,7 +16,7 @@ export function getTwoColumnGridArraySplitFromArray(list) {
       }
       return acc;
     },
-    [[], []]
+    [[], []],
   );
 }
 
@@ -48,21 +52,32 @@ export function parseMarkdown(text) {
   return insane(marked(text, { gfm: true }));
 }
 
-export function expiryText(fluent, expiration) {
-  const expiryDate = new Date(expiration);
+export function expiryTextFromDate(fluent, expirationDate) {
+  const expiryDate = new Date(expirationDate);
   const currentDate = new Date();
   const difference = expiryDate.getTime() - currentDate.getTime();
-  if (difference <= 0) {
+  const expDiffDays = Math.ceil(difference / (1000 * 3600 * 24));
+  return expiryText(fluent, expDiffDays);
+}
+
+export function expiryText(fluent, days) {
+  if (days <= 0) {
     return `0 ${fluent('date-day', 'plural')}`;
   }
-  const expDiffDays = Math.ceil(difference / (1000 * 3600 * 24));
-  if (expDiffDays % 7 === 0 && expDiffDays !== 0 && expDiffDays !== null) {
-    const weekNum = expDiffDays / 7;
+
+  if (days % MEMBER_EXPIRATION_ONE_YEAR === 0 && days !== 0 && days !== null) {
+    const yearNum = days / MEMBER_EXPIRATION_ONE_YEAR;
+    const yearLabel =
+      yearNum === 1 ? fluent('date-year') : fluent('date-year', 'plural');
+    return `${yearNum} ${yearLabel}`;
+  }
+  if (days % MEMBER_EXPIRATION_ONE_WEEK === 0 && days !== 0 && days !== null) {
+    const weekNum = days / MEMBER_EXPIRATION_ONE_WEEK;
     const weekLabel =
       weekNum === 1 ? fluent('date-week') : fluent('date-week', 'plural');
     return `${weekNum} ${weekLabel}`;
   }
   const dayLabel =
-    expDiffDays === 1 ? fluent('date-day') : fluent('date-day', 'plural');
-  return `${expDiffDays} ${dayLabel}`;
+    days === 1 ? fluent('date-day') : fluent('date-day', 'plural');
+  return `${days} ${dayLabel}`;
 }

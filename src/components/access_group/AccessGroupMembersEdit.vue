@@ -39,9 +39,9 @@
                 @click="handleRemoveConfirmClick(member)"
                 >{{ fluent('access-group_members', 'remove-action') }}</Button
               >
-              <Button class="secondary-button" @click="togglePending(false)">
-                {{ fluent('access-group_members', 'remove-cancel') }}
-              </Button>
+              <Button class="secondary-button" @click="togglePending(false)">{{
+                fluent('access-group_members', 'remove-cancel')
+              }}</Button>
             </div>
             <div
               slot="row-actions"
@@ -120,9 +120,9 @@
       <template v-slot:content>
         <div class="members-expiration-container">
           <div class="content-area__row expiration-container">
-            <label class="content-area__label expiration-container__label">
-              {{ fluent('access-group_expiration', 'expiration__description') }}
-            </label>
+            <label class="content-area__label expiration-container__label">{{
+              fluent('access-group_expiration', 'expiration__description')
+            }}</label>
             <RadioSelect
               class="expiration-container__value"
               :options="expirationOptions"
@@ -194,7 +194,7 @@ import {
   MEMBER_EXPIRATION_ONE_YEAR,
   MEMBER_EXPIRATION_TWO_YEARS,
 } from '@/view_models/AccessGroupViewModel';
-import { expiryText } from '@/assets/js/component-utils';
+import { expiryTextFromDate } from '@/assets/js/component-utils';
 import AccessGroups from '@/assets/js/access-groups';
 
 export default {
@@ -426,7 +426,7 @@ export default {
       });
     },
     expiry(expiration) {
-      return expiryText(this.fluent, expiration);
+      return expiryTextFromDate(this.fluent, expiration);
     },
     isExpirationCustom(optionValue) {
       return optionValue === 'custom';

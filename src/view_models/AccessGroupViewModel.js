@@ -91,6 +91,7 @@ export class AbbDisplayMemberViewModel {
 }
 
 export const MEMBER_EXPIRATION_NONE = 0;
+export const MEMBER_EXPIRATION_ONE_WEEK = 7;
 export const MEMBER_EXPIRATION_ONE_YEAR = 365;
 export const MEMBER_EXPIRATION_TWO_YEARS = MEMBER_EXPIRATION_ONE_YEAR * 2;
 export const MEMBER_IDEX = {
@@ -108,6 +109,7 @@ export class DisplayMemberViewModel {
     this.isStaff = false;
     this.since = '';
     this.expiration = MEMBER_EXPIRATION_NONE;
+    this.invitationExpiration = '';
     [, , this.role] = DISPLAY_MEMBER_ROLES;
     this.added_by = {};
     this.error = false;
@@ -141,9 +143,18 @@ export class DisplayMemberViewModel {
       this.email = data.email;
       this.isStaff = data.is_staff;
       this.since = !data.since ? '' : new Date(data.since).toLocaleDateString();
-      this.expiration = !data.expiration
-        ? MEMBER_EXPIRATION_NONE
-        : data.expiration;
+      if (data.hasOwnProperty('group_expiration')) {
+        this.expiration = !data.group_expiration ? '' : data.group_expiration;
+      } else if (data.hasOwnProperty('expiration')) {
+        this.expiration = !data.expiration
+          ? MEMBER_EXPIRATION_NONE
+          : data.expiration;
+      }
+      if (data.hasOwnProperty('invitation_expiration')) {
+        this.invitationExpiration = !data.invitation_expiration
+          ? ''
+          : data.invitation_expiration;
+      }
       if (data.role === 'Admin') {
         this.role = DISPLAY_MEMBER_ROLES[MEMBER_IDEX.Curator];
       } else {
