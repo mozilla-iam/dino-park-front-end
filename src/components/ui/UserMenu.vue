@@ -71,7 +71,7 @@
         </span>
       </li>
     </ul>
-    <a href="/oauth/logout?redirect=/logbackin.html" class="user-menu__log-out">
+    <a href="/_/logout" class="user-menu__log-out">
       <span>{{ fluent('user-menu_logout') }}</span>
       <Icon id="log-out" :width="24" :height="24" />
     </a>

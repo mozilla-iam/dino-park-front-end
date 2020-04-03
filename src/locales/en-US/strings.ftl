@@ -13,6 +13,8 @@ edit = Edit
   .section = Edit {$section}
 open_label = Open {$label}
 loading = Loading
+log_in = Log in
+select = Select
 
 # titles
 
@@ -36,6 +38,12 @@ user-menu_dashboard = Dashboard
 user-menu_notifications = Notifications
 user-menu_auto-login = Manage Auto-Login
 user-menu_logout = Log Out
+
+## Contribute
+
+contribute = Get Involved
+contribute_header = How do I get involved?
+contribute_text = Mozilla exists to promote openness, innovation and opportunity on the Internet. The success of our mission depends on participation from people like you. Find out how you can get involved to help make a difference in the lives of people everywhere.
 
 ## Footer
 
@@ -71,6 +79,7 @@ classification_info = This person has access to data classified as public.
 home_welcome = Welcome to the Mozilla People Directory
   .description = A secure place to quickly find your fellow Mozillians and share information about yourself!
   .description-staff = A secure place to quickly find your team members and easily discover new ones.
+  .description-public = A secure place for all Mozillians, staff and non-staff alike, to manage their Mozilla profile. A Mozilla profile is a universal identity shared by a growing number of Mozilla projects and websites. 
   .my-profile = My profile
 
 home_links_feedback = Your Feedback Matters
@@ -82,6 +91,8 @@ home_links_updates = Recent Additions
   .description-groups-announcement = LDAP and Mozillians.org access groups are now displayed under the <i>Access groups</i> section. Read more about this and all newly added functionality in our <a data-l10n-name="discourse">Discourse post</a>.
   .description-ldap-contributor-announcement = Contributors with a volunteer LDAP account can now access PMO. Read all about it in our <a data-l10n-name="discourse">Discourse post</a>.
 
+home_paragraph = Mozilla profiles are part of the Identity and Access Management (IAM) initiative.
+  .link = Learn more
 ## Org Chart
 
 orgchart = Org chart

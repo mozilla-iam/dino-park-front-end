@@ -41,6 +41,18 @@ export default {
   height: 1.3em;
 }
 
+.button--invert {
+  background-color: var(--white);
+  border-color: var(--blue-60);
+  color: var(--blue-60);
+}
+
+.button--invert:hover {
+  background-color: var(--blue-60);
+  color: var(--white);
+  border: 1px solid transparent;
+}
+
 .button--secondary {
   border-color: var(--gray-50);
   background-color: transparent;

@@ -17,6 +17,7 @@ export default {
         legal: 'https://www.mozilla.org/en-US/legal',
         privacy: 'https://www.mozilla.org/en-US/privacy/',
         hrEmail: 'mailto:peopleops@mozilla.com',
+        iamFaq: 'https://wiki.mozilla.org/IAM/Frequently_asked_questions',
       },
     };
   },
