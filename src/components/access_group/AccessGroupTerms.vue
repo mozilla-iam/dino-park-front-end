@@ -37,9 +37,9 @@
           />
           {{ fluent('access-group_terms', 'do-not-accept') }}
         </div>
-        <Button class="button--primary" @click="handleSubmitClicked">
-          {{ fluent('access-group_terms', 'submit-changes') }}
-        </Button>
+        <Button class="button--primary" @click="handleSubmitClicked">{{
+          fluent('access-group_terms', 'submit-changes')
+        }}</Button>
       </footer>
     </section>
   </main>
@@ -97,14 +97,14 @@ export default {
       this.acceptInvitation(
         this.getInvitationByName(this.$route.params.groupname),
       ).then(() => {
+        this.tinyNotification('access-group-terms-accepted');
+        this.completeLoading();
         this.$router.push({
           name: 'Access Group',
           query: {
             groupname: this.$route.query.groupname,
           },
         });
-        this.tinyNotification('access-group-terms-accepted');
-        this.completeLoading();
       });
     },
     doNotAcceptTerms() {
