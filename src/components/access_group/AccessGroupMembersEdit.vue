@@ -73,15 +73,15 @@
               slot-scope="{ member }"
               class="expandable-actions-container"
             >
+              <p class="member-email" v-if="member.email">
+                {{ fluent('access-group_members', 'expandable-email') }}
+                <a :href="`mailto:${member.email}`">{{ member.email }}</a>
+              </p>
               <Button
                 class="primary-button delete"
                 @click="handleRemoveConfirmClick(member)"
                 >{{ fluent('access-group_members', 'remove-action') }}</Button
               >
-              <p class="member-email" v-if="member.email">
-                {{ fluent('access-group_members', 'expandable-email') }}
-                <a :href="`mailto:${member.email}`">{{ member.email }}</a>
-              </p>
             </div>
             <div
               slot="row-actions"
@@ -611,6 +611,12 @@ export default {
   padding-left: 2em;
 }
 
+@media (min-width: 57.5em) {
+  .edit-members-container .edit-members-meta {
+    padding-left: 0;
+  }
+}
+
 .edit-members-container .edit-members-meta__focus {
   font-weight: bold;
 }
@@ -713,10 +719,14 @@ export default {
 
 .expandable-actions-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   padding: 0 0 1em;
+}
+
+.expandable-actions-container .member-email {
+  margin-bottom: 2em;
 }
 
 .expandable-actions-container .primary-button {
@@ -728,11 +738,19 @@ export default {
   border-color: var(--neon-red);
 }
 
-.expandable-content-container .expandable-content-container__first-row {
-  margin-top: 0;
+@media (min-width: 57.5em) {
+  .expandable-actions-container {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 0 0 1em;
+  }
 }
 
-.expandable-content-container .expandable-content-container__second-row {
+.expandable-content-container .expandable-content-container__first-row {
+  margin-top: 0;
+  margin-bottom: 2em;
 }
 
 .expandable-content-container__second-row .expiration-select {
@@ -741,15 +759,30 @@ export default {
   row-gap: 2em;
 }
 
-.expandable-content-container__second-row .expiration-select {
-  flex: 9;
-}
-
 .expandable-content-container__second-row .expiration-actions {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   margin-top: 1em;
+}
+
+@media (min-width: 57.5em) {
+  .expandable-content-container__second-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .expandable-content-container__second-row .expiration-select {
+    display: flex;
+    flex-direction: row;
+    flex: 9;
+  }
+
+  .expandable-content-container__second-row .expiration-actions {
+    flex: 1;
+    align-items: center;
+    margin-top: 0;
+  }
 }
 
 .edit-members-container .edit-members__load-more {

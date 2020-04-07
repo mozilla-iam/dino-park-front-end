@@ -202,6 +202,7 @@ export default {
 .row-member__expanded.content-empty {
   border-top: 1px solid var(--gray-40);
   padding-top: 1em;
+  margin-top: 1em;
 }
 
 .row-member__expanded .row-member__expanded-content {
