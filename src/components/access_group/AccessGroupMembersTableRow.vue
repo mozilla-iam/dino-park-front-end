@@ -24,6 +24,7 @@
         :class="{
           'row-member__item': true,
           alert: isMemberItemOnAlert(column),
+          [`row-item-${idx}`]: true,
         }"
         v-for="(column, idx) in getSecondaryColumns(member)"
         :key="idx"
@@ -84,7 +85,7 @@ export default {
     columns: Array,
     hasExpandedContent: {
       type: Function,
-      default: member => false,
+      default: (member) => false,
     },
   },
   data() {
@@ -95,10 +96,7 @@ export default {
   },
   methods: {
     getSecondaryColumns(member) {
-      if (this.expanded) {
-        return [];
-      }
-      return this.columns.filter(column => 'contentHandler' in column);
+      return this.columns.filter((column) => 'contentHandler' in column);
     },
     toggleExpand(status) {
       if (typeof status === 'boolean') {
@@ -128,10 +126,21 @@ export default {
 }
 
 .members-table__row .row-member__main {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 1em 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-areas:
+    'header header header header'
+    'first second actions actions'
+    'footer footer footer footer';
+}
+
+@media (min-width: 57.5em) {
+  .members-table__row .row-member__main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 1em 0;
+  }
 }
 
 .members-table__row .row-member__main .row-member__item {
@@ -142,12 +151,25 @@ export default {
   justify-content: center;
 }
 
+.members-table__row .row-member__main .row-member__item.row-item-0 {
+  grid-area: first;
+}
+.members-table__row .row-member__main .row-member__item.row-item-1 {
+  grid-area: second;
+}
+
+.members-table__row .row-member__main .row-member__item.row-actions,
+.members-table__row .row-member__main .row-member__item.row-actions-expanded {
+  grid-area: actions;
+}
+
 .members-table__row .row-member__main .row-member__item.alert {
   color: var(--neon-red);
 }
 
 .members-table__row .row-member__main .row-member__item.row-member__display {
   flex: 1.5;
+  grid-area: header;
 }
 
 .members-table__row .row-member__main .row-member__action-confirm {

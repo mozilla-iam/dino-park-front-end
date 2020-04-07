@@ -12,22 +12,24 @@
           </output>
         </p>
         <div class="members-list-container">
-          <SearchForm
-            class="edit-members__search"
-            v-on:clear-query="clearSearchHandler"
-            :searchFormHandler="searchFormHandler"
-            :searchFormLabel="
-              fluent('access-group_members', 'edit-members__search')
-            "
-          ></SearchForm>
-          <Select
-            class="options--chevron options--large sort-select"
-            label="Sort"
-            id="member-list-sort"
-            v-model="selectedSort"
-            :options="sortOptions"
-            :nonOption="defaultSort"
-          ></Select>
+          <header class="members-list-container__controls">
+            <SearchForm
+              class="edit-members__search"
+              v-on:clear-query="clearSearchHandler"
+              :searchFormHandler="searchFormHandler"
+              :searchFormLabel="
+                fluent('access-group_members', 'edit-members__search')
+              "
+            ></SearchForm>
+            <Select
+              class="options--chevron options--large sort-select"
+              label="Sort"
+              id="member-list-sort"
+              v-model="selectedSort"
+              :options="sortOptions"
+              :nonOption="defaultSort"
+            ></Select>
+          </header>
           <AccessGroupMembersTable
             :data="membersList"
             :columns="membersColumns"
@@ -39,7 +41,7 @@
           >
             <div
               slot="row-expandable-content"
-              slot-scope="{ member, toggleExpand }"
+              slot-scope="{ member }"
               class="expandable-content-container"
             >
               <p class="expandable-content-container__first-row">
@@ -68,7 +70,7 @@
             </div>
             <div
               slot="row-expandable-actions"
-              slot-scope="{ member, toggleExpand }"
+              slot-scope="{ member }"
               class="expandable-actions-container"
             >
               <Button
@@ -234,7 +236,6 @@ import RadioSelect from '@/components/ui/RadioSelect.vue';
 import Select from '@/components/ui/Select.vue';
 import AccessGroupEditPanel from '@/components/access_group/AccessGroupEditPanel.vue';
 import SearchForm from '@/components/ui/SearchForm.vue';
-import RadioSelect from '@/components/ui/RadioSelect.vue';
 import AccessGroupMembersTable from '@/components/access_group/AccessGroupMembersTable.vue';
 import TagSelector from '@/components/ui/TagSelector.vue';
 import MembersListMixin from '@/components/_mixins/MembersListMixin.vue';
@@ -577,6 +578,20 @@ export default {
   overflow: visible;
 }
 
+.members-list-container .members-list-container__controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1em;
+}
+.members-list-container .edit-members__search {
+  margin: 0 2em 1em;
+}
+.members-list-container .sort-select.options {
+  align-self: initial;
+}
+
 @media (min-width: 57.5em) {
   .edit-members-container {
     padding: 1em;
@@ -592,6 +607,10 @@ export default {
   position: relative;
 }
 
+.edit-members-container .edit-members-meta {
+  padding-left: 2em;
+}
+
 .edit-members-container .edit-members-meta__focus {
   font-weight: bold;
 }
@@ -601,6 +620,9 @@ export default {
 }
 
 @media (min-width: 57.5em) {
+  .members-list-container .members-list-container__controls {
+    display: block;
+  }
   .edit-members-container .edit-members-section__header {
     margin-left: 0;
   }
@@ -609,16 +631,11 @@ export default {
     width: auto;
     padding-top: 0.5em;
   }
-}
-
-.sort-select {
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-
-.edit-members__table {
-  display: none;
+  .sort-select {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
 }
 
 .confirm-container {
@@ -716,8 +733,12 @@ export default {
 }
 
 .expandable-content-container .expandable-content-container__second-row {
-  display: flex;
-  flex-direction: row;
+}
+
+.expandable-content-container__second-row .expiration-select {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 2em;
 }
 
 .expandable-content-container__second-row .expiration-select {
@@ -725,7 +746,10 @@ export default {
 }
 
 .expandable-content-container__second-row .expiration-actions {
-  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-top: 1em;
 }
 
 .edit-members-container .edit-members__load-more {
