@@ -12,7 +12,7 @@ export function getTwoColumnGridArraySplitFromArray(list) {
       }
       return acc;
     },
-    [[], []]
+    [[], []],
   );
 }
 
@@ -74,4 +74,10 @@ export function expiryText(fluent, expiration) {
   const dayLabel =
     expDiffDays === 1 ? fluent('date-day') : fluent('date-day', 'plural');
   return `${expDiffDays} ${dayLabel}`;
+}
+
+export function getExpirationDate(expiration) {
+  const currentDate = new Date();
+  currentDate.setDate(currentDate.getDate() + expiration);
+  return currentDate.toLocaleDateString();
 }

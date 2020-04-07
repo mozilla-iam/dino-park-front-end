@@ -245,7 +245,7 @@ import {
   MEMBER_EXPIRATION_ONE_YEAR,
   MEMBER_EXPIRATION_TWO_YEARS,
 } from '@/view_models/AccessGroupViewModel';
-import { expiryText } from '@/assets/js/component-utils';
+import { expiryText, getExpirationDate } from '@/assets/js/component-utils';
 import AccessGroups from '@/assets/js/access-groups';
 
 const memberRenewalThreshold = 14;
@@ -354,6 +354,9 @@ export default {
           contentHandler: ({ expiration }) => {
             if (!expiration) {
               return this.fluent('access-group_members', 'no-expiration');
+            }
+            if (expiration > memberRenewalThreshold) {
+              return getExpirationDate(expiration);
             }
             return this.expiry(expiration);
           },
