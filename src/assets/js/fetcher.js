@@ -59,7 +59,7 @@ class Fetcher {
           return res.status;
         }
       } else {
-        throw new Error(responseObject.error);
+        throw new Error(res.status);
       }
     } catch (e) {
       throw new Error(e.message);
