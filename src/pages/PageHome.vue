@@ -69,7 +69,10 @@
         {{ fluent('home_paragraph', 'link') }}
       </a>
     </p>
-    <section class="home__large-card large-card--no-bottom" v-if="!loggedIn">
+    <section
+      class="home__large-card large-card--no-bottom large-card--quad-bg"
+      v-if="!loggedIn"
+    >
       <h1>{{ fluent('contribute_header') }}</h1>
       <div class="contribute__image">
         <img
@@ -243,9 +246,17 @@ export default {
   background-position: top 2em left 0em;
 }
 
+.large-card--quad-bg {
+  background-image: url('~@/assets/images/quad.svg');
+  background-repeat: no-repeat;
+  background-size: 80%;
+  background-position: left -10% bottom 2em;
+}
+
 .contribute__image > img {
   padding-top: 1em;
-  width: 70%;
+  width: 75%;
+  max-width: 50vw;
   padding-bottom: 3em;
 }
 
@@ -260,6 +271,10 @@ export default {
   .contribute__image > img {
     max-width: 50%;
     padding-bottom: 0em;
+  }
+  .large-card--quad-bg {
+    background-size: 40%;
+    background-position: left -15% bottom 2em;
   }
 }
 </style>
