@@ -171,9 +171,9 @@
       <template v-slot:content>
         <div class="members-expiration-container">
           <div class="content-area__row expiration-container">
-            <label class="content-area__label expiration-container__label">
-              {{ fluent('access-group_expiration', 'expiration__description') }}
-            </label>
+            <label class="content-area__label expiration-container__label">{{
+              fluent('access-group_expiration', 'expiration__description')
+            }}</label>
             <RadioSelect
               class="expiration-container__value"
               :options="expirationOptions"
@@ -245,7 +245,7 @@ import {
   MEMBER_EXPIRATION_ONE_YEAR,
   MEMBER_EXPIRATION_TWO_YEARS,
 } from '@/view_models/AccessGroupViewModel';
-import { expiryText, getExpirationDate } from '@/assets/js/component-utils';
+import { expiryTextFromDate, getExpirationDate } from '@/assets/js/component-utils';
 import AccessGroups from '@/assets/js/access-groups';
 
 const memberRenewalThreshold = 14;
@@ -505,7 +505,7 @@ export default {
       });
     },
     expiry(expiration) {
-      return expiryText(this.fluent, expiration);
+      return expiryTextFromDate(this.fluent, expiration);
     },
     isExpirationCustom(optionValue) {
       return optionValue === 'custom';

@@ -113,9 +113,9 @@
           </div>
         </div>
         <div class="content-area__row multi-line" v-if="emailInviteTextEnabled">
-          <label class="content-area__label">
-            {{ fluent('access-group_email-invite-text', 'description') }}
-          </label>
+          <label class="content-area__label">{{
+            fluent('access-group_email-invite-text', 'description')
+          }}</label>
           <TextArea
             :rows="5"
             :maxlength="5000"
@@ -129,9 +129,10 @@
           :disabled="!emailInviteTextDirty"
           @click="handleUpdateInviteTextClicked"
           class="button--secondary button--action row-primary-action"
+          >{{
+            fluent('access-group_email-invite-text', 'update-invite-text')
+          }}</Button
         >
-          {{ fluent('access-group_email-invite-text', 'update-invite-text') }}
-        </Button>
       </template>
     </AccessGroupEditPanel>
   </section>
@@ -155,7 +156,7 @@ import {
 } from '@/view_models/AccessGroupViewModel';
 import AccessGroupMemberListDisplay from '@/components/access_group/AccessGroupMemberListDisplay.vue';
 import AccessGroupMembersTable from '@/components/access_group/AccessGroupMembersTable.vue';
-import { expiryText } from '@/assets/js/component-utils';
+import { expiryTextFromDate } from '@/assets/js/component-utils';
 
 const memberRowsDisplay = 20;
 export default {
@@ -249,7 +250,7 @@ export default {
       updateInviteText: 'accessGroup/updateInviteText',
     }),
     expiry(expiration) {
-      return expiryText(this.fluent, expiration);
+      return expiryTextFromDate(this.fluent, expiration);
     },
     isExpirationCustom(optionValue) {
       return optionValue === 'custom';
