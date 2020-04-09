@@ -545,6 +545,8 @@ tiny-notification = Hello World
   .access-group-curators-updated = The curators list has been successfully updated
   .access-group-expiration-updated = Access Group expiration has been successfully updated
 
+date-year = year
+  .plural = years
 date-week = week
   .plural = weeks
 date-day = day
