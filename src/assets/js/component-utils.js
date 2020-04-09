@@ -56,6 +56,7 @@ export function expiryTextFromDate(fluent, expirationDate) {
   const expiryDate = new Date(expirationDate);
   const currentDate = new Date();
   const difference = expiryDate.getTime() - currentDate.getTime();
+
   const expDiffDays = Math.ceil(difference / (1000 * 3600 * 24));
   return expiryText(fluent, expDiffDays);
 }
@@ -77,7 +78,14 @@ export function expiryText(fluent, days) {
       weekNum === 1 ? fluent('date-week') : fluent('date-week', 'plural');
     return `${weekNum} ${weekLabel}`;
   }
+
   const dayLabel =
     days === 1 ? fluent('date-day') : fluent('date-day', 'plural');
   return `${days} ${dayLabel}`;
+}
+
+export function getExpirationDate(expiration) {
+  const currentDate = new Date();
+  currentDate.setDate(currentDate.getDate() + expiration);
+  return currentDate.toLocaleDateString();
 }

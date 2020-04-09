@@ -154,16 +154,16 @@ export default {
     };
   },
   watch: {
-    groupDescriptionData(val) {
+    groupDescriptionData() {
       this.groupDescriptionDirty = true;
     },
-    groupTermsData(val) {
+    groupTermsData() {
       this.groupTermsDirty = true;
     },
-    groupTypeData(val) {
+    groupTypeData() {
       this.groupTypeDirty = true;
     },
-    groupTermsRequiredData(val) {
+    groupTermsRequiredData() {
       this.groupTermsDirty = true;
     },
   },
