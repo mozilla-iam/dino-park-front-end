@@ -54,17 +54,7 @@ export default {
     id: String,
   },
   mounted() {
-    generateIdenticon(this.$store.state.scope.username, 40).then(a => {
-      this.generatedAvatarUrl = a;
-    });
-  },
-  methods: {
-    handleIconClicked(e) {
-      this.$emit('click', e);
-    },
-  },
-  computed: {
-    computedAvatarUrl() {
+    if (this.id === 'self-avatar') {
       if (
         this.$store.state.scope.isLoggedIn &&
         this.$store.state.user.picture.value
@@ -72,13 +62,18 @@ export default {
         this.avatarUrl = avatarUrl(
           this.$store.state.user.picture.value,
           40,
-          true
+          true,
         );
       } else {
-        generateIdenticon(this.$store.state.scope.username, 40).then(a => {
+        generateIdenticon(this.$store.state.scope.username, 40).then((a) => {
           this.avatarUrl = a;
         });
       }
+    }
+  },
+  methods: {
+    handleIconClicked(e) {
+      this.$emit('click', e);
     },
   },
   data() {
