@@ -195,7 +195,7 @@ export default {
 .edit-container .edit-container__tabs {
   margin: 0 1em;
   position: sticky;
-  top: 6.5em;
+  top: 6em;
   left: 0;
   z-index: var(--layerPopover);
 }
