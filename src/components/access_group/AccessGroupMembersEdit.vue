@@ -7,9 +7,9 @@
       <template v-slot:content>
         <p class="edit-members-meta">
           {{ fluent('access-group_members', 'edit-members-meta') }}
-          <output class="edit-members-meta__focus">
-            {{ expirationMetaText }}
-          </output>
+          <output class="edit-members-meta__focus">{{
+            expirationMetaText
+          }}</output>
         </p>
         <div class="members-list-container">
           <header class="members-list-container__controls">
@@ -62,9 +62,10 @@
                         expiration: selectedRowExpiration,
                       })
                     "
+                    >{{
+                      fluent('access-group_members', 'renew-action')
+                    }}</Button
                   >
-                    {{ fluent('access-group_members', 'renew-action') }}
-                  </Button>
                 </div>
               </div>
             </div>
@@ -171,9 +172,9 @@
       <template v-slot:content>
         <div class="members-expiration-container">
           <div class="content-area__row expiration-container">
-            <label class="content-area__label expiration-container__label">{{
-              fluent('access-group_expiration', 'expiration__description')
-            }}</label>
+            <label class="content-area__label expiration-container__label">
+              {{ fluent('access-group_expiration', 'expiration__description') }}
+            </label>
             <RadioSelect
               class="expiration-container__value"
               :options="expirationOptions"
@@ -245,7 +246,10 @@ import {
   MEMBER_EXPIRATION_ONE_YEAR,
   MEMBER_EXPIRATION_TWO_YEARS,
 } from '@/view_models/AccessGroupViewModel';
-import { expiryTextFromDate, getExpirationDate } from '@/assets/js/component-utils';
+import {
+  expiryTextFromDate,
+  getExpirationDate,
+} from '@/assets/js/component-utils';
 import AccessGroups from '@/assets/js/access-groups';
 
 const memberRenewalThreshold = 14;
@@ -554,16 +558,16 @@ export default {
       return this.selectedExpiration === 'custom';
     },
     expirationMetaText() {
-      if (this.accessGroupExpiration === 360) {
+      if (this.accessGroupExpiration === MEMBER_EXPIRATION_ONE_YEAR) {
         return `1 ${this.fluent('date-year')}`;
       }
-      if (this.accessGroupExpiration === 720) {
+      if (this.accessGroupExpiration === MEMBER_EXPIRATION_TWO_YEARS) {
         return `2 ${this.fluent('date-year', 'plural')}`;
       }
       if (this.accessGroupExpiration === 1) {
         return `1 ${this.fluent('date-day')}`;
       }
-      if (this.accessGroupExpiration === 0) {
+      if (this.accessGroupExpiration === MEMBER_EXPIRATION_NONE) {
         return `not expire`;
       }
       return `${this.accessGroupExpiration} ${this.fluent(
