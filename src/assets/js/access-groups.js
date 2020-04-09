@@ -162,7 +162,6 @@ export default class AccessGroups {
   // TODO: Confirm this method as we are not currently supporting it
   async renewMember(groupName, memberUuid, expiration) {
     try {
-      // return await this.membersApi.renew(groupName, memberUuid, expiration);
       return await this.api.execute({
         path: 'members/renew',
         endpointArguments: [groupName, memberUuid],

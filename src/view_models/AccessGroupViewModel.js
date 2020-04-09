@@ -8,6 +8,8 @@ export class GroupInvitationViewModel {
     this.user_uuid = '';
     this.requires_tos = false;
     this.accepted_tos = false;
+    this.group_expiration = '';
+    this.invitation_expiration = '';
     this.state = '';
     this.error = false;
     this.processData(data);
@@ -21,6 +23,8 @@ export class GroupInvitationViewModel {
       if ('state' in data) {
         this.state = data.state;
       }
+      this.group_expiration = data.group_expiration;
+      this.invitation_expiration = data.invitation_expiration;
     } catch (e) {
       this.error = e.message;
       console.error('GroupInvitation error: ', e.message);
@@ -109,7 +113,7 @@ export class DisplayMemberViewModel {
     this.isStaff = false;
     this.since = '';
     this.expiration = MEMBER_EXPIRATION_NONE;
-    this.invitationExpiration = '';
+    this.invitationExpiration = MEMBER_EXPIRATION_NONE;
     [, , this.role] = DISPLAY_MEMBER_ROLES;
     this.added_by = {};
     this.error = false;
@@ -152,7 +156,7 @@ export class DisplayMemberViewModel {
       }
       if (data.hasOwnProperty('invitation_expiration')) {
         this.invitationExpiration = !data.invitation_expiration
-          ? ''
+          ? MEMBER_EXPIRATION_NONE
           : data.invitation_expiration;
       }
       if (data.role === 'Admin') {

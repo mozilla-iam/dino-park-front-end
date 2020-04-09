@@ -10,9 +10,15 @@
     >
       <template v-slot:content>
         <AccessGroupMembersTable
-          :data="groupInvitations"
+          :data="invitationsAndRequests"
           :columns="invitationColumns"
+          :totalRows="invitationCount"
+          :rowsPerLoad="memberRowsDisplay"
           :showHeaders="false"
+          :loadMoreHandler="loadMoreHandler"
+          :loadMoreText="
+            fluent('access-group_pending-invitations', 'load-more-text')
+          "
         >
           <div slot="row-confirm" slot-scope="{ member }">
             <p class="leave-confirm__description">
@@ -138,7 +144,6 @@ import TextInput from '@/components/ui/TextInput.vue';
 import TextArea from '@/components/ui/TextArea.vue';
 import Button from '@/components/ui/Button.vue';
 import Icon from '@/components/ui/Icon.vue';
-import SelectCustom from '@/components/ui/SelectCustom.vue';
 import RadioSelect from '@/components/ui/RadioSelect.vue';
 import AccessGroupEditPanel from '@/components/access_group/AccessGroupEditPanel.vue';
 import TagSelector from '@/components/ui/TagSelector.vue';
@@ -153,6 +158,7 @@ import AccessGroupMemberListDisplay from '@/components/access_group/AccessGroupM
 import AccessGroupMembersTable from '@/components/access_group/AccessGroupMembersTable.vue';
 import { expiryTextFromDate } from '@/assets/js/component-utils';
 
+const memberRowsDisplay = 20;
 export default {
   name: 'AccessGroupInvitationsEdit',
   components: {
@@ -164,7 +170,6 @@ export default {
     TagSelector,
     AccessGroupMemberListDisplay,
     AccessGroupMembersTable,
-    SelectCustom,
     RadioSelect,
   },
   props: [],
@@ -182,6 +187,7 @@ export default {
       emailInviteTextDirty: false,
       newInvitesExpirationEnabled: false,
       newInvitesExpiration: groupExpiration,
+      memberRowsDisplay,
       expirationOptions: [
         {
           label: this.fluent('access-group_expiration', 'one-year'),
@@ -262,6 +268,13 @@ export default {
     getTagLabel(curator) {
       return curator.displayName;
     },
+    loadMoreHandler() {
+      this.memberListOptions.numResults += memberRowsDisplay;
+      this.getMembersWithOptions({
+        groupName: this.groupName,
+        options: this.memberListOptions,
+      });
+    },
     updateAutoCompleteList(search) {
       return new Promise((res, rej) => {
         AccessGroups.getUsers(search, this.groupName).then((results) => {
@@ -296,10 +309,25 @@ export default {
       groupExpiration: 'accessGroup/getExpiration',
       groupInvitations: 'accessGroup/getInvitations',
       groupRequests: 'accessGroup/getRequests',
+      invitationCount: 'accessGroup/getInvitationCount',
     }),
     // TODO: Eventually include request numbers in this number
     totalInvitationsAndRequests() {
       return this.groupInvitations.length;
+    },
+    invitationsAndRequests() {
+      return this.groupInvitations
+        .concat(this.groupRequests)
+        .sort((memberA, memberB) => {
+          if (memberA.invitationExpiration > memberB.invitationExpiration) {
+            return 1;
+          } else if (
+            memberA.invitationExpiration < memberB.invitationExpiration
+          ) {
+            return -1;
+          }
+          return 0;
+        });
     },
   },
 };
@@ -367,12 +395,15 @@ export default {
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 100%;
 }
 
 .new-invites-expiration .new-invites-expiration__label {
   color: var(--gray-40);
   margin-bottom: 1em;
+}
+
+.new-invites-expiration .new-invites-expiration__value {
+  width: 100%;
 }
 
 .new-invites-expiration .new-invites-expiration__value {
