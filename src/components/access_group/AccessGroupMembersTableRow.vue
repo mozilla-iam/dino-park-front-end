@@ -8,7 +8,10 @@
   >
     <div class="row-member__main">
       <div class="row-member__item row-member__display">
-        <AccessGroupMemberListDisplay :member="member" />
+        <AccessGroupMemberListDisplay
+          :member="member"
+          :subRowText="subRowTextDisplay"
+        />
       </div>
       <div
         v-if="pendingAction"
@@ -95,6 +98,17 @@ export default {
     };
   },
   methods: {
+    subRowTextDisplay(member) {
+      if (
+        !member.added_by.hasOwnProperty('uuid') ||
+        member.added_by.uuid === null
+      ) {
+        return ' ';
+      }
+      return `${this.fluent('member-list-description__sub')} ${
+        member.added_by.displayName
+      }`;
+    },
     getSecondaryColumns(member) {
       return this.columns.filter((column) => 'contentHandler' in column);
     },
