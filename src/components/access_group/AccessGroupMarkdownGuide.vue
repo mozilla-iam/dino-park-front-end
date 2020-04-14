@@ -48,9 +48,10 @@
       </div>
     </div>
     <footer class="markdown-guide__footer">
-      <ExternalLink href="/#test">
-        {{ fluent('access-group_markdown', 'footer-link') }}
-      </ExternalLink>
+      <ExternalLink
+        href="https://daringfireball.net/projects/markdown/syntax"
+        >{{ fluent('access-group_markdown', 'footer-link') }}</ExternalLink
+      >
     </footer>
   </aside>
 </template>
