@@ -16,20 +16,20 @@
         >
           <template v-slot:content>
             <div class="content-area__row">
-              <label class="content-area__label">
-                {{ fluent('access-group_details', 'name') }}
-              </label>
+              <label class="content-area__label">{{
+                fluent('access-group_details', 'name')
+              }}</label>
               <TextInput
                 type="text"
                 v-model="groupName"
-                :maxlength="50"
+                :maxlength="60"
                 class="content-area__value"
               />
             </div>
             <div class="content-area__row multi-line markdown-outer-container">
-              <label class="content-area__label">
-                {{ fluent('access-group_details', 'description') }}
-              </label>
+              <label class="content-area__label">{{
+                fluent('access-group_details', 'description')
+              }}</label>
               <TextArea
                 :rows="5"
                 :maxlength="450"
@@ -56,17 +56,17 @@
               </div>
             </div>
             <div class="content-area__row radio-control__description">
-              <label class="description-label">
-                {{ fluent('access-group_type', 'reviewed-heading') }}
-              </label>
+              <label class="description-label">{{
+                fluent('access-group_type', 'reviewed-heading')
+              }}</label>
               <p class="description-content">
                 {{ fluent('access-group_type', 'reviewed-content') }}
               </p>
             </div>
             <div class="content-area__row radio-control__description">
-              <label class="description-label">
-                {{ fluent('access-group_type', 'closed-heading') }}
-              </label>
+              <label class="description-label">{{
+                fluent('access-group_type', 'closed-heading')
+              }}</label>
               <p class="description-content">
                 {{ fluent('access-group_type', 'closed-content') }}
               </p>
@@ -138,9 +138,9 @@
               class="content-area__row multi-line markdown-outer-container"
               v-if="groupTermsRequiredData"
             >
-              <label class="content-area__label">
-                {{ fluent('access-group_terms', 'terms-intro') }}
-              </label>
+              <label class="content-area__label">{{
+                fluent('access-group_terms', 'terms-intro')
+              }}</label>
               <TextArea
                 :rows="5"
                 :maxlength="5000"
