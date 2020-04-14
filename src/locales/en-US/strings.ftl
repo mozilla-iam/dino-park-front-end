@@ -540,6 +540,7 @@ tiny-notification = Hello World
   .access-group-terms-updated = Group terms of service updated
   .access-group-terms-accepted = You accepted the terms for this group.
   .access-group-terms-rejected = You rejected the invite for group []
+  .access-group-joined-group = You are now a member of the [] group
   .access-group-left-group = You have left the [] group
   .access-group-invite-email-resent = Invite email resent
   .access-group-invite-deleted = Invitation deleted

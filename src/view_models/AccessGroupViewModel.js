@@ -4,12 +4,12 @@ export const INVITATION_STATE = {
 };
 export class GroupInvitationViewModel {
   constructor(data) {
-    this.group_name = '';
-    this.user_uuid = '';
-    this.requires_tos = false;
+    this.groupName = '';
+    this.userUuid = '';
+    this.requiresTos = false;
     this.accepted_tos = false;
-    this.group_expiration = '';
-    this.invitation_expiration = '';
+    this.groupExpiration = '';
+    this.invitationExpiration = '';
     this.state = '';
     this.error = false;
     this.processData(data);
@@ -17,14 +17,14 @@ export class GroupInvitationViewModel {
 
   processData(data) {
     try {
-      this.group_name = data.group_name;
-      this.requires_tos = data.terms;
-      this.user_uuid = data.user_uuid;
+      this.groupName = data.group_name;
+      this.requiresTos = data.terms;
+      this.userUuid = data.user_uuid;
       if ('state' in data) {
         this.state = data.state;
       }
-      this.group_expiration = data.group_expiration;
-      this.invitation_expiration = data.invitation_expiration;
+      this.groupExpiration = data.group_expiration;
+      this.invitationExpiration = data.invitation_expiration;
     } catch (e) {
       this.error = e.message;
       console.error('GroupInvitation error: ', e.message);

@@ -37,9 +37,9 @@
           />
           {{ fluent('access-group_terms', 'do-not-accept') }}
         </div>
-        <Button class="button--primary" @click="handleSubmitClicked">{{
-          fluent('access-group_terms', 'submit-changes')
-        }}</Button>
+        <Button class="button--primary" @click="handleSubmitClicked">
+          {{ fluent('access-group_terms', 'submit-changes') }}
+        </Button>
       </footer>
     </section>
   </main>
@@ -145,7 +145,7 @@ export default {
       if (!this.$route.query.accept) {
         return false;
       }
-      return this.groupInvitation.requires_tos;
+      return this.groupInvitation.requiresTos;
     },
   },
 };
