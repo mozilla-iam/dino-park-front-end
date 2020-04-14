@@ -48,9 +48,9 @@
       </div>
     </div>
     <footer class="markdown-guide__footer">
-      <ExternalLink href="/#test">{{
-        fluent('access-group_markdown', 'footer-link')
-      }}</ExternalLink>
+      <ExternalLink href="/#test">
+        {{ fluent('access-group_markdown', 'footer-link') }}
+      </ExternalLink>
     </footer>
   </aside>
 </template>
@@ -70,6 +70,7 @@ export default {
   methods: {
     toggleCollapsed() {
       this.collapsed = !this.collapsed;
+      this.$emit('collapse-toggled', this.collapsed);
     },
   },
   data() {

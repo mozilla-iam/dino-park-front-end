@@ -16,9 +16,9 @@
         >
           <template v-slot:content>
             <div class="content-area__row">
-              <label class="content-area__label">
-                {{ fluent('access-group_details', 'name') }}
-              </label>
+              <label class="content-area__label">{{
+                fluent('access-group_details', 'name')
+              }}</label>
               <TextInput
                 type="text"
                 v-model="groupName"
@@ -27,9 +27,9 @@
               />
             </div>
             <div class="content-area__row multi-line markdown-outer-container">
-              <label class="content-area__label">
-                {{ fluent('access-group_details', 'description') }}
-              </label>
+              <label class="content-area__label">{{
+                fluent('access-group_details', 'description')
+              }}</label>
               <TextArea
                 :rows="5"
                 :maxlength="450"
@@ -56,17 +56,17 @@
               </div>
             </div>
             <div class="content-area__row radio-control__description">
-              <label class="description-label">
-                {{ fluent('access-group_type', 'reviewed-heading') }}
-              </label>
+              <label class="description-label">{{
+                fluent('access-group_type', 'reviewed-heading')
+              }}</label>
               <p class="description-content">
                 {{ fluent('access-group_type', 'reviewed-content') }}
               </p>
             </div>
             <div class="content-area__row radio-control__description">
-              <label class="description-label">
-                {{ fluent('access-group_type', 'closed-heading') }}
-              </label>
+              <label class="description-label">{{
+                fluent('access-group_type', 'closed-heading')
+              }}</label>
               <p class="description-content">
                 {{ fluent('access-group_type', 'closed-content') }}
               </p>
@@ -135,19 +135,27 @@
               </div>
             </div>
             <div
-              class="content-area__row multi-line markdown-outer-container"
+              :class="{
+                'content-area__row': true,
+                'multi-line': true,
+                'markdown-outer-container': true,
+                expanded: !lastMarkdownCollapsed,
+              }"
               v-if="groupTermsRequiredData"
             >
-              <label class="content-area__label">
-                {{ fluent('access-group_terms', 'terms-intro') }}
-              </label>
+              <label class="content-area__label">{{
+                fluent('access-group_terms', 'terms-intro')
+              }}</label>
               <TextArea
                 :rows="5"
                 :maxlength="5000"
                 v-model="groupTermsData"
                 class="content-area__value"
               ></TextArea>
-              <AccessGroupMarkdownGuide :isCollapsed="true" />
+              <AccessGroupMarkdownGuide
+                :isCollapsed="true"
+                v-on:collapse-toggled="onLastCollapseToggled"
+              />
             </div>
           </template>
         </AccessGroupEditPanel>
@@ -208,6 +216,7 @@ export default {
       groupTermsRequiredData: false,
       groupTermsData: '',
       selectedExpiration: MEMBER_EXPIRATION_ONE_YEAR,
+      lastMarkdownCollapsed: true,
       expirationOptions: [
         {
           label: this.fluent('access-group_expiration', 'one-year__default'),
@@ -271,6 +280,9 @@ export default {
     isExpirationCustom(optionValue) {
       return optionValue === 'custom';
     },
+    onLastCollapseToggled(toggleValue) {
+      this.lastMarkdownCollapsed = toggleValue;
+    },
   },
 };
 </script>
@@ -323,6 +335,10 @@ export default {
   margin: 2em 0;
   align-items: flex-start;
   justify-content: flex-start;
+}
+
+.content-area .content-area__row.expanded {
+  height: 30em;
 }
 
 .content-area__row.group-expiration {
@@ -383,15 +399,27 @@ export default {
 
 .content-area .content-area__value {
   width: 100%;
+  position: relative;
 }
 
 .content-area p.content-area__value {
   color: var(--gray-40);
 }
+.content-area .content-area__row.multi-line {
+  display: block;
+}
+
+.content-area .content-area__row.multi-line .content-area__label {
+  width: 100%;
+  margin-bottom: 1em;
+  display: block;
+}
+
 .content-area .content-area__row.multi-line .content-area__value {
   width: 100%;
   flex: 10;
   margin-top: 0;
+  display: block;
 }
 
 .content-area .content-area__value-description {
