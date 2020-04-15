@@ -36,6 +36,7 @@
         <AccessGroupMemberListDisplay
           class="selector-auto-complete__item"
           :member="item"
+          :subRowText="subRowTextDisplay"
         />
       </li>
     </ul>
@@ -79,6 +80,9 @@ export default {
     },
   },
   methods: {
+    subRowTextDisplay(member) {
+      return member.email;
+    },
     onTagSelectorClicked(e) {
       const parent = e.target.closest('.tag-selector-container');
       const itemParent = e.target.closest('.selector-auto-complete__item');
@@ -92,7 +96,7 @@ export default {
         return;
       }
       const parent = e.explicitOriginalTarget.closest(
-        '.tag-selector-container'
+        '.tag-selector-container',
       );
       if (!parent) {
         this.autoCompleteList = [];
@@ -115,7 +119,7 @@ export default {
         }
         return;
       }
-      this.updateAutoComplete(e.target.value).then(members => {
+      this.updateAutoComplete(e.target.value).then((members) => {
         this.autoCompleteList = members;
       });
     }, 1000),

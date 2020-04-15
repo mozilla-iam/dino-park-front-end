@@ -154,7 +154,7 @@ export default {
   }
 
   .members-table .members-table__header {
-    background: var(--gray-30);
+    background: var(--gray-20);
     border-bottom: 1px solid var(--gray-40);
     color: var(--black);
     text-transform: uppercase;
@@ -172,6 +172,7 @@ export default {
     padding: 1.5em 1em;
     text-align: left;
     flex: 1;
+    text-transform: capitalize;
   }
 
   .members-table__header .heading-container.primary {

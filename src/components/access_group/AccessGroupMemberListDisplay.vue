@@ -25,6 +25,7 @@ export default {
   },
   props: {
     member: Object,
+    subRowText: Function,
   },
   mounted() {},
   data() {
@@ -33,15 +34,7 @@ export default {
   methods: {},
   computed: {
     subText() {
-      if (
-        !this.member.added_by.hasOwnProperty('uuid') ||
-        this.member.added_by.uuid === null
-      ) {
-        return ' ';
-      }
-      return `${this.fluent('member-list-description__sub')} ${
-        this.member.added_by.displayName
-      }`;
+      return this.subRowText(this.member);
     },
   },
 };

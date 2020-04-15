@@ -595,6 +595,18 @@ export default {
 .members-list-container .edit-members__search {
   margin: 0 2em 1em;
 }
+
+.members-list-container .edit-members__search {
+  margin: 0 2em 1em;
+}
+
+.members-list-container .edit-members__search .search-form__input {
+  padding-left: 3.5em;
+}
+
+.members-list-container .edit-members__search .search-form__input::placeholder {
+  text-align: left;
+}
 .members-list-container .sort-select.options {
   align-self: initial;
 }

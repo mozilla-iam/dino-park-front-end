@@ -25,9 +25,9 @@
       </p>
       <div class="invitation-notification__actions">
         <template v-if="isInvitationInitial(notification)">
-          <Button class="primary-action" v-on:click="handleAcceptClick(idx)">
-            {{ fluent('access-group_notifications', 'continue-action') }}
-          </Button>
+          <Button class="primary-action" v-on:click="handleAcceptClick(idx)">{{
+            fluent('access-group_notifications', 'continue-action')
+          }}</Button>
           <Button
             class="secondary-action button--secondary button--action"
             v-on:click="handleRejectClick(idx)"
@@ -38,9 +38,10 @@
           <Button
             class="secondary-action button--secondary button--action"
             v-on:click="handleRejectClick(idx)"
+            >{{
+              fluent('access-group_notifications', 'confirm-action')
+            }}</Button
           >
-            {{ fluent('access-group_notifications', 'confirm-action') }}
-          </Button>
           <Button
             class="primary-action"
             v-on:click="handleInvitationBack(idx)"
@@ -71,41 +72,46 @@ export default {
     ...mapActions({
       acceptInvitation: 'userV2/acceptInvitation',
       rejectInvitation: 'userV2/rejectInvitation',
+      fetchGroup: 'accessGroup/fetchGroup',
       fetchMembers: 'accessGroup/fetchMembers',
       setLoading: 'setLoading',
       completeLoading: 'completeLoading',
     }),
     handleAcceptClick(idx) {
       const currentInvitation = this.invitations[idx];
-      if (currentInvitation.requires_tos) {
+      if (currentInvitation.requiresTos) {
         this.$router.push({
           name: 'Access Group TOS',
-          params: { groupname: currentInvitation.group_name },
+          params: { groupname: currentInvitation.groupName },
           query: {
             accept: true,
           },
         });
       } else {
         this.setLoading();
-        this.acceptInvitation(currentInvitation).then(() => {
-          // This is a bit of a hack in place of actually reloading the page if you're already on the access group
-          // TODO: Remove this once a better solution is figured out
-          const completePromise = () => {
-            this.$router.push({
-              name: 'Access Group',
-              params: { groupname: currentInvitation.group_name },
-            });
-            this.tinyNotification('access-group-terms-accepted');
-            this.completeLoading();
-          };
-          if (this.$route.name === 'Access Group') {
-            this.fetchMembers(currentInvitation.group_name).then(() => {
+        const completePromise = () => {
+          this.$router.push({
+            name: 'Access Group',
+            params: { groupname: currentInvitation.groupName },
+          });
+          this.tinyNotification(
+            'access-group-joined-group',
+            currentInvitation.groupName,
+          );
+          this.completeLoading();
+        };
+        if (this.$route.name === 'Access Group') {
+          this.acceptInvitation(currentInvitation)
+            .then(() => this.fetchGroup(currentInvitation.groupName))
+            .then(() => this.fetchMembers(currentInvitation.groupName))
+            .then(() => {
               completePromise();
             });
-          } else {
+        } else {
+          this.acceptInvitation(currentInvitation).then(() => {
             completePromise();
-          }
-        });
+          });
+        }
       }
     },
     handleRejectClick(idx) {
@@ -114,7 +120,7 @@ export default {
         this.rejectInvitation(currentInvitation).then((result) => {
           this.tinyNotification(
             'access-group-terms-rejected',
-            currentInvitation.group_name,
+            currentInvitation.groupName,
           );
         });
       } else if (currentInvitation.state === '') {
@@ -142,7 +148,7 @@ export default {
     getInvitationText(invitation) {
       return this.fluent('access-group_notifications', 'invitation').replace(
         '[]',
-        invitation.group_name,
+        invitation.groupName,
       );
     },
   },

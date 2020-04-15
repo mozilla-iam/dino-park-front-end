@@ -22,7 +22,7 @@
               <TextInput
                 type="text"
                 v-model="groupName"
-                :maxlength="50"
+                :maxlength="60"
                 class="content-area__value"
               />
             </div>
@@ -135,7 +135,12 @@
               </div>
             </div>
             <div
-              class="content-area__row multi-line markdown-outer-container"
+              :class="{
+                'content-area__row': true,
+                'multi-line': true,
+                'markdown-outer-container': true,
+                expanded: !lastMarkdownCollapsed,
+              }"
               v-if="groupTermsRequiredData"
             >
               <label class="content-area__label">{{
@@ -147,7 +152,10 @@
                 v-model="groupTermsData"
                 class="content-area__value"
               ></TextArea>
-              <AccessGroupMarkdownGuide :isCollapsed="true" />
+              <AccessGroupMarkdownGuide
+                :isCollapsed="true"
+                v-on:collapse-toggled="onLastCollapseToggled"
+              />
             </div>
           </template>
         </AccessGroupEditPanel>
@@ -161,7 +169,7 @@
           <Button
             class="button button--secondary button--action"
             @click="handleBackClicked"
-            >{{ fluent('access-group_create', 'leave-action') }}</Button
+            >{{ fluent('access-group_create', 'cancel-action') }}</Button
           >
         </footer>
       </section>
@@ -208,6 +216,7 @@ export default {
       groupTermsRequiredData: false,
       groupTermsData: '',
       selectedExpiration: MEMBER_EXPIRATION_ONE_YEAR,
+      lastMarkdownCollapsed: true,
       expirationOptions: [
         {
           label: this.fluent('access-group_expiration', 'one-year__default'),
@@ -271,6 +280,9 @@ export default {
     isExpirationCustom(optionValue) {
       return optionValue === 'custom';
     },
+    onLastCollapseToggled(toggleValue) {
+      this.lastMarkdownCollapsed = toggleValue;
+    },
   },
 };
 </script>
@@ -323,6 +335,10 @@ export default {
   margin: 2em 0;
   align-items: flex-start;
   justify-content: flex-start;
+}
+
+.content-area .content-area__row.expanded {
+  height: 30em;
 }
 
 .content-area__row.group-expiration {
@@ -383,15 +399,27 @@ export default {
 
 .content-area .content-area__value {
   width: 100%;
+  position: relative;
 }
 
 .content-area p.content-area__value {
   color: var(--gray-40);
 }
+.content-area .content-area__row.multi-line {
+  display: block;
+}
+
+.content-area .content-area__row.multi-line .content-area__label {
+  width: 100%;
+  margin-bottom: 1em;
+  display: block;
+}
+
 .content-area .content-area__row.multi-line .content-area__value {
   width: 100%;
   flex: 10;
   margin-top: 0;
+  display: block;
 }
 
 .content-area .content-area__value-description {

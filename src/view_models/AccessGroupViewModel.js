@@ -4,12 +4,12 @@ export const INVITATION_STATE = {
 };
 export class GroupInvitationViewModel {
   constructor(data) {
-    this.group_name = '';
-    this.user_uuid = '';
-    this.requires_tos = false;
+    this.groupName = '';
+    this.userUuid = '';
+    this.requiresTos = false;
     this.accepted_tos = false;
-    this.group_expiration = '';
-    this.invitation_expiration = '';
+    this.groupExpiration = '';
+    this.invitationExpiration = '';
     this.state = '';
     this.error = false;
     this.processData(data);
@@ -17,14 +17,14 @@ export class GroupInvitationViewModel {
 
   processData(data) {
     try {
-      this.group_name = data.group_name;
-      this.requires_tos = data.terms;
-      this.user_uuid = data.user_uuid;
+      this.groupName = data.group_name;
+      this.requiresTos = data.terms;
+      this.userUuid = data.user_uuid;
       if ('state' in data) {
         this.state = data.state;
       }
-      this.group_expiration = data.group_expiration;
-      this.invitation_expiration = data.invitation_expiration;
+      this.groupExpiration = data.group_expiration;
+      this.invitationExpiration = data.invitation_expiration;
     } catch (e) {
       this.error = e.message;
       console.error('GroupInvitation error: ', e.message);
@@ -62,6 +62,15 @@ export class TypeValueViewModel {
 }
 
 const defaultUserName = 'Anonymous User';
+const getDisplayName = (data) => {
+  if (!data.first_name) {
+    return defaultUserName;
+  } else if (!data.last_name) {
+    return data.first_name;
+  } else {
+    return `${data.first_name} ${data.last_name}`;
+  }
+};
 
 export class AbbDisplayMemberViewModel {
   constructor(data) {
@@ -77,10 +86,7 @@ export class AbbDisplayMemberViewModel {
   processData(data) {
     try {
       this.uuid = !data.first_name && !data.last_name ? null : data.user_uuid;
-      this.displayName =
-        !data.first_name && !data.last_name
-          ? defaultUserName
-          : `${data.first_name} ${data.last_name}`;
+      this.displayName = getDisplayName(data);
       this.username = data.username;
       this.email = data.email;
     } catch (e) {
@@ -127,7 +133,7 @@ export class DisplayMemberViewModel {
   static fromUserData(user) {
     const member = new DisplayMemberViewModel();
     member.uuid = user.user_uuid;
-    member.displayName = `${user.first_name} ${user.last_name}`;
+    member.displayName = getDisplayName(user);
     member.picture = user.picture;
     member.email = user.email;
     member.username = user.username;
@@ -139,14 +145,20 @@ export class DisplayMemberViewModel {
     try {
       this.uuid = data.user_uuid;
       this.picture = data.picture;
-      this.displayName =
-        !data.first_name && !data.last_name
-          ? defaultUserName
-          : `${data.first_name} ${data.last_name}`;
+      this.displayName = getDisplayName(data);
       this.username = data.username;
       this.email = data.email;
       this.isStaff = data.is_staff;
-      this.since = !data.since ? '' : new Date(data.since).toLocaleDateString();
+      if (!data.since) {
+        this.since = '';
+      } else {
+        const sinceDate = new Date(data.since);
+        if (!(sinceDate instanceof Date)) {
+          this.since = '';
+        } else {
+          this.since = sinceDate.toLocaleDateString();
+        }
+      }
       if (data.hasOwnProperty('group_expiration')) {
         this.expiration = !data.group_expiration ? '' : data.group_expiration;
       } else if (data.hasOwnProperty('expiration')) {

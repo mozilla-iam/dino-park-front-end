@@ -37,7 +37,7 @@ export default {
       }
       return (
         this.$route.name === ACCESS_GROUP_TOS_PAGE &&
-        invitationByName.requires_tos
+        invitationByName.requiresTos
       );
     },
     showInvitations() {
