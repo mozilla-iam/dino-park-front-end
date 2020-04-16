@@ -51,6 +51,7 @@ footer_cpg = CPG
   .abbr = Community Participation Guidelines
 footer_faq = FAQ
 footer_github = GitHub
+footer_feedback = Feedback
 footer_legal = Legal
 footer_privacy = Privacy
 

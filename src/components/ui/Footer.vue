@@ -62,6 +62,11 @@ export default {
           label: this.fluent('footer_github'),
         },
         {
+          link: this.globalLinks.githubIssues,
+          icon: 'irc',
+          label: this.fluent('footer_feedback'),
+        },
+        {
           link: this.globalLinks.legal,
           icon: 'check',
           label: this.fluent('footer_legal'),
