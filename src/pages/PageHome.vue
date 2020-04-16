@@ -108,6 +108,7 @@ export default {
   margin-bottom: 2em;
   width: max-content;
   height: max-content;
+  align-self: flex-start;
 }
 
 .home__button-link svg {
@@ -164,7 +165,7 @@ export default {
 .large-card--quad-bg {
   background-image: url('~@/assets/images/quad.svg');
   background-repeat: no-repeat;
-  background-size: 80% 8em;
+  background-size: calc(100% - 120px) 8em;
   background-position: left 0em bottom 1.5em;
 }
 
@@ -181,8 +182,14 @@ export default {
     min-width: 22em;
   }
   .large-card--quad-bg {
-    background-size: max(27%, 18em) 9.5em;
+    background-size: 18em 9.5em;
     background-position: left 0em bottom 3.5em;
+  }
+}
+
+@media (min-width: 57.5em) {
+  .large-card--quad-bg {
+    background-size: 27% 9.5em;
   }
 }
 
