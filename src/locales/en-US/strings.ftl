@@ -90,6 +90,7 @@ home_paragraph = Mozilla profiles are part of the Identity and Access Management
 ## Org Chart
 
 orgchart = Org chart
+orgchart_nav-bar = Org Chart
 orgchart_expand = Expand
 orgchart_expand-all = Expand all
 orgchart_collapse = Collapse

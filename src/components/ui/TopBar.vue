@@ -48,6 +48,7 @@
         :to="{ name: 'Orgchart' }"
         class="top-bar__link"
         exact-active-class="top-bar__link--current"
+        :title="fluent('orgchart_nav-bar')"
       >
         <title id="org-chart-link-icon-title">{{ fluent('orgchart') }}</title>
         <Icon id="org-chart" :width="24" :height="24" />
@@ -82,8 +83,7 @@
         class="top-bar__login"
         iconRight="chevron-right"
         :text="fluent('log_in')"
-      >
-      </ExternalButtonLink>
+      ></ExternalButtonLink>
       <Toast />
     </div>
     <SearchForm
