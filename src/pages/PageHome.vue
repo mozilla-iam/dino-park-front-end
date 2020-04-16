@@ -35,14 +35,11 @@
         {{ fluent('home_paragraph', 'link') }}
       </a>
     </p>
-    <section class="home__large-card large-card--no-bottom large-card--quad-bg">
+    <section
+      class="home__large-card large-card--no-bottom large-card--23 large-card--quad-bg"
+    >
       <h1>{{ fluent('contribute_header') }}</h1>
-      <div class="contribute__image">
-        <img
-          src="@/assets/images/crowd.png"
-          srcset="@/assets/images/crowd@2x.png 2x"
-        />
-      </div>
+      <div class="contribute__image"></div>
       <p>{{ fluent('contribute_text') }}</p>
       <ExternalButtonLink
         class="contribute__link button--invert"
@@ -157,24 +154,18 @@ export default {
   align-items: center;
   grid-column: 1;
   grid-row: 4;
-  background-image: url(~@/assets/images/skewed-triangle.svg);
+  background-image: url(~@/assets/images/tricrowd.png);
   background-repeat: no-repeat;
-  background-size: cover;
-  background-position: top 2em left 0em;
+  background-size: 18em;
+  background-position: bottom -7em right 0em;
+  min-height: 14em;
 }
 
 .large-card--quad-bg {
   background-image: url('~@/assets/images/quad.svg');
   background-repeat: no-repeat;
-  background-size: 80%;
-  background-position: left -10% bottom 2em;
-}
-
-.contribute__image > img {
-  padding-top: 1em;
-  width: 75%;
-  max-width: 50vw;
-  padding-bottom: 3em;
+  background-size: 80% 8em;
+  background-position: left 0em bottom 1.5em;
 }
 
 @media (min-width: 50em) {
@@ -184,14 +175,20 @@ export default {
     grid-column: 1;
     grid-row: 1/4;
     align-items: start;
-  }
-  .contribute__image > img {
-    max-width: 50%;
-    padding-bottom: 0em;
+    background-size: 22em;
+    background-position: bottom -7em right 0em;
+    min-height: 18em;
+    min-width: 22em;
   }
   .large-card--quad-bg {
-    background-size: 40%;
-    background-position: left -15% bottom 2em;
+    background-size: max(27%, 18em) 9.5em;
+    background-position: left 0em bottom 3.5em;
+  }
+}
+
+@media (min-resolution: 120dpi), (-webkit-min-device-pixel-ratio: 1.5) {
+  .contribute__image {
+    background-image: url(~@/assets/images/tricrowd@2x.png);
   }
 }
 </style>
