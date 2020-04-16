@@ -58,9 +58,15 @@
       ></ProfileTeamLocation>
       <MetaList>
         <MetaItem :metaKey="fluent('profile_access-to')">
-          <DataClassification
+          <AccessLabel
             :staffInformation="staffInformation"
             :accessInformation="accessInformation"
+            labelType="classification"
+          />
+          <AccessLabel
+            :staffInformation="staffInformation"
+            :accessInformation="accessInformation"
+            labelType="slack-access"
           />
         </MetaItem>
         <MetaItem
@@ -103,7 +109,7 @@ import ProfileDescription from '../ProfileDescription.vue';
 import ProfileName from '../ProfileName.vue';
 import ProfileTitle from '../ProfileTitle.vue';
 import ProfileTeamLocation from '../ProfileTeamLocation.vue';
-import DataClassification from '../DataClassification.vue';
+import AccessLabel from '../AccessLabel.vue';
 
 export default {
   mixins: [CompanyMixin, OfficesMixin],
@@ -141,7 +147,7 @@ export default {
     ProfileTeamLocation,
     ProfileTitle,
     UserPicture,
-    DataClassification,
+    AccessLabel,
   },
   data() {
     return {

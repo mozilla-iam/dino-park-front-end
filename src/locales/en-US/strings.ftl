@@ -72,12 +72,16 @@ classification_info = This person has access to data classified as public.
   .how = This was determined from profile information visible to you.
   .wiki = Read more about data classification <a data-l10n-name="wiki">on the wiki</a>.
 
+## Slack Access
+slack_access_info = This person has access to the Mozilla Slack instance.
+  .wiki = Read more about contributors having access to Slack <a data-l10n-name="wiki">on the wiki</a>.
+
 # pages
 
 ## Home Page
 
 home_welcome = Welcome to the Mozilla People Directory
-  .description-public = A secure place for all Mozillians, staff and non-staff alike, to manage their Mozilla profile. A Mozilla profile is a universal identity shared by a growing number of Mozilla projects and websites. 
+  .description-public = A secure place for all Mozillians, staff and non-staff alike, to manage their Mozilla profile. A Mozilla profile is a universal identity shared by a growing number of Mozilla projects and websites.
   .my-profile = My profile
 
 home_paragraph = Mozilla profiles are part of the Identity and Access Management (IAM) initiative.
@@ -115,6 +119,7 @@ profile_timezone_offset_current = {$difference}hrs to your current time
 profile_timezone_offset_local = {$difference}hrs to your local time
   .tooltip = We get this from what you set up in your profile as your primary location
 profile_access-to = Access to
+profile_slack-access = Slack access
 
 profile_primary = Primary Info
   .edit = Edit primary information
@@ -447,7 +452,7 @@ access-group_expiration = Expiration
   .container-info__description-3 = Changes are not applied retroactively.
   .create-info__description-1 = Membership expiration is
   .create-info__description-2 = enabled by default
-  .create-info__description-3 = (for up to 2 years). 
+  .create-info__description-3 = (for up to 2 years).
   .create-info__description-4 = If you believe your Access Group is an exception and should have expiration disabled please send a request to
   .one-year = 1 year
   .one-year__default = 1 year (default)

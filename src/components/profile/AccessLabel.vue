@@ -1,6 +1,9 @@
 <template>
-  <div :class="['data-classification', classificationClass]">
-    <span class="data-classification__label">{{ label }}</span>
+  <div
+    :class="['access-label', classificationClass]"
+    v-if="labelType === 'classification'"
+  >
+    <span class="data-access__label">{{ label }}</span>
     <Tooltip
       :buttonText="'Open ' + label + ' info'"
       :alternateButtonText="'Close ' + label + ' info'"
@@ -20,6 +23,29 @@
       />
     </Tooltip>
   </div>
+  <div
+    class="access-label access-label--slack"
+    v-else-if="labelType === 'slack-access' && isVolunteerWithSlackAccess"
+  >
+    <span class="slack__label">{{ slackLabel }}</span>
+    <Tooltip
+      :buttonText="'Open Slack access info'"
+      :alternateButtonText="'Close Slack access info'"
+    >
+      {{ fluent('slack_access_info') }}<br />
+      <Fluent
+        id="slack_access_info"
+        attr="wiki"
+        :tags="{
+          wiki: {
+            tag: 'a',
+            target: '_blank',
+            href: 'https://wiki.mozilla.org/NDA-Slack',
+          },
+        }"
+      />
+    </Tooltip>
+  </div>
 </template>
 
 <script>
@@ -27,7 +53,7 @@ import Tooltip from '@/components/ui/Tooltip.vue';
 import Fluent from '@/components/Fluent.vue';
 
 export default {
-  name: 'DataClassification',
+  name: 'AccessLabel',
   components: {
     Tooltip,
     Fluent,
@@ -35,6 +61,12 @@ export default {
   props: {
     staffInformation: Object,
     accessInformation: Object,
+    labelType: String,
+  },
+  data: function() {
+    return {
+      slackLabel: 'Slack',
+    };
   },
   computed: {
     classification() {
@@ -47,7 +79,7 @@ export default {
       return 'public';
     },
     classificationClass() {
-      return `data-classification--${this.classification}`;
+      return `access-label--data-${this.classification}`;
     },
     label() {
       switch (this.classification) {
@@ -69,12 +101,22 @@ export default {
           return this.fluent('classification_info');
       }
     },
+    isVolunteerWithSlackAccess() {
+      return (
+        !this.staffInformation.staff.value &&
+        'slack-access' in (this.accessInformation.mozilliansorg.values || {})
+      );
+    },
   },
 };
 </script>
 
 <style>
-.data-classification {
+.access-label:not(:last-child) {
+  margin-right: 0.3em;
+}
+
+.access-label {
   border-radius: 0.2em;
   display: inline-flex;
   padding: 0.3em 0.5em;
@@ -85,17 +127,23 @@ export default {
   color: #000;
 }
 
-.data-classification--confidential {
+.access-label--data-confidential {
   background-color: #4a6785;
   color: #fff;
 }
 
-.data-classification--staff {
+.access-label--data-staff {
   background-color: #ffd351;
   color: #594300;
 }
 
-.data-classification__label {
+.access-label--slack {
+  background-color: #611f69;
+  color: #fff;
+}
+
+.data-access__label,
+.slack__label {
   display: block;
   text-transform: uppercase;
   font-size: 0.8em;
@@ -104,7 +152,7 @@ export default {
   margin-right: 0.2em;
 }
 
-.data-classification .tooltip button {
+.access-label .tooltip button {
   color: inherit;
   display: flex;
 }
