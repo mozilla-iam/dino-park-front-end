@@ -105,9 +105,4 @@ export default {
   color: var(--gray-40);
   height: 1.5em;
 }
-
-.content-area__row .radio-control {
-  margin: 0 1em 0 0;
-  color: var(--gray-40);
-}
 </style>

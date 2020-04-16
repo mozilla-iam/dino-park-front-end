@@ -16,9 +16,9 @@
         >
           <template v-slot:content>
             <div class="content-area__row">
-              <label class="content-area__label">{{
-                fluent('access-group_details', 'name')
-              }}</label>
+              <label class="content-area__label">
+                {{ fluent('access-group_details', 'name') }}
+              </label>
               <TextInput
                 type="text"
                 v-model="groupName"
@@ -27,9 +27,9 @@
               />
             </div>
             <div class="content-area__row multi-line markdown-outer-container">
-              <label class="content-area__label">{{
-                fluent('access-group_details', 'description')
-              }}</label>
+              <label class="content-area__label">
+                {{ fluent('access-group_details', 'description') }}
+              </label>
               <TextArea
                 :rows="5"
                 :maxlength="450"
@@ -56,17 +56,17 @@
               </div>
             </div>
             <div class="content-area__row radio-control__description">
-              <label class="description-label">{{
-                fluent('access-group_type', 'reviewed-heading')
-              }}</label>
+              <label class="description-label">
+                {{ fluent('access-group_type', 'reviewed-heading') }}
+              </label>
               <p class="description-content">
                 {{ fluent('access-group_type', 'reviewed-content') }}
               </p>
             </div>
             <div class="content-area__row radio-control__description">
-              <label class="description-label">{{
-                fluent('access-group_type', 'closed-heading')
-              }}</label>
+              <label class="description-label">
+                {{ fluent('access-group_type', 'closed-heading') }}
+              </label>
               <p class="description-content">
                 {{ fluent('access-group_type', 'closed-content') }}
               </p>
@@ -143,9 +143,9 @@
               }"
               v-if="groupTermsRequiredData"
             >
-              <label class="content-area__label">{{
-                fluent('access-group_terms', 'terms-intro')
-              }}</label>
+              <label class="content-area__label">
+                {{ fluent('access-group_terms', 'terms-intro') }}
+              </label>
               <TextArea
                 :rows="5"
                 :maxlength="5000"
@@ -359,15 +359,6 @@ export default {
 
 .group-expiration .container-info {
   margin-top: 1em;
-}
-
-.content-area__row .radio-control {
-  margin: 0 1em 0 0;
-  color: var(--gray-40);
-}
-
-.content-area__row .radio-control > input {
-  margin: 0 0.5em 0 0;
 }
 
 .content-area__row.action-row {

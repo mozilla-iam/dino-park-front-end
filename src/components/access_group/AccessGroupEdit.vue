@@ -311,4 +311,14 @@ export default {
 .group-edit .expiration-container .expiration-container__value {
   width: 100%;
 }
+
+/* Radio styles */
+.group-edit .content-area__row .radio-control {
+  margin: 0 1em 0 0;
+  color: var(--black);
+}
+
+.group-edit .content-area__row .radio-control > input {
+  margin: 0 0.5em 0 0;
+}
 </style>
