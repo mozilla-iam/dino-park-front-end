@@ -172,6 +172,10 @@ export default {
   border: 1px solid var(--gray-30);
 }
 
+.list-container__control-bar .group-select .options__toggle:hover {
+  border-color: var(--blue-60);
+}
+
 .search-container {
   margin: 0 auto;
 }
