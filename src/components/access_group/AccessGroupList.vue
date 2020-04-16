@@ -7,6 +7,7 @@
         v-on:clear-query="clearSearchHandler"
         :searchFormHandler="searchFormHandler"
         :searchFormLabel="fluent('access-group_list', 'search')"
+        :searchFormKeyUpHandler="searchFormKeyUpHandler"
       ></SearchForm>
       <Select
         class="options--chevron options--large group-select"
@@ -77,6 +78,13 @@ export default {
       }
       this.listOptions.search = searchQuery;
       this.fetchList(this.listOptions);
+    },
+    searchFormKeyUpHandler(searchQuery, scope) {
+      if (searchQuery.length >= 3) {
+        this.searchFormHandler(searchQuery, scope);
+      } else {
+        this.clearSearchHandler();
+      }
     },
     clearSearchHandler() {
       this.listOptions.search = '';
