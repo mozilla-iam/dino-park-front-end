@@ -11,9 +11,9 @@
         }"
         >{{ pendingInvitationsText }}</RouterLink
       >
-      <span class="primary-data-row__direct" v-else>
-        {{ pendingInvitationsText }}
-      </span>
+      <span class="primary-data-row__direct" v-else>{{
+        pendingInvitationsText
+      }}</span>
     </p>
     <p class="primary-data-row">
       <span class="primary-data-row__count">{{ totalPendingRenewals }}</span>
@@ -26,15 +26,15 @@
         }"
         >{{ pendingRenewalsText }}</RouterLink
       >
-      <span class="primary-data-row__direct" v-else>
-        {{ pendingRenewalsText }}
-      </span>
+      <span class="primary-data-row__direct" v-else>{{
+        pendingRenewalsText
+      }}</span>
     </p>
     <p class="secondary-data-row">
       {{ fluent('access-group_membership-management', 'expire-first') }}
-      <span class="secondary-data-row__focus">{{
-        fluent('access-group_membership-management', 'expire-second')
-      }}</span>
+      <span class="secondary-data-row__focus">
+        {{ fluent('access-group_membership-management', 'expire-second') }}
+      </span>
       {{ fluent('access-group_membership-management', 'expire-third') }}
       <span class="secondary-data-row__focus">{{ expiry }}</span>
     </p>
@@ -49,9 +49,8 @@
           },
         }"
       >
-        <Icon id="plus" :width="16" :height="16" />{{
-          fluent('access-group_membership-management', 'add-members')
-        }}
+        <Icon id="plus" :width="16" :height="16" />
+        {{ fluent('access-group_membership-management', 'add-members') }}
       </RouterLink>
     </footer>
   </div>
@@ -83,12 +82,12 @@ export default {
       if (this.invitationCount > 1) {
         return this.fluent(
           'access-group_membership-management',
-          'pending-invitations'
+          'pending-invitations',
         );
       }
       return this.fluent(
         'access-group_membership-management',
-        'pending-invitation'
+        'pending-invitation',
       );
     },
     totalPendingRenewals() {
@@ -98,12 +97,12 @@ export default {
       if (this.renewalCount > 1) {
         return this.fluent(
           'access-group_membership-management',
-          'pending-renewals'
+          'pending-renewals',
         );
       }
       return this.fluent(
         'access-group_membership-management',
-        'pending-renewal'
+        'pending-renewal',
       );
     },
     expiry() {

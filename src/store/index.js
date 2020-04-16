@@ -110,6 +110,7 @@ export async function resolvePromisesSerially(promises, resolvers) {
       resolvers[i](await promises[i]());
     }
   } catch (e) {
+    console.error(e.message);
     throw new Error(e.message);
   }
 }

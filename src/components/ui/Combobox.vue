@@ -4,7 +4,8 @@
 
 <script>
 import pick from 'object.pick';
-import { h, render } from 'preact';
+// lack of a better solution: https://github.com/downshift-js/downshift/pull/808#issuecomment-546994349
+import { h, render } from 'hack/preact';
 import Downshift from 'downshift/preact';
 
 const FILTERS = {

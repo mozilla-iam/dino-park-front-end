@@ -97,14 +97,14 @@ export default {
       this.acceptInvitation(
         this.getInvitationByName(this.$route.params.groupname),
       ).then(() => {
+        this.tinyNotification('access-group-terms-accepted');
+        this.completeLoading();
         this.$router.push({
           name: 'Access Group',
           query: {
             groupname: this.$route.query.groupname,
           },
         });
-        this.tinyNotification('access-group-terms-accepted');
-        this.completeLoading();
       });
     },
     doNotAcceptTerms() {
@@ -145,7 +145,7 @@ export default {
       if (!this.$route.query.accept) {
         return false;
       }
-      return this.groupInvitation.requires_tos;
+      return this.groupInvitation.requiresTos;
     },
   },
 };

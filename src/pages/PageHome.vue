@@ -1,93 +1,68 @@
 <template>
   <main class="home">
-    <div v-if="loggedIn" class="home__intro intro--23">
-      <img
-        v-if="scope.isStaff"
-        src="@/assets/images/laptop-phone.png"
-        srcset="@/assets/images/laptop-phone@2x.png 2x"
-      />
-      <img
-        v-else
-        src="@/assets/images/laptop-phone-community.png"
-        srcset="@/assets/images/laptop-phone-community@2x.png 2x"
-      />
-      <h1>{{ fluent('home_welcome') }}</h1>
-      <p v-if="scope.isStaff">
-        {{ fluent('home_welcome', 'description-staff') }}
-      </p>
-      <p v-else>{{ fluent('home_welcome', 'description') }}</p>
-      <p>
-        <RouterLink
-          :to="{
-            name: 'Profile',
-            params: { username },
-          }"
-          class="button"
-        >
-          <span class="button-text">
-            {{ fluent('home_welcome', 'my-profile') }}
-          </span>
-          <Icon id="chevron-right" :width="24" :height="24" />
-        </RouterLink>
-      </p>
-    </div>
-    <div class="home__intro" v-else>
+    <div class="home__large-card">
       <h1>{{ fluent('home_welcome') }}</h1>
       <img
         src="@/assets/images/people-dots.png"
         srcset="@/assets/images/people-dots@2x.png 2x"
       />
       <p>{{ fluent('home_welcome', 'description-public') }}</p>
+      <RouterLink
+        v-if="loggedIn"
+        :to="{
+          name: 'Profile',
+          params: { username },
+        }"
+        class="home__button-link button"
+      >
+        <span class="button-text">
+          {{ fluent('home_welcome', 'my-profile') }}
+        </span>
+        <Icon id="chevron-right" :width="24" :height="24" />
+      </RouterLink>
       <ExternalButtonLink
+        v-else
         href="/_/login"
         iconRight="chevron-right"
+        class="home__button-link"
         :text="fluent('log_in')"
       >
       </ExternalButtonLink>
     </div>
-    <CardRow v-if="loggedIn">
-      <Card v-for="(card, idx) in cards" :key="idx">
-        <div class="card__icon">
-          <Icon v-bind:id="card.icon" :width="64" :height="64"></Icon>
-        </div>
-        <h2>
-          <a
-            v-bind:href="card.link"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="card__link"
-            >{{ card.headline }}</a
-          >
-        </h2>
-        <p v-html="card.description"></p>
-      </Card>
-    </CardRow>
-    <p class="home__paragraph" v-else>
+    <p class="home__paragraph">
       {{ fluent('home_paragraph') }}
       <a target="_blank" rel="noopener noreferrer" :href="globalLinks.iamFaq">
         {{ fluent('home_paragraph', 'link') }}
       </a>
     </p>
+    <section
+      class="home__large-card large-card--no-bottom large-card--23 large-card--quad-bg"
+    >
+      <h1>{{ fluent('contribute_header') }}</h1>
+      <div class="contribute__image"></div>
+      <p>{{ fluent('contribute_text') }}</p>
+      <ExternalButtonLink
+        class="contribute__link button--invert"
+        href="https://www.mozilla.org/contribute/"
+        iconRight="chevron-right"
+        :text="fluent('contribute')"
+      >
+      </ExternalButtonLink>
+    </section>
   </main>
 </template>
 
 <script>
-import Card from '@/components/ui/Card.vue';
-import CardRow from '@/components/ui/CardRow.vue';
 import ExternalButtonLink from '@/components/ui/ExternalButtonLink.vue';
 import Icon from '@/components/ui/Icon.vue';
-import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 import LinksMixin from '@/components/_mixins/LinksMixin.vue';
 
 export default {
   name: 'PageHome',
   mixins: [LinksMixin],
   components: {
-    Card,
-    CardRow,
     ExternalButtonLink,
     Icon,
-    LoadingSpinner,
   },
   computed: {
     loggedIn() {
@@ -95,47 +70,6 @@ export default {
     },
     username() {
       return this.$store.state.scope.username;
-    },
-    cards() {
-      const privacyLink =
-        this.scope.isStaff || this.scope.isNdaed
-          ? this.globalLinks.profilePrivacyNda
-          : this.globalLinks.profilePrivacyPublic;
-      const updatesLink =
-        this.scope.isStaff || this.scope.isNdaed
-          ? this.globalLinks.groupsAnnouncement
-          : this.globalLinks.ldapContributorsAnnouncement;
-      return [
-        {
-          link: this.globalLinks.feedback,
-          icon: 'irc',
-          headline: this.fluent('home_links_feedback'),
-          description: this.fluent('home_links_feedback', 'description'),
-        },
-        {
-          link: privacyLink,
-          icon: 'lock',
-          headline: this.fluent('home_links_privacy'),
-          description: this.fluent({
-            id: 'home_links_privacy',
-            attr: this.scope.isStaff ? 'description-staff' : 'description',
-            tags: { discourse: { tag: 'a', href: privacyLink } },
-          }),
-        },
-        {
-          link: updatesLink,
-          icon: 'idcard',
-          headline: this.fluent('home_links_updates'),
-          description: this.fluent({
-            id: 'home_links_updates',
-            attr:
-              this.scope.isStaff || this.scope.isNdaed
-                ? 'description-groups-announcement'
-                : 'description-ldap-contributor-announcement',
-            tags: { discourse: { tag: 'a', href: updatesLink } },
-          }),
-        },
-      ];
     },
   },
 };
@@ -145,38 +79,41 @@ export default {
 .home {
   padding-top: 2em;
 }
-.home__intro {
+.home__large-card {
   background: var(--white);
   padding: 2em;
   margin-bottom: 2em;
   box-shadow: var(--shadowCard);
   border-radius: var(--cardRadius);
   display: grid;
+  grid-template-rows: max-content max-content minmax(max-content, 1fr);
   grid-template-columns: 1fr;
 }
-.home__intro > img {
+.home__large-card > img {
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 1em;
 }
-.home__intro h1 {
-  margin-bottom: 0;
+.home__large-card h1 {
+  margin-bottom: 0.5em;
   font-size: 2.5em;
   line-height: 1.1;
 }
-.home__intro p {
+.home__large-card p {
   color: var(--gray-50);
 }
-.home__intro .button {
+.home__button-link {
   display: inline-flex;
   margin-top: 2em;
   margin-bottom: 2em;
+  width: max-content;
+  height: max-content;
 }
 
-.home__intro .button svg {
+.home__button-link svg {
   margin-left: 1em;
 }
-.home__intro p:last-child {
+.home__large-card p:last-child {
   margin-bottom: 0;
 }
 
@@ -186,22 +123,72 @@ export default {
 }
 
 @media (min-width: 50em) {
-  .home__intro {
+  .home__large-card {
     grid-template-columns: 1fr 1fr;
     grid-gap: 0 2em;
     width: 100%;
     padding: 4em 4em 2em;
   }
-  .intro--23 {
+  .large-card--23 {
     grid-template-columns: 2fr 3fr;
     grid-gap: 0 4em;
   }
-  .home__intro > img {
+  .home__large-card > img {
     grid-column: 2;
     grid-row: 1/4;
   }
-  .home__paragraph {
-    max-width: 50%;
+}
+
+.large-card--no-bottom {
+  padding-bottom: 0em;
+}
+
+.contribute__link {
+  margin-top: 1em;
+  margin-bottom: 4em;
+}
+.contribute__image {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  grid-column: 1;
+  grid-row: 4;
+  background-image: url(~@/assets/images/tricrowd.png);
+  background-repeat: no-repeat;
+  background-size: 18em;
+  background-position: bottom -7em right 0em;
+  min-height: 14em;
+}
+
+.large-card--quad-bg {
+  background-image: url('~@/assets/images/quad.svg');
+  background-repeat: no-repeat;
+  background-size: 80% 8em;
+  background-position: left 0em bottom 1.5em;
+}
+
+@media (min-width: 50em) {
+  .contribute__image {
+    justify-self: center;
+    justify-content: center;
+    grid-column: 1;
+    grid-row: 1/4;
+    align-items: start;
+    background-size: 22em;
+    background-position: bottom -7em right 0em;
+    min-height: 18em;
+    min-width: 22em;
+  }
+  .large-card--quad-bg {
+    background-size: max(27%, 18em) 9.5em;
+    background-position: left 0em bottom 3.5em;
+  }
+}
+
+@media (min-resolution: 120dpi), (-webkit-min-device-pixel-ratio: 1.5) {
+  .contribute__image {
+    background-image: url(~@/assets/images/tricrowd@2x.png);
   }
 }
 </style>

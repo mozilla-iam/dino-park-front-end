@@ -67,13 +67,13 @@ const tabs = [
   {
     key: 'members',
     fluentLabel: 'access-group-members-tab',
-    icon: 'users',
+    icon: 'users-outline',
     component: 'AccessGroupMembersEdit',
   },
   {
     key: 'invitations',
     fluentLabel: 'access-group-invitations-tab',
-    icon: 'mail-outline',
+    icon: 'user-plus',
     component: 'AccessGroupInvitationsEdit',
   },
 ];
@@ -195,7 +195,7 @@ export default {
 .edit-container .edit-container__tabs {
   margin: 0 1em;
   position: sticky;
-  top: 6.5em;
+  top: 6em;
   left: 0;
   z-index: var(--layerPopover);
 }

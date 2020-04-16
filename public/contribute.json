@@ -1,0 +1,22 @@
+{
+  "name": "DinoPark",
+  "description": "DinoPark - people.mozilla.org - the Mozilla people directory.",
+  "repository": {
+    "url": "https://github.com/mozilla-iam/dino-park-issues",
+    "license": "MPL2/MIT"
+  },
+  "bugs": {
+    "list": "https://github.com/mozilla-iam/dino-park-issues",
+    "report": "https://github.com/mozilla-iam/dino-park-issues"
+  },
+  "participate": {
+    "docs": "https://github.com/mozilla-iam/dino-park-issues",
+    "chat": {
+      "url": "https://chat.mozilla.org/#/room/#iam:mozilla.org"
+    }
+  },
+  "urls": {
+    "prod": "https://people.mozilla.org/"
+  },
+  "keywords": ["profile", "identity", "mozillians", "iam", "access", "rust"]
+}

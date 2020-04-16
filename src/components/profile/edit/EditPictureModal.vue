@@ -32,7 +32,7 @@
       <Crop v-if="imgSrc" :src="imgSrc" ref="crop" />
       <UserPicture
         v-else
-        :avatar="{ picture: editPicture, username: username.value }"
+        :avatar="{ picture: editPicture, username }"
         :size="264"
       ></UserPicture>
     </div>
@@ -105,7 +105,7 @@ export default {
   props: {
     picture: Object,
     pictureData: Object,
-    username: Object,
+    username: String,
     staffInformation: Object,
   },
   components: {

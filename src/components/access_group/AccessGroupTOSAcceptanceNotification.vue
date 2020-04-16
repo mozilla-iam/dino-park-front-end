@@ -31,8 +31,14 @@ export default {
         ``;
         return false;
       }
-      const { requires_tos } = this.getInvitationByName(this.accessGroup.name);
-      return this.$route.name === ACCESS_GROUP_TOS_PAGE && requires_tos;
+      const invitationByName = this.getInvitationByName(this.accessGroup.name);
+      if (!invitationByName) {
+        return false;
+      }
+      return (
+        this.$route.name === ACCESS_GROUP_TOS_PAGE &&
+        invitationByName.requiresTos
+      );
     },
     showInvitations() {
       return this.$route.name !== ACCESS_GROUP_TOS_PAGE;

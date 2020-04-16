@@ -4,7 +4,7 @@
       class="radio-select__option"
       v-for="(radio, idx) in options"
       :key="idx"
-      @click="e => handleRadioClicked(e, radio)"
+      @click="(e) => handleRadioClicked(e, radio)"
     >
       <input
         type="radio"
@@ -48,7 +48,7 @@ export default {
       this.selectedRadio = 'custom';
       this.$emit(
         'input',
-        this.customValue === '' ? 'custom' : Number(this.customValue)
+        this.customValue === '' ? 'custom' : Number(this.customValue),
       );
     },
     optionIsCustom(option) {
@@ -69,9 +69,15 @@ export default {
     },
   },
   data() {
+    let customValue = null;
+    for (let i = 0, len = this.options.length; i < len; i += 1) {
+      if (this.value === this.options[i].value) {
+        customValue = this.value;
+      }
+    }
     return {
-      selectedRadio: this.value,
-      customValue: '',
+      customValue: customValue === null ? this.value : '',
+      selectedRadio: customValue === null ? 'custom' : this.value,
     };
   },
   components: {

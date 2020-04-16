@@ -72,24 +72,17 @@ classification_info = This person has access to data classified as public.
   .how = This was determined from profile information visible to you.
   .wiki = Read more about data classification <a data-l10n-name="wiki">on the wiki</a>.
 
+## Slack Access
+slack_access_info = This person has access to the Mozilla Slack instance.
+  .wiki = Read more about contributors having access to Slack <a data-l10n-name="wiki">on the wiki</a>.
+
 # pages
 
 ## Home Page
 
 home_welcome = Welcome to the Mozilla People Directory
-  .description = A secure place to quickly find your fellow Mozillians and share information about yourself!
-  .description-staff = A secure place to quickly find your team members and easily discover new ones.
-  .description-public = A secure place for all Mozillians, staff and non-staff alike, to manage their Mozilla profile. A Mozilla profile is a universal identity shared by a growing number of Mozilla projects and websites. 
+  .description-public = A secure place for all Mozillians, staff and non-staff alike, to manage their Mozilla profile. A Mozilla profile is a universal identity shared by a growing number of Mozilla projects and websites.
   .my-profile = My profile
-
-home_links_feedback = Your Feedback Matters
-  .description = Let us know how we can make the Mozilla Directory even better.
-home_links_privacy = Your Privacy is Protected
-  .description = You control how and with whom your data is being shared. Read our <a data-l10n-name="discourse">Discourse post</a> for further details.
-  .description-staff = Your Staff profile data is only visible to Staff and NDA’d people by default. You can edit this via your profile privacy settings. Read our <a data-l10n-name="discourse">Discourse post</a> for details.
-home_links_updates = Recent Additions
-  .description-groups-announcement = LDAP and Mozillians.org access groups are now displayed under the <i>Access groups</i> section. Read more about this and all newly added functionality in our <a data-l10n-name="discourse">Discourse post</a>.
-  .description-ldap-contributor-announcement = Contributors with a volunteer LDAP account can now access PMO. Read all about it in our <a data-l10n-name="discourse">Discourse post</a>.
 
 home_paragraph = Mozilla profiles are part of the Identity and Access Management (IAM) initiative.
   .link = Learn more
@@ -126,6 +119,7 @@ profile_timezone_offset_current = {$difference}hrs to your current time
 profile_timezone_offset_local = {$difference}hrs to your local time
   .tooltip = We get this from what you set up in your profile as your primary location
 profile_access-to = Access to
+profile_slack-access = Slack access
 
 profile_primary = Primary Info
   .edit = Edit primary information
@@ -418,6 +412,7 @@ access-group_details = Group Details
   .description = Group description
   .update-details = Update details
 access-group_members = Members
+  .edit-members-meta = Membership renewal is currently set to
   .search = Search Members
   .no-expiration = -
   .empty-line1 = There are no members in this group.
@@ -431,10 +426,13 @@ access-group_members = Members
   .tabs-container__item-all = All
   .tabs-container__item-curators = Curators
   .tabs-container__item-members = Members
+  .expandable-content-container__first-row = Set []'s renewal period:
+  .expandable-email = Member email
   .remove-confirm = Confirm removal from the group?
   .remove-confirm-mobile = Confirm remove?
-  .remove-action = Remove
+  .remove-action = Remove member
   .remove-cancel = Cancel
+  .renew-action = Renew
   .load-more = Load more members
   .members-container__load-more = Load more entries
   .member-expandable_member-since = Member since
@@ -454,13 +452,13 @@ access-group_expiration = Expiration
   .container-info__description-3 = Changes are not applied retroactively.
   .create-info__description-1 = Membership expiration is
   .create-info__description-2 = enabled by default
-  .create-info__description-3 = (for up to 2 years). 
+  .create-info__description-3 = (for up to 2 years).
   .create-info__description-4 = If you believe your Access Group is an exception and should have expiration disabled please send a request to
   .one-year = 1 year
   .one-year__default = 1 year (default)
   .two-years = 2 years
   .no-expire = Does not expire
-  .custom = Custom
+  .custom = days
 access-group_markdown = Markdown Quick Guide
   .bold = Bold text
   .italic = Italicized text
@@ -490,6 +488,7 @@ access-group_close-group = Close group
   .confirm-text = I understand this action will delete the entire group
   .confirm-close = Close group
 access-group_pending-invitations = Pending Invitations and Requests
+  .load-more-text = Load more invitations and requests
 access-group_invite-member = Invite new member
   .invite = Invite
   .tags-selector__description = Start typing the name/email/username of the Mozillian
@@ -504,7 +503,7 @@ access-group_email-invite-text = Additional email invite text
 access-group_create = Create Access Group
   .group-create__back-action = Back
   .create-action = Create Access Group
-  .leave-action = Leave
+  .cancel-action = Cancel
 access-group_history = History log
 access-group_notifications = Notifications
   .invitation = You've been invited to join [] group
@@ -535,6 +534,7 @@ tiny-notification = Hello World
   .access-group-terms-updated = Group terms of service updated
   .access-group-terms-accepted = You accepted the terms for this group.
   .access-group-terms-rejected = You rejected the invite for group []
+  .access-group-joined-group = You are now a member of the [] group
   .access-group-left-group = You have left the [] group
   .access-group-invite-email-resent = Invite email resent
   .access-group-invite-deleted = Invitation deleted
@@ -545,6 +545,8 @@ tiny-notification = Hello World
   .access-group-curators-updated = The curators list has been successfully updated
   .access-group-expiration-updated = Access Group expiration has been successfully updated
 
+date-year = year
+  .plural = years
 date-week = week
   .plural = weeks
 date-day = day

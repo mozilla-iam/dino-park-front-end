@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import store, { fetchProfile, resolvePromisesSerially } from '@/store';
 import Error from '@/components/ui/Error.vue';
 import Profile from '@/components/profile/Profile.vue';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
@@ -78,6 +79,21 @@ export default {
         this.scope.isStaff
       );
     },
+  },
+  beforeRouteEnter(to, from, next) {
+    const { groupname } = to.params;
+    store.dispatch('setLoading');
+    const [profilePromises, profileResolvers] = fetchProfile(store, groupname);
+    resolvePromisesSerially([...profilePromises], [...profileResolvers])
+      .then((responseArray) => {
+        store.dispatch('completeLoading');
+        next();
+      })
+      .catch((error) => {
+        console.error('Loading profile/invitations error: ', error.message);
+        store.dispatch('completeLoading');
+        next();
+      });
   },
   data() {
     return {

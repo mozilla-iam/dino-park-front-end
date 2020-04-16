@@ -23,7 +23,7 @@ export const userInvitationsActions = {
   async acceptInvitation({ dispatch }, invitation) {
     try {
       const result = await accessGroupsService.acceptInvitation(
-        invitation.group_name
+        invitation.groupName,
       );
       await dispatch('fetchInvitations');
       return result;
@@ -34,7 +34,7 @@ export const userInvitationsActions = {
   async rejectInvitation({ dispatch }, invitation) {
     try {
       const result = await accessGroupsService.rejectInvitation(
-        invitation.group_name
+        invitation.groupName,
       );
       await dispatch('fetchInvitations');
       return result;
@@ -48,7 +48,7 @@ export const userInvitationsMutations = {
   setInvitations(state, invitations) {
     try {
       state.invitations = invitations.map(
-        invite => new GroupInvitationViewModel(invite)
+        (invite) => new GroupInvitationViewModel(invite),
       );
     } catch (e) {
       state.error = e.message;
@@ -58,9 +58,9 @@ export const userInvitationsMutations = {
 };
 
 export const userInvitationsGetters = {
-  getInvitationByName: ({ invitations }) => groupName => {
+  getInvitationByName: ({ invitations }) => (groupName) => {
     const options = invitations.filter(
-      invite => invite.group_name === groupName
+      (invite) => invite.groupName === groupName,
     );
     if (options.length !== 1) {
       return null;
@@ -69,7 +69,7 @@ export const userInvitationsGetters = {
   },
   getInvitations: ({ invitations }) => invitations,
   getActiveInvitations: ({ invitations }) =>
-    invitations.filter(invitation => {
+    invitations.filter((invitation) => {
       return (
         invitation.state !== INVITATION_STATE.ACCEPTED &&
         invitation.state !== INVITATION_STATE.REJECTED

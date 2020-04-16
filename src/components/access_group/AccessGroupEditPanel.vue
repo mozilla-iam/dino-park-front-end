@@ -51,15 +51,12 @@ export default {
     width: 100%;
     padding: 3em 2em 1em;
   }
-
-  .edit-panel-container.full .edit-panel__header {
-    margin-left: 0;
-  }
 }
 
 .edit-panel-container .edit-panel__header {
   font-size: 2em;
   font-weight: normal;
+  text-transform: capitalize;
 }
 
 .edit-panel-container.full .edit-panel__header {

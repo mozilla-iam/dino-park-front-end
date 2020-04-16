@@ -1,18 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
-  <defs>
-    <path d="M17,19 L17,21 C17,21.6 16.6,22 16,22 C15.4,22 15,21.6 15,21 L15,19 C15,17.3 13.7,16 12,16 L5,16 C3.3,16 2,17.3 2,19 L2,21 C2,21.6 1.6,22 1,22 C0.4,22 0,21.6 0,21 L0,19 C0,16.2 2.2,14 5,14 L12,14 C14.8,14 17,16.2 17,19 Z M3.5,7 C3.5,4.2 5.7,2 8.5,2 C11.3,2 13.5,4.2 13.5,7 C13.5,9.8 11.3,12 8.5,12 C5.7,12 3.5,9.8 3.5,7 Z M5.5,7 C5.5,8.7 6.8,10 8.5,10 C10.2,10 11.5,8.7 11.5,7 C11.5,5.3 10.2,4 8.5,4 C6.8,4 5.5,5.3 5.5,7 Z M23,10 L21,10 L21,8 C21,7.4 20.6,7 20,7 C19.4,7 19,7.4 19,8 L19,10 L17,10 C16.4,10 16,10.4 16,11 C16,11.6 16.4,12 17,12 L19,12 L19,14 C19,14.6 19.4,15 20,15 C20.6,15 21,14.6 21,14 L21,12 L23,12 C23.6,12 24,11.6 24,11 C24,10.4 23.6,10 23,10 Z" id="user-plus" />
-  </defs>
-  <g id="Cheat-Sheet" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-    <g id="Artboard" transform="translate(-2898.000000, -2345.000000)">
-      <g id="icon-/-user-plus" transform="translate(2898.000000, 2343.000000)">
-        <mask id="mask-2" fill="currentColor">
-          <use xlink:href="#user-plus" />
-        </mask>
-        <use id="Mask" fill="currentColor" fill-rule="nonzero" xlink:href="#user-plus" />
-        <g id="Icon-🎨" stroke-width="1" fill-rule="evenodd" mask="url(#mask-2)" fill="#4A4A4A">
-          <rect id="Shape" x="0" y="0" width="24" height="24" />
-        </g>
-      </g>
-    </g>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+  <circle cx="8.5" cy="7" r="4"></circle>
+  <line x1="20" y1="8" x2="20" y2="14"></line>
+  <line x1="23" y1="11" x2="17" y2="11"></line>
 </svg>

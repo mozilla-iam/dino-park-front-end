@@ -11,7 +11,7 @@ export const accessGroupInvitationsActions = {
     const groupName = state.group.name;
     try {
       const invitations = await accessGroupsService.getAccessGroupMemberInvitations(
-        groupName
+        groupName,
       );
       commit('setInvitations', invitations);
       return invitations;
@@ -25,7 +25,7 @@ export const accessGroupInvitationsActions = {
       const result = await accessGroupsService.sendInvitations(
         state.group.name,
         invites,
-        expiration
+        expiration,
       );
       return await dispatch('fetchInvitations', state.group.name);
     } catch (e) {
@@ -36,7 +36,7 @@ export const accessGroupInvitationsActions = {
     try {
       const result = await accessGroupsService.deleteInvitation(
         state.group.name,
-        invitation.uuid
+        invitation.uuid,
       );
       return await dispatch('fetchInvitations', invitation.name);
     } catch (e) {
@@ -49,7 +49,7 @@ export const accessGroupInvitationsMutations = {
   setInvitations(state, invitations) {
     try {
       state.invitations = invitations.map(
-        invite => new DisplayMemberViewModel(invite)
+        (invite) => new DisplayMemberViewModel(invite),
       );
     } catch (e) {
       state.error = e.message;
@@ -58,7 +58,7 @@ export const accessGroupInvitationsMutations = {
   },
 };
 export const accessGroupInvitationsGetters = {
-  getInvitations: state => {
+  getInvitations: (state) => {
     return state.invitations;
   },
 };

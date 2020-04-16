@@ -1,22 +1,5 @@
 <template>
   <footer class="footer">
-    <section class="footer__contribute" v-if="showContribute">
-      <h1>{{ fluent('contribute_header') }}</h1>
-      <div class="contribute__image">
-        <img
-          src="@/assets/images/crowd.png"
-          srcset="@/assets/images/crowd@2x.png 2x"
-        />
-      </div>
-      <p>{{ fluent('contribute_text') }}</p>
-      <ExternalButtonLink
-        class="contribute__link button--invert"
-        href="https://www.mozilla.org/contribute/"
-        iconRight="chevron-right"
-        :text="fluent('contribute')"
-      >
-      </ExternalButtonLink>
-    </section>
     <section class="footer__links">
       <a
         v-for="(single, index) in links"
@@ -49,19 +32,14 @@
 import Icon from '@/components/ui/Icon.vue';
 import LinksMixin from '@/components/_mixins/LinksMixin.vue';
 import Fluent from '@/assets/js/fluent';
-import ExternalButtonLink from '@/components/ui/ExternalButtonLink.vue';
 
 export default {
   name: 'Footer',
   mixins: [LinksMixin],
   components: {
     Icon,
-    ExternalButtonLink,
   },
   computed: {
-    showContribute() {
-      return !this.$store.state.scope.isLoggedIn && this.$route.name === 'Home';
-    },
     links() {
       return [
         {
@@ -114,52 +92,6 @@ export default {
 <style>
 .footer {
   margin-top: 2em;
-}
-.footer__contribute {
-  padding: 2em 2em 0em;
-  background-color: var(--white);
-  display: grid;
-  grid-template-columns: 1fr;
-}
-.footer__contribute > h1 {
-  font-size: 2.5em;
-}
-.contribute__link {
-  margin-top: 1em;
-  margin-bottom: 4em;
-}
-.contribute__image {
-  width: 100%;
-  display: flex;
-  justify-content: end;
-  align-items: center;
-  grid-column: 1;
-  grid-row: 4;
-  background-image: url(~@/assets/images/skewed-triangle.svg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: top 2em left 0em;
-}
-
-.contribute__image > img {
-  padding-bottom: 3em;
-}
-@media (min-width: 50em) {
-  .footer__contribute {
-    --contribute-pad: calc(((100% - 74em) / 2) + 4em);
-    padding: 1em max(4em, var(--contribute-pad)) 0em;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 0 2em;
-  }
-  .contribute__image {
-    justify-self: center;
-    justify-content: center;
-    grid-column: 1;
-    grid-row: 1/4;
-  }
-  .contribute__image > img {
-    padding-bottom: 0em;
-  }
 }
 .footer__links {
   background-color: var(--black);
