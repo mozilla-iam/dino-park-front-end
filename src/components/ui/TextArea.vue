@@ -46,9 +46,15 @@ export default {
   font: inherit;
   margin: 0.5em 0;
 }
+
+.textarea > textarea:hover {
+  border-color: var(--blue-60);
+}
+
 .textarea textarea[maxlength] {
   padding-bottom: 5em;
 }
+
 .textarea textarea[maxlength] + span {
   position: absolute;
   bottom: 1rem;

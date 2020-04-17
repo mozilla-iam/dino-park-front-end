@@ -46,9 +46,15 @@ export default {
   font-size: 1em;
   padding: 0.5em 0.9em;
 }
+
+.input > input:hover {
+  border-color: var(--blue-60);
+}
+
 .input input[maxlength] {
   padding: 0.5em 4.5em 0.5em 0.9em;
 }
+
 .input input[maxlength] + span {
   position: absolute;
   right: 1em;
