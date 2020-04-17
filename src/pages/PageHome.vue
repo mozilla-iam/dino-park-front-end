@@ -151,7 +151,7 @@ export default {
 .contribute__image {
   width: 100%;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   align-items: center;
   grid-column: 1;
   grid-row: 4;

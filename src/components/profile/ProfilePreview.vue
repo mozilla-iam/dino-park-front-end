@@ -147,7 +147,7 @@ export default {
 }
 .profile-preview__buttons {
   display: flex;
-  align-items: start;
+  align-items: flex-start;
   justify-content: center;
 }
 @media (min-width: 57.5em) {
