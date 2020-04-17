@@ -2,6 +2,9 @@
   <div class="membership-management-container">
     <p class="primary-data-row">
       <span class="primary-data-row__count">{{ totalPendingInvitations }}</span>
+      <span class="primary-data-row__intro">
+        {{ pendingInvitationsIntroText }}
+      </span>
       <RouterLink
         v-if="showEdit"
         class="primary-data-row__direct"
@@ -9,14 +12,27 @@
           name: 'Edit Access Group',
           query: { section: 'invitations' },
         }"
-        >{{ pendingInvitationsText }}</RouterLink
+        >{{
+          fluent(
+            'access-group_membership-management',
+            'pending-invitations-link',
+          )
+        }}</RouterLink
       >
-      <span class="primary-data-row__direct" v-else>{{
-        pendingInvitationsText
-      }}</span>
+      <span class="primary-data-row__direct" v-else>
+        {{
+          fluent(
+            'access-group_membership-management',
+            'pending-invitations-link',
+          )
+        }}
+      </span>
     </p>
     <p class="primary-data-row">
       <span class="primary-data-row__count">{{ totalPendingRenewals }}</span>
+      <span class="primary-data-row__intro">
+        {{ pendingRenewalsIntroText }}
+      </span>
       <RouterLink
         v-if="showEdit"
         class="primary-data-row__direct"
@@ -24,19 +40,15 @@
           name: 'Edit Access Group',
           query: { section: 'members' },
         }"
-        >{{ pendingRenewalsText }}</RouterLink
+        >{{
+          fluent('access-group_membership-management', 'pending-renewals-link')
+        }}</RouterLink
       >
-      <span class="primary-data-row__direct" v-else>{{
-        pendingRenewalsText
-      }}</span>
-    </p>
-    <p class="secondary-data-row">
-      {{ fluent('access-group_membership-management', 'expire-first') }}
-      <span class="secondary-data-row__focus">
-        {{ fluent('access-group_membership-management', 'expire-second') }}
+      <span class="primary-data-row__direct" v-else>
+        {{
+          fluent('access-group_membership-management', 'pending-renewals-link')
+        }}
       </span>
-      {{ fluent('access-group_membership-management', 'expire-third') }}
-      <span class="secondary-data-row__focus">{{ expiry }}</span>
     </p>
     <footer class="action-row" v-if="showEdit">
       <RouterLink
@@ -60,7 +72,6 @@
 import { mapGetters } from 'vuex';
 import Icon from '@/components/ui/Icon.vue';
 import Button from '@/components/ui/Button.vue';
-import { expiryText } from '@/assets/js/component-utils';
 
 export default {
   name: 'AccessGroupMembershipManagement',
@@ -78,35 +89,32 @@ export default {
     totalPendingInvitations() {
       return !this.invitationCount ? 0 : this.invitationCount;
     },
-    pendingInvitationsText() {
-      if (this.invitationCount > 1) {
+    pendingInvitationsIntroText() {
+      if (this.invitationCount == 1) {
         return this.fluent(
           'access-group_membership-management',
-          'pending-invitations',
+          'pending-invitations-single',
         );
       }
       return this.fluent(
         'access-group_membership-management',
-        'pending-invitation',
+        'pending-invitations',
       );
     },
     totalPendingRenewals() {
       return !this.renewalCount ? 0 : this.renewalCount;
     },
-    pendingRenewalsText() {
-      if (this.renewalCount > 1) {
+    pendingRenewalsIntroText() {
+      if (this.renewalCount == 1) {
         return this.fluent(
           'access-group_membership-management',
-          'pending-renewals',
+          'pending-renewals-single',
         );
       }
       return this.fluent(
         'access-group_membership-management',
-        'pending-renewal',
+        'pending-renewals',
       );
-    },
-    expiry() {
-      return expiryText(this.fluent, this.expiration);
     },
     showEdit() {
       return this.isCurator;
