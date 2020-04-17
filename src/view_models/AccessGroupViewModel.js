@@ -63,13 +63,19 @@ export class TypeValueViewModel {
 
 const defaultUserName = 'Anonymous User';
 const getDisplayName = (data) => {
-  if (!data.first_name) {
-    return defaultUserName;
-  } else if (!data.last_name) {
-    return data.first_name;
-  } else {
+  if (data.first_name && data.last_name) {
     return `${data.first_name} ${data.last_name}`;
   }
+  if (data.first_name) {
+    return data.first_name;
+  }
+  if (data.last_name) {
+    return data.last_name;
+  }
+  if (!data.username.startsWith('r--')) {
+    return data.username;
+  }
+  return defaultUserName;
 };
 
 export class AbbDisplayMemberViewModel {
