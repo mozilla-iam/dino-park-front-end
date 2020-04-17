@@ -106,7 +106,7 @@ export default {
   align-items: flex-end;
   justify-content: flex-end;
   padding-right: 1em;
-  color: var(--gray-40);
+  color: var(--gray-50);
 }
 
 .info-aside .info-aside__icon {
@@ -126,6 +126,6 @@ export default {
 
 .group-view__info .info-sub {
   margin-top: 0;
-  color: var(--gray-40);
+  color: var(--gray-50);
 }
 </style>

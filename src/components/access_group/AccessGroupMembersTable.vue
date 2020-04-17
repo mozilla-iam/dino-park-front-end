@@ -221,14 +221,14 @@ export default {
 }
 
 .members-table__footer .load-more {
-  display: inline-block;
+  display: flex;
   background: transparent;
   border-color: transparent;
-  color: var(--gray-40);
+  color: var(--gray-50);
 }
 
 .members-table__footer .load-more:hover {
   border-color: transparent;
-  color: var(--gray-40);
+  color: var(--gray-50);
 }
 </style>

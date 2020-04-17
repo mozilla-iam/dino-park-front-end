@@ -113,9 +113,9 @@
           </div>
         </div>
         <div class="content-area__row multi-line" v-if="emailInviteTextEnabled">
-          <label class="content-area__label">{{
-            fluent('access-group_email-invite-text', 'description')
-          }}</label>
+          <label class="content-area__label">
+            {{ fluent('access-group_email-invite-text', 'description') }}
+          </label>
           <TextArea
             :rows="5"
             :maxlength="5000"
@@ -129,10 +129,9 @@
           :disabled="!emailInviteTextDirty"
           @click="handleUpdateInviteTextClicked"
           class="button--secondary button--action row-primary-action"
-          >{{
-            fluent('access-group_email-invite-text', 'update-invite-text')
-          }}</Button
         >
+          {{ fluent('access-group_email-invite-text', 'update-invite-text') }}
+        </Button>
       </template>
     </AccessGroupEditPanel>
   </section>
@@ -387,26 +386,6 @@ export default {
 }
 
 .tags-selector .tags-selector__description {
-  color: var(--gray-40);
+  color: var(--gray-50);
 }
-
-/* .new-invites-expiration {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-}
-
-.new-invites-expiration .new-invites-expiration__label {
-  color: var(--gray-40);
-  margin-bottom: 1em;
-}
-
-.new-invites-expiration .new-invites-expiration__value {
-  width: 100%;
-}
-
-.new-invites-expiration .new-invites-expiration__value {
-  width: 100%;
-} */
 </style>

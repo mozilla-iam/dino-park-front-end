@@ -304,7 +304,7 @@ export default {
 }
 
 .group-edit .expiration-container .expiration-container__label {
-  color: var(--gray-40);
+  color: var(--gray-50);
   margin-bottom: 1em;
 }
 

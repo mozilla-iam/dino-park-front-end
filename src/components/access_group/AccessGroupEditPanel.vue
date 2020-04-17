@@ -102,7 +102,7 @@ export default {
 }
 
 .content-area__row .content-area__label {
-  color: var(--gray-40);
+  color: var(--gray-50);
   height: 1.5em;
 }
 </style>

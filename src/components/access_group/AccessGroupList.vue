@@ -295,7 +295,7 @@ export default {
 
 .list-container .list-container__actions .show-more {
   background: transparent;
-  color: var(--gray-40);
+  color: var(--gray-50);
 }
 
 .list-container .list-container__actions .show-more:hover {

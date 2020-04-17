@@ -16,9 +16,9 @@
         >
           <template v-slot:content>
             <div class="content-area__row">
-              <label class="content-area__label">
-                {{ fluent('access-group_details', 'name') }}
-              </label>
+              <label class="content-area__label">{{
+                fluent('access-group_details', 'name')
+              }}</label>
               <TextInput
                 type="text"
                 v-model="groupName"
@@ -27,9 +27,9 @@
               />
             </div>
             <div class="content-area__row multi-line markdown-outer-container">
-              <label class="content-area__label">
-                {{ fluent('access-group_details', 'description') }}
-              </label>
+              <label class="content-area__label">{{
+                fluent('access-group_details', 'description')
+              }}</label>
               <TextArea
                 :rows="5"
                 :maxlength="450"
@@ -56,17 +56,17 @@
               </div>
             </div>
             <div class="content-area__row radio-control__description">
-              <label class="description-label">
-                {{ fluent('access-group_type', 'reviewed-heading') }}
-              </label>
+              <label class="description-label">{{
+                fluent('access-group_type', 'reviewed-heading')
+              }}</label>
               <p class="description-content">
                 {{ fluent('access-group_type', 'reviewed-content') }}
               </p>
             </div>
             <div class="content-area__row radio-control__description">
-              <label class="description-label">
-                {{ fluent('access-group_type', 'closed-heading') }}
-              </label>
+              <label class="description-label">{{
+                fluent('access-group_type', 'closed-heading')
+              }}</label>
               <p class="description-content">
                 {{ fluent('access-group_type', 'closed-content') }}
               </p>
@@ -143,9 +143,9 @@
               }"
               v-if="groupTermsRequiredData"
             >
-              <label class="content-area__label">
-                {{ fluent('access-group_terms', 'terms-intro') }}
-              </label>
+              <label class="content-area__label">{{
+                fluent('access-group_terms', 'terms-intro')
+              }}</label>
               <TextArea
                 :rows="5"
                 :maxlength="5000"
@@ -349,7 +349,7 @@ export default {
 }
 
 .content-area__row.group-expiration .description-label {
-  color: var(--gray-40);
+  color: var(--gray-50);
   margin-bottom: 1em;
 }
 
@@ -383,7 +383,7 @@ export default {
 
 .content-area .content-area__label {
   flex: 1;
-  color: var(--gray-40);
+  color: var(--gray-50);
   height: 1.5em;
   margin-bottom: 1em;
 }
@@ -394,7 +394,7 @@ export default {
 }
 
 .content-area p.content-area__value {
-  color: var(--gray-40);
+  color: var(--gray-50);
 }
 .content-area .content-area__row.multi-line {
   display: block;
@@ -414,7 +414,7 @@ export default {
 }
 
 .content-area .content-area__value-description {
-  color: var(--gray-40);
+  color: var(--gray-50);
   flex: 10;
 }
 
@@ -422,7 +422,7 @@ export default {
   display: flex;
   width: 65%;
   flex-direction: row-reverse;
-  border-top: 1px solid var(--gray-40);
+  border-top: 1px solid var(--gray-50);
   margin: 1em 0 2em 2em;
 }
 
