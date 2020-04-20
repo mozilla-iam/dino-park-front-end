@@ -121,6 +121,10 @@
                       'create-info__description-4',
                     )
                   }}
+                  <ExternalLink
+                    href="mailto:people.mozilla.org-admin@mozilla.com"
+                    >people.mozilla.org-admin@mozilla.com</ExternalLink
+                  >
                 </p>
               </aside>
             </div>
@@ -188,6 +192,7 @@ import RadioSelect from '@/components/ui/RadioSelect.vue';
 import AccessGroupEditPanel from '@/components/access_group/AccessGroupEditPanel.vue';
 import AccessGroupMarkdownGuide from '@/components/access_group/AccessGroupMarkdownGuide.vue';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
+import ExternalLink from '@/components/ui/ExternalLink.vue';
 import { ACCESS_GROUP_PAGE } from '@/router.js';
 import {
   TYPE_INDEX,
@@ -207,6 +212,7 @@ export default {
     AccessGroupEditPanel,
     AccessGroupMarkdownGuide,
     LoadingSpinner,
+    ExternalLink,
   },
   data() {
     return {
