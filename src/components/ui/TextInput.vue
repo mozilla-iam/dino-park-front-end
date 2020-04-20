@@ -5,7 +5,7 @@
       :id="id"
       :placeholder="placeholder"
       :maxlength="maxlength"
-      :value="value ? value : ''"
+      :value="value"
       @input="$emit('input', $event.target.value)"
       @focus="handleInputFocus"
     />
@@ -21,8 +21,10 @@ export default {
     placeholder: String,
     id: String,
     maxlength: Number,
-    input: String,
-    value: String,
+    value: {
+      type: [String, Number],
+      default: '',
+    },
   },
   methods: {
     handleInputFocus() {
