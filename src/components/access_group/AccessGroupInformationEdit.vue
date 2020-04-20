@@ -255,15 +255,6 @@ export default {
   }
 }
 
-.content-area__row .radio-control {
-  margin: 0 1em 0 0;
-  color: var(--gray-40);
-}
-
-.content-area__row .radio-control > input {
-  margin: 0 0.5em 0 0;
-}
-
 .content-area__row.action-row {
   display: flex;
   flex-direction: row;
@@ -292,7 +283,7 @@ export default {
 
 .content-area .content-area__label {
   flex: 1;
-  color: var(--gray-40);
+  color: var(--gray-50);
   height: 1.5em;
 }
 
@@ -305,7 +296,7 @@ export default {
 }
 
 .content-area p.content-area__value {
-  color: var(--gray-40);
+  color: var(--gray-50);
 }
 .content-area .content-area__row.multi-line .content-area__value {
   width: 100%;
@@ -313,7 +304,7 @@ export default {
 }
 
 .content-area .content-area__value-description {
-  color: var(--gray-40);
+  color: var(--gray-50);
 }
 
 .edit-information-section .edit-information-section__footer {

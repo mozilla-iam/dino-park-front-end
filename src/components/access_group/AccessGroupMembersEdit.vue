@@ -7,9 +7,9 @@
       <template v-slot:content>
         <p class="edit-members-meta">
           {{ fluent('access-group_members', 'edit-members-meta') }}
-          <output class="edit-members-meta__focus">{{
-            expirationMetaText
-          }}</output>
+          <output class="edit-members-meta__focus">
+            {{ expirationMetaText }}
+          </output>
         </p>
         <div class="members-list-container">
           <header class="members-list-container__controls">
@@ -62,10 +62,9 @@
                         expiration: selectedRowExpiration,
                       })
                     "
-                    >{{
-                      fluent('access-group_members', 'renew-action')
-                    }}</Button
                   >
+                    {{ fluent('access-group_members', 'renew-action') }}
+                  </Button>
                 </div>
               </div>
             </div>
@@ -172,9 +171,9 @@
       <template v-slot:content>
         <div class="members-expiration-container">
           <div class="content-area__row expiration-container">
-            <label class="content-area__label expiration-container__label">
-              {{ fluent('access-group_expiration', 'expiration__description') }}
-            </label>
+            <label class="content-area__label expiration-container__label">{{
+              fluent('access-group_expiration', 'expiration__description')
+            }}</label>
             <RadioSelect
               class="expiration-container__value"
               :options="expirationOptions"
@@ -811,7 +810,7 @@ export default {
 }
 
 .tags-selector .tags-selector__description {
-  color: var(--gray-40);
+  color: var(--gray-50);
 }
 
 .members-expiration-container .content-area__row {

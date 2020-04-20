@@ -304,11 +304,21 @@ export default {
 }
 
 .group-edit .expiration-container .expiration-container__label {
-  color: var(--gray-40);
+  color: var(--gray-50);
   margin-bottom: 1em;
 }
 
 .group-edit .expiration-container .expiration-container__value {
   width: 100%;
+}
+
+/* Radio styles */
+.group-edit .content-area__row .radio-control {
+  margin: 0 1em 0 0;
+  color: var(--black);
+}
+
+.group-edit .content-area__row .radio-control > input {
+  margin: 0 0.5em 0 0;
 }
 </style>

@@ -18,8 +18,8 @@
           <Icon
             class="info-aside__icon"
             :id="groupTypeIcon"
-            :width="16"
-            :height="16"
+            :width="20"
+            :height="20"
           />
           {{ group.type }}
         </aside>
@@ -43,7 +43,7 @@ export default {
   },
   computed: {
     groupTypeIcon() {
-      return this.group.type === 'Closed' ? 'lock' : 'user';
+      return this.group.type === 'Closed' ? 'lock' : 'user-check';
     },
     infoSubText() {
       return this.group.memberCount === 1
@@ -65,12 +65,13 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: column;
+  border-radius: var(--cardRadius);
+  border: 1px solid transparent;
   padding: 1em;
 }
 
 .list-item:hover {
-  box-shadow: 0 0 0.1em 0.25em #b3d3fc;
-  border-radius: var(--cardRadius);
+  border: 1px solid var(--blue-60);
 }
 
 .list-item .group-view {
@@ -105,7 +106,7 @@ export default {
   align-items: flex-end;
   justify-content: flex-end;
   padding-right: 1em;
-  color: var(--gray-40);
+  color: var(--gray-50);
 }
 
 .info-aside .info-aside__icon {
@@ -120,15 +121,11 @@ export default {
 .group-view .group-view__info .info-header {
   font-weight: bold;
   color: var(--black);
-  margin-bottom: 1em;
-}
-
-.list-item:hover .info-header {
-  color: var(--blue-60);
+  margin-bottom: 0.25em;
 }
 
 .group-view__info .info-sub {
   margin-top: 0;
-  color: var(--gray-40);
+  color: var(--gray-50);
 }
 </style>

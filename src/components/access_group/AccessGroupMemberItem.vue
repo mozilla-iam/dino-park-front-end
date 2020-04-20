@@ -102,6 +102,8 @@ export default {
 .list-item {
   width: 100%;
   box-shadow: var(--shadowCard);
+  border: 1px solid transparent;
+  border-radius: var(--cardRadius);
   background: var(--white);
   height: 5.5em;
   display: flex;
@@ -109,8 +111,7 @@ export default {
 }
 
 .list-item:hover {
-  box-shadow: 0 0 0.1em 0.25em #b3d3fc;
-  border-radius: var(--cardRadius);
+  border: 1px solid var(--blue-60);
 }
 
 .list-item.expanded {
@@ -147,10 +148,6 @@ export default {
   color: var(--black);
 }
 
-.list-item:hover .info-header {
-  color: var(--blue-60);
-}
-
 .member-view__info .info-sub {
   margin-top: 0;
 }
@@ -181,7 +178,7 @@ export default {
   border-left: 2px solid transparent;
 }
 
-.list-item__main .member-action.expanded svg {
+.list-item__main .member-action:hover svg {
   color: var(--blue-60);
 }
 

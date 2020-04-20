@@ -349,7 +349,7 @@ export default {
 }
 
 .content-area__row.group-expiration .description-label {
-  color: var(--gray-40);
+  color: var(--gray-50);
   margin-bottom: 1em;
 }
 
@@ -359,15 +359,6 @@ export default {
 
 .group-expiration .container-info {
   margin-top: 1em;
-}
-
-.content-area__row .radio-control {
-  margin: 0 1em 0 0;
-  color: var(--gray-40);
-}
-
-.content-area__row .radio-control > input {
-  margin: 0 0.5em 0 0;
 }
 
 .content-area__row.action-row {
@@ -392,7 +383,7 @@ export default {
 
 .content-area .content-area__label {
   flex: 1;
-  color: var(--gray-40);
+  color: var(--gray-50);
   height: 1.5em;
   margin-bottom: 1em;
 }
@@ -403,7 +394,7 @@ export default {
 }
 
 .content-area p.content-area__value {
-  color: var(--gray-40);
+  color: var(--gray-50);
 }
 .content-area .content-area__row.multi-line {
   display: block;
@@ -423,7 +414,7 @@ export default {
 }
 
 .content-area .content-area__value-description {
-  color: var(--gray-40);
+  color: var(--gray-50);
   flex: 10;
 }
 
@@ -431,7 +422,7 @@ export default {
   display: flex;
   width: 65%;
   flex-direction: row-reverse;
-  border-top: 1px solid var(--gray-40);
+  border-top: 1px solid var(--gray-50);
   margin: 1em 0 2em 2em;
 }
 

@@ -119,7 +119,7 @@ export default {
 
 .markdown-guide__content p {
   margin: 0;
-  color: var(--gray-40);
+  color: var(--gray-50);
 }
 
 .markdown-guide__content .markdown-guide__row {
