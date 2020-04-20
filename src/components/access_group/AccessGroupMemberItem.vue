@@ -34,12 +34,12 @@
       </button>
     </article>
     <aside class="list-item__expandable" v-if="showExpandable">
-      <p class="expandable-row">
+      <p class="expandable-row" v-if="isMemberSinceDateValid">
         <span class="expandable-row__label">{{
           fluent('access-group_members', 'member-expandable_member-since')
         }}</span>
         <span class="expandable-row__content">
-          {{ formatDate(member.since) }}
+          {{ formatMemberSinceDate }}
         </span>
       </p>
       <p class="expandable-row" v-if="!member.added_by.isAnonymous()">
@@ -69,6 +69,7 @@ import {
   DISPLAY_MEMBER_ROLES,
   MEMBER_IDEX,
 } from '@/view_models/AccessGroupViewModel';
+import { formatDate, isDateValid } from '@/assets/js/component-utils';
 
 export default {
   name: 'AccessGroupMemberItem',
@@ -82,12 +83,21 @@ export default {
     },
     // TODO: This needs to be done in the vuex model
     formatDate(dateString) {
+      if (isNaN(Date.parse(dateString))) {
+        return '';
+      }
       return new Date(dateString).toLocaleDateString();
     },
   },
   computed: {
     isCurator() {
       return this.member.role === DISPLAY_MEMBER_ROLES[MEMBER_IDEX.Curator];
+    },
+    isMemberSinceDateValid() {
+      return isDateValid(this.member.since);
+    },
+    formatMemberSinceDate() {
+      return formatDate(this.member.since);
     },
   },
   data() {

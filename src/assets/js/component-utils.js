@@ -89,3 +89,15 @@ export function getExpirationDate(expiration) {
   currentDate.setDate(currentDate.getDate() + expiration);
   return currentDate.toLocaleDateString();
 }
+
+export function formatDate(dateString) {
+  if (!isDateValid(dateString)) {
+    console.error('Found invalid date string: ', dateString);
+    return '';
+  }
+  return new Date(dateString).toLocaleDateString();
+}
+
+export function isDateValid(dateString) {
+  return !isNaN(Date.parse(dateString));
+}
