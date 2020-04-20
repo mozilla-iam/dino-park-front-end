@@ -1,13 +1,15 @@
 <template>
   <div class="input">
     <input
-      :type="type ? type : 'text'"
+      :type="type"
+      :min="min"
       :id="id"
       :placeholder="placeholder"
       :maxlength="maxlength"
       :value="value"
       @input="$emit('input', $event.target.value)"
       @focus="handleInputFocus"
+      @keypress="handleInputKeyPress"
     />
     <span v-if="maxlength">{{ value.length }}/{{ maxlength }}</span>
   </div>
@@ -17,7 +19,10 @@
 export default {
   name: 'TextInput',
   props: {
-    type: String,
+    type: {
+      type: String,
+      default: 'text',
+    },
     placeholder: String,
     id: String,
     maxlength: Number,
@@ -25,10 +30,30 @@ export default {
       type: [String, Number],
       default: '',
     },
+    min: {
+      type: Number,
+      default: null,
+    },
   },
   methods: {
     handleInputFocus() {
       this.$emit('focus');
+    },
+    handleInputKeyPress(e) {
+      // Check if type is number
+      if (this.type === 'number') {
+        // Since we know this is a number, just concat the keycode onto the current value to check the new value
+        const pressed = parseInt(
+          `${e.target.value}${String.fromCharCode(e.keyCode)}`,
+        );
+        // Confirm the value is still appropriate
+        if (e.which < 48 || e.which > 57 || pressed < this.min) {
+          e.preventDefault();
+          return;
+        } else {
+          this.$emit('keypress', e);
+        }
+      }
     },
   },
 };
