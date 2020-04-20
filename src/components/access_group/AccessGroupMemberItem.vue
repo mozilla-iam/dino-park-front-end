@@ -112,16 +112,13 @@ export default {
 .list-item {
   width: 100%;
   box-shadow: var(--shadowCard);
-  border: 1px solid transparent;
+  border: none;
   border-radius: var(--cardRadius);
   background: var(--white);
   height: 5.5em;
   display: flex;
   flex-direction: column;
-}
-
-.list-item:hover {
-  border: 1px solid var(--blue-60);
+  position: relative;
 }
 
 .list-item.expanded {
@@ -138,6 +135,23 @@ export default {
   display: flex;
   flex: 6;
   text-decoration: none;
+}
+
+.list-item__main .member-view::before {
+  content: '';
+  display: block;
+  background: transparent;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: background-color 0.2s ease-in-out;
+  border: 1px solid transparent;
+}
+
+.list-item__main .member-view:hover::before {
+  border-color: var(--blue-60);
 }
 
 .member-view .member-view__image {
@@ -182,6 +196,7 @@ export default {
   border-top: none;
   border-bottom: none;
   display: block;
+  position: relative;
 }
 
 .list-item__main .member-action-container:hover .member-action {
@@ -194,6 +209,7 @@ export default {
 
 .list-item__expandable {
   margin: 0 1em 1em;
+  position: relative;
 }
 .expandable-row {
   display: block;
