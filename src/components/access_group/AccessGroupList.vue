@@ -49,7 +49,7 @@ import Icon from '@/components/ui/Icon.vue';
 const resultsStep = 20;
 const defaultListOptions = {
   search: '',
-  sort: 'name-asc',
+  sort: 'member-count-desc',
   numResults: resultsStep,
 };
 export default {
