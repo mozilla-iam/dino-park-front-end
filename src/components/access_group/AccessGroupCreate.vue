@@ -298,8 +298,14 @@ export default {
   padding: 2em 0 1em;
   margin-left: 2em;
   margin-right: 2em;
-  width: 65%;
 }
+
+@media (min-width: 57.5em) {
+  .group-create .edit-panel-container {
+    width: 65%;
+  }
+}
+
 .group-create .group-create__back-action {
   background-color: var(--gray-30);
   color: var(--black);
@@ -367,6 +373,11 @@ export default {
   margin-top: 1em;
 }
 
+.container-info .container-info__icon {
+  width: 5em;
+  margin-right: 1em;
+}
+
 .content-area__row.action-row {
   flex-direction: column;
   text-align: left;
@@ -426,10 +437,16 @@ export default {
 
 .group-create .group-create__footer {
   display: flex;
-  width: 65%;
   flex-direction: row-reverse;
   border-top: 1px solid var(--gray-50);
-  margin: 1em 0 2em 2em;
+  margin: 1em 2em 2em 2em;
+}
+
+@media (min-width: 57.5em) {
+  .group-create .group-create__footer {
+    width: 65%;
+    margin: 1em 0 2em 2em;
+  }
 }
 
 .group-create__footer .button {

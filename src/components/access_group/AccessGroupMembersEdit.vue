@@ -836,7 +836,7 @@ export default {
 }
 
 .container-info__icon {
-  width: 7%;
+  width: 5em;
   margin-right: 1em;
 }
 </style>
