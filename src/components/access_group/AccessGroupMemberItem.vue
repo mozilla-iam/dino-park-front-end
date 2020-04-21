@@ -29,6 +29,7 @@
       <button
         :class="{ 'member-action': true, expanded: showExpandable }"
         v-on:click="toggleExpandable"
+        :title="fluent('access-group_members', 'member-action')"
       >
         <Icon id="info" :width="24" :height="24" />
       </button>
@@ -115,14 +116,15 @@ export default {
   border: none;
   border-radius: var(--cardRadius);
   background: var(--white);
-  height: 5.5em;
+  height: auto;
+  max-height: 5.5em;
   display: flex;
   flex-direction: column;
   position: relative;
 }
 
 .list-item.expanded {
-  height: auto;
+  max-height: 12em;
 }
 
 .list-item .list-item__main {
@@ -135,6 +137,7 @@ export default {
   display: flex;
   flex: 6;
   text-decoration: none;
+  background: transparent;
 }
 
 .list-item__main .member-view::before {
@@ -152,6 +155,7 @@ export default {
 
 .list-item__main .member-view:hover::before {
   border-color: var(--blue-60);
+  background-color: var(--lightBlue);
 }
 
 .member-view .member-view__image {
@@ -170,10 +174,12 @@ export default {
 .member-view__info .info-header {
   font-weight: bold;
   color: var(--black);
+  position: relative;
 }
 
 .member-view__info .info-sub {
   margin-top: 0;
+  position: relative;
 }
 
 .list-item.primary .member-view__info .info-sub {
