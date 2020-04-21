@@ -119,27 +119,33 @@ export default {
   width: 100%;
   max-width: 31em;
 }
+
 .search-form fieldset {
   border: 0;
   padding: 0;
 }
+
 .search-form__fields {
   display: flex;
   flex-direction: row;
   position: relative;
 }
+
 .search-form__fields:focus .search-form__input,
 .search-form__fields:hover .search-form__input {
   border: 1px solid var(--blue-60);
 }
+
 .search-form__fields:focus button[type='submit'],
 .search-form__fields:hover button[type='submit'] {
   border-right: 1px solid var(--blue-60);
 }
+
 .search-form__fields input,
 .search-form__fields button[type='submit'] {
   font-size: 1.15em;
 }
+
 .search-form__input {
   border: 1px solid var(--gray-30);
   width: 100%;
@@ -149,6 +155,7 @@ export default {
   border-radius: 0;
   padding: 0.5em 1.75em 0.5em 3em;
 }
+
 .search-form__input::placeholder {
   text-align: center;
 }
