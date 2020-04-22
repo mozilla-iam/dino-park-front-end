@@ -29,17 +29,18 @@
       <button
         :class="{ 'member-action': true, expanded: showExpandable }"
         v-on:click="toggleExpandable"
+        :title="fluent('access-group_members', 'member-action')"
       >
         <Icon id="info" :width="24" :height="24" />
       </button>
     </article>
     <aside class="list-item__expandable" v-if="showExpandable">
-      <p class="expandable-row">
+      <p class="expandable-row" v-if="isMemberSinceDateValid">
         <span class="expandable-row__label">{{
           fluent('access-group_members', 'member-expandable_member-since')
         }}</span>
         <span class="expandable-row__content">
-          {{ formatDate(member.since) }}
+          {{ formatMemberSinceDate }}
         </span>
       </p>
       <p class="expandable-row" v-if="!member.added_by.isAnonymous()">
@@ -69,6 +70,7 @@ import {
   DISPLAY_MEMBER_ROLES,
   MEMBER_IDEX,
 } from '@/view_models/AccessGroupViewModel';
+import { formatDate, isDateValid } from '@/assets/js/component-utils';
 
 export default {
   name: 'AccessGroupMemberItem',
@@ -82,12 +84,21 @@ export default {
     },
     // TODO: This needs to be done in the vuex model
     formatDate(dateString) {
+      if (isNaN(Date.parse(dateString))) {
+        return '';
+      }
       return new Date(dateString).toLocaleDateString();
     },
   },
   computed: {
     isCurator() {
       return this.member.role === DISPLAY_MEMBER_ROLES[MEMBER_IDEX.Curator];
+    },
+    isMemberSinceDateValid() {
+      return isDateValid(this.member.since);
+    },
+    formatMemberSinceDate() {
+      return formatDate(this.member.since);
     },
   },
   data() {
@@ -102,20 +113,18 @@ export default {
 .list-item {
   width: 100%;
   box-shadow: var(--shadowCard);
-  border: 1px solid transparent;
+  border: none;
   border-radius: var(--cardRadius);
   background: var(--white);
-  height: 5.5em;
+  height: auto;
+  max-height: 5.5em;
   display: flex;
   flex-direction: column;
-}
-
-.list-item:hover {
-  border: 1px solid var(--blue-60);
+  position: relative;
 }
 
 .list-item.expanded {
-  height: auto;
+  max-height: 12em;
 }
 
 .list-item .list-item__main {
@@ -128,6 +137,25 @@ export default {
   display: flex;
   flex: 6;
   text-decoration: none;
+  background: transparent;
+}
+
+.list-item__main .member-view::before {
+  content: '';
+  display: block;
+  background: transparent;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: background-color 0.2s ease-in-out;
+  border: 1px solid transparent;
+}
+
+.list-item__main .member-view:hover::before {
+  border-color: var(--blue-60);
+  background-color: var(--lightBlue);
 }
 
 .member-view .member-view__image {
@@ -146,10 +174,12 @@ export default {
 .member-view__info .info-header {
   font-weight: bold;
   color: var(--black);
+  position: relative;
 }
 
 .member-view__info .info-sub {
   margin-top: 0;
+  position: relative;
 }
 
 .list-item.primary .member-view__info .info-sub {
@@ -172,6 +202,7 @@ export default {
   border-top: none;
   border-bottom: none;
   display: block;
+  position: relative;
 }
 
 .list-item__main .member-action-container:hover .member-action {
@@ -184,6 +215,7 @@ export default {
 
 .list-item__expandable {
   margin: 0 1em 1em;
+  position: relative;
 }
 .expandable-row {
   display: block;

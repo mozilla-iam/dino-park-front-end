@@ -1,11 +1,9 @@
 <template>
   <section class="edit-invitations-container">
     <AccessGroupEditPanel
-      :title="
-        `${fluent(
-          'access-group_pending-invitations',
-        )} (${totalInvitationsAndRequests})`
-      "
+      :title="`${fluent(
+        'access-group_pending-invitations',
+      )} (${totalInvitationsAndRequests})`"
       :full="true"
     >
       <template v-slot:content>
@@ -86,6 +84,7 @@
               :options="expirationOptions"
               v-model="newInvitesExpiration"
               :isCustom="isExpirationCustom"
+              :minCustom="1"
             />
           </div>
         </div>
@@ -113,9 +112,9 @@
           </div>
         </div>
         <div class="content-area__row multi-line" v-if="emailInviteTextEnabled">
-          <label class="content-area__label">
-            {{ fluent('access-group_email-invite-text', 'description') }}
-          </label>
+          <label class="content-area__label">{{
+            fluent('access-group_email-invite-text', 'description')
+          }}</label>
           <TextArea
             :rows="5"
             :maxlength="5000"
@@ -129,9 +128,10 @@
           :disabled="!emailInviteTextDirty"
           @click="handleUpdateInviteTextClicked"
           class="button--secondary button--action row-primary-action"
+          >{{
+            fluent('access-group_email-invite-text', 'update-invite-text')
+          }}</Button
         >
-          {{ fluent('access-group_email-invite-text', 'update-invite-text') }}
-        </Button>
       </template>
     </AccessGroupEditPanel>
   </section>
@@ -195,10 +195,6 @@ export default {
         {
           label: this.fluent('access-group_expiration', 'two-years'),
           value: MEMBER_EXPIRATION_TWO_YEARS,
-        },
-        {
-          label: this.fluent('access-group_expiration', 'no-expire'),
-          value: MEMBER_EXPIRATION_NONE,
         },
         {
           label: this.fluent('access-group_expiration', 'custom'),

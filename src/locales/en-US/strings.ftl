@@ -436,6 +436,7 @@ access-group_members = Members
   .renew-action = Renew
   .load-more = Load more members
   .members-container__load-more = Load more entries
+  .member-action = Member details
   .member-expandable_member-since = Member since
   .member-expandable_added-by = Added by
 access-group_curators = Curators

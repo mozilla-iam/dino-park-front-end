@@ -7,9 +7,9 @@
       <template v-slot:content>
         <p class="edit-members-meta">
           {{ fluent('access-group_members', 'edit-members-meta') }}
-          <output class="edit-members-meta__focus">
-            {{ expirationMetaText }}
-          </output>
+          <output class="edit-members-meta__focus">{{
+            expirationMetaText
+          }}</output>
         </p>
         <div class="members-list-container">
           <header class="members-list-container__controls">
@@ -53,6 +53,7 @@
                   :isCustom="isExpirationCustom"
                   :options="expirationOptions"
                   v-model="selectedRowExpiration"
+                  :minCustom="1"
                 />
                 <div class="expiration-actions">
                   <Button
@@ -62,9 +63,10 @@
                         expiration: selectedRowExpiration,
                       })
                     "
+                    >{{
+                      fluent('access-group_members', 'renew-action')
+                    }}</Button
                   >
-                    {{ fluent('access-group_members', 'renew-action') }}
-                  </Button>
                 </div>
               </div>
             </div>
@@ -171,14 +173,15 @@
       <template v-slot:content>
         <div class="members-expiration-container">
           <div class="content-area__row expiration-container">
-            <label class="content-area__label expiration-container__label">{{
-              fluent('access-group_expiration', 'expiration__description')
-            }}</label>
+            <label class="content-area__label expiration-container__label">
+              {{ fluent('access-group_expiration', 'expiration__description') }}
+            </label>
             <RadioSelect
               class="expiration-container__value"
               :options="expirationOptions"
               v-model="groupExpiration"
               :isCustom="isExpirationCustom"
+              :minCustom="1"
             />
           </div>
           <aside class="container-info">
@@ -286,7 +289,7 @@ export default {
     },
     selectedExpiration(value) {
       if (value === 'custom') {
-        this.groupExpiration = MEMBER_EXPIRATION_NONE;
+        this.groupExpiration = MEMBER_EXPIRATION_ONE_YEAR;
       } else {
         this.groupExpiration = value;
       }
@@ -380,10 +383,6 @@ export default {
         {
           label: this.fluent('access-group_expiration', 'two-years'),
           value: MEMBER_EXPIRATION_TWO_YEARS,
-        },
-        {
-          label: this.fluent('access-group_expiration', 'no-expire'),
-          value: MEMBER_EXPIRATION_NONE,
         },
         {
           label: this.fluent('access-group_expiration', 'custom'),
@@ -837,7 +836,7 @@ export default {
 }
 
 .container-info__icon {
-  width: 7%;
+  width: 5em;
   margin-right: 1em;
 }
 </style>

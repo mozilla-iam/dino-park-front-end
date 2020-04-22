@@ -49,7 +49,7 @@ import Icon from '@/components/ui/Icon.vue';
 const resultsStep = 20;
 const defaultListOptions = {
   search: '',
-  sort: 'name-asc',
+  sort: 'member-count-desc',
   numResults: resultsStep,
 };
 export default {
@@ -143,14 +143,12 @@ export default {
 
 <style>
 .list-container {
-  width: 100%;
-  background: var(--white);
-  box-shadow: var(--shadowCard);
+  margin: 0 1em;
 }
 
 @media (min-width: 57.5em) {
   .list-container {
-    background: transparent;
+    margin: 0;
     box-shadow: none;
   }
 }
@@ -160,8 +158,22 @@ export default {
   position: relative;
   padding: 1.5em;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
+  background: var(--white);
+  box-shadow: var(--shadowCard);
+  margin-bottom: 2em;
+}
+
+.list-container__control-bar .search-form__input {
+  font-size: 1em;
+  padding-top: 0.7em;
+  padding-bottom: 0.7em;
+  padding-left: 4em;
+}
+
+.list-container__control-bar .search-form__input::placeholder {
+  text-align: left;
 }
 
 @media (min-width: 57.5em) {
@@ -169,15 +181,20 @@ export default {
     background: var(--white);
     margin-bottom: 1em;
   }
+
+  .list-container__control-bar .search-form__input {
+    font-size: initial;
+  }
 }
 
 .list-container__control-bar .group-select {
   align-self: center;
-  margin-top: 1em;
+  margin-left: 1em;
 }
 
 .list-container__control-bar .group-select .options__toggle {
   border: 1px solid var(--gray-30);
+  padding: 0.75em 2.5em 0.75em 1.75em;
 }
 
 .list-container__control-bar .group-select .options__toggle:hover {
@@ -196,7 +213,7 @@ export default {
 
   .list-container__control-bar .group-select {
     position: absolute;
-    top: 0;
+    top: 1.7em;
     right: 1em;
   }
 }
@@ -240,14 +257,16 @@ export default {
 .list-container__list .list-item-container {
   width: 100%;
   display: flex;
+  background: var(--white);
+  box-shadow: var(--shadowCard);
+  margin: 1em 0;
 }
 
-.list-container__list .list-item-container:nth-child(even) {
-  background: var(--gray-20);
-}
 @media (min-width: 57.5em) {
   .list-container__list .list-item-container {
     background: var(--white);
+    box-shadow: none;
+    margin: 0;
   }
   .list-container__list .list-item-container:nth-child(even) {
     background: var(--white);
@@ -263,10 +282,6 @@ export default {
   .list-container__list-column {
     display: flex;
     flex-direction: column;
-  }
-
-  .list-container__list .list-item-container:first-child {
-    margin-top: 0;
   }
 }
 

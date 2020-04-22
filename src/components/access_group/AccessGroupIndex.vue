@@ -77,8 +77,19 @@ export default {
   width: 100%;
 }
 
+.group-index .access-group__header {
+  margin-bottom: 0.5em;
+}
+
 .group-index .summary-area {
   padding: 1.5em;
+}
+
+.summary-area .summary-area__bottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 @media (min-width: 57.5em) {
@@ -108,5 +119,6 @@ export default {
   color: var(--blue-60);
   border-color: var(--blue-60);
   display: flex;
+  margin: 1em 0;
 }
 </style>

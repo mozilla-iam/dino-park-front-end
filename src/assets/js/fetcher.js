@@ -59,7 +59,12 @@ class Fetcher {
           return res.status;
         }
       } else {
-        throw new Error(res.status);
+        const { status } = res;
+        const errorResponse = await res.json();
+        if (errorResponse.hasOwnProperty('error')) {
+          throw new Error(errorResponse.error);
+        }
+        throw new Error(status);
       }
     } catch (e) {
       throw new Error(e.message);

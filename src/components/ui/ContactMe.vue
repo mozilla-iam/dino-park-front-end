@@ -97,7 +97,10 @@ import ShowMore from '@/components/_functional/ShowMore.vue';
 export default {
   name: 'ContactMe',
   props: {
-    identities: Object,
+    identities: {
+      type: Object,
+      default: null,
+    },
     primaryEmail: String,
     phoneNumbers: Object,
     uris: Object,
@@ -110,6 +113,9 @@ export default {
   },
   computed: {
     displayedSecondaryEmail() {
+      if (!this.identities) {
+        return '';
+      }
       return this.identities.custom1PrimaryEmail.value;
     },
     displayedPhoneNumbers() {

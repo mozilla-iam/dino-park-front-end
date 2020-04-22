@@ -15,9 +15,12 @@
       />
       <TextInput
         @focus="handleCustomInputFocus"
+        @keypress="handleTextInputKeyPress"
         class="custom-value"
         v-if="optionIsCustom(radio)"
         v-model="customValue"
+        type="number"
+        :min="minCustom"
       />
       <label :for="radio.value">{{ radio.label }}</label>
     </div>
@@ -29,11 +32,16 @@ import Icon from '@/components/ui/Icon.vue';
 import TextInput from '@/components/ui/TextInput.vue';
 
 export default {
-  name: 'Checkbox',
+  name: 'RadioSelect',
   props: {
     options: Array,
     value: [String, Number],
     isCustom: Function,
+    // TODO: update this if we ever want to put something here other than a number
+    minCustom: {
+      type: Number,
+      default: null,
+    },
   },
   methods: {
     emitChange(event) {
@@ -51,6 +59,7 @@ export default {
         this.customValue === '' ? 'custom' : Number(this.customValue),
       );
     },
+    handleTextInputKeyPress(event) {},
     optionIsCustom(option) {
       if (!this.isCustom) {
         return false;
