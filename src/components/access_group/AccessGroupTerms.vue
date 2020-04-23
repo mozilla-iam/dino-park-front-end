@@ -4,6 +4,7 @@
       class="button group-terms__back-action"
       v-on:click.native="goBack"
       to="#"
+      v-if="!invitationShowTOSAccept"
     >
       <Icon
         class="group-terms__back-icon"
@@ -142,7 +143,7 @@ export default {
       return this.$route.path.substr(0, this.$route.path.lastIndexOf('/'));
     },
     invitationShowTOSAccept() {
-      if (!this.$route.query.accept) {
+      if (!this.$route.query.accept || !this.groupInvitation) {
         return false;
       }
       return this.groupInvitation.requiresTos;
