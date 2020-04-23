@@ -143,13 +143,14 @@ export default {
 
 <style>
 .list-container {
-  margin: 0 1em;
+  width: 100%;
 }
 
 @media (min-width: 57.5em) {
   .list-container {
     margin: 0;
     box-shadow: none;
+    width: auto;
   }
 }
 
@@ -162,7 +163,7 @@ export default {
   justify-content: center;
   background: var(--white);
   box-shadow: var(--shadowCard);
-  margin-bottom: 2em;
+  margin: 0 1em 2em 1em;
 }
 
 .list-container__control-bar .search-form__input {
