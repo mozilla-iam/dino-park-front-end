@@ -47,7 +47,7 @@
         </ul>
       </div>
     </div>
-    <footer class="markdown-guide__footer">
+    <footer class="markdown-guide__footer" v-if="!collapsed">
       <ExternalLink
         href="https://daringfireball.net/projects/markdown/syntax"
         >{{ fluent('access-group_markdown', 'footer-link') }}</ExternalLink
