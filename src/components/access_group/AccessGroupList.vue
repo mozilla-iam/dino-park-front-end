@@ -180,7 +180,7 @@ export default {
 @media (min-width: 57.5em) {
   .list-container__control-bar {
     background: var(--white);
-    margin-bottom: 1em;
+    margin: 0 0 2em 0;
   }
 
   .list-container__control-bar .search-form__input {

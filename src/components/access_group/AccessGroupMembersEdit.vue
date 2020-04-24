@@ -251,6 +251,7 @@ import {
 import {
   expiryTextFromDate,
   getExpirationDate,
+  getDaysFromToday,
 } from '@/assets/js/component-utils';
 import AccessGroups from '@/assets/js/access-groups';
 
@@ -357,13 +358,19 @@ export default {
             'access-group_members',
             'members-table__header-3',
           ),
+          // Date display logic
           contentHandler: ({ expiration }) => {
-            if (!expiration) {
+            // Get the number of days between the expiration date and today
+            const daysDiff = getDaysFromToday(expiration);
+            // If expiration is today or in the past/infinite expiration, show "no expire" text
+            if (daysDiff <= 0) {
               return this.fluent('access-group_members', 'no-expiration');
             }
-            if (expiration > memberRenewalThreshold) {
-              return getExpirationDate(expiration);
+            // If the expiration is beyond the threshold, just show the date
+            if (daysDiff > memberRenewalThreshold) {
+              return new Date(expiration).toLocaleDateString();
             }
+            // If the expiration is within the threshold, show specialized text
             return this.expiry(expiration);
           },
           isAlert: (member) => this.isMemberUpForRenewal(member),
