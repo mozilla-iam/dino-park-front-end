@@ -43,8 +43,7 @@
       class="profile-description--faded"
       :description="description.value"
     ></ProfileDescription>
-    <hr class="profile-preview__divider" />
-    <div class="profile-preview__buttons">
+    <div class="profile-preview__actions">
       <div class="hide-mobile">
         <ContactMe
           :primaryEmail="primaryEmail.value"
@@ -52,13 +51,15 @@
           :uris="uris"
         ></ContactMe>
       </div>
-      <RouterLink
-        :to="{ name: 'Profile', params: { username: primaryUsername.value } }"
-        class="button button--text-only"
-      >
-        {{ fluent('orgchart_full-profile') }}
-        <Icon id="chevron-right" :width="16" :height="16" />
-      </RouterLink>
+      <footer class="profile-preview__footer">
+        <RouterLink
+          :to="{ name: 'Profile', params: { username: primaryUsername.value } }"
+          class="button button--text-only"
+        >
+          {{ fluent('orgchart_full-profile') }}
+          <Icon id="chevron-right" :width="16" :height="16" />
+        </RouterLink>
+      </footer>
     </div>
   </div>
 </template>
@@ -145,14 +146,16 @@ export default {
   object-fit: cover;
   margin-bottom: 1em;
 }
-.profile-preview__buttons {
+.profile-preview__actions {
   display: flex;
   align-items: flex-start;
   justify-content: center;
+  margin-top: 2em;
 }
 @media (min-width: 57.5em) {
-  .profile-preview__buttons {
-    justify-content: space-around;
+  .profile-preview__actions {
+    flex-direction: column;
+    justify-content: flex-start;
   }
 }
 .profile-preview__close {
@@ -168,9 +171,6 @@ export default {
 .profile-preview__close:hover {
   background-color: transparent;
   color: var(--blue-60);
-}
-.profile-preview__divider {
-  margin: 2em 0;
 }
 
 .modal .profile-preview {
@@ -191,5 +191,15 @@ export default {
 }
 .modal .profile-preview__since {
   text-align: center;
+}
+
+.profile-preview .profile-preview__footer {
+  width: 100%;
+  border-top: 1px solid var(--gray-30);
+  padding-top: 1em;
+}
+
+.profile-preview__footer .button--text-only {
+  padding: 0;
 }
 </style>
