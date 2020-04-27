@@ -304,6 +304,7 @@ export default {
       'accessGroup/getExpiration'
     ];
     const accessGroupCurators = this.$store.getters['accessGroup/getCurators'];
+    // TODO: Figure out what this value does and delete it if unnecessary
     let selectedExpiration =
       accessGroupExpiration === MEMBER_EXPIRATION_ONE_YEAR ||
       accessGroupExpiration === MEMBER_EXPIRATION_TWO_YEARS ||
@@ -321,7 +322,7 @@ export default {
       removedCurators: [],
       curatorsListDirty: false,
       groupExpirationDirty: false,
-      selectedRowExpiration: selectedExpiration,
+      selectedRowExpiration: !accessGroupExpiration ? 0 : accessGroupExpiration,
       memberListOptions: {
         search: '',
         sort: '',

@@ -1,5 +1,5 @@
 <template>
-  <div class="radio-select">
+  <form class="radio-select">
     <div
       class="radio-select__option"
       v-for="(radio, idx) in options"
@@ -24,7 +24,7 @@
       />
       <label :for="radio.value">{{ radio.label }}</label>
     </div>
-  </div>
+  </form>
 </template>
 
 <script>
