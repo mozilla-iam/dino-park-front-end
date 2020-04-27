@@ -196,7 +196,7 @@ export default {
 .profile-preview .profile-preview__footer {
   width: 100%;
   border-top: 1px solid var(--gray-30);
-  padding-top: 1em;
+  padding-top: 2em;
 }
 
 .profile-preview__footer .button--text-only {
