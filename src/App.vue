@@ -5,6 +5,10 @@
     <GlobalNotifications class="container" />
     <RouterView class="container" />
     <Footer></Footer>
+    <OnboardingModal
+      v-if="showOnboarding"
+      @close="closeOnboardingModal"
+    ></OnboardingModal>
   </div>
 </template>
 
@@ -13,6 +17,7 @@ import Banner from '@/components/ui/Banner.vue';
 import TopBar from '@/components/ui/TopBar.vue';
 import Footer from '@/components/ui/Footer.vue';
 import GlobalNotifications from '@/components/ui/GlobalNotifications.vue';
+import OnboardingModal from '@/components/guide/OnboardingModal.vue';
 
 export default {
   name: 'PageHome',
@@ -21,10 +26,14 @@ export default {
     TopBar,
     Footer,
     GlobalNotifications,
+    OnboardingModal,
   },
   computed: {
     containerCSS() {
       return `${this.$route.meta.key}-container`;
+    },
+    showOnboarding() {
+      return this.$store.state.onboarding.modal;
     },
   },
   methods: {
@@ -34,6 +43,9 @@ export default {
           document.body.classList.add('focus-styles');
         }
       });
+    },
+    closeOnboardingModal() {
+      this.$store.state.onboarding.modal = false;
     },
   },
   mounted() {

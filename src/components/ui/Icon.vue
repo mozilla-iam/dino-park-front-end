@@ -23,7 +23,7 @@
       <use
         :href="
           '#' +
-            require(`!svg-sprite-loader?extract=false!image-webpack-loader?${`{
+          require(`!svg-sprite-loader?extract=false!image-webpack-loader?${`{
               svgo: {
                 plugins: [
                   { removeXMLNS: true },
@@ -56,7 +56,7 @@ export default {
   mounted() {
     if (this.id === 'self-avatar') {
       if (
-        this.$store.state.scope.isLoggedIn &&
+        this.$store.state.scope.isReady &&
         this.$store.state.user.picture.value
       ) {
         this.avatarUrl = avatarUrl(

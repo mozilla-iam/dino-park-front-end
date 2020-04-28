@@ -21,7 +21,10 @@ class Scope {
     } = user || {};
     this.username = username;
     this.uuid = uuid;
-    this.isLoggedIn = Boolean(username);
+    this.isLoggedIn = Boolean(username || user?.loggedIn);
+    // TODO: update this
+    this.firstTime = this.isLoggedIn && window.location.hash === '#tour';
+    this.isReady = Boolean(username);
     this.isStaff = isStaff;
     this.isNdaed = 'nda' in (mozilliansorgGroups || {});
     this.isLdap = Boolean(ldapGroups);

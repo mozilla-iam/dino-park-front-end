@@ -7,6 +7,9 @@ export const profileState = {
 };
 export const profileActions = {
   async fetchProfile({ commit, dispatch }) {
+    // This is redundant to fetchUser in store/index.js.
+    // Right now this will always retrieve from cache and error handing is done
+    // in store/index.js gracefully.
     const { data } = await client.query({
       query: DISPLAY_PROFILE,
       variables: { username: null },
@@ -26,7 +29,7 @@ export const profileMutations = {
   },
 };
 export const profileGetters = {
-  getProfile: state => {
+  getProfile: (state) => {
     return state.profile;
   },
 };

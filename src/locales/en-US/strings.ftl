@@ -15,6 +15,9 @@ open_label = Open {$label}
 loading = Loading
 log_in = Log in
 select = Select
+next = Next
+skip = Skip
+back = Back
 
 # titles
 
@@ -77,6 +80,17 @@ classification_info = This person has access to data classified as public.
 slack_access_info = This person has access to the Mozilla Slack instance.
   .wiki = Read more about contributors having access to Slack <a data-l10n-name="wiki">on the wiki</a>.
 
+## Onboarding
+
+onboarding_modal_1 = Welcome to your profile
+  .paragraph_1 = Your Profile is your comprehensive Mozilla identity. It is shared by a growing number of Mozilla projects and websites.
+  .paragraph_2 = We take privacy very seriously, which is why we provide easy to use <strong>privacy controls</strong> for each piece of information within your profile. You can also preview how your profile page looks publicly using the <strong>Preview as</strong> feature.
+onboarding_modal_2 = Tell us about yourself
+  .paragraph_1 = our profile <strong>biography</strong> is a great way to share your achievements and areas of interest with your fellow Mozillians. You can determine who can read your biography by changing its <strong>privacy level</strong>.
+  .paragraph_2 = Use the “<strong>Tags</strong>” section in your profile to add your skills and interests This will help relevant Mozilla staff and contributors connect with you. 
+onboarding_modal_3 = We're here to help
+  .paragraph_1 = You can access help and documentation at any time by reading our comprehensive Mozilla People Directory <a data-l10n-name="FAQ">FAQ</a>.
+  .paragraph_2 = That’s it! You’re ready to dive in.
 # pages
 
 ## Home Page

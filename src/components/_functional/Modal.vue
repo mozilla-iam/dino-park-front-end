@@ -119,6 +119,8 @@ export default {
   margin-bottom: 2em;
   border-bottom: 1px solid var(--gray-30);
   position: relative;
+  display: grid;
+  grid-template-columns: 30px auto 30px;
 }
 @media (min-width: 57.5em) {
   .modal__header {
@@ -130,11 +132,14 @@ export default {
   font-family: 'Open Sans', sans-serif;
   margin-bottom: 0;
   text-align: center;
+  grid-column: 2;
+  grid-row: 1;
 }
 .modal__close {
-  position: absolute;
-  top: 1.5em;
-  right: 1.5em;
+  padding: 0em;
+  grid-column: 3;
+  grid-row: 1;
+  align-self: flex-start;
   border: 0;
   background-color: transparent;
 }

@@ -2,12 +2,39 @@ import Vuex from 'vuex';
 import Vue from 'vue';
 import { DISPLAY_PROFILE } from '@/queries/profile';
 import Scope from '@/assets/js/scope';
+import Onboarding from '@/assets/js/onboarding';
 import { client } from '@/server';
 import user from './user.store';
 import scope from './scope.store';
 import accessGroup from './access-group.store';
 import accessGroups from './access-groups.store';
 import features from './features.store';
+
+async function fetchUser(commit) {
+  try {
+    const { data } = await client.query({
+      query: DISPLAY_PROFILE,
+      variables: { username: null },
+    });
+    commit('setUser', data.profile);
+    return true;
+  } catch (e) {
+    const {
+      graphQLErrors: [{ message }],
+    } = e;
+    if (message === 'wait_for_profile') {
+      console.log('creating');
+    }
+    commit('setUser', { loggedIn: true });
+    return false;
+  }
+}
+
+async function retryFetchUser(commit, retries = 10) {
+  if (!(await fetchUser(commit)) && retries > 0) {
+    setTimeout(() => retryFetchUser(commit, retries - 1), 1000);
+  }
+}
 
 Vue.use(Vuex);
 export default new Vuex.Store({
@@ -24,15 +51,12 @@ export default new Vuex.Store({
     org: null,
     error: false,
     loading: false,
+    onboarding: new Onboarding(),
   },
   actions: {
     // TODO: Create error handling for this action
     async fetchUser({ commit }) {
-      const { data } = await client.query({
-        query: DISPLAY_PROFILE,
-        variables: { username: null },
-      });
-      commit('setUser', data.profile);
+      await retryFetchUser(commit);
     },
     setLoading({ commit }) {
       commit('setLoading', true);
@@ -45,6 +69,9 @@ export default new Vuex.Store({
     setUser(state, userContent) {
       state.user = userContent;
       state.scope.update(userContent);
+      if (state.scope.firstTime) {
+        state.onboarding.enable();
+      }
     },
     setOrg(state, org) {
       state.org = org;
