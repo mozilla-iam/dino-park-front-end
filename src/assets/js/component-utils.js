@@ -52,12 +52,16 @@ export function parseMarkdown(text) {
   return insane(marked(text, { gfm: true }));
 }
 
-export function expiryTextFromDate(fluent, expirationDate) {
-  const expiryDate = new Date(expirationDate);
+export function getDaysFromToday(date) {
+  const expiryDate = new Date(date);
   const currentDate = new Date();
   const difference = expiryDate.getTime() - currentDate.getTime();
 
-  const expDiffDays = Math.ceil(difference / (1000 * 3600 * 24));
+  return Math.ceil(difference / (1000 * 3600 * 24));
+}
+
+export function expiryTextFromDate(fluent, expirationDate) {
+  const expDiffDays = getDaysFromToday(expirationDate);
   return expiryText(fluent, expDiffDays);
 }
 
