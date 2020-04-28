@@ -135,7 +135,7 @@ export default {
         (img) => {
           this.imgSrc = img.toDataURL();
         },
-        { orientation: true },
+        { orientation: true, canvas: true },
       );
     },
     async resize(img) {
