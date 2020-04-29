@@ -3,7 +3,7 @@
     <UserPicture
       :avatar="{ picture: member.picture, username: member.username }"
       class="curator-image"
-      :size="24"
+      :size="40"
       :showLabel="member.isStaff"
     />
     <div class="member-list-description">

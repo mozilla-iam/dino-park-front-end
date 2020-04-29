@@ -732,7 +732,7 @@ export default {
   background: none;
   color: var(--black);
   padding-right: 0;
-  padding: 0.5em;
+  padding: 5px;
   display: flex;
   margin-right: 1em;
 }
