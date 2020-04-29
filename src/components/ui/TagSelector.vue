@@ -112,7 +112,7 @@ export default {
       this.tagsDisplay.splice(idx, 1);
       this.$emit('input', this.tagsDisplay);
     },
-    onInput: throttle(function(e) {
+    onInput: throttle(function (e) {
       if (!e || e.target.value === '') {
         if (e.target.value === '') {
           this.autoCompleteList = [];
@@ -190,6 +190,11 @@ export default {
   flex: 1;
   min-width: 5em;
   margin: 0.6em 0;
+}
+
+.tag-selector .tag-container__action:hover {
+  background: var(--darkBlue);
+  cursor: pointer;
 }
 
 .tag-selector-container .selector-auto-complete {

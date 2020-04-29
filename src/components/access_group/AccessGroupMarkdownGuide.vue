@@ -1,9 +1,6 @@
 <template>
-  <aside class="markdown-guide-container">
-    <h4
-      :class="{ 'markdown-guide__header': true, collapsed }"
-      @click="toggleCollapsed"
-    >
+  <aside :class="{ 'markdown-guide-container': true, collapsed }">
+    <h4 class="markdown-guide__header" @click="toggleCollapsed">
       <span class="markdown-arrow"></span>
       {{ fluent('access-group_markdown') }}
     </h4>
@@ -106,11 +103,15 @@ export default {
   margin-right: 1.2em;
 }
 
-.markdown-guide__header.collapsed {
+.markdown-guide-container.collapsed:hover {
+  border: 1px solid var(--blue-60);
+}
+
+.markdown-guide-container.collapsed .markdown-guide__header {
   border-bottom: none;
 }
 
-.markdown-guide__header.collapsed .markdown-arrow {
+.markdown-guide-container.collapsed .markdown-guide__header .markdown-arrow {
   border-top: 0.5em solid transparent;
   border-bottom: 0.5em solid transparent;
   border-left: 0.7em solid var(--black);
