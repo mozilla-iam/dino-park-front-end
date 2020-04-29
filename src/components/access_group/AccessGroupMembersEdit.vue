@@ -82,6 +82,7 @@
               <Button
                 class="primary-button delete"
                 @click="handleRemoveConfirmClick(member)"
+                v-if="canMemberBeRemoved(member)"
                 >{{ fluent('access-group_members', 'remove-action') }}</Button
               >
             </div>
