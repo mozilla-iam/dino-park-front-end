@@ -115,6 +115,7 @@ body {
   margin: 0;
   font-size: 87.5%;
   letter-spacing: 0.04em;
+  height: 100vh;
 }
 
 h1,

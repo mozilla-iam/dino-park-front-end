@@ -78,7 +78,7 @@ export default {
   background: rgba(0, 0, 0, 0.7);
   display: flex;
   align-items: center;
-  padding: 1em;
+  padding: 0em;
   top: 0;
   left: 0;
   opacity: 1;
@@ -102,6 +102,9 @@ export default {
   overflow: auto;
 }
 @media (min-width: 57.5em) {
+  .modal {
+    padding: 1em;
+  }
   .modal__content {
     height: auto;
   }
