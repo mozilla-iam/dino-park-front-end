@@ -100,6 +100,9 @@
               <Button
                 class="tertiary-action expand"
                 @click="toggleExpand(true)"
+                :title="
+                  fluent('access-group_members', 'expandable-action-text')
+                "
               >
                 <Icon id="chevron-down" :width="32" :height="32" />
               </Button>
