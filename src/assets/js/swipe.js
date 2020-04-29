@@ -21,7 +21,7 @@ class Swipe {
   }
 
   handleSwipe() {
-    let diff = this.touchEnd - this.touchStart;
+    const diff = this.touchEnd - this.touchStart;
     if (diff > 10) {
       this.right();
     }

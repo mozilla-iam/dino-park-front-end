@@ -81,13 +81,13 @@ export default {
   data() {
     const steps = [
       {
-        img: require('@/assets/images/people-dots.png'),
+        img: require('@/assets/images/tour-heads.png'),
       },
       {
-        img: require('@/assets/images/people-dots.png'),
+        img: require('@/assets/images/tour-technology.png'),
       },
       {
-        img: require('@/assets/images/people-dots.png'),
+        img: require('@/assets/images/tour-foundation.png'),
         tags: {
           FAQ: {
             tag: 'a',
@@ -125,7 +125,7 @@ export default {
 .onboarding-modal__article > img {
   margin-left: auto;
   margin-right: auto;
-  width: 18em;
+  height: 18em;
 }
 
 .onboarding-modal__hline {
