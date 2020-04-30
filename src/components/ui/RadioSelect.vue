@@ -1,5 +1,5 @@
 <template>
-  <form class="radio-select">
+  <div class="radio-select">
     <div
       class="radio-select__option"
       v-for="(radio, idx) in options"
@@ -11,20 +11,21 @@
         :name="radio.value"
         v-model="selectedRadio"
         :value="radio.value"
-        class="radio-select__value"
+        class="input--w-error radio-select__value"
       />
       <TextInput
         @focus="handleCustomInputFocus"
-        @keypress="handleTextInputKeyPress"
         class="custom-value"
         v-if="optionIsCustom(radio)"
         v-model="customValue"
         type="number"
-        :min="minCustom"
+        :min="selectedRadio == radio.value ? minCustom : null"
+        :infoMsg="infoMsg"
+        :required="selectedRadio == radio.value"
       />
       <label :for="radio.value">{{ radio.label }}</label>
     </div>
-  </form>
+  </div>
 </template>
 
 <script>
@@ -41,6 +42,10 @@ export default {
     minCustom: {
       type: Number,
       default: null,
+    },
+    infoMsg: {
+      type: String,
+      default: '',
     },
   },
   methods: {
@@ -59,7 +64,6 @@ export default {
         this.customValue === '' ? 'custom' : Number(this.customValue),
       );
     },
-    handleTextInputKeyPress(event) {},
     optionIsCustom(option) {
       if (!this.isCustom) {
         return false;

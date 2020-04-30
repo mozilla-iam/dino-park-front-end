@@ -190,7 +190,6 @@ import Icon from '@/components/ui/Icon.vue';
 import Select from '@/components/ui/Select.vue';
 import { DISPLAY_LEVELS } from '@/assets/js/display-levels';
 import Tooltip from '@/components/ui/Tooltip.vue';
-import Fluent from '@/components/Fluent.vue';
 import LinksMixin from '@/components/_mixins/LinksMixin.vue';
 
 const EMPTY_SECONDARY_EMAIL = {
@@ -216,7 +215,6 @@ export default {
     PrivacySetting,
     Select,
     Tooltip,
-    Fluent,
   },
   mounted() {
     this.$refs.header.focus();

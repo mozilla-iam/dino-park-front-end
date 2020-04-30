@@ -50,20 +50,18 @@
 
 <script>
 import Tooltip from '@/components/ui/Tooltip.vue';
-import Fluent from '@/components/Fluent.vue';
 
 export default {
   name: 'AccessLabel',
   components: {
     Tooltip,
-    Fluent,
   },
   props: {
     staffInformation: Object,
     accessInformation: Object,
     labelType: String,
   },
-  data: function() {
+  data: function () {
     return {
       slackLabel: 'Slack',
     };

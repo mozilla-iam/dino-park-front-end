@@ -1,6 +1,5 @@
 <template>
-  <RouterView v-if="!loading" />
-  <LoadingSpinner v-else />
+  <RouterView />
 </template>
 
 <script>

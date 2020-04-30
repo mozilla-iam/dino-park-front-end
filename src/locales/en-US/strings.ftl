@@ -453,10 +453,7 @@ access-group_expiration = Expiration
   .container-info__description-1 = Changes made to the expiration length will
   .container-info__description-2 = only apply to new members.
   .container-info__description-3 = Changes are not applied retroactively.
-  .create-info__description-1 = Membership expiration is
-  .create-info__description-2 = enabled by default
-  .create-info__description-3 = (for up to 2 years).
-  .create-info__description-4 = If you believe your Access Group is an exception and should have expiration disabled please send a request to
+  .create-info = Memberships expire <strong>by default</strong> after 1 year.<br /> If you believe your access group is an exception and should have expiration disabled please send a request <a data-l10n-name="email">via email</a>.
   .one-year = 1 year
   .one-year__default = 1 year (default)
   .two-years = 2 years
@@ -554,3 +551,9 @@ date-week = week
   .plural = weeks
 date-day = day
   .plural = days
+
+ag_errors = Something is wrong :/
+  .number_gt_0 = x > 0
+ag_api_errors = Something went wrong :/
+ .invalid_group_name = Minimum length is 3, allowed characters are: a-z, 0-9, _ and -.
+ .group_name_exists = Group name already exists

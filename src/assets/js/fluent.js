@@ -9,7 +9,7 @@ const languages = [
   ['en-GB', 'English (British)'],
 ];
 
-const whitelistedTags = ['i', 'strong'];
+const whitelistedTags = ['i', 'strong', 'br'];
 const whitelistedAttributes = ['title', 'aria-label'];
 
 class Fluent {

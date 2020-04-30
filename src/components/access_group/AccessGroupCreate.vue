@@ -1,6 +1,6 @@
 <template>
   <section class="group-create-container">
-    <main class="group-create" v-if="!loading">
+    <main class="group-create">
       <Button
         class="button group-create__back-action"
         @click="handleBackClicked"
@@ -8,7 +8,11 @@
         <Icon id="chevron-left" :width="17" :height="17" />
         {{ fluent('access-group_create', 'group-create__back-action') }}
       </Button>
-      <section class="primary-area">
+      <form
+        class="primary-area"
+        v-on:submit.prevent="handleCreateClicked"
+        ref="createGroupForm"
+      >
         <h1>{{ fluent('access-group_create') }}</h1>
         <AccessGroupEditPanel
           class="details-container"
@@ -24,6 +28,8 @@
                 v-model="groupName"
                 :maxlength="60"
                 class="content-area__value"
+                :pattern="groupNamePattern"
+                :infoMsg="fluent('ag_api_errors', 'invalid_group_name')"
               />
             </div>
             <div class="content-area__row multi-line markdown-outer-container">
@@ -85,6 +91,7 @@
                 :options="expirationOptions"
                 v-model="selectedExpiration"
                 :isCustom="isExpirationCustom"
+                :minCustom="1"
               />
               <aside class="container-info">
                 <Icon
@@ -94,37 +101,16 @@
                   :height="24"
                 />
                 <p class="container-info__description">
-                  {{
-                    fluent(
-                      'access-group_expiration',
-                      'create-info__description-1',
-                    )
-                  }}
-                  <strong>
-                    {{
-                      fluent(
-                        'access-group_expiration',
-                        'create-info__description-2',
-                      )
-                    }}
-                  </strong>
-                  {{
-                    fluent(
-                      'access-group_expiration',
-                      'create-info__description-3',
-                    )
-                  }}
-                  <br />
-                  {{
-                    fluent(
-                      'access-group_expiration',
-                      'create-info__description-4',
-                    )
-                  }}
-                  <ExternalLink
-                    href="mailto:people.mozilla.org-admin@mozilla.com"
-                    >people.mozilla.org-admin@mozilla.com</ExternalLink
-                  >
+                  <Fluent
+                    id="access-group_expiration"
+                    attr="create-info"
+                    :tags="{
+                      email: {
+                        tag: 'a',
+                        href: 'mailto:people.mozilla.org-admin@mozilla.com',
+                      },
+                    }"
+                  />
                 </p>
               </aside>
             </div>
@@ -134,8 +120,14 @@
           <template v-slot:content>
             <div class="content-area__row">
               <div class="radio-control">
-                <input type="checkbox" v-model="groupTermsRequiredData" />
-                {{ fluent('access-group_terms', 'terms-required') }}
+                <input
+                  id="tos"
+                  type="checkbox"
+                  v-model="groupTermsRequiredData"
+                />
+                <label id="tos-label" for="tos">{{
+                  fluent('access-group_terms', 'terms-required')
+                }}</label>
               </div>
             </div>
             <div
@@ -164,21 +156,22 @@
           </template>
         </AccessGroupEditPanel>
         <footer class="group-create__footer">
-          <Button
-            class="button--primary"
-            @click="handleCreateClicked"
-            :disabled="!createEnabled"
-            >{{ fluent('access-group_create', 'create-action') }}</Button
+          <button
+            class="button button--primary"
+            type="submit"
+            :disabled="!isValid"
           >
+            {{ fluent('access-group_create', 'create-action') }}
+          </button>
           <Button
             class="button button--secondary button--action"
             @click="handleBackClicked"
             >{{ fluent('access-group_create', 'cancel-action') }}</Button
           >
         </footer>
-      </section>
+        <LoadingSpinner v-if="loading"></LoadingSpinner>
+      </form>
     </main>
-    <LoadingSpinner v-else></LoadingSpinner>
   </section>
 </template>
 
@@ -216,6 +209,8 @@ export default {
   },
   data() {
     return {
+      groupNamePattern: '[a-z0-9\\-_]*',
+      isValid: false,
       groupDescription: '',
       groupType: ACCESS_GROUP_TYPES[TYPE_INDEX.closed],
       groupName: '',
@@ -243,12 +238,14 @@ export default {
     ...mapGetters({
       loading: 'getLoading',
     }),
-    createEnabled() {
-      return this.groupName.length > 0;
-    },
     groupTypes() {
       return ACCESS_GROUP_TYPES.filter((type) => type !== 'Open');
     },
+  },
+  mounted() {
+    [...this.$refs.createGroupForm.elements].forEach((el) =>
+      el.addEventListener('input', () => this.updateValidity()),
+    );
   },
   methods: {
     ...mapActions({
@@ -256,15 +253,25 @@ export default {
       setLoading: 'setLoading',
       completeLoading: 'completeLoading',
     }),
-    handleCreateClicked() {
-      this.setLoading();
-      this.createGroup({
-        name: this.groupName,
-        type: this.groupType,
-        description: this.groupDescription,
-        group_expiration: this.selectedExpiration,
-      })
-        .then(() => {
+    updateValidity() {
+      this.isValid = this.$refs.createGroupForm.checkValidity();
+    },
+    async handleCreateClicked(ev) {
+      this.groupNamePattern = '[a-z0-9\\-_]{3,}';
+      await this.$nextTick();
+      const form = ev.target;
+      if (!form.checkValidity()) {
+        ev.preventDefault();
+      } else {
+        this.setLoading();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        try {
+          await this.createGroup({
+            name: this.groupName,
+            type: this.groupType,
+            description: this.groupDescription,
+            group_expiration: this.selectedExpiration,
+          });
           this.tinyNotification('access-group-created', this.groupName);
           this.$router.push({
             name: ACCESS_GROUP_PAGE,
@@ -273,15 +280,16 @@ export default {
             },
           });
           this.completeLoading();
-        })
-        .catch((e) => {
+        } catch (e) {
           this.completeLoading();
-          this.tinyNotificationError(e.message);
-        });
+          this.$root.$emit('toast', {
+            content: this.fluent('ag_api_errors', e.message),
+          });
+        }
+      }
     },
     handleBackClicked() {
       this.$router.go(-1);
-      return;
     },
     isExpirationCustom(optionValue) {
       return optionValue === 'custom';
@@ -322,6 +330,8 @@ export default {
   box-shadow: var(--shadowCard);
   margin: 0 0 2em;
   position: relative;
+  overflow: auto;
+  widows: 100%;
 }
 .primary-area .details-container {
   margin-top: 0;
@@ -507,5 +517,22 @@ export default {
 .group-create__footer .button {
   margin-top: 2em;
   margin-left: 1em;
+}
+
+.primary-area > .loading {
+  position: absolute;
+  z-index: var(--layerOne);
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+#tos-label {
+  padding-left: 1em;
 }
 </style>
