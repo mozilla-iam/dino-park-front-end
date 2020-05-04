@@ -159,9 +159,7 @@ export default {
 }
 
 .member-view .member-view__image {
-  margin: 16px;
-  width: 40px;
-  height: 40px;
+  margin: 1em;
 }
 
 .member-view .member-view__info {
@@ -194,9 +192,8 @@ export default {
 }
 
 .list-item__main .member-action {
-  /* Exact measurements from mockup */
-  width: 51.5px;
-  margin: 4px 0;
+  width: 3.5em;
+  margin: 0.25em 0;
   background: transparent;
   border-left: 2px solid var(--gray-20);
   border-right: none;
@@ -207,8 +204,8 @@ export default {
 }
 
 .list-item__main .member-action svg {
-  width: 20px;
-  height: 20px;
+  width: 1.425em;
+  height: 1.425em;
 }
 
 .list-item__main .member-action-container:hover .member-action {
