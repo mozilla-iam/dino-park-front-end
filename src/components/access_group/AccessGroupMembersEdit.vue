@@ -82,6 +82,7 @@
               <Button
                 class="primary-button delete"
                 @click="handleRemoveConfirmClick(member)"
+                v-if="canMemberBeRemoved(member)"
                 >{{ fluent('access-group_members', 'remove-action') }}</Button
               >
             </div>
@@ -99,6 +100,9 @@
               <Button
                 class="tertiary-action expand"
                 @click="toggleExpand(true)"
+                :title="
+                  fluent('access-group_members', 'expandable-action-text')
+                "
               >
                 <Icon id="chevron-down" :width="32" :height="32" />
               </Button>
@@ -731,9 +735,15 @@ export default {
   background: none;
   color: var(--black);
   padding-right: 0;
-  padding: 0.5em;
+  padding: 5px;
   display: flex;
   margin-right: 1em;
+  box-sizing: content-box;
+}
+
+.member-actions .tertiary-action:hover {
+  border: 2px solid var(--blue-60);
+  padding: 4px;
 }
 
 .member-actions .tertiary-action .icon {
@@ -755,12 +765,15 @@ export default {
 }
 
 .expandable-actions-container .primary-button {
-  background: var(--neon-red);
+  color: var(--neon-red);
+  border-color: var(--neon-red);
+  background: var(--white);
+  transition: none;
 }
 
 .expandable-actions-container .primary-button:hover {
   color: var(--white);
-  border-color: var(--neon-red);
+  background: var(--neon-red);
 }
 
 @media (min-width: 57.5em) {

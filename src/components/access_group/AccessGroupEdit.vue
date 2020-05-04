@@ -294,6 +294,11 @@ export default {
   }
 }
 
+.tab-item:hover .item__icon,
+.tab-item:hover .item__label {
+  color: var(--blue-60);
+}
+
 /* Expiration styles */
 .access-group-container .group-edit .expiration-container {
   display: flex;

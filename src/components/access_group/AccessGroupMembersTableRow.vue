@@ -133,10 +133,11 @@ export default {
 </script>
 <style scoped>
 .members-table__row {
-  border: 0.5em solid transparent;
+  border: 0.25em solid transparent;
 }
-.members-table__row.active {
-  border: 0.5em solid var(--blue-60);
+.members-table .members-table__body .members-table__row.active {
+  border: 0.25em solid var(--blue-60);
+  background: var(--lightBlue);
 }
 
 .members-table__row .row-member__main {
@@ -153,7 +154,7 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 1em 0;
+    padding: 0.25em 0;
   }
 }
 

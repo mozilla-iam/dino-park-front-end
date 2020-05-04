@@ -155,7 +155,7 @@ export default {
 
   .members-table .members-table__header {
     background: var(--gray-20);
-    border-bottom: 1px solid var(--gray-40);
+    border-bottom: 1px solid var(--gray-30);
     color: var(--black);
     text-transform: uppercase;
     font-weight: bold;
