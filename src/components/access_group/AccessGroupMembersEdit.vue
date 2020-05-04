@@ -733,13 +733,15 @@ export default {
 
 .member-actions .tertiary-action {
   border: 1px solid var(--gray-40);
-  border-radius: 5em;
+  border-radius: 1rem;
   background: none;
   color: var(--black);
   padding-right: 0;
   padding: 0.25rem;
   display: flex;
   margin-right: 1rem;
+  height: 2rem;
+  width: 2rem;
 }
 
 .member-actions .tertiary-action:hover {
