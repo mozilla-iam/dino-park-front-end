@@ -727,6 +727,8 @@ export default {
 }
 .member-actions .primary-action {
   margin-right: 1em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
 }
 
 .member-actions .tertiary-action {
@@ -735,15 +737,14 @@ export default {
   background: none;
   color: var(--black);
   padding-right: 0;
-  padding: 5px;
+  padding: 0.25rem;
   display: flex;
-  margin-right: 1em;
-  box-sizing: content-box;
+  margin-right: 1rem;
 }
 
 .member-actions .tertiary-action:hover {
   border: 2px solid var(--blue-60);
-  padding: 4px;
+  padding: calc(0.25rem - 1px);
 }
 
 .member-actions .tertiary-action .icon {
