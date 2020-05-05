@@ -49,7 +49,7 @@
               </p>
               <div class="expandable-content-container__second-row">
                 <ExpirationSelect
-                  class="expiration-select"
+                  class="renew-expiration-select"
                   v-model="selectedRowExpiration"
                   :highlightError="true"
                 />
@@ -760,12 +760,6 @@ export default {
   margin-bottom: 2em;
 }
 
-.expandable-content-container__second-row .expiration-select {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  row-gap: 2em;
-}
-
 .expandable-content-container__second-row .expiration-actions {
   display: flex;
   flex-direction: row;
@@ -778,11 +772,6 @@ export default {
     display: flex;
     flex-direction: row;
     align-items: center;
-  }
-  .expandable-content-container__second-row .expiration-select {
-    display: flex;
-    flex-direction: row;
-    flex: 9;
   }
 
   .expandable-content-container__second-row .expiration-actions {
