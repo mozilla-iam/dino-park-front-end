@@ -79,12 +79,9 @@
                 fluent('access-group_invite-member', 'invite-expiration__label')
               }}
             </label>
-            <RadioSelect
+            <ExpirationSelect
               class="expiration-container__value"
-              :options="expirationOptions"
               v-model="newInvitesExpiration"
-              :isCustom="isExpirationCustom"
-              :minCustom="1"
             />
           </div>
         </div>
@@ -143,7 +140,7 @@ import TextInput from '@/components/ui/TextInput.vue';
 import TextArea from '@/components/ui/TextArea.vue';
 import Button from '@/components/ui/Button.vue';
 import Icon from '@/components/ui/Icon.vue';
-import RadioSelect from '@/components/ui/RadioSelect.vue';
+import ExpirationSelect from '@/components/ui/ExpirationSelect.vue';
 import AccessGroupEditPanel from '@/components/access_group/AccessGroupEditPanel.vue';
 import TagSelector from '@/components/ui/TagSelector.vue';
 import AccessGroups from '@/assets/js/access-groups';
@@ -169,7 +166,7 @@ export default {
     TagSelector,
     AccessGroupMemberListDisplay,
     AccessGroupMembersTable,
-    RadioSelect,
+    ExpirationSelect,
   },
   props: [],
   mounted() {},
@@ -187,20 +184,6 @@ export default {
       newInvitesExpirationEnabled: false,
       newInvitesExpiration: groupExpiration,
       memberRowsDisplay,
-      expirationOptions: [
-        {
-          label: this.fluent('access-group_expiration', 'one-year'),
-          value: MEMBER_EXPIRATION_ONE_YEAR,
-        },
-        {
-          label: this.fluent('access-group_expiration', 'two-years'),
-          value: MEMBER_EXPIRATION_TWO_YEARS,
-        },
-        {
-          label: this.fluent('access-group_expiration', 'custom'),
-          value: 'custom',
-        },
-      ],
       invitationColumns: [
         {
           header: null,
@@ -246,9 +229,6 @@ export default {
     }),
     expiry(expiration) {
       return expiryTextFromDate(this.fluent, expiration);
-    },
-    isExpirationCustom(optionValue) {
-      return optionValue === 'custom';
     },
     handleResendClicked(invitation) {
       this.resendInvitation(invitation).then((result) => {

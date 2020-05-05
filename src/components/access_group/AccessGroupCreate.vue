@@ -90,17 +90,10 @@
                   fluent('access-group_expiration', 'expiration__description')
                 }}
               </label>
-              <RadioSelect
-                :options="expirationOptions"
+              <ExpirationSelect
                 v-model="selectedExpiration"
-                :isCustom="isExpirationCustom"
-                :minCustom="1"
-                :maxCustom="730"
                 :highlightError="highlightError"
               />
-              <span class="group-expiration__info">{{
-                fluent('access-group_expiration', 'custom-expiration-info')
-              }}</span>
               <aside class="container-info">
                 <Icon
                   id="info"
@@ -185,7 +178,7 @@ import TextInput from '@/components/ui/TextInput.vue';
 import TextArea from '@/components/ui/TextArea.vue';
 import Button from '@/components/ui/Button.vue';
 import Icon from '@/components/ui/Icon.vue';
-import RadioSelect from '@/components/ui/RadioSelect.vue';
+import ExpirationSelect from '@/components/ui/ExpirationSelect.vue';
 import AccessGroupEditPanel from '@/components/access_group/AccessGroupEditPanel.vue';
 import AccessGroupMarkdownGuide from '@/components/access_group/AccessGroupMarkdownGuide.vue';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
@@ -194,7 +187,6 @@ import {
   TYPE_INDEX,
   ACCESS_GROUP_TYPES,
   MEMBER_EXPIRATION_ONE_YEAR,
-  MEMBER_EXPIRATION_TWO_YEARS,
 } from '@/view_models/AccessGroupViewModel.js';
 
 export default {
@@ -204,7 +196,7 @@ export default {
     TextArea,
     Button,
     Icon,
-    RadioSelect,
+    ExpirationSelect,
     AccessGroupEditPanel,
     AccessGroupMarkdownGuide,
     LoadingSpinner,
@@ -220,20 +212,6 @@ export default {
       groupTermsData: '',
       selectedExpiration: MEMBER_EXPIRATION_ONE_YEAR,
       lastMarkdownCollapsed: true,
-      expirationOptions: [
-        {
-          label: this.fluent('access-group_expiration', 'one-year__default'),
-          value: MEMBER_EXPIRATION_ONE_YEAR,
-        },
-        {
-          label: this.fluent('access-group_expiration', 'two-years'),
-          value: MEMBER_EXPIRATION_TWO_YEARS,
-        },
-        {
-          label: this.fluent('access-group_expiration', 'custom'),
-          value: 'custom',
-        },
-      ],
     };
   },
   computed: {
@@ -285,9 +263,6 @@ export default {
     },
     handleBackClicked() {
       this.$router.go(-1);
-    },
-    isExpirationCustom(optionValue) {
-      return optionValue === 'custom';
     },
     onLastCollapseToggled(toggleValue) {
       this.lastMarkdownCollapsed = toggleValue;
@@ -370,7 +345,7 @@ export default {
   margin-bottom: 1em;
 }
 
-.group-create .content-area__row.group-expiration .radio-select {
+.group-create .content-area__row.group-expiration .expiration-select {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -379,7 +354,7 @@ export default {
 }
 
 @media (min-width: 57.5em) {
-  .group-create .content-area__row.group-expiration .radio-select {
+  .group-create .content-area__row.group-expiration .expiration-select {
     flex-direction: row;
     padding-left: 0;
   }
@@ -387,31 +362,31 @@ export default {
 
 .group-create
   .content-area__row.group-expiration
-  .radio-select
-  >>> .radio-select__option {
+  .expiration-select
+  >>> .expiration-select__option {
   margin: 1em 0;
 }
 
 .group-create
   .content-area__row.group-expiration
-  .radio-select
-  >>> .radio-select__option:first-child {
+  .expiration-select
+  >>> .expiration-select__option:first-child {
   margin-left: 0;
 }
 
 @media (min-width: 57.5em) {
   .group-create
     .content-area__row.group-expiration
-    .radio-select
-    >>> .radio-select__option {
+    .expiration-select
+    >>> .expiration-select__option {
     flex: none;
     margin: 1em;
   }
 
   .group-create
     .content-area__row.group-expiration
-    .radio-select
-    >>> .radio-select__option:first-child {
+    .expiration-select
+    >>> .expiration-select__option:first-child {
     margin-left: 0;
   }
 }
@@ -420,13 +395,6 @@ export default {
   margin-top: 1em;
   display: flex;
   align-items: flex-start;
-}
-
-.group-expiration__info {
-  color: var(--gray-50);
-  padding: 0em 1em;
-  font-size: small;
-  display: inline-block;
 }
 
 .container-info .container-info__icon {

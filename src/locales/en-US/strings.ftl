@@ -450,10 +450,8 @@ access-group_expiration = Expiration
   .expiration__description = Membership will expire after
   .expiration__value-custom-unit = days
   .update-expiration = Update expiration
-  .container-info__description-1 = Changes made to the expiration length will
-  .container-info__description-2 = only apply to new members.
-  .container-info__description-3 = Changes are not applied retroactively.
-  .create-info = Memberships expire <strong>by default</strong> after 1 year.<br /> If you believe your access group is an exception and should have expiration disabled please send a request <a data-l10n-name="email">via email</a>.
+  .container-info__description = Changes made to the expiration length will <strong>only apply to new members</strong>.<br /> Changes are not applied retroactively.
+  .create-info = Memberships expire <strong>by default</strong> after 1 year. If you believe your access group is an exception and should have expiration disabled please send a request <a data-l10n-name="email">via email</a>.
   .one-year = 1 year
   .one-year__default = 1 year (default)
   .two-years = 2 years
