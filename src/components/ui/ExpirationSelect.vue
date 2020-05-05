@@ -36,17 +36,16 @@
 </template>
 
 <script>
-import Icon from '@/components/ui/Icon.vue';
 import TextInput from '@/components/ui/TextInput.vue';
 import {
   MEMBER_EXPIRATION_ONE_YEAR,
   MEMBER_EXPIRATION_TWO_YEARS,
-} from '@/view_models/AccessGroupViewModel.js';
+} from '@/view_models/AccessGroupViewModel';
 
 export default {
   name: 'ExpirationSelect',
   props: {
-    value: Number,
+    value: [String, Number],
     infoMsg: {
       type: String,
       default: '',
@@ -62,7 +61,11 @@ export default {
     },
     handleRadioClicked(event, radioOption) {
       this.selectedRadio = radioOption.value;
-      this.$emit('input', radioOption.value);
+      if (this.optionIsCustom(radioOption)) {
+        this.$emit('input', Number(this.customValue));
+      } else {
+        this.$emit('input', radioOption.value);
+      }
       event.stopPropagation();
     },
     handleCustomInputFocus() {
@@ -119,7 +122,6 @@ export default {
     };
   },
   components: {
-    Icon,
     TextInput,
   },
 };

@@ -47,26 +47,24 @@
               <p class="expandable-content-container__first-row">
                 {{ getRowExpirationIntroText(member) }}
               </p>
-              <div class="expandable-content-container__second-row">
+              <form
+                novalidate
+                v-on:submit.prevent="
+                  (ev) => handleCustomRenew(ev, member, selectedRowExpiration)
+                "
+                class="expandable-content-container__second-row"
+              >
                 <ExpirationSelect
                   class="renew-expiration-select"
                   v-model="selectedRowExpiration"
                   :highlightError="true"
                 />
                 <div class="expiration-actions">
-                  <Button
-                    class="primary-button renew"
-                    @click="
-                      handleRenewClick(member, {
-                        expiration: selectedRowExpiration,
-                      })
-                    "
-                    >{{
-                      fluent('access-group_members', 'renew-action')
-                    }}</Button
-                  >
+                  <Button class="primary-button renew" type="submit">{{
+                    fluent('access-group_members', 'renew-action')
+                  }}</Button>
                 </div>
-              </div>
+              </form>
             </div>
             <div
               slot="row-expandable-actions"
@@ -404,13 +402,19 @@ export default {
     loadMoreHandler() {
       this.loadMoreMembers();
     },
-    handleRenewClick(member, options = {}) {
+    handleCustomRenew(ev, member, expiration) {
+      const form = ev.target;
+      if (!form.checkValidity()) {
+        ev.preventDefault();
+      } else {
+        this.handleRenewClick(member, expiration);
+      }
+    },
+    handleRenewClick(member, expiration) {
       this.setLoading();
       this.renewMember({
         memberUuid: member.uuid,
-        expiration: options.hasOwnProperty('expiration')
-          ? options.expiration
-          : this.accessGroupExpiration,
+        expiration: expiration || this.accessGroupExpiration,
       }).then((result) => {
         this.completeLoading();
         this.tinyNotification(

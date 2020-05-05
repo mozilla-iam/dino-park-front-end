@@ -37,6 +37,7 @@
       <section class="edit-container__content">
         <component v-bind:is="currentTab.component"></component>
       </section>
+      <LoadingSpinner v-if="loading"></LoadingSpinner>
     </section>
   </main>
 </template>
@@ -56,6 +57,7 @@ import AccessGroupInformationEdit from '@/components/access_group/AccessGroupInf
 import AccessGroupMembersEdit from '@/components/access_group/AccessGroupMembersEdit.vue';
 import AccessGroupInvitationsEdit from '@/components/access_group/AccessGroupInvitationsEdit.vue';
 import AccessGroupHistoryEdit from '@/components/access_group/AccessGroupHistoryEdit.vue';
+import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 
 const tabs = [
   {
@@ -86,6 +88,7 @@ export default {
     AccessGroupMembersEdit,
     AccessGroupInvitationsEdit,
     AccessGroupHistoryEdit,
+    LoadingSpinner,
   },
   props: {
     groupname: String,
@@ -125,6 +128,7 @@ export default {
   computed: {
     ...mapGetters({
       groupName: 'accessGroup/getGroupName',
+      loading: 'getLoading',
     }),
     currentTab() {
       const defaultTab = 0;
@@ -181,6 +185,7 @@ export default {
 }
 
 .group-edit .edit-container {
+  position: relative;
   margin-top: 2em;
   /* enable tag selector dropdown */
   overflow: visible;
@@ -197,7 +202,7 @@ export default {
   position: sticky;
   top: 6em;
   left: 0;
-  z-index: var(--layerPopover);
+  z-index: var(--layerUnderPopover);
 }
 
 @media (min-width: 57.5em) {
@@ -325,5 +330,17 @@ export default {
 
 .group-edit .content-area__row .radio-control > input {
   margin: 0 0.5em 0 0;
+}
+.edit-container > .loading {
+  position: absolute;
+  z-index: var(--layerPopover);
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  flex-direction: row;
 }
 </style>
