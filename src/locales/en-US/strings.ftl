@@ -459,6 +459,7 @@ access-group_expiration = Expiration
   .two-years = 2 years
   .no-expire = Does not expire
   .custom = days
+  .custom-expiration-info = For custom expiration: enter a number of days between 1 and 730.
 access-group_markdown = Markdown Quick Guide
   .bold = Bold text
   .italic = Italicized text

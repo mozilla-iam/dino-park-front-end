@@ -20,8 +20,10 @@
         v-model="customValue"
         type="number"
         :min="selectedRadio == radio.value ? minCustom : null"
+        :max="selectedRadio == radio.value ? maxCustom : null"
         :infoMsg="infoMsg"
         :required="selectedRadio == radio.value"
+        :highlightError="highlightError"
       />
       <label :for="radio.value">{{ radio.label }}</label>
     </div>
@@ -43,9 +45,17 @@ export default {
       type: Number,
       default: null,
     },
+    maxCustom: {
+      type: Number,
+      default: null,
+    },
     infoMsg: {
       type: String,
       default: '',
+    },
+    highlightError: {
+      type: Boolean,
+      default: false,
     },
   },
   methods: {
@@ -127,5 +137,8 @@ export default {
 .radio-select .radio-select__option .custom-value {
   width: 5em;
   margin-right: 0.5em;
+}
+
+.radio-select__info {
 }
 </style>

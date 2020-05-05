@@ -1,9 +1,13 @@
 <template>
   <div class="input">
     <input
-      :class="{ ['input--w-info']: Boolean(infoMsg) }"
+      :class="{
+        'input--w-info': Boolean(infoMsg),
+        'input--red': highlightError,
+      }"
       :type="type"
       :min="min"
+      :max="max"
       :id="id"
       :placeholder="placeholder"
       :maxlength="maxlength"
@@ -37,6 +41,10 @@ export default {
       type: Number,
       default: null,
     },
+    max: {
+      type: Number,
+      default: null,
+    },
     infoMsg: {
       type: String,
       default: '',
@@ -45,6 +53,10 @@ export default {
       type: String,
       default: '.*',
     },
+    highlightError: {
+      type: Boolean,
+      default: false,
+    },
     required: Boolean,
   },
   methods: {
@@ -52,9 +64,6 @@ export default {
       this.$emit('focus');
     },
     handleInput(e) {
-      if (!this.infoMsg) {
-        e.target.reportValidity();
-      }
       this.$emit('input', e.target.value);
     },
   },
@@ -98,11 +107,11 @@ input.input--w-info ~ .input__info-msg {
   font-size: small;
   display: inline-block;
 }
-input:invalid:not(focues).input--w-info ~ .input__info-msg {
+input:invalid.input--red ~ .input__info-msg {
   color: var(--neon-red);
 }
 
-input:invalid:not(focus).input--w-info {
+input:invalid:not(focus).input--red {
   border-color: var(--neon-red);
 }
 </style>

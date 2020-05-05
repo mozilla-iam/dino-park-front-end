@@ -10,6 +10,7 @@
       </Button>
       <form
         class="primary-area"
+        novalidate
         v-on:submit.prevent="handleCreateClicked"
         ref="createGroupForm"
       >
@@ -29,6 +30,8 @@
                 :maxlength="60"
                 class="content-area__value"
                 :pattern="groupNamePattern"
+                :required="true"
+                :highlightError="highlightError"
                 :infoMsg="fluent('ag_api_errors', 'invalid_group_name')"
               />
             </div>
@@ -92,7 +95,12 @@
                 v-model="selectedExpiration"
                 :isCustom="isExpirationCustom"
                 :minCustom="1"
+                :maxCustom="730"
+                :highlightError="highlightError"
               />
+              <span class="group-expiration__info">{{
+                fluent('access-group_expiration', 'custom-expiration-info')
+              }}</span>
               <aside class="container-info">
                 <Icon
                   id="info"
@@ -156,11 +164,7 @@
           </template>
         </AccessGroupEditPanel>
         <footer class="group-create__footer">
-          <button
-            class="button button--primary"
-            type="submit"
-            :disabled="!isValid"
-          >
+          <button class="button button--primary" type="submit">
             {{ fluent('access-group_create', 'create-action') }}
           </button>
           <Button
@@ -185,7 +189,6 @@ import RadioSelect from '@/components/ui/RadioSelect.vue';
 import AccessGroupEditPanel from '@/components/access_group/AccessGroupEditPanel.vue';
 import AccessGroupMarkdownGuide from '@/components/access_group/AccessGroupMarkdownGuide.vue';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
-import ExternalLink from '@/components/ui/ExternalLink.vue';
 import { ACCESS_GROUP_PAGE } from '@/router.js';
 import {
   TYPE_INDEX,
@@ -205,12 +208,11 @@ export default {
     AccessGroupEditPanel,
     AccessGroupMarkdownGuide,
     LoadingSpinner,
-    ExternalLink,
   },
   data() {
     return {
+      highlightError: false,
       groupNamePattern: '[a-z0-9\\-_]*',
-      isValid: false,
       groupDescription: '',
       groupType: ACCESS_GROUP_TYPES[TYPE_INDEX.closed],
       groupName: '',
@@ -242,22 +244,15 @@ export default {
       return ACCESS_GROUP_TYPES.filter((type) => type !== 'Open');
     },
   },
-  mounted() {
-    [...this.$refs.createGroupForm.elements].forEach((el) =>
-      el.addEventListener('input', () => this.updateValidity()),
-    );
-  },
   methods: {
     ...mapActions({
       createGroup: 'accessGroup/createGroup',
       setLoading: 'setLoading',
       completeLoading: 'completeLoading',
     }),
-    updateValidity() {
-      this.isValid = this.$refs.createGroupForm.checkValidity();
-    },
     async handleCreateClicked(ev) {
       this.groupNamePattern = '[a-z0-9\\-_]{3,}';
+      this.highlightError = true;
       await this.$nextTick();
       const form = ev.target;
       if (!form.checkValidity()) {
@@ -425,6 +420,13 @@ export default {
   margin-top: 1em;
   display: flex;
   align-items: flex-start;
+}
+
+.group-expiration__info {
+  color: var(--gray-50);
+  padding: 0em 1em;
+  font-size: small;
+  display: inline-block;
 }
 
 .container-info .container-info__icon {
