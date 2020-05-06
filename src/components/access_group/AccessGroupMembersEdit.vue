@@ -171,7 +171,7 @@
     </AccessGroupEditPanel>
     <AccessGroupEditPanel
       form="expirationForm"
-      :handler="handleUpdateExpirationClicked"
+      :handler="handleUpdateExpiration"
       :title="fluent('access-group_expiration')"
     >
       <template v-slot:content>
@@ -480,16 +480,13 @@ export default {
           this.completeLoading();
         });
     },
-    handleUpdateExpirationClicked() {
-      this.setLoading();
-      this.updateGroup({
+    async handleUpdateExpiration() {
+      await this.updateGroup({
         field: 'expiration',
-        value: parseInt(this.groupExpiration),
-      }).then((result) => {
-        this.groupExpirationDirty = false;
-        this.tinyNotification('access-group-expiration-updated');
-        this.completeLoading();
+        value: parseInt(this.groupExpiration, 10),
       });
+      this.groupExpirationDirty = false;
+      this.tinyNotification('access-group-expiration-updated');
     },
     expiry(expiration) {
       return expiryTextFromDate(this.fluent, expiration);

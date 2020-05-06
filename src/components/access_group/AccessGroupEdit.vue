@@ -50,6 +50,7 @@ import store, {
   fetchAccessGroup,
   resolvePromisesSerially,
   fetchInvitationsAndRequests,
+  fetchTerms,
 } from '@/store';
 import Icon from '@/components/ui/Icon.vue';
 import Button from '@/components/ui/Button.vue';
@@ -99,9 +100,10 @@ export default {
     const [membersPromises, membersResolvers] = fetchMembers(store, groupname);
     const [agPromises, agResolvers] = fetchAccessGroup(store, groupname);
     const [iarPromises, iarResolvers] = fetchInvitationsAndRequests(store);
+    const [termsPromises, termsResolvers] = fetchTerms(store);
     resolvePromisesSerially(
-      [...membersPromises, ...agPromises, ...iarPromises],
-      [...membersResolvers, ...agResolvers, ...iarResolvers],
+      [...membersPromises, ...agPromises, ...iarPromises, ...termsPromises],
+      [...membersResolvers, ...agResolvers, ...iarResolvers, ...termsResolvers],
     ).then(() => {
       store.dispatch('completeLoading');
       next();

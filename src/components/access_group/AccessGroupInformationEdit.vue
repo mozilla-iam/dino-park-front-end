@@ -1,6 +1,10 @@
 <template>
   <section class="edit-information-container">
-    <AccessGroupEditPanel :title="fluent('access-group_details')">
+    <AccessGroupEditPanel
+      form="descriptionForm"
+      :handler="handleDescriptionUpdate"
+      :title="fluent('access-group_details')"
+    >
       <template v-slot:content>
         <div class="content-area__row">
           <label class="content-area__label">{{
@@ -23,9 +27,9 @@
       </template>
       <template v-slot:footer>
         <Button
+          type="submit"
           :disabled="!groupDescriptionDirty"
           class="button--secondary button--action row-primary-action"
-          @click="handleDescriptionUpdateClicked"
           >{{ fluent('access-group_details', 'update-details') }}</Button
         >
       </template>
@@ -71,7 +75,11 @@
         >
       </template>
     </AccessGroupEditPanel>
-    <AccessGroupEditPanel :title="fluent('access-group_terms')">
+    <AccessGroupEditPanel
+      form="termsForm"
+      :handler="handleTermsUpdate"
+      :title="fluent('access-group_terms')"
+    >
       <template v-slot:content>
         <div class="content-area__row">
           <div class="radio-control">
@@ -97,9 +105,9 @@
       </template>
       <template v-slot:footer>
         <Button
+          type="submit"
           :disabled="!groupTermsDirty"
           class="button--secondary button--action row-primary-action"
-          @click="handleTermsUpdateClicked()"
           >{{ fluent('access-group_terms', 'update-terms') }}</Button
         >
       </template>
@@ -121,20 +129,16 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import TextInput from '@/components/ui/TextInput.vue';
 import TextArea from '@/components/ui/TextArea.vue';
 import Button from '@/components/ui/Button.vue';
-import Icon from '@/components/ui/Icon.vue';
 import AccessGroupEditPanel from '@/components/access_group/AccessGroupEditPanel.vue';
 import AccessGroupMarkdownGuide from '@/components/access_group/AccessGroupMarkdownGuide.vue';
 
 export default {
   name: 'AccessGroupInformationEdit',
   components: {
-    TextInput,
     TextArea,
     Button,
-    Icon,
     AccessGroupEditPanel,
     AccessGroupMarkdownGuide,
   },
@@ -177,16 +181,13 @@ export default {
       setLoading: 'setLoading',
       completeLoading: 'completeLoading',
     }),
-    handleDescriptionUpdateClicked(e) {
-      e.preventDefault();
-      this.updateGroup({
+    async handleDescriptionUpdate() {
+      await this.updateGroup({
         field: 'description',
         value: this.groupDescriptionData,
-      }).then(() => {
-        this.groupDescriptionDirty = false;
-        this.tinyNotification('access-group-description-updated');
       });
-      return false;
+      this.groupDescriptionDirty = false;
+      this.tinyNotification('access-group-description-updated');
     },
     handleTypeUpdateClicked() {
       this.updateGroup({ field: 'type', value: this.groupTypeData }).then(
@@ -196,25 +197,20 @@ export default {
         },
       );
     },
-    handleTermsUpdateClicked() {
-      this.setLoading();
-      let termsPromise;
+    async handleTermsUpdate() {
       let tinyFluentSelector;
       if (!this.groupTermsRequiredData && this.accessGroup.terms) {
-        termsPromise = this.deleteTerms();
+        await this.deleteTerms();
         tinyFluentSelector = 'access-group-terms-removed';
       } else if (!this.accessGroup.terms && this.groupTermsData.length > 0) {
-        termsPromise = this.addTerms(this.groupTermsData);
+        await this.addTerms(this.groupTermsData);
         tinyFluentSelector = 'access-group-terms-updated';
       } else {
-        termsPromise = this.updateTerms(this.groupTermsData);
+        await this.updateTerms(this.groupTermsData);
         tinyFluentSelector = 'access-group-terms-updated';
       }
-      termsPromise.then(() => {
-        this.groupTermsDirty = false;
-        this.tinyNotification(tinyFluentSelector);
-        this.completeLoading();
-      });
+      this.groupTermsDirty = false;
+      this.tinyNotification(tinyFluentSelector);
     },
   },
   computed: {

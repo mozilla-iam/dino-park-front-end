@@ -48,7 +48,12 @@
         </AccessGroupMembersTable>
       </template>
     </AccessGroupEditPanel>
-    <AccessGroupEditPanel :title="fluent('access-group_invite-member')">
+    <AccessGroupEditPanel
+      form="invitationForm"
+      :handler="handleAddNewInvitesClicked"
+      :beforeHandler="beforeAddNewInvitesClicked"
+      :title="fluent('access-group_invite-member')"
+    >
       <template v-slot:content>
         <div class="members-invite-container tags-selector">
           <TagSelector
@@ -81,6 +86,7 @@
             </label>
             <ExpirationSelect
               class="expiration-container__value"
+              :highlightError="highlightError"
               v-model="newInvitesExpiration"
             />
           </div>
@@ -90,7 +96,7 @@
         <Button
           :disabled="!newInvitesDirty"
           class="button--secondary button--action row-primary-action"
-          @click="handleAddNewInvitesClicked()"
+          type="submit"
           >{{ fluent('access-group_invite-member', 'invite') }}</Button
         >
       </template>
@@ -176,6 +182,7 @@ export default {
     ];
     const groupExpiration = this.$store.getters['accessGroup/getExpiration'];
     return {
+      highlightError: false,
       newInvites: [],
       newInvitesDirty: false,
       emailInviteTextEnabled: invitationConfig !== null,
@@ -261,15 +268,18 @@ export default {
         });
       });
     },
-    handleAddNewInvitesClicked() {
-      this.sendInvitations({
+    async beforeAddNewInvitesClicked() {
+      this.highlightError = true;
+      await this.$nextTick();
+    },
+    async handleAddNewInvitesClicked() {
+      await this.sendInvitations({
         invites: this.newInvites,
         expiration: this.newInvitesExpiration,
-      }).then((result) => {
-        this.tinyNotification('access-group-members-invite-success');
-        this.newInvites = [];
-        this.newInvitesDirty = false;
       });
+      this.tinyNotification('access-group-members-invite-success');
+      this.newInvites = [];
+      this.newInvitesDirty = false;
     },
     handleUpdateInviteTextClicked() {
       this.updateInviteText(this.newInvites).then((result) => {

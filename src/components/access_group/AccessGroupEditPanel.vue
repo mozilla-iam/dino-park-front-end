@@ -28,6 +28,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   name: 'AccessGroupEditPanel',
   props: {
@@ -44,17 +46,28 @@ export default {
       type: Function,
       default: () => {},
     },
+    beforeHandler: {
+      type: Function,
+      default: async () => {},
+    },
   },
   data() {
     return {};
   },
   methods: {
-    submitHandler(ev) {
+    ...mapActions({
+      setLoading: 'setLoading',
+      completeLoading: 'completeLoading',
+    }),
+    async submitHandler(ev) {
+      await this.beforeHandler(ev);
       const form = ev.target;
       if (!form.checkValidity()) {
         ev.preventDefault();
       } else {
-        this.handler(ev);
+        this.setLoading();
+        await this.handler(ev);
+        this.completeLoading();
       }
     },
   },

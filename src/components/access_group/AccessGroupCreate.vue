@@ -236,7 +236,6 @@ export default {
       if (!form.checkValidity()) {
         ev.preventDefault();
       } else {
-        this.setLoading();
         window.scrollTo({ top: 0, behavior: 'smooth' });
         try {
           await this.createGroup({
@@ -252,9 +251,7 @@ export default {
               groupname: this.groupName,
             },
           });
-          this.completeLoading();
         } catch (e) {
-          this.completeLoading();
           this.$root.$emit('toast', {
             content: this.fluent('ag_api_errors', e.message),
           });
