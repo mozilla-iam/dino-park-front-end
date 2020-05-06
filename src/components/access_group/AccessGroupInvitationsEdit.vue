@@ -69,13 +69,19 @@
           </p>
           <div class="content-area__row invite-expiration">
             <div class="radio-control invite-expiration__toggle">
-              <input type="checkbox" v-model="newInvitesExpirationEnabled" />
-              {{
-                fluent(
-                  'access-group_invite-member',
-                  'invite-expiration__toggle',
-                )
-              }}
+              <input
+                id="custom-expiration-enabled"
+                type="checkbox"
+                v-model="newInvitesExpirationEnabled"
+              />
+              <label for="custom-expiration-enabled">
+                {{
+                  fluent(
+                    'access-group_invite-member',
+                    'invite-expiration__toggle',
+                  )
+                }}
+              </label>
             </div>
           </div>
           <div class="expiration-container" v-if="newInvitesExpirationEnabled">
