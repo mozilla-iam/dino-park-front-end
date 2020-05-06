@@ -83,8 +83,14 @@
       <template v-slot:content>
         <div class="content-area__row">
           <div class="radio-control">
-            <input type="checkbox" v-model="groupTermsRequiredData" />
-            {{ fluent('access-group_terms', 'terms-required') }}
+            <input
+              id="require-terms"
+              type="checkbox"
+              v-model="groupTermsRequiredData"
+            />
+            <label for="require-terms">{{
+              fluent('access-group_terms', 'terms-required')
+            }}</label>
           </div>
         </div>
         <div
