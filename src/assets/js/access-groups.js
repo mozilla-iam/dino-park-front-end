@@ -60,7 +60,7 @@ export default class AccessGroups {
     }
   }
 
-  async closeGroup(groupName) {
+  async deleteGroup(groupName) {
     try {
       return await this.api.execute({
         path: 'group/delete',
