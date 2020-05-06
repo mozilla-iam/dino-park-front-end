@@ -57,7 +57,7 @@
                 <ExpirationSelect
                   class="renew-expiration-select"
                   v-model="selectedRowExpiration"
-                  :highlightError="true"
+                  :highlightError="customExpirationErrorHighlight"
                 />
                 <div class="expiration-actions">
                   <Button class="primary-button renew" type="submit">{{
@@ -172,6 +172,7 @@
     <AccessGroupEditPanel
       form="expirationForm"
       :handler="handleUpdateExpiration"
+      :beforeHandler="beforeHandleUpdateExpiration"
       :title="fluent('access-group_expiration')"
     >
       <template v-slot:content>
@@ -183,7 +184,7 @@
             <ExpirationSelect
               class="expiration-container__value"
               v-model="groupExpiration"
-              :highlightError="true"
+              :highlightError="updateExpirationErrorHighlight"
             />
           </div>
           <aside class="container-info">
@@ -297,6 +298,8 @@ export default {
         ? accessGroupExpiration
         : 'custom';
     return {
+      updateExpirationErrorHighlight: false,
+      customExpirationErrorHighlight: false,
       memberRowsDisplay,
       groupExpiration: !accessGroupExpiration ? 0 : accessGroupExpiration,
       groupData: '',
@@ -403,6 +406,7 @@ export default {
       this.loadMoreMembers();
     },
     handleCustomRenew(ev, member, expiration) {
+      this.customExpirationErrorHighlight = true;
       const form = ev.target;
       if (!form.checkValidity()) {
         ev.preventDefault();
@@ -479,6 +483,9 @@ export default {
           console.error(e);
           this.completeLoading();
         });
+    },
+    async beforeHandleUpdateExpiration() {
+      this.updateExpirationErrorHighlight = true;
     },
     async handleUpdateExpiration() {
       await this.updateGroup({
