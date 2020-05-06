@@ -4,6 +4,7 @@ import { mapGetters } from 'vuex';
 
 import store from '@/store';
 import { ACCESS_GROUP_TYPES } from '@/view_models/AccessGroupViewModel';
+import FluentComponent from '@/components/Fluent.vue';
 import App from './App.vue';
 import DPRouter from './router';
 import Fluent from './assets/js/fluent';
@@ -34,9 +35,10 @@ Promise.all([
   store.dispatch('fetchUser'),
   Fluent.init(),
 ]).then(([features, , fluent]) => {
-  let router = new DPRouter(features, fluent, store);
+  const router = new DPRouter(features, fluent, store);
   store.dispatch('completeLoading');
 
+  Vue.component('Fluent', FluentComponent);
   Vue.mixin({
     data() {
       return {

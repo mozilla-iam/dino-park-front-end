@@ -41,14 +41,12 @@
 <script>
 import Error from '@/components/ui/Error.vue';
 import LinksMixin from '@/components/_mixins/LinksMixin.vue';
-import Fluent from '@/components/Fluent.vue';
 
 export default {
   name: 'Page404',
   mixins: [LinksMixin],
   components: {
     Error,
-    Fluent,
   },
   computed: {
     errorMessage() {

@@ -97,7 +97,6 @@ import SearchResultList from '@/components/search/SearchResultList.vue';
 import SearchToggle from '@/components/search/SearchToggle.vue';
 import Fetcher from '@/assets/js/fetcher';
 import LinksMixin from '@/components/_mixins/LinksMixin.vue';
-import Fluent from '@/components/Fluent.vue';
 
 const fetcher = new Fetcher({
   isError: (e) =>
@@ -114,7 +113,6 @@ export default {
     LoadingSpinner,
     SearchResultList,
     SearchToggle,
-    Fluent,
   },
   data() {
     return {

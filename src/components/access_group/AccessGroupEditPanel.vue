@@ -1,5 +1,21 @@
 <template>
-  <article :class="{ 'edit-panel-container': true, full: full }">
+  <form
+    novalidate
+    v-on:submit.prevent="submitHandler"
+    :ref="form"
+    v-if="form"
+    :class="{ 'edit-panel-container': true, full: full }"
+  >
+    <h3 class="edit-panel__header">{{ title }}</h3>
+    <div class="edit-panel__content content-area">
+      <slot name="content"></slot>
+    </div>
+
+    <footer class="edit-panel__footer" v-if="hasFooterSlot">
+      <slot name="footer"></slot>
+    </footer>
+  </form>
+  <article v-else :class="{ 'edit-panel-container': true, full: full }">
     <h3 class="edit-panel__header">{{ title }}</h3>
     <div class="edit-panel__content content-area">
       <slot name="content"></slot>
@@ -12,6 +28,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   name: 'AccessGroupEditPanel',
   props: {
@@ -20,11 +38,39 @@ export default {
       type: Boolean,
       default: false,
     },
+    form: {
+      type: String,
+      default: null,
+    },
+    handler: {
+      type: Function,
+      default: () => {},
+    },
+    beforeHandler: {
+      type: Function,
+      default: async () => {},
+    },
   },
   data() {
     return {};
   },
-  methods: {},
+  methods: {
+    ...mapActions({
+      setLoading: 'setLoading',
+      completeLoading: 'completeLoading',
+    }),
+    async submitHandler(ev) {
+      await this.beforeHandler(ev);
+      const form = ev.target;
+      if (!form.checkValidity()) {
+        ev.preventDefault();
+      } else {
+        this.setLoading();
+        await this.handler(ev);
+        this.completeLoading();
+      }
+    },
+  },
   computed: {
     hasFooterSlot() {
       return 'footer' in this.$slots;

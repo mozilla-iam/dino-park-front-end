@@ -85,7 +85,6 @@ import Modal from '@/components/_functional/Modal.vue';
 import UserPicture from '@/components/ui/UserPicture.vue';
 import Fetcher from '@/assets/js/fetcher';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
-import Fluent from '@/components/Fluent.vue';
 
 const fetcher = new Fetcher();
 
@@ -113,7 +112,6 @@ export default {
     Modal,
     UserPicture,
     LoadingSpinner,
-    Fluent,
   },
   data() {
     return {

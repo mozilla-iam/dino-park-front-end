@@ -1,17 +1,24 @@
 <template>
   <div class="input">
     <input
+      :class="{
+        'input--w-info': Boolean(infoMsg),
+        'input--red': highlightError,
+      }"
       :type="type"
       :min="min"
+      :max="max"
       :id="id"
       :placeholder="placeholder"
       :maxlength="maxlength"
+      :pattern="pattern"
       :value="value"
-      @input="$emit('input', $event.target.value)"
+      :required="required"
+      @input="handleInput"
       @focus="handleInputFocus"
-      @keypress="handleInputKeyPress"
     />
     <span v-if="maxlength">{{ value.length }}/{{ maxlength }}</span>
+    <span v-if="infoMsg" class="input__info-msg">{{ infoMsg }}</span>
   </div>
 </template>
 
@@ -34,26 +41,30 @@ export default {
       type: Number,
       default: null,
     },
+    max: {
+      type: Number,
+      default: null,
+    },
+    infoMsg: {
+      type: String,
+      default: '',
+    },
+    pattern: {
+      type: String,
+      default: '.*',
+    },
+    highlightError: {
+      type: Boolean,
+      default: false,
+    },
+    required: Boolean,
   },
   methods: {
     handleInputFocus() {
       this.$emit('focus');
     },
-    handleInputKeyPress(e) {
-      // Check if type is number
-      if (this.type === 'number') {
-        // Since we know this is a number, just concat the keycode onto the current value to check the new value
-        const pressed = parseInt(
-          `${e.target.value}${String.fromCharCode(e.keyCode)}`,
-        );
-        // Confirm the value is still appropriate
-        if (e.which < 48 || e.which > 57 || pressed < this.min) {
-          e.preventDefault();
-          return;
-        } else {
-          this.$emit('keypress', e);
-        }
-      }
+    handleInput(e) {
+      this.$emit('input', e.target.value);
     },
   },
 };
@@ -85,9 +96,22 @@ export default {
 .input input[maxlength] + span {
   position: absolute;
   right: 1em;
-  top: 50%;
-  transform: translate(0, -50%);
+  top: 0.5em;
   color: var(--gray-50);
   letter-spacing: 0.1em;
+}
+
+input.input--w-info ~ .input__info-msg {
+  color: var(--gray-50);
+  padding: 0em 1em;
+  font-size: small;
+  display: inline-block;
+}
+input:invalid.input--red ~ .input__info-msg {
+  color: var(--neon-red);
+}
+
+input:invalid:not(focus).input--red {
+  border-color: var(--neon-red);
 }
 </style>

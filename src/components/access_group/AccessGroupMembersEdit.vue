@@ -47,28 +47,24 @@
               <p class="expandable-content-container__first-row">
                 {{ getRowExpirationIntroText(member) }}
               </p>
-              <div class="expandable-content-container__second-row">
-                <RadioSelect
-                  class="expiration-select"
-                  :isCustom="isExpirationCustom"
-                  :options="expirationOptions"
+              <form
+                novalidate
+                v-on:submit.prevent="
+                  (ev) => handleCustomRenew(ev, member, selectedRowExpiration)
+                "
+                class="expandable-content-container__second-row"
+              >
+                <ExpirationSelect
+                  class="renew-expiration-select"
                   v-model="selectedRowExpiration"
-                  :minCustom="1"
+                  :highlightError="customExpirationErrorHighlight"
                 />
                 <div class="expiration-actions">
-                  <Button
-                    class="primary-button renew"
-                    @click="
-                      handleRenewClick(member, {
-                        expiration: selectedRowExpiration,
-                      })
-                    "
-                    >{{
-                      fluent('access-group_members', 'renew-action')
-                    }}</Button
-                  >
+                  <Button class="primary-button renew" type="submit">{{
+                    fluent('access-group_members', 'renew-action')
+                  }}</Button>
                 </div>
-              </div>
+              </form>
             </div>
             <div
               slot="row-expandable-actions"
@@ -173,19 +169,22 @@
         >
       </template>
     </AccessGroupEditPanel>
-    <AccessGroupEditPanel :title="fluent('access-group_expiration')">
+    <AccessGroupEditPanel
+      form="expirationForm"
+      :handler="handleUpdateExpiration"
+      :beforeHandler="beforeHandleUpdateExpiration"
+      :title="fluent('access-group_expiration')"
+    >
       <template v-slot:content>
         <div class="members-expiration-container">
           <div class="content-area__row expiration-container">
             <label class="content-area__label expiration-container__label">
               {{ fluent('access-group_expiration', 'expiration__description') }}
             </label>
-            <RadioSelect
+            <ExpirationSelect
               class="expiration-container__value"
-              :options="expirationOptions"
               v-model="groupExpiration"
-              :isCustom="isExpirationCustom"
-              :minCustom="1"
+              :highlightError="updateExpirationErrorHighlight"
             />
           </div>
           <aside class="container-info">
@@ -196,35 +195,19 @@
               :height="24"
             />
             <p class="container-info__description">
-              {{
-                fluent(
-                  'access-group_expiration',
-                  'container-info__description-1',
-                )
-              }}
-              <strong>
-                {{
-                  fluent(
-                    'access-group_expiration',
-                    'container-info__description-2',
-                  )
-                }}
-              </strong>
-              {{
-                fluent(
-                  'access-group_expiration',
-                  'container-info__description-3',
-                )
-              }}
+              <Fluent
+                id="access-group_expiration"
+                attr="container-info__description"
+              />
             </p>
           </aside>
         </div>
       </template>
       <template v-slot:footer>
         <Button
+          type="submit"
           :disabled="!groupExpirationDirty"
           class="button--secondary button--action row-primary-action"
-          @click="handleUpdateExpirationClicked"
           >{{ fluent('access-group_expiration', 'update-expiration') }}</Button
         >
       </template>
@@ -239,7 +222,7 @@ import TextArea from '@/components/ui/TextArea.vue';
 import Button from '@/components/ui/Button.vue';
 import Icon from '@/components/ui/Icon.vue';
 import SelectCustom from '@/components/ui/SelectCustom.vue';
-import RadioSelect from '@/components/ui/RadioSelect.vue';
+import ExpirationSelect from '@/components/ui/ExpirationSelect.vue';
 import Select from '@/components/ui/Select.vue';
 import AccessGroupEditPanel from '@/components/access_group/AccessGroupEditPanel.vue';
 import SearchForm from '@/components/ui/SearchForm.vue';
@@ -274,9 +257,8 @@ export default {
     AccessGroupMembersTable,
     TagSelector,
     SelectCustom,
-    RadioSelect,
     Select,
-    RadioSelect,
+    ExpirationSelect,
   },
   mixins: [MembersListMixin],
   watch: {
@@ -316,6 +298,8 @@ export default {
         ? accessGroupExpiration
         : 'custom';
     return {
+      updateExpirationErrorHighlight: false,
+      customExpirationErrorHighlight: false,
       memberRowsDisplay,
       groupExpiration: !accessGroupExpiration ? 0 : accessGroupExpiration,
       groupData: '',
@@ -387,20 +371,6 @@ export default {
           ),
         },
       ],
-      expirationOptions: [
-        {
-          label: this.fluent('access-group_expiration', 'one-year'),
-          value: MEMBER_EXPIRATION_ONE_YEAR,
-        },
-        {
-          label: this.fluent('access-group_expiration', 'two-years'),
-          value: MEMBER_EXPIRATION_TWO_YEARS,
-        },
-        {
-          label: this.fluent('access-group_expiration', 'custom'),
-          value: 'custom',
-        },
-      ],
       selectedExpiration,
     };
   },
@@ -435,13 +405,20 @@ export default {
     loadMoreHandler() {
       this.loadMoreMembers();
     },
-    handleRenewClick(member, options = {}) {
+    handleCustomRenew(ev, member, expiration) {
+      this.customExpirationErrorHighlight = true;
+      const form = ev.target;
+      if (!form.checkValidity()) {
+        ev.preventDefault();
+      } else {
+        this.handleRenewClick(member, expiration);
+      }
+    },
+    handleRenewClick(member, expiration) {
       this.setLoading();
       this.renewMember({
         memberUuid: member.uuid,
-        expiration: options.hasOwnProperty('expiration')
-          ? options.expiration
-          : this.accessGroupExpiration,
+        expiration: expiration || this.accessGroupExpiration,
       }).then((result) => {
         this.completeLoading();
         this.tinyNotification(
@@ -507,22 +484,19 @@ export default {
           this.completeLoading();
         });
     },
-    handleUpdateExpirationClicked() {
-      this.setLoading();
-      this.updateGroup({
+    async beforeHandleUpdateExpiration() {
+      this.updateExpirationErrorHighlight = true;
+    },
+    async handleUpdateExpiration() {
+      await this.updateGroup({
         field: 'expiration',
-        value: parseInt(this.groupExpiration),
-      }).then((result) => {
-        this.groupExpirationDirty = false;
-        this.tinyNotification('access-group-expiration-updated');
-        this.completeLoading();
+        value: parseInt(this.groupExpiration, 10),
       });
+      this.groupExpirationDirty = false;
+      this.tinyNotification('access-group-expiration-updated');
     },
     expiry(expiration) {
       return expiryTextFromDate(this.fluent, expiration);
-    },
-    isExpirationCustom(optionValue) {
-      return optionValue === 'custom';
     },
     handleSortUpdated(value) {
       this.memberListOptions.sort = value;
@@ -794,12 +768,6 @@ export default {
   margin-bottom: 2em;
 }
 
-.expandable-content-container__second-row .expiration-select {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  row-gap: 2em;
-}
-
 .expandable-content-container__second-row .expiration-actions {
   display: flex;
   flex-direction: row;
@@ -812,11 +780,6 @@ export default {
     display: flex;
     flex-direction: row;
     align-items: center;
-  }
-  .expandable-content-container__second-row .expiration-select {
-    display: flex;
-    flex-direction: row;
-    flex: 9;
   }
 
   .expandable-content-container__second-row .expiration-actions {
