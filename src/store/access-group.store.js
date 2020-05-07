@@ -100,9 +100,9 @@ export default {
         throw new Error(e.message);
       }
     },
-    async closeGroup({ state }) {
+    async deleteGroup({ state }) {
       try {
-        return await accessGroupsService.closeGroup(state.group.name);
+        return await accessGroupsService.deleteGroup(state.group.name);
       } catch (e) {
         throw new Error(e.message);
       }

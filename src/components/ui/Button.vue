@@ -135,9 +135,30 @@ export default {
   height: 1.3em;
 }
 
+.button[disabled]:hover,
+.button[disabled]:active,
 .button[disabled] {
   color: var(--gray-50);
   background-color: var(--gray-20);
   border-color: transparent;
+}
+
+.button--red {
+  color: var(--white);
+  background-color: var(--neon-red);
+}
+
+.button--red:hover {
+  background-color: transparent;
+  color: var(--neon-red);
+  border-color: var(--neon-red);
+}
+.button--red:hover svg > path {
+  fill: var(--black);
+}
+
+.button--red:active {
+  color: var(--white);
+  background-color: var(--neon-red);
 }
 </style>

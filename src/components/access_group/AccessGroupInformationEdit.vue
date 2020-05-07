@@ -83,8 +83,14 @@
       <template v-slot:content>
         <div class="content-area__row">
           <div class="radio-control">
-            <input type="checkbox" v-model="groupTermsRequiredData" />
-            {{ fluent('access-group_terms', 'terms-required') }}
+            <input
+              id="require-terms"
+              type="checkbox"
+              v-model="groupTermsRequiredData"
+            />
+            <label for="require-terms">{{
+              fluent('access-group_terms', 'terms-required')
+            }}</label>
           </div>
         </div>
         <div
@@ -112,15 +118,32 @@
         >
       </template>
     </AccessGroupEditPanel>
-    <AccessGroupEditPanel :title="fluent('access-group_close-group')">
+    <AccessGroupEditPanel
+      form="deleteFrom"
+      :handler="handleDeleteGroup"
+      :title="fluent('access-group_delete-group')"
+    >
       <template v-slot:content>
         <div class="content-area__row">
           <p class="content-area__description">
-            {{ fluent('access-group_close-group', 'part-1') }}
-            <br />
-            {{ fluent('access-group_close-group', 'part-2') }}
-            <a :href="administratorEmail">{{ administratorEmail }}</a>
+            <Fluent
+              id="access-group_delete-group"
+              attr="info"
+              :args="{ groupName }"
+            />
           </p>
+        </div>
+        <div class="delete-group__action">
+          <label>
+            <input id="enable-delete" type="checkbox" v-model="enableDelete" />
+            {{ fluent('access-group_delete-group', 'check-text') }}</label
+          >
+          <Button
+            :disabled="!enableDelete"
+            type="submit"
+            class="button--red row-primary-action"
+            >{{ fluent('access-group_delete-group', 'delete-group') }}</Button
+          >
         </div>
       </template>
     </AccessGroupEditPanel>
@@ -128,6 +151,7 @@
 </template>
 
 <script>
+import { ACCESS_GROUP_INDEX_PAGE } from '@/router';
 import { mapGetters, mapActions } from 'vuex';
 import TextArea from '@/components/ui/TextArea.vue';
 import Button from '@/components/ui/Button.vue';
@@ -155,6 +179,7 @@ export default {
       groupTermsDirty: false,
       groupTypeData: accessGroup.type,
       groupTypeDirty: false,
+      enableDelete: false,
     };
   },
   watch: {
@@ -177,7 +202,7 @@ export default {
       deleteTerms: 'accessGroup/deleteTerms',
       updateTerms: 'accessGroup/updateTerms',
       addTerms: 'accessGroup/addTerms',
-      closeGroup: 'accessGroup/closeGroup',
+      deleteGroup: 'accessGroup/deleteGroup',
       setLoading: 'setLoading',
       completeLoading: 'completeLoading',
     }),
@@ -212,6 +237,27 @@ export default {
       this.groupTermsDirty = false;
       this.tinyNotification(tinyFluentSelector);
     },
+    async handleDeleteGroup() {
+      try {
+        await this.deleteGroup();
+        this.$root.$emit('toast', {
+          content: this.fluent({
+            id: 'access-group_delete-group',
+            attr: 'success',
+            args: { groupName: this.groupName },
+          }),
+        });
+        this.$router.push({ name: ACCESS_GROUP_INDEX_PAGE });
+      } catch (e) {
+        this.$root.$emit('toast', {
+          content: this.fluent({
+            id: 'access-group_delete-group',
+            attr: 'fail',
+            args: { groupName: this.groupName },
+          }),
+        });
+      }
+    },
   },
   computed: {
     ...mapGetters({
@@ -228,6 +274,10 @@ export default {
 <style scoped>
 .edit-information {
   padding: 1em;
+}
+
+.edit-information-container {
+  padding-bottom: 2em;
 }
 
 .content-area__row {
@@ -313,9 +363,20 @@ export default {
   margin-top: 2em;
 }
 
-.close-group-container .button--primary[disabled='disabled'] {
+.close-group__action .button[disabled='disabled'] {
   border: 1px solid var(--gray-40);
   color: var(--black);
   background: var(--white);
+}
+
+.delete-group__action {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.delete-group__action .button {
+  margin-left: auto;
 }
 </style>

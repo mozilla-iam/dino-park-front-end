@@ -133,7 +133,7 @@ export default {
       loading: 'getLoading',
     }),
     currentTab() {
-      const defaultTab = 0;
+      const defaultTab = tabs[0];
       if (!this.$route.query.section) {
         return defaultTab;
       }
