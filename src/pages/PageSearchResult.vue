@@ -155,10 +155,9 @@ export default {
         if (more) {
           params.append('a', this.results.next);
         }
-        const data = await fetcher.fetch(
+        const results = await fetcher.fetch(
           `/api/v4/search/simple/?${params.toString()}`,
         );
-        const results = await data.json();
         if (!results.error) {
           return results;
         }

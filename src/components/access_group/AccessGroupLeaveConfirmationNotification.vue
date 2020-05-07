@@ -17,7 +17,7 @@
       </p>
       <div class="leave-confirmation-notification__actions">
         <RouterLink
-          class="button secondary-action "
+          class="button secondary-action"
           :to="{
             name: 'Access Group',
           }"
@@ -113,19 +113,18 @@ export default {
       setLoading: 'setLoading',
       completeLoading: 'completeLoading',
     }),
-    handleLeaveClick() {
-      if (!this.canLeaveGroup) {
+    async handleLeaveClick() {
+      this.setLoading();
+      const couldLeave = await this.leaveGroup();
+      if (!couldLeave) {
         this.showCantLeave = true;
         return;
       }
-      this.setLoading();
-      this.leaveGroup().then(() => {
-        this.tinyNotification('access-group-left-group', this.groupName);
-        this.$router.replace({
-          name: 'Access Group',
-        });
-        this.completeLoading();
+      this.tinyNotification('access-group-left-group', this.groupName);
+      this.$router.replace({
+        name: 'Access Group',
       });
+      this.completeLoading();
     },
     handleCancelClick() {
       this.$router.push({

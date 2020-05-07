@@ -5,8 +5,7 @@ export default class Features {
   }
   async get() {
     try {
-      const result = await this.fetcher.fetch('/config/features.json');
-      return await result.json();
+      return await this.fetcher.fetch('/config/features.json');
     } catch (e) {
       console.error(e.message);
       throw new Error(e.message);

@@ -12,10 +12,9 @@ class Related {
 
   async update(username) {
     try {
-      const res = await fetcher.fetch(
+      const { manager, directs, peers } = await fetcher.fetch(
         `/api/v4/orgchart/related/${encodeURIComponent(username)}`,
       );
-      const { manager, directs, peers } = await res.json();
       this.manager = manager || null;
       this.directs = directs || [];
       this.peers = peers || [];
