@@ -80,11 +80,7 @@ export default {
       this.fetchList(this.listOptions);
     },
     searchFormKeyUpHandler(searchQuery, scope) {
-      if (searchQuery.length >= 3) {
-        this.searchFormHandler(searchQuery, scope);
-      } else {
-        this.clearSearchHandler();
-      }
+      this.searchFormHandler(searchQuery, scope);
     },
     clearSearchHandler() {
       this.listOptions.search = '';
@@ -125,7 +121,7 @@ export default {
       nextClicked: false,
       groupList: this.$store.getters['accessGroups/getList'],
       listOptions: defaultListOptions,
-      selectedSort: '',
+      selectedSort: defaultListOptions.sort,
       sortOptions: [
         { value: 'name-asc', label: 'Name A-Z' },
         { value: 'name-desc', label: 'Name Z-A' },
