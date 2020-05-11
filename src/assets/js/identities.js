@@ -78,7 +78,6 @@ class Identities {
     if (this.identities.githubIdV3.value) {
       return this.fetcher
         .fetch(`/whoami/github/username/${this.identities.githubIdV3.value}`)
-        .then((r) => r.json())
         .then(({ username }) => {
           this.githubUsername = username;
           this.githubLink = `https://github.com/${username}`;
