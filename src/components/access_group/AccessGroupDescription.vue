@@ -70,12 +70,6 @@ export default {
       default: true,
     },
   },
-  methods: {
-    // TODO: This needs to be done in the vuex model
-    formatDate(dateString) {
-      return new Date(dateString).toLocaleDateString('en-US');
-    },
-  },
 
   computed: {
     ...mapGetters({
