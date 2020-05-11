@@ -18,6 +18,7 @@ select = Select
 next = Next
 skip = Skip
 back = Back
+confirm = Confirm
 
 # titles
 
@@ -91,6 +92,11 @@ onboarding_modal_2 = Tell us about yourself
 onboarding_modal_3 = We're here to help
   .paragraph_1 = Get help at any time by reading our Mozilla People Directory <a data-l10n-name="FAQ">FAQ</a>.
   .paragraph_2 = That’s it! You’re ready to dive in.
+onboarding_modal_username = Confirm your username
+  .paragraph_1 = Before you dive in, we would like you to chose a username or confirm the one we generated for you.<br /> Your username is <strong>publicly visible</strong> and included in your profile URL.
+  .paragraph_2 = <strong>Pro tip:</strong> Use the same username across systems for easy discovery (e.g. Slack, Discourse). 
+
+
 # pages
 
 ## Home Page

@@ -12,11 +12,14 @@
         class="mutation-form"
         action=""
         :novalidate="novalidate"
-        v-on:submit.prevent="ev => check(mutate, ev)"
+        v-on:submit.prevent="(ev) => check(mutate, ev)"
         :aria-label="formName"
       >
         <slot></slot>
-        <div class="button-bar">
+        <div v-if="confirm" class="button-bar button-bar--center">
+          <button type="submit" class="button">{{ fluent('confirm') }}</button>
+        </div>
+        <div v-else class="button-bar">
           <button
             type="button"
             class="button button--secondary"
@@ -55,6 +58,14 @@ export default {
       type: Boolean,
       default: false,
     },
+    confirm: {
+      type: Boolean,
+      default: false,
+    },
+    emit: {
+      type: String,
+      default: '',
+    },
   },
   methods: {
     check(mutate, ev) {
@@ -89,12 +100,7 @@ export default {
       });
     },
     handleSuccess() {},
-    updateCache(
-      store,
-      {
-        data: { profile },
-      }
-    ) {
+    updateCache(store, { data: { profile } }) {
       const data = store.readQuery({
         query: DISPLAY_PROFILE,
         variables: {
@@ -117,7 +123,9 @@ export default {
         },
       });
 
-      this.$emit('toggle-edit-mode');
+      if (this.emit) {
+        this.$parent.$emit(this.emit);
+      }
       this.$root.$emit('toast', {
         content: 'Your changes have been saved. Thank you.',
       });
@@ -205,5 +213,14 @@ export default {
 }
 .button-bar .button:first-child {
   margin-left: auto;
+}
+
+.button-bar--center {
+  justify-content: center;
+}
+
+.button-bar--center .button,
+.button-bar--center .button:first-child {
+  margin-left: initial;
 }
 </style>
