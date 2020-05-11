@@ -257,6 +257,8 @@ export default {
   background: var(--white);
   box-shadow: var(--shadowCard);
   margin: 1em 0;
+  word-break: break-all;
+  height: min-content;
 }
 
 @media (min-width: 57.5em) {
