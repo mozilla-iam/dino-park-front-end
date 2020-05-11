@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 import Fetcher from '@/assets/js/fetcher';
 import apiConfig from './access-groups-api.config';
 
@@ -7,6 +8,7 @@ export class Api {
   constructor() {
     this.fetcher = new Fetcher({ failoverOn: [302] });
   }
+
   async handleGet(endpointGetter, endpointArguments) {
     try {
       const endpoint =
@@ -14,13 +16,13 @@ export class Api {
           ? getEndpoint(...endpointArguments)
           : endpointGetter(...endpointArguments);
 
-      const result = await this.fetcher.fetch(endpoint);
-      return await result.json();
+      return await this.fetcher.fetch(endpoint);
     } catch (e) {
       console.error(e.message);
       throw new Error(e.message);
     }
   }
+
   async handleDelete(endpointGetter, endpointArguments) {
     try {
       const endpoint =
@@ -33,6 +35,7 @@ export class Api {
       throw new Error(e.message);
     }
   }
+
   async handlePost(
     endpointGetter,
     endpointArguments,
@@ -53,6 +56,7 @@ export class Api {
       throw new Error(e.message);
     }
   }
+
   async handlePut(
     endpointGetter,
     endpointArguments,
@@ -70,6 +74,7 @@ export class Api {
       throw new Error(e.message);
     }
   }
+
   async execute({ path, endpointArguments = [], dataArguments = {} }) {
     try {
       let [scope, restMethod] = path.split('/');
@@ -134,16 +139,12 @@ export class MembersApi extends Api {
 
   async renew(groupName, memberUuid, groupExpiration) {
     try {
-      const result = await this.fetcher.post(
+      return await this.fetcher.post(
         `${this.endpoint}/${groupName}/${memberUuid}/renew`,
         {
           group_expiration: groupExpiration,
         },
       );
-      if (Number.isInteger(result)) {
-        throw new Error(`Member post error: ${result}`);
-      }
-      return await result.json();
     } catch (e) {
       console.error(e.message);
       throw new Error(e.message);

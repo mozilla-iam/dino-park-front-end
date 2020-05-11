@@ -1,4 +1,27 @@
+/* eslint-disable max-classes-per-file */
 import reload from '@/assets/js/reload';
+
+class ApiError extends Error {}
+
+function isJson(res) {
+  const contentType = res.headers.get('content-type');
+  return contentType && contentType.includes('application/json');
+}
+
+async function handleResponse(res) {
+  if (isJson(res)) {
+    const json = await res.json();
+    if (!res.ok) {
+      const { error } = json;
+      if (error !== undefined) {
+        throw new ApiError(error);
+      }
+      throw ApiError(res.status);
+    }
+    return json;
+  }
+  return res.status;
+}
 
 class Fetcher {
   constructor({ failOnError = true, isError = () => true } = {}) {
@@ -10,8 +33,11 @@ class Fetcher {
     try {
       const init = _init || {};
       init.credentials = 'same-origin';
-      return await fetch(resource, init);
+      return handleResponse(await fetch(resource, init));
     } catch (e) {
+      if (e instanceof ApiError) {
+        throw e;
+      }
       if (this.failOnError && this.isError(e)) {
         console.log(`got error → failing over`);
         reload();
@@ -19,6 +45,7 @@ class Fetcher {
       throw e;
     }
   }
+
   async put(resource, data, _init) {
     try {
       const init = _init || {};
@@ -30,8 +57,11 @@ class Fetcher {
         },
         body: JSON.stringify(data),
       });
-      return res.status;
+      return handleResponse(res);
     } catch (e) {
+      if (e instanceof ApiError) {
+        throw e;
+      }
       console.log('error: ', e);
       if (this.failOnError && this.isError(e)) {
         console.log(`got error → failing over`);
@@ -52,22 +82,17 @@ class Fetcher {
         },
         body: JSON.stringify(data),
       });
-      if (res.status >= 200 && res.status < 300) {
-        try {
-          return await res.json();
-        } catch (e) {
-          return res.status;
-        }
-      } else {
-        const { status } = res;
-        const errorResponse = await res.json();
-        if (errorResponse.hasOwnProperty('error')) {
-          throw new Error(errorResponse.error);
-        }
-        throw new Error(status);
-      }
+      return handleResponse(res);
     } catch (e) {
-      throw new Error(e.message);
+      if (e instanceof ApiError) {
+        throw e;
+      }
+      console.log('error: ', e);
+      if (this.failOnError && this.isError(e)) {
+        console.log(`got error → failing over`);
+        // reload();
+      }
+      throw e;
     }
   }
 
@@ -78,8 +103,11 @@ class Fetcher {
       const res = await fetch(resource, {
         method: 'DELETE',
       });
-      return res.status;
+      return handleResponse(res);
     } catch (e) {
+      if (e instanceof ApiError) {
+        throw e;
+      }
       console.log('error: ', e);
       if (this.failOnError && this.isError(e)) {
         console.log(`got error → failing over`);

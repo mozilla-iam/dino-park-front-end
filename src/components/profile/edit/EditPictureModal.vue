@@ -141,12 +141,11 @@ export default {
       if (file !== null) {
         const formData = new FormData();
         formData.append('data', file);
-        const res = await fetcher.fetch('/avatar/send/intermediate', {
-          method: 'POST',
-          body: formData,
-        });
         try {
-          const { uuid } = await res.json();
+          const { uuid } = await fetcher.fetch('/avatar/send/intermediate', {
+            method: 'POST',
+            body: formData,
+          });
           if (uuid) {
             this.pictureData.value = img;
             this.picture.value = `intermediate:${uuid}`;

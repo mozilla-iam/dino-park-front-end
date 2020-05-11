@@ -557,10 +557,9 @@ export default {
         this.setTimezone(hit);
       }
       try {
-        const res = await fetcher.fetch(
+        const json = await fetcher.fetch(
           `/world/suggest?s=${encodeURIComponent(query)}`,
         );
-        const json = await res.json();
         const locations = new Map(
           json.map((l) => [`${l.city}, ${l.region}, ${l.country}`, l]),
         );

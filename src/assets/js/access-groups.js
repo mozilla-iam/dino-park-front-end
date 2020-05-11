@@ -39,10 +39,11 @@ export default class AccessGroups {
 
   async leaveGroup(groupName) {
     try {
-      return await this.api.execute({
+      const r = await this.api.execute({
         path: 'self/delete',
         endpointArguments: [groupName],
       });
+      return r?.error === 'last_admin_of_group';
     } catch (e) {
       console.log(e.message);
       throw new Error(e.message);

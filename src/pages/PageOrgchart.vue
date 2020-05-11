@@ -228,12 +228,7 @@ export default {
     async fetchData() {
       this.loading = true;
       try {
-        const data = await fetcher.fetch('/api/v4/orgchart');
-        if (data.status === 403) {
-          this.$router.push({ path: '/forbidden' });
-          return;
-        }
-        const orgchart = await data.json();
+        const orgchart = await fetcher.fetch('/api/v4/orgchart');
         this.initiallyExpanded = orgchart.forrest
           .map((node) => node.data.username)
           .reduce((obj, key) => {
@@ -288,6 +283,10 @@ export default {
           }
         });
       } catch (e) {
+        if (e.message === 403) {
+          this.$router.push({ path: '/forbidden' });
+          return;
+        }
         if (e instanceof TypeError && e.message.startsWith('NetworkError')) {
           window.location.reload();
           return;
@@ -303,10 +302,9 @@ export default {
       }
 
       try {
-        const data = await fetcher.fetch(
+        const { trace } = await fetcher.fetch(
           `/api/v4/orgchart/trace/${encodeURIComponent(username)}`,
         );
-        const { trace } = await data.json();
         const isLoose = trace && trace.startsWith('-1-');
 
         const root = this.$el.querySelector(

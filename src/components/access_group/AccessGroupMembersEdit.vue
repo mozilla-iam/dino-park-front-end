@@ -289,7 +289,8 @@ export default {
     const accessGroupExpiration = this.$store.getters[
       'accessGroup/getExpiration'
     ];
-    const accessGroupCurators = this.$store.getters['accessGroup/getCurators'];
+    // const accessGroupCurators = this.$store.getters['accessGroup/getCurators'];
+    const accessGroupCurators = [];
     // TODO: Figure out what this value does and delete it if unnecessary
     let selectedExpiration =
       accessGroupExpiration === MEMBER_EXPIRATION_ONE_YEAR ||
@@ -320,7 +321,7 @@ export default {
         value: '',
         label: 'Sort',
       },
-      selectedSort: '',
+      selectedSort: 'expiration-asc',
       sortOptions: [
         { value: 'role-asc', label: 'Role Asc' },
         { value: 'role-desc', label: 'Role Desc' },
@@ -383,6 +384,7 @@ export default {
       renewMember: 'accessGroup/renewMember',
       setLoading: 'setLoading',
       completeLoading: 'completeLoading',
+      fetchAllCurators: 'accessGroup/fetchAllCurators',
     }),
     canMemberBeRemoved(member) {
       if (!this.membersList.length) {
@@ -528,6 +530,11 @@ export default {
     membersRowHasExpandedContent(member) {
       return this.isMemberUpForRenewal(member);
     },
+  },
+  async mounted() {
+    // FIXME: We're fetching members 3 times when loading this page…
+    this.handleSortUpdated(this.selectedSort);
+    this.fetchAllCurators(this.groupName);
   },
   computed: {
     ...mapGetters({
