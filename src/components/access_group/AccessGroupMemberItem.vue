@@ -35,12 +35,12 @@
       </button>
     </article>
     <aside class="list-item__expandable" v-if="showExpandable">
-      <p class="expandable-row" v-if="isMemberSinceDateValid">
+      <p class="expandable-row" v-if="member.since">
         <span class="expandable-row__label">{{
           fluent('access-group_members', 'member-expandable_member-since')
         }}</span>
         <span class="expandable-row__content">
-          {{ formatMemberSinceDate }}
+          {{ member.since }}
         </span>
       </p>
       <p class="expandable-row" v-if="!member.added_by.isAnonymous()">
@@ -82,23 +82,10 @@ export default {
     toggleExpandable() {
       this.showExpandable = !this.showExpandable;
     },
-    // TODO: This needs to be done in the vuex model
-    formatDate(dateString) {
-      if (isNaN(Date.parse(dateString))) {
-        return '';
-      }
-      return new Date(dateString).toLocaleDateString();
-    },
   },
   computed: {
     isCurator() {
       return this.member.role === DISPLAY_MEMBER_ROLES[MEMBER_IDEX.Curator];
-    },
-    isMemberSinceDateValid() {
-      return isDateValid(this.member.since);
-    },
-    formatMemberSinceDate() {
-      return formatDate(this.member.since);
     },
   },
   data() {
