@@ -32,7 +32,7 @@
       <a href="#" @click="prev()" :class="[{ 'button--hidden': first }]">{{
         fluent('back')
       }}</a>
-      <a href="#" class="button" @click="next()">{{ fluent('next') }}</a>
+      <a class="button" @click="next()">{{ fluent('next') }}</a>
       <a href="#" @click="skip()" :class="[{ 'button--hidden': last }]">{{
         fluent('skip')
       }}</a>
@@ -62,28 +62,43 @@
         </p>
         <section class="onboarding-modal__username">
           <label for="field-username">{{ fluent('profile_username') }}</label>
-          <input
+          <TextInput
             class="username__input"
             type="text"
+            :maxlength="64"
+            :required="true"
+            pattern="[A-Za-z0-9\-_]{3,}"
             id="field-username"
+            :highlightError="true"
+            :infoMsg="fluent('onboarding_modal_username', 'restriction')"
             v-model="primaryUsername.value"
           />
         </section>
       </article>
+      <LoadingSpinner v-if="!scope.isReady"></LoadingSpinner>
     </EditMutationWrapper>
   </Modal>
 </template>
 
 <script>
 import Fluent from '@/components/Fluent.vue';
+import TextInput from '@/components/ui/TextInput.vue';
 import Modal from '@/components/_functional/Modal.vue';
 import ProgressDots from '@/components/guide/ProgressDots.vue';
-import Swipe from '@/assets/js/swipe';
+import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 import EditMutationWrapper from '@/components/profile/edit/EditMutationWrapper.vue';
+import Swipe from '@/assets/js/swipe';
 
 export default {
   name: 'OnboardingModal',
-  components: { EditMutationWrapper, Fluent, Modal, ProgressDots },
+  components: {
+    EditMutationWrapper,
+    Fluent,
+    LoadingSpinner,
+    Modal,
+    ProgressDots,
+    TextInput,
+  },
   computed: {
     first() {
       return this.step === 1;
@@ -137,8 +152,13 @@ export default {
         },
       },
     ];
+    let { username } = this.$store.state.scope;
+    if (username.startsWith('r--')) {
+      username = username.replace(/^r--/, 'p--');
+      username = username.replace(/=*$/, '');
+    }
     return {
-      primaryUsername: { value: this.$store.state.scope.username },
+      primaryUsername: { value: username },
       swipe: null,
       step: 1,
       step_data: steps[1],
@@ -185,15 +205,6 @@ export default {
 .onboarding-modal__username {
   margin: 3em;
 }
-.username__input {
-  border: 1px solid transparent;
-  background-color: var(--gray-20);
-  border-radius: var(--formElementRadius);
-  color: var(--black);
-  margin: 0;
-  padding: 0.5em 0.9em;
-  width: 100%;
-}
 
 .button--hidden {
   visibility: hidden;
@@ -201,5 +212,17 @@ export default {
 
 .onboarding-modal .button-bar {
   margin: auto;
+}
+.onboarding-modal .loading {
+  position: absolute;
+  z-index: var(--layerOne);
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  flex-direction: row;
 }
 </style>
