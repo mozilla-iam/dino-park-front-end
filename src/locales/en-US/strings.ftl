@@ -15,6 +15,11 @@ open_label = Open {$label}
 loading = Loading
 log_in = Log in
 select = Select
+next = Next
+skip = Skip
+back = Back
+confirm = Confirm
+unknown_error = Unknown error occurred
 
 # titles
 
@@ -76,6 +81,24 @@ classification_info = This person has access to data classified as public.
 ## Slack Access
 slack_access_info = This person has access to the Mozilla Slack instance.
   .wiki = Read more about contributors having access to Slack <a data-l10n-name="wiki">on the wiki</a>.
+
+## Onboarding
+
+onboarding_modal_1 = Welcome to your profile
+  .paragraph_1 = Your Profile is your comprehensive Mozilla identity. It is shared by a growing number of Mozilla projects and websites.
+  .paragraph_2 = We take privacy very seriously, which is why we provide easy to use <strong>privacy controls</strong> for each piece of information within your profile. You can also preview how your profile page looks publicly by using the <strong>Preview as</strong> feature.
+onboarding_modal_2 = Tell us about yourself
+  .paragraph_1 = Your profile <strong>biography</strong> is a great place to share your achievements and areas of interest with your fellow Mozillians. You can determine who can read your biography by adjusting its <strong>privacy level</strong>.
+  .paragraph_2 = Use the “<strong>Tags</strong>” section in your profile to add your skills and interests. This will help relevant Mozilla staff and contributors with similar interests connect with you.
+onboarding_modal_3 = We're here to help
+  .paragraph_1 = Get help at any time by reading our Mozilla People Directory <a data-l10n-name="FAQ">FAQ</a>.
+  .paragraph_2 = That’s it! You’re ready to dive in.
+onboarding_modal_username = Confirm your username
+  .paragraph_1 = Before you dive in, we would like you to chose a username or confirm the one we generated for you.<br /> Your username is <strong>publicly visible</strong> and included in your profile URL.
+  .paragraph_2 = <strong>Pro tip:</strong> Use the same username across systems for easy discovery (e.g. Slack, Discourse). 
+  .restriction = Minimum length is 3, allowed characters are: a-z, 0-9, _ and -.
+  .username_exists = Username {$username} exists already, please choose another username.
+
 
 # pages
 

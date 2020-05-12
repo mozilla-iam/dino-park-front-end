@@ -53,7 +53,7 @@
         <title id="org-chart-link-icon-title">{{ fluent('orgchart') }}</title>
         <Icon id="org-chart" :width="24" :height="24" />
       </RouterLink>
-      <template v-if="loggedIn">
+      <template v-if="scope.isLoggedIn">
         <ShowMore
           :buttonText="fluent('user-menu_open')"
           :alternateButtonText="fluent('user-menu_close')"
@@ -66,10 +66,17 @@
           </template>
           <template slot="button-content">
             <UserPicture
+              v-if="scope.isReady"
               :avatar="{
                 picture: user.picture.value,
                 username: user.primaryUsername.value,
               }"
+              :size="40"
+              :pictureSize="100"
+              :showLabel="scope.isStaff"
+            ></UserPicture>
+            <UserPicture
+              v-else
               :size="40"
               :pictureSize="100"
               :showLabel="scope.isStaff"
@@ -141,9 +148,6 @@ export default {
     };
   },
   computed: {
-    loggedIn() {
-      return this.$store.state.scope.isLoggedIn;
-    },
     user() {
       return this.$store.state.user;
     },
@@ -205,7 +209,8 @@ export default {
 .focus-styles .top-bar__link--current:focus {
   outline: none;
 }
-.focus-styles .top-bar__link--current:focus::before /* because of https://bugzilla.mozilla.org/show_bug.cgi?id=687311 */ {
+.focus-styles .top-bar__link--current:focus::before /* because of https://bugzilla.mozilla.org/show_bug.cgi?id=687311 */
+{
   content: '';
   top: 0;
   left: 0;

@@ -8,7 +8,7 @@
       />
       <p>{{ fluent('home_welcome', 'description-public') }}</p>
       <RouterLink
-        v-if="loggedIn"
+        v-if="scope.isReady"
         :to="{
           name: 'Profile',
           params: { username },
@@ -21,7 +21,7 @@
         <Icon id="chevron-right" :width="24" :height="24" />
       </RouterLink>
       <ExternalButtonLink
-        v-else
+        v-else-if="!scope.isLoggedIn"
         href="/_/login"
         iconRight="chevron-right"
         class="home__button-link"
@@ -65,9 +65,6 @@ export default {
     Icon,
   },
   computed: {
-    loggedIn() {
-      return this.$store.state.scope.isLoggedIn;
-    },
     username() {
       return this.$store.state.scope.username;
     },

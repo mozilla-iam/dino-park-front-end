@@ -5,6 +5,7 @@
     <GlobalNotifications class="container" />
     <RouterView class="container" />
     <Footer></Footer>
+    <OnboardingModal v-if="showOnboarding"></OnboardingModal>
   </div>
 </template>
 
@@ -13,6 +14,7 @@ import Banner from '@/components/ui/Banner.vue';
 import TopBar from '@/components/ui/TopBar.vue';
 import Footer from '@/components/ui/Footer.vue';
 import GlobalNotifications from '@/components/ui/GlobalNotifications.vue';
+import OnboardingModal from '@/components/guide/OnboardingModal.vue';
 
 export default {
   name: 'PageHome',
@@ -21,10 +23,14 @@ export default {
     TopBar,
     Footer,
     GlobalNotifications,
+    OnboardingModal,
   },
   computed: {
     containerCSS() {
       return `${this.$route.meta.key}-container`;
+    },
+    showOnboarding() {
+      return this.$store.state.onboarding.modal;
     },
   },
   methods: {
@@ -103,6 +109,7 @@ body {
   margin: 0;
   font-size: 87.5%;
   letter-spacing: 0.04em;
+  height: 100vh;
 }
 
 h1,

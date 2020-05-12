@@ -4,6 +4,7 @@
       <button class="user-menu__close-avatar" type="button">
         <span class="visually-hidden">{{ fluent('user-menu_close') }}</span>
         <UserPicture
+          v-if="scope.isReady"
           :avatar="{
             picture: user.picture.value,
             username: user.primaryUsername.value,
@@ -12,9 +13,16 @@
           :pictureSize="100"
           :showLabel="scope.isStaff"
         ></UserPicture>
+        <UserPicture
+          v-else
+          :size="40"
+          :pictureSize="100"
+          :showLabel="scope.isStaff"
+        ></UserPicture>
       </button>
       <div class="user-menu__name">
         <RouterLink
+          v-if="scope.isReady"
           :to="{
             name: 'Profile',
             params: { username: user.primaryUsername.value },
@@ -39,6 +47,7 @@
     <ul class="user-menu__items">
       <li>
         <RouterLink
+          v-if="scope.isReady"
           id="link-usermenu-my-profile"
           :to="{
             name: 'Profile',
