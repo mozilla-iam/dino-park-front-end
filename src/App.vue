@@ -5,10 +5,7 @@
     <GlobalNotifications class="container" />
     <RouterView class="container" />
     <Footer></Footer>
-    <OnboardingModal
-      v-if="showOnboarding"
-      @close="closeOnboardingModal"
-    ></OnboardingModal>
+    <OnboardingModal v-if="showOnboarding"></OnboardingModal>
   </div>
 </template>
 
@@ -43,9 +40,6 @@ export default {
           document.body.classList.add('focus-styles');
         }
       });
-    },
-    closeOnboardingModal() {
-      this.$store.state.onboarding.modal = false;
     },
   },
   mounted() {
