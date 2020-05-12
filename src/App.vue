@@ -6,6 +6,7 @@
     <RouterView class="container" />
     <Footer></Footer>
     <OnboardingModal v-if="showOnboarding"></OnboardingModal>
+    <ToolTourtip />
   </div>
 </template>
 
@@ -15,6 +16,7 @@ import TopBar from '@/components/ui/TopBar.vue';
 import Footer from '@/components/ui/Footer.vue';
 import GlobalNotifications from '@/components/ui/GlobalNotifications.vue';
 import OnboardingModal from '@/components/guide/OnboardingModal.vue';
+import ToolTourtip from '@/components/guide/TourTooltip.vue';
 
 export default {
   name: 'PageHome',
@@ -24,6 +26,7 @@ export default {
     Footer,
     GlobalNotifications,
     OnboardingModal,
+    ToolTourtip,
   },
   computed: {
     containerCSS() {
