@@ -190,7 +190,7 @@ export default class AccessGroups {
           }),
         );
       }
-      const errors = results.filter((code) => code !== 200);
+      const errors = results.filter(({ error }) => Boolean(error));
       if (errors.length) {
         throw new Error('Send invitation errors');
       }
