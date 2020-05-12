@@ -19,6 +19,7 @@ next = Next
 skip = Skip
 back = Back
 confirm = Confirm
+unknown_error = Unknown error occurred
 
 # titles
 
@@ -96,6 +97,7 @@ onboarding_modal_username = Confirm your username
   .paragraph_1 = Before you dive in, we would like you to chose a username or confirm the one we generated for you.<br /> Your username is <strong>publicly visible</strong> and included in your profile URL.
   .paragraph_2 = <strong>Pro tip:</strong> Use the same username across systems for easy discovery (e.g. Slack, Discourse). 
   .restriction = Minimum length is 3, allowed characters are: a-z, 0-9, _ and -.
+  .username_exists = Username {$username} exists already, please choose another username.
 
 
 # pages

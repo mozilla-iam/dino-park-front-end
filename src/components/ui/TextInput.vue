@@ -16,9 +16,10 @@
       :required="required"
       @input="handleInput"
       @focus="handleInputFocus"
+      ref="input"
     />
     <span v-if="maxlength">{{ value.length }}/{{ maxlength }}</span>
-    <span v-if="infoMsg" class="input__info-msg">{{ infoMsg }}</span>
+    <span v-if="infoMsg" class="input__info-msg">{{ custom || infoMsg }}</span>
   </div>
 </template>
 
@@ -57,6 +58,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    oneShotError: {
+      type: String,
+      default: '',
+    },
     required: Boolean,
   },
   methods: {
@@ -64,8 +69,25 @@ export default {
       this.$emit('focus');
     },
     handleInput(e) {
+      if (this.custom) {
+        this.custom = '';
+        e.target.setCustomValidity('');
+      }
       this.$emit('input', e.target.value);
     },
+  },
+  watch: {
+    oneShotError(v) {
+      if (v) {
+        this.custom = v;
+        this.$refs.input.setCustomValidity(v);
+      }
+    },
+  },
+  data() {
+    return {
+      custom: '',
+    };
   },
 };
 </script>

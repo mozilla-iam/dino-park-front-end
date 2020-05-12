@@ -30,7 +30,7 @@ async function fetchUser(commit) {
   }
 }
 
-async function retryFetchUser(commit, retries = 10) {
+async function retryFetchUser(commit, retries = 120) {
   if (!(await fetchUser(commit)) && retries > 0) {
     setTimeout(() => retryFetchUser(commit, retries - 1), 1000);
   }

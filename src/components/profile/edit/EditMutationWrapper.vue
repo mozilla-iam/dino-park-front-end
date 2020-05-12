@@ -66,6 +66,10 @@ export default {
       type: String,
       default: '',
     },
+    errorHandler: {
+      type: Function,
+      default: null,
+    },
   },
   methods: {
     check(mutate, ev) {
@@ -79,6 +83,9 @@ export default {
       return mutate(ev);
     },
     handleError(e) {
+      if (this.errorHandler) {
+        return this.errorHandler(e);
+      }
       let msg = '';
       switch (e.message) {
         case 'GraphQL error: username_exists':
@@ -95,7 +102,7 @@ export default {
         default:
           msg = 'A problem occurred, please try again later.';
       }
-      this.$root.$emit('toast', {
+      return this.$root.$emit('toast', {
         content: msg,
       });
     },

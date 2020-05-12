@@ -32,7 +32,7 @@
       <a href="#" @click="prev()" :class="[{ 'button--hidden': first }]">{{
         fluent('back')
       }}</a>
-      <a class="button" @click="next()">{{ fluent('next') }}</a>
+      <a href="#" class="button" @click="next()">{{ fluent('next') }}</a>
       <a href="#" @click="skip()" :class="[{ 'button--hidden': last }]">{{
         fluent('skip')
       }}</a>
@@ -51,6 +51,7 @@
       :novalidate="true"
       :formName="fluent('profile_contact', 'edit')"
       :confirm="true"
+      :errorHandler="handleUsernameError"
       emit="close"
     >
       <article class="onboarding-modal__article">
@@ -60,7 +61,7 @@
         <p>
           <Fluent :id="`onboarding_modal_username`" attr="paragraph_2" />
         </p>
-        <section class="onboarding-modal__username">
+        <section v-if="scope.isReady" class="onboarding-modal__username">
           <label for="field-username">{{ fluent('profile_username') }}</label>
           <TextInput
             class="username__input"
@@ -71,6 +72,7 @@
             id="field-username"
             :highlightError="true"
             :infoMsg="fluent('onboarding_modal_username', 'restriction')"
+            :oneShotError="usernameExists"
             v-model="primaryUsername.value"
           />
         </section>
@@ -106,6 +108,16 @@ export default {
     last() {
       return this.step === this.steps.length;
     },
+    username() {
+      return this.$store.state.scope.username;
+    },
+  },
+  watch: {
+    username() {
+      if (this.username) {
+        this.primaryUsername.value = this.updateUsername(this.username);
+      }
+    },
   },
   methods: {
     skip() {
@@ -128,6 +140,24 @@ export default {
     done() {
       this.$store.state.onboarding.modal = false;
       this.$emit('close');
+    },
+    updateUsername(username) {
+      if (username.startsWith('r--')) {
+        username = username.replace(/^r--/, 'p--');
+        username = username.replace(/=*$/, '');
+      }
+      return username;
+    },
+    handleUsernameError(e) {
+      if (e.gqlError?.message === 'username_exists') {
+        this.usernameExists = this.fluent({
+          id: 'onboarding_modal_username',
+          attr: 'username_exists',
+          args: { username: this.primaryUsername.value },
+        });
+      } else {
+        this.usernameExists = this.fluent('unknown_error');
+      }
     },
   },
   mounted() {
@@ -153,12 +183,9 @@ export default {
       },
     ];
     let { username } = this.$store.state.scope;
-    if (username.startsWith('r--')) {
-      username = username.replace(/^r--/, 'p--');
-      username = username.replace(/=*$/, '');
-    }
     return {
-      primaryUsername: { value: username },
+      primaryUsername: { value: this.updateUsername(username) },
+      usernameExists: '',
       swipe: null,
       step: 1,
       step_data: steps[1],
