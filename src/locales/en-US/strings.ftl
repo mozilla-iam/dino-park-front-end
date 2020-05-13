@@ -2,6 +2,7 @@
 
 mozilla = Mozilla
 pmo = Mozilla People Directory
+ok = OK
 save = Save
 cancel = Cancel
 submit = Submit
@@ -101,7 +102,11 @@ onboarding_modal_username = Confirm your username
 
 tooltip_tour = Welcome
   .skip = Skip tour
-  .step1 = You can search for Mozilla Staff and Volunteers who have shared their profiles.
+  .step1_1 = You can search for Mozilla Staff and Volunteers who have shared their profiles.
+  .step1_2 = Use the Preview As feature to see what your public profile page looks like.
+  .step1_3 = Get started by telling us about yourself!
+  .step2_1 = Upload a profile photo to help people find your page.
+  .step2_2 = Chose a privacy settings for each field to determine who can see your information.
 
 # pages
 

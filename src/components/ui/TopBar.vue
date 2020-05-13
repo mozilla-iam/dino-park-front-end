@@ -11,7 +11,9 @@
         :searchFormHandler="searchFormHandler"
         :searchFormLabel="fluent('search_input', 'placeholder')"
         class="hide-mobile"
-      ></SearchForm>
+      >
+        <TourTooltip :index="1" selector=".search-form__submit"></TourTooltip>
+      </SearchForm>
       <ShowMore
         :buttonText="fluent('search', 'open')"
         :alternateButtonText="fluent('search', 'close')"
@@ -110,6 +112,7 @@ import ShowMore from '@/components/_functional/ShowMore.vue';
 import Toast from '@/components/ui/Toast.vue';
 import Icon from '@/components/ui/Icon.vue';
 import ExternalButtonLink from '@/components/ui/ExternalButtonLink.vue';
+import TourTooltip from '@/components/guide/TourTooltip.vue';
 import SearchForm from './SearchForm.vue';
 import UserMenu from './UserMenu.vue';
 import UserPicture from './UserPicture.vue';
@@ -124,6 +127,7 @@ export default {
     UserPicture,
     Icon,
     ExternalButtonLink,
+    TourTooltip,
   },
   methods: {
     closeMobileSearchForm() {

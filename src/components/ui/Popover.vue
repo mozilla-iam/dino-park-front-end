@@ -19,11 +19,23 @@ export default {
       type: Boolean,
       default: true,
     },
+    anker: {
+      type: HTMLElement,
+      default: null,
+    },
   },
   methods: {
     positionAndSize() {
       // We should take another look at this.
-      const { button } = this.$parent.$refs;
+      let button;
+      if (this.anker) {
+        button = this.anker;
+      } else {
+        button = this.$parent.$refs.button;
+      }
+      if (!button) {
+        return;
+      }
       const {
         left: spaceOnLeft,
         right,
@@ -55,6 +67,11 @@ export default {
       if (this.position === 'left' && spaceOnLeft < this.maxWidth) {
         this.maxWidth = spaceOnLeft;
       }
+    },
+  },
+  watch: {
+    anker() {
+      this.positionAndSize();
     },
   },
   data() {

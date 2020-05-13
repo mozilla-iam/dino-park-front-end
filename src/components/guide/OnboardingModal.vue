@@ -138,7 +138,7 @@ export default {
       }
     },
     done() {
-      this.$store.state.onboarding.modal = false;
+      this.$store.state.onboarding.modalDone();
       this.$emit('close');
     },
     updateUsername(username) {

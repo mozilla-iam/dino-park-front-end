@@ -1,46 +1,116 @@
 <template>
-  <div
-    :class="['tour-tooltip', { [`tour-tooltip--${position}`]: position }]"
+  <Popover
+    v-if="active"
+    class="tour-tooltip"
     ref="tour-tooltip"
+    :initialMaxWidth="200"
+    :anker="anker"
   >
     <div class="tour-tooltip__content" ref="content">
-      <header>{{ step }}/{{ steps }}</header>
+      <header>{{ num }}/{{ total }}</header>
       <section>
-        {{ fluent('tooltip_tour', `step${step}`) }}
+        {{ fluent('tooltip_tour', `step${phase}_${num}`) }}
       </section>
       <footer>
-        <button>{{ fluent('next') }}</button>
-        <button v-if="step < steps">
+        <button v-if="num < total" @click="next" ref="focus">
+          {{ fluent('next') }}
+        </button>
+        <button v-else @click="done" ref="focus">{{ fluent('ok') }}</button>
+        <button v-if="num < total" @click="done">
           {{ fluent('tooltip_tour', 'skip') }}
         </button>
       </footer>
     </div>
-  </div>
+  </Popover>
 </template>
 
 <script>
+import Popover from '@/components/ui/Popover.vue';
+
 export default {
   name: 'TourTooltip',
+  components: { Popover },
+  props: {
+    index: Number,
+    selector: String,
+  },
   methods: {
-    attach(selector) {
-      const anker = document.querySelector(selector);
-      const r = anker.getBoundingClientRect();
-      this.$el.style.top = `${r.top + r.height + 10}px`;
-      this.$el.style.left = `${r.left + r.width / 2}px`;
+    attach() {
+      if (this.active) {
+        const { num, phase, total } = this.$store.state.onboarding.step();
+
+        this.deHighlight();
+        if (this.selector) {
+          this.anker = this.$parent.$el.querySelector(this.selector);
+        } else {
+          this.anker = this.$parent.$el;
+        }
+        this.highlight();
+
+        this.num = num;
+        this.phase = phase;
+        this.total = total;
+
+        console.log(this.anker);
+        const r = this.anker.getBoundingClientRect();
+        const p = this.$parent.$el.getBoundingClientRect();
+        console.log(r);
+        this.anker.style.setProperty('--top', `${r.height / 2}px`);
+        this.anker.style.setProperty('--left', `${r.width / 2}px`);
+        this.$el.style.top = `calc(${
+          this.anker.offsetTop + r.height / 2
+        }px + 2.5em)`;
+        this.$el.style.left = `${this.anker.offsetLeft + r.width / 2}px`;
+      }
+    },
+    deHighlight() {
+      if (this.anker) {
+        this.anker.classList.remove('tour-highlight');
+      }
+    },
+    highlight() {
+      this.anker.classList.add('tour-highlight');
+    },
+    next(e) {
+      this.$store.state.onboarding.tooltipTourNext();
+      e.preventDefault();
+    },
+    done(e) {
+      this.$store.state.onboarding.nextPhase();
+      this.deHighlight();
+      e.preventDefault();
     },
   },
-  mounted() {
-    this.attach('.search-form__submit');
+  computed: {
+    step() {
+      return this.$store.state.onboarding.tooltipTour;
+    },
+    active() {
+      return this.step === this.index;
+    },
+  },
+  watch: {
+    async active(active) {
+      if (active) {
+        await this.$nextTick();
+        this.attach();
+        this.$refs.focus.focus();
+      } else {
+        this.deHighlight();
+      }
+    },
+  },
+  async mounted() {
+    await this.$nextTick();
+    this.attach();
   },
   data() {
-    const s = [
-      { selector: '.search-form__submit' },
-      { selector: 'profile__intro > a.edit-button' },
-    ];
     return {
+      anker: null,
       position: '',
-      step: 1,
-      steps: 4,
+      phase: 1,
+      num: 1,
+      total: 0,
     };
   },
 };
@@ -48,17 +118,8 @@ export default {
 
 <style>
 .tour-tooltip {
-  box-shadow: 0 0.125em 0.25em 0.125em rgba(210, 210, 210, 0.5);
-  text-align: left;
-  padding-left: 0;
   z-index: var(--layerModal);
-  position: fixed;
-  top: calc(100% + 0.5em);
-  left: 50%;
-  width: 90vw;
-  transform: translateX(calc(-50%));
   color: var(--gray-60);
-  border-radius: var(--imageRadius);
   border: 2px solid var(--gray-30);
   background-color: var(--blue-60);
   color: var(--white);
@@ -69,19 +130,9 @@ export default {
   }
 }
 .tour-tooltip::before {
-  content: '';
-  width: 1em;
-  height: 1em;
   background-color: var(--blue-60);
-  position: absolute;
-  left: 50%;
-  margin-left: -0.5em;
-  margin-top: -0.5em;
-  transform: rotate(-45deg);
-  box-shadow: 0 0 0.25em 0 var(--gray-30);
-  border-radius: inherit;
-  border: inherit;
 }
+
 .tour-tooltip__content {
   background-color: var(--blue-60);
   position: relative;
@@ -113,20 +164,24 @@ export default {
   padding: 0.25em 1em;
 }
 
-.tour-tooltip--left {
-  transform: translateX(calc(-100% + 1.75em));
-}
-.tour-tooltip--left::before {
-  left: auto;
-  right: 1em;
-}
-.tour-tooltip--right {
-  transform: translateX(-2.25em);
-}
-.tour-tooltip--right::before {
-  left: 2em;
-}
 .tour-tooltip a {
   background-color: var(--white);
+}
+
+.tour-highlight::before {
+  pointer-events: none;
+}
+.tour-highlight::before {
+  pointer-events: all;
+  box-shadow: 0px 0px 1em rgba(0, 96, 223, 0.5);
+  position: absolute;
+  width: 3em;
+  height: 3em;
+  border: 3px solid rgba(0, 96, 223, 0.24);
+  border-radius: calc(1.5em + 3px);
+  content: '';
+  left: var(--left, 0px);
+  top: var(--top, 0px);
+  transform: translateX(-50%) translateY(-50%);
 }
 </style>

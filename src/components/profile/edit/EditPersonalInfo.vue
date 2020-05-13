@@ -50,6 +50,10 @@
           :profileFieldObject="picture"
           class="edit-personal-info__picture-privacy"
         />
+        <TourTooltip
+          :index="4"
+          selector=".edit-personal-info__picture-edit-button"
+        ></TourTooltip>
       </div>
 
       <div class="edit-personal-info__label">
@@ -91,6 +95,10 @@
         profileFieldName="firstName"
         :profileFieldObject="firstName"
       />
+      <TourTooltip
+        :index="5"
+        selector="#field-first-name + .privacy-select"
+      ></TourTooltip>
 
       <hr role="presentation" />
 
@@ -478,6 +486,7 @@ import UserPicture from '@/components/ui/UserPicture.vue';
 import EditPictureModal from './EditPictureModal.vue';
 import Fetcher from '@/assets/js/fetcher';
 import LinksMixin from '@/components/_mixins/LinksMixin.vue';
+import TourTooltip from '@/components/guide/TourTooltip.vue';
 
 const fetcher = new Fetcher();
 
@@ -499,6 +508,7 @@ export default {
     TextArea,
     Tooltip,
     UserPicture,
+    TourTooltip,
   },
   computed: {
     loggedInUsername() {
