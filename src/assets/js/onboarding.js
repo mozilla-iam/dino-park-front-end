@@ -1,5 +1,5 @@
 const TOUR = [
-  { num: 1, total: 3, phase: 1, selector: '.search-form__submit' },
+  { num: 1, total: 3, phase: 1, selector: '.hl-search-form' },
   {
     num: 2,
     total: 3,

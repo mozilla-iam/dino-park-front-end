@@ -10,7 +10,7 @@
       <SearchForm
         :searchFormHandler="searchFormHandler"
         :searchFormLabel="fluent('search_input', 'placeholder')"
-        class="hide-mobile"
+        class="hide-mobile hl-search-form"
       >
       </SearchForm>
       <ShowMore
@@ -32,7 +32,7 @@
           ></SearchForm>
         </template>
         <template slot="button-content">
-          <Icon id="search" :width="20" :height="20" />
+          <Icon class="hl-search-form" id="search" :width="20" :height="20" />
         </template>
       </ShowMore>
       <RouterLink

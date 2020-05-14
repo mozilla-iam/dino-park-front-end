@@ -1,31 +1,34 @@
 <template>
-  <Popover
-    v-if="active"
-    class="tour-tooltip"
-    ref="tour-tooltip"
-    :initialMaxWidth="200"
-    :anker="anker"
-  >
-    <div class="tour-tooltip__content" ref="content">
-      <header>{{ num }}/{{ total }}</header>
-      <section>
-        {{ fluent('tooltip_tour', `step${phase}_${num}`) }}
-      </section>
-      <footer>
-        <button v-if="num < total" @click="next" ref="focus">
-          {{ fluent('next') }}
-        </button>
-        <button v-else @click="done" ref="focus">{{ fluent('ok') }}</button>
-        <button v-if="num < total" @click="done">
-          {{ fluent('tooltip_tour', 'skip') }}
-        </button>
-      </footer>
-    </div>
-  </Popover>
+  <div v-if="active" class="darkness" @click="(e) => e.preventDefault()">
+    <div class="spotlight"></div>
+    <Popover
+      class="tour-tooltip"
+      ref="tour-tooltip"
+      :initialMaxWidth="200"
+      :anker="anker"
+    >
+      <div class="tour-tooltip__content" ref="content">
+        <header>{{ num }}/{{ total }}</header>
+        <section>
+          {{ fluent('tooltip_tour', `step${phase}_${num}`) }}
+        </section>
+        <footer>
+          <button v-if="num < total" @click="next" ref="focus">
+            {{ fluent('next') }}
+          </button>
+          <button v-else @click="done" ref="focus">{{ fluent('ok') }}</button>
+          <button v-if="num < total" @click="done">
+            {{ fluent('tooltip_tour', 'skip') }}
+          </button>
+        </footer>
+      </div>
+    </Popover>
+  </div>
 </template>
 
 <script>
 import Popover from '@/components/ui/Popover.vue';
+import { trapFocus } from '@/assets/js/trap-focus';
 
 export default {
   name: 'TourTooltip',
@@ -41,19 +44,34 @@ export default {
         } = this.$store.state.onboarding.step();
 
         this.deHighlight();
-        this.anker = document.querySelector(selector);
+        const anker = document.querySelectorAll(selector);
+        if (anker.length === 1) {
+          [this.anker] = anker;
+        } else if (anker[0].clientWidth === 0 && anker.length > 1) {
+          [, this.anker] = anker;
+        } else {
+          [this.anker] = anker;
+        }
+
         this.highlight();
 
         this.num = num;
         this.phase = phase;
         this.total = total;
 
-        console.log(this.anker);
         const r = this.anker.getBoundingClientRect();
         this.anker.style.setProperty('--top', `${r.height / 2}px`);
         this.anker.style.setProperty('--left', `${r.width / 2}px`);
-        this.$el.style.top = `calc(${r.top + r.height / 2}px + 2.5em)`;
-        this.$el.style.left = `${r.left + r.width / 2}px`;
+        this.$el.style.setProperty('--top', `${r.top + r.height / 2}px`);
+        this.$el.style.setProperty('--left', `${r.left + r.width / 2}px`);
+        this.$el.style.setProperty(
+          '--ttt-top',
+          `calc(${r.top + r.height / 2}px + 2.5em)`,
+        );
+        this.$el.style.setProperty(
+          '--ttt-left',
+          `calc(${r.left + r.width / 2}px)`,
+        );
       }
     },
     deHighlight() {
@@ -66,13 +84,20 @@ export default {
     },
     next(e) {
       this.$store.state.onboarding.tooltipTourNext();
-      console.log('do');
       e.preventDefault();
     },
     done(e) {
       this.$store.state.onboarding.nextPhase();
       this.deHighlight();
       e.preventDefault();
+    },
+    preventBackgroundScrolling() {
+      document.body.style.overflow = 'hidden';
+      document.body.style.width = '100%';
+    },
+    enableBackgroundScrolling() {
+      document.body.style.overflow = 'visible';
+      document.body.style.width = 'auto';
     },
   },
   computed: {
@@ -94,8 +119,11 @@ export default {
         await this.$nextTick();
         this.attach();
         this.$refs.focus.focus();
+        trapFocus({ target: this.$el });
+        this.preventBackgroundScrolling();
       } else {
         this.deHighlight();
+        this.enableBackgroundScrolling();
       }
     },
     async step() {
@@ -124,12 +152,32 @@ export default {
 
 <style>
 .tour-tooltip {
+  left: 0px;
+  min-width: 100vw;
+  position: absolute;
   z-index: var(--layerModal);
   color: var(--white);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background-color: transparent;
+  border: none;
 }
-@media (min-width: 57.5em) {
+@media (max-width: 35em) {
   .tour-tooltip {
+    transform: none;
+  }
+}
+@media (min-width: 35em) {
+  .tour-tooltip {
+    height: initial;
+    display: initial;
+    min-width: 18em;
     width: 18em;
+    top: var(--ttt-top);
+    left: var(--ttt-left);
+    box-shadow: 0 0.125em 0.25em 0.125em rgb(100, 100, 100);
   }
 }
 .tour-tooltip::before {
@@ -171,20 +219,19 @@ export default {
   background-color: var(--white);
 }
 
-.tour-highlight::before {
-  pointer-events: none;
-}
-.tour-highlight::before {
-  pointer-events: all;
-  box-shadow: 0px 0px 1em rgba(0, 96, 223, 0.5);
+.darkness {
   position: absolute;
-  width: 3em;
-  height: 3em;
-  border: 3px solid rgba(0, 96, 223, 0.24);
-  border-radius: calc(1.5em + 3px);
-  content: '';
-  left: var(--left, 0px);
-  top: var(--top, 0px);
+}
+.spotlight {
+  position: absolute;
+  z-index: var(--layerModal);
+  left: var(--left);
+  top: var(--top);
+  width: 3.5em;
+  height: 3.5em;
+  border-radius: 1.75em;
+  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2) inset,
+    0px 0px 0px max(200vh, 200vw) rgba(0, 0, 0, 0.2);
   transform: translateX(-50%) translateY(-50%);
 }
 </style>
