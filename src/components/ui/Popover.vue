@@ -48,6 +48,8 @@ export default {
       const centeredSpaceOnLeft = spaceOnLeft + width / 2;
       const centeredSpaceOnRight = spaceOnRight + width / 2;
 
+      this.position = '';
+
       if (
         !this.floating ||
         (centeredSpaceOnLeft > 0.5 * this.maxWidth &&
@@ -103,8 +105,8 @@ export default {
   width: 90vw;
   transform: translateX(calc(-50%));
   color: var(--gray-60);
-  border-radius: var(--imageRadius);
   border: 2px solid var(--gray-30);
+  border-radius: var(--imageRadius);
 }
 @media (min-width: 57.5em) {
   .popover {
@@ -122,13 +124,19 @@ export default {
   margin-top: -0.5em;
   transform: rotate(-45deg);
   box-shadow: 0 0 0.25em 0 var(--gray-30);
-  border-radius: inherit;
+  border-radius: var(--imageRadius);
   border: inherit;
 }
 .popover__content {
   background-color: var(--white);
+  border-radius: var(--imageRadius);
   position: relative;
 }
+
+.popover__content > div {
+  border-radius: var(--imageRadius);
+}
+
 .popover--left {
   transform: translateX(calc(-100% + 1.75em));
 }

@@ -30,21 +30,18 @@ import Popover from '@/components/ui/Popover.vue';
 export default {
   name: 'TourTooltip',
   components: { Popover },
-  props: {
-    index: Number,
-    selector: String,
-  },
   methods: {
     attach() {
       if (this.active) {
-        const { num, phase, total } = this.$store.state.onboarding.step();
+        const {
+          num,
+          phase,
+          total,
+          selector,
+        } = this.$store.state.onboarding.step();
 
         this.deHighlight();
-        if (this.selector) {
-          this.anker = this.$parent.$el.querySelector(this.selector);
-        } else {
-          this.anker = this.$parent.$el;
-        }
+        this.anker = document.querySelector(selector);
         this.highlight();
 
         this.num = num;
@@ -53,14 +50,10 @@ export default {
 
         console.log(this.anker);
         const r = this.anker.getBoundingClientRect();
-        const p = this.$parent.$el.getBoundingClientRect();
-        console.log(r);
         this.anker.style.setProperty('--top', `${r.height / 2}px`);
         this.anker.style.setProperty('--left', `${r.width / 2}px`);
-        this.$el.style.top = `calc(${
-          this.anker.offsetTop + r.height / 2
-        }px + 2.5em)`;
-        this.$el.style.left = `${this.anker.offsetLeft + r.width / 2}px`;
+        this.$el.style.top = `calc(${r.top + r.height / 2}px + 2.5em)`;
+        this.$el.style.left = `${r.left + r.width / 2}px`;
       }
     },
     deHighlight() {
@@ -73,6 +66,7 @@ export default {
     },
     next(e) {
       this.$store.state.onboarding.tooltipTourNext();
+      console.log('do');
       e.preventDefault();
     },
     done(e) {
@@ -86,7 +80,12 @@ export default {
       return this.$store.state.onboarding.tooltipTour;
     },
     active() {
-      return this.step === this.index;
+      return (
+        (this.$route.name === 'Profile' &&
+          this.$store.state.onboarding.isPhase1) ||
+        (this.$route.name === 'Edit Profile' &&
+          this.$store.state.onboarding.isPhase2)
+      );
     },
   },
   watch: {
@@ -97,6 +96,13 @@ export default {
         this.$refs.focus.focus();
       } else {
         this.deHighlight();
+      }
+    },
+    async step() {
+      if (this.active) {
+        await this.$nextTick();
+        this.attach();
+        this.$refs.focus.focus();
       }
     },
   },
@@ -119,9 +125,6 @@ export default {
 <style>
 .tour-tooltip {
   z-index: var(--layerModal);
-  color: var(--gray-60);
-  border: 2px solid var(--gray-30);
-  background-color: var(--blue-60);
   color: var(--white);
 }
 @media (min-width: 57.5em) {

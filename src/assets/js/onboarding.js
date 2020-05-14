@@ -1,17 +1,24 @@
 const TOUR = [
-  { num: 1, total: 3, phase: 1 },
+  { num: 1, total: 3, phase: 1, selector: '.search-form__submit' },
   {
     num: 2,
     total: 3,
     phase: 1,
+    selector: '.preview-as__button',
   },
-  { num: 3, total: 3, phase: 1 },
+  { num: 3, total: 3, phase: 1, selector: '.profile__intro > .edit-button' },
   {
     num: 1,
     total: 2,
     phase: 2,
+    selector: '.edit-personal-info__picture-edit-button',
   },
-  { num: 2, total: 2, phase: 2 },
+  {
+    num: 2,
+    total: 2,
+    phase: 2,
+    selector: '#field-first-name + .privacy-select',
+  },
 ];
 
 const PHASE_2 = 4;

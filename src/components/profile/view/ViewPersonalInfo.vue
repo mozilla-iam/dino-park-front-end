@@ -93,7 +93,6 @@
       </MetaList>
       <ProfileDescription :description="description.value"></ProfileDescription>
     </div>
-    <TourTooltip :index="3" selector="a.edit-button"></TourTooltip>
   </div>
 </template>
 
@@ -106,7 +105,6 @@ import Icon from '@/components/ui/Icon.vue';
 import MetaItem from '@/components/ui/Meta.vue';
 import MetaList from '@/components/ui/MetaList.vue';
 import UserPicture from '@/components/ui/UserPicture.vue';
-import TourTooltip from '@/components/guide/TourTooltip.vue';
 import ProfileDescription from '../ProfileDescription.vue';
 import ProfileName from '../ProfileName.vue';
 import ProfileTitle from '../ProfileTitle.vue';
@@ -150,7 +148,6 @@ export default {
     ProfileTitle,
     UserPicture,
     AccessLabel,
-    TourTooltip,
   },
   data() {
     return {

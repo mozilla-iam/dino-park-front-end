@@ -39,7 +39,6 @@
         </button>
       </div>
     </fieldset>
-    <slot></slot>
   </form>
 </template>
 

@@ -26,7 +26,6 @@
       <span>{{ fluent('profile_preview') }}</span>
       <Icon id="chevron-right" :width="17" :height="17"></Icon>
     </Button>
-    <TourTooltip :index="2" selector=".preview-as__button"></TourTooltip>
   </aside>
 </template>
 
@@ -35,11 +34,10 @@ import Icon from '@/components/ui/Icon.vue';
 import Button from '@/components/ui/Button.vue';
 import Select from '@/components/ui/Select.vue';
 import { DISPLAY_LEVELS } from '@/assets/js/display-levels';
-import TourTooltip from '@/components/guide/TourTooltip.vue';
 
 export default {
   name: 'PreviewAs',
-  components: { Select, Button, Icon, TourTooltip },
+  components: { Select, Button, Icon },
   props: {
     viewAsFilter: Object,
     viewAsActive: Boolean,
