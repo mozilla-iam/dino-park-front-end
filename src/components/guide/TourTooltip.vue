@@ -168,6 +168,7 @@ export default {
 @media (max-width: 35em) {
   .tour-tooltip {
     transform: none;
+    top: 0px;
   }
 }
 @media (min-width: 35em) {
@@ -178,11 +179,19 @@ export default {
     width: 18em;
     top: var(--ttt-top);
     left: var(--ttt-left);
-    box-shadow: 0 0.125em 0.25em 0.125em rgb(100, 100, 100);
+    box-shadow: 0 0.325em 0.25em -0.145em rgba(100, 100, 100, 0.6),
+      0 0.225em 0.625em 0.145em rgba(100, 100, 100, 0.6);
   }
 }
 .tour-tooltip::before {
+  content: none;
   background-color: var(--blue-60);
+}
+
+@media (min-width: 35em) {
+  .tour-tooltip::before {
+    content: '';
+  }
 }
 
 .tour-tooltip__content {
@@ -213,7 +222,13 @@ export default {
   color: var(--white);
   border: transparent;
   border-radius: 0.25em;
-  padding: 0.25em 1em;
+  padding: 0.75em 1.5em;
+}
+
+@media (min-width: 35em) {
+  .tour-tooltip__content > footer > button {
+    padding: 0.25em 1em;
+  }
 }
 
 .tour-tooltip a {
@@ -222,7 +237,11 @@ export default {
 
 .darkness {
   position: absolute;
+  width: 100vw;
+  height: 100vh;
+  z-index: var(--layerModal);
 }
+
 .spotlight {
   position: absolute;
   z-index: var(--layerModal);
@@ -231,8 +250,8 @@ export default {
   width: 3.5em;
   height: 3.5em;
   border-radius: 1.75em;
-  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2) inset,
-    0px 0px 0px max(200vh, 200vw) rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 0px max(200vh, 200vw) rgba(0, 0, 0, 0.2),
+    0px 0px 1em rgba(0, 0, 0, 0.6);
   transform: translateX(-50%) translateY(-50%);
 }
 </style>
