@@ -44,11 +44,11 @@ class Onboarding {
     this.isPhase1 = true;
   }
 
-  step() {
+  tttStep() {
     return TOUR[this.tooltipTour - 1] || null;
   }
 
-  tooltipTourNext() {
+  tttNext() {
     this.tooltipTour += 1;
     if (this.tooltipTour >= PHASE_2) {
       this.isPhase1 = false;
@@ -56,9 +56,15 @@ class Onboarding {
     }
   }
 
-  nextPhase() {
+  tttSkip() {
+    this.tooltipTour = null;
+    this.isPhase1 = false;
+    this.isPhase2 = false;
+  }
+
+  tttNextPhase() {
     if (this.isPhase1) {
-      this.startPhase2();
+      this.tttStartPhase2();
     } else {
       this.tooltipTour = null;
       this.isPhase1 = false;
@@ -66,7 +72,7 @@ class Onboarding {
     }
   }
 
-  startPhase2() {
+  tttStartPhase2() {
     if (this.tooltipTour && this.tooltipTour < PHASE_2) {
       this.tooltipTour = PHASE_2;
       this.isPhase1 = false;

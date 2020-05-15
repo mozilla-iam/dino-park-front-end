@@ -17,7 +17,7 @@
             {{ fluent('next') }}
           </button>
           <button v-else @click="done" ref="focus">{{ fluent('ok') }}</button>
-          <button v-if="num < total" @click="done">
+          <button v-if="num < total" @click="skip">
             {{ fluent('tooltip_tour', 'skip') }}
           </button>
         </footer>
@@ -41,7 +41,7 @@ export default {
           phase,
           total,
           selector,
-        } = this.$store.state.onboarding.step();
+        } = this.$store.state.onboarding.tttStep();
 
         this.deHighlight();
         const anker = document.querySelectorAll(selector);
@@ -83,11 +83,17 @@ export default {
       this.anker.classList.add('tour-highlight');
     },
     next(e) {
-      this.$store.state.onboarding.tooltipTourNext();
+      this.$store.state.onboarding.tttNext();
       e.preventDefault();
     },
     done(e) {
-      this.$store.state.onboarding.nextPhase();
+      this.$store.state.onboarding.tttNextPhase();
+      this.deHighlight();
+      this.enableBackgroundScrolling();
+      e.preventDefault();
+    },
+    skip(e) {
+      this.$store.state.onboarding.tttSkip();
       this.deHighlight();
       this.enableBackgroundScrolling();
       e.preventDefault();
