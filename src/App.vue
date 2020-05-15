@@ -15,8 +15,6 @@ import Banner from '@/components/ui/Banner.vue';
 import TopBar from '@/components/ui/TopBar.vue';
 import Footer from '@/components/ui/Footer.vue';
 import GlobalNotifications from '@/components/ui/GlobalNotifications.vue';
-import OnboardingModal from '@/components/guide/OnboardingModal.vue';
-import TourTooltip from '@/components/guide/TourTooltip.vue';
 
 export default {
   name: 'PageHome',
@@ -25,8 +23,8 @@ export default {
     TopBar,
     Footer,
     GlobalNotifications,
-    OnboardingModal,
-    TourTooltip,
+    OnboardingModal: () => import('@/components/guide/OnboardingModal.vue'),
+    TourTooltip: () => import('@/components/guide/TourTooltip.vue'),
   },
   computed: {
     containerCSS() {

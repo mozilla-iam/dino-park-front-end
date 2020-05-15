@@ -36,6 +36,10 @@ export default {
   methods: {
     attach() {
       if (this.active) {
+        this.$refs.focus.focus();
+        window.scrollTo(0, 0);
+        trapFocus({ target: this.$el });
+        this.preventBackgroundScrolling();
         const {
           num,
           phase,
@@ -125,9 +129,6 @@ export default {
       if (active) {
         await this.$nextTick();
         this.attach();
-        this.$refs.focus.focus();
-        trapFocus({ target: this.$el });
-        this.preventBackgroundScrolling();
       } else {
         this.deHighlight();
         this.enableBackgroundScrolling();
@@ -137,7 +138,6 @@ export default {
       if (this.active) {
         await this.$nextTick();
         this.attach();
-        this.$refs.focus.focus();
       }
     },
   },

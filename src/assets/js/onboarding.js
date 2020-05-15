@@ -27,11 +27,8 @@ class Onboarding {
   constructor() {
     this.modal = false;
     this.tooltipTour = null;
-    // this.isPhase1 = false;
+    this.isPhase1 = false;
     this.isPhase2 = false;
-
-    this.tooltipTour = 1;
-    this.isPhase1 = true;
   }
 
   enable() {
