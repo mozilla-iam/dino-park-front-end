@@ -89,6 +89,7 @@ export default {
     done(e) {
       this.$store.state.onboarding.nextPhase();
       this.deHighlight();
+      this.enableBackgroundScrolling();
       e.preventDefault();
     },
     preventBackgroundScrolling() {
