@@ -233,7 +233,7 @@ export default {
 
 @media (min-width: 35em) {
   .tour-tooltip__content > footer > button {
-    padding: 0.25em 1em;
+    padding: 0.5em 1em;
   }
 }
 
