@@ -144,6 +144,7 @@ export class DisplayMemberViewModel {
     member.email = user.email;
     member.username = user.username;
     member.error = false;
+    member.role = !user.role ? null : user.role;
     return member;
   }
 

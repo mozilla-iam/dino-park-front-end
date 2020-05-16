@@ -37,6 +37,7 @@
           class="selector-auto-complete__item"
           :member="item"
           :subRowText="subRowTextDisplay"
+          :showMeta="showMeta(item)"
         />
       </li>
     </ul>
@@ -60,6 +61,10 @@ export default {
     canBeRemoved: {
       type: Function,
       default: () => true,
+    },
+    showMeta: {
+      type: Function,
+      default: (item) => false,
     },
   },
   components: {
@@ -214,7 +219,12 @@ export default {
 
 .selector-auto-complete .selector-auto-complete__item {
   cursor: pointer;
-  padding: 0.5em;
+  padding: 0 0.5em;
+  border-bottom: 1px solid var(--gray-40);
+}
+
+.selector-auto-complete .selector-auto-complete__item:last-child {
+  border-bottom: none;
 }
 
 .selector-auto-complete .selector-auto-complete__item:hover {
