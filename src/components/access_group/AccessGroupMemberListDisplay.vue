@@ -17,7 +17,9 @@
         :width="16"
         :height="16"
       />
-      <p class="member-list-meta__text">Member</p>
+      <p class="member-list-meta__text">
+        {{ fluent('access-group_invite-member', 'member-list-meta__text') }}
+      </p>
     </div>
   </div>
 </template>
