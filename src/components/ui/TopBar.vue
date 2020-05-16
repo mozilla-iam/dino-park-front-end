@@ -14,6 +14,7 @@
       >
       </SearchForm>
       <ShowMore
+        class="hl-search-form"
         :buttonText="fluent('search', 'open')"
         :alternateButtonText="fluent('search', 'close')"
         buttonClass="hide-desktop top-bar__search-toggle"
@@ -32,7 +33,7 @@
           ></SearchForm>
         </template>
         <template slot="button-content">
-          <Icon class="hl-search-form" id="search" :width="20" :height="20" />
+          <Icon id="search" :width="20" :height="20" />
         </template>
       </ShowMore>
       <RouterLink

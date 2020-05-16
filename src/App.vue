@@ -114,6 +114,7 @@ body {
   font-size: 87.5%;
   letter-spacing: 0.04em;
   height: 100vh;
+  height: -webkit-fill-available;
 }
 
 h1,
@@ -202,6 +203,7 @@ abbr {
   flex-direction: column;
   max-width: 100vw;
   min-height: 100vh;
+  min-height: -webkit-fill-available;
 }
 .app-container > .container {
   flex: 1;

@@ -4,7 +4,7 @@
     <Popover
       class="tour-tooltip"
       ref="tour-tooltip"
-      :initialMaxWidth="200"
+      :initialMaxWidth="252"
       :anker="anker"
     >
       <div class="tour-tooltip__content" ref="content">
@@ -144,6 +144,10 @@ export default {
   async mounted() {
     await this.$nextTick();
     this.attach();
+    window.onresize = () => this.attach();
+  },
+  destroyed() {
+    window.onresize = () => {};
   },
   data() {
     return {
@@ -164,7 +168,8 @@ export default {
   position: absolute;
   z-index: var(--layerModal);
   color: var(--white);
-  height: 100vh;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -180,6 +185,7 @@ export default {
 @media (min-width: 35em) {
   .tour-tooltip {
     height: initial;
+    min-height: initial;
     display: initial;
     min-width: 18em;
     width: 18em;
@@ -209,7 +215,7 @@ export default {
 }
 
 .tour-tooltip__content > header {
-  align-self: end;
+  align-self: flex-end;
 }
 
 .tour-tooltip__content > section {
@@ -244,8 +250,8 @@ export default {
 .darkness {
   position: absolute;
   width: 100%;
-  height: 100vh;
-  height: -webkit-fill-available;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
   z-index: var(--layerModal);
 }
 
