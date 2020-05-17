@@ -118,6 +118,7 @@ export default {
   margin-right: auto;
   width: 100%;
   max-width: 31em;
+  position: relative;
 }
 
 .search-form fieldset {

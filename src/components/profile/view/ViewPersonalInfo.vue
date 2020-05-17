@@ -87,7 +87,7 @@
           v-if="staffInformation.costCenter.value"
           :metaValue="
             staffInformation.costCenter.value &&
-              staffInformation.costCenter.value.replace(/\.0$/, '')
+            staffInformation.costCenter.value.replace(/\.0$/, '')
           "
         />
       </MetaList>

@@ -19,11 +19,23 @@ export default {
       type: Boolean,
       default: true,
     },
+    anker: {
+      type: HTMLElement,
+      default: null,
+    },
   },
   methods: {
     positionAndSize() {
       // We should take another look at this.
-      const { button } = this.$parent.$refs;
+      let button;
+      if (this.anker) {
+        button = this.anker;
+      } else {
+        button = this.$parent.$refs.button;
+      }
+      if (!button) {
+        return;
+      }
       const {
         left: spaceOnLeft,
         right,
@@ -35,6 +47,8 @@ export default {
       // Account for large buttons. We don't want their witdh in the equation.
       const centeredSpaceOnLeft = spaceOnLeft + width / 2;
       const centeredSpaceOnRight = spaceOnRight + width / 2;
+
+      this.position = '';
 
       if (
         !this.floating ||
@@ -55,6 +69,11 @@ export default {
       if (this.position === 'left' && spaceOnLeft < this.maxWidth) {
         this.maxWidth = spaceOnLeft;
       }
+    },
+  },
+  watch: {
+    anker() {
+      this.positionAndSize();
     },
   },
   data() {
@@ -86,8 +105,8 @@ export default {
   width: 90vw;
   transform: translateX(calc(-50%));
   color: var(--gray-60);
-  border-radius: var(--imageRadius);
   border: 2px solid var(--gray-30);
+  border-radius: var(--imageRadius);
 }
 @media (min-width: 57.5em) {
   .popover {
@@ -105,13 +124,19 @@ export default {
   margin-top: -0.5em;
   transform: rotate(-45deg);
   box-shadow: 0 0 0.25em 0 var(--gray-30);
-  border-radius: inherit;
+  border-radius: var(--imageRadius);
   border: inherit;
 }
 .popover__content {
   background-color: var(--white);
+  border-radius: var(--imageRadius);
   position: relative;
 }
+
+.popover__content > div {
+  border-radius: var(--imageRadius);
+}
+
 .popover--left {
   transform: translateX(calc(-100% + 1.75em));
 }

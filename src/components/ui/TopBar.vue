@@ -10,9 +10,11 @@
       <SearchForm
         :searchFormHandler="searchFormHandler"
         :searchFormLabel="fluent('search_input', 'placeholder')"
-        class="hide-mobile"
-      ></SearchForm>
+        class="hide-mobile hl-search-form"
+      >
+      </SearchForm>
       <ShowMore
+        class="hl-search-form"
         :buttonText="fluent('search', 'open')"
         :alternateButtonText="fluent('search', 'close')"
         buttonClass="hide-desktop top-bar__search-toggle"

@@ -6,6 +6,7 @@
     <RouterView class="container" />
     <Footer></Footer>
     <OnboardingModal v-if="showOnboarding"></OnboardingModal>
+    <TourTooltip v-if="showTooltipTour" />
   </div>
 </template>
 
@@ -14,7 +15,6 @@ import Banner from '@/components/ui/Banner.vue';
 import TopBar from '@/components/ui/TopBar.vue';
 import Footer from '@/components/ui/Footer.vue';
 import GlobalNotifications from '@/components/ui/GlobalNotifications.vue';
-import OnboardingModal from '@/components/guide/OnboardingModal.vue';
 
 export default {
   name: 'PageHome',
@@ -23,7 +23,8 @@ export default {
     TopBar,
     Footer,
     GlobalNotifications,
-    OnboardingModal,
+    OnboardingModal: () => import('@/components/guide/OnboardingModal.vue'),
+    TourTooltip: () => import('@/components/guide/TourTooltip.vue'),
   },
   computed: {
     containerCSS() {
@@ -31,6 +32,9 @@ export default {
     },
     showOnboarding() {
       return this.$store.state.onboarding.modal;
+    },
+    showTooltipTour() {
+      return this.$store.state.onboarding.tooltipTour;
     },
   },
   methods: {
@@ -110,6 +114,7 @@ body {
   font-size: 87.5%;
   letter-spacing: 0.04em;
   height: 100vh;
+  height: -webkit-fill-available;
 }
 
 h1,
@@ -198,6 +203,7 @@ abbr {
   flex-direction: column;
   max-width: 100vw;
   min-height: 100vh;
+  min-height: -webkit-fill-available;
 }
 .app-container > .container {
   flex: 1;
