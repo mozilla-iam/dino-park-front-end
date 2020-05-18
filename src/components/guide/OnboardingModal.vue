@@ -189,7 +189,7 @@ export default {
       usernameExists: '',
       swipe: null,
       step: 1,
-      step_data: steps[1],
+      step_data: steps[0],
       steps,
     };
   },
@@ -206,15 +206,27 @@ export default {
 .onboarding-modal__article {
   display: flex;
   flex-direction: column;
-  padding-left: 4em;
-  padding-right: 4em;
-  min-height: 29em;
+  padding-left: 2em;
+  padding-right: 2em;
+  min-height: 26em;
   color: var(--gray-50);
 }
 .onboarding-modal__article > img {
   margin-left: auto;
   margin-right: auto;
-  height: 18em;
+  height: 15em;
+}
+
+@media (min-width: 35em) {
+  .onboarding-modal__article {
+    padding-left: 4em;
+    padding-right: 4em;
+    min-height: 29em;
+  }
+
+  .onboarding-modal__article > img {
+    height: 18em;
+  }
 }
 
 .onboarding-modal__hline {
@@ -231,7 +243,13 @@ export default {
 }
 
 .onboarding-modal__username {
-  margin: 3em;
+  margin-top: 3em;
+  margin-bottom: 3em;
+}
+@media (min-width: 35em) {
+  .onboarding-modal__username {
+    margin: 3em;
+  }
 }
 
 .button--hidden {

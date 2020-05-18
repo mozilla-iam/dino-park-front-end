@@ -106,7 +106,7 @@ export default {
   position: relative;
   overflow: auto;
 }
-@media (min-width: 57.5em) {
+@media (min-width: 35em) {
   .modal {
     padding: 1em;
   }
@@ -130,7 +130,7 @@ export default {
   display: grid;
   grid-template-columns: 30px auto 30px;
 }
-@media (min-width: 57.5em) {
+@media (min-width: 35em) {
   .modal__header {
     padding: 1.15em;
   }
