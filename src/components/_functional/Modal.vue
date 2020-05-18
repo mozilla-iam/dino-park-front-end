@@ -1,6 +1,11 @@
 <template>
   <transition name="modal-">
-    <div class="modal" tabindex="-1" @keyup.esc="$emit('close')" ref="modalEl">
+    <div
+      class="modal"
+      tabindex="-1"
+      @keyup.esc="() => closeButton && $emit('close')"
+      ref="modalEl"
+    >
       <div class="modal__content">
         <header class="modal__header">
           <button

@@ -6,6 +6,7 @@
       ref="tour-tooltip"
       :initialMaxWidth="252"
       :anker="anker"
+      :reposition="reposition"
     >
       <div class="tour-tooltip__content" ref="content">
         <header>{{ num }}/{{ total }}</header>
@@ -148,7 +149,10 @@ export default {
   async mounted() {
     await this.$nextTick();
     this.attach();
-    window.onresize = () => this.attach();
+    window.onresize = () => {
+      this.attach();
+      this.reposition += 1;
+    };
   },
   destroyed() {
     window.onresize = () => {};
@@ -156,6 +160,7 @@ export default {
   data() {
     return {
       anker: null,
+      reposition: 1,
       position: '',
       phase: 1,
       num: 1,

@@ -23,6 +23,7 @@ export default {
       type: HTMLElement,
       default: null,
     },
+    reposition: Number,
   },
   methods: {
     positionAndSize() {
@@ -73,6 +74,9 @@ export default {
   },
   watch: {
     anker() {
+      this.positionAndSize();
+    },
+    reposition() {
       this.positionAndSize();
     },
   },
