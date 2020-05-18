@@ -1,4 +1,4 @@
 env: test
 namespace: dinopark-test
 features:
-  accessGroupsToggle: true
+  accessGroupsToggle: false
