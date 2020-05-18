@@ -267,7 +267,7 @@ export default {
   width: 3.5em;
   height: 3.5em;
   border-radius: 1.75em;
-  box-shadow: 0px 0px 0px max(200vh, 200vw) rgba(0, 0, 0, 0.2),
+  box-shadow: 0px 0px 0px calc(200vh + 200vw) rgba(0, 0, 0, 0.2),
     0px 0px 1em rgba(0, 0, 0, 0.6);
   transform: translateX(-50%) translateY(-50%);
 }
