@@ -116,6 +116,11 @@ body {
   height: 100vh;
   height: -webkit-fill-available;
 }
+@media (min-width: 35em) {
+  body {
+    min-height: 50em;
+  }
+}
 
 h1,
 h2,

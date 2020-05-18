@@ -76,6 +76,10 @@ export default {
           '--ttt-left',
           `calc(${r.left + r.width / 2}px)`,
         );
+
+        if (r.top > window.innerHeight * 0.7) {
+          window.scrollTo({ top: r.top - 50, behavior: 'smooth' });
+        }
       }
     },
     deHighlight() {
