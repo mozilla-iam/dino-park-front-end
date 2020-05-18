@@ -63,6 +63,7 @@ export default {
       default: '',
     },
     required: Boolean,
+    selected: Boolean,
   },
   methods: {
     handleInputFocus() {
@@ -75,6 +76,12 @@ export default {
       }
       this.$emit('input', e.target.value);
     },
+  },
+  mounted() {
+    if (this.selected) {
+      this.$refs.input.focus();
+      this.$refs.input.select();
+    }
   },
   watch: {
     oneShotError(v) {

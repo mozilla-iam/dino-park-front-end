@@ -73,6 +73,7 @@
             :highlightError="true"
             :infoMsg="fluent('onboarding_modal_username', 'restriction')"
             :oneShotError="usernameExists"
+            :selected="true"
             v-model="primaryUsername.value"
           />
         </section>
