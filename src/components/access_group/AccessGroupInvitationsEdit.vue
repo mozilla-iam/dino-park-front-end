@@ -297,7 +297,7 @@ export default {
       });
     },
     showTagSelectorMeta(member) {
-      return member.role;
+      return member.role !== null;
     },
   },
   computed: {

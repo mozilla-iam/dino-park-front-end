@@ -1,5 +1,5 @@
 <template>
-  <div class="member-list-display">
+  <div :class="{ 'member-list-display': true, disabled: showMeta }">
     <UserPicture
       :avatar="{ picture: member.picture, username: member.username }"
       class="curator-image"
@@ -62,6 +62,10 @@ export default {
   align-items: center;
 }
 
+.member-list-display.disabled {
+  background: var(--gray-10);
+}
+
 .member-list-description p {
   margin: 0.5em;
 }
@@ -80,6 +84,11 @@ export default {
   height: 1.5em;
 }
 
+.member-list-display.disabled .member-list-description__header,
+.member-list-display.disabled .member-list-description__sub {
+  color: var(--gray-50);
+}
+
 .member-list-description .member-list-description__sub svg {
   margin-right: 0.5em;
 }
@@ -94,6 +103,10 @@ export default {
   margin-top: auto;
   margin-left: auto;
   margin-bottom: 0.5em;
+}
+
+.member-list-display.disabled .member-list-meta {
+  color: var(--gray-50);
 }
 
 .member-list-meta .member-list-meta__text {

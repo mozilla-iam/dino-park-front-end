@@ -28,13 +28,15 @@
     </div>
     <ul class="selector-auto-complete" v-if="autoCompleteList.length > 0">
       <li
-        class="selector-auto-complete__item"
         v-for="(item, idx) in autoCompleteList"
         :key="idx"
         @click="handleAddItem(item)"
       >
         <AccessGroupMemberListDisplay
-          class="selector-auto-complete__item"
+          :class="{
+            'selector-auto-complete__item': true,
+            disabled: showMeta(item),
+          }"
           :member="item"
           :subRowText="subRowTextDisplay"
           :showMeta="showMeta(item)"
@@ -129,6 +131,9 @@ export default {
       });
     }, 1000),
     handleAddItem(item) {
+      if (this.showMeta(item)) {
+        return;
+      }
       this.$emit('tag:add', item);
       this.tagsDisplay.push(item);
       this.$emit('input', this.tagsDisplay);
@@ -221,6 +226,10 @@ export default {
   cursor: pointer;
   padding: 0 0.5em;
   border-bottom: 1px solid var(--gray-40);
+}
+
+.selector-auto-complete .selector-auto-complete__item.disabled {
+  cursor: not-allowed;
 }
 
 .selector-auto-complete .selector-auto-complete__item:last-child {
