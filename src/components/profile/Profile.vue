@@ -3,7 +3,7 @@
     <div
       :class="
         'profile__section' +
-          (this.editing === 'personal-info' ? ' profile__section--editing' : '')
+        (this.editing === 'personal-info' ? ' profile__section--editing' : '')
       "
     >
       <a id="nav-personal-info" class="profile__anchor"></a>
@@ -328,7 +328,7 @@ export default {
         accounts:
           this.editing === 'accounts' ||
           Object.entries(this.uris.values || {}).filter(([k]) =>
-            this.isAccountKey(k)
+            this.isAccountKey(k),
           ).length > 0,
         languages:
           this.editing === 'languages' ||
@@ -416,7 +416,7 @@ export default {
         },
         {
           id: 'nav-access-groups',
-          iconId: 'lock',
+          iconId: 'users-outline',
           label: this.fluent('profile_access-groups'),
         },
         {
