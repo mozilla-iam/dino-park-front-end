@@ -2,8 +2,8 @@
   <div
     :class="
       'show-more' +
-        (transition ? ' show-more--transition' : '') +
-        (isExpanded ? ' show-more--expanded' : '')
+      (transition ? ' show-more--transition' : '') +
+      (isExpanded ? ' show-more--expanded' : '')
     "
   >
     <slot name="base"> </slot>
@@ -109,7 +109,7 @@ export default {
       if (event.target.tagName === 'A' || event.target.tagName === 'BUTTON') {
         setTimeout(() => {
           this.isExpanded = false;
-        }, 100);
+        }, 150);
       }
     },
   },
