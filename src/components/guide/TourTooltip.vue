@@ -8,7 +8,7 @@
       :anker="anker"
       :reposition="reposition"
     >
-      <div class="tour-tooltip__content" ref="content">
+      <div class="tour-tooltip__content" @keyup.esc="skip" ref="content">
         <header>{{ num }}/{{ total }}</header>
         <section>
           {{ fluent('tooltip_tour', `step${phase}_${num}`) }}
