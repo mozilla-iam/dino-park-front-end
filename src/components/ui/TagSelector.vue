@@ -153,12 +153,16 @@ export default {
           e.preventDefault();
           this.focusedChild -= 1;
         } else if (e.keyCode === 13) {
+          e.preventDefault();
           if (
             this.handleAddItem(this.autoCompleteList[this.focusedChild]) !==
             false
           ) {
             this.focusedChild = -1;
           }
+        } else if (e.keyCode === 27) {
+          e.preventDefault();
+          this.autoCompleteList = [];
         } else {
           this.focusedChild = -1;
         }
