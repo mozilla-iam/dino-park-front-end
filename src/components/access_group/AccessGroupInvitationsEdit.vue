@@ -61,6 +61,7 @@
             v-model="newInvites"
             :getLabel="getTagLabel"
             :updateAutoComplete="updateAutoCompleteList"
+            :showMeta="showTagSelectorMeta"
           />
           <p class="tags-selector__description">
             {{
@@ -265,13 +266,15 @@ export default {
     },
     updateAutoCompleteList(search) {
       return new Promise((res, rej) => {
-        AccessGroups.getUsers(search, this.groupName).then((results) => {
-          res(
-            results.map((profile) =>
-              DisplayMemberViewModel.fromUserData(profile),
-            ),
-          );
-        });
+        AccessGroups.getUsers(search, this.groupName, false, true).then(
+          (results) => {
+            res(
+              results.map((profile) =>
+                DisplayMemberViewModel.fromUserData(profile),
+              ),
+            );
+          },
+        );
       });
     },
     async beforeAddNewInvitesClicked() {
@@ -292,6 +295,9 @@ export default {
         this.tinyNotification('access-group-invitation-text-updated');
         this.emailInviteTextDirty = false;
       });
+    },
+    showTagSelectorMeta(member) {
+      return member.role !== null;
     },
   },
   computed: {

@@ -20,23 +20,37 @@
       <input
         class="tag-selector__value"
         type="text"
+        ref="auto-complete-input"
         v-model="currentInput"
         @change="onSelectorInput"
         @input="onInput"
         @blur="onInputBlur"
+        @focus="onInputFocus"
       />
     </div>
-    <ul class="selector-auto-complete" v-if="autoCompleteList.length > 0">
+    <ul
+      ref="auto-complete-list"
+      class="selector-auto-complete"
+      v-if="autoCompleteList.length > 0"
+    >
       <li
-        class="selector-auto-complete__item"
+        :class="{
+          'selector-auto-complete__item-container': true,
+          active: focusedChild === idx,
+        }"
         v-for="(item, idx) in autoCompleteList"
         :key="idx"
         @click="handleAddItem(item)"
+        tabindex="-1"
       >
         <AccessGroupMemberListDisplay
-          class="selector-auto-complete__item"
+          :class="{
+            'selector-auto-complete__item': true,
+            disabled: showMeta(item),
+          }"
           :member="item"
           :subRowText="subRowTextDisplay"
+          :showMeta="showMeta(item)"
         />
       </li>
     </ul>
@@ -61,6 +75,10 @@ export default {
       type: Function,
       default: () => true,
     },
+    showMeta: {
+      type: Function,
+      default: (item) => false,
+    },
   },
   components: {
     Icon,
@@ -72,6 +90,7 @@ export default {
       currentInput: '',
       tagsDisplay: this.value,
       autoCompleteList: [],
+      focusedChild: -1,
     };
   },
   watch: {
@@ -91,6 +110,10 @@ export default {
       }
     },
     onInputBlur(e) {
+      this.$refs['auto-complete-input'].removeEventListener(
+        'keydown',
+        this.arrowListener,
+      );
       // TODO: This currently only works on firefox.
       if (!e.explicitOriginalTarget || !e.explicitOriginalTarget.closest) {
         return;
@@ -112,6 +135,41 @@ export default {
       this.tagsDisplay.splice(idx, 1);
       this.$emit('input', this.tagsDisplay);
     },
+    onInputFocus(e) {
+      this.$refs['auto-complete-input'].addEventListener(
+        'keydown',
+        this.arrowListener,
+      );
+    },
+    arrowListener(e) {
+      if (this.autoCompleteList.length) {
+        if (
+          e.keyCode === 40 &&
+          this.focusedChild < this.autoCompleteList.length - 1
+        ) {
+          e.preventDefault();
+          this.focusedChild += 1;
+        } else if (e.keyCode === 38 && this.focusedChild > 0) {
+          e.preventDefault();
+          this.focusedChild -= 1;
+        } else if (e.keyCode === 13) {
+          e.preventDefault();
+          if (
+            this.handleAddItem(this.autoCompleteList[this.focusedChild]) !==
+            false
+          ) {
+            this.focusedChild = -1;
+          }
+        } else if (e.keyCode === 27) {
+          e.preventDefault();
+          this.autoCompleteList = [];
+        } else {
+          this.focusedChild = -1;
+        }
+      } else {
+        this.focusedChild = -1;
+      }
+    },
     onInput: throttle(function (e) {
       if (!e || e.target.value === '') {
         if (e.target.value === '') {
@@ -124,6 +182,9 @@ export default {
       });
     }, 1000),
     handleAddItem(item) {
+      if (this.showMeta(item)) {
+        return false;
+      }
       this.$emit('tag:add', item);
       this.tagsDisplay.push(item);
       this.$emit('input', this.tagsDisplay);
@@ -212,9 +273,22 @@ export default {
   z-index: 1;
 }
 
+.selector-auto-complete .selector-auto-complete__item-container.active {
+  background: var(--gray-20);
+}
+
 .selector-auto-complete .selector-auto-complete__item {
   cursor: pointer;
-  padding: 0.5em;
+  padding: 0 0.5em;
+  border-bottom: 1px solid var(--gray-40);
+}
+
+.selector-auto-complete .selector-auto-complete__item.disabled {
+  cursor: not-allowed;
+}
+
+.selector-auto-complete .selector-auto-complete__item:last-child {
+  border-bottom: none;
 }
 
 .selector-auto-complete .selector-auto-complete__item:hover {

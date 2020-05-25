@@ -377,12 +377,17 @@ export default class AccessGroups {
     };
   }
 
-  static async getUsers(q, groupName, includeCurators = false) {
+  static async getUsers(
+    q,
+    groupName,
+    includeCurators = false,
+    showExisting = false,
+  ) {
     try {
       const api = new Api();
       let users = await api.execute({
         path: 'users/get',
-        endpointArguments: [q, groupName, includeCurators],
+        endpointArguments: [q, groupName, includeCurators, showExisting],
       });
       return users;
     } catch (e) {

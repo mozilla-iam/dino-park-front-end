@@ -141,7 +141,13 @@ export default {
   },
   users: {
     endpoint: `${API_PREFIX}users`,
-    get: (endpoint, q, groupName, includeCurators = false) =>
-      `${endpoint}?q=${q}&g=${groupName}&c=${includeCurators}`,
+    get: (
+      endpoint,
+      q,
+      groupName,
+      includeCurators = false,
+      showExisting = false,
+    ) =>
+      `${endpoint}?q=${q}&g=${groupName}&c=${includeCurators}&a=${showExisting}`,
   },
 };

@@ -526,6 +526,7 @@ access-group_invite-member = Invite new member
   .invite-expiration__label = Membership will expire after
   .invite-expiration__custom-unit = days
   .table-row-text = Expires in
+  .member-list-meta__text = Member
 access-group_email-invite-text = Additional email invite text
   .checkbox = Custom invitation text
   .description = Please enter any additional text for the invitation email
