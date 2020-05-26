@@ -70,6 +70,11 @@ export default {
     ],
     delete: (endpoint, groupName, uuid) => `${endpoint}/${groupName}/${uuid}`,
   },
+  groupRequests: {
+    endpoint: `${API_PREFIX}requests`,
+    get: true,
+    delete: (endpoint, groupName, uuid) => `${endpoint}/${groupName}/${uuid}`,
+  },
   members: {
     endpoint: `${API_PREFIX}members`,
     get: (endpoint, groupName, options = {}) => {
@@ -135,6 +140,12 @@ export default {
   },
   selfInvitations: {
     endpoint: `${API_PREFIX}self/invitations`,
+    get: (endpoint) => endpoint,
+    post: [true],
+    delete: true,
+  },
+  selfRequests: {
+    endpoint: `${API_PREFIX}self/requests`,
     get: (endpoint) => endpoint,
     post: [true],
     delete: true,

@@ -47,11 +47,26 @@
         >{{ fluent('access-group_leave') }}</RouterLink
       >
     </footer>
+    <footer
+      class="description-container-area description-footer"
+      v-else-if="showRequest"
+    >
+      <button
+        v-if="showCancelRequest"
+        @click="cancel"
+        class="button primary-action"
+      >
+        {{ fluent('access-group_request-cancel') }}
+      </button>
+      <button v-else @click="request" class="button primary-action">
+        {{ fluent('access-group_request') }}
+      </button>
+    </footer>
   </article>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import EditButton from '@/components/ui/EditButton.vue';
 import Button from '@/components/ui/Button.vue';
 import Icon from '@/components/ui/Icon.vue';
@@ -77,6 +92,7 @@ export default {
       memberCount: 'accessGroup/memberCount',
       isCurator: 'accessGroup/isCurator',
       isMember: 'accessGroup/isMember',
+      userRequest: 'userV2/getRequestByName',
     }),
     membersCountText() {
       return this.memberCount === 1
@@ -91,6 +107,24 @@ export default {
     },
     showLeave() {
       return this.isMember;
+    },
+    showRequest() {
+      return this.accessGroup.type === 'Reviewed';
+    },
+    showCancelRequest() {
+      return this.userRequest(this.accessGroup.name);
+    },
+  },
+  methods: {
+    ...mapActions({
+      requestInvitation: 'userV2/requestInvitation',
+      cancelRequest: 'userV2/cancelRequest',
+    }),
+    request() {
+      this.requestInvitation({ groupName: this.accessGroup.name });
+    },
+    cancel() {
+      this.cancelRequest({ groupName: this.accessGroup.name });
     },
   },
   data() {

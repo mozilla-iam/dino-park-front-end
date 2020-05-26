@@ -1,5 +1,5 @@
 ---
 customInvitationText: false
 historyTab: false
-editGroupType: false
+editGroupType: true
 accessGroupsToggle: true

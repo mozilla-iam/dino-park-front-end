@@ -2,6 +2,28 @@ export const INVITATION_STATE = {
   ACCEPTED: 'accepted',
   REJECTED: 'rejected',
 };
+export class GroupRequestViewModel {
+  constructor(data) {
+    this.groupName = '';
+    this.userUuid = '';
+    this.requestExpiration = '';
+    this.error = false;
+    this.processData(data);
+  }
+
+  processData(data) {
+    try {
+      this.groupName = data.group_name;
+      this.userUuid = data.user_uuid;
+      this.requestExpiration = data.request_expiration;
+    } catch (e) {
+      this.error = e.message;
+      console.error('GroupRequest error: ', e.message);
+      throw new Error(e.message);
+    }
+  }
+}
+
 export class GroupInvitationViewModel {
   constructor(data) {
     this.groupName = '';
