@@ -27,6 +27,7 @@ export const accessGroupInvitationsActions = {
         invites,
         expiration,
       );
+      await dispatch('fetchRequests', state.group.name);
       return await dispatch('fetchInvitations', state.group.name);
     } catch (e) {
       throw new Error(e.message);

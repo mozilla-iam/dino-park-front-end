@@ -10,13 +10,8 @@
         <AccessGroupMembersTable
           :data="groupInvitations"
           :columns="invitationColumns"
-          :totalRows="invitationCount"
-          :rowsPerLoad="memberRowsDisplay"
+          :totalRows="groupInvitations.length"
           :showHeaders="false"
-          :loadMoreHandler="loadMoreHandler"
-          :loadMoreText="
-            fluent('access-group_pending-invitations', 'load-more-text')
-          "
         >
           <div slot="row-confirm" slot-scope="{ member }">
             <p class="leave-confirm__description">
@@ -50,14 +45,9 @@
         <AccessGroupMembersTable
           :data="groupRequests"
           :columns="requestColumns"
-          :totalRows="requestCount"
-          :rowsPerLoad="memberRowsDisplay"
+          :totalRows="groupRequests.length"
           :rowHasExpandedContent="() => true"
           :showHeaders="false"
-          :loadMoreHandler="loadMoreHandler"
-          :loadMoreText="
-            fluent('access-group_pending-invitations', 'load-more-text')
-          "
         >
           <div
             slot="row-expandable-content"
@@ -111,6 +101,11 @@
             slot-scope="{ member, toggleExpand }"
             class="member-actions"
           >
+            <Button
+              class="primary-action renew"
+              @click="handleRequestInvitation(member)"
+              >{{ fluent('access-group_members', 'request-action') }}</Button
+            >
             <Button
               class="tertiary-action expand"
               @click="toggleExpand(true)"
@@ -361,6 +356,9 @@ export default {
         this.tinyNotification('access-group-invite-deleted');
       });
     },
+    handleRequestInvitation(member) {
+      this.sendInvitations({ invites: [member] });
+    },
     handleCustomRequestInvitation(ev, member, expiration) {
       this.customExpirationErrorHighlight = true;
       const form = ev.target;
@@ -422,8 +420,6 @@ export default {
       groupExpiration: 'accessGroup/getExpiration',
       groupInvitations: 'accessGroup/getInvitations',
       groupRequests: 'accessGroup/getRequests',
-      invitationCount: 'accessGroup/getInvitationCount',
-      requestCount: 'accessGroup/getRequestCount',
       group: 'accessGroup/getGroup',
       accessGroupExpiration: 'accessGroup/getExpiration',
     }),

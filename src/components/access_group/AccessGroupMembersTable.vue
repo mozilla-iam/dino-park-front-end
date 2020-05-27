@@ -86,10 +86,6 @@ export default {
     columns: Array,
     totalRows: Number,
     toggleExpand: Function,
-    rowsPerLoad: {
-      default: 20,
-      type: Number,
-    },
     showHeaders: {
       type: Boolean,
       default: true,
