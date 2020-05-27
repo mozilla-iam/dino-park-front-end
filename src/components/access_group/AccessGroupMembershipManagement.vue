@@ -1,10 +1,13 @@
 <template>
   <div class="membership-management-container">
     <p class="primary-data-row">
-      <span class="primary-data-row__count">{{ totalPendingInvitations }}</span>
-      <span class="primary-data-row__intro">
-        {{ pendingInvitationsIntroText }}
-      </span>
+      <Fluent
+        class="primary-data-row__count"
+        id="access-group_membership-management"
+        attr="mozillians"
+        :args="{ mozilliansCount: totalPendingInvitations }"
+      />
+      &nbsp;
       <RouterLink
         v-if="showEdit"
         class="primary-data-row__direct"
@@ -28,11 +31,39 @@
         }}
       </span>
     </p>
-    <p class="primary-data-row">
-      <span class="primary-data-row__count">{{ totalPendingRenewals }}</span>
-      <span class="primary-data-row__intro">
-        {{ pendingRenewalsIntroText }}
+    <p v-if="requestCount !== null" class="primary-data-row">
+      <Fluent
+        class="primary-data-row__count"
+        id="access-group_membership-management"
+        attr="mozillians"
+        :args="{ mozilliansCount: requestCount }"
+      />
+      &nbsp;
+      <RouterLink
+        v-if="showEdit"
+        class="primary-data-row__direct"
+        :to="{
+          name: 'Edit Access Group',
+          query: { section: 'invitations' },
+        }"
+        >{{
+          fluent('access-group_membership-management', 'pending-requests-link')
+        }}</RouterLink
+      >
+      <span class="primary-data-row__direct" v-else>
+        {{
+          fluent('access-group_membership-management', 'pending-requests-link')
+        }}
       </span>
+    </p>
+    <p class="primary-data-row">
+      <Fluent
+        class="primary-data-row__count"
+        id="access-group_membership-management"
+        attr="members-will"
+        :args="{ membersCount: totalPendingRenewals }"
+      />
+      &nbsp;
       <RouterLink
         v-if="showEdit"
         class="primary-data-row__direct"
@@ -83,6 +114,7 @@ export default {
     ...mapGetters({
       invitationCount: 'accessGroup/getInvitationCount',
       renewalCount: 'accessGroup/getRenewalCount',
+      requestCount: 'accessGroup/getRequestCount',
       expiration: 'accessGroup/getExpiration',
       isCurator: 'accessGroup/isCurator',
     }),
@@ -128,7 +160,7 @@ export default {
   margin-top: 0;
 }
 
-.primary-data-row .primary-data-row__count {
+.primary-data-row .primary-data-row__count > strong {
   font-weight: bold;
   color: var(--black);
   margin-right: 0.25em;

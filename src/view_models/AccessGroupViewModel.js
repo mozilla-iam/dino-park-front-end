@@ -148,6 +148,7 @@ export class DisplayMemberViewModel {
     this.since = '';
     this.expiration = MEMBER_EXPIRATION_NONE;
     this.invitationExpiration = MEMBER_EXPIRATION_NONE;
+    this.requestExpiration = MEMBER_EXPIRATION_NONE;
     [, , this.role] = DISPLAY_MEMBER_ROLES;
     this.added_by = {};
     this.error = false;
@@ -199,6 +200,11 @@ export class DisplayMemberViewModel {
         this.invitationExpiration = !data.invitation_expiration
           ? MEMBER_EXPIRATION_NONE
           : data.invitation_expiration;
+      }
+      if (data.hasOwnProperty('request_expiration')) {
+        this.requestExpiration = !data.request_expiration
+          ? MEMBER_EXPIRATION_NONE
+          : data.request_expiration;
       }
       if (data.role === 'Admin') {
         this.role = DISPLAY_MEMBER_ROLES[MEMBER_IDEX.Curator];
