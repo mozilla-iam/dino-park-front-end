@@ -161,4 +161,29 @@ export default {
   color: var(--white);
   background-color: var(--neon-red);
 }
+
+.button--red-secondary {
+  background-color: var(--white);
+  color: var(--neon-red);
+  border-color: var(--neon-red);
+}
+
+.button--red-secondary:hover {
+  color: var(--white);
+  background-color: var(--neon-red);
+  border-color: transparent;
+}
+
+.button--red-secondary svg > path {
+  fill: var(--neon-red);
+}
+
+.button--red-secondary:hover svg > path {
+  fill: var(--white);
+}
+
+.button--red-secondary:active {
+  background-color: var(--white);
+  color: var(--neon-red);
+}
 </style>

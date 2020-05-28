@@ -107,7 +107,7 @@
               >{{ fluent('access-group_members', 'request-action') }}</Button
             >
             <Button
-              class="primary-action button--red hide-mobile"
+              class="primary-action button--red-secondary hide-mobile"
               @click="rejectRequest(member)"
               >{{ fluent('access-group_members', 'request-reject') }}</Button
             >
