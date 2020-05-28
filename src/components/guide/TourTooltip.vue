@@ -67,6 +67,7 @@ export default {
         const r = this.anker.getBoundingClientRect();
         this.anker.style.setProperty('--top', `${r.height / 2}px`);
         this.anker.style.setProperty('--left', `${r.width / 2}px`);
+        this.$el.style.setProperty('--height', `${window.innerHeight}px`);
         this.$el.style.setProperty('--top', `${r.top + r.height / 2}px`);
         this.$el.style.setProperty('--left', `${r.left + r.width / 2}px`);
         this.$el.style.setProperty(
@@ -174,16 +175,16 @@ export default {
 .tour-tooltip {
   left: 0px;
   min-width: 100vw;
-  position: absolute;
+  position: fixed;
   z-index: var(--layerModal);
   color: var(--white);
   min-height: 100vh;
-  min-height: -webkit-fill-available;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   background-color: transparent;
   border: none;
+  padding-bottom: calc(100vh - var(--height));
 }
 @media (max-width: 35em) {
   .tour-tooltip {
@@ -202,6 +203,7 @@ export default {
     left: var(--ttt-left);
     box-shadow: 0 0.325em 0.25em -0.145em rgba(100, 100, 100, 0.6),
       0 0.225em 0.625em 0.145em rgba(100, 100, 100, 0.6);
+    padding-bottom: initial;
   }
 }
 .tour-tooltip::before {
@@ -260,7 +262,6 @@ export default {
   position: absolute;
   width: 100%;
   min-height: 100vh;
-  min-height: -webkit-fill-available;
   z-index: var(--layerModal);
 }
 
