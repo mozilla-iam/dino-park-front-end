@@ -102,9 +102,14 @@
             class="member-actions"
           >
             <Button
-              class="primary-action renew"
+              class="primary-action hide-mobile"
               @click="handleRequestInvitation(member)"
               >{{ fluent('access-group_members', 'request-action') }}</Button
+            >
+            <Button
+              class="primary-action button--red hide-mobile"
+              @click="rejectRequest(member)"
+              >{{ fluent('access-group_members', 'request-reject') }}</Button
             >
             <Button
               class="tertiary-action expand"
