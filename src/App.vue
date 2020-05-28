@@ -115,11 +115,7 @@ body {
   letter-spacing: 0.04em;
   height: 100vh;
   height: -webkit-fill-available;
-}
-@media (min-width: 35em) {
-  body {
-    min-height: 50em;
-  }
+  min-height: 50em;
 }
 
 h1,
