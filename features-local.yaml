@@ -3,3 +3,4 @@ customInvitationText: false
 historyTab: false
 editGroupType: true
 accessGroupsToggle: true
+onboarding: true

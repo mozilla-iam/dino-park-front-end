@@ -2,3 +2,4 @@ name: dino-park-front-end-preview
 features:
   accessGroupsToggle: true
   editGroupType: true
+  onboarding: true

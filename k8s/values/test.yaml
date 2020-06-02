@@ -2,3 +2,5 @@ env: test
 namespace: dinopark-test
 features:
   accessGroupsToggle: false
+  editGroupType: false
+  onboarding: false

@@ -69,7 +69,10 @@ export default new Vuex.Store({
     setUser(state, userContent) {
       state.user = userContent;
       state.scope.update(userContent);
-      if (state.scope.firstTime) {
+      if (
+        (state.features?.onboarding || window.location.hash === '#tour') &&
+        state.scope.firstTime
+      ) {
         state.onboarding.enable();
       }
     },

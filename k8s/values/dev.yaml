@@ -2,3 +2,5 @@ env: dev
 namespace: dinopark-dev
 features:
   accessGroupsToggle: true
+  onboarding: true
+  editGroupType: true
