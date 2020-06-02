@@ -11,7 +11,7 @@ export const accessGroupRequestsActions = {
     const groupName = state.group.name;
     try {
       const requests = await accessGroupsService.getAccessGroupMemberRequests(
-        groupName
+        groupName,
       );
       commit('setRequests', requests);
       return requests;
@@ -20,24 +20,11 @@ export const accessGroupRequestsActions = {
       throw new Error(e.message);
     }
   },
-  // TODO: This needs to be a method operating on a single request
-  async sendRequests({ state, dispatch }, { requests, expiration }) {
-    try {
-      const result = await accessGroupsService.sendRequests(
-        state.group.name,
-        requests,
-        expiration
-      );
-      return await dispatch('fetchRequests', state.group.name);
-    } catch (e) {
-      throw new Error(e.message);
-    }
-  },
   async rejectRequest({ state, dispatch }, request) {
     try {
       const result = await accessGroupsService.rejectRequest(
         state.group.name,
-        request.uuid
+        request.uuid,
       );
       return await dispatch('fetchRequests', request.name);
     } catch (e) {
@@ -50,7 +37,7 @@ export const accessGroupRequestsMutations = {
   setRequests(state, requests) {
     try {
       state.requests = requests.map(
-        invite => new DisplayMemberViewModel(invite)
+        (invite) => new DisplayMemberViewModel(invite),
       );
     } catch (e) {
       state.error = e.message;
@@ -59,7 +46,7 @@ export const accessGroupRequestsMutations = {
   },
 };
 export const accessGroupRequestsGetters = {
-  getRequests: state => {
+  getRequests: (state) => {
     return state.requests;
   },
 };

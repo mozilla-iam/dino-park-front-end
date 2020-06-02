@@ -38,6 +38,7 @@ export default {
     memberCount: 0,
     invitationCount: 0,
     renewalCount: 0,
+    requestCount: null,
     invitationConfig: null,
     loading: false,
     isCurator: false,
@@ -132,6 +133,7 @@ export default {
         state.renewalCount = !accessGroup.renewal_count
           ? 0
           : accessGroup.renewal_count;
+        state.requestCount = accessGroup.request_count;
         state.invitationConfig = accessGroup.invitation;
         state.isCurator = Boolean(accessGroup.curator);
         state.isMember = Boolean(accessGroup.member);
@@ -151,6 +153,7 @@ export default {
     getMemberCount: ({ memberCount }) => memberCount,
     getInvitationCount: ({ invitationCount }) => invitationCount,
     getRenewalCount: ({ renewalCount }) => renewalCount,
+    getRequestCount: ({ requestCount }) => requestCount,
     getExpiration: ({ group }) =>
       group && group.expiration ? group.expiration : 0,
     getInvitationConfig: ({ invitationConfig }) =>

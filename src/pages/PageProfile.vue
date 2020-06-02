@@ -83,8 +83,7 @@ export default {
   beforeRouteEnter(to, from, next) {
     const { groupname } = to.params;
     store.dispatch('setLoading');
-    const [profilePromises, profileResolvers] = fetchProfile(store, groupname);
-    resolvePromisesSerially([...profilePromises], [...profileResolvers])
+    fetchProfile(store, groupname)
       .then((responseArray) => {
         store.dispatch('completeLoading');
         next();

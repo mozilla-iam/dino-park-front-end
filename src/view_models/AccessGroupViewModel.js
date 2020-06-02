@@ -2,6 +2,28 @@ export const INVITATION_STATE = {
   ACCEPTED: 'accepted',
   REJECTED: 'rejected',
 };
+export class GroupRequestViewModel {
+  constructor(data) {
+    this.groupName = '';
+    this.userUuid = '';
+    this.requestExpiration = '';
+    this.error = false;
+    this.processData(data);
+  }
+
+  processData(data) {
+    try {
+      this.groupName = data.group_name;
+      this.userUuid = data.user_uuid;
+      this.requestExpiration = data.request_expiration;
+    } catch (e) {
+      this.error = e.message;
+      console.error('GroupRequest error: ', e.message);
+      throw new Error(e.message);
+    }
+  }
+}
+
 export class GroupInvitationViewModel {
   constructor(data) {
     this.groupName = '';
@@ -126,6 +148,7 @@ export class DisplayMemberViewModel {
     this.since = '';
     this.expiration = MEMBER_EXPIRATION_NONE;
     this.invitationExpiration = MEMBER_EXPIRATION_NONE;
+    this.requestExpiration = MEMBER_EXPIRATION_NONE;
     [, , this.role] = DISPLAY_MEMBER_ROLES;
     this.added_by = {};
     this.error = false;
@@ -177,6 +200,11 @@ export class DisplayMemberViewModel {
         this.invitationExpiration = !data.invitation_expiration
           ? MEMBER_EXPIRATION_NONE
           : data.invitation_expiration;
+      }
+      if (data.hasOwnProperty('request_expiration')) {
+        this.requestExpiration = !data.request_expiration
+          ? MEMBER_EXPIRATION_NONE
+          : data.request_expiration;
       }
       if (data.role === 'Admin') {
         this.role = DISPLAY_MEMBER_ROLES[MEMBER_IDEX.Curator];

@@ -425,13 +425,20 @@ access-group-information-tab = Information
 access-group-members-tab = Members
 access-group-invitations-tab = Invites and Requests
 access-group_leave = Leave
+access-group_request = Request Invitation
+access-group_request-cancel = Cancel Request
 access-group-nav-bar = Access Groups
 access-group_membership-management = Membership Management
-  .pending-invitations = mozillians
-  .pending-invitations-single = mozillian
+  .mozillians = <strong>{$mozilliansCount}</strong> {$mozilliansCount -> 
+                   [one] mozillian
+                   *[other] mozillians
+                }
+  .members-will = <strong>{$membersCount}</strong> {$membersCount -> 
+                   [one] member
+                   *[other] members
+                } will
   .pending-invitations-link = pending membership
-  .pending-renewals = members will
-  .pending-renewals-single = member will
+  .pending-requests-link = pending approval
   .pending-renewals-link = expire within 14 days
   .add-members = Add Members
 access-group_details = Group Details
@@ -464,6 +471,9 @@ access-group_members = Members
   .remove-action = Remove member
   .remove-cancel = Cancel
   .renew-action = Renew
+  .request-invite-intro = Invite
+  .request-action = Invite
+  .request-reject = Reject
   .load-more = Load more members
   .members-container__load-more = Load more entries
   .member-action = Member details

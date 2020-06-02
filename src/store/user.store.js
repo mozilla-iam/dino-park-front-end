@@ -10,17 +10,25 @@ import {
   userInvitationsMutations,
   userInvitationsGetters,
 } from './user-invitations.store';
+import {
+  userRequestsState,
+  userRequestsActions,
+  userRequestsMutations,
+  userRequestsGetters,
+} from './user-requests.store';
 
 export default {
   namespaced: true,
   state: {
     ...profileState,
     ...userInvitationsState,
+    ...userRequestsState,
     personListViewPreference: 'list',
   },
   actions: {
     ...profileActions,
     ...userInvitationsActions,
+    ...userRequestsActions,
     setPersonViewPreference({ commit }, preference) {
       commit('setPersonViewPreference', preference);
     },
@@ -28,6 +36,7 @@ export default {
   mutations: {
     ...profileMutations,
     ...userInvitationsMutations,
+    ...userRequestsMutations,
     setPersonViewPreference(state, preference) {
       state.personListViewPreference = preference;
     },
@@ -35,5 +44,6 @@ export default {
   getters: {
     ...profileGetters,
     ...userInvitationsGetters,
+    ...userRequestsGetters,
   },
 };

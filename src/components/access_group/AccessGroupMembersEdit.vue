@@ -34,7 +34,6 @@
             :data="membersList"
             :columns="membersColumns"
             :totalRows="memberCount"
-            :rowsPerLoad="memberRowsDisplay"
             :rowHasExpandedContent="membersRowHasExpandedContent"
             :loadMoreHandler="loadMoreHandler"
             :loadMoreText="fluent('access-group_members', 'load-more')"
@@ -243,7 +242,6 @@ import {
 import AccessGroups from '@/assets/js/access-groups';
 
 const memberRenewalThreshold = 14;
-const memberRowsDisplay = 20;
 
 export default {
   name: 'AccessGroupMembersEdit',
@@ -301,7 +299,6 @@ export default {
     return {
       updateExpirationErrorHighlight: false,
       customExpirationErrorHighlight: false,
-      memberRowsDisplay,
       groupExpiration: !accessGroupExpiration ? 0 : accessGroupExpiration,
       groupData: '',
       groupDescriptionData: '',
