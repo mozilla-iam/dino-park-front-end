@@ -90,7 +90,7 @@ onboarding_modal_1 = Welcome to your profile
   .paragraph_2 = We take privacy very seriously, which is why we provide easy to use <strong>privacy controls</strong> for each piece of information within your profile. You can also preview how your profile page looks publicly by using the <strong>Preview as</strong> feature.
 onboarding_modal_2 = Tell us about yourself
   .paragraph_1 = Your profile <strong>biography</strong> is a great place to share your achievements and areas of interest with your fellow Mozillians. You can determine who can read your biography by adjusting its <strong>privacy level</strong>.
-  .paragraph_2 = Use the “<strong>Tags</strong>” section in your profile to add your skills and interests. This will help relevant Mozilla staff and contributors with similar interests connect with you.
+  .paragraph_2 = Use the <strong>Tags</strong> section in your profile to add your skills and interests. This will help relevant Mozilla staff and contributors with similar interests connect with you.
 onboarding_modal_3 = We're here to help
   .paragraph_1 = Get help at any time by reading our Mozilla People Directory <a data-l10n-name="FAQ">FAQ</a>.
   .paragraph_2 = That’s it! You’re ready to dive in.
