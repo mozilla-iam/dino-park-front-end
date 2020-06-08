@@ -160,9 +160,8 @@ export default {
 
 <style>
 .profile__intro {
+  padding-top: 2em;
   position: relative;
-  padding-top: 5em;
-  margin-top: 5em;
   word-wrap: anywhere;
 }
 @media (min-width: 57.5em) {
@@ -179,13 +178,12 @@ export default {
 }
 
 .profile__headshot {
+  display: flex;
+  justify-content: center;
   width: 6.25em;
   height: 6.25em;
-  position: absolute;
-  top: -3.125em;
-  left: 50%;
-  margin-left: -3.125em;
   margin-bottom: 1em;
+  width: 100%;
 }
 .profile__headshot img {
   width: 100%;
