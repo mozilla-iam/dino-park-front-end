@@ -4,12 +4,10 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
-import store, { fetchProfile, resolvePromisesSerially } from '@/store';
+import store, { fetchProfile } from '@/store';
 
 export default {
   name: 'AccessGroups',
-  components: { LoadingSpinner },
   computed: {
     ...mapGetters({
       loading: 'getLoading',
@@ -19,18 +17,22 @@ export default {
     },
   },
   beforeRouteEnter(to, from, next) {
-    const { groupname } = to.params;
-    store.dispatch('setLoading');
-    fetchProfile(store, groupname)
-      .then((responseArray) => {
-        store.dispatch('completeLoading');
-        next();
-      })
-      .catch((error) => {
-        console.error('Loading profile/invitations error: ', error.message);
-        store.dispatch('completeLoading');
-        next();
-      });
+    if (store.state.scope.isReady) {
+      const { groupname } = to.params;
+      store.dispatch('setLoading');
+      fetchProfile(store, groupname)
+        .then(() => {
+          store.dispatch('completeLoading');
+          next();
+        })
+        .catch((error) => {
+          console.error('Loading profile/invitations error: ', error.message);
+          store.dispatch('completeLoading');
+          next();
+        });
+    } else {
+      next();
+    }
   },
   data() {
     return {};

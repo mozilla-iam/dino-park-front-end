@@ -30,19 +30,17 @@
 </template>
 
 <script>
-import store, { fetchProfile, resolvePromisesSerially } from '@/store';
-import Error from '@/components/ui/Error.vue';
+import store, { fetchProfile } from '@/store';
 import Profile from '@/components/profile/Profile.vue';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 import { DISPLAY_PROFILE } from '@/queries/profile';
 import Related from '@/assets/js/related';
-import Page404 from './PageUnknown.vue';
 import PreviewAs from '@/components/profile/PreviewAs.vue';
+import Page404 from './PageUnknown.vue';
 
 export default {
   name: 'PageProfile',
   components: {
-    Error,
     Profile,
     Page404,
     PreviewAs,
@@ -81,18 +79,22 @@ export default {
     },
   },
   beforeRouteEnter(to, from, next) {
-    const { groupname } = to.params;
-    store.dispatch('setLoading');
-    fetchProfile(store, groupname)
-      .then((responseArray) => {
-        store.dispatch('completeLoading');
-        next();
-      })
-      .catch((error) => {
-        console.error('Loading profile/invitations error: ', error.message);
-        store.dispatch('completeLoading');
-        next();
-      });
+    if (store.state.scope.isReady) {
+      const { groupname } = to.params;
+      store.dispatch('setLoading');
+      fetchProfile(store, groupname)
+        .then(() => {
+          store.dispatch('completeLoading');
+          next();
+        })
+        .catch((error) => {
+          console.error('Loading profile/invitations error: ', error.message);
+          store.dispatch('completeLoading');
+          next();
+        });
+    } else {
+      next();
+    }
   },
   data() {
     return {
