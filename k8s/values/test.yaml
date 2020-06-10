@@ -1,6 +1,6 @@
 env: test
 namespace: dinopark-test
 features:
-  accessGroupsToggle: false
-  editGroupType: false
-  onboarding: false
+  accessGroupsToggle: true
+  editGroupType: true
+  onboarding: true
