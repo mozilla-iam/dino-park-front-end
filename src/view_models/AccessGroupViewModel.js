@@ -94,7 +94,7 @@ const getDisplayName = (data) => {
   if (data.last_name) {
     return data.last_name;
   }
-  if (!data.username.startsWith('r--')) {
+  if (!data.username.startsWith('r--') && !data.username.startsWith('p--')) {
     return data.username;
   }
   return defaultUserName;

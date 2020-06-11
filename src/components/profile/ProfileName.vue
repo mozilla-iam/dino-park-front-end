@@ -25,7 +25,10 @@ export default {
   },
   computed: {
     prettierUsername() {
-      if (this.username && this.username.startsWith('r--')) {
+      if (
+        this.username &&
+        (this.username.startsWith('r--') || this.username.startsWith('p--'))
+      ) {
         return null;
       }
       return this.username;

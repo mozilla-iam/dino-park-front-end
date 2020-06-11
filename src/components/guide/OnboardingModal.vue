@@ -144,8 +144,8 @@ export default {
     },
     updateUsername(username) {
       if (username.startsWith('r--')) {
-        username = username.replace(/^r--/, 'p--');
-        username = username.replace(/=*$/, '');
+        const rand = () => Math.random().toString(36).split('.')[1];
+        username = `p--${rand()}${rand()}`;
       }
       return username;
     },

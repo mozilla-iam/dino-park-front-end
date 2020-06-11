@@ -56,7 +56,10 @@ export default {
       if (this.lastName) {
         return this.lastName;
       }
-      if (!this.username.startsWith('r--')) {
+      if (
+        !this.username.startsWith('r--') &&
+        !this.username.startsWith('p--')
+      ) {
         return this.username;
       }
       return 'Anonymous User';

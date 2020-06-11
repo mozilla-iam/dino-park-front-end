@@ -24,7 +24,7 @@ export const ACCESS_GROUP_LEAVE_CONFIRMATION_PAGE =
   'Access Group Confirm Leave';
 
 function showUsername(username) {
-  return username && !username.startsWith('r--');
+  return username && !username.startsWith('r--') && !username.startsWith('p--');
 }
 
 async function resolvePromisesSerially(promises, resolvers) {
