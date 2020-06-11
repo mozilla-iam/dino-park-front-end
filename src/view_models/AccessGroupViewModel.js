@@ -186,7 +186,11 @@ export class DisplayMemberViewModel {
         if (!(sinceDate instanceof Date)) {
           this.since = '';
         } else {
-          this.since = sinceDate.toLocaleDateString();
+          this.since = sinceDate.toLocaleString(undefined, {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          });
         }
       }
       if (data.hasOwnProperty('group_expiration')) {
@@ -256,6 +260,13 @@ export class AbbGroupViewModel {
   }
 }
 
+export class MembershipModel {
+  constructor(data) {
+    this.expiration = data?.expiration || MEMBER_EXPIRATION_NONE;
+    this.role = data?.role || null;
+    this.since = data?.since || null;
+  }
+}
 export class GroupViewModel {
   constructor(data) {
     this.id = '';
