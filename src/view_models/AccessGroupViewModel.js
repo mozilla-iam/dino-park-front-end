@@ -262,7 +262,7 @@ export class AbbGroupViewModel {
 
 export class MembershipModel {
   constructor(data) {
-    this.expiration = data?.expiration || MEMBER_EXPIRATION_NONE;
+    this.expiration = data?.expiration || null;
     this.role = data?.role || null;
     this.since = data?.since || null;
   }
