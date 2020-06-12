@@ -1,4 +1,7 @@
-import { GroupViewModel } from '@/view_models/AccessGroupViewModel';
+import {
+  GroupViewModel,
+  MembershipModel,
+} from '@/view_models/AccessGroupViewModel';
 import AccessGroups from '@/assets/js/access-groups';
 import {
   accessGroupInvitationsState,
@@ -35,6 +38,7 @@ export default {
     ...membersState,
     ...termsState,
     group: null,
+    membership: null,
     memberCount: 0,
     invitationCount: 0,
     renewalCount: 0,
@@ -124,6 +128,7 @@ export default {
     setGroup(state, accessGroup) {
       try {
         state.group = new GroupViewModel(accessGroup.group);
+        state.membership = new MembershipModel(accessGroup.membership);
         state.memberCount = !accessGroup.member_count
           ? 0
           : accessGroup.member_count;
@@ -149,6 +154,7 @@ export default {
     ...membersGetters,
     ...termsGetters,
     getGroup: ({ group }) => group,
+    getMembership: ({ membership }) => membership,
     getGroupName: ({ group }) => group.name,
     getMemberCount: ({ memberCount }) => memberCount,
     getInvitationCount: ({ invitationCount }) => invitationCount,

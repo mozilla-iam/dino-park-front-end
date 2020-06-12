@@ -32,12 +32,24 @@
       </div>
       <h1 class="description-container__title">{{ title }}</h1>
     </header>
+    <section v-if="membership.role" class="membership">
+      <dl>
+        <dt>{{ fluent('access-groups_membership', 'since') }}</dt>
+        <dd>{{ date(membership.since) }}</dd>
+        <template v-if="membership.expiration">
+          <dt>{{ fluent('access-groups_membership', 'expires') }}</dt>
+          <dd>
+            {{ date(membership.expiration) }}
+          </dd>
+        </template>
+      </dl>
+    </section>
     <section class="description-container-area description-content">
       <div class="description-content__main" v-html="descriptionDisplay"></div>
     </section>
     <footer
       class="description-container-area description-footer"
-      v-if="showLeave"
+      v-if="isMember"
     >
       <RouterLink
         class="button primary-action"
@@ -89,6 +101,7 @@ export default {
   computed: {
     ...mapGetters({
       accessGroup: 'accessGroup/getGroup',
+      membership: 'accessGroup/getMembership',
       memberCount: 'accessGroup/memberCount',
       isCurator: 'accessGroup/isCurator',
       isMember: 'accessGroup/isMember',
@@ -125,6 +138,13 @@ export default {
     },
     cancel() {
       this.cancelRequest({ groupName: this.accessGroup.name });
+    },
+    date(d) {
+      return new Date(d).toLocaleString(undefined, {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      });
     },
   },
   data() {
@@ -276,10 +296,34 @@ export default {
   border-top: 2px solid var(--gray-20);
   display: flex;
   flex-flow: row-reverse;
+  flex-wrap: wrap-reverse;
 }
 
 .description-container .description-footer > .button {
   margin-top: 0;
   margin-bottom: 0;
+  align-self: flex-start;
+}
+
+.membership {
+  color: var(--gray-50);
+  margin-right: auto;
+  padding: 1em 1.5em 0.5em 1.5em;
+  width: max-content;
+}
+
+.membership dl {
+  margin: auto;
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 1em;
+}
+
+.membership dt::after {
+  content: ': ';
+}
+
+.membership dd {
+  margin-left: 0;
 }
 </style>

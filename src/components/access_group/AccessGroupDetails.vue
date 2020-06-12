@@ -17,7 +17,7 @@
       {{
         `${fluent(
           'access-group_details',
-          'create-date-text'
+          'create-date-text',
         )} ${groupCreatedDate}`
       }}
     </p>
@@ -58,14 +58,15 @@ export default {
         ? `1 ${this.fluent('access-group_details', 'member')}`
         : `${this.memberCount} ${this.fluent(
             'access-group_details',
-            'members'
+            'members',
           )}`;
     },
     groupCreatedDate() {
-      const date = new Date(this.group.created);
-      return `${date.getDate()} ${date.toLocaleString('default', {
+      return new Date(this.group.created).toLocaleString(undefined, {
+        year: 'numeric',
         month: 'long',
-      })} ${date.getFullYear()}`;
+        day: 'numeric',
+      });
     },
   },
 };
