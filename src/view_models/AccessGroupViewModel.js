@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 export const INVITATION_STATE = {
   ACCEPTED: 'accepted',
   REJECTED: 'rejected',
@@ -215,7 +216,11 @@ export class DisplayMemberViewModel {
       } else {
         this.role = DISPLAY_MEMBER_ROLES.includes(data.role) ? data.role : null;
       }
-      this.added_by = new AbbDisplayMemberViewModel(data.host || data.added_by);
+      if (data.hasOwnProperty('host') || data.hasOwnProperty('added_by')) {
+        this.added_by = new AbbDisplayMemberViewModel(
+          data.host || data.added_by,
+        );
+      }
     } catch (e) {
       this.error = e.message;
       console.error('Display Member error: ', e.message);

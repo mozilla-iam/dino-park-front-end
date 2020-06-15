@@ -1,7 +1,5 @@
 import { Api, MembersApi } from './access-groups-api';
 
-const defaultGroupInvitationExpiration = 5;
-
 export default class AccessGroups {
   constructor() {
     this.api = new Api();
@@ -184,7 +182,6 @@ export default class AccessGroups {
             endpointArguments: [groupName],
             dataArguments: {
               uuid: member.uuid,
-              invitationExpiration: defaultGroupInvitationExpiration,
               groupExpiration: parseInt(expiration),
             },
           }),

@@ -403,7 +403,9 @@ export default {
     async handleAddNewInvitesClicked() {
       await this.sendInvitations({
         invites: this.newInvites,
-        expiration: this.newInvitesExpiration,
+        expiration: this.newInvitesExpirationEnabled
+          ? this.newInvitesExpiration
+          : null,
       });
       this.tinyNotification('access-group-members-invite-success');
       this.newInvites = [];

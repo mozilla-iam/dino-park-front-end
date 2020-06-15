@@ -99,10 +99,7 @@ export default {
   },
   methods: {
     subRowTextDisplay(member) {
-      if (
-        !member.added_by.hasOwnProperty('uuid') ||
-        member.added_by.uuid === null
-      ) {
+      if (!member.added_by?.uuid) {
         return ' ';
       }
       return `${this.fluent('member-list-description__sub')} ${
