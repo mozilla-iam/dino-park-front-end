@@ -79,7 +79,7 @@ export default {
     },
   },
   beforeRouteEnter(to, from, next) {
-    if (store.state.scope.isReady) {
+    if (store.state.features?.accessGroupsToggle && store.state.scope.isReady) {
       const { groupname } = to.params;
       store.dispatch('setLoading');
       fetchProfile(store, groupname)
