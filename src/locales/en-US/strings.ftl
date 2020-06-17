@@ -95,6 +95,8 @@ onboarding_modal_3 = We're here to help
   .paragraph_1 = Get help at any time by reading our Mozilla People Directory <a data-l10n-name="FAQ">FAQ</a>.
   .paragraph_2 = That’s it! You're ready to dive in.
 onboarding_modal_username = Getting started
+  .staff_1 =  As a member of Mozilla staff, you were automatically assigned a username when we created your profile. You haven’t changed it so far. Due to the platform now being publicly accessible, we would like you to either choose a username to your liking or confirm the newly auto-generated one below.
+  .staff_2 = Your username is <strong>publicly visible</strong> and included in your profile URL.
   .paragraph_1 = Before you explore your profile, we would like you to choose a username or confirm the one we generated for you.<br /> Your username is <strong>publicly visible</strong> and included in your profile URL.
   .paragraph_2 = <strong>Pro tip:</strong> Use the same username across systems for easy discovery (e.g. Slack, Discourse). 
   .restriction = Minimum length is 3, allowed characters are: a-z, 0-9, _ and -.

@@ -55,10 +55,16 @@
       emit="close"
     >
       <article class="onboarding-modal__article">
-        <p>
+        <p v-if="scope.isStaff">
+          <Fluent :id="`onboarding_modal_username`" attr="staff_1" />
+        </p>
+        <p v-else>
           <Fluent :id="`onboarding_modal_username`" attr="paragraph_1" />
         </p>
-        <p>
+        <p v-if="scope.isStaff">
+          <Fluent :id="`onboarding_modal_username`" attr="staff_2" />
+        </p>
+        <p v-else>
           <Fluent :id="`onboarding_modal_username`" attr="paragraph_2" />
         </p>
         <section v-if="scope.isReady" class="onboarding-modal__username">
