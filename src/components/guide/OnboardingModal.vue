@@ -49,6 +49,7 @@
     <EditMutationWrapper
       :editVariables="{ primaryUsername }"
       :novalidate="true"
+      :skipValidation="true"
       :formName="fluent('profile_contact', 'edit')"
       :confirm="true"
       :errorHandler="handleUsernameError"
@@ -68,11 +69,11 @@
             type="text"
             :maxlength="64"
             :required="true"
-            pattern="[A-Za-z0-9\-_]{3,}"
+            pattern="[a-z0-9\-_]{3,}"
             id="field-username"
             :highlightError="true"
             :infoMsg="fluent('onboarding_modal_username', 'restriction')"
-            :oneShotError="usernameExists"
+            :oneShotError="usernameErrorMsg"
             :selected="true"
             v-model="primaryUsername.value"
           />
@@ -150,14 +151,28 @@ export default {
       return username;
     },
     handleUsernameError(e) {
-      if (e.gqlError?.message === 'username_exists') {
-        this.usernameExists = this.fluent({
-          id: 'onboarding_modal_username',
-          attr: 'username_exists',
-          args: { username: this.primaryUsername.value },
-        });
-      } else {
-        this.usernameExists = this.fluent('unknown_error');
+      switch (e.gqlError?.message) {
+        case 'username_exists':
+          this.usernameErrorMsg = this.fluent({
+            id: 'onboarding_modal_username',
+            attr: 'username_exists',
+            args: { username: this.primaryUsername.value },
+          });
+          break;
+        case 'username_invalid_chars':
+          this.usernameErrorMsg = this.fluent({
+            id: 'onboarding_modal_username',
+            attr: 'username_invalid_chars',
+          });
+          break;
+        case 'username_length':
+          this.usernameErrorMsg = this.fluent({
+            id: 'onboarding_modal_username',
+            attr: 'username_length',
+          });
+          break;
+        default:
+          this.usernameErrorMsg = this.fluent('unknown_error');
       }
     },
   },
@@ -186,7 +201,7 @@ export default {
     let { username } = this.$store.state.scope;
     return {
       primaryUsername: { value: this.updateUsername(username) },
-      usernameExists: '',
+      usernameErrorMsg: '',
       swipe: null,
       step: 1,
       step_data: steps[0],

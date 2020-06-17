@@ -99,6 +99,8 @@ onboarding_modal_username = Confirm your username
   .paragraph_2 = <strong>Pro tip:</strong> Use the same username across systems for easy discovery (e.g. Slack, Discourse). 
   .restriction = Minimum length is 3, allowed characters are: a-z, 0-9, _ and -.
   .username_exists = Username {$username} exists already, please choose another username.
+  .username_invalid_chars = Username must not contain spaces or uppercase characters
+  .username_length = Username length must be between 3 and 64
 
 tooltip_tour = Welcome
   .skip = Skip tour

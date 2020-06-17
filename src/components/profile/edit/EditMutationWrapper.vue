@@ -58,6 +58,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    skipValidation: {
+      type: Boolean,
+      default: false,
+    },
     confirm: {
       type: Boolean,
       default: false,
@@ -75,7 +79,7 @@ export default {
     check(mutate, ev) {
       if (this.novalidate) {
         const form = ev.target;
-        if (form.checkValidity()) {
+        if (this.skipValidation || form.checkValidity()) {
           return mutate(ev);
         }
         return ev.preventDefault();
