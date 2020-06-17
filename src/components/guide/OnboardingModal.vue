@@ -1,45 +1,6 @@
 <template>
   <Modal
-    v-if="step"
-    :heading="fluent(`onboarding_modal_${step}`)"
-    :initiallyOpen="true"
-    :closeButton="true"
-    @close="skip"
-    class="onboarding-modal"
-  >
-    <div class="onboarding-modal__dots">
-      <ProgressDots :dots="steps.length" :progress="step" />
-    </div>
-    <article class="onboarding-modal__article">
-      <img :src="step_data.img" />
-      <p>
-        <Fluent
-          :id="`onboarding_modal_${step}`"
-          attr="paragraph_1"
-          :tags="step_data.tags"
-        />
-      </p>
-      <p>
-        <Fluent
-          :id="`onboarding_modal_${step}`"
-          attr="paragraph_2"
-          :tags="step_data.tags"
-        />
-      </p>
-    </article>
-    <hr class="onboarding-modal__hline" />
-    <footer class="onboarding-modal__footer">
-      <a href="#" @click="prev()" :class="[{ 'button--hidden': first }]">{{
-        fluent('back')
-      }}</a>
-      <a href="#" class="button" @click="next()">{{ fluent('next') }}</a>
-      <a href="#" @click="skip()" :class="[{ 'button--hidden': last }]">{{
-        fluent('skip')
-      }}</a>
-    </footer>
-  </Modal>
-  <Modal
-    v-else
+    v-if="!step"
     :heading="fluent(`onboarding_modal_username`)"
     :initiallyOpen="true"
     :closeButton="false"
@@ -87,6 +48,45 @@
       </article>
       <LoadingSpinner v-if="!scope.isReady"></LoadingSpinner>
     </EditMutationWrapper>
+  </Modal>
+  <Modal
+    v-else
+    :heading="fluent(`onboarding_modal_${step}`)"
+    :initiallyOpen="true"
+    :closeButton="true"
+    @close="skip"
+    class="onboarding-modal"
+  >
+    <div class="onboarding-modal__dots">
+      <ProgressDots :dots="steps.length" :progress="step" />
+    </div>
+    <article class="onboarding-modal__article">
+      <img :src="step_data.img" />
+      <p>
+        <Fluent
+          :id="`onboarding_modal_${step}`"
+          attr="paragraph_1"
+          :tags="step_data.tags"
+        />
+      </p>
+      <p>
+        <Fluent
+          :id="`onboarding_modal_${step}`"
+          attr="paragraph_2"
+          :tags="step_data.tags"
+        />
+      </p>
+    </article>
+    <hr class="onboarding-modal__hline" />
+    <footer class="onboarding-modal__footer">
+      <a href="#" @click="prev()" :class="[{ 'button--hidden': first }]">{{
+        fluent('back')
+      }}</a>
+      <a href="#" class="button" @click="next()">{{ fluent('next') }}</a>
+      <a href="#" @click="skip()" :class="[{ 'button--hidden': last }]">{{
+        fluent('skip')
+      }}</a>
+    </footer>
   </Modal>
 </template>
 
@@ -137,7 +137,10 @@ export default {
       this.done();
     },
     next() {
-      if (this.step > 0 && this.step < this.steps.length) {
+      if (this.step < 1) {
+        return;
+      }
+      if (this.step < this.steps.length) {
         this.step += 1;
         this.step_data = this.steps[this.step - 1];
       } else {
