@@ -234,4 +234,11 @@ export default {
 .button-bar--center .button:first-child {
   margin-left: initial;
 }
+
+.mutation-form:invalid .button-bar > button {
+  pointer-events: none;
+  color: var(--gray-50);
+  background-color: var(--gray-20);
+  border-color: transparent;
+}
 </style>

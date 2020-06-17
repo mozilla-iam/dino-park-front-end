@@ -101,6 +101,9 @@ onboarding_modal_username = Confirm your username
   .username_exists = Username {$username} exists already, please choose another username.
   .username_invalid_chars = Username must not contain spaces or uppercase characters
   .username_length = Username length must be between 3 and 64
+  .username_upper = Username must not contain uppercase characters
+  .username_space = Username must not contain spaces
+  .username_chars = Username must only contain latin characters a-z or digits 0-9
 
 tooltip_tour = Welcome
   .skip = Skip tour

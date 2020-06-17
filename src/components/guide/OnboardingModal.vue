@@ -72,10 +72,11 @@
             pattern="[a-z0-9\-_]{3,}"
             id="field-username"
             :highlightError="true"
-            :infoMsg="fluent('onboarding_modal_username', 'restriction')"
+            :infoMsg="infoMsg"
             :oneShotError="usernameErrorMsg"
             :selected="true"
             v-model="primaryUsername.value"
+            @input="updateInfoMsg"
           />
         </section>
       </article>
@@ -92,6 +93,11 @@ import ProgressDots from '@/components/guide/ProgressDots.vue';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 import EditMutationWrapper from '@/components/profile/edit/EditMutationWrapper.vue';
 import Swipe from '@/assets/js/swipe';
+
+const CHECK_UPPER = /[A-Z]/;
+const CHECK_SPACE = /[ ]/;
+const CHECK_LENGTH = /^(.{1,2}|.{64,})$/;
+const CHECK_CHARS = /[^a-z0-9\-_]/;
 
 export default {
   name: 'OnboardingModal',
@@ -150,6 +156,39 @@ export default {
       }
       return username;
     },
+    updateInfoMsg(username) {
+      this.infoMsg = this.getInfoMsg(username);
+    },
+    getInfoMsg(username) {
+      if (CHECK_UPPER.test(username)) {
+        return this.fluent({
+          id: 'onboarding_modal_username',
+          attr: 'username_upper',
+        });
+      }
+      if (CHECK_SPACE.test(username)) {
+        return this.fluent({
+          id: 'onboarding_modal_username',
+          attr: 'username_space',
+        });
+      }
+      if (CHECK_LENGTH.test(username)) {
+        return this.fluent({
+          id: 'onboarding_modal_username',
+          attr: 'username_length',
+        });
+      }
+      if (CHECK_CHARS.test(username)) {
+        return this.fluent({
+          id: 'onboarding_modal_username',
+          attr: 'username_chars',
+        });
+      }
+      return this.fluent({
+        id: 'onboarding_modal_username',
+        attr: 'restriction',
+      });
+    },
     handleUsernameError(e) {
       switch (e.gqlError?.message) {
         case 'username_exists':
@@ -198,10 +237,11 @@ export default {
         },
       },
     ];
-    let { username } = this.$store.state.scope;
+    const { username } = this.$store.state.scope;
     return {
       primaryUsername: { value: this.updateUsername(username) },
       usernameErrorMsg: '',
+      infoMsg: this.getInfoMsg(),
       swipe: null,
       step: 1,
       step_data: steps[0],
