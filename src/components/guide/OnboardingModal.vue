@@ -49,7 +49,6 @@
     <EditMutationWrapper
       :editVariables="{ primaryUsername }"
       :novalidate="true"
-      :skipValidation="true"
       :formName="fluent('profile_contact', 'edit')"
       :confirm="true"
       :errorHandler="handleUsernameError"

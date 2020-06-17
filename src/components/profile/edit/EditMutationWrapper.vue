@@ -58,10 +58,6 @@ export default {
       type: Boolean,
       default: false,
     },
-    skipValidation: {
-      type: Boolean,
-      default: false,
-    },
     confirm: {
       type: Boolean,
       default: false,
@@ -79,7 +75,7 @@ export default {
     check(mutate, ev) {
       if (this.novalidate) {
         const form = ev.target;
-        if (this.skipValidation || form.checkValidity()) {
+        if (form.checkValidity()) {
           return mutate(ev);
         }
         return ev.preventDefault();
@@ -236,7 +232,6 @@ export default {
 }
 
 .mutation-form:invalid .button-bar > button {
-  pointer-events: none;
   color: var(--gray-50);
   background-color: var(--gray-20);
   border-color: transparent;
