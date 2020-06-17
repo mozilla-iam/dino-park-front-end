@@ -44,7 +44,7 @@
     :initiallyOpen="true"
     :closeButton="false"
     class="onboarding-modal"
-    @close="done"
+    @close="start"
   >
     <EditMutationWrapper
       :editVariables="{ primaryUsername }"
@@ -129,14 +129,14 @@ export default {
   },
   methods: {
     skip() {
-      this.step = 0;
+      this.done();
     },
     next() {
       if (this.step > 0 && this.step < this.steps.length) {
         this.step += 1;
         this.step_data = this.steps[this.step - 1];
       } else {
-        this.step = 0;
+        this.done();
       }
     },
     prev() {
@@ -144,6 +144,9 @@ export default {
         this.step -= 1;
         this.step_data = this.steps[this.step - 1];
       }
+    },
+    start() {
+      this.step = 1;
     },
     done() {
       this.$store.state.onboarding.modalDone();
@@ -243,7 +246,7 @@ export default {
       usernameErrorMsg: '',
       infoMsg: this.getInfoMsg(),
       swipe: null,
-      step: 1,
+      step: 0,
       step_data: steps[0],
       steps,
     };
