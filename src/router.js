@@ -27,16 +27,6 @@ function showUsername(username) {
   return username && !username.startsWith('r--') && !username.startsWith('p--');
 }
 
-async function resolvePromisesSerially(promises, resolvers) {
-  try {
-    for (let i = 0, len = promises.length; i < len; i += 1) {
-      resolvers[i](await promises[i]());
-    }
-  } catch (e) {
-    throw new Error(e.message);
-  }
-}
-
 const ACCESS_GROUP_ROUTES = [
   {
     path: '/a',
@@ -45,7 +35,7 @@ const ACCESS_GROUP_ROUTES = [
     meta: { key: 'access-group' },
     children: [
       {
-        path: 'create',
+        path: 'c',
         name: ACCESS_GROUP_CREATE_PAGE,
         component: AccessGroupCreate,
         props: true,
@@ -133,9 +123,11 @@ export default class DPRouter {
     });
     this.router = initRouter;
   }
+
   get vueRouter() {
     return this.router;
   }
+
   processRoutes() {
     this.router.beforeEach((to, from, next) => {
       const {
@@ -170,9 +162,10 @@ export default class DPRouter {
       next();
     });
   }
+
   getRoutes(features) {
     let featureEnabledRoutes = [];
-    if (features['accessGroupsToggle']) {
+    if (features.accessGroupsToggle) {
       featureEnabledRoutes = [...featureEnabledRoutes, ...ACCESS_GROUP_ROUTES];
     }
     return [
