@@ -38,7 +38,6 @@ export default {
   display: inline-block;
   vertical-align: top;
   margin: 0 0.5em 0.5em 0;
-  white-space: nowrap;
   padding: 1.1em;
   background-color: var(--gray-10);
   border-radius: 2em;

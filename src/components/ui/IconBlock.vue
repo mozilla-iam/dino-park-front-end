@@ -49,6 +49,7 @@ export default {
   margin-left: 1em;
   position: relative;
   break-inside: avoid;
+  word-break: break-word;
 }
 .icon-block__heading {
   font-size: 0.9em;
