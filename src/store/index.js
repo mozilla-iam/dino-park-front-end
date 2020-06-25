@@ -12,9 +12,11 @@ import features from './features.store';
 
 async function fetchUser(commit) {
   try {
+    const fetchPolicy = 'network-only';
     const { data } = await client.query({
       query: DISPLAY_PROFILE,
       variables: { username: null },
+      fetchPolicy,
     });
     commit('setUser', data.profile);
     return true;

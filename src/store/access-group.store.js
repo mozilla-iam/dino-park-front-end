@@ -100,6 +100,7 @@ export default {
           state.group.name,
           rootState.user.uuid.value,
         );
+        await dispatch('fetchUser', null, { root: true });
         return await dispatch('fetchGroup', state.group.name);
       } catch (e) {
         throw new Error(e.message);

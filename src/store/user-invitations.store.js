@@ -26,6 +26,7 @@ export const userInvitationsActions = {
         invitation.groupName,
       );
       await dispatch('fetchInvitations');
+      await dispatch('fetchUser', null, { root: true });
       return result;
     } catch (e) {
       throw new Error(e.message);
