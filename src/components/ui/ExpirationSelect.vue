@@ -39,7 +39,7 @@
 import TextInput from '@/components/ui/TextInput.vue';
 import {
   MEMBER_EXPIRATION_ONE_YEAR,
-  MEMBER_EXPIRATION_TWO_YEARS,
+  MEMBER_EXPIRATION_NONE,
 } from '@/view_models/AccessGroupViewModel';
 
 export default {
@@ -100,8 +100,8 @@ export default {
         value: MEMBER_EXPIRATION_ONE_YEAR,
       },
       {
-        label: this.fluent('access-group_expiration', 'two-years'),
-        value: MEMBER_EXPIRATION_TWO_YEARS,
+        label: this.fluent('access-group_expiration', 'no-expiration'),
+        value: MEMBER_EXPIRATION_NONE,
       },
       {
         label: this.fluent('access-group_expiration', 'custom'),

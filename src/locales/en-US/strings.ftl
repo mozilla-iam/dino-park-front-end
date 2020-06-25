@@ -504,7 +504,7 @@ access-group_expiration = Expiration
   .create-info = Memberships expire <strong>by default</strong> after 1 year. If you believe your access group is an exception and should have expiration disabled please send a request <a data-l10n-name="email">via email</a>.
   .one-year = 1 year
   .one-year__default = 1 year (default)
-  .two-years = 2 years
+  .no-expiration = None
   .no-expire = Does not expire
   .custom = days
   .custom-expiration-info = For custom expiration: enter a number of days between 1 and 730.
