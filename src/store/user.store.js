@@ -1,10 +1,4 @@
 import {
-  profileState,
-  profileActions,
-  profileMutations,
-  profileGetters,
-} from './profile.store';
-import {
   userInvitationsState,
   userInvitationsActions,
   userInvitationsMutations,
@@ -20,13 +14,11 @@ import {
 export default {
   namespaced: true,
   state: {
-    ...profileState,
     ...userInvitationsState,
     ...userRequestsState,
     personListViewPreference: 'list',
   },
   actions: {
-    ...profileActions,
     ...userInvitationsActions,
     ...userRequestsActions,
     setPersonViewPreference({ commit }, preference) {
@@ -34,7 +26,6 @@ export default {
     },
   },
   mutations: {
-    ...profileMutations,
     ...userInvitationsMutations,
     ...userRequestsMutations,
     setPersonViewPreference(state, preference) {
@@ -42,7 +33,6 @@ export default {
     },
   },
   getters: {
-    ...profileGetters,
     ...userInvitationsGetters,
     ...userRequestsGetters,
   },

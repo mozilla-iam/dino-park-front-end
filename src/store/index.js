@@ -106,7 +106,6 @@ export function fetchMembers(store, groupname) {
 
 export function fetchProfile(store) {
   return Promise.all([
-    store.dispatch('userV2/fetchProfile'),
     store.dispatch('userV2/fetchInvitations'),
     store.dispatch('userV2/fetchRequests'),
   ]);
