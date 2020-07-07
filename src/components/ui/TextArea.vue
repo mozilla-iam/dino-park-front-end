@@ -52,7 +52,7 @@ export default {
 }
 
 .textarea textarea[maxlength] {
-  padding-bottom: 5em;
+  padding-bottom: 2em;
 }
 
 .textarea textarea[maxlength] + span {
