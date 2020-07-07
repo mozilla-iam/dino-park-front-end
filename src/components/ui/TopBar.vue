@@ -155,7 +155,7 @@ export default {
     },
     showAccessGroupNav() {
       const { isNdaed, isStaff } = this.$store.state.scope;
-      return this.getFeature('accessGroupsToggle') && (isNdaed || isStaff);
+      return this.getFeature('accessGroupsNav') && (isNdaed || isStaff);
     },
   },
   mounted() {
