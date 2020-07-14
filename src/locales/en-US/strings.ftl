@@ -60,6 +60,7 @@ footer_github = GitHub
 footer_feedback = Feedback
 footer_legal = Legal
 footer_privacy = Privacy
+footer_language_select = Select your language
 
 ## Privacy Setting
 
@@ -122,6 +123,7 @@ tooltip_tour = Welcome
 home_welcome = Welcome to the Mozilla People Directory
   .description-public = A secure place for all Mozillians, staff and non-staff alike, to manage their Mozilla profile. A Mozilla profile is a universal identity shared by a growing number of Mozilla projects and websites.
   .my-profile = My profile
+  .picture_alt = "Group of people connecting dots"
 
 home_paragraph = Mozilla profiles are part of the Identity and Access Management (IAM) initiative.
   .link = Learn more

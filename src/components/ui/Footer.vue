@@ -15,7 +15,11 @@
         </abbr>
         {{ !single.abbr ? single.label : '' }}
       </a>
-      <select v-if="languages.length > 1" v-on:change="updateLocale">
+      <select
+        id="language-select"
+        v-if="languages.length > 1"
+        v-on:change="updateLocale"
+      >
         <option
           v-for="[locale, language] in languages"
           :key="locale"
@@ -24,6 +28,9 @@
           >{{ language }}</option
         >
       </select>
+      <label for="language-select" class="visually-hidden">
+        {{ fluent('footer_language_select') }}</label
+      >
     </section>
   </footer>
 </template>

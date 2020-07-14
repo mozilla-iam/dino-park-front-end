@@ -5,6 +5,7 @@
       <img
         src="@/assets/images/people-dots.png"
         srcset="@/assets/images/people-dots@2x.png 2x"
+        :alt="fluent('home_welcome', 'picture_alt')"
       />
       <p>{{ fluent('home_welcome', 'description-public') }}</p>
       <RouterLink
@@ -117,7 +118,7 @@ export default {
 
 .home__paragraph {
   padding: 0em 3em 3em;
-  color: var(--gray-50);
+  color: var(--gray-60);
 }
 
 @media (min-width: 50em) {
