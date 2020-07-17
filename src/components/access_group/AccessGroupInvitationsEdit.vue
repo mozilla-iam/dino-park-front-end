@@ -191,44 +191,6 @@
         >
       </template>
     </AccessGroupEditPanel>
-    <AccessGroupEditPanel
-      :title="fluent('access-group_email-invite-text')"
-      form="invitationEmailForm"
-      :handler="handleUpdateInviteTextClicked"
-      v-if="getFeature('customInvitationText')"
-    >
-      <template v-slot:content>
-        <div class="members-expiration-container">
-          <div class="content-area__row">
-            <div class="radio-control">
-              <input type="checkbox" v-model="emailInviteTextEnabled" />
-              {{ fluent('access-group_email-invite-text', 'checkbox') }}
-            </div>
-          </div>
-        </div>
-        <div class="content-area__row multi-line" v-if="emailInviteTextEnabled">
-          <label class="content-area__label">{{
-            fluent('access-group_email-invite-text', 'description')
-          }}</label>
-          <TextArea
-            :rows="5"
-            :maxlength="5000"
-            v-model="emailInviteText"
-            class="content-area__value"
-          ></TextArea>
-        </div>
-      </template>
-      <template v-slot:footer>
-        <Button
-          :disabled="!emailInviteTextDirty"
-          type="submit"
-          class="button--secondary button--action row-primary-action"
-          >{{
-            fluent('access-group_email-invite-text', 'update-invite-text')
-          }}</Button
-        >
-      </template>
-    </AccessGroupEditPanel>
   </section>
 </template>
 
@@ -271,9 +233,6 @@ export default {
   props: [],
   mounted() {},
   data() {
-    const invitationEmail = this.$store.getters[
-      'accessGroup/getInvitationEmail'
-    ];
     const groupExpiration = this.$store.getters['accessGroup/getExpiration'];
     return {
       selectedRowExpiration: !groupExpiration ? 0 : groupExpiration,
@@ -281,9 +240,6 @@ export default {
       highlightError: false,
       newInvites: [],
       newInvitesDirty: false,
-      emailInviteTextEnabled: Boolean(invitationEmail),
-      emailInviteText: invitationEmail,
-      emailInviteTextDirty: false,
       newInvitesExpirationEnabled: false,
       newInvitesExpiration: groupExpiration,
       memberRowsDisplay,
@@ -348,7 +304,6 @@ export default {
       deleteInvitation: 'accessGroup/deleteInvitation',
       rejectRequest: 'accessGroup/rejectRequest',
       sendInvitations: 'accessGroup/sendInvitations',
-      updateInvitationEmail: 'accessGroup/updateInvitationEmail',
     }),
     expiry(expiration) {
       return expiryTextFromDate(this.fluent, expiration);
@@ -412,13 +367,6 @@ export default {
       this.tinyNotification('access-group-members-invite-success');
       this.newInvites = [];
       this.newInvitesDirty = false;
-    },
-    handleUpdateInviteTextClicked() {
-      const text = this.emailInviteTextEnabled ? this.emailInviteText : '';
-      this.updateInvitationEmail(text).then(() => {
-        this.tinyNotification('access-group-invitation-text-updated');
-        this.emailInviteTextDirty = false;
-      });
     },
     showTagSelectorMeta(member) {
       return member.role !== null;

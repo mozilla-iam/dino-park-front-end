@@ -119,6 +119,49 @@
       </template>
     </AccessGroupEditPanel>
     <AccessGroupEditPanel
+      :title="fluent('access-group_email-invite-text')"
+      form="invitationEmailForm"
+      :handler="handleUpdateInviteTextClicked"
+      v-if="getFeature('customInvitationText')"
+    >
+      <template v-slot:content>
+        <div class="members-expiration-container">
+          <div class="content-area__row">
+            <div class="radio-control">
+              <input type="checkbox" v-model="emailInviteTextEnabled" />
+              {{ fluent('access-group_email-invite-text', 'checkbox') }}
+            </div>
+          </div>
+        </div>
+        <div class="content-area__row multi-line" v-if="emailInviteTextEnabled">
+          <label class="content-area__label"
+            ><p>
+              {{ fluent('access-group_email-invite-text', 'description-1') }}
+            </p>
+            <p>
+              {{ fluent('access-group_email-invite-text', 'description-2') }}
+            </p></label
+          >
+          <TextArea
+            :rows="5"
+            :maxlength="5000"
+            v-model="emailInviteText"
+            class="content-area__value"
+          ></TextArea>
+        </div>
+      </template>
+      <template v-slot:footer>
+        <Button
+          :disabled="!emailInviteTextDirty"
+          type="submit"
+          class="button--secondary button--action row-primary-action"
+          >{{
+            fluent('access-group_email-invite-text', 'update-invite-text')
+          }}</Button
+        >
+      </template>
+    </AccessGroupEditPanel>
+    <AccessGroupEditPanel
       form="deleteFrom"
       :handler="handleDeleteGroup"
       :title="fluent('access-group_delete-group')"
@@ -169,6 +212,9 @@ export default {
   props: [],
   mounted() {},
   data() {
+    const invitationEmail = this.$store.getters[
+      'accessGroup/getInvitationEmail'
+    ];
     const accessGroup = this.$store.getters['accessGroup/getGroup'];
     const terms = this.$store.getters['accessGroup/getTerms'];
     return {
@@ -180,6 +226,9 @@ export default {
       groupTypeData: accessGroup.type,
       groupTypeDirty: false,
       enableDelete: false,
+      emailInviteTextEnabled: Boolean(invitationEmail),
+      emailInviteText: invitationEmail,
+      emailInviteTextDirty: false,
     };
   },
   watch: {
@@ -205,6 +254,7 @@ export default {
       deleteGroup: 'accessGroup/deleteGroup',
       setLoading: 'setLoading',
       completeLoading: 'completeLoading',
+      updateInvitationEmail: 'accessGroup/updateInvitationEmail',
     }),
     async handleDescriptionUpdate() {
       await this.updateGroup({
@@ -257,6 +307,13 @@ export default {
           }),
         });
       }
+    },
+    handleUpdateInviteTextClicked() {
+      const text = this.emailInviteTextEnabled ? this.emailInviteText : '';
+      this.updateInvitationEmail(text).then(() => {
+        this.tinyNotification('access-group-invitation-text-updated');
+        this.emailInviteTextDirty = false;
+      });
     },
   },
   computed: {
