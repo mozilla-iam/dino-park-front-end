@@ -141,6 +141,7 @@ export default {
   color: var(--gray-50);
   background-color: var(--gray-20);
   border-color: transparent;
+  cursor: not-allowed;
 }
 
 .button--red {

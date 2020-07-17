@@ -70,6 +70,14 @@ export default {
     ],
     delete: (endpoint, groupName, uuid) => `${endpoint}/${groupName}/${uuid}`,
   },
+  groupInvitationEmail: {
+    endpoint: `${API_PREFIX}invitations`,
+    get: (endpoint, groupName) => `${endpoint}/${groupName}/email`,
+    post: [
+      (endpoint, groupName) => `${endpoint}/${groupName}/email`,
+      (body) => ({ body }),
+    ],
+  },
   groupRequests: {
     endpoint: `${API_PREFIX}requests`,
     get: true,

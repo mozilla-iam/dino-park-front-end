@@ -3,7 +3,7 @@ namespace: dino-park
 rev: latest
 replicas: 1
 features:
-  customInvitationText: false
+  customInvitationText: true
   historyTab: false
   editGroupType: true
   accessGroupsToggle: true

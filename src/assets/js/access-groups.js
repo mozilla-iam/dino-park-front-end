@@ -368,11 +368,29 @@ export default class AccessGroups {
     }
   }
 
-  // TODO: This method is one that will eventually be built but are not supported right now
-  async updateInviteText(text) {
-    return new Promise((res, rej) => {
-      res('text updated');
-    });
+  async getInvitationEmail(groupName) {
+    try {
+      return await this.api.execute({
+        path: 'groupInvitationEmail/get',
+        endpointArguments: [groupName],
+      });
+    } catch (e) {
+      console.log(e.message);
+      throw new Error(e.message);
+    }
+  }
+
+  async updateInvitationEmail(groupName, text) {
+    try {
+      return await this.api.execute({
+        path: 'groupInvitationEmail/post',
+        endpointArguments: [groupName],
+        dataArguments: text,
+      });
+    } catch (e) {
+      console.log(e.message);
+      throw new Error(e.message);
+    }
   }
 
   // TODO: This method is one that will eventually be built but are not supported right now

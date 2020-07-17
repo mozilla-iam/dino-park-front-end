@@ -193,6 +193,8 @@
     </AccessGroupEditPanel>
     <AccessGroupEditPanel
       :title="fluent('access-group_email-invite-text')"
+      form="invitationEmailForm"
+      :handler="handleUpdateInviteTextClicked"
       v-if="getFeature('customInvitationText')"
     >
       <template v-slot:content>
@@ -219,7 +221,7 @@
       <template v-slot:footer>
         <Button
           :disabled="!emailInviteTextDirty"
-          @click="handleUpdateInviteTextClicked"
+          type="submit"
           class="button--secondary button--action row-primary-action"
           >{{
             fluent('access-group_email-invite-text', 'update-invite-text')
@@ -269,8 +271,8 @@ export default {
   props: [],
   mounted() {},
   data() {
-    const invitationConfig = this.$store.getters[
-      'accessGroup/getInvitationConfig'
+    const invitationEmail = this.$store.getters[
+      'accessGroup/getInvitationEmail'
     ];
     const groupExpiration = this.$store.getters['accessGroup/getExpiration'];
     return {
@@ -279,8 +281,8 @@ export default {
       highlightError: false,
       newInvites: [],
       newInvitesDirty: false,
-      emailInviteTextEnabled: invitationConfig !== null,
-      emailInviteText: invitationConfig,
+      emailInviteTextEnabled: Boolean(invitationEmail),
+      emailInviteText: invitationEmail,
       emailInviteTextDirty: false,
       newInvitesExpirationEnabled: false,
       newInvitesExpiration: groupExpiration,
@@ -346,7 +348,7 @@ export default {
       deleteInvitation: 'accessGroup/deleteInvitation',
       rejectRequest: 'accessGroup/rejectRequest',
       sendInvitations: 'accessGroup/sendInvitations',
-      updateInviteText: 'accessGroup/updateInviteText',
+      updateInvitationEmail: 'accessGroup/updateInvitationEmail',
     }),
     expiry(expiration) {
       return expiryTextFromDate(this.fluent, expiration);
@@ -412,7 +414,8 @@ export default {
       this.newInvitesDirty = false;
     },
     handleUpdateInviteTextClicked() {
-      this.updateInviteText(this.newInvites).then((result) => {
+      const text = this.emailInviteTextEnabled ? this.emailInviteText : '';
+      this.updateInvitationEmail(text).then(() => {
         this.tinyNotification('access-group-invitation-text-updated');
         this.emailInviteTextDirty = false;
       });

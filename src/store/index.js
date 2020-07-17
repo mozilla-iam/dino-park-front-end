@@ -122,6 +122,12 @@ export function fetchAccessGroups(store) {
 export function fetchTerms(store) {
   return [[() => store.dispatch('accessGroup/fetchTerms')], [(data) => {}]];
 }
+export function fetchInvitationEmail(store) {
+  return [
+    [() => store.dispatch('accessGroup/fetchInvitationEmail')],
+    [(data) => {}],
+  ];
+}
 
 export function fetchInvitationsAndRequests(store) {
   return [

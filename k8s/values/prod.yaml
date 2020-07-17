@@ -3,3 +3,4 @@ namespace: dinopark-prod
 replicas: 3
 features:
   accessGroupsNav: false
+  customInvitationText: false

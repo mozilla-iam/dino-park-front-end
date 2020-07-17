@@ -49,6 +49,7 @@ import store, {
   fetchMembers,
   fetchAccessGroup,
   resolvePromisesSerially,
+  fetchInvitationEmail,
   fetchInvitationsAndRequests,
   fetchTerms,
 } from '@/store';
@@ -101,9 +102,25 @@ export default {
     const [agPromises, agResolvers] = fetchAccessGroup(store, groupname);
     const [iarPromises, iarResolvers] = fetchInvitationsAndRequests(store);
     const [termsPromises, termsResolvers] = fetchTerms(store);
+    const [
+      invitationEmailPromises,
+      invitationEmailResolvers,
+    ] = fetchInvitationEmail(store);
     resolvePromisesSerially(
-      [...membersPromises, ...agPromises, ...iarPromises, ...termsPromises],
-      [...membersResolvers, ...agResolvers, ...iarResolvers, ...termsResolvers],
+      [
+        ...membersPromises,
+        ...agPromises,
+        ...iarPromises,
+        ...termsPromises,
+        ...invitationEmailPromises,
+      ],
+      [
+        ...membersResolvers,
+        ...agResolvers,
+        ...iarResolvers,
+        ...termsResolvers,
+        ...invitationEmailResolvers,
+      ],
     ).then(() => {
       store.dispatch('completeLoading');
       next();

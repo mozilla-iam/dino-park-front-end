@@ -27,6 +27,12 @@ import {
   termsMutations,
   termsGetters,
 } from './terms.store';
+import {
+  invitationEmailState,
+  invitationEmailActions,
+  invitationEmailMutations,
+  invitationEmailGetters,
+} from './invitation-email.store';
 
 const accessGroupsService = new AccessGroups();
 
@@ -35,6 +41,7 @@ export default {
   state: {
     ...accessGroupInvitationsState,
     ...accessGroupRequestsState,
+    ...invitationEmailState,
     ...membersState,
     ...termsState,
     group: null,
@@ -51,6 +58,7 @@ export default {
   actions: {
     ...accessGroupInvitationsActions,
     ...accessGroupRequestsActions,
+    ...invitationEmailActions,
     ...membersActions,
     ...termsActions,
     async fetchGroup({ commit }, groupName) {
@@ -68,21 +76,12 @@ export default {
           ...state.group,
           [field]: value,
         };
-        const result = await accessGroupsService.updateGroupDetails(
+        await accessGroupsService.updateGroupDetails(
           state.group.name,
           updateData,
         );
         return await dispatch('fetchGroup', state.group.name);
       } catch (e) {
-        throw new Error(e.message);
-      }
-    },
-    async updateInviteText({ state, dispatch }, text) {
-      try {
-        const data = await accessGroupsService.updateInviteText(text);
-        return await dispatch('fetchGroup', state.group.name);
-      } catch (e) {
-        state.error = e.message;
         throw new Error(e.message);
       }
     },
@@ -124,6 +123,7 @@ export default {
   mutations: {
     ...accessGroupInvitationsMutations,
     ...accessGroupRequestsMutations,
+    ...invitationEmailMutations,
     ...membersMutations,
     ...termsMutations,
     setGroup(state, accessGroup) {
@@ -152,6 +152,7 @@ export default {
   getters: {
     ...accessGroupInvitationsGetters,
     ...accessGroupRequestsGetters,
+    ...invitationEmailGetters,
     ...membersGetters,
     ...termsGetters,
     getGroup: ({ group }) => group,
