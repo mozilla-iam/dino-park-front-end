@@ -107,6 +107,7 @@ export default {
   justify-content: flex-end;
   padding-right: 1em;
   color: var(--gray-50);
+  min-width: max-content;
 }
 
 .info-aside .info-aside__icon {
