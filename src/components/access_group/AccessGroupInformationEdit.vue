@@ -102,7 +102,7 @@
           }}</label>
           <TextArea
             :rows="5"
-            :maxlength="5000"
+            :maxlength="7000"
             v-model="groupTermsData"
             class="content-area__value"
           ></TextArea>

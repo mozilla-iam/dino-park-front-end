@@ -215,16 +215,16 @@ export default {
 
 .description-container .description-container__title {
   margin-top: 0.25em;
-  font-size: 3.5em;
+  font-size: 2.5em;
   word-break: break-all;
 }
 
 .description-content .description-content__sub {
-  font-size: 1.25em;
+  font-size: 1em;
 }
 
 .description-content .description-content__main {
-  font-size: 1.25em;
+  font-size: 1em;
   color: var(--black);
 }
 
