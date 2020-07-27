@@ -28,6 +28,9 @@ export default {
     },
   },
   mounted() {
+    if (this.selectedSort) {
+      this.membersListOptions.sort = this.selectedSort;
+    }
     this.fetchMembers(this.groupName);
   },
   methods: {

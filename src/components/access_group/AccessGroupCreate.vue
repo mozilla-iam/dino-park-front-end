@@ -1,13 +1,13 @@
 <template>
   <section class="group-create-container">
     <main class="group-create">
-      <Button
+      <RouterLink
         class="button group-create__back-action"
-        @click="handleBackClicked"
+        :to="{ name: accessGroupListRoute }"
       >
         <Icon id="chevron-left" :width="17" :height="17" />
         {{ fluent('access-group_create', 'group-create__back-action') }}
-      </Button>
+      </RouterLink>
       <form
         class="primary-area"
         novalidate
@@ -182,7 +182,7 @@ import ExpirationSelect from '@/components/ui/ExpirationSelect.vue';
 import AccessGroupEditPanel from '@/components/access_group/AccessGroupEditPanel.vue';
 import AccessGroupMarkdownGuide from '@/components/access_group/AccessGroupMarkdownGuide.vue';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
-import { ACCESS_GROUP_PAGE } from '@/router.js';
+import { ACCESS_GROUP_PAGE, ACCESS_GROUP_INDEX_PAGE } from '@/router.js';
 import {
   TYPE_INDEX,
   ACCESS_GROUP_TYPES,
@@ -212,6 +212,7 @@ export default {
       groupTermsData: '',
       selectedExpiration: MEMBER_EXPIRATION_ONE_YEAR,
       lastMarkdownCollapsed: true,
+      accessGroupListRoute: ACCESS_GROUP_INDEX_PAGE,
     };
   },
   computed: {
@@ -285,6 +286,7 @@ export default {
   background-color: var(--gray-30);
   color: var(--black);
   margin-bottom: 2em;
+  display: inline-flex;
 }
 
 .group-create h1 {

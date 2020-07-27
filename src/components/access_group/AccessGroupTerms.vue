@@ -2,8 +2,12 @@
   <main class="group-terms">
     <RouterLink
       class="button group-terms__back-action"
-      v-on:click.native="goBack"
-      to="#"
+      :to="{
+        name: 'Access Group',
+        params: {
+          groupname: $route.params.groupname,
+        },
+      }"
       v-if="!invitationShowTOSAccept"
     >
       <Icon
@@ -113,16 +117,18 @@ export default {
       this.rejectInvitation(
         this.getInvitationByName(this.$route.params.groupname),
       ).then(() => {
-        this.$router.go(-1);
         this.tinyNotification(
           'access-group-terms-rejected',
           this.$route.params.groupname,
         );
         this.completeLoading();
+        this.$router.push({
+          name: 'Access Group',
+          query: {
+            groupname: this.$route.query.groupname,
+          },
+        });
       });
-    },
-    goBack() {
-      this.$router.go(-1);
     },
   },
   data() {
