@@ -51,18 +51,18 @@
         </div>
         <div class="content-area__row radio-control__description">
           <label class="description-label">{{
-            fluent('access-group_type', 'reviewed-heading')
-          }}</label>
-          <p class="description-content">
-            {{ fluent('access-group_type', 'reviewed-content') }}
-          </p>
-        </div>
-        <div class="content-area__row radio-control__description">
-          <label class="description-label">{{
             fluent('access-group_type', 'closed-heading')
           }}</label>
           <p class="description-content">
             {{ fluent('access-group_type', 'closed-content') }}
+          </p>
+        </div>
+        <div class="content-area__row radio-control__description">
+          <label class="description-label">{{
+            fluent('access-group_type', 'reviewed-heading')
+          }}</label>
+          <p class="description-content">
+            {{ fluent('access-group_type', 'reviewed-content') }}
           </p>
         </div>
       </template>

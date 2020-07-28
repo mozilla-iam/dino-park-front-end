@@ -102,16 +102,7 @@
                   :height="24"
                 />
                 <p class="container-info__description">
-                  <Fluent
-                    id="access-group_expiration"
-                    attr="create-info"
-                    :tags="{
-                      email: {
-                        tag: 'a',
-                        href: 'mailto:people.mozilla.org-admin@mozilla.com',
-                      },
-                    }"
-                  />
+                  <Fluent id="access-group_expiration" attr="create-info" />
                 </p>
               </aside>
             </div>

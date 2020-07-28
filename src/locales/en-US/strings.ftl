@@ -173,7 +173,7 @@ profile_picture = Profile Picture
   .privacy = Profile picture privacy levels
 profile_username = Username
   .tooltip-open = Open username info
-  .tooltip-close = Close usename info
+  .tooltip-close = Close username info
   .tooltip = Your username is publicly visible and included in your profile URL. Pro tip: Use the same username across systems for easy discovery (e.g. Slack, Discourse).
   .privacy = Username privacy levels
 profile_first-name = First Name
@@ -397,7 +397,7 @@ search_toggle = Set who to search for
   .staff = Staff
   .contributors = Contributors
 search_result_orgchart = View {$username} in org chart
-search_error = An error occured while trying to load the search results
+search_error = An error occurred while trying to load the search results
 search_no-results = No results found for <strong>{$query}</strong>
 search_suggestions = Some suggestions include:
   .spelling = Make sure that all words are spelled correctly.
@@ -415,7 +415,7 @@ error_issues = Please submit all bugs or issues to <a data-l10n-name="github">th
 ## Access Groups
 
 access-group_list = Access Groups
-  .summary-area__summary--1 = Discover access groups across the organisation.
+  .summary-area__summary--1 = Discover access groups across the organization.
   .summary-area__summary--2 = Visit the
   .summary-area__summary--3 = Access Groups wiki page
   .summary-area__summary--4 = to learn more.
@@ -503,7 +503,7 @@ access-group_expiration = Expiration
   .expiration__value-custom-unit = days
   .update-expiration = Update expiration
   .container-info__description = Changes made to the expiration length will <strong>only apply to new members</strong>.<br /> Changes are not applied retroactively.
-  .create-info = Memberships expire <strong>by default</strong> after 1 year. If you believe your access group is an exception and should have expiration disabled please send a request <a data-l10n-name="email">via email</a>.
+  .create-info = Memberships expire <strong>by default</strong> after 1 year.
   .one-year = 1 year
   .one-year__default = 1 year (default)
   .no-expiration = None
@@ -520,7 +520,7 @@ access-group_markdown = Markdown Quick Guide
   .footer-link = Complete Markdown Guide
 access-group_type = Group type
   .reviewed-heading = Reviewed
-  .reviewed-content = When a group is set to "Reviewed", Mozillians are presented with a "Request to Join" button on the group page. Once clicked, Group Curators will receive a pending rquest notification, prompting them to review and accept or deny the membership. Group Curators can invite and/or remove people from the group if needed.
+  .reviewed-content = When a group is set to "Reviewed", Mozillians are presented with a "Request to Join" button on the group page. Once clicked, Group Curators will receive a pending request notification, prompting them to review and accept or deny the membership. Group Curators can invite and/or remove people from the group if needed.
   .closed-heading = Closed
   .closed-content = "Closed" groups provide more tight control over a group. Mozillians cannot request membership, and can only be invited to join the group by Group Curators. Group Curators can, of course, remove people from the group if needed. Avoid using this group type unless you are absolutely sure it is necessary.
   .update-type = Update type
