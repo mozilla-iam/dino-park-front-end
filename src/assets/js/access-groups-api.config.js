@@ -23,7 +23,7 @@ export default {
     put: [
       true,
       ({ type, description, expiration }) => ({
-        type: type.toLowerCase(),
+        type,
         description,
         group_expiration: expiration,
       }),
