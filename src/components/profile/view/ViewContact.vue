@@ -49,12 +49,13 @@ export default {
     IconBlock,
     IconBlockList,
   },
-  data() {
-    return {
-      secondaryEmail:
+  computed: {
+    secondaryEmail() {
+      return (
         this.identities.custom1PrimaryEmail.value ||
-        this.identities.custom2PrimaryEmail.value,
-    };
+        this.identities.custom2PrimaryEmail.value
+      );
+    },
   },
 };
 </script>
