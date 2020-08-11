@@ -53,8 +53,12 @@ module.exports = {
     host: 'localhost',
     port: 8080,
     disableHostCheck: true,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
     before(app) {
       app.get('/config/features.json', (_, res) => {
+        res.append('Access-Control-Allow-Origin', '*');
         res.json(yaml.parse(fs.readFileSync('./features-local.yaml', 'utf8')));
       });
     },
