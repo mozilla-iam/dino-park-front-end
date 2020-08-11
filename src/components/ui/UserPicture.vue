@@ -5,6 +5,7 @@
       ref="img"
       :class="cls"
       :src="src"
+      :srcset="srcset"
       alt=""
       :width="size"
       role="presentation"
@@ -31,6 +32,7 @@ export default {
     },
     cls: String,
     pictureSize: Number,
+    useSrcset: Boolean,
     showLabel: Boolean,
   },
   components: {
@@ -68,7 +70,7 @@ export default {
         this.avatar.picture.startsWith('https://s3.amazonaws.com/')
       ) {
         this.identicon = true;
-        generateIdenticon(this.avatar.username, this.size).then(i => {
+        generateIdenticon(this.avatar.username, this.size).then((i) => {
           this.src = i;
         });
       } else {
@@ -84,13 +86,39 @@ export default {
           this.src = avatarUrl(
             this.avatar.picture,
             this.slot,
-            this.ownPicture()
+            this.ownPicture(),
           );
         }
       }
+      this.srcset = this.buildSrcset();
     },
     ownPicture() {
       return this.avatar.username === this.$store.state.scope.username;
+    },
+    buildSrcset() {
+      if (this.identicon || !this.useSrcset) {
+        return '';
+      }
+
+      const SRC_SIZE_TO_2X_SIZE = {
+        40: 100,
+        100: 264,
+        264: 528,
+      };
+
+      let doubleSized = SRC_SIZE_TO_2X_SIZE[this.slot];
+
+      // possible when the :pictureSize prop gets set to other values
+      // where we don't have a bigger picture (e.g. 528)
+      if (doubleSized === void 0) {
+        return '';
+      }
+
+      return `${this.src} 1x, ${avatarUrl(
+        this.avatar.picture,
+        doubleSized,
+        this.ownPicture(),
+      )} 2x`;
     },
   },
   created() {
@@ -99,6 +127,7 @@ export default {
   data() {
     return {
       src: '',
+      srcset: '',
       dinoTypeSize: 'small',
       slot: 40,
       class: 'user-picture--40',

@@ -5,6 +5,7 @@
       class="curator-image"
       :size="40"
       :showLabel="member.isStaff"
+      :useSrcset="true"
     />
     <div class="member-list-description">
       <p class="member-list-description__header">{{ member.displayName }}</p>

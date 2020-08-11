@@ -13,6 +13,7 @@
         :avatar="{ picture: picture.value, username: primaryUsername.value }"
         :size="100"
         :showLabel="staffInformation.staff.value"
+        :useSrcset="false"
       />
     </div>
     <ProfileName
