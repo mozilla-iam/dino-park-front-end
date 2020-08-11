@@ -1,5 +1,13 @@
 <template>
-  <main class="profile">
+  <main v-if="skeleton" class="profile profile--skeleton">
+    <div class="profile__section" aria-hidden="true">
+      <ViewPersonalInfo :skeleton="true" />
+    </div>
+    <ProfileNav :links="profileNav" aria-hidden="true"></ProfileNav>
+    <ProfileSection :skeleton="true" aria-hidden="true" />
+    <p class="visually-hidden">{{ fluent('loading-profile') }}</p>
+  </main>
+  <main v-else class="profile">
     <div
       :class="
         'profile__section' +
@@ -287,6 +295,7 @@ export default {
     primaryUsername: Object,
     viewAs: Boolean,
     allowStaffOnlyFields: Boolean,
+    skeleton: Boolean,
   },
   mixins: [AccountsMixin],
   components: {
@@ -451,5 +460,12 @@ export default {
   .profile__anchor {
     top: -7em;
   }
+}
+
+.profile__section--skeleton .profile__section-header h2 {
+  height: 1.4em;
+}
+.profile__section--skeleton p {
+  height: 1.4em;
 }
 </style>

@@ -1,5 +1,31 @@
 <template>
-  <div class="profile-preview" ref="profilePreviewElement" tabindex="-1">
+  <div v-if="skeleton" class="profile-preview profile-preview__skeleton">
+    <div class="profile-preview__image">
+      <div
+        class="button button--icon-only button--secondary profile-preview__close"
+      >
+        <svg
+          aria-hidden="true"
+          role="presentation"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          focusable="false"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </div>
+      <UserPicture :size="100" :avatar="{ picture: 'empty:' }" />
+    </div>
+  </div>
+  <div v-else class="profile-preview" ref="profilePreviewElement" tabindex="-1">
     <button
       v-if="desktopView"
       @click="$emit('close')"
@@ -66,6 +92,7 @@
 
 <script>
 import CompanyMixin from '@/components/_mixins/CompanyMixin.vue';
+import SkeletonMixin from '@/components/_mixins/SkeletonMixin.vue';
 import ContactMe from '@/components/ui/ContactMe.vue';
 import UserPicture from '@/components/ui/UserPicture.vue';
 import ProfileDescription from './ProfileDescription.vue';
@@ -75,7 +102,7 @@ import ProfileTeamLocation from './ProfileTeamLocation.vue';
 import Icon from '@/components/ui/Icon.vue';
 
 export default {
-  mixins: [CompanyMixin],
+  mixins: [CompanyMixin, SkeletonMixin],
   name: 'ProfilePreview',
   props: {
     staffInformation: Object,
@@ -93,6 +120,7 @@ export default {
     uris: Object,
     userId: Object,
     desktopView: Boolean,
+    skeleton: Boolean,
   },
   components: {
     ContactMe,
@@ -126,6 +154,10 @@ export default {
   box-shadow: var(--shadowCard);
   position: relative;
   border-radius: var(--cardRadius);
+}
+.profile-preview__skeleton {
+  width: 30em;
+  height: 40em;
 }
 .profile-preview .profile__name {
   display: block;
