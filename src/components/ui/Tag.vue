@@ -9,8 +9,14 @@
       ><span class="visually-hidden">{{
         fluent({ id: 'profile_tags', attr: 'remove', args: { tag } })
       }}</span></Button
-    >{{ tag }}</span
-  >
+    >
+    <RouterLink
+      :to="{ name: 'Search', query: { query, who: 'all' } }"
+      class="tag__link"
+    >
+      {{ tag }}
+    </RouterLink>
+  </span>
 </template>
 
 <script>
@@ -21,6 +27,7 @@ export default {
   name: 'Tag',
   props: {
     tag: String,
+    type: String,
     removable: {
       type: Boolean,
       default: false,
@@ -29,6 +36,15 @@ export default {
   components: {
     Button,
     Icon,
+  },
+  computed: {
+    query() {
+      if (this.type === 'searchTag') {
+        return `tags:"${this.tag}"`;
+      } else if (this.type === 'searchLanguage') {
+        return `languages:"${this.tag}"`;
+      }
+    },
   },
 };
 </script>
