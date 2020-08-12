@@ -10,14 +10,12 @@
             username: user.primaryUsername.value,
           }"
           :size="40"
-          :pictureSize="100"
           :useSrcset="true"
           :showLabel="scope.isStaff"
         ></UserPicture>
         <UserPicture
           v-else
           :size="40"
-          :pictureSize="100"
           :useSrcset="true"
           :showLabel="scope.isStaff"
         ></UserPicture>

@@ -31,7 +31,6 @@ export default {
       },
     },
     cls: String,
-    pictureSize: Number,
     useSrcset: Boolean,
     showLabel: Boolean,
   },
@@ -58,7 +57,6 @@ export default {
         this.dinoTypeSize = 'large';
         this.slot = 264;
       }
-      this.slot = this.pictureSize || this.slot;
       this.modifier = `user-picture--${this.dinoTypeSize}`;
     },
     updateUserPicture() {
@@ -108,7 +106,7 @@ export default {
 
       let doubleSized = SRC_SIZE_TO_2X_SIZE[this.slot];
 
-      // possible when the :pictureSize prop gets set to other values
+      // possible when the :size prop gets set to other values
       // where we don't have a bigger picture (e.g. 528)
       if (doubleSized === void 0) {
         return '';
