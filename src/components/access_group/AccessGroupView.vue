@@ -1,11 +1,11 @@
 <template>
-  <main class="access-group">
+  <main class="access-group" v-if="groupInformation">
     <section class="primary-area">
       <section class="primary-area__description">
         <AccessGroupDescription
-          :title="groupname"
+          :groupInformation="groupInformation"
           :editable="!editing"
-        ></AccessGroupDescription>
+        />
       </section>
       <aside class="primary-area__control">
         <PanelSection
@@ -13,30 +13,27 @@
           :title="fluent('access-group_membership-management')"
         >
           <template v-slot:content>
-            <AccessGroupMembershipManagement></AccessGroupMembershipManagement>
+            <AccessGroupMembershipManagement
+              :groupInformation="groupInformation"
+            ></AccessGroupMembershipManagement>
           </template>
         </PanelSection>
         <PanelSection :title="fluent('access-group_details')">
           <template v-slot:content>
-            <AccessGroupDetails></AccessGroupDetails>
+            <AccessGroupDetails
+              :groupInformation="groupInformation"
+            ></AccessGroupDetails>
           </template>
         </PanelSection>
       </aside>
     </section>
     <section class="secondary-area">
-      <AccessGroupMembers />
+      <AccessGroupMembers :groupInformation="groupInformation" />
     </section>
   </main>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import store, {
-  fetchBase,
-  fetchMembers,
-  fetchAccessGroup,
-  resolvePromisesSerially,
-} from '@/store';
 import Icon from '@/components/ui/Icon.vue';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 import EditButton from '@/components/ui/EditButton.vue';
@@ -46,7 +43,14 @@ import AccessGroupDescription from '@/components/access_group/AccessGroupDescrip
 import AccessGroupMembershipManagement from '@/components/access_group/AccessGroupMembershipManagement.vue';
 import AccessGroupMembers from '@/components/access_group/AccessGroupMembers.vue';
 import AccessGroupDetails from '@/components/access_group/AccessGroupDetails.vue';
+import { DisplayMemberViewModel } from '@/view_models/AccessGroupViewModel.js';
+import { Api } from '@/assets/js/access-groups-api.js';
+import {
+  GroupViewModel,
+  MembershipModel,
+} from '@/view_models/AccessGroupViewModel';
 
+const accessGroupApi = new Api();
 export default {
   name: 'AccessGroupView',
   mixins: [LinksMixin],
@@ -63,23 +67,55 @@ export default {
   props: {
     groupname: String,
   },
-  beforeRouteEnter(to, from, next) {
-    const { groupname } = to.params;
-    store.dispatch('setLoading');
-    const [membersPromises, membersResolvers] = fetchMembers(store, groupname);
-    const [agPromises, agResolvers] = fetchAccessGroup(store, groupname);
-    resolvePromisesSerially(
-      [...membersPromises, ...agPromises],
-      [...membersResolvers, ...agResolvers],
-    ).then(() => {
-      store.dispatch('completeLoading');
-      next();
-    });
+  methods: {
+    async fetchAccessGroupInformation() {
+      try {
+        const groupData = await accessGroupApi.execute({
+          path: 'group/get',
+          endpointArguments: [this.groupname],
+        });
+
+        const groupInformation = {};
+        groupInformation.group = new GroupViewModel(groupData.group);
+        groupInformation.membership = new MembershipModel(groupData.membership);
+        groupInformation.memberCount = !groupData.member_count
+          ? 0
+          : groupData.member_count;
+        groupInformation.invitationCount = !groupData.invitation_count
+          ? 0
+          : groupInformation.invitation_count;
+        groupInformation.renewalCount = !groupData.renewal_count
+          ? 0
+          : groupInformation.renewal_count;
+        groupInformation.requestCount = groupData.request_count;
+        groupInformation.invitationConfig = groupData.invitation;
+        groupInformation.isCurator = Boolean(groupData.curator);
+        groupInformation.isMember = Boolean(groupData.member);
+
+        this.groupInformation = groupInformation;
+      } catch (e) {
+        console.log(e.message);
+        throw new Error(e.message);
+      }
+    },
+    async fetchMembers() {
+      try {
+        const memberData = await accessGroupApi.execute({
+          path: 'members/get',
+          endpointArguments: [this.groupname, { sort: 'role-asc' }],
+        });
+
+        this.members = memberData.members.map(
+          (member) => new DisplayMemberViewModel(member),
+        );
+        this.membersNext = memberData.next;
+      } catch (e) {
+        console.log(e.message);
+        throw new Error(e.message);
+      }
+    },
   },
   computed: {
-    ...mapGetters({
-      isCurator: 'accessGroup/isCurator',
-    }),
     editing() {
       if (
         this.$route.name === 'Edit Access Group' &&
@@ -89,6 +125,20 @@ export default {
       }
       return null;
     },
+    isCurator() {
+      return this.groupInformation.curator;
+    },
+  },
+  data() {
+    return {
+      groupInformation: null,
+      members: [],
+      membersNext: null,
+    };
+  },
+  mounted() {
+    this.fetchAccessGroupInformation();
+    this.fetchMembers();
   },
 };
 </script>
