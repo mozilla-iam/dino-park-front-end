@@ -58,6 +58,11 @@ export default {
   components: {
     Icon,
   },
+  watch: {
+    query(queryString) {
+      this.searchQuery = queryString;
+    },
+  },
   methods: {
     handleSubmit(event) {
       event.preventDefault();

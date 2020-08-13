@@ -31,6 +31,7 @@
         :key="`tag-${index}`"
         :removable="true"
         @removeTag="removeTag(index)"
+        type="searchTag"
       >
       </Tag>
     </div>
