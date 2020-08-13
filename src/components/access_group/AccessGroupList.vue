@@ -132,9 +132,6 @@ export default {
       this.listOptions.sort = value;
       this.fetchList(this.listOptions);
     },
-    // rawList(value) {
-    //   this.groupList = value;
-    // },
   },
   data() {
     return {
