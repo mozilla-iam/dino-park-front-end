@@ -1,6 +1,11 @@
 <template>
   <div class="person">
-    <UserPicture :avatar="{ picture, username }" :size="40" :showLabel="true" />
+    <UserPicture
+      :avatar="{ picture, username }"
+      :size="40"
+      :showLabel="true"
+      :useSrcset="true"
+    />
     <RouterLink
       :to="{ name: 'Profile', params: { username } }"
       :title="`${firstName} ${lastName}`"
