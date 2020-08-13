@@ -56,6 +56,7 @@ const defaultListOptions = {
 };
 const accessGroupApi = new Api();
 let localFetchList = null;
+let next = null;
 export default {
   name: 'AccessGroupList',
   components: {
@@ -73,7 +74,7 @@ export default {
   methods: {
     async fetchList(options) {
       try {
-        let data = await accessGroupApi.execute({
+        const data = await accessGroupApi.execute({
           path: 'groups/get',
           endpointArguments: [options],
         });
@@ -81,15 +82,34 @@ export default {
         localFetchList = data.groups.map(
           (group) => new AbbGroupViewModel(group),
         );
+        next = data.next;
         this.groupList = localFetchList;
       } catch (e) {
         console.error('Propagating error during fetchList()', e);
         throw new Error(e);
       }
     },
+    async fetchNext(options = {}) {
+      try {
+        const data = await accessGroupApi.execute({
+          path: 'groups/get',
+          endpointArguments: [...options, next],
+        });
+
+        const nextList = data.groups.map(
+          (group) => new AbbGroupViewModel(group),
+        );
+        next = data.next;
+
+        return nextList;
+      } catch (e) {
+        console.error('Propagating error during fetchNext()', e);
+        throw new Error(e);
+      }
+    },
     ...mapActions({
       // fetchList: 'accessGroups/fetchList',
-      fetchNext: 'accessGroups/fetchNext',
+      // fetchNext: 'accessGroups/fetchNext',
     }),
     // eslint-disable-next-line
     searchFormHandler(searchQuery, scope) {
@@ -113,15 +133,16 @@ export default {
     },
     resetOptions() {
       this.listOptions = defaultListOptions;
+      this.nextClicked = false;
     },
   },
   computed: {
     ...mapGetters({
-      rawList: 'accessGroups/getList',
-      groupNext: 'accessGroups/getNext',
+      // rawList: 'accessGroups/getList',
+      // groupNext: 'accessGroups/getNext',
     }),
     canShowMore() {
-      return this.groupNext;
+      return next !== null;
     },
   },
   watch: {
@@ -132,9 +153,9 @@ export default {
       this.listOptions.sort = value;
       this.fetchList(this.listOptions);
     },
-    rawList(value) {
-      this.groupList = value;
-    },
+    // rawList(value) {
+    //   this.groupList = value;
+    // },
   },
   data() {
     return {
