@@ -84,6 +84,7 @@ export default {
         );
         next = data.next;
         this.groupList = localFetchList;
+        this.canShowMore = next !== null;
       } catch (e) {
         console.error('Propagating error during fetchList()', e);
         throw new Error(e);
@@ -93,14 +94,14 @@ export default {
       try {
         const data = await accessGroupApi.execute({
           path: 'groups/get',
-          endpointArguments: [...options, next],
+          endpointArguments: [options, next],
         });
 
         const nextList = data.groups.map(
           (group) => new AbbGroupViewModel(group),
         );
         next = data.next;
-
+        this.canShowMore = next !== null;
         return nextList;
       } catch (e) {
         console.error('Propagating error during fetchNext()', e);
@@ -141,9 +142,6 @@ export default {
       // rawList: 'accessGroups/getList',
       // groupNext: 'accessGroups/getNext',
     }),
-    canShowMore() {
-      return next !== null;
-    },
   },
   watch: {
     selectedSort(value) {
@@ -163,6 +161,7 @@ export default {
       groupList: localFetchList,
       listOptions: defaultListOptions,
       selectedSort: defaultListOptions.sort,
+      canShowMore: next !== null,
       sortOptions: [
         { value: 'name-asc', label: 'Name A-Z' },
         { value: 'name-desc', label: 'Name Z-A' },
