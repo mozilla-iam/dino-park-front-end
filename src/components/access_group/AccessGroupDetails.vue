@@ -49,9 +49,6 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({
-      group: 'accessGroup/getGroup',
-    }),
     membersCountText() {
       return this.groupInformation.memberCount === 1
         ? `1 ${this.fluent('access-group_details', 'member')}`
