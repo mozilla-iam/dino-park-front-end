@@ -53,10 +53,9 @@ const defaultListOptions = {
   search: '',
   sort: 'member-count-desc',
   numResults: resultsStep,
+  next: void 0,
 };
 const accessGroupApi = new Api();
-let localFetchList = null;
-let next = null;
 export default {
   name: 'AccessGroupList',
   components: {
@@ -72,46 +71,29 @@ export default {
     title: String,
   },
   methods: {
-    async fetchList(options) {
+    async fetchList(options = {}) {
       try {
         const data = await accessGroupApi.execute({
           path: 'groups/get',
           endpointArguments: [options],
         });
 
-        localFetchList = data.groups.map(
+        const localFetchList = data.groups.map(
           (group) => new AbbGroupViewModel(group),
         );
-        next = data.next;
-        this.groupList = localFetchList;
-        this.canShowMore = next !== null;
+        // if we have requested new groups, concat them to the already existing ones
+        if (options.hasOwnProperty('next') && options.next) {
+          this.groupList = this.groupList.concat(localFetchList);
+        } else {
+          this.groupList = localFetchList;
+        }
+
+        this.next = data.next;
       } catch (e) {
         console.error('Propagating error during fetchList()', e);
         throw new Error(e);
       }
     },
-    async fetchNext(options = {}) {
-      try {
-        const data = await accessGroupApi.execute({
-          path: 'groups/get',
-          endpointArguments: [options, next],
-        });
-
-        const nextList = data.groups.map(
-          (group) => new AbbGroupViewModel(group),
-        );
-        next = data.next;
-        this.canShowMore = next !== null;
-        return nextList;
-      } catch (e) {
-        console.error('Propagating error during fetchNext()', e);
-        throw new Error(e);
-      }
-    },
-    ...mapActions({
-      // fetchList: 'accessGroups/fetchList',
-      // fetchNext: 'accessGroups/fetchNext',
-    }),
     // eslint-disable-next-line
     searchFormHandler(searchQuery, scope) {
       if (this.nextClicked) {
@@ -129,8 +111,8 @@ export default {
     },
     async handleShowMoreClicked() {
       this.nextClicked = true;
-      const nextList = await this.fetchNext(this.listOptions);
-      this.groupList = this.groupList.concat(nextList);
+      this.listOptions.next = this.next;
+      await this.fetchList(this.listOptions);
     },
     resetOptions() {
       this.listOptions = defaultListOptions;
@@ -138,10 +120,9 @@ export default {
     },
   },
   computed: {
-    ...mapGetters({
-      // rawList: 'accessGroups/getList',
-      // groupNext: 'accessGroups/getNext',
-    }),
+    canShowMore() {
+      return this.next !== null;
+    },
   },
   watch: {
     selectedSort(value) {
@@ -158,10 +139,10 @@ export default {
   data() {
     return {
       nextClicked: false,
-      groupList: localFetchList,
+      groupList: [],
       listOptions: defaultListOptions,
       selectedSort: defaultListOptions.sort,
-      canShowMore: next !== null,
+      next: null,
       sortOptions: [
         { value: 'name-asc', label: 'Name A-Z' },
         { value: 'name-desc', label: 'Name Z-A' },
