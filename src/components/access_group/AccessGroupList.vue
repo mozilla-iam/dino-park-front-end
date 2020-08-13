@@ -45,6 +45,8 @@ import SearchForm from '@/components/ui/SearchForm.vue';
 import Select from '@/components/ui/Select.vue';
 import Tooltip from '@/components/ui/Tooltip.vue';
 import Icon from '@/components/ui/Icon.vue';
+import { Api } from '@/assets/js/access-groups-api.js';
+import { AbbGroupViewModel } from '@/view_models/AccessGroupViewModel';
 
 const resultsStep = 20;
 const defaultListOptions = {
@@ -52,6 +54,8 @@ const defaultListOptions = {
   sort: 'member-count-desc',
   numResults: resultsStep,
 };
+const accessGroupApi = new Api();
+let localFetchList = null;
 export default {
   name: 'AccessGroupList',
   components: {
@@ -67,8 +71,24 @@ export default {
     title: String,
   },
   methods: {
+    async fetchList(options) {
+      try {
+        let data = await accessGroupApi.execute({
+          path: 'groups/get',
+          endpointArguments: [options],
+        });
+
+        localFetchList = data.groups.map(
+          (group) => new AbbGroupViewModel(group),
+        );
+        this.groupList = localFetchList;
+      } catch (e) {
+        console.error('Propagating error during fetchList()', e);
+        throw new Error(e);
+      }
+    },
     ...mapActions({
-      fetchList: 'accessGroups/fetchList',
+      // fetchList: 'accessGroups/fetchList',
       fetchNext: 'accessGroups/fetchNext',
     }),
     // eslint-disable-next-line
@@ -119,7 +139,7 @@ export default {
   data() {
     return {
       nextClicked: false,
-      groupList: this.$store.getters['accessGroups/getList'],
+      groupList: localFetchList,
       listOptions: defaultListOptions,
       selectedSort: defaultListOptions.sort,
       sortOptions: [
@@ -133,6 +153,9 @@ export default {
         label: 'Sort',
       },
     };
+  },
+  mounted() {
+    this.fetchList(this.defaultListOptions);
   },
 };
 </script>
