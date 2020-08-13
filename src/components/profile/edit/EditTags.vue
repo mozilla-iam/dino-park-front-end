@@ -121,14 +121,14 @@ export default {
     },
     handlePaste() {
       this.$nextTick(() => {
-        let text = this.$refs.inputTag.value.trim();
+        let text = this.$refs.inputTag.value;
 
-        if (text === '' || !text.includes(', ')) {
+        if (text === '' || !text.includes(',')) {
           return;
         }
 
-        for (let tag of text.split(', ')) {
-          this.addTag(tag);
+        for (let tag of text.split(',')) {
+          this.addTag(tag.trim());
         }
       });
     },
