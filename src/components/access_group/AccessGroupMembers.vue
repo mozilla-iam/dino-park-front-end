@@ -81,6 +81,7 @@ export default {
   mixins: [MembersListMixin],
   props: {
     title: String,
+    groupInformation: Object,
   },
   methods: {
     // eslint-disable-next-line

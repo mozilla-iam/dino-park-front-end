@@ -30,16 +30,18 @@
           :sectionId="section"
         ></EditButton>
       </div>
-      <h1 class="description-container__title">{{ title }}</h1>
+      <h1 class="description-container__title">
+        {{ groupInformation.group.name }}
+      </h1>
     </header>
-    <section v-if="membership.role" class="membership">
+    <section v-if="groupInformation.membership.role" class="membership">
       <dl>
         <dt>{{ fluent('access-groups_membership', 'since') }}</dt>
-        <dd>{{ date(membership.since) }}</dd>
-        <template v-if="membership.expiration">
+        <dd>{{ date(groupInformation.membership.since) }}</dd>
+        <template v-if="groupInformation.membership.expiration">
           <dt>{{ fluent('access-groups_membership', 'expires') }}</dt>
           <dd>
-            {{ date(membership.expiration) }}
+            {{ date(groupInformation.membership.expiration) }}
           </dd>
         </template>
       </dl>
@@ -91,29 +93,31 @@ export default {
   components: { EditButton, Button, Icon, Tooltip },
   mixins: [LinksMixin],
   props: {
-    title: String,
     editable: {
       type: Boolean,
       default: true,
     },
+    groupInformation: Object,
   },
 
   computed: {
     ...mapGetters({
-      accessGroup: 'accessGroup/getGroup',
-      membership: 'accessGroup/getMembership',
-      memberCount: 'accessGroup/memberCount',
-      isCurator: 'accessGroup/isCurator',
-      isMember: 'accessGroup/isMember',
+      // TODO: Remove this
       userRequest: 'userV2/getRequestByName',
     }),
+    isCurator() {
+      return this.groupInformation.isCurator;
+    },
+    isMember() {
+      return this.groupInformation.isMember;
+    },
     membersCountText() {
-      return this.memberCount === 1
+      return this.groupInformation.memberCount === 1
         ? '1 member'
-        : `${this.memberCount} members`;
+        : `${this.groupInformation.memberCount} members`;
     },
     descriptionDisplay() {
-      return parseMarkdown(this.accessGroup.description);
+      return parseMarkdown(this.groupInformation.description);
     },
     showEdit() {
       return this.isCurator;
@@ -122,10 +126,10 @@ export default {
       return this.isMember;
     },
     showRequest() {
-      return this.accessGroup.type === 'Reviewed';
+      return this.groupInformation.type === 'Reviewed';
     },
     showCancelRequest() {
-      return this.userRequest(this.accessGroup.name);
+      return this.userRequest(this.groupInformation.name);
     },
   },
   methods: {
@@ -134,10 +138,10 @@ export default {
       cancelRequest: 'userV2/cancelRequest',
     }),
     request() {
-      this.requestInvitation({ groupName: this.accessGroup.name });
+      this.requestInvitation({ groupName: this.groupInformation.name });
     },
     cancel() {
-      this.cancelRequest({ groupName: this.accessGroup.name });
+      this.cancelRequest({ groupName: this.groupInformation.name });
     },
     date(d) {
       return new Date(d).toLocaleString(undefined, {

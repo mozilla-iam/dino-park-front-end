@@ -3,11 +3,11 @@
     <p class="primary-data-row">{{ membersCountText }}</p>
     <RouterLink
       class="primary-data-row"
-      v-if="group.terms"
+      v-if="groupInformation.group.terms"
       :to="{
         name: tosName,
         params: {
-          groupname: groupName,
+          groupname: groupInformation.group.name,
         },
       }"
     >
@@ -41,6 +41,7 @@ export default {
       type: Boolean,
       default: true,
     },
+    groupInformation: Object,
   },
   data() {
     return {
@@ -50,23 +51,24 @@ export default {
   computed: {
     ...mapGetters({
       group: 'accessGroup/getGroup',
-      memberCount: 'accessGroup/getMemberCount',
-      groupName: 'accessGroup/getGroupName',
     }),
     membersCountText() {
-      return this.memberCount === 1
+      return this.groupInformation.memberCount === 1
         ? `1 ${this.fluent('access-group_details', 'member')}`
-        : `${this.memberCount} ${this.fluent(
+        : `${this.groupInformation.memberCount} ${this.fluent(
             'access-group_details',
             'members',
           )}`;
     },
     groupCreatedDate() {
-      return new Date(this.group.created).toLocaleString(undefined, {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      });
+      return new Date(this.groupInformation.group.created).toLocaleString(
+        undefined,
+        {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        },
+      );
     },
   },
 };
