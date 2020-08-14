@@ -12,7 +12,7 @@
         :viewAsFilter="viewAs"
         :viewAsActive="variables.viewAsActive"
       ></PreviewAs>
-      <LoadingSpinner v-if="loading"></LoadingSpinner>
+      <Profile v-if="loading" :skeleton="true" />
       <template v-else-if="data && data.profile !== null">
         <Profile
           v-bind="data.profile"

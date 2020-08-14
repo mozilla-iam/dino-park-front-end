@@ -50,6 +50,7 @@ export default {
     messageNoLdap: String,
     isLdap: Boolean,
     editing: Boolean,
+    skeleton: Boolean,
   },
   components: { EditButton, EmptyCard, PanelSection },
   computed: {
@@ -58,6 +59,7 @@ export default {
         profile__section: true,
         'profile__section--editing': this.editing,
         'profile__section--disabled': !this.editing && this.empty,
+        'profile__section--skeleton': this.skeleton,
       };
     },
     needsLdap() {

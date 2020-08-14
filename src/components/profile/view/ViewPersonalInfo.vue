@@ -1,5 +1,12 @@
 <template>
-  <div class="profile__intro">
+  <div v-if="skeleton" class="profile__intro">
+    <div class="profile__intro-photo">
+      <div class="profile__headshot">
+        <UserPicture :avatar="{ picture: 'empty:' }" :size="264"></UserPicture>
+      </div>
+    </div>
+  </div>
+  <div v-else class="profile__intro">
     <EditButton
       v-if="userOnOwnProfile && editable"
       :sendTo="{
@@ -100,6 +107,7 @@
 <script>
 import CompanyMixin from '@/components/_mixins/CompanyMixin.vue';
 import OfficesMixin from '@/components/_mixins/OfficesMixin.vue';
+import SkeletonMixin from '@/components/_mixins/SkeletonMixin.vue';
 import ContactMe from '@/components/ui/ContactMe.vue';
 import EditButton from '@/components/ui/EditButton.vue';
 import Icon from '@/components/ui/Icon.vue';
@@ -136,6 +144,7 @@ export default {
     userOnOwnProfile: Boolean,
     editable: Boolean,
     accessInformation: Object,
+    skeleton: Boolean,
   },
   components: {
     ContactMe,

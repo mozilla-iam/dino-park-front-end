@@ -99,7 +99,7 @@ onboarding_modal_username = Getting started
   .staff_1 =  As a member of Mozilla staff, you were automatically assigned a username when we created your profile. You haven’t changed it so far. Due to the platform now being publicly accessible, we would like you to either choose a username to your liking or confirm the newly auto-generated one below.
   .staff_2 = Your username is <strong>publicly visible</strong> and included in your profile URL.
   .paragraph_1 = Before you explore your profile, we would like you to choose a username or confirm the one we generated for you.<br /> Your username is <strong>publicly visible</strong> and included in your profile URL.
-  .paragraph_2 = <strong>Pro tip:</strong> Use the same username across systems for easy discovery (e.g. Slack, Discourse). 
+  .paragraph_2 = <strong>Pro tip:</strong> Use the same username across systems for easy discovery (e.g. Slack, Discourse).
   .restriction = Minimum length is 3, allowed characters are: a-z, 0-9, _ and -.
   .username_exists = Username {$username} exists already, please choose another username.
   .username_invalid_chars = Username must not contain spaces or uppercase characters
@@ -144,6 +144,8 @@ orgchart_full-profile = View full profile
 -staff-not-editable = Staff information is not editable and is shared by default with all Mozilla Staff. Please contact <a data-l10n-name="email">our HR Team</a> to request any change.
 
 profile = Profile
+
+profile_loading = Loading profile…
 
 profile_preview = Preview As
 profile_preview_active = Previewing profile as
@@ -438,11 +440,11 @@ access-group_request = Request Invitation
 access-group_request-cancel = Cancel Request
 access-group-nav-bar = Access Groups
 access-group_membership-management = Membership Management
-  .mozillians = <strong>{$mozilliansCount}</strong> {$mozilliansCount -> 
+  .mozillians = <strong>{$mozilliansCount}</strong> {$mozilliansCount ->
                    [one] mozillian
                    *[other] mozillians
                 }
-  .members-will = <strong>{$membersCount}</strong> {$membersCount -> 
+  .members-will = <strong>{$membersCount}</strong> {$membersCount ->
                    [one] member
                    *[other] members
                 } will
