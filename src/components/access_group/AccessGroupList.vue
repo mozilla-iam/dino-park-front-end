@@ -37,7 +37,6 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
 import EditButton from '@/components/ui/EditButton.vue';
 import Button from '@/components/ui/Button.vue';
 import AccessGroupListItem from '@/components/access_group/AccessGroupListItem.vue';
@@ -53,7 +52,7 @@ const defaultListOptions = {
   search: '',
   sort: 'member-count-desc',
   numResults: resultsStep,
-  next: void 0,
+  next: null,
 };
 const accessGroupApi = new Api();
 export default {
@@ -117,6 +116,7 @@ export default {
     resetOptions() {
       this.listOptions = defaultListOptions;
       this.nextClicked = false;
+      this.next = null;
     },
   },
   computed: {
