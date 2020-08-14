@@ -43,7 +43,6 @@ import AccessGroupDescription from '@/components/access_group/AccessGroupDescrip
 import AccessGroupMembershipManagement from '@/components/access_group/AccessGroupMembershipManagement.vue';
 import AccessGroupMembers from '@/components/access_group/AccessGroupMembers.vue';
 import AccessGroupDetails from '@/components/access_group/AccessGroupDetails.vue';
-import { DisplayMemberViewModel } from '@/view_models/AccessGroupViewModel.js';
 import { Api } from '@/assets/js/access-groups-api.js';
 import {
   GroupViewModel,
@@ -98,22 +97,6 @@ export default {
         throw new Error(e.message);
       }
     },
-    async fetchMembers() {
-      try {
-        const memberData = await accessGroupApi.execute({
-          path: 'members/get',
-          endpointArguments: [this.groupname, { sort: 'role-asc' }],
-        });
-
-        this.members = memberData.members.map(
-          (member) => new DisplayMemberViewModel(member),
-        );
-        this.membersNext = memberData.next;
-      } catch (e) {
-        console.log(e.message);
-        throw new Error(e.message);
-      }
-    },
   },
   computed: {
     editing() {
@@ -138,7 +121,6 @@ export default {
   },
   mounted() {
     this.fetchAccessGroupInformation();
-    this.fetchMembers();
   },
 };
 </script>
