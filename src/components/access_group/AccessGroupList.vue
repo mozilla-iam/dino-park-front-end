@@ -52,7 +52,7 @@ const defaultListOptions = {
   search: '',
   sort: 'member-count-desc',
   numResults: resultsStep,
-  next: null,
+  next: void 0,
 };
 const accessGroupApi = new Api();
 export default {
@@ -94,19 +94,19 @@ export default {
       }
     },
     // eslint-disable-next-line
-    searchFormHandler(searchQuery, scope) {
+    async searchFormHandler(searchQuery, scope) {
       if (this.nextClicked) {
         this.resetOptions();
       }
       this.listOptions.search = searchQuery;
-      this.fetchList(this.listOptions);
+      await this.fetchList(this.listOptions);
     },
     searchFormKeyUpHandler(searchQuery, scope) {
       this.searchFormHandler(searchQuery, scope);
     },
-    clearSearchHandler() {
+    async clearSearchHandler() {
       this.listOptions.search = '';
-      this.fetchList(this.listOptions);
+      await this.fetchList(this.listOptions);
     },
     async handleShowMoreClicked() {
       this.nextClicked = true;
@@ -117,6 +117,8 @@ export default {
       this.listOptions = defaultListOptions;
       this.nextClicked = false;
       this.next = null;
+      // fix `next` not getting overwritten to a falsey value besides `defaultListOptions.next` is null.
+      this.listOptions.next = null;
     },
   },
   computed: {
@@ -153,7 +155,7 @@ export default {
     };
   },
   mounted() {
-    this.fetchList(this.defaultListOptions);
+    this.fetchList(this.listOptions);
   },
 };
 </script>
