@@ -129,7 +129,7 @@ export default {
       return this.groupInformation.type === 'Reviewed';
     },
     showCancelRequest() {
-      return this.userRequest(this.groupInformation.name);
+      return this.userRequest(this.groupInformation.group.name);
     },
   },
   methods: {
@@ -138,10 +138,10 @@ export default {
       cancelRequest: 'userV2/cancelRequest',
     }),
     request() {
-      this.requestInvitation({ groupName: this.groupInformation.name });
+      this.requestInvitation({ groupName: this.groupInformation.group.name });
     },
     cancel() {
-      this.cancelRequest({ groupName: this.groupInformation.name });
+      this.cancelRequest({ groupName: this.groupInformation.group.name });
     },
     date(d) {
       return new Date(d).toLocaleString(undefined, {
