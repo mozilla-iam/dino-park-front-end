@@ -52,7 +52,7 @@ const defaultListOptions = {
   search: '',
   sort: 'member-count-desc',
   numResults: resultsStep,
-  next: void 0,
+  next: null,
 };
 const accessGroupApi = new Api();
 export default {
