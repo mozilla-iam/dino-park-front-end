@@ -259,6 +259,11 @@ export default {
     ExpirationSelect,
   },
   mixins: [MembersListMixin],
+  props: {
+    groupInformation: Object,
+    memberList: Array,
+    tos: String,
+  },
   watch: {
     accessGroupCurators(value) {
       this.curatorsList = value;
@@ -535,13 +540,13 @@ export default {
   },
   computed: {
     ...mapGetters({
-      group: 'accessGroup/getGroup',
-      groupName: 'accessGroup/getGroupName',
       accessGroupCurators: 'accessGroup/getCurators',
       accessGroupExpiration: 'accessGroup/getExpiration',
-      memberCount: 'accessGroup/getMemberCount',
       membersNext: 'accessGroup/getMembersNext',
     }),
+    memberCount() {
+      return this.groupInformation.memberCount;
+    },
     expirationIsCustom() {
       return this.selectedExpiration === 'custom';
     },

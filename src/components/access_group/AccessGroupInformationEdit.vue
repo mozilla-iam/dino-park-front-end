@@ -10,7 +10,7 @@
           <label class="content-area__label">{{
             fluent('access-group_details', 'name')
           }}</label>
-          <p class="content-area__value">{{ groupName }}</p>
+          <p class="content-area__value">{{ groupInformation.group.name }}</p>
         </div>
         <div class="content-area__row multi-line markdown-outer-container">
           <label class="content-area__label">{{
@@ -172,7 +172,7 @@
             <Fluent
               id="access-group_delete-group"
               attr="info"
-              :args="{ groupName }"
+              :args="{ groupName: groupInformation.group.name }"
             />
           </p>
         </div>
@@ -209,42 +209,54 @@ export default {
     AccessGroupEditPanel,
     AccessGroupMarkdownGuide,
   },
-  props: [],
-  mounted() {},
+  props: {
+    groupInformation: Object,
+    memberList: Array,
+    tos: String,
+  },
+  computed: {
+    groupDescriptionData() {
+      return this.groupInformation.group.description;
+    },
+    groupTermsRequiredData() {
+      return this.tos;
+    },
+    groupTypeData() {
+      console.log(this.groupInformation);
+      return this.groupInformation.group.type;
+    },
+  },
   data() {
-    const invitationEmail = this.$store.getters[
-      'accessGroup/getInvitationEmail'
-    ];
-    const accessGroup = this.$store.getters['accessGroup/getGroup'];
-    const terms = this.$store.getters['accessGroup/getTerms'];
+    // const invitationEmail = this.$store.getters[
+    // 'accessGroup/getInvitationEmail'
+    // ];
+    // const terms = this.$store.getters['accessGroup/getTerms'];
     return {
-      groupDescriptionData: accessGroup.description,
       groupDescriptionDirty: false,
-      groupTermsData: terms,
-      groupTermsRequiredData: accessGroup.terms,
+      groupTermsData: this.tos,
       groupTermsDirty: false,
-      groupTypeData: accessGroup.type,
       groupTypeDirty: false,
       enableDelete: false,
-      emailInviteTextEnabled: Boolean(invitationEmail),
-      emailInviteText: invitationEmail,
+      // TODO: Implement
+      emailInviteTextEnabled: true,
+      emailInviteText: 'my invitation e-mail text',
       emailInviteTextDirty: false,
     };
   },
-  watch: {
-    groupDescriptionData() {
-      this.groupDescriptionDirty = true;
-    },
-    groupTermsData() {
-      this.groupTermsDirty = true;
-    },
-    groupTypeData() {
-      this.groupTypeDirty = true;
-    },
-    groupTermsRequiredData() {
-      this.groupTermsDirty = true;
-    },
-  },
+  // watch: {
+  //   groupDescriptionData() {
+  //     this.groupDescriptionDirty = true;
+  //   },
+  //   groupTermsData() {
+  //     this.groupTermsDirty = true;
+  //   },
+  //   groupTypeData() {
+  //     this.groupTypeDirty = true;
+  //   },
+  //   groupTermsRequiredData() {
+  //     this.groupTermsDirty = true;
+  //   },
+  // },
   methods: {
     ...mapActions({
       updateGroup: 'accessGroup/updateGroup',
@@ -316,14 +328,8 @@ export default {
       });
     },
   },
-  computed: {
-    ...mapGetters({
-      accessGroup: 'accessGroup/getGroup',
-      terms: 'accessGroup/getTerms',
-    }),
-    groupName() {
-      return this.accessGroup.name;
-    },
+  mounted() {
+    console.debug(this.groupInformation);
   },
 };
 </script>
