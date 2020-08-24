@@ -310,11 +310,6 @@ export default {
     },
   },
   methods: {
-    ...mapActions({
-      resendInvitation: 'accessGroup/resendInvitation',
-      deleteInvitation: 'accessGroup/deleteInvitation',
-      rejectRequest: 'accessGroup/rejectRequest',
-    }),
     async fetchGroupInvitations() {
       try {
         let data = await accessGroupApi.execute({
@@ -325,6 +320,19 @@ export default {
         this.groupInformation.invitationCount = data.length;
 
         return data.map((invite) => new DisplayMemberViewModel(invite));
+      } catch (e) {
+        console.log(e.message);
+        throw new Error(e.message);
+      }
+    },
+    async rejectRequest(member) {
+      try {
+        await accessGroupApi.execute({
+          path: 'groupRequests/delete',
+          endpointArguments: [this.groupInformation.group.name, member.uuid],
+        });
+
+        this.groupRequests = await this.fetchGroupRequests();
       } catch (e) {
         console.log(e.message);
         throw new Error(e.message);
@@ -373,11 +381,6 @@ export default {
     },
     expiry(expiration) {
       return expiryTextFromDate(this.fluent, expiration);
-    },
-    handleResendClicked(invitation) {
-      this.resendInvitation(invitation).then((result) => {
-        this.tinyNotification('access-group-invite-email-resent');
-      });
     },
     async handleRemoveClicked(member) {
       try {
