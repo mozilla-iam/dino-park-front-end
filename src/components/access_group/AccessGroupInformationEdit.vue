@@ -200,7 +200,9 @@ import TextArea from '@/components/ui/TextArea.vue';
 import Button from '@/components/ui/Button.vue';
 import AccessGroupEditPanel from '@/components/access_group/AccessGroupEditPanel.vue';
 import AccessGroupMarkdownGuide from '@/components/access_group/AccessGroupMarkdownGuide.vue';
+import { Api } from '@/assets/js/access-groups-api.js';
 
+const accessGroupApi = new Api();
 export default {
   name: 'AccessGroupInformationEdit',
   components: {
@@ -215,51 +217,43 @@ export default {
     tos: String,
   },
   computed: {
-    groupDescriptionData() {
-      return this.groupInformation.group.description;
-    },
     groupTermsRequiredData() {
       return this.tos;
     },
-    groupTypeData() {
-      console.log(this.groupInformation);
-      return this.groupInformation.group.type;
-    },
+  },
+  async created() {
+    this.emailInviteText = String(await this.fetchEmailInviteText());
   },
   data() {
-    // const invitationEmail = this.$store.getters[
-    // 'accessGroup/getInvitationEmail'
-    // ];
-    // const terms = this.$store.getters['accessGroup/getTerms'];
     return {
+      groupDescriptionData: this.groupInformation.group.description,
       groupDescriptionDirty: false,
       groupTermsData: this.tos,
       groupTermsDirty: false,
+      groupTypeData: this.groupInformation.group.type,
       groupTypeDirty: false,
       enableDelete: false,
-      // TODO: Implement
-      emailInviteTextEnabled: true,
-      emailInviteText: 'my invitation e-mail text',
+      emailInviteText: '',
+      emailInviteTextEnabled: Boolean(this.emailInviteText),
       emailInviteTextDirty: false,
     };
   },
-  // watch: {
-  //   groupDescriptionData() {
-  //     this.groupDescriptionDirty = true;
-  //   },
-  //   groupTermsData() {
-  //     this.groupTermsDirty = true;
-  //   },
-  //   groupTypeData() {
-  //     this.groupTypeDirty = true;
-  //   },
-  //   groupTermsRequiredData() {
-  //     this.groupTermsDirty = true;
-  //   },
-  // },
+  watch: {
+    groupDescriptionData() {
+      this.groupDescriptionDirty = true;
+    },
+    groupTermsData() {
+      this.groupTermsDirty = true;
+    },
+    groupTypeData() {
+      this.groupTypeDirty = true;
+    },
+    groupTermsRequiredData() {
+      this.groupTermsDirty = true;
+    },
+  },
   methods: {
     ...mapActions({
-      updateGroup: 'accessGroup/updateGroup',
       deleteTerms: 'accessGroup/deleteTerms',
       updateTerms: 'accessGroup/updateTerms',
       addTerms: 'accessGroup/addTerms',
@@ -268,21 +262,40 @@ export default {
       completeLoading: 'completeLoading',
       updateInvitationEmail: 'accessGroup/updateInvitationEmail',
     }),
+    async fetchEmailInviteText() {
+      try {
+        return await accessGroupApi.execute({
+          path: 'groupInvitationEmail/get',
+          endpointArguments: [this.groupInformation.group.name],
+        }).body;
+      } catch (e) {
+        console.log(e.message);
+        throw new Error(e.message);
+      }
+    },
+    async updateGroup(updateData) {
+      try {
+        await accessGroupApi.execute({
+          path: 'group/put',
+          endpointArguments: [this.groupInformation.group.name],
+          dataArguments: updateData,
+        });
+      } catch (e) {
+        console.error(e.message);
+        throw new Error(e.message);
+      }
+    },
     async handleDescriptionUpdate() {
       await this.updateGroup({
-        field: 'description',
-        value: this.groupDescriptionData,
+        description: this.groupDescriptionData,
       });
       this.groupDescriptionDirty = false;
       this.tinyNotification('access-group-description-updated');
     },
-    handleTypeUpdateClicked() {
-      this.updateGroup({ field: 'type', value: this.groupTypeData }).then(
-        () => {
-          this.groupTypeDirty = false;
-          this.tinyNotification('access-group-type-updated');
-        },
-      );
+    async handleTypeUpdateClicked() {
+      await this.updateGroup({ type: this.groupTypeData });
+      this.groupTypeDirty = false;
+      this.tinyNotification('access-group-type-updated');
     },
     async handleTermsUpdate() {
       let tinyFluentSelector;
@@ -327,9 +340,6 @@ export default {
         this.emailInviteTextDirty = false;
       });
     },
-  },
-  mounted() {
-    console.debug(this.groupInformation);
   },
 };
 </script>

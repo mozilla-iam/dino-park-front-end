@@ -289,9 +289,7 @@ export default {
     },
   },
   data() {
-    const accessGroupExpiration = this.$store.getters[
-      'accessGroup/getExpiration'
-    ];
+    const accessGroupExpiration = this.groupInformation.group.expiration || 0;
     // const accessGroupCurators = this.$store.getters['accessGroup/getCurators'];
     const accessGroupCurators = [];
     // TODO: Figure out what this value does and delete it if unnecessary
@@ -502,12 +500,9 @@ export default {
     expiry(expiration) {
       return expiryTextFromDate(this.fluent, expiration);
     },
-    handleSortUpdated(value) {
+    async handleSortUpdated(value) {
       this.memberListOptions.sort = value;
-      this.getMembersWithOptions({
-        groupName: this.groupName,
-        options: this.memberListOptions,
-      });
+      await this.fetchMembers();
     },
     getRowExpirationIntroText(member) {
       return this.fluent(
@@ -542,7 +537,6 @@ export default {
     ...mapGetters({
       accessGroupCurators: 'accessGroup/getCurators',
       accessGroupExpiration: 'accessGroup/getExpiration',
-      membersNext: 'accessGroup/getMembersNext',
     }),
     memberCount() {
       return this.groupInformation.memberCount;
@@ -551,22 +545,21 @@ export default {
       return this.selectedExpiration === 'custom';
     },
     expirationMetaText() {
-      if (this.accessGroupExpiration === MEMBER_EXPIRATION_ONE_YEAR) {
+      const expiration = this.groupInformation.group.expiration || 0;
+
+      if (expiration === MEMBER_EXPIRATION_ONE_YEAR) {
         return `1 ${this.fluent('date-year')}`;
       }
-      if (this.accessGroupExpiration === MEMBER_EXPIRATION_TWO_YEARS) {
+      if (expiration === MEMBER_EXPIRATION_TWO_YEARS) {
         return `2 ${this.fluent('date-year', 'plural')}`;
       }
-      if (this.accessGroupExpiration === 1) {
+      if (expiration === 1) {
         return `1 ${this.fluent('date-day')}`;
       }
-      if (this.accessGroupExpiration === MEMBER_EXPIRATION_NONE) {
+      if (expiration === MEMBER_EXPIRATION_NONE) {
         return `not expire`;
       }
-      return `${this.accessGroupExpiration} ${this.fluent(
-        'date-day',
-        'plural',
-      )}`;
+      return `${expiration} ${this.fluent('date-day', 'plural')}`;
     },
   },
 };
