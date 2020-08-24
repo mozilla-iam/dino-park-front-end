@@ -117,7 +117,7 @@ export default {
         : `${this.groupInformation.memberCount} members`;
     },
     descriptionDisplay() {
-      return parseMarkdown(this.groupInformation.description);
+      return parseMarkdown(this.groupInformation.group.description);
     },
     showEdit() {
       return this.isCurator;
@@ -126,7 +126,7 @@ export default {
       return this.isMember;
     },
     showRequest() {
-      return this.groupInformation.type === 'Reviewed';
+      return this.groupInformation.group.type === 'Reviewed';
     },
     showCancelRequest() {
       return this.userRequest(this.groupInformation.group.name);
