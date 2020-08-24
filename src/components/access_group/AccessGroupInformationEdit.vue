@@ -216,19 +216,15 @@ export default {
     memberList: Array,
     tos: String,
   },
-  computed: {
-    groupTermsRequiredData() {
-      return this.tos;
-    },
-  },
   async created() {
-    this.emailInviteText = String(await this.fetchEmailInviteText());
+    this.emailInviteText = (await this.fetchEmailInviteText()) || '';
   },
   data() {
     return {
       groupDescriptionData: this.groupInformation.group.description,
       groupDescriptionDirty: false,
       groupTermsData: this.tos,
+      groupTermsRequiredData: Boolean(this.tos),
       groupTermsDirty: false,
       groupTypeData: this.groupInformation.group.type,
       groupTypeDirty: false,
@@ -251,17 +247,57 @@ export default {
     groupTermsRequiredData() {
       this.groupTermsDirty = true;
     },
+    emailInviteText() {
+      this.emailInviteTextDirty = true;
+    },
   },
   methods: {
-    ...mapActions({
-      deleteTerms: 'accessGroup/deleteTerms',
-      updateTerms: 'accessGroup/updateTerms',
-      addTerms: 'accessGroup/addTerms',
-      deleteGroup: 'accessGroup/deleteGroup',
-      setLoading: 'setLoading',
-      completeLoading: 'completeLoading',
-      updateInvitationEmail: 'accessGroup/updateInvitationEmail',
-    }),
+    async addTerms(text) {
+      try {
+        await accessGroupApi.execute({
+          path: 'terms/post',
+          endpointArguments: [this.groupInformation.group.name],
+          dataArguments: text,
+        });
+      } catch (e) {
+        console.error(e.message);
+        throw new Error(e.message);
+      }
+    },
+    async updateTerms(text) {
+      try {
+        await accessGroupApi.execute({
+          path: 'terms/put',
+          endpointArguments: [this.groupInformation.group.name],
+          dataArguments: text,
+        });
+      } catch (e) {
+        console.error(e.message);
+        throw new Error(e.message);
+      }
+    },
+    async deleteTerms() {
+      try {
+        await accessGroupApi.execute({
+          path: 'terms/delete',
+          endpointArguments: [this.groupInformation.group.name],
+        });
+      } catch (e) {
+        console.error(e.message);
+        throw new Error(e.message);
+      }
+    },
+    async deleteGroup() {
+      try {
+        await accessGroupApi.execute({
+          path: 'group/delete',
+          endpointArguments: [this.groupInformation.group.name],
+        });
+      } catch (e) {
+        console.error(e.message);
+        throw new Error(e.message);
+      }
+    },
     async fetchEmailInviteText() {
       try {
         return await accessGroupApi.execute({
@@ -299,10 +335,13 @@ export default {
     },
     async handleTermsUpdate() {
       let tinyFluentSelector;
-      if (!this.groupTermsRequiredData && this.accessGroup.terms) {
+      if (!this.groupTermsRequiredData && this.groupInformation.group.terms) {
         await this.deleteTerms();
         tinyFluentSelector = 'access-group-terms-removed';
-      } else if (!this.accessGroup.terms && this.groupTermsData.length > 0) {
+      } else if (
+        !this.groupInformation.group.terms &&
+        this.groupTermsData.length > 0
+      ) {
         await this.addTerms(this.groupTermsData);
         tinyFluentSelector = 'access-group-terms-updated';
       } else {
@@ -333,12 +372,20 @@ export default {
         });
       }
     },
-    handleUpdateInviteTextClicked() {
+    async handleUpdateInviteTextClicked() {
       const text = this.emailInviteTextEnabled ? this.emailInviteText : '';
-      this.updateInvitationEmail(text).then(() => {
-        this.tinyNotification('access-group-invitation-text-updated');
-        this.emailInviteTextDirty = false;
-      });
+      try {
+        await accessGroupApi.execute({
+          path: 'groupInvitationEmail/post',
+          endpointArguments: [this.groupInformation.group.name],
+          dataArguments: text,
+        });
+      } catch (e) {
+        console.error(e.message);
+        throw new Error(e.message);
+      }
+      this.emailInviteTextDirty = false;
+      this.tinyNotification('access-group-invitation-text-updated');
     },
   },
 };
