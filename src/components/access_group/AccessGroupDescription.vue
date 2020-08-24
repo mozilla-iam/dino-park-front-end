@@ -66,7 +66,7 @@
       v-else-if="showRequest"
     >
       <button
-        v-if="showCancelRequest"
+        v-if="hasRequestedInvitation"
         @click="cancel"
         class="button primary-action"
       >
@@ -87,7 +87,9 @@ import Icon from '@/components/ui/Icon.vue';
 import Tooltip from '@/components/ui/Tooltip.vue';
 import LinksMixin from '@/components/_mixins/LinksMixin.vue';
 import { parseMarkdown } from '@/assets/js/component-utils';
+import { Api } from '@/assets/js/access-groups-api.js';
 
+const accessGroupApi = new Api();
 export default {
   name: 'AccessGroupDescription',
   components: { EditButton, Button, Icon, Tooltip },
@@ -101,10 +103,6 @@ export default {
   },
 
   computed: {
-    ...mapGetters({
-      // TODO: Remove this
-      userRequest: 'userV2/getRequestByName',
-    }),
     isCurator() {
       return this.groupInformation.isCurator;
     },
@@ -128,20 +126,49 @@ export default {
     showRequest() {
       return this.groupInformation.group.type === 'Reviewed';
     },
-    showCancelRequest() {
-      return this.userRequest(this.groupInformation.group.name);
-    },
   },
   methods: {
-    ...mapActions({
-      requestInvitation: 'userV2/requestInvitation',
-      cancelRequest: 'userV2/cancelRequest',
-    }),
-    request() {
-      this.requestInvitation({ groupName: this.groupInformation.group.name });
+    async fetchInvitationRequestStatus() {
+      try {
+        const requests = await accessGroupApi.execute({
+          path: 'selfRequests/get',
+        });
+
+        for (const request of requests) {
+          if (request.group_name === this.groupInformation.group.name) {
+            return true;
+          }
+        }
+
+        return false;
+      } catch (e) {
+        console.log(e.message);
+        throw new Error(e.message);
+      }
     },
-    cancel() {
-      this.cancelRequest({ groupName: this.groupInformation.group.name });
+    async request() {
+      try {
+        return await accessGroupApi.execute({
+          path: 'selfRequests/post',
+          endpointArguments: [this.groupInformation.group.name],
+        });
+        this.hasRequestedInvitation = true;
+      } catch (e) {
+        console.log(e.message);
+        throw new Error(e.message);
+      }
+    },
+    async cancel() {
+      try {
+        return await accessGroupApi.execute({
+          path: 'selfRequests/delete',
+          endpointArguments: [this.groupInformation.group.name],
+        });
+        this.hasRequestedInvitation = false;
+      } catch (e) {
+        console.log(e.message);
+        throw new Error(e.message);
+      }
     },
     date(d) {
       return new Date(d).toLocaleString(undefined, {
@@ -151,9 +178,13 @@ export default {
       });
     },
   },
+  async created() {
+    this.hasRequestedInvitation = await this.fetchInvitationRequestStatus();
+  },
   data() {
     return {
       section: 'information',
+      hasRequestedInvitation: false,
     };
   },
 };
