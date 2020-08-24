@@ -148,7 +148,7 @@ export default {
     },
     async request() {
       try {
-        return await accessGroupApi.execute({
+        await accessGroupApi.execute({
           path: 'selfRequests/post',
           endpointArguments: [this.groupInformation.group.name],
         });
@@ -160,7 +160,7 @@ export default {
     },
     async cancel() {
       try {
-        return await accessGroupApi.execute({
+        await accessGroupApi.execute({
           path: 'selfRequests/delete',
           endpointArguments: [this.groupInformation.group.name],
         });
