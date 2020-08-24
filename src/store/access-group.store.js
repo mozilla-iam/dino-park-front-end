@@ -155,18 +155,49 @@ export default {
     ...invitationEmailGetters,
     ...membersGetters,
     ...termsGetters,
-    getGroup: ({ group }) => group,
-    getMembership: ({ membership }) => membership,
-    getGroupName: ({ group }) => group.name,
-    getMemberCount: ({ memberCount }) => memberCount,
-    getInvitationCount: ({ invitationCount }) => invitationCount,
-    getRenewalCount: ({ renewalCount }) => renewalCount,
-    getRequestCount: ({ requestCount }) => requestCount,
-    getExpiration: ({ group }) =>
-      group && group.expiration ? group.expiration : 0,
-    getInvitationConfig: ({ invitationConfig }) =>
-      invitationConfig ? invitationConfig.content : null,
-    isCurator: ({ isCurator }) => isCurator,
-    isMember: ({ isMember }) => isMember,
+    getGroup: ({ group }) => {
+      console.log('access-group.store.js#getGroup() was called');
+      return group;
+    },
+    getMembership: ({ membership }) => {
+      console.log('access-group.store.js#getMembership() was called');
+      return membership;
+    },
+    getGroupName: ({ group }) => {
+      console.log('access-group.store.js#getGroupName() was called');
+      return group.name;
+    },
+    getMemberCount: ({ memberCount }) => {
+      console.log('access-group.store.js#getMemberCount() was called');
+      return memberCount;
+    },
+    getInvitationCount: ({ invitationCount }) => {
+      console.log('access-group.store.js#getInvitationCount() was called');
+      return invitationCount;
+    },
+    getRenewalCount: ({ renewalCount }) => {
+      console.log('access-group.store.js#getRenewalCount() was called');
+      return renewalCount;
+    },
+    getRequestCount: ({ requestCount }) => {
+      console.log('access-group.store.js#getRequestCount() was called');
+      return requestCount;
+    },
+    getExpiration: ({ group }) => {
+      console.log('access-group.store.js#getExpiration() was called');
+      return group && group.expiration ? group.expiration : 0;
+    },
+    getInvitationConfig: ({ invitationConfig }) => {
+      console.log('access-group.store.js#getInvitationConfig was called');
+      return invitationConfig ? invitationConfig.content : null;
+    },
+    isCurator: ({ isCurator }) => {
+      console.log('access-group.store.js#isCurator was called');
+      return isCurator;
+    },
+    isMember: ({ isMember }) => {
+      console.log('access-group.store.js#isMember was called');
+      return isMember;
+    },
   },
 };
