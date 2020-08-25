@@ -240,8 +240,10 @@ import {
   getDaysFromToday,
 } from '@/assets/js/component-utils';
 import AccessGroups from '@/assets/js/access-groups';
+import { Api } from '@/assets/js/access-groups-api';
 
 const memberRenewalThreshold = 14;
+const accessGroupApi = new Api();
 
 export default {
   name: 'AccessGroupMembersEdit',
@@ -270,7 +272,7 @@ export default {
     },
     curatorsList(value) {
       this.curatorsListDirty =
-        JSON.stringify(value) === JSON.stringify(this.accessGroupCurators);
+        JSON.stringify(value) === JSON.stringify(this.curatorsList);
     },
     groupExpiration(value) {
       if (value !== this.accessGroupExpiration) {
@@ -288,10 +290,11 @@ export default {
       this.updateSort(value);
     },
   },
+  async created() {
+    this.curatorsList = await this.fetchAccessGroupCurators();
+  },
   data() {
     const accessGroupExpiration = this.groupInformation.group.expiration || 0;
-    // const accessGroupCurators = this.$store.getters['accessGroup/getCurators'];
-    const accessGroupCurators = [];
     // TODO: Figure out what this value does and delete it if unnecessary
     let selectedExpiration =
       accessGroupExpiration === MEMBER_EXPIRATION_ONE_YEAR ||
@@ -306,7 +309,7 @@ export default {
       groupData: '',
       groupDescriptionData: '',
       groupTermsData: '',
-      curatorsList: accessGroupCurators,
+      curatorsList: [],
       addedCurators: [],
       removedCurators: [],
       curatorsListDirty: false,
@@ -384,15 +387,38 @@ export default {
       renewMember: 'accessGroup/renewMember',
       setLoading: 'setLoading',
       completeLoading: 'completeLoading',
-      fetchAllCurators: 'accessGroup/fetchAllCurators',
     }),
+    async fetchAccessGroupCurators() {
+      let cont = 0;
+      const allMembers = [];
+      while (cont !== null) {
+        // eslint-disable-next-line no-await-in-loop
+        const { members, next } = await accessGroupApi.execute({
+          path: 'members/get',
+          endpointArguments: [
+            this.groupName,
+            {
+              role: 'curators',
+              numResults: 100,
+              next: cont,
+            },
+          ],
+        });
+        allMembers.push(
+          ...members.map((member) => new DisplayMemberViewModel(member)),
+        );
+        cont = next;
+      }
+
+      return allMembers;
+    },
     canMemberBeRemoved(member) {
       if (!this.membersList.length) {
         return false;
       }
       if (
-        this.accessGroupCurators.length === 1 &&
-        member.uuid === this.accessGroupCurators[0].uuid
+        this.curatorsList.length === 1 &&
+        member.uuid === this.curatorsList[0].uuid
       ) {
         return false;
       }
@@ -531,11 +557,9 @@ export default {
   async mounted() {
     // FIXME: We're fetching members 3 times when loading this page…
     this.handleSortUpdated(this.selectedSort);
-    this.fetchAllCurators(this.groupName);
   },
   computed: {
     ...mapGetters({
-      accessGroupCurators: 'accessGroup/getCurators',
       accessGroupExpiration: 'accessGroup/getExpiration',
     }),
     memberCount() {
