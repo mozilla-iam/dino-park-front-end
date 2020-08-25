@@ -179,7 +179,9 @@ import {
   ACCESS_GROUP_TYPES,
   MEMBER_EXPIRATION_ONE_YEAR,
 } from '@/view_models/AccessGroupViewModel.js';
+import { Api } from '@/assets/js/access-groups-api';
 
+const accessGroupApi = new Api();
 export default {
   name: 'AccessGroupInformationEdit',
   components: {
@@ -216,7 +218,6 @@ export default {
   },
   methods: {
     ...mapActions({
-      createGroup: 'accessGroup/createGroup',
       setLoading: 'setLoading',
       completeLoading: 'completeLoading',
     }),
@@ -230,12 +231,17 @@ export default {
       } else {
         window.scrollTo({ top: 0, behavior: 'smooth' });
         try {
-          await this.createGroup({
-            name: this.groupName,
-            type: this.groupType,
-            description: this.groupDescription,
-            group_expiration: this.selectedExpiration,
+          this.setLoading();
+          await accessGroupApi.execute({
+            path: 'group/post',
+            dataArguments: {
+              name: this.groupName,
+              type: this.groupType,
+              description: this.groupDescription,
+              group_expiration: this.selectedExpiration,
+            },
           });
+          this.completeLoading();
           this.tinyNotification('access-group-created', this.groupName);
           this.$router.push({
             name: ACCESS_GROUP_PAGE,

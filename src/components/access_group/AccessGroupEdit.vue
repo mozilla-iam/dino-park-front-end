@@ -112,9 +112,6 @@ export default {
     await this.fetchAccessGroupInformation();
     await this.fetchTOS();
     await this.fetchMembers();
-    // this.fetchInvitationsAndRequests(store);
-    // this.fetchTerms(store);
-    // this.fetchInvitationEmails(store);
 
     if (this.getFeature('historyTab')) {
       tabs.concat({
@@ -129,59 +126,44 @@ export default {
   },
   methods: {
     async fetchAccessGroupInformation() {
-      try {
-        const groupData = await accessGroupApi.execute({
-          path: 'group/get',
-          endpointArguments: [this.groupname],
-        });
-        const groupInformation = {};
-        groupInformation.group = new GroupViewModel(groupData.group);
-        groupInformation.membership = new MembershipModel(groupData.membership);
-        groupInformation.memberCount = !groupData.member_count
-          ? 0
-          : groupData.member_count;
-        groupInformation.invitationCount = !groupData.invitation_count
-          ? 0
-          : groupInformation.invitation_count;
-        groupInformation.renewalCount = !groupData.renewal_count
-          ? 0
-          : groupInformation.renewal_count;
-        groupInformation.requestCount = groupData.request_count;
-        groupInformation.invitationConfig = groupData.invitation;
-        groupInformation.isCurator = Boolean(groupData.curator);
-        groupInformation.isMember = Boolean(groupData.member);
-        this.groupInformation = groupInformation;
-      } catch (e) {
-        console.log(e.message);
-        throw new Error(e.message);
-      }
+      const groupData = await accessGroupApi.execute({
+        path: 'group/get',
+        endpointArguments: [this.groupname],
+      });
+      const groupInformation = {};
+      groupInformation.group = new GroupViewModel(groupData.group);
+      groupInformation.membership = new MembershipModel(groupData.membership);
+      groupInformation.memberCount = !groupData.member_count
+        ? 0
+        : groupData.member_count;
+      groupInformation.invitationCount = !groupData.invitation_count
+        ? 0
+        : groupInformation.invitation_count;
+      groupInformation.renewalCount = !groupData.renewal_count
+        ? 0
+        : groupInformation.renewal_count;
+      groupInformation.requestCount = groupData.request_count;
+      groupInformation.invitationConfig = groupData.invitation;
+      groupInformation.isCurator = Boolean(groupData.curator);
+      groupInformation.isMember = Boolean(groupData.member);
+      this.groupInformation = groupInformation;
     },
     async fetchTOS() {
-      try {
-        this.tos =
-          (await accessGroupApi.execute({
-            path: 'terms/get',
-            endpointArguments: [this.groupname],
-          })) || '';
-      } catch (e) {
-        console.log(e.message);
-        throw new Error(e.message);
-      }
+      this.tos =
+        (await accessGroupApi.execute({
+          path: 'terms/get',
+          endpointArguments: [this.groupname],
+        })) || '';
     },
     async fetchMembers() {
-      try {
-        const memberData = await accessGroupApi.execute({
-          path: 'members/get',
-          endpointArguments: [this.groupname, { sort: 'role-asc' }],
-        });
-        const members = memberData.members.map(
-          (member) => new DisplayMemberViewModel(member),
-        );
-        this.memberList = members;
-      } catch (e) {
-        console.log(e.message);
-        throw new Error(e.message);
-      }
+      const memberData = await accessGroupApi.execute({
+        path: 'members/get',
+        endpointArguments: [this.groupname, { sort: 'role-asc' }],
+      });
+      const members = memberData.members.map(
+        (member) => new DisplayMemberViewModel(member),
+      );
+      this.memberList = members;
     },
     isActive(tab) {
       if (!this.$route.query.section) {

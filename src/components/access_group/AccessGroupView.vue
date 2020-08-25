@@ -1,5 +1,9 @@
 <template>
-  <main class="access-group" v-if="groupInformation">
+  <main
+    class="access-group"
+    v-if="groupInformation"
+    @dp-group-join="fetchAccessGroupInformation"
+  >
     <section class="primary-area">
       <section class="primary-area__description">
         <AccessGroupDescription

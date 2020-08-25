@@ -253,73 +253,43 @@ export default {
   },
   methods: {
     async addTerms(text) {
-      try {
-        await accessGroupApi.execute({
-          path: 'terms/post',
-          endpointArguments: [this.groupInformation.group.name],
-          dataArguments: text,
-        });
-      } catch (e) {
-        console.error(e.message);
-        throw new Error(e.message);
-      }
+      await accessGroupApi.execute({
+        path: 'terms/post',
+        endpointArguments: [this.groupInformation.group.name],
+        dataArguments: text,
+      });
     },
     async updateTerms(text) {
-      try {
-        await accessGroupApi.execute({
-          path: 'terms/put',
-          endpointArguments: [this.groupInformation.group.name],
-          dataArguments: text,
-        });
-      } catch (e) {
-        console.error(e.message);
-        throw new Error(e.message);
-      }
+      await accessGroupApi.execute({
+        path: 'terms/put',
+        endpointArguments: [this.groupInformation.group.name],
+        dataArguments: text,
+      });
     },
     async deleteTerms() {
-      try {
-        await accessGroupApi.execute({
-          path: 'terms/delete',
-          endpointArguments: [this.groupInformation.group.name],
-        });
-      } catch (e) {
-        console.error(e.message);
-        throw new Error(e.message);
-      }
+      await accessGroupApi.execute({
+        path: 'terms/delete',
+        endpointArguments: [this.groupInformation.group.name],
+      });
     },
     async deleteGroup() {
-      try {
-        await accessGroupApi.execute({
-          path: 'group/delete',
-          endpointArguments: [this.groupInformation.group.name],
-        });
-      } catch (e) {
-        console.error(e.message);
-        throw new Error(e.message);
-      }
+      await accessGroupApi.execute({
+        path: 'group/delete',
+        endpointArguments: [this.groupInformation.group.name],
+      });
     },
     async fetchEmailInviteText() {
-      try {
-        return await accessGroupApi.execute({
-          path: 'groupInvitationEmail/get',
-          endpointArguments: [this.groupInformation.group.name],
-        }).body;
-      } catch (e) {
-        console.log(e.message);
-        throw new Error(e.message);
-      }
+      return await accessGroupApi.execute({
+        path: 'groupInvitationEmail/get',
+        endpointArguments: [this.groupInformation.group.name],
+      }).body;
     },
     async updateGroup(updateData) {
-      try {
-        await accessGroupApi.execute({
-          path: 'group/put',
-          endpointArguments: [this.groupInformation.group.name],
-          dataArguments: updateData,
-        });
-      } catch (e) {
-        console.error(e.message);
-        throw new Error(e.message);
-      }
+      await accessGroupApi.execute({
+        path: 'group/put',
+        endpointArguments: [this.groupInformation.group.name],
+        dataArguments: updateData,
+      });
     },
     async handleDescriptionUpdate() {
       await this.updateGroup({
@@ -374,16 +344,11 @@ export default {
     },
     async handleUpdateInviteTextClicked() {
       const text = this.emailInviteTextEnabled ? this.emailInviteText : '';
-      try {
-        await accessGroupApi.execute({
-          path: 'groupInvitationEmail/post',
-          endpointArguments: [this.groupInformation.group.name],
-          dataArguments: text,
-        });
-      } catch (e) {
-        console.error(e.message);
-        throw new Error(e.message);
-      }
+      await accessGroupApi.execute({
+        path: 'groupInvitationEmail/post',
+        endpointArguments: [this.groupInformation.group.name],
+        dataArguments: text,
+      });
       this.emailInviteTextDirty = false;
       this.tinyNotification('access-group-invitation-text-updated');
     },

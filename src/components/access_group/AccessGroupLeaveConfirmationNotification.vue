@@ -57,31 +57,16 @@ import { mapGetters, mapActions } from 'vuex';
 import Icon from '@/components/ui/Icon.vue';
 import Button from '@/components/ui/Button.vue';
 import { ACCESS_GROUP_LEAVE_CONFIRMATION_PAGE } from '@/router';
+import { Api } from '@/assets/js/access-groups-api.js';
 
+const accessGroupApi = new Api();
 export default {
   name: 'AccessGroupLeaveConfirmationNotification',
   props: {},
   components: { Icon, Button },
   computed: {
-    ...mapGetters({
-      accessGroup: 'accessGroup/getGroup',
-      groupName: 'accessGroup/getGroupName',
-      isCurator: 'accessGroup/isCurator',
-      curatorsList: 'accessGroup/getCurators',
-    }),
     showLeaveConfirmationNotification() {
       return this.$route.name === ACCESS_GROUP_LEAVE_CONFIRMATION_PAGE;
-    },
-    // Determine if the the user is allowed to leave the group, in case they are the last one in the group and the only curator
-    canLeaveGroup() {
-      if (!this.curatorsList.length) {
-        return false;
-      }
-      // Return false if the current user is both the last curator and the last member of this group
-      if (this.curatorsList.length === 1 && this.isCurator) {
-        return false;
-      }
-      return true;
     },
     cannotLeaveContactLine() {
       return this.fluent(
@@ -92,13 +77,13 @@ export default {
     confirmLeaveText() {
       return this.fluent('access-group_notifications', 'leave-confirm').replace(
         '[]',
-        this.groupName,
+        this.$route.params.groupname,
       );
     },
     leaveAlertText() {
       return this.fluent('access-group_notifications', 'leave-alert').replace(
         '[]',
-        this.groupName,
+        this.$route.params.groupname,
       );
     },
   },
@@ -109,10 +94,16 @@ export default {
   },
   methods: {
     ...mapActions({
-      leaveGroup: 'accessGroup/leaveGroup',
       setLoading: 'setLoading',
       completeLoading: 'completeLoading',
     }),
+    async leaveGroup() {
+      const r = await accessGroupApi.execute({
+        path: 'self/delete',
+        endpointArguments: [this.$route.params.groupname],
+      });
+      return r?.error === 'last_admin_of_group';
+    },
     async handleLeaveClick() {
       this.setLoading();
       const couldLeave = await this.leaveGroup();
@@ -120,7 +111,10 @@ export default {
         this.showCantLeave = true;
         return;
       }
-      this.tinyNotification('access-group-left-group', this.groupName);
+      this.tinyNotification(
+        'access-group-left-group',
+        this.$route.params.groupname,
+      );
       this.$router.replace({
         name: 'Access Group',
       });
