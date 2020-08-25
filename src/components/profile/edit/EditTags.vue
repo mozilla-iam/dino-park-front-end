@@ -31,9 +31,11 @@
         :key="`tag-${index}`"
         :removable="true"
         @removeTag="removeTag(index)"
+        type="searchTag"
       >
       </Tag>
     </div>
+    <!-- add new tag when pressing either the enter or the comma key (keyCode: 188) -->
     <input
       v-if="addingTag"
       type="text"
@@ -41,6 +43,8 @@
       ref="inputTag"
       class="add-tags__input"
       @keydown.enter="handleAddTag"
+      @keydown.188.prevent="handleAddTag"
+      @paste="handlePaste"
     />
     <button
       type="button"
@@ -94,7 +98,6 @@ export default {
       }
       if (this.newTag.length > 0) {
         this.addTag(this.newTag);
-        this.addingTag = false;
       } else {
         this.$refs.inputTag.focus();
       }
@@ -116,6 +119,19 @@ export default {
       if (this.tags.values.length > index) {
         this.tags.values.splice(index, 1);
       }
+    },
+    handlePaste() {
+      this.$nextTick(() => {
+        let text = this.$refs.inputTag.value;
+
+        if (text === '' || !text.includes(',')) {
+          return;
+        }
+
+        for (let tag of text.split(',')) {
+          this.addTag(tag.trim());
+        }
+      });
     },
   },
   mounted() {

@@ -17,6 +17,7 @@
           class="member-view__image"
           :size="40"
           :showLabel="member.isStaff"
+          :useSrcset="true"
         />
         <div class="member-view__info">
           <p class="info-header">{{ member.displayName }}</p>

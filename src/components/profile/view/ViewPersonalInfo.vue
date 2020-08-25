@@ -17,6 +17,7 @@
           :avatar="{ picture: picture.value, username: primaryUsername.value }"
           :size="264"
           :showLabel="staffInformation.staff.value"
+          :useSrcset="true"
         ></UserPicture>
       </div>
       <div class="hide-mobile profile__contact-me-container">

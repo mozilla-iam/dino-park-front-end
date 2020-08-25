@@ -1,6 +1,11 @@
 <template>
   <div>
-    <Tag v-for="(tag, index) in tags.values" :tag="tag" :key="`tag-${index}`" />
+    <Tag
+      v-for="(tag, index) in tags.values"
+      :tag="tag"
+      type="searchTag"
+      :key="`tag-${index}`"
+    />
   </div>
 </template>
 

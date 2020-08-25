@@ -4,6 +4,7 @@
       :avatar="{ picture, username }"
       class="search-result__image"
       :size="40"
+      :useSrcset="false"
       :showLabel="isStaff"
     ></UserPicture>
     <RouterLink

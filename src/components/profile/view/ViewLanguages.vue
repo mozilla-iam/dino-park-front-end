@@ -5,6 +5,7 @@
       v-for="(language, index) in languages.values"
       :tag="language"
       :key="`language-${index}`"
+      type="searchLanguage"
     >
     </Tag>
     <p v-else>{{ fluent('profile_languages_none', 'self') }}</p>

@@ -74,13 +74,13 @@
                 username: user.primaryUsername.value,
               }"
               :size="40"
-              :pictureSize="100"
               :showLabel="scope.isStaff"
+              :useSrcset="true"
             ></UserPicture>
             <UserPicture
               v-else
               :size="40"
-              :pictureSize="100"
+              :useSrcset="false"
               :showLabel="scope.isStaff"
             ></UserPicture>
           </template>
