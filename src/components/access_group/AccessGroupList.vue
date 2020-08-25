@@ -37,7 +37,6 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
 import EditButton from '@/components/ui/EditButton.vue';
 import Button from '@/components/ui/Button.vue';
 import AccessGroupListItem from '@/components/access_group/AccessGroupListItem.vue';
@@ -45,13 +44,17 @@ import SearchForm from '@/components/ui/SearchForm.vue';
 import Select from '@/components/ui/Select.vue';
 import Tooltip from '@/components/ui/Tooltip.vue';
 import Icon from '@/components/ui/Icon.vue';
+import { Api } from '@/assets/js/access-groups-api.js';
+import { AbbGroupViewModel } from '@/view_models/AccessGroupViewModel';
 
 const resultsStep = 20;
 const defaultListOptions = {
   search: '',
   sort: 'member-count-desc',
   numResults: resultsStep,
+  next: null,
 };
+const accessGroupApi = new Api();
 export default {
   name: 'AccessGroupList',
   components: {
@@ -67,41 +70,60 @@ export default {
     title: String,
   },
   methods: {
-    ...mapActions({
-      fetchList: 'accessGroups/fetchList',
-      fetchNext: 'accessGroups/fetchNext',
-    }),
+    async fetchList(options = {}) {
+      try {
+        const data = await accessGroupApi.execute({
+          path: 'groups/get',
+          endpointArguments: [options],
+        });
+
+        const localFetchList = data.groups.map(
+          (group) => new AbbGroupViewModel(group),
+        );
+        // if we have requested new groups, concat them to the already existing ones
+        if (options.hasOwnProperty('next') && options.next) {
+          this.groupList = this.groupList.concat(localFetchList);
+        } else {
+          this.groupList = localFetchList;
+        }
+
+        this.next = data.next;
+      } catch (e) {
+        console.error('Propagating error during fetchList()', e);
+        throw new Error(e);
+      }
+    },
     // eslint-disable-next-line
-    searchFormHandler(searchQuery, scope) {
+    async searchFormHandler(searchQuery, scope) {
       if (this.nextClicked) {
         this.resetOptions();
       }
       this.listOptions.search = searchQuery;
-      this.fetchList(this.listOptions);
+      await this.fetchList(this.listOptions);
     },
     searchFormKeyUpHandler(searchQuery, scope) {
       this.searchFormHandler(searchQuery, scope);
     },
-    clearSearchHandler() {
+    async clearSearchHandler() {
       this.listOptions.search = '';
-      this.fetchList(this.listOptions);
+      await this.fetchList(this.listOptions);
     },
     async handleShowMoreClicked() {
       this.nextClicked = true;
-      const nextList = await this.fetchNext(this.listOptions);
-      this.groupList = this.groupList.concat(nextList);
+      this.listOptions.next = this.next;
+      await this.fetchList(this.listOptions);
     },
     resetOptions() {
       this.listOptions = defaultListOptions;
+      this.nextClicked = false;
+      this.next = null;
+      // fix `next` not getting overwritten to a falsey value besides `defaultListOptions.next` is null.
+      this.listOptions.next = null;
     },
   },
   computed: {
-    ...mapGetters({
-      rawList: 'accessGroups/getList',
-      groupNext: 'accessGroups/getNext',
-    }),
     canShowMore() {
-      return this.groupNext;
+      return this.next !== null;
     },
   },
   watch: {
@@ -112,16 +134,14 @@ export default {
       this.listOptions.sort = value;
       this.fetchList(this.listOptions);
     },
-    rawList(value) {
-      this.groupList = value;
-    },
   },
   data() {
     return {
       nextClicked: false,
-      groupList: this.$store.getters['accessGroups/getList'],
+      groupList: [],
       listOptions: defaultListOptions,
       selectedSort: defaultListOptions.sort,
+      next: null,
       sortOptions: [
         { value: 'name-asc', label: 'Name A-Z' },
         { value: 'name-desc', label: 'Name Z-A' },
@@ -133,6 +153,9 @@ export default {
         label: 'Sort',
       },
     };
+  },
+  mounted() {
+    this.fetchList(this.listOptions);
   },
 };
 </script>
