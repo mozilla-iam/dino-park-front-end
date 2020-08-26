@@ -1,5 +1,6 @@
 <template>
   <main class="group-terms">
+    <AccessGroupTOSAcceptanceNotification v-if="invitationShowTOSAccept" />
     <RouterLink
       class="button group-terms__back-action"
       :to="{
@@ -61,13 +62,15 @@ import {
   MembershipModel,
 } from '@/view_models/AccessGroupViewModel.js';
 import { parseMarkdown } from '@/assets/js/component-utils';
+import AccessGroupTOSAcceptanceNotification from '@/components/access_group/AccessGroupTOSAcceptanceNotification.vue';
 
 const accessGroupApi = new Api();
 export default {
   name: 'AccessGroup',
   components: {
-    Icon,
+    AccessGroupTOSAcceptanceNotification,
     Button,
+    Icon,
   },
   props: {
     groupname: String,
@@ -86,11 +89,21 @@ export default {
   },
   methods: {
     ...mapActions({
-      acceptInvitation: 'userV2/acceptInvitation',
-      rejectInvitation: 'userV2/rejectInvitation',
       setLoading: 'setLoading',
       completeLoading: 'completeLoading',
     }),
+    async rejectInvitation(invite) {
+      await this.api.execute({
+        path: 'selfInvitations/delete',
+        endpointArguments: [invite.groupInvitation],
+      });
+    },
+    async acceptInvitation(invite) {
+      await this.api.execute({
+        path: 'selfInvitations/post',
+        endpointArguments: [invite.groupInvitation],
+      });
+    },
     async getInvitationByName(groupName) {
       const invitations = (
         await accessGroupApi.execute({

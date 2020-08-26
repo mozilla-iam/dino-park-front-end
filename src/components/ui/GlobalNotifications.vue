@@ -1,24 +1,22 @@
-<template lang="html">
+<template>
   <section class="global-notifications-container">
-    <AccessGroupTOSAcceptanceNotification />
     <AccessGroupInvitationNotification />
+    <!-- TODO: Refactor this out to live inside the AccessGroup view (as it is only shown when you visit the group you want to leave) -->
     <AccessGroupLeaveConfirmationNotification />
   </section>
 </template>
 
-<script lang="js">
+<script>
 import AccessGroupInvitationNotification from '@/components/access_group/AccessGroupInvitationNotification.vue';
-import AccessGroupTOSAcceptanceNotification from '@/components/access_group/AccessGroupTOSAcceptanceNotification.vue';
 import AccessGroupLeaveConfirmationNotification from '@/components/access_group/AccessGroupLeaveConfirmationNotification.vue';
 
-export default  {
+export default {
   name: 'GlobalNotifications',
   components: {
     AccessGroupInvitationNotification,
-    AccessGroupTOSAcceptanceNotification,
     AccessGroupLeaveConfirmationNotification,
-  }
-}
+  },
+};
 </script>
 
 <style>
