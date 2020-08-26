@@ -27,28 +27,23 @@ export default {
   },
   methods: {
     async fetchMembers() {
-      try {
-        const memberData = await accessGroupApi.execute({
-          path: 'members/get',
-          endpointArguments: [this.groupName, this.membersListOptions],
-        });
+      const memberData = await accessGroupApi.execute({
+        path: 'members/get',
+        endpointArguments: [this.groupName, this.membersListOptions],
+      });
 
-        const members = memberData.members.map(
-          (member) => new DisplayMemberViewModel(member),
-        );
-        this.membersNext = memberData.next;
+      const members = memberData.members.map(
+        (member) => new DisplayMemberViewModel(member),
+      );
+      this.membersNext = memberData.next;
 
-        if (
-          this.membersListOptions.hasOwnProperty('next') &&
-          this.membersListOptions.next
-        ) {
-          this.membersList = this.membersList.concat(members);
-        } else {
-          this.membersList = members;
-        }
-      } catch (e) {
-        console.log(e.message);
-        throw new Error(e.message);
+      if (
+        this.membersListOptions.hasOwnProperty('next') &&
+        this.membersListOptions.next
+      ) {
+        this.membersList = this.membersList.concat(members);
+      } else {
+        this.membersList = members;
       }
     },
     async loadMoreMembers() {

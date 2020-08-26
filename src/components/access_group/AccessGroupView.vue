@@ -72,34 +72,29 @@ export default {
   },
   methods: {
     async fetchAccessGroupInformation() {
-      try {
-        const groupData = await accessGroupApi.execute({
-          path: 'group/get',
-          endpointArguments: [this.groupname],
-        });
+      const groupData = await accessGroupApi.execute({
+        path: 'group/get',
+        endpointArguments: [this.groupname],
+      });
 
-        const groupInformation = {};
-        groupInformation.group = new GroupViewModel(groupData.group);
-        groupInformation.membership = new MembershipModel(groupData.membership);
-        groupInformation.memberCount = !groupData.member_count
-          ? 0
-          : groupData.member_count;
-        groupInformation.invitationCount = !groupData.invitation_count
-          ? 0
-          : groupInformation.invitation_count;
-        groupInformation.renewalCount = !groupData.renewal_count
-          ? 0
-          : groupInformation.renewal_count;
-        groupInformation.requestCount = groupData.request_count;
-        groupInformation.invitationConfig = groupData.invitation;
-        groupInformation.isCurator = Boolean(groupData.curator);
-        groupInformation.isMember = Boolean(groupData.member);
+      const groupInformation = {};
+      groupInformation.group = new GroupViewModel(groupData.group);
+      groupInformation.membership = new MembershipModel(groupData.membership);
+      groupInformation.memberCount = !groupData.member_count
+        ? 0
+        : groupData.member_count;
+      groupInformation.invitationCount = !groupData.invitation_count
+        ? 0
+        : groupInformation.invitation_count;
+      groupInformation.renewalCount = !groupData.renewal_count
+        ? 0
+        : groupInformation.renewal_count;
+      groupInformation.requestCount = groupData.request_count;
+      groupInformation.invitationConfig = groupData.invitation;
+      groupInformation.isCurator = Boolean(groupData.curator);
+      groupInformation.isMember = Boolean(groupData.member);
 
-        this.groupInformation = groupInformation;
-      } catch (e) {
-        console.log(e.message);
-        throw new Error(e.message);
-      }
+      this.groupInformation = groupInformation;
     },
   },
   computed: {
