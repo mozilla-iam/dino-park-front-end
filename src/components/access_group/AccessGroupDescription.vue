@@ -129,46 +129,31 @@ export default {
   },
   methods: {
     async fetchInvitationRequestStatus() {
-      try {
-        const requests = await accessGroupApi.execute({
-          path: 'selfRequests/get',
-        });
+      const requests = await accessGroupApi.execute({
+        path: 'selfRequests/get',
+      });
 
-        for (const request of requests) {
-          if (request.group_name === this.groupInformation.group.name) {
-            return true;
-          }
+      for (const request of requests) {
+        if (request.group_name === this.groupInformation.group.name) {
+          return true;
         }
-
-        return false;
-      } catch (e) {
-        console.log(e.message);
-        throw new Error(e.message);
       }
+
+      return false;
     },
     async request() {
-      try {
-        await accessGroupApi.execute({
-          path: 'selfRequests/post',
-          endpointArguments: [this.groupInformation.group.name],
-        });
-        this.hasRequestedInvitation = true;
-      } catch (e) {
-        console.log(e.message);
-        throw new Error(e.message);
-      }
+      await accessGroupApi.execute({
+        path: 'selfRequests/post',
+        endpointArguments: [this.groupInformation.group.name],
+      });
+      this.hasRequestedInvitation = true;
     },
     async cancel() {
-      try {
-        await accessGroupApi.execute({
-          path: 'selfRequests/delete',
-          endpointArguments: [this.groupInformation.group.name],
-        });
-        this.hasRequestedInvitation = false;
-      } catch (e) {
-        console.log(e.message);
-        throw new Error(e.message);
-      }
+      await accessGroupApi.execute({
+        path: 'selfRequests/delete',
+        endpointArguments: [this.groupInformation.group.name],
+      });
+      this.hasRequestedInvitation = false;
     },
     date(d) {
       return new Date(d).toLocaleString(undefined, {

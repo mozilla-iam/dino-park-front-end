@@ -311,90 +311,65 @@ export default {
   },
   methods: {
     async fetchGroupInvitations() {
-      try {
-        let data = await accessGroupApi.execute({
-          path: 'groupInvitations/get',
-          endpointArguments: [this.groupInformation.group.name],
-        });
+      let data = await accessGroupApi.execute({
+        path: 'groupInvitations/get',
+        endpointArguments: [this.groupInformation.group.name],
+      });
 
-        this.groupInformation.invitationCount = data.length;
+      this.groupInformation.invitationCount = data.length;
 
-        return data.map((invite) => new DisplayMemberViewModel(invite));
-      } catch (e) {
-        console.log(e.message);
-        throw new Error(e.message);
-      }
+      return data.map((invite) => new DisplayMemberViewModel(invite));
     },
     async rejectRequest(member) {
-      try {
-        await accessGroupApi.execute({
-          path: 'groupRequests/delete',
-          endpointArguments: [this.groupInformation.group.name, member.uuid],
-        });
+      await accessGroupApi.execute({
+        path: 'groupRequests/delete',
+        endpointArguments: [this.groupInformation.group.name, member.uuid],
+      });
 
-        this.groupRequests = await this.fetchGroupRequests();
-      } catch (e) {
-        console.log(e.message);
-        throw new Error(e.message);
-      }
+      this.groupRequests = await this.fetchGroupRequests();
     },
     async sendInvitations(invitationData) {
-      try {
-        const results = [];
-        for (const member of invitationData.invites) {
-          results.push(
-            await accessGroupApi.execute({
-              path: 'groupInvitations/post',
-              endpointArguments: [this.groupInformation.group.name],
-              dataArguments: {
-                uuid: member.uuid,
-                groupExpiration: Number.parseInt(invitationData.expiration),
-              },
-            }),
-          );
-        }
-        const errors = results.filter(({ error }) => Boolean(error));
-        if (errors.length) {
-          throw new Error('Send invitation errors');
-        }
-
-        this.groupInvitations = await this.fetchGroupInvitations();
-        this.groupRequests = await this.fetchGroupRequests();
-      } catch (e) {
-        console.log(e.message);
-        throw new Error(e.message);
+      const results = [];
+      for (const member of invitationData.invites) {
+        results.push(
+          await accessGroupApi.execute({
+            path: 'groupInvitations/post',
+            endpointArguments: [this.groupInformation.group.name],
+            dataArguments: {
+              uuid: member.uuid,
+              groupExpiration: Number.parseInt(invitationData.expiration),
+            },
+          }),
+        );
       }
+      const errors = results.filter(({ error }) => Boolean(error));
+      if (errors.length) {
+        throw new Error('Send invitation errors');
+      }
+
+      this.groupInvitations = await this.fetchGroupInvitations();
+      this.groupRequests = await this.fetchGroupRequests();
     },
     async fetchGroupRequests() {
-      try {
-        const data = await accessGroupApi.execute({
-          path: 'groupRequests/get',
-          endpointArguments: [this.groupInformation.group.name],
-        });
+      const data = await accessGroupApi.execute({
+        path: 'groupRequests/get',
+        endpointArguments: [this.groupInformation.group.name],
+      });
 
-        this.groupInformation.requestCount = data.length;
+      this.groupInformation.requestCount = data.length;
 
-        return data.map((invite) => new DisplayMemberViewModel(invite));
-      } catch (e) {
-        console.log(e.message);
-        throw new Error(e.message);
-      }
+      return data.map((invite) => new DisplayMemberViewModel(invite));
     },
     expiry(expiration) {
       return expiryTextFromDate(this.fluent, expiration);
     },
     async handleRemoveClicked(member) {
-      try {
-        await accessGroupApi.execute({
-          path: 'groupInvitations/delete',
-          endpointArguments: [this.groupInformation.group.name, member.uuid],
-        });
+      await accessGroupApi.execute({
+        path: 'groupInvitations/delete',
+        endpointArguments: [this.groupInformation.group.name, member.uuid],
+      });
 
-        this.groupInvitations = await this.fetchGroupInvitations();
-      } catch (e) {
-        console.log(e.message);
-        throw new Error(e.message);
-      }
+      this.groupInvitations = await this.fetchGroupInvitations();
     },
     handleRequestInvitation(member) {
       this.sendInvitations({ invites: [member] });
@@ -416,26 +391,21 @@ export default {
       await this.fetchMembers();
     },
     async updateAutoCompleteList(search) {
-      try {
-        const includeCurators = false;
-        const showExisting = true;
-        const data = await accessGroupApi.execute({
-          path: 'users/get',
-          endpointArguments: [
-            search,
-            this.groupInformation.group.name,
-            includeCurators,
-            showExisting,
-          ],
-        });
+      const includeCurators = false;
+      const showExisting = true;
+      const data = await accessGroupApi.execute({
+        path: 'users/get',
+        endpointArguments: [
+          search,
+          this.groupInformation.group.name,
+          includeCurators,
+          showExisting,
+        ],
+      });
 
-        return data.map((profile) =>
-          DisplayMemberViewModel.fromUserData(profile),
-        );
-      } catch (e) {
-        console.log(e.message);
-        throw new Error(e.message);
-      }
+      return data.map((profile) =>
+        DisplayMemberViewModel.fromUserData(profile),
+      );
     },
     async beforeAddNewInvitesClicked() {
       this.highlightError = true;
