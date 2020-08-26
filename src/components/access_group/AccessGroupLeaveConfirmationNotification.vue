@@ -118,6 +118,7 @@ export default {
       this.$router.replace({
         name: 'Access Group',
       });
+      this.$root.$emit('dp-reload-group');
       this.completeLoading();
     },
     handleCancelClick() {

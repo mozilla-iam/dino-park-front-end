@@ -109,7 +109,11 @@ export default {
         });
       } else {
         this.setLoading();
-        const completePromise = () => {
+        const completePromise = async () => {
+          // refresh open invitations and group status
+          this.invitations = await this.fetchInvitations();
+          this.$root.$emit('dp-reload-group');
+
           if (
             this.$route.name !== ACCESS_GROUP_PAGE ||
             this.$route.params.groupname !== currentInvitation.groupName
@@ -129,13 +133,11 @@ export default {
           await this.acceptInvitation(currentInvitation).then(() => {
             completePromise();
           });
-          this.$emit('dp-reload-group');
         } else {
           await this.acceptInvitation(currentInvitation).then(() => {
             completePromise();
           });
         }
-        this.invitations = await this.fetchInvitations();
       }
     },
     async handleRejectClick(idx) {
@@ -147,7 +149,9 @@ export default {
             currentInvitation.groupName,
           );
         });
+        // refresh open invitations and group status
         this.invitations = await this.fetchInvitations();
+        this.$root.$emit('dp-reload-group');
       } else if (currentInvitation.state === '') {
         currentInvitation.state = PENDING_REJECTION;
       }
