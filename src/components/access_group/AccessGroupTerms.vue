@@ -99,7 +99,6 @@ export default {
       });
     },
     async acceptInvitation(invite) {
-      console.log(invite);
       await accessGroupApi.execute({
         path: 'selfInvitations/post',
         endpointArguments: [invite.groupName],

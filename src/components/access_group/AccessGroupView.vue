@@ -1,9 +1,5 @@
 <template>
-  <main
-    class="access-group"
-    v-if="groupInformation"
-    @dp-group-join="fetchAccessGroupInformation"
-  >
+  <main class="access-group" v-if="groupInformation">
     <section class="primary-area">
       <section class="primary-area__description">
         <AccessGroupDescription
@@ -118,8 +114,12 @@ export default {
       membersNext: null,
     };
   },
-  mounted() {
-    this.fetchAccessGroupInformation();
+  async created() {
+    await this.fetchAccessGroupInformation();
+
+    this.$root.$on('dp-reload-group', async () => {
+      await this.fetchAccessGroupInformation();
+    });
   },
 };
 </script>
