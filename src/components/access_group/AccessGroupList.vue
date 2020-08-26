@@ -154,8 +154,8 @@ export default {
       },
     };
   },
-  mounted() {
-    this.fetchList(this.listOptions);
+  async created() {
+    await this.fetchList(this.listOptions);
   },
 };
 </script>

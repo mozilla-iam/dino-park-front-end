@@ -129,7 +129,7 @@ export default {
           await this.acceptInvitation(currentInvitation).then(() => {
             completePromise();
           });
-          this.$emit('dp-group-join', currentInvitation.groupName);
+          this.$emit('dp-reload-group');
         } else {
           await this.acceptInvitation(currentInvitation).then(() => {
             completePromise();

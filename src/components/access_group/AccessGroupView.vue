@@ -113,7 +113,7 @@ export default {
       return null;
     },
     isCurator() {
-      return this.groupInformation.curator;
+      return this.groupInformation.isCurator;
     },
   },
   data() {

@@ -22,7 +22,7 @@
       <h1 class="group-terms__header">
         {{ fluent('access-group_terms', 'heading') }}
       </h1>
-      <p>{{ termsContent }}</p>
+      <p v-html="formattedTerms"></p>
       <footer class="group-terms__form" v-if="invitationShowTOSAccept">
         <div class="form-action-row">
           <input
@@ -52,14 +52,17 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import store, {
-  fetchAccessGroup,
-  fetchTerms,
-  resolvePromisesSerially,
-} from '@/store';
+import { Api } from '@/assets/js/access-groups-api.js';
 import Icon from '@/components/ui/Icon.vue';
 import Button from '@/components/ui/Button.vue';
+import {
+  GroupInvitationViewModel,
+  GroupViewModel,
+  MembershipModel,
+} from '@/view_models/AccessGroupViewModel.js';
+import { parseMarkdown } from '@/assets/js/component-utils';
 
+const accessGroupApi = new Api();
 export default {
   name: 'AccessGroup',
   components: {
@@ -69,19 +72,17 @@ export default {
   props: {
     groupname: String,
   },
-  mounted() {},
-  beforeRouteEnter(to, from, next) {
-    store.dispatch('setLoading');
-    const { groupname } = to.params;
-    const [agPromises, agResolvers] = fetchAccessGroup(store, groupname);
-    const [termsPromises, termsResolvers] = fetchTerms(store);
-    resolvePromisesSerially(
-      [...agPromises, ...termsPromises],
-      [...agResolvers, ...termsResolvers],
-    ).then(() => {
-      store.dispatch('completeLoading');
-      next();
-    });
+  async mounted() {
+    this.setLoading();
+
+    this.terms =
+      (await accessGroupApi.execute({
+        path: 'terms/get',
+        endpointArguments: [this.groupname],
+      })) || '';
+    this.groupInvitation = await this.getInvitationByName(this.groupname);
+
+    this.completeLoading();
   },
   methods: {
     ...mapActions({
@@ -90,6 +91,20 @@ export default {
       setLoading: 'setLoading',
       completeLoading: 'completeLoading',
     }),
+    async getInvitationByName(groupName) {
+      const invitations = (
+        await accessGroupApi.execute({
+          path: 'selfInvitations/get',
+        })
+      ).map((invite) => new GroupInvitationViewModel(invite));
+
+      for (const invite of invitations) {
+        if (invite.groupName === groupName) {
+          return invite;
+        }
+      }
+      return null;
+    },
     handleSubmitClicked() {
       if (this.termsAccepted) {
         this.acceptTerms();
@@ -97,56 +112,49 @@ export default {
         this.doNotAcceptTerms();
       }
     },
-    acceptTerms() {
+    async acceptTerms() {
       this.setLoading();
-      this.acceptInvitation(
-        this.getInvitationByName(this.$route.params.groupname),
-      ).then(() => {
-        this.tinyNotification('access-group-terms-accepted');
-        this.completeLoading();
-        this.$router.push({
-          name: 'Access Group',
-          query: {
-            groupname: this.$route.query.groupname,
-          },
-        });
+      await this.acceptInvitation(this.groupInvitation);
+
+      this.tinyNotification('access-group-terms-accepted');
+      this.completeLoading();
+      this.$router.push({
+        name: 'Access Group',
+        query: {
+          groupname: this.$route.query.groupname,
+        },
       });
     },
-    doNotAcceptTerms() {
+    async doNotAcceptTerms() {
       this.setLoading();
-      this.rejectInvitation(
-        this.getInvitationByName(this.$route.params.groupname),
-      ).then(() => {
-        this.tinyNotification(
-          'access-group-terms-rejected',
-          this.$route.params.groupname,
-        );
-        this.completeLoading();
-        this.$router.push({
-          name: 'Access Group',
-          query: {
-            groupname: this.$route.query.groupname,
-          },
-        });
+      await this.rejectInvitation(this.groupInvitation);
+
+      this.tinyNotification(
+        'access-group-terms-rejected',
+        this.$route.params.groupname,
+      );
+      this.completeLoading();
+      this.$router.push({
+        name: 'Access Group',
+        query: {
+          groupname: this.$route.query.groupname,
+        },
       });
     },
   },
   data() {
     return {
       termsAccepted: true,
+      terms: '',
+      groupInvitation: {},
     };
   },
   computed: {
-    ...mapGetters({
-      accessGroup: 'accessGroup/getGroup',
-      termsContent: 'accessGroup/getTerms',
-      getInvitationByName: 'userV2/getInvitationByName',
-    }),
-    groupInvitation() {
-      return this.getInvitationByName(this.accessGroup.name);
-    },
     backUrl() {
       return this.$route.path.substr(0, this.$route.path.lastIndexOf('/'));
+    },
+    formattedTerms() {
+      return parseMarkdown(this.terms);
     },
     invitationShowTOSAccept() {
       if (!this.$route.query.accept || !this.groupInvitation) {

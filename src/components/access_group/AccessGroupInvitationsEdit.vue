@@ -359,6 +359,7 @@ export default {
         }
 
         this.groupInvitations = await this.fetchGroupInvitations();
+        this.groupRequests = await this.fetchGroupRequests();
       } catch (e) {
         console.log(e.message);
         throw new Error(e.message);
