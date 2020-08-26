@@ -93,15 +93,16 @@ export default {
       completeLoading: 'completeLoading',
     }),
     async rejectInvitation(invite) {
-      await this.api.execute({
+      await accessGroupApi.execute({
         path: 'selfInvitations/delete',
-        endpointArguments: [invite.groupInvitation],
+        endpointArguments: [invite.groupName],
       });
     },
     async acceptInvitation(invite) {
-      await this.api.execute({
+      console.log(invite);
+      await accessGroupApi.execute({
         path: 'selfInvitations/post',
-        endpointArguments: [invite.groupInvitation],
+        endpointArguments: [invite.groupName],
       });
     },
     async getInvitationByName(groupName) {
