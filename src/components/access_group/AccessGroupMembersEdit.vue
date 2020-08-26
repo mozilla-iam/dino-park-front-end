@@ -380,9 +380,6 @@ export default {
   },
   methods: {
     ...mapActions({
-      addCurators: 'accessGroup/addCurators',
-      removeCurators: 'accessGroup/removeCurators',
-      renewMember: 'accessGroup/renewMember',
       setLoading: 'setLoading',
       completeLoading: 'completeLoading',
     }),
@@ -404,7 +401,7 @@ export default {
     },
     async removeCurators(oldCurators, expiration) {
       for (const curator of oldCurators) {
-        await this.api.execute({
+        await accessGroupApi.execute({
           path: 'curators/downgrade',
           endpointArguments: [this.groupInformation.group.name, curator.uuid],
           dataArguments: { groupExpiration: expiration },
@@ -465,24 +462,32 @@ export default {
         this.handleRenewClick(member, expiration);
       }
     },
+    async renewMember(memberUuid, expiration) {
+      await this.api.execute({
+        path: 'members/renew',
+        endpointArguments: [this.groupName, memberUuid],
+        dataArguments: { groupExpiration: expiration },
+      });
+    },
     handleRenewClick(member, expiration) {
       this.setLoading();
-      this.renewMember({
-        memberUuid: member.uuid,
-        expiration: expiration || this.accessGroupExpiration,
-      }).then((result) => {
+      this.renewMember(
+        member.uuid,
+        expiration || this.accessGroupExpiration,
+      ).then((result) => {
         this.completeLoading();
         this.tinyNotification(
           'access-group-member-renewed',
           member.displayName,
         );
       });
+      this.$root.$emit('dp-reload-group');
     },
     async handleRemoveConfirmClick(member) {
       this.setLoading();
       await this.api.execute({
         path: 'members/delete',
-        endpointArguments: [groupName, member.uuid],
+        endpointArguments: [this.groupName, member.uuid],
       });
       this.tinyNotification('access-group-member-removed', member.displayName);
       this.completeLoading();
@@ -498,7 +503,7 @@ export default {
             search,
             this.groupName,
             /* includeCurators =*/ false,
-            /* showExistingMembers =*/ false,
+            /* showExistingMembers =*/ true,
           ],
         })
         .then((users) => users.map((user) => new DisplayMemberViewModel(user)));
@@ -527,6 +532,12 @@ export default {
           this.addedCurators = [];
           this.removedCurators = [];
           this.curatorsListDirty = false;
+        })
+        .then(() => {
+          this.$root.$emit('dp-reload-group');
+          return this.$nextTick();
+        })
+        .then(() => {
           this.completeLoading();
         })
         .catch((e) => {
