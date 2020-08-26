@@ -19,11 +19,15 @@ const getDefaultOptions = () => Object.assign({}, defaultOptions);
 const accessGroupApi = new Api();
 
 export default {
-  mounted() {
+  async mounted() {
     if (this.selectedSort) {
       this.membersListOptions.sort = this.selectedSort;
     }
-    this.fetchMembers();
+    await this.fetchMembers();
+    this.$root.$on('dp-reload-group', async () => {
+      this.resetOptions();
+      await this.fetchMembers();
+    });
   },
   methods: {
     async fetchMembers() {
