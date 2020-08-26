@@ -16,32 +16,46 @@
 import { mapGetters } from 'vuex';
 import Icon from '@/components/ui/Icon.vue';
 import { ACCESS_GROUP_TOS_PAGE } from '@/router';
+import { Api } from '@/assets/js/access-groups-api.js';
+import { GroupInvitationViewModel } from '@/view_models/AccessGroupViewModel';
 
+const accessGroupApi = new Api();
 export default {
   name: 'AccessGroupTOSAcceptanceNotification',
   props: {},
   components: { Icon },
+  methods: {
+    async getInvitationByName(groupName) {
+      const invitations = (
+        await accessGroupApi.execute({
+          path: 'selfInvitations/get',
+        })
+      ).map((invite) => new GroupInvitationViewModel(invite));
+
+      for (const invite of invitations) {
+        if (invite.groupName === groupName) {
+          return invite;
+        }
+      }
+      return null;
+    },
+  },
   computed: {
-    ...mapGetters({
-      accessGroup: 'accessGroup/getGroup',
-      getInvitationByName: 'userV2/getInvitationByName',
-    }),
     showTOSAcceptanceNotification() {
-      if (!this.$route.query.accept) {
-        ``;
+      if (
+        this.$route.name !== ACCESS_GROUP_TOS_PAGE ||
+        !this.$route.query.accept
+      ) {
         return false;
       }
-      const invitationByName = this.getInvitationByName(this.accessGroup.name);
+
+      const invitationByName = this.getInvitationByName(
+        this.$route.params.groupname,
+      );
       if (!invitationByName) {
         return false;
       }
-      return (
-        this.$route.name === ACCESS_GROUP_TOS_PAGE &&
-        invitationByName.requiresTos
-      );
-    },
-    showInvitations() {
-      return this.$route.name !== ACCESS_GROUP_TOS_PAGE;
+      return invitationByName.requiresTos;
     },
   },
 };

@@ -380,14 +380,37 @@ export default {
   },
   methods: {
     ...mapActions({
-      removeMember: 'accessGroup/removeMember',
       addCurators: 'accessGroup/addCurators',
       removeCurators: 'accessGroup/removeCurators',
-      updateGroup: 'accessGroup/updateGroup',
       renewMember: 'accessGroup/renewMember',
       setLoading: 'setLoading',
       completeLoading: 'completeLoading',
     }),
+    async updateGroup(updateData) {
+      await accessGroupApi.execute({
+        path: 'group/put',
+        endpointArguments: [this.groupInformation.group.name],
+        dataArguments: updateData,
+      });
+    },
+    async addCurators(newCurators) {
+      for (const curator of newCurators) {
+        await accessGroupApi.execute({
+          path: 'curators/post',
+          endpointArguments: [this.groupInformation.group.name],
+          dataArguments: { uuid: curator.uuid },
+        });
+      }
+    },
+    async removeCurators(oldCurators, expiration) {
+      for (const curator of oldCurators) {
+        await this.api.execute({
+          path: 'curators/downgrade',
+          endpointArguments: [this.groupInformation.group.name, curator.uuid],
+          dataArguments: { groupExpiration: expiration },
+        });
+      }
+    },
     async fetchAccessGroupCurators() {
       let cont = 0;
       const allMembers = [];
@@ -455,29 +478,30 @@ export default {
         );
       });
     },
-    handleRemoveConfirmClick(member) {
+    async handleRemoveConfirmClick(member) {
       this.setLoading();
-      this.removeMember(member).then((result) => {
-        this.tinyNotification(
-          'access-group-member-removed',
-          member.displayName,
-        );
-        this.completeLoading();
+      await this.api.execute({
+        path: 'members/delete',
+        endpointArguments: [groupName, member.uuid],
       });
+      this.tinyNotification('access-group-member-removed', member.displayName);
+      this.completeLoading();
     },
     getTagLabel(curator) {
       return curator.displayName;
     },
     updateAutoCompleteList(search) {
-      return new Promise((res, rej) => {
-        AccessGroups.getUsers(search, this.groupName, true).then((results) => {
-          res(
-            results.map((profile) =>
-              DisplayMemberViewModel.fromUserData(profile),
-            ),
-          );
-        });
-      });
+      return accessGroupApi
+        .execute({
+          path: 'users/get',
+          endpointArguments: [
+            search,
+            this.groupName,
+            /* includeCurators =*/ false,
+            /* showExistingMembers =*/ false,
+          ],
+        })
+        .then((users) => users.map((user) => new DisplayMemberViewModel(user)));
     },
     handleCuratorAdded(curator) {
       this.addedCurators.push(curator);
@@ -486,16 +510,14 @@ export default {
       this.removedCurators.push(curator);
     },
     handleCuratorsUpdateClicked() {
+      // TODO: Fix https://github.com/mozilla-iam/dino-park-issues/issues/203 here (avoiding group ownership taken over by one person)
       let promises = [];
       if (this.addedCurators.length > 0) {
         promises = promises.concat(this.addCurators(this.addedCurators));
       }
       if (this.removedCurators.length > 0) {
         promises = promises.concat(
-          this.removeCurators({
-            curators: this.removedCurators,
-            expiration: this.accessGroupExpiration,
-          }),
+          this.removeCurators(this.removedCurators, this.accessGroupExpiration),
         );
       }
       this.setLoading();
@@ -517,8 +539,7 @@ export default {
     },
     async handleUpdateExpiration() {
       await this.updateGroup({
-        field: 'expiration',
-        value: parseInt(this.groupExpiration, 10),
+        expiration: Number.parseInt(this.groupExpiration, 10),
       });
       this.groupExpirationDirty = false;
       this.tinyNotification('access-group-expiration-updated');
@@ -559,9 +580,9 @@ export default {
     this.handleSortUpdated(this.selectedSort);
   },
   computed: {
-    ...mapGetters({
-      accessGroupExpiration: 'accessGroup/getExpiration',
-    }),
+    accessGroupExpiration() {
+      return this.groupInformation.group.expiration || 0;
+    },
     memberCount() {
       return this.groupInformation.memberCount;
     },

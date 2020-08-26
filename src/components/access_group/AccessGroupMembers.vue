@@ -82,7 +82,6 @@ export default {
     groupInformation: Object,
   },
   methods: {
-    // eslint-disable-next-line
     searchFormHandler(searchQuery) {
       this.updateSearch(searchQuery);
     },
