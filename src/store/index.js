@@ -6,8 +6,6 @@ import Onboarding from '@/assets/js/onboarding';
 import { client } from '@/server';
 import user from './user.store';
 import scope from './scope.store';
-import accessGroup from './access-group.store';
-import accessGroups from './access-groups.store';
 import features from './features.store';
 
 async function fetchUser(commit) {
@@ -44,8 +42,6 @@ export default new Vuex.Store({
     userV2: user,
     scopeV2: scope,
     features,
-    accessGroup,
-    accessGroups,
   },
   state: {
     user: null,
@@ -93,49 +89,6 @@ export function fetchBase(store) {
   return [
     [() => store.dispatch('features/fetch'), () => store.dispatch('fetchUser')],
     [() => {}, () => {}],
-  ];
-}
-
-export function fetchMembers(store, groupname) {
-  return [
-    [() => store.dispatch('accessGroup/fetchMembers', groupname)],
-    [(data) => {}],
-  ];
-}
-
-export function fetchProfile(store) {
-  return Promise.all([
-    store.dispatch('userV2/fetchInvitations'),
-    store.dispatch('userV2/fetchRequests'),
-  ]);
-}
-
-export function fetchAccessGroup(store, groupname) {
-  return [
-    [() => store.dispatch('accessGroup/fetchGroup', groupname)],
-    [(data) => {}],
-  ];
-}
-export function fetchAccessGroups(store) {
-  return [[() => store.dispatch('accessGroups/fetchList')], [(data) => {}]];
-}
-export function fetchTerms(store) {
-  return [[() => store.dispatch('accessGroup/fetchTerms')], [(data) => {}]];
-}
-export function fetchInvitationEmail(store) {
-  return [
-    [() => store.dispatch('accessGroup/fetchInvitationEmail')],
-    [(data) => {}],
-  ];
-}
-
-export function fetchInvitationsAndRequests(store) {
-  return [
-    [
-      () => store.dispatch('accessGroup/fetchInvitations'),
-      () => store.dispatch('accessGroup/fetchRequests'),
-    ],
-    [(data) => {}, (data) => {}],
   ];
 }
 
