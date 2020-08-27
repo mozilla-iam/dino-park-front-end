@@ -263,7 +263,6 @@ export default {
   mixins: [MembersListMixin],
   props: {
     groupInformation: Object,
-    memberList: Array,
     tos: String,
   },
   watch: {
@@ -587,7 +586,6 @@ export default {
     },
   },
   async mounted() {
-    // FIXME: We're fetching members 3 times when loading this page…
     this.handleSortUpdated(this.selectedSort);
   },
   computed: {

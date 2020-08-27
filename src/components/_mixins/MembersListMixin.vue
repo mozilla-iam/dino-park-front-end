@@ -23,7 +23,6 @@ export default {
     if (this.selectedSort) {
       this.membersListOptions.sort = this.selectedSort;
     }
-    await this.fetchMembers();
     this.$root.$on('dp-reload-group', async () => {
       this.resetOptions();
       await this.fetchMembers();

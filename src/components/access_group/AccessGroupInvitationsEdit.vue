@@ -234,7 +234,6 @@ export default {
   },
   props: {
     groupInformation: Object,
-    memberList: Array,
     tos: String,
   },
   async created() {

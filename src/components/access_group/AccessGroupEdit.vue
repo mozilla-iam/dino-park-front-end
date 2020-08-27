@@ -39,7 +39,6 @@
         <component
           v-bind:is="currentTab.component"
           :groupInformation="groupInformation"
-          :memberList="memberList"
           :tos="tos"
         ></component>
       </section>
@@ -111,7 +110,6 @@ export default {
     this.loading = true;
     await this.fetchAccessGroupInformation();
     await this.fetchTOS();
-    await this.fetchMembers();
 
     if (this.getFeature('historyTab')) {
       tabs.concat({
@@ -154,16 +152,6 @@ export default {
           path: 'terms/get',
           endpointArguments: [this.groupname],
         })) || '';
-    },
-    async fetchMembers() {
-      const memberData = await accessGroupApi.execute({
-        path: 'members/get',
-        endpointArguments: [this.groupname, { sort: 'role-asc' }],
-      });
-      const members = memberData.members.map(
-        (member) => new DisplayMemberViewModel(member),
-      );
-      this.memberList = members;
     },
     isActive(tab) {
       if (!this.$route.query.section) {
