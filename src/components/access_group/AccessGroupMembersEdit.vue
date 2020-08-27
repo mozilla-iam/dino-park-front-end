@@ -491,7 +491,7 @@ export default {
       this.completeLoading();
     },
     getTagLabel(curator) {
-      return curator.displayName;
+      return curator.displayName || curator.data.displayName;
     },
     updateAutoCompleteList(search) {
       return accessGroupApi

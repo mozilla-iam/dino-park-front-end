@@ -17,6 +17,15 @@
           :height="16"
         />
       </div>
+      <Combobox
+        id="tag-selector__value"
+        @input="onInput"
+        v-model="currentInput"
+        :filter="'none'"
+        :onSelect="handleAddItem"
+        :source="autoCompleteList"
+      />
+      <!--
       <input
         class="tag-selector__value"
         type="text"
@@ -27,39 +36,15 @@
         @blur="onInputBlur"
         @focus="onInputFocus"
       />
+      -->
     </div>
-    <ul
-      ref="auto-complete-list"
-      class="selector-auto-complete"
-      v-if="autoCompleteList.length > 0"
-    >
-      <li
-        :class="{
-          'selector-auto-complete__item-container': true,
-          active: focusedChild === idx,
-        }"
-        v-for="(item, idx) in autoCompleteList"
-        :key="idx"
-        @click="handleAddItem(item)"
-        tabindex="-1"
-      >
-        <AccessGroupMemberListDisplay
-          :class="{
-            'selector-auto-complete__item': true,
-            disabled: showMeta(item),
-          }"
-          :member="item"
-          :subRowText="subRowTextDisplay"
-          :showMeta="showMeta(item)"
-        />
-      </li>
-    </ul>
   </div>
 </template>
 
 <script>
-import Icon from '@/components/ui/Icon.vue';
 import AccessGroupMemberListDisplay from '@/components/access_group/AccessGroupMemberListDisplay.vue';
+import Combobox from '@/components/ui/Combobox.vue';
+import Icon from '@/components/ui/Icon.vue';
 import throttle from 'lodash.throttle';
 
 /**
@@ -81,8 +66,9 @@ export default {
     },
   },
   components: {
-    Icon,
     AccessGroupMemberListDisplay,
+    Combobox,
+    Icon,
   },
   mounted() {},
   data() {
@@ -103,11 +89,11 @@ export default {
       return member.email;
     },
     onTagSelectorClicked(e) {
-      const parent = e.target.closest('.tag-selector-container');
-      const itemParent = e.target.closest('.selector-auto-complete__item');
-      if (parent || itemParent) {
-        this.$el.querySelector('.tag-selector__value').focus();
-      }
+      // const parent = e.target.closest('.tag-selector-container');
+      // const itemParent = e.target.closest('.selector-auto-complete__item');
+      // if (parent || itemParent) {
+      //   this.$el.querySelector('.tag-selector__value').focus();
+      // }
     },
     onInputBlur(e) {
       this.$refs['auto-complete-input'].removeEventListener(
@@ -170,18 +156,24 @@ export default {
         this.focusedChild = -1;
       }
     },
-    onInput: throttle(function (e) {
-      if (!e || e.target.value === '') {
-        if (e.target.value === '') {
-          this.autoCompleteList = [];
-        }
+    onInput: throttle(function (value) {
+      if (value === '') {
+        this.autoCompleteList = [];
         return;
       }
-      this.updateAutoComplete(e.target.value).then((members) => {
-        this.autoCompleteList = members;
+
+      this.updateAutoComplete(value).then((members) => {
+        this.autoCompleteList = members.map((member) => {
+          return {
+            display: member.displayName,
+            item: member.uuid,
+            data: member,
+          };
+        });
       });
-    }, 1000),
+    }, 250),
     handleAddItem(item) {
+      console.log(item);
       if (this.showMeta(item)) {
         return false;
       }
@@ -190,11 +182,6 @@ export default {
       this.$emit('input', this.tagsDisplay);
       this.autoCompleteList = [];
       this.currentInput = '';
-    },
-  },
-  computed: {
-    autocompleteList() {
-      return [];
     },
   },
 };
