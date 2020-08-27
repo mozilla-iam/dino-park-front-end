@@ -1,11 +1,16 @@
 <template>
-  <div
-    class="tag-selector-container"
-    tabindex="-1"
-    @click="onTagSelectorClicked"
-  >
+  <div class="tag-selector-container" @click="onTagSelectorClicked">
     <div class="tag-selector">
-      <div class="tag-container" v-for="(tag, idx) in tagsDisplay" :key="idx">
+      <div
+        class="tag-container"
+        v-for="(tag, idx) in tagsDisplay"
+        :key="idx"
+        v-on:keyup.delete="tagActionClicked(idx)"
+        :aria-label="canBeRemoved(tag) ? 'Remove this tag' : ''"
+        :aria-disabled="!canBeRemoved(tag)"
+        :aria-role="canBeRemoved(tag) ? 'button' : ''"
+        tabindex="0"
+      >
         <p class="tag-container__text" v-if="getLabel">{{ getLabel(tag) }}</p>
         <p class="tag-container__text" v-else>{{ tag }}</p>
         <Icon
@@ -25,18 +30,6 @@
         :onSelect="handleAddItem"
         :source="autoCompleteList"
       />
-      <!--
-      <input
-        class="tag-selector__value"
-        type="text"
-        ref="auto-complete-input"
-        v-model="currentInput"
-        @change="onSelectorInput"
-        @input="onInput"
-        @blur="onInputBlur"
-        @focus="onInputFocus"
-      />
-      -->
     </div>
   </div>
 </template>
@@ -167,20 +160,19 @@ export default {
           return {
             display: member.displayName,
             item: member.uuid,
-            data: member,
+            ...member,
           };
         });
       });
     }, 250),
     handleAddItem(item) {
-      console.log(item);
       if (this.showMeta(item)) {
         return false;
       }
+      this.autoCompleteList = [];
       this.$emit('tag:add', item);
       this.tagsDisplay.push(item);
       this.$emit('input', this.tagsDisplay);
-      this.autoCompleteList = [];
       this.currentInput = '';
     },
   },
