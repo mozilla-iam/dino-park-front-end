@@ -1,5 +1,5 @@
 <template>
-  <div class="combobox"></div>
+  <div class="combobox" />
 </template>
 
 <script>
