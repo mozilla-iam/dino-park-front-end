@@ -237,6 +237,11 @@ export default {
   async created() {
     this.groupInvitations = await this.fetchGroupInvitations();
     this.groupRequests = await this.fetchGroupRequests();
+
+    this.$root.$on('dp-reload-group', async () => {
+      this.groupInvitations = await this.fetchGroupInvitations();
+      this.groupRequests = await this.fetchGroupRequests();
+    });
   },
   data() {
     const groupExpiration = this.groupInformation.group.expiration || 0;
@@ -344,8 +349,7 @@ export default {
         throw new Error('Send invitation errors');
       }
 
-      this.groupInvitations = await this.fetchGroupInvitations();
-      this.groupRequests = await this.fetchGroupRequests();
+      this.$root.$emit('dp-reload-group');
     },
     async fetchGroupRequests() {
       const data = await this.accessGroupApi.execute({
@@ -366,7 +370,7 @@ export default {
         endpointArguments: [this.groupInformation.group.name, member.uuid],
       });
 
-      this.groupInvitations = await this.fetchGroupInvitations();
+      this.$root.$emit('dp-reload-group');
     },
     handleRequestInvitation(member) {
       this.sendInvitations({ invites: [member] });
