@@ -57,7 +57,6 @@ import { mapGetters, mapActions } from 'vuex';
 import Icon from '@/components/ui/Icon.vue';
 import Button from '@/components/ui/Button.vue';
 import { ACCESS_GROUP_LEAVE_CONFIRMATION_PAGE } from '@/router';
-import { Api } from '@/assets/js/access-groups-api.js';
 
 export default {
   name: 'AccessGroupLeaveConfirmationNotification',

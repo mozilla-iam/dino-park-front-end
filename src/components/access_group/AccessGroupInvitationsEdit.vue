@@ -215,7 +215,6 @@ import {
 import AccessGroupMemberListDisplay from '@/components/access_group/AccessGroupMemberListDisplay.vue';
 import AccessGroupMembersTable from '@/components/access_group/AccessGroupMembersTable.vue';
 import { expiryTextFromDate } from '@/assets/js/component-utils';
-import { Api } from '@/assets/js/access-groups-api.js';
 
 const memberRowsDisplay = 20;
 export default {

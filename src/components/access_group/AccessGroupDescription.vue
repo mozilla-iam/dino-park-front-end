@@ -87,7 +87,6 @@ import Icon from '@/components/ui/Icon.vue';
 import Tooltip from '@/components/ui/Tooltip.vue';
 import LinksMixin from '@/components/_mixins/LinksMixin.vue';
 import { parseMarkdown } from '@/assets/js/component-utils';
-import { Api } from '@/assets/js/access-groups-api.js';
 
 export default {
   name: 'AccessGroupDescription',

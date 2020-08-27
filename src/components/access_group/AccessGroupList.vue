@@ -44,7 +44,6 @@ import SearchForm from '@/components/ui/SearchForm.vue';
 import Select from '@/components/ui/Select.vue';
 import Tooltip from '@/components/ui/Tooltip.vue';
 import Icon from '@/components/ui/Icon.vue';
-import { Api } from '@/assets/js/access-groups-api.js';
 import { AbbGroupViewModel } from '@/view_models/AccessGroupViewModel';
 
 const resultsStep = 20;

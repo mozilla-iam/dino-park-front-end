@@ -1,6 +1,5 @@
 <script>
 import { DisplayMemberViewModel } from '@/view_models/AccessGroupViewModel.js';
-import { Api } from '@/assets/js/access-groups-api.js';
 
 const defaultRole = 'all';
 const defaultSort = 'role-asc';

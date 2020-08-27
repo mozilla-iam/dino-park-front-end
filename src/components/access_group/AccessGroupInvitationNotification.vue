@@ -63,7 +63,6 @@ import {
   GroupInvitationViewModel,
 } from '@/view_models/AccessGroupViewModel';
 import { ACCESS_GROUP_TOS_PAGE, ACCESS_GROUP_PAGE } from '@/router';
-import { Api } from '@/assets/js/access-groups-api.js';
 
 const PENDING_REJECTION = 'PENDING_REJECTION';
 

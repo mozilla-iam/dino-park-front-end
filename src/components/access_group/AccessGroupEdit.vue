@@ -54,7 +54,6 @@ import AccessGroupMembersEdit from '@/components/access_group/AccessGroupMembers
 import AccessGroupInvitationsEdit from '@/components/access_group/AccessGroupInvitationsEdit.vue';
 import AccessGroupHistoryEdit from '@/components/access_group/AccessGroupHistoryEdit.vue';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
-import { Api } from '@/assets/js/access-groups-api.js';
 import {
   GroupViewModel,
   MembershipModel,

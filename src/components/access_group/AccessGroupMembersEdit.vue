@@ -240,7 +240,6 @@ import {
   getDaysFromToday,
 } from '@/assets/js/component-utils';
 import AccessGroups from '@/assets/js/access-groups';
-import { Api } from '@/assets/js/access-groups-api';
 
 const memberRenewalThreshold = 14;
 

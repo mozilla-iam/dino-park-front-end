@@ -43,7 +43,6 @@ import AccessGroupDescription from '@/components/access_group/AccessGroupDescrip
 import AccessGroupMembershipManagement from '@/components/access_group/AccessGroupMembershipManagement.vue';
 import AccessGroupMembers from '@/components/access_group/AccessGroupMembers.vue';
 import AccessGroupDetails from '@/components/access_group/AccessGroupDetails.vue';
-import { Api } from '@/assets/js/access-groups-api.js';
 import {
   GroupViewModel,
   MembershipModel,

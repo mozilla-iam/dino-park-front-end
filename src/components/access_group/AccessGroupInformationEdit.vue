@@ -200,7 +200,6 @@ import TextArea from '@/components/ui/TextArea.vue';
 import Button from '@/components/ui/Button.vue';
 import AccessGroupEditPanel from '@/components/access_group/AccessGroupEditPanel.vue';
 import AccessGroupMarkdownGuide from '@/components/access_group/AccessGroupMarkdownGuide.vue';
-import { Api } from '@/assets/js/access-groups-api.js';
 
 export default {
   name: 'AccessGroupInformationEdit',

@@ -53,7 +53,6 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import { Api } from '@/assets/js/access-groups-api.js';
 import Icon from '@/components/ui/Icon.vue';
 import Button from '@/components/ui/Button.vue';
 import {

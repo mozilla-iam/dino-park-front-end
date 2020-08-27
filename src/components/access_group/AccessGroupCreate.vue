@@ -179,7 +179,6 @@ import {
   ACCESS_GROUP_TYPES,
   MEMBER_EXPIRATION_ONE_YEAR,
 } from '@/view_models/AccessGroupViewModel.js';
-import { Api } from '@/assets/js/access-groups-api';
 
 export default {
   name: 'AccessGroupInformationEdit',
