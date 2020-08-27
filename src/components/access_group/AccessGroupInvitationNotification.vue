@@ -66,7 +66,6 @@ import { ACCESS_GROUP_TOS_PAGE, ACCESS_GROUP_PAGE } from '@/router';
 import { Api } from '@/assets/js/access-groups-api.js';
 
 const PENDING_REJECTION = 'PENDING_REJECTION';
-const accessGroupApi = new Api();
 
 export default {
   name: 'AccessGroupInvitationNotification',
@@ -79,20 +78,20 @@ export default {
       completeLoading: 'completeLoading',
     }),
     async fetchInvitations() {
-      const data = await accessGroupApi.execute({
+      const data = await this.accessGroupApi.execute({
         path: 'selfInvitations/get',
       });
 
       return data.map((invite) => new GroupInvitationViewModel(invite));
     },
     async acceptInvitation(currentInvitation) {
-      return await accessGroupApi.execute({
+      return await this.accessGroupApi.execute({
         path: 'selfInvitations/post',
         endpointArguments: [currentInvitation.groupName],
       });
     },
     async rejectInvitation(currentInvitation) {
-      return await accessGroupApi.execute({
+      return await this.accessGroupApi.execute({
         path: 'selfInvitations/delete',
         endpointArguments: [currentInvitation.groupName],
       });

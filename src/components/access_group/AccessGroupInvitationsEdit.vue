@@ -217,7 +217,6 @@ import AccessGroupMembersTable from '@/components/access_group/AccessGroupMember
 import { expiryTextFromDate } from '@/assets/js/component-utils';
 import { Api } from '@/assets/js/access-groups-api.js';
 
-const accessGroupApi = new Api();
 const memberRowsDisplay = 20;
 export default {
   name: 'AccessGroupInvitationsEdit',
@@ -310,7 +309,7 @@ export default {
   },
   methods: {
     async fetchGroupInvitations() {
-      let data = await accessGroupApi.execute({
+      let data = await this.accessGroupApi.execute({
         path: 'groupInvitations/get',
         endpointArguments: [this.groupInformation.group.name],
       });
@@ -320,7 +319,7 @@ export default {
       return data.map((invite) => new DisplayMemberViewModel(invite));
     },
     async rejectRequest(member) {
-      await accessGroupApi.execute({
+      await this.accessGroupApi.execute({
         path: 'groupRequests/delete',
         endpointArguments: [this.groupInformation.group.name, member.uuid],
       });
@@ -331,7 +330,7 @@ export default {
       const results = [];
       for (const member of invitationData.invites) {
         results.push(
-          await accessGroupApi.execute({
+          await this.accessGroupApi.execute({
             path: 'groupInvitations/post',
             endpointArguments: [this.groupInformation.group.name],
             dataArguments: {
@@ -350,7 +349,7 @@ export default {
       this.groupRequests = await this.fetchGroupRequests();
     },
     async fetchGroupRequests() {
-      const data = await accessGroupApi.execute({
+      const data = await this.accessGroupApi.execute({
         path: 'groupRequests/get',
         endpointArguments: [this.groupInformation.group.name],
       });
@@ -363,7 +362,7 @@ export default {
       return expiryTextFromDate(this.fluent, expiration);
     },
     async handleRemoveClicked(member) {
-      await accessGroupApi.execute({
+      await this.accessGroupApi.execute({
         path: 'groupInvitations/delete',
         endpointArguments: [this.groupInformation.group.name, member.uuid],
       });
@@ -392,7 +391,7 @@ export default {
     async updateAutoCompleteList(search) {
       const includeCurators = false;
       const showExisting = true;
-      const data = await accessGroupApi.execute({
+      const data = await this.accessGroupApi.execute({
         path: 'users/get',
         endpointArguments: [
           search,

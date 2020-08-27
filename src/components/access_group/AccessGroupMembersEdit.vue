@@ -243,7 +243,6 @@ import AccessGroups from '@/assets/js/access-groups';
 import { Api } from '@/assets/js/access-groups-api';
 
 const memberRenewalThreshold = 14;
-const accessGroupApi = new Api();
 
 export default {
   name: 'AccessGroupMembersEdit',
@@ -383,7 +382,7 @@ export default {
       completeLoading: 'completeLoading',
     }),
     async updateGroup(updateData) {
-      await accessGroupApi.execute({
+      await this.accessGroupApi.execute({
         path: 'group/put',
         endpointArguments: [this.groupInformation.group.name],
         dataArguments: updateData,
@@ -391,7 +390,7 @@ export default {
     },
     async addCurators(newCurators) {
       for (const curator of newCurators) {
-        await accessGroupApi.execute({
+        await this.accessGroupApi.execute({
           path: 'curators/post',
           endpointArguments: [this.groupInformation.group.name],
           dataArguments: { uuid: curator.uuid },
@@ -400,7 +399,7 @@ export default {
     },
     async removeCurators(oldCurators, expiration) {
       for (const curator of oldCurators) {
-        await accessGroupApi.execute({
+        await this.accessGroupApi.execute({
           path: 'curators/downgrade',
           endpointArguments: [this.groupInformation.group.name, curator.uuid],
           dataArguments: { groupExpiration: expiration },
@@ -412,7 +411,7 @@ export default {
       const allMembers = [];
       while (cont !== null) {
         // eslint-disable-next-line no-await-in-loop
-        const { members, next } = await accessGroupApi.execute({
+        const { members, next } = await this.accessGroupApi.execute({
           path: 'members/get',
           endpointArguments: [
             this.groupName,
@@ -462,7 +461,7 @@ export default {
       }
     },
     async renewMember(memberUuid, expiration) {
-      await this.api.execute({
+      await this.accessGroupApi.execute({
         path: 'members/renew',
         endpointArguments: [this.groupName, memberUuid],
         dataArguments: { groupExpiration: expiration },
@@ -484,7 +483,7 @@ export default {
     },
     async handleRemoveConfirmClick(member) {
       this.setLoading();
-      await this.api.execute({
+      await this.accessGroupApi.execute({
         path: 'members/delete',
         endpointArguments: [this.groupName, member.uuid],
       });
@@ -559,7 +558,6 @@ export default {
     },
     async handleSortUpdated(value) {
       this.memberListOptions.sort = value;
-      await this.fetchMembers();
     },
     getRowExpirationIntroText(member) {
       return this.fluent(

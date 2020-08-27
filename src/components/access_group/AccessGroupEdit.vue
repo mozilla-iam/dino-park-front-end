@@ -47,16 +47,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import store, {
-  fetchBase,
-  fetchMembers,
-  fetchAccessGroup,
-  resolvePromisesSerially,
-  fetchInvitationEmail,
-  fetchInvitationsAndRequests,
-  fetchTerms,
-} from '@/store';
 import Icon from '@/components/ui/Icon.vue';
 import Button from '@/components/ui/Button.vue';
 import AccessGroupInformationEdit from '@/components/access_group/AccessGroupInformationEdit.vue';
@@ -71,7 +61,6 @@ import {
   DisplayMemberViewModel,
 } from '@/view_models/AccessGroupViewModel';
 
-const accessGroupApi = new Api();
 const tabs = [
   {
     key: 'information',
@@ -124,7 +113,7 @@ export default {
   },
   methods: {
     async fetchAccessGroupInformation() {
-      const groupData = await accessGroupApi.execute({
+      const groupData = await this.accessGroupApi.execute({
         path: 'group/get',
         endpointArguments: [this.groupname],
       });
@@ -148,7 +137,7 @@ export default {
     },
     async fetchTOS() {
       this.tos =
-        (await accessGroupApi.execute({
+        (await this.accessGroupApi.execute({
           path: 'terms/get',
           endpointArguments: [this.groupname],
         })) || '';

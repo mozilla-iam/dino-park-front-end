@@ -49,7 +49,6 @@ import {
   MembershipModel,
 } from '@/view_models/AccessGroupViewModel';
 
-const accessGroupApi = new Api();
 export default {
   name: 'AccessGroupView',
   mixins: [LinksMixin],
@@ -68,7 +67,7 @@ export default {
   },
   methods: {
     async fetchAccessGroupInformation() {
-      const groupData = await accessGroupApi.execute({
+      const groupData = await this.accessGroupApi.execute({
         path: 'group/get',
         endpointArguments: [this.groupname],
       });

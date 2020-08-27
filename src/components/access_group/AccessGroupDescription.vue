@@ -89,7 +89,6 @@ import LinksMixin from '@/components/_mixins/LinksMixin.vue';
 import { parseMarkdown } from '@/assets/js/component-utils';
 import { Api } from '@/assets/js/access-groups-api.js';
 
-const accessGroupApi = new Api();
 export default {
   name: 'AccessGroupDescription',
   components: { EditButton, Button, Icon, Tooltip },
@@ -129,7 +128,7 @@ export default {
   },
   methods: {
     async fetchInvitationRequestStatus() {
-      const requests = await accessGroupApi.execute({
+      const requests = await this.accessGroupApi.execute({
         path: 'selfRequests/get',
       });
 
@@ -142,14 +141,14 @@ export default {
       return false;
     },
     async request() {
-      await accessGroupApi.execute({
+      await this.accessGroupApi.execute({
         path: 'selfRequests/post',
         endpointArguments: [this.groupInformation.group.name],
       });
       this.hasRequestedInvitation = true;
     },
     async cancel() {
-      await accessGroupApi.execute({
+      await this.accessGroupApi.execute({
         path: 'selfRequests/delete',
         endpointArguments: [this.groupInformation.group.name],
       });

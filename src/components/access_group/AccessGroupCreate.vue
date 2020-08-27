@@ -181,7 +181,6 @@ import {
 } from '@/view_models/AccessGroupViewModel.js';
 import { Api } from '@/assets/js/access-groups-api';
 
-const accessGroupApi = new Api();
 export default {
   name: 'AccessGroupInformationEdit',
   components: {
@@ -232,7 +231,7 @@ export default {
         window.scrollTo({ top: 0, behavior: 'smooth' });
         try {
           this.setLoading();
-          await accessGroupApi.execute({
+          await this.accessGroupApi.execute({
             path: 'group/post',
             dataArguments: {
               name: this.groupName,

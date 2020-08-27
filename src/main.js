@@ -9,6 +9,7 @@ import App from './App.vue';
 import DPRouter from './router';
 import Fluent from './assets/js/fluent';
 import { apolloProvider } from './server';
+import { Api } from '@/assets/js/access-groups-api.js';
 
 // polyfill/fallback adapted from MDN (https://developer.mozilla.org/en-US/docs/Web/API/Background_Tasks_API#Falling_back_to_setTimeout)
 window.requestIdleCallback =
@@ -42,6 +43,7 @@ Promise.all([
   Vue.mixin({
     data() {
       return {
+        accessGroupApi: new Api(),
         administratorEmail: 'fiji@mozilla.com',
       };
     },

@@ -202,7 +202,6 @@ import AccessGroupEditPanel from '@/components/access_group/AccessGroupEditPanel
 import AccessGroupMarkdownGuide from '@/components/access_group/AccessGroupMarkdownGuide.vue';
 import { Api } from '@/assets/js/access-groups-api.js';
 
-const accessGroupApi = new Api();
 export default {
   name: 'AccessGroupInformationEdit',
   components: {
@@ -252,39 +251,39 @@ export default {
   },
   methods: {
     async addTerms(text) {
-      await accessGroupApi.execute({
+      await this.accessGroupApi.execute({
         path: 'terms/post',
         endpointArguments: [this.groupInformation.group.name],
         dataArguments: text,
       });
     },
     async updateTerms(text) {
-      await accessGroupApi.execute({
+      await this.accessGroupApi.execute({
         path: 'terms/put',
         endpointArguments: [this.groupInformation.group.name],
         dataArguments: text,
       });
     },
     async deleteTerms() {
-      await accessGroupApi.execute({
+      await this.accessGroupApi.execute({
         path: 'terms/delete',
         endpointArguments: [this.groupInformation.group.name],
       });
     },
     async deleteGroup() {
-      await accessGroupApi.execute({
+      await this.accessGroupApi.execute({
         path: 'group/delete',
         endpointArguments: [this.groupInformation.group.name],
       });
     },
     async fetchEmailInviteText() {
-      return await accessGroupApi.execute({
+      return await this.accessGroupApi.execute({
         path: 'groupInvitationEmail/get',
         endpointArguments: [this.groupInformation.group.name],
       }).body;
     },
     async updateGroup(updateData) {
-      await accessGroupApi.execute({
+      await this.accessGroupApi.execute({
         path: 'group/put',
         endpointArguments: [this.groupInformation.group.name],
         dataArguments: updateData,
@@ -343,7 +342,7 @@ export default {
     },
     async handleUpdateInviteTextClicked() {
       const text = this.emailInviteTextEnabled ? this.emailInviteText : '';
-      await accessGroupApi.execute({
+      await this.accessGroupApi.execute({
         path: 'groupInvitationEmail/post',
         endpointArguments: [this.groupInformation.group.name],
         dataArguments: text,

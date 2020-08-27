@@ -59,7 +59,6 @@ import Button from '@/components/ui/Button.vue';
 import { ACCESS_GROUP_LEAVE_CONFIRMATION_PAGE } from '@/router';
 import { Api } from '@/assets/js/access-groups-api.js';
 
-const accessGroupApi = new Api();
 export default {
   name: 'AccessGroupLeaveConfirmationNotification',
   props: {},
@@ -98,7 +97,7 @@ export default {
       completeLoading: 'completeLoading',
     }),
     async leaveGroup() {
-      const r = await accessGroupApi.execute({
+      const r = await this.accessGroupApi.execute({
         path: 'self/delete',
         endpointArguments: [this.$route.params.groupname],
       });

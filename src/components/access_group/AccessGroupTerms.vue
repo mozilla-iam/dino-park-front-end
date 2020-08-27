@@ -64,7 +64,6 @@ import {
 import { parseMarkdown } from '@/assets/js/component-utils';
 import AccessGroupTOSAcceptanceNotification from '@/components/access_group/AccessGroupTOSAcceptanceNotification.vue';
 
-const accessGroupApi = new Api();
 export default {
   name: 'AccessGroup',
   components: {
@@ -79,7 +78,7 @@ export default {
     this.setLoading();
 
     this.terms =
-      (await accessGroupApi.execute({
+      (await this.accessGroupApi.execute({
         path: 'terms/get',
         endpointArguments: [this.groupname],
       })) || '';
@@ -93,20 +92,20 @@ export default {
       completeLoading: 'completeLoading',
     }),
     async rejectInvitation(invite) {
-      await accessGroupApi.execute({
+      await this.accessGroupApi.execute({
         path: 'selfInvitations/delete',
         endpointArguments: [invite.groupName],
       });
     },
     async acceptInvitation(invite) {
-      await accessGroupApi.execute({
+      await this.accessGroupApi.execute({
         path: 'selfInvitations/post',
         endpointArguments: [invite.groupName],
       });
     },
     async getInvitationByName(groupName) {
       const invitations = (
-        await accessGroupApi.execute({
+        await this.accessGroupApi.execute({
           path: 'selfInvitations/get',
         })
       ).map((invite) => new GroupInvitationViewModel(invite));

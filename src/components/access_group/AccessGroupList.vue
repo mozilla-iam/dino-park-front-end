@@ -54,7 +54,7 @@ const defaultListOptions = {
   numResults: resultsStep,
   next: null,
 };
-const accessGroupApi = new Api();
+
 export default {
   name: 'AccessGroupList',
   components: {
@@ -72,7 +72,7 @@ export default {
   methods: {
     async fetchList(options = {}) {
       try {
-        const data = await accessGroupApi.execute({
+        const data = await this.accessGroupApi.execute({
           path: 'groups/get',
           endpointArguments: [options],
         });
