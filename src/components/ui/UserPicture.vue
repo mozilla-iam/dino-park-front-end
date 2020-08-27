@@ -158,7 +158,7 @@ export default {
   bottom: 0;
 }
 .user-picture--small {
-  width: 2.85em;
+  min-width: 2.85em;
   height: 2.85em;
 }
 .user-picture--small .dino-type {

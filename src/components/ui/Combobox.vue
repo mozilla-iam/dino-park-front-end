@@ -7,6 +7,8 @@ import pick from 'object.pick';
 // lack of a better solution: https://github.com/downshift-js/downshift/pull/808#issuecomment-546994349
 import { h, render } from 'hack/preact';
 import Downshift from 'downshift/preact';
+import avatarUrl from '@/assets/js/avatars';
+import generateIdenticon from '@/assets/js/identicon-avatar';
 
 const FILTERS = {
   includes: (value) => (entry) =>
@@ -57,33 +59,110 @@ const Combobox = ({
           class: 'combobox__input',
           autocomplete: 'off',
           onFocus: () => openMenu(),
-          onBlur: () => closeMenu(),
+          // onBlur: () => closeMenu(),
           placeholder,
           ...getInputProps(),
         }),
         source &&
-          isOpen &&
+          // isOpen &&
           h(
             'ul',
-            { class: 'combobox__options', ...getMenuProps() },
+            {
+              class: 'selector-auto-complete combobox__options',
+              ...getMenuProps(),
+            },
             source
               .filter((option) => option !== null)
               .filter(filter(value))
               .map((item, i) => {
                 const option = itemToString(item);
-                return h(
-                  'li',
-                  {
-                    key: option,
-                    class: `combobox__option ${
-                      i === highlightedIndex
-                        ? 'combobox__option--highlighted'
-                        : ''
-                    }`,
-                    ...getItemProps({ item }),
-                  },
-                  option,
-                );
+                let style = {};
+                // check whether we are dealing with a user (which are displayed a little bit different)
+                if (item.hasOwnProperty('username')) {
+                  const picture = item.picture;
+                  if (
+                    picture === null ||
+                    picture === '' ||
+                    picture === 'default:' ||
+                    picture.startsWith('https://s3.amazonaws.com/')
+                  ) {
+                    generateIdenticon(item.username, 40).then((src) => {
+                      // small delay to make sure that the image is actually in the dom
+                      setTimeout(() => {
+                        let img = document.querySelector(
+                          `img[data-uuid="${item.uuid}"]`,
+                        );
+
+                        img.style.backgroundSize = 'cover';
+                        img.style.backgroundImage = `url("${src}")`;
+                      }, 40);
+                    });
+                  } else {
+                    style.backgroundSize = 'cover';
+                    style.backgroundImage = `url("${avatarUrl(picture, 40)}")`;
+                  }
+                  console.log(item);
+                  const img = h(
+                    'div',
+                    { class: 'curator-image user-picture user-picture--small' },
+                    h('img', {
+                      style,
+                      'data-uuid': item.uuid,
+                      'aria-role': 'presentation',
+                      'aria-hidden': true,
+                    }),
+                  );
+                  const memberListDescription = h(
+                    'div',
+                    { class: 'member-list-description' },
+                    h(
+                      'p',
+                      { class: 'member-list-description__header' },
+                      option,
+                    ),
+                    h(
+                      'p',
+                      { class: 'member-list-description__sub' },
+                      item.email || item.username,
+                    ),
+                  );
+
+                  return h(
+                    'li',
+                    {
+                      key: option,
+                      class: `combobox__option ${
+                        i === highlightedIndex
+                          ? 'combobox__option--highlighted'
+                          : ''
+                      }`,
+                      ...getItemProps({ item }),
+                    },
+                    h(
+                      'div',
+                      {
+                        class:
+                          'member-list-display selector-auto-complete__item',
+                      },
+                      img,
+                      memberListDescription,
+                    ),
+                  );
+                } else {
+                  return h(
+                    'li',
+                    {
+                      key: option,
+                      class: `combobox__option ${
+                        i === highlightedIndex
+                          ? 'combobox__option--highlighted'
+                          : ''
+                      }`,
+                      ...getItemProps({ item }),
+                    },
+                    option,
+                  );
+                }
               }),
           ),
       ]),
@@ -164,7 +243,6 @@ export default {
   padding: 0.5em 1em;
 }
 .combobox__option--highlighted {
-  background-color: var(--blue-60);
-  color: var(--white);
+  background-color: var(--gray-20);
 }
 </style>
