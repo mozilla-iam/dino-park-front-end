@@ -259,13 +259,17 @@ export default {
     ExpirationSelect,
   },
   mixins: [MembersListMixin],
+  props: {
+    groupInformation: Object,
+    tos: String,
+  },
   watch: {
     accessGroupCurators(value) {
       this.curatorsList = value;
     },
     curatorsList(value) {
       this.curatorsListDirty =
-        JSON.stringify(value) === JSON.stringify(this.accessGroupCurators);
+        JSON.stringify(value) === JSON.stringify(this.curatorsList);
     },
     groupExpiration(value) {
       if (value !== this.accessGroupExpiration) {
@@ -283,12 +287,11 @@ export default {
       this.updateSort(value);
     },
   },
+  async created() {
+    this.curatorsList = await this.fetchAccessGroupCurators();
+  },
   data() {
-    const accessGroupExpiration = this.$store.getters[
-      'accessGroup/getExpiration'
-    ];
-    // const accessGroupCurators = this.$store.getters['accessGroup/getCurators'];
-    const accessGroupCurators = [];
+    const accessGroupExpiration = this.groupInformation.group.expiration || 0;
     // TODO: Figure out what this value does and delete it if unnecessary
     let selectedExpiration =
       accessGroupExpiration === MEMBER_EXPIRATION_ONE_YEAR ||
@@ -303,7 +306,7 @@ export default {
       groupData: '',
       groupDescriptionData: '',
       groupTermsData: '',
-      curatorsList: accessGroupCurators,
+      curatorsList: [],
       addedCurators: [],
       removedCurators: [],
       curatorsListDirty: false,
@@ -374,22 +377,65 @@ export default {
   },
   methods: {
     ...mapActions({
-      removeMember: 'accessGroup/removeMember',
-      addCurators: 'accessGroup/addCurators',
-      removeCurators: 'accessGroup/removeCurators',
-      updateGroup: 'accessGroup/updateGroup',
-      renewMember: 'accessGroup/renewMember',
       setLoading: 'setLoading',
       completeLoading: 'completeLoading',
-      fetchAllCurators: 'accessGroup/fetchAllCurators',
     }),
+    async updateGroup(updateData) {
+      await this.accessGroupApi.execute({
+        path: 'group/put',
+        endpointArguments: [this.groupInformation.group.name],
+        dataArguments: updateData,
+      });
+    },
+    async addCurators(newCurators) {
+      for (const curator of newCurators) {
+        await this.accessGroupApi.execute({
+          path: 'curators/post',
+          endpointArguments: [this.groupInformation.group.name],
+          dataArguments: { uuid: curator.uuid },
+        });
+      }
+    },
+    async removeCurators(oldCurators, expiration) {
+      for (const curator of oldCurators) {
+        await this.accessGroupApi.execute({
+          path: 'curators/downgrade',
+          endpointArguments: [this.groupInformation.group.name, curator.uuid],
+          dataArguments: { groupExpiration: expiration },
+        });
+      }
+    },
+    async fetchAccessGroupCurators() {
+      let cont = 0;
+      const allMembers = [];
+      while (cont !== null) {
+        // eslint-disable-next-line no-await-in-loop
+        const { members, next } = await this.accessGroupApi.execute({
+          path: 'members/get',
+          endpointArguments: [
+            this.groupName,
+            {
+              role: 'curators',
+              numResults: 100,
+              next: cont,
+            },
+          ],
+        });
+        allMembers.push(
+          ...members.map((member) => new DisplayMemberViewModel(member)),
+        );
+        cont = next;
+      }
+
+      return allMembers;
+    },
     canMemberBeRemoved(member) {
       if (!this.membersList.length) {
         return false;
       }
       if (
-        this.accessGroupCurators.length === 1 &&
-        member.uuid === this.accessGroupCurators[0].uuid
+        this.curatorsList.length === 1 &&
+        member.uuid === this.curatorsList[0].uuid
       ) {
         return false;
       }
@@ -413,42 +459,52 @@ export default {
         this.handleRenewClick(member, expiration);
       }
     },
+    async renewMember(memberUuid, expiration) {
+      await this.accessGroupApi.execute({
+        path: 'members/renew',
+        endpointArguments: [this.groupName, memberUuid],
+        dataArguments: { groupExpiration: expiration },
+      });
+    },
     handleRenewClick(member, expiration) {
       this.setLoading();
-      this.renewMember({
-        memberUuid: member.uuid,
-        expiration: expiration || this.accessGroupExpiration,
-      }).then((result) => {
+      this.renewMember(
+        member.uuid,
+        expiration || this.accessGroupExpiration,
+      ).then((result) => {
         this.completeLoading();
         this.tinyNotification(
           'access-group-member-renewed',
           member.displayName,
         );
       });
+      this.$root.$emit('dp-reload-group');
     },
-    handleRemoveConfirmClick(member) {
+    async handleRemoveConfirmClick(member) {
       this.setLoading();
-      this.removeMember(member).then((result) => {
-        this.tinyNotification(
-          'access-group-member-removed',
-          member.displayName,
-        );
-        this.completeLoading();
+      await this.accessGroupApi.execute({
+        path: 'members/delete',
+        endpointArguments: [this.groupName, member.uuid],
       });
+      this.tinyNotification('access-group-member-removed', member.displayName);
+      this.$root.$emit('dp-reload-group');
+      this.completeLoading();
     },
     getTagLabel(curator) {
       return curator.displayName;
     },
     updateAutoCompleteList(search) {
-      return new Promise((res, rej) => {
-        AccessGroups.getUsers(search, this.groupName, true).then((results) => {
-          res(
-            results.map((profile) =>
-              DisplayMemberViewModel.fromUserData(profile),
-            ),
-          );
-        });
-      });
+      return accessGroupApi
+        .execute({
+          path: 'users/get',
+          endpointArguments: [
+            search,
+            this.groupName,
+            /* includeCurators =*/ false,
+            /* showExistingMembers =*/ true,
+          ],
+        })
+        .then((users) => users.map((user) => new DisplayMemberViewModel(user)));
     },
     handleCuratorAdded(curator) {
       this.addedCurators.push(curator);
@@ -457,16 +513,14 @@ export default {
       this.removedCurators.push(curator);
     },
     handleCuratorsUpdateClicked() {
+      // TODO: Fix https://github.com/mozilla-iam/dino-park-issues/issues/203 here (avoiding group ownership taken over by one person)
       let promises = [];
       if (this.addedCurators.length > 0) {
         promises = promises.concat(this.addCurators(this.addedCurators));
       }
       if (this.removedCurators.length > 0) {
         promises = promises.concat(
-          this.removeCurators({
-            curators: this.removedCurators,
-            expiration: this.accessGroupExpiration,
-          }),
+          this.removeCurators(this.removedCurators, this.accessGroupExpiration),
         );
       }
       this.setLoading();
@@ -476,6 +530,12 @@ export default {
           this.addedCurators = [];
           this.removedCurators = [];
           this.curatorsListDirty = false;
+        })
+        .then(() => {
+          this.$root.$emit('dp-reload-group');
+          return this.$nextTick();
+        })
+        .then(() => {
           this.completeLoading();
         })
         .catch((e) => {
@@ -488,8 +548,7 @@ export default {
     },
     async handleUpdateExpiration() {
       await this.updateGroup({
-        field: 'expiration',
-        value: parseInt(this.groupExpiration, 10),
+        expiration: Number.parseInt(this.groupExpiration, 10),
       });
       this.groupExpirationDirty = false;
       this.tinyNotification('access-group-expiration-updated');
@@ -497,12 +556,8 @@ export default {
     expiry(expiration) {
       return expiryTextFromDate(this.fluent, expiration);
     },
-    handleSortUpdated(value) {
+    async handleSortUpdated(value) {
       this.memberListOptions.sort = value;
-      this.getMembersWithOptions({
-        groupName: this.groupName,
-        options: this.memberListOptions,
-      });
     },
     getRowExpirationIntroText(member) {
       return this.fluent(
@@ -529,39 +584,34 @@ export default {
     },
   },
   async mounted() {
-    // FIXME: We're fetching members 3 times when loading this page…
     this.handleSortUpdated(this.selectedSort);
-    this.fetchAllCurators(this.groupName);
   },
   computed: {
-    ...mapGetters({
-      group: 'accessGroup/getGroup',
-      groupName: 'accessGroup/getGroupName',
-      accessGroupCurators: 'accessGroup/getCurators',
-      accessGroupExpiration: 'accessGroup/getExpiration',
-      memberCount: 'accessGroup/getMemberCount',
-      membersNext: 'accessGroup/getMembersNext',
-    }),
+    accessGroupExpiration() {
+      return this.groupInformation.group.expiration || 0;
+    },
+    memberCount() {
+      return this.groupInformation.memberCount;
+    },
     expirationIsCustom() {
       return this.selectedExpiration === 'custom';
     },
     expirationMetaText() {
-      if (this.accessGroupExpiration === MEMBER_EXPIRATION_ONE_YEAR) {
+      const expiration = this.groupInformation.group.expiration || 0;
+
+      if (expiration === MEMBER_EXPIRATION_ONE_YEAR) {
         return `1 ${this.fluent('date-year')}`;
       }
-      if (this.accessGroupExpiration === MEMBER_EXPIRATION_TWO_YEARS) {
+      if (expiration === MEMBER_EXPIRATION_TWO_YEARS) {
         return `2 ${this.fluent('date-year', 'plural')}`;
       }
-      if (this.accessGroupExpiration === 1) {
+      if (expiration === 1) {
         return `1 ${this.fluent('date-day')}`;
       }
-      if (this.accessGroupExpiration === MEMBER_EXPIRATION_NONE) {
+      if (expiration === MEMBER_EXPIRATION_NONE) {
         return `not expire`;
       }
-      return `${this.accessGroupExpiration} ${this.fluent(
-        'date-day',
-        'plural',
-      )}`;
+      return `${expiration} ${this.fluent('date-day', 'plural')}`;
     },
   },
 };

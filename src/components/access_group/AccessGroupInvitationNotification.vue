@@ -58,8 +58,11 @@ import { mapGetters, mapActions } from 'vuex';
 import Button from '@/components/ui/Button.vue';
 import Icon from '@/components/ui/Icon.vue';
 import LinksMixin from '@/components/_mixins/LinksMixin.vue';
-import { INVITATION_STATE } from '@/view_models/AccessGroupViewModel';
-import { ACCESS_GROUP_TOS_PAGE } from '@/router';
+import {
+  INVITATION_STATE,
+  GroupInvitationViewModel,
+} from '@/view_models/AccessGroupViewModel';
+import { ACCESS_GROUP_TOS_PAGE, ACCESS_GROUP_PAGE } from '@/router';
 
 const PENDING_REJECTION = 'PENDING_REJECTION';
 
@@ -70,18 +73,33 @@ export default {
   props: {},
   methods: {
     ...mapActions({
-      acceptInvitation: 'userV2/acceptInvitation',
-      rejectInvitation: 'userV2/rejectInvitation',
-      fetchGroup: 'accessGroup/fetchGroup',
-      fetchMembers: 'accessGroup/fetchMembers',
       setLoading: 'setLoading',
       completeLoading: 'completeLoading',
     }),
-    handleAcceptClick(idx) {
+    async fetchInvitations() {
+      const data = await this.accessGroupApi.execute({
+        path: 'selfInvitations/get',
+      });
+
+      return data.map((invite) => new GroupInvitationViewModel(invite));
+    },
+    async acceptInvitation(currentInvitation) {
+      return await this.accessGroupApi.execute({
+        path: 'selfInvitations/post',
+        endpointArguments: [currentInvitation.groupName],
+      });
+    },
+    async rejectInvitation(currentInvitation) {
+      return await this.accessGroupApi.execute({
+        path: 'selfInvitations/delete',
+        endpointArguments: [currentInvitation.groupName],
+      });
+    },
+    async handleAcceptClick(idx) {
       const currentInvitation = this.invitations[idx];
       if (currentInvitation.requiresTos) {
         this.$router.push({
-          name: 'Access Group TOS',
+          name: ACCESS_GROUP_TOS_PAGE,
           params: { groupname: currentInvitation.groupName },
           query: {
             accept: true,
@@ -89,40 +107,48 @@ export default {
         });
       } else {
         this.setLoading();
-        const completePromise = () => {
-          this.$router.push({
-            name: 'Access Group',
-            params: { groupname: currentInvitation.groupName },
-          });
+        const completePromise = async () => {
+          // refresh open invitations and group status
+          this.$root.$emit('dp-reload-group');
+
+          if (
+            this.$route.name !== ACCESS_GROUP_PAGE ||
+            this.$route.params.groupname !== currentInvitation.groupName
+          ) {
+            this.$router.push({
+              name: ACCESS_GROUP_PAGE,
+              params: { groupname: currentInvitation.groupName },
+            });
+          }
           this.tinyNotification(
             'access-group-joined-group',
             currentInvitation.groupName,
           );
           this.completeLoading();
         };
-        if (this.$route.name === 'Access Group') {
-          this.acceptInvitation(currentInvitation)
-            .then(() => this.fetchGroup(currentInvitation.groupName))
-            .then(() => this.fetchMembers(currentInvitation.groupName))
-            .then(() => {
-              completePromise();
-            });
+        if (this.$route.name === ACCESS_GROUP_PAGE) {
+          await this.acceptInvitation(currentInvitation).then(() => {
+            completePromise();
+          });
         } else {
-          this.acceptInvitation(currentInvitation).then(() => {
+          await this.acceptInvitation(currentInvitation).then(() => {
             completePromise();
           });
         }
       }
     },
-    handleRejectClick(idx) {
+    async handleRejectClick(idx) {
       const currentInvitation = this.invitations[idx];
       if (currentInvitation.state === PENDING_REJECTION) {
-        this.rejectInvitation(currentInvitation).then((result) => {
+        await this.rejectInvitation(currentInvitation).then((result) => {
           this.tinyNotification(
             'access-group-terms-rejected',
             currentInvitation.groupName,
           );
         });
+        // refresh open invitations and group status
+        this.invitations = await this.fetchInvitations();
+        this.$root.$emit('dp-reload-group');
       } else if (currentInvitation.state === '') {
         currentInvitation.state = PENDING_REJECTION;
       }
@@ -153,16 +179,21 @@ export default {
     },
   },
   computed: {
-    ...mapGetters({
-      invitations: 'userV2/getActiveInvitations',
-    }),
     showInvitations() {
       return this.$route.name !== ACCESS_GROUP_TOS_PAGE;
     },
   },
+  async created() {
+    this.invitations = await this.fetchInvitations();
+
+    this.$root.$on('dp-reload-group', async () => {
+      this.invitations = await this.fetchInvitations();
+    });
+  },
   data() {
     return {
       mode: '',
+      invitations: [],
     };
   },
 };

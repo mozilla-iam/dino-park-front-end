@@ -30,7 +30,6 @@
 </template>
 
 <script>
-import store, { fetchProfile } from '@/store';
 import Profile from '@/components/profile/Profile.vue';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 import { DISPLAY_PROFILE } from '@/queries/profile';
@@ -77,24 +76,6 @@ export default {
         this.scope.isStaff
       );
     },
-  },
-  beforeRouteEnter(to, from, next) {
-    if (store.state.features?.accessGroupsToggle && store.state.scope.isReady) {
-      const { groupname } = to.params;
-      store.dispatch('setLoading');
-      fetchProfile(store, groupname)
-        .then(() => {
-          store.dispatch('completeLoading');
-          next();
-        })
-        .catch((error) => {
-          console.error('Loading profile/invitations error: ', error.message);
-          store.dispatch('completeLoading');
-          next();
-        });
-    } else {
-      next();
-    }
   },
   data() {
     return {

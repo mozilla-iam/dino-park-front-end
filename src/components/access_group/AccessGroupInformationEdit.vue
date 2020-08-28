@@ -10,7 +10,7 @@
           <label class="content-area__label">{{
             fluent('access-group_details', 'name')
           }}</label>
-          <p class="content-area__value">{{ groupName }}</p>
+          <p class="content-area__value">{{ groupInformation.group.name }}</p>
         </div>
         <div class="content-area__row multi-line markdown-outer-container">
           <label class="content-area__label">{{
@@ -172,7 +172,7 @@
             <Fluent
               id="access-group_delete-group"
               attr="info"
-              :args="{ groupName }"
+              :args="{ groupName: groupInformation.group.name }"
             />
           </p>
         </div>
@@ -209,25 +209,25 @@ export default {
     AccessGroupEditPanel,
     AccessGroupMarkdownGuide,
   },
-  props: [],
-  mounted() {},
+  props: {
+    groupInformation: Object,
+    tos: String,
+  },
+  async created() {
+    this.emailInviteText = (await this.fetchEmailInviteText()) || '';
+  },
   data() {
-    const invitationEmail = this.$store.getters[
-      'accessGroup/getInvitationEmail'
-    ];
-    const accessGroup = this.$store.getters['accessGroup/getGroup'];
-    const terms = this.$store.getters['accessGroup/getTerms'];
     return {
-      groupDescriptionData: accessGroup.description,
+      groupDescriptionData: this.groupInformation.group.description,
       groupDescriptionDirty: false,
-      groupTermsData: terms,
-      groupTermsRequiredData: accessGroup.terms,
+      groupTermsData: this.tos,
+      groupTermsRequiredData: Boolean(this.tos),
       groupTermsDirty: false,
-      groupTypeData: accessGroup.type,
+      groupTypeData: this.groupInformation.group.type,
       groupTypeDirty: false,
       enableDelete: false,
-      emailInviteTextEnabled: Boolean(invitationEmail),
-      emailInviteText: invitationEmail,
+      emailInviteText: '',
+      emailInviteTextEnabled: Boolean(this.emailInviteText),
       emailInviteTextDirty: false,
     };
   },
@@ -244,40 +244,71 @@ export default {
     groupTermsRequiredData() {
       this.groupTermsDirty = true;
     },
+    emailInviteText() {
+      this.emailInviteTextDirty = true;
+    },
   },
   methods: {
-    ...mapActions({
-      updateGroup: 'accessGroup/updateGroup',
-      deleteTerms: 'accessGroup/deleteTerms',
-      updateTerms: 'accessGroup/updateTerms',
-      addTerms: 'accessGroup/addTerms',
-      deleteGroup: 'accessGroup/deleteGroup',
-      setLoading: 'setLoading',
-      completeLoading: 'completeLoading',
-      updateInvitationEmail: 'accessGroup/updateInvitationEmail',
-    }),
+    async addTerms(text) {
+      await this.accessGroupApi.execute({
+        path: 'terms/post',
+        endpointArguments: [this.groupInformation.group.name],
+        dataArguments: text,
+      });
+    },
+    async updateTerms(text) {
+      await this.accessGroupApi.execute({
+        path: 'terms/put',
+        endpointArguments: [this.groupInformation.group.name],
+        dataArguments: text,
+      });
+    },
+    async deleteTerms() {
+      await this.accessGroupApi.execute({
+        path: 'terms/delete',
+        endpointArguments: [this.groupInformation.group.name],
+      });
+    },
+    async deleteGroup() {
+      await this.accessGroupApi.execute({
+        path: 'group/delete',
+        endpointArguments: [this.groupInformation.group.name],
+      });
+    },
+    async fetchEmailInviteText() {
+      return await this.accessGroupApi.execute({
+        path: 'groupInvitationEmail/get',
+        endpointArguments: [this.groupInformation.group.name],
+      }).body;
+    },
+    async updateGroup(updateData) {
+      await this.accessGroupApi.execute({
+        path: 'group/put',
+        endpointArguments: [this.groupInformation.group.name],
+        dataArguments: updateData,
+      });
+    },
     async handleDescriptionUpdate() {
       await this.updateGroup({
-        field: 'description',
-        value: this.groupDescriptionData,
+        description: this.groupDescriptionData,
       });
       this.groupDescriptionDirty = false;
       this.tinyNotification('access-group-description-updated');
     },
-    handleTypeUpdateClicked() {
-      this.updateGroup({ field: 'type', value: this.groupTypeData }).then(
-        () => {
-          this.groupTypeDirty = false;
-          this.tinyNotification('access-group-type-updated');
-        },
-      );
+    async handleTypeUpdateClicked() {
+      await this.updateGroup({ type: this.groupTypeData });
+      this.groupTypeDirty = false;
+      this.tinyNotification('access-group-type-updated');
     },
     async handleTermsUpdate() {
       let tinyFluentSelector;
-      if (!this.groupTermsRequiredData && this.accessGroup.terms) {
+      if (!this.groupTermsRequiredData && this.groupInformation.group.terms) {
         await this.deleteTerms();
         tinyFluentSelector = 'access-group-terms-removed';
-      } else if (!this.accessGroup.terms && this.groupTermsData.length > 0) {
+      } else if (
+        !this.groupInformation.group.terms &&
+        this.groupTermsData.length > 0
+      ) {
         await this.addTerms(this.groupTermsData);
         tinyFluentSelector = 'access-group-terms-updated';
       } else {
@@ -308,21 +339,15 @@ export default {
         });
       }
     },
-    handleUpdateInviteTextClicked() {
+    async handleUpdateInviteTextClicked() {
       const text = this.emailInviteTextEnabled ? this.emailInviteText : '';
-      this.updateInvitationEmail(text).then(() => {
-        this.tinyNotification('access-group-invitation-text-updated');
-        this.emailInviteTextDirty = false;
+      await this.accessGroupApi.execute({
+        path: 'groupInvitationEmail/post',
+        endpointArguments: [this.groupInformation.group.name],
+        dataArguments: text,
       });
-    },
-  },
-  computed: {
-    ...mapGetters({
-      accessGroup: 'accessGroup/getGroup',
-      terms: 'accessGroup/getTerms',
-    }),
-    groupName() {
-      return this.accessGroup.name;
+      this.emailInviteTextDirty = false;
+      this.tinyNotification('access-group-invitation-text-updated');
     },
   },
 };

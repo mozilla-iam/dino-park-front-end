@@ -7,7 +7,7 @@
       }"
     >
       <Icon id="chevron-left" :width="17" :height="17" />
-      {{ `${groupName} ${fluent('access-group_nav-back')}` }}
+      {{ `${groupname} ${fluent('access-group_nav-back')}` }}
     </RouterLink>
     <section class="edit-container">
       <nav class="edit-container__tabs">
@@ -34,25 +34,19 @@
           </li>
         </ul>
       </nav>
-      <section class="edit-container__content">
-        <component v-bind:is="currentTab.component"></component>
-      </section>
       <LoadingSpinner v-if="loading"></LoadingSpinner>
+      <section class="edit-container__content" v-else>
+        <component
+          v-bind:is="currentTab.component"
+          :groupInformation="groupInformation"
+          :tos="tos"
+        ></component>
+      </section>
     </section>
   </main>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import store, {
-  fetchBase,
-  fetchMembers,
-  fetchAccessGroup,
-  resolvePromisesSerially,
-  fetchInvitationEmail,
-  fetchInvitationsAndRequests,
-  fetchTerms,
-} from '@/store';
 import Icon from '@/components/ui/Icon.vue';
 import Button from '@/components/ui/Button.vue';
 import AccessGroupInformationEdit from '@/components/access_group/AccessGroupInformationEdit.vue';
@@ -60,6 +54,11 @@ import AccessGroupMembersEdit from '@/components/access_group/AccessGroupMembers
 import AccessGroupInvitationsEdit from '@/components/access_group/AccessGroupInvitationsEdit.vue';
 import AccessGroupHistoryEdit from '@/components/access_group/AccessGroupHistoryEdit.vue';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
+import {
+  GroupViewModel,
+  MembershipModel,
+  DisplayMemberViewModel,
+} from '@/view_models/AccessGroupViewModel';
 
 const tabs = [
   {
@@ -95,38 +94,11 @@ export default {
   props: {
     groupname: String,
   },
-  beforeRouteEnter(to, from, next) {
-    const { groupname } = to.params;
-    store.dispatch('setLoading');
-    const [membersPromises, membersResolvers] = fetchMembers(store, groupname);
-    const [agPromises, agResolvers] = fetchAccessGroup(store, groupname);
-    const [iarPromises, iarResolvers] = fetchInvitationsAndRequests(store);
-    const [termsPromises, termsResolvers] = fetchTerms(store);
-    const [
-      invitationEmailPromises,
-      invitationEmailResolvers,
-    ] = fetchInvitationEmail(store);
-    resolvePromisesSerially(
-      [
-        ...membersPromises,
-        ...agPromises,
-        ...iarPromises,
-        ...termsPromises,
-        ...invitationEmailPromises,
-      ],
-      [
-        ...membersResolvers,
-        ...agResolvers,
-        ...iarResolvers,
-        ...termsResolvers,
-        ...invitationEmailResolvers,
-      ],
-    ).then(() => {
-      store.dispatch('completeLoading');
-      next();
-    });
-  },
-  mounted() {
+  async mounted() {
+    this.loading = true;
+    await this.fetchAccessGroupInformation();
+    await this.fetchTOS();
+
     if (this.getFeature('historyTab')) {
       tabs.concat({
         key: 'history',
@@ -135,8 +107,40 @@ export default {
         component: 'AccessGroupHistoryEdit',
       });
     }
+
+    this.loading = false;
   },
   methods: {
+    async fetchAccessGroupInformation() {
+      const groupData = await this.accessGroupApi.execute({
+        path: 'group/get',
+        endpointArguments: [this.groupname],
+      });
+      const groupInformation = {};
+      groupInformation.group = new GroupViewModel(groupData.group);
+      groupInformation.membership = new MembershipModel(groupData.membership);
+      groupInformation.memberCount = !groupData.member_count
+        ? 0
+        : groupData.member_count;
+      groupInformation.invitationCount = !groupData.invitation_count
+        ? 0
+        : groupInformation.invitation_count;
+      groupInformation.renewalCount = !groupData.renewal_count
+        ? 0
+        : groupInformation.renewal_count;
+      groupInformation.requestCount = groupData.request_count;
+      groupInformation.invitationConfig = groupData.invitation;
+      groupInformation.isCurator = Boolean(groupData.curator);
+      groupInformation.isMember = Boolean(groupData.member);
+      this.groupInformation = groupInformation;
+    },
+    async fetchTOS() {
+      this.tos =
+        (await this.accessGroupApi.execute({
+          path: 'terms/get',
+          endpointArguments: [this.groupname],
+        })) || '';
+    },
     isActive(tab) {
       if (!this.$route.query.section) {
         return false;
@@ -145,10 +149,6 @@ export default {
     },
   },
   computed: {
-    ...mapGetters({
-      groupName: 'accessGroup/getGroupName',
-      loading: 'getLoading',
-    }),
     currentTab() {
       const defaultTab = tabs[0];
       if (!this.$route.query.section) {
@@ -166,6 +166,10 @@ export default {
   data() {
     return {
       tabs,
+      loading: true,
+      groupInformation: {},
+      memberList: [],
+      tos: '',
     };
   },
 };

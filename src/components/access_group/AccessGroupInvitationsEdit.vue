@@ -230,11 +230,24 @@ export default {
     AccessGroupMembersTable,
     ExpirationSelect,
   },
-  props: [],
-  mounted() {},
+  props: {
+    groupInformation: Object,
+    tos: String,
+  },
+  async created() {
+    this.groupInvitations = await this.fetchGroupInvitations();
+    this.groupRequests = await this.fetchGroupRequests();
+
+    this.$root.$on('dp-reload-group', async () => {
+      this.groupInvitations = await this.fetchGroupInvitations();
+      this.groupRequests = await this.fetchGroupRequests();
+    });
+  },
   data() {
-    const groupExpiration = this.$store.getters['accessGroup/getExpiration'];
+    const groupExpiration = this.groupInformation.group.expiration || 0;
     return {
+      groupInvitations: [],
+      groupRequests: [],
       selectedRowExpiration: !groupExpiration ? 0 : groupExpiration,
       customExpirationErrorHighlight: false,
       highlightError: false,
@@ -299,24 +312,65 @@ export default {
     },
   },
   methods: {
-    ...mapActions({
-      resendInvitation: 'accessGroup/resendInvitation',
-      deleteInvitation: 'accessGroup/deleteInvitation',
-      rejectRequest: 'accessGroup/rejectRequest',
-      sendInvitations: 'accessGroup/sendInvitations',
-    }),
+    async fetchGroupInvitations() {
+      let data = await this.accessGroupApi.execute({
+        path: 'groupInvitations/get',
+        endpointArguments: [this.groupInformation.group.name],
+      });
+
+      this.groupInformation.invitationCount = data.length;
+
+      return data.map((invite) => new DisplayMemberViewModel(invite));
+    },
+    async rejectRequest(member) {
+      await this.accessGroupApi.execute({
+        path: 'groupRequests/delete',
+        endpointArguments: [this.groupInformation.group.name, member.uuid],
+      });
+
+      this.groupRequests = await this.fetchGroupRequests();
+    },
+    async sendInvitations(invitationData) {
+      const results = [];
+      for (const member of invitationData.invites) {
+        results.push(
+          await this.accessGroupApi.execute({
+            path: 'groupInvitations/post',
+            endpointArguments: [this.groupInformation.group.name],
+            dataArguments: {
+              uuid: member.uuid,
+              groupExpiration: Number.parseInt(invitationData.expiration),
+            },
+          }),
+        );
+      }
+      const errors = results.filter(({ error }) => Boolean(error));
+      if (errors.length) {
+        throw new Error('Send invitation errors');
+      }
+
+      this.$root.$emit('dp-reload-group');
+    },
+    async fetchGroupRequests() {
+      const data = await this.accessGroupApi.execute({
+        path: 'groupRequests/get',
+        endpointArguments: [this.groupInformation.group.name],
+      });
+
+      this.groupInformation.requestCount = data.length;
+
+      return data.map((invite) => new DisplayMemberViewModel(invite));
+    },
     expiry(expiration) {
       return expiryTextFromDate(this.fluent, expiration);
     },
-    handleResendClicked(invitation) {
-      this.resendInvitation(invitation).then((result) => {
-        this.tinyNotification('access-group-invite-email-resent');
+    async handleRemoveClicked(member) {
+      await this.accessGroupApi.execute({
+        path: 'groupInvitations/delete',
+        endpointArguments: [this.groupInformation.group.name, member.uuid],
       });
-    },
-    handleRemoveClicked(invitation) {
-      this.deleteInvitation(invitation).then((result) => {
-        this.tinyNotification('access-group-invite-deleted');
-      });
+
+      this.$root.$emit('dp-reload-group');
     },
     handleRequestInvitation(member) {
       this.sendInvitations({ invites: [member] });
@@ -333,25 +387,26 @@ export default {
     getTagLabel(curator) {
       return curator.displayName;
     },
-    loadMoreHandler() {
+    async loadMoreHandler() {
       this.memberListOptions.numResults += memberRowsDisplay;
-      this.getMembersWithOptions({
-        groupName: this.groupName,
-        options: this.memberListOptions,
-      });
+      await this.fetchMembers();
     },
-    updateAutoCompleteList(search) {
-      return new Promise((res, rej) => {
-        AccessGroups.getUsers(search, this.groupName, false, true).then(
-          (results) => {
-            res(
-              results.map((profile) =>
-                DisplayMemberViewModel.fromUserData(profile),
-              ),
-            );
-          },
-        );
+    async updateAutoCompleteList(search) {
+      const includeCurators = false;
+      const showExisting = true;
+      const data = await this.accessGroupApi.execute({
+        path: 'users/get',
+        endpointArguments: [
+          search,
+          this.groupInformation.group.name,
+          includeCurators,
+          showExisting,
+        ],
       });
+
+      return data.map((profile) =>
+        DisplayMemberViewModel.fromUserData(profile),
+      );
     },
     async beforeAddNewInvitesClicked() {
       this.highlightError = true;
@@ -373,38 +428,31 @@ export default {
     },
   },
   computed: {
-    ...mapGetters({
-      groupName: 'accessGroup/getGroupName',
-      groupExpiration: 'accessGroup/getExpiration',
-      groupInvitations: 'accessGroup/getInvitations',
-      groupRequests: 'accessGroup/getRequests',
-      group: 'accessGroup/getGroup',
-      accessGroupExpiration: 'accessGroup/getExpiration',
-    }),
     expirationIsCustom() {
       return this.selectedExpiration === 'custom';
     },
     expirationMetaText() {
-      if (this.accessGroupExpiration === MEMBER_EXPIRATION_ONE_YEAR) {
+      const groupExpiration = this.groupInformation.group.expiration || 0;
+      if (groupExpiration === MEMBER_EXPIRATION_ONE_YEAR) {
         return `1 ${this.fluent('date-year')}`;
       }
-      if (this.accessGroupExpiration === MEMBER_EXPIRATION_TWO_YEARS) {
+      if (groupExpiration === MEMBER_EXPIRATION_TWO_YEARS) {
         return `2 ${this.fluent('date-year', 'plural')}`;
       }
-      if (this.accessGroupExpiration === 1) {
+      if (groupExpiration === 1) {
         return `1 ${this.fluent('date-day')}`;
       }
-      if (this.accessGroupExpiration === MEMBER_EXPIRATION_NONE) {
+      if (groupExpiration === MEMBER_EXPIRATION_NONE) {
         return `not expire`;
       }
-      return `${this.accessGroupExpiration} ${this.fluent(
-        'date-day',
-        'plural',
-      )}`;
+      return `${groupExpiration} ${this.fluent('date-day', 'plural')}`;
     },
     // TODO: Eventually include request numbers in this number
     totalInvitationsAndRequests() {
-      return this.groupInvitations.length + this.groupRequests.length;
+      return (
+        this.groupInformation.invitationCount +
+        this.groupInformation.requestCount
+      );
     },
   },
 };

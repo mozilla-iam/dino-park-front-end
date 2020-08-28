@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import store, { fetchAccessGroups, resolvePromisesSerially } from '@/store';
+import store, { resolvePromisesSerially } from '@/store';
 import ExternalLink from '@/components/ui/ExternalLink.vue';
 import Icon from '@/components/ui/Icon.vue';
 import Button from '@/components/ui/Button.vue';
@@ -50,14 +50,6 @@ export default {
     EditButton,
     PanelSection,
     AccessGroupList,
-  },
-  beforeRouteEnter(to, from, next) {
-    store.dispatch('setLoading');
-    const [agPromises, agResolvers] = fetchAccessGroups(store);
-    resolvePromisesSerially([...agPromises], [...agResolvers]).then(() => {
-      store.dispatch('completeLoading');
-      next();
-    });
   },
   computed: {
     canCreateGroup() {

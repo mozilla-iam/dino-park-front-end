@@ -216,7 +216,6 @@ export default {
   },
   methods: {
     ...mapActions({
-      createGroup: 'accessGroup/createGroup',
       setLoading: 'setLoading',
       completeLoading: 'completeLoading',
     }),
@@ -230,12 +229,17 @@ export default {
       } else {
         window.scrollTo({ top: 0, behavior: 'smooth' });
         try {
-          await this.createGroup({
-            name: this.groupName,
-            type: this.groupType,
-            description: this.groupDescription,
-            group_expiration: this.selectedExpiration,
+          this.setLoading();
+          await this.accessGroupApi.execute({
+            path: 'group/post',
+            dataArguments: {
+              name: this.groupName,
+              type: this.groupType,
+              description: this.groupDescription,
+              group_expiration: this.selectedExpiration,
+            },
           });
+          this.completeLoading();
           this.tinyNotification('access-group-created', this.groupName);
           this.$router.push({
             name: ACCESS_GROUP_PAGE,

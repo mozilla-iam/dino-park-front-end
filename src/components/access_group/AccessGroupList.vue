@@ -44,7 +44,6 @@ import SearchForm from '@/components/ui/SearchForm.vue';
 import Select from '@/components/ui/Select.vue';
 import Tooltip from '@/components/ui/Tooltip.vue';
 import Icon from '@/components/ui/Icon.vue';
-import { Api } from '@/assets/js/access-groups-api.js';
 import { AbbGroupViewModel } from '@/view_models/AccessGroupViewModel';
 
 const resultsStep = 20;
@@ -54,7 +53,7 @@ const defaultListOptions = {
   numResults: resultsStep,
   next: null,
 };
-const accessGroupApi = new Api();
+
 export default {
   name: 'AccessGroupList',
   components: {
@@ -72,7 +71,7 @@ export default {
   methods: {
     async fetchList(options = {}) {
       try {
-        const data = await accessGroupApi.execute({
+        const data = await this.accessGroupApi.execute({
           path: 'groups/get',
           endpointArguments: [options],
         });
@@ -154,8 +153,8 @@ export default {
       },
     };
   },
-  mounted() {
-    this.fetchList(this.listOptions);
+  async created() {
+    await this.fetchList(this.listOptions);
   },
 };
 </script>

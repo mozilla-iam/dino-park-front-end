@@ -55,7 +55,6 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
 import EditButton from '@/components/ui/EditButton.vue';
 import Button from '@/components/ui/Button.vue';
 import AccessGroupMemberItem from '@/components/access_group/AccessGroupMemberItem.vue';
@@ -80,10 +79,9 @@ export default {
   },
   mixins: [MembersListMixin],
   props: {
-    title: String,
+    groupInformation: Object,
   },
   methods: {
-    // eslint-disable-next-line
     searchFormHandler(searchQuery) {
       this.updateSearch(searchQuery);
     },
@@ -102,11 +100,8 @@ export default {
     },
   },
   computed: {
-    ...mapGetters({
-      membersNext: 'accessGroup/getMembersNext',
-    }),
     showLoadMore() {
-      return this.membersNext;
+      return this.membersNext !== null;
     },
   },
   data() {

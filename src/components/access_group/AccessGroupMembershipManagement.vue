@@ -31,12 +31,12 @@
         }}
       </span>
     </p>
-    <p v-if="requestCount !== null" class="primary-data-row">
+    <p v-if="groupInformation.requestCount !== null" class="primary-data-row">
       <Fluent
         class="primary-data-row__count"
         id="access-group_membership-management"
         attr="mozillians"
-        :args="{ mozilliansCount: requestCount }"
+        :args="{ mozilliansCount: groupInformation.requestCount }"
       />
       &nbsp;
       <RouterLink
@@ -108,21 +108,16 @@ export default {
   name: 'AccessGroupMembershipManagement',
   components: { Icon, Button },
   props: {
-    title: String,
+    groupInformation: Object,
   },
   computed: {
-    ...mapGetters({
-      invitationCount: 'accessGroup/getInvitationCount',
-      renewalCount: 'accessGroup/getRenewalCount',
-      requestCount: 'accessGroup/getRequestCount',
-      expiration: 'accessGroup/getExpiration',
-      isCurator: 'accessGroup/isCurator',
-    }),
     totalPendingInvitations() {
-      return !this.invitationCount ? 0 : this.invitationCount;
+      return !this.groupInformation.invitationCount
+        ? 0
+        : this.groupInformation.invitationCount;
     },
     pendingInvitationsIntroText() {
-      if (this.invitationCount == 1) {
+      if (this.groupInformation.invitationCount == 1) {
         return this.fluent(
           'access-group_membership-management',
           'pending-invitations-single',
@@ -134,10 +129,12 @@ export default {
       );
     },
     totalPendingRenewals() {
-      return !this.renewalCount ? 0 : this.renewalCount;
+      return !this.groupInformation.renewalCount
+        ? 0
+        : this.groupInformation.renewalCount;
     },
     pendingRenewalsIntroText() {
-      if (this.renewalCount == 1) {
+      if (this.groupInformation.renewalCount == 1) {
         return this.fluent(
           'access-group_membership-management',
           'pending-renewals-single',
@@ -149,7 +146,7 @@ export default {
       );
     },
     showEdit() {
-      return this.isCurator;
+      return this.groupInformation.isCurator;
     },
   },
 };

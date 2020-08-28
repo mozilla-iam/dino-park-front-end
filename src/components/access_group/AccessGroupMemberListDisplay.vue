@@ -43,11 +43,6 @@ export default {
     member: Object,
     subRowText: Function,
   },
-  mounted() {},
-  data() {
-    return {};
-  },
-  methods: {},
   computed: {
     subText() {
       return this.subRowText(this.member);

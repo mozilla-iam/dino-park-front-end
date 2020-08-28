@@ -1,5 +1,5 @@
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { DisplayMemberViewModel } from '@/view_models/AccessGroupViewModel.js';
 
 const defaultRole = 'all';
 const defaultSort = 'role-asc';
@@ -12,85 +12,75 @@ const defaultOptions = {
   role: defaultRole,
   sort: defaultSort,
   numResults: 20,
+  next: null,
 };
 const getDefaultOptions = () => Object.assign({}, defaultOptions);
 
 export default {
-  computed: {
-    ...mapGetters({
-      groupName: 'accessGroup/getGroupName',
-      rawMembers: 'accessGroup/getMembers',
-    }),
-  },
-  watch: {
-    rawMembers(list) {
-      this.membersList = list;
-    },
-  },
-  mounted() {
+  async mounted() {
     if (this.selectedSort) {
       this.membersListOptions.sort = this.selectedSort;
     }
-    this.fetchMembers(this.groupName);
+    await this.fetchMembers();
+    this.$root.$on('dp-reload-group', async () => {
+      // reload list while discarding the entries we have loaded in addition
+      this.updateSort(this.membersListOptions.sort);
+    });
   },
   methods: {
-    ...mapActions({
-      fetchMembers: 'accessGroup/fetchMembers',
-      getMembersWithOptions: 'accessGroup/fetchMembersWithOptions',
-      getMembersWithOptionsNext: 'accessGroup/fetchMembersWithOptionsNext',
-    }),
-    async loadMoreMembers() {
-      this.hasLoadedMore = true;
-      try {
-        const nextMembers = await this.getMembersWithOptionsNext({
-          groupName: this.groupName,
-          options: this.membersListOptions,
-        });
-        this.membersList = this.membersList.concat(nextMembers);
-      } catch (e) {
-        console.error("Error loading 'next members':", e.message);
-        throw new Error(e.message);
+    async fetchMembers() {
+      const memberData = await this.accessGroupApi.execute({
+        path: 'members/get',
+        endpointArguments: [this.groupName, this.membersListOptions],
+      });
+
+      const members = memberData.members.map(
+        (member) => new DisplayMemberViewModel(member),
+      );
+      this.membersNext = memberData.next;
+
+      if (
+        this.membersListOptions.hasOwnProperty('next') &&
+        this.membersListOptions.next
+      ) {
+        this.membersList = this.membersList.concat(members);
+      } else {
+        this.membersList = members;
       }
     },
-    updateSearch(value) {
+    async loadMoreMembers() {
+      this.hasLoadedMore = true;
+      this.membersListOptions.next = this.membersNext;
+      await this.fetchMembers(this.groupName);
+    },
+    async updateSearch(value) {
       if (this.hasLoadedMore) {
         this.resetOptions();
       }
       this.membersListOptions.search = value;
-      this.getMembersWithOptions({
-        groupName: this.groupName,
-        options: this.membersListOptions,
-      });
+      await this.fetchMembers();
     },
-    clearSearch() {
+    async clearSearch() {
       this.membersListOptions.search = '';
-      this.getMembersWithOptions({
-        groupName: this.groupName,
-        options: this.membersListOptions,
-      });
+      await this.fetchMembers();
     },
-    updateSort(value) {
+    async updateSort(value) {
       if (this.hasLoadedMore) {
         this.resetOptions();
       }
       this.membersListOptions.sort = value;
-      this.getMembersWithOptions({
-        groupName: this.groupName,
-        options: this.membersListOptions,
-      });
+      await this.fetchMembers();
     },
-    updateRole(value) {
+    async updateRole(value) {
       if (this.hasLoadedMore) {
         this.resetOptions();
       }
       this.membersListOptions.role = value;
-      this.getMembersWithOptions({
-        groupName: this.groupName,
-        options: this.membersListOptions,
-      });
+      await this.fetchMembers();
     },
     resetOptions() {
       this.membersListOptions = getDefaultOptions();
+      this.hasLoadedMore = false;
     },
   },
   data() {
@@ -99,6 +89,8 @@ export default {
       hasLoadedMore: false,
       membersListOptions: getDefaultOptions(),
       membersList: [],
+      membersNext: null,
+      groupName: this.groupInformation.group.name,
     };
   },
 };
