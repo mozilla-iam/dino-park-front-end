@@ -65,12 +65,12 @@ const Combobox = ({
           class: 'combobox__input',
           autocomplete: 'off',
           onFocus: () => openMenu(),
-          // onBlur: () => closeMenu(),
+          onBlur: () => closeMenu(),
           placeholder,
           ...getInputProps(),
         }),
         source &&
-          // isOpen &&
+          isOpen &&
           h(
             'ul',
             {
