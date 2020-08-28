@@ -492,12 +492,22 @@ export default {
       this.completeLoading();
     },
     getTagLabel(curator) {
+      if (!curator) {
+        return false;
+      }
+
       return curator.displayName || curator.data.displayName;
     },
     isAlreadySelected(autocompleteSuggestion) {
-      // TODO: Implement
-      console.log(autocompleteSuggestion);
-      return true;
+      for (const alreadyAddedCurator of this.curatorsList.concat(
+        this.addedCurators,
+      )) {
+        if (alreadyAddedCurator.uuid === autocompleteSuggestion.uuid) {
+          return true;
+        }
+      }
+
+      return false;
     },
     updateAutoCompleteList(search) {
       return this.accessGroupApi
