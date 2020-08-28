@@ -29,6 +29,7 @@
         :filter="'none'"
         :onSelect="handleAddItem"
         :source="autoCompleteList"
+        :isAlreadySelected="isAlreadySelected"
       />
     </div>
   </div>
@@ -56,6 +57,10 @@ export default {
     showMeta: {
       type: Function,
       default: (item) => false,
+    },
+    isAlreadySelected: {
+      type: Function,
+      default: (autocompleteSuggestion) => false,
     },
   },
   components: {
@@ -242,7 +247,6 @@ export default {
   position: absolute;
   top: 100%;
   background: var(--white);
-  border: 1px solid var(--blue-60);
   border-radius: var(--formElementRadius);
   margin: 0;
   padding: 0;
