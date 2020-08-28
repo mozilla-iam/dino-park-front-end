@@ -127,6 +127,7 @@
             v-on:tag:add="handleCuratorAdded"
             v-model="curatorsList"
             :getLabel="getTagLabel"
+            :isAlreadySelected="isAlreadySelected"
             :updateAutoComplete="updateAutoCompleteList"
             :canBeRemoved="canMemberBeRemoved"
           />
@@ -492,6 +493,11 @@ export default {
     },
     getTagLabel(curator) {
       return curator.displayName || curator.data.displayName;
+    },
+    isAlreadySelected(autocompleteSuggestion) {
+      // TODO: Implement
+      console.log(autocompleteSuggestion);
+      return true;
     },
     updateAutoCompleteList(search) {
       return accessGroupApi
