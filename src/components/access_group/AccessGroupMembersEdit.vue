@@ -494,14 +494,14 @@ export default {
       return curator.displayName;
     },
     updateAutoCompleteList(search) {
-      return accessGroupApi
+      return this.accessGroupApi
         .execute({
           path: 'users/get',
           endpointArguments: [
             search,
             this.groupName,
-            /* includeCurators =*/ false,
-            /* showExistingMembers =*/ true,
+            /* includeCurators =*/ true,
+            /* showExistingMembers =*/ false,
           ],
         })
         .then((users) => users.map((user) => new DisplayMemberViewModel(user)));
