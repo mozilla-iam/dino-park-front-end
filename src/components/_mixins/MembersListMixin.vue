@@ -23,8 +23,8 @@ export default {
     }
     await this.fetchMembers();
     this.$root.$on('dp-reload-group', async () => {
-      this.resetOptions();
-      await this.fetchMembers();
+      // reload list while discarding the entries we have loaded in addition
+      this.updateSort(this.membersListOptions.sort);
     });
   },
   methods: {
