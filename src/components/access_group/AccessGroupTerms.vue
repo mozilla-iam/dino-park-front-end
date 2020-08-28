@@ -116,11 +116,11 @@ export default {
       }
       return null;
     },
-    handleSubmitClicked() {
+    async handleSubmitClicked() {
       if (this.termsAccepted) {
-        this.acceptTerms();
+        await this.acceptTerms();
       } else {
-        this.doNotAcceptTerms();
+        await this.doNotAcceptTerms();
       }
     },
     async acceptTerms() {
@@ -128,6 +128,7 @@ export default {
       await this.acceptInvitation(this.groupInvitation);
 
       this.tinyNotification('access-group-terms-accepted');
+      this.$root.$emit('dp-reload-group');
       this.completeLoading();
       this.$router.push({
         name: 'Access Group',
@@ -144,6 +145,7 @@ export default {
         'access-group-terms-rejected',
         this.$route.params.groupname,
       );
+      this.$root.$emit('dp-reload-group');
       this.completeLoading();
       this.$router.push({
         name: 'Access Group',
