@@ -54,9 +54,6 @@ Promise.all([
       scope() {
         return this.$store.state.scope;
       },
-      groupTypes() {
-        return ACCESS_GROUP_TYPES.filter((type) => type !== 'Open');
-      },
     },
     methods: {
       fluent(...args) {

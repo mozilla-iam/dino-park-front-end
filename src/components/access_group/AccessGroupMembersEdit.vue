@@ -516,8 +516,8 @@ export default {
           endpointArguments: [
             search,
             this.groupName,
-            /* showExistingMembers =*/ false,
             /* includePotentialCurators =*/ true,
+            /* showExistingMembers =*/ false,
           ],
         })
         .then((users) => users.map((user) => new DisplayMemberViewModel(user)));
