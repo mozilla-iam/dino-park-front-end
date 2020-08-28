@@ -21,6 +21,20 @@
         )} ${groupCreatedDate}`
       }}
     </p>
+    <p class="primary-data-row">
+      {{
+        `${fluent('access-group_details', 'typ')}: ${
+          groupInformation.group.type
+        }`
+      }}
+    </p>
+    <p class="primary-data-row">
+      {{
+        `${fluent('access-group_details', 'trust')}: ${
+          groupInformation.group.trust
+        }`
+      }}
+    </p>
   </div>
 </template>
 

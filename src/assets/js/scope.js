@@ -32,6 +32,16 @@ class Scope {
       'group_creators' in (mozilliansorgGroups || {}) ||
       'group_admins' in (mozilliansorgGroups || {});
   }
+
+  hasTrust(trust) {
+    if (this.isStaff) {
+      return true;
+    }
+    if (this.isNdaed) {
+      return trust !== 'Staff';
+    }
+    return trust === 'Authenticated';
+  }
 }
 
 export default Scope;

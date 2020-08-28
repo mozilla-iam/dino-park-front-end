@@ -75,6 +75,18 @@
         >
       </template>
     </AccessGroupEditPanel>
+    <AccessGroupEditPanel :title="fluent('access-group_trust')">
+      <template v-slot:content>
+        <div class="content-area__row radio-control__description">
+          <label class="description-label">{{
+            fluent('access-group_trust', groupTrust)
+          }}</label>
+          <p class="description-content">
+            <Fluent id="access-group_trust" :attr="`${groupTrust}-content`" />
+          </p>
+        </div>
+      </template>
+    </AccessGroupEditPanel>
     <AccessGroupEditPanel
       form="termsForm"
       :handler="handleTermsUpdate"
@@ -200,6 +212,10 @@ import TextArea from '@/components/ui/TextArea.vue';
 import Button from '@/components/ui/Button.vue';
 import AccessGroupEditPanel from '@/components/access_group/AccessGroupEditPanel.vue';
 import AccessGroupMarkdownGuide from '@/components/access_group/AccessGroupMarkdownGuide.vue';
+import {
+  ACCESS_GROUP_TYPES,
+  ACCESS_GROUP_TRUST,
+} from '@/view_models/AccessGroupViewModel.js';
 
 export default {
   name: 'AccessGroupInformationEdit',
@@ -225,6 +241,8 @@ export default {
       groupTermsDirty: false,
       groupTypeData: this.groupInformation.group.type,
       groupTypeDirty: false,
+      groupTypes: ACCESS_GROUP_TYPES.filter((type) => type !== 'Open'),
+      groupTrust: this.groupInformation.group.trust,
       enableDelete: false,
       emailInviteText: '',
       emailInviteTextEnabled: Boolean(this.emailInviteText),

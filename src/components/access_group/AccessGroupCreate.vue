@@ -55,14 +55,14 @@
         >
           <template v-slot:content>
             <div class="content-area__row">
-              <div
+              <label
                 class="radio-control"
                 v-for="(type, idx) in groupTypes"
                 :key="idx"
               >
                 <input type="radio" :value="type" v-model="groupType" />
                 {{ type }}
-              </div>
+              </label>
             </div>
             <div class="content-area__row radio-control__description">
               <label class="description-label">{{
@@ -78,6 +78,32 @@
               }}</label>
               <p class="description-content">
                 {{ fluent('access-group_type', 'closed-content') }}
+              </p>
+            </div>
+          </template>
+        </AccessGroupEditPanel>
+        <AccessGroupEditPanel :title="fluent('access-group_trust')">
+          <template v-slot:content>
+            <div class="content-area__row">
+              <label
+                class="radio-control"
+                v-for="[k, trust] in groupTrustLevels"
+                :key="k"
+              >
+                <input type="radio" :value="trust" v-model="groupTrust" />
+                {{ fluent('access-group_trust', trust) }}
+              </label>
+            </div>
+            <div
+              v-for="[k, trust] in groupTrustLevels"
+              :key="k"
+              class="content-area__row radio-control__description"
+            >
+              <label class="description-label">{{
+                fluent('access-group_trust', trust)
+              }}</label>
+              <p class="description-content">
+                <Fluent id="access-group_trust" :attr="`${trust}-content`" />
               </p>
             </div>
           </template>
@@ -177,6 +203,7 @@ import { ACCESS_GROUP_PAGE, ACCESS_GROUP_INDEX_PAGE } from '@/router.js';
 import {
   TYPE_INDEX,
   ACCESS_GROUP_TYPES,
+  ACCESS_GROUP_TRUST,
   MEMBER_EXPIRATION_ONE_YEAR,
 } from '@/view_models/AccessGroupViewModel.js';
 
@@ -197,10 +224,12 @@ export default {
       highlightError: false,
       groupNamePattern: '[a-z0-9\\-_]*',
       groupDescription: '',
+      groupTrust: ACCESS_GROUP_TRUST.ndaed,
       groupType: ACCESS_GROUP_TYPES[TYPE_INDEX.closed],
       groupName: '',
       groupTermsRequiredData: false,
       groupTermsData: '',
+      groupTypes: ACCESS_GROUP_TYPES.filter((type) => type !== 'Open'),
       selectedExpiration: MEMBER_EXPIRATION_ONE_YEAR,
       lastMarkdownCollapsed: true,
       accessGroupListRoute: ACCESS_GROUP_INDEX_PAGE,
@@ -210,8 +239,8 @@ export default {
     ...mapGetters({
       loading: 'getLoading',
     }),
-    groupTypes() {
-      return ACCESS_GROUP_TYPES.filter((type) => type !== 'Open');
+    groupTrustLevels() {
+      return Object.entries(ACCESS_GROUP_TRUST);
     },
   },
   methods: {
@@ -237,6 +266,7 @@ export default {
               type: this.groupType,
               description: this.groupDescription,
               group_expiration: this.selectedExpiration,
+              trust: this.groupTrust,
             },
           });
           this.completeLoading();
@@ -251,6 +281,7 @@ export default {
           this.$root.$emit('toast', {
             content: this.fluent('ag_api_errors', e.message),
           });
+          this.completeLoading();
         }
       }
     },
