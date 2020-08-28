@@ -500,14 +500,14 @@ export default {
       return true;
     },
     updateAutoCompleteList(search) {
-      return accessGroupApi
+      return this.accessGroupApi
         .execute({
           path: 'users/get',
           endpointArguments: [
             search,
             this.groupName,
-            /* includeCurators =*/ false,
-            /* showExistingMembers =*/ true,
+            /* showExistingMembers =*/ false,
+            /* includePotentialCurators =*/ true,
           ],
         })
         .then((users) => users.map((user) => new DisplayMemberViewModel(user)));
