@@ -9,6 +9,7 @@ import { h, render } from 'hack/preact';
 import Downshift from 'downshift/preact';
 import avatarUrl from '@/assets/js/avatars';
 import generateIdenticon from '@/assets/js/identicon-avatar';
+import mozillaM from '@/assets/images/mozilla-m.svg';
 
 const FILTERS = {
   includes: (value) => (entry) =>
@@ -75,8 +76,9 @@ const Combobox = ({
               .filter((option) => option !== null)
               .filter(filter(value))
               .map((item, i) => {
+                console.log(item);
                 const option = itemToString(item);
-                let style = {};
+                let src = '""';
                 // check whether we are dealing with a user (which are displayed a little bit different)
                 if (item.hasOwnProperty('username')) {
                   const picture = item.picture;
@@ -89,28 +91,36 @@ const Combobox = ({
                     generateIdenticon(item.username, 40).then((src) => {
                       // small delay to make sure that the image is actually in the dom
                       setTimeout(() => {
-                        let img = document.querySelector(
-                          `img[data-uuid="${item.uuid}"]`,
+                        let div = document.querySelector(
+                          `div[data-uuid="${item.uuid}"]`,
                         );
 
-                        img.style.backgroundSize = 'cover';
-                        img.style.backgroundImage = `url("${src}")`;
-                      }, 40);
+                        // give up
+                        if (div === null) {
+                          return;
+                        }
+
+                        div.style.backgroundImage = `url("${src}")`;
+                      }, 120);
                     });
                   } else {
-                    style.backgroundSize = 'cover';
-                    style.backgroundImage = `url("${avatarUrl(picture, 40)}")`;
+                    src = `url("${avatarUrl(picture, 40)}")`;
                   }
-                  console.log(item);
                   const img = h(
                     'div',
-                    { class: 'curator-image user-picture user-picture--small' },
-                    h('img', {
-                      style,
+                    {
+                      class: 'curator-image user-picture user-picture--small',
                       'data-uuid': item.uuid,
-                      'aria-role': 'presentation',
-                      'aria-hidden': true,
-                    }),
+                      style: `background-size: 'cover'; background-image: ${src}`,
+                    },
+                    // FIXME: item.isStaff is false for staff members?
+                    item.isStaff &&
+                      h('img', {
+                        alt: 'Staff',
+                        class: 'dino-type',
+                        size: 'small',
+                        src: mozillaM,
+                      }),
                   );
                   const memberListDescription = h(
                     'div',
