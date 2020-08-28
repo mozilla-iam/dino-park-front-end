@@ -109,7 +109,6 @@ export default {
         this.setLoading();
         const completePromise = async () => {
           // refresh open invitations and group status
-          this.invitations = await this.fetchInvitations();
           this.$root.$emit('dp-reload-group');
 
           if (
@@ -186,6 +185,10 @@ export default {
   },
   async created() {
     this.invitations = await this.fetchInvitations();
+
+    this.$root.$on('dp-reload-group', async () => {
+      this.invitations = await this.fetchInvitations();
+    });
   },
   data() {
     return {
