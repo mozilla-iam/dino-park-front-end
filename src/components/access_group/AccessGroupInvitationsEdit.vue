@@ -314,6 +314,10 @@ export default {
   },
   methods: {
     isAlreadySelected(data) {
+      if (data === null) {
+        return false;
+      }
+
       return data.role !== null;
     },
     async fetchGroupInvitations() {
