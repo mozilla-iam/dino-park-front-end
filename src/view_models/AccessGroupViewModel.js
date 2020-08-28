@@ -246,6 +246,11 @@ export const TYPE_INDEX = {
   open: 2,
 };
 export const ACCESS_GROUP_TYPES = ['Closed', 'Reviewed', 'Open'];
+export const ACCESS_GROUP_TRUST = {
+  authenticated: 'Authenticated',
+  ndaed: 'Ndaed',
+  staff: 'Staff',
+};
 
 export class AbbGroupViewModel {
   constructor(data) {
@@ -288,6 +293,7 @@ export class GroupViewModel {
     this.expiration = MEMBER_EXPIRATION_NONE;
     this.error = false;
     this.created = '';
+    this.trust = '';
     this.processData(data);
   }
 
@@ -300,6 +306,7 @@ export class GroupViewModel {
       this.terms = data.terms;
       this.expiration = data.expiration;
       this.created = data.created;
+      this.trust = data.trust;
     } catch (e) {
       this.error = e.message;
       console.error('Group data error: ', e.message);

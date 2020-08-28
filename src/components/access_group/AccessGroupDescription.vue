@@ -122,7 +122,10 @@ export default {
       return this.isMember;
     },
     showRequest() {
-      return this.groupInformation.group.type === 'Reviewed';
+      return (
+        this.groupInformation.group.type === 'Reviewed' &&
+        this.scope.hasTrust(this.groupInformation.group.trust)
+      );
     },
   },
   methods: {
