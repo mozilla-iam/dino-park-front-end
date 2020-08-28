@@ -487,6 +487,7 @@ export default {
         endpointArguments: [this.groupName, member.uuid],
       });
       this.tinyNotification('access-group-member-removed', member.displayName);
+      this.$root.$emit('dp-reload-group');
       this.completeLoading();
     },
     getTagLabel(curator) {
