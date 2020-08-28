@@ -147,7 +147,6 @@ export default {
           );
         });
         // refresh open invitations and group status
-        this.invitations = await this.fetchInvitations();
         this.$root.$emit('dp-reload-group');
       } else if (currentInvitation.state === '') {
         currentInvitation.state = PENDING_REJECTION;
