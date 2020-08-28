@@ -10,6 +10,7 @@ import Downshift from 'downshift/preact';
 import avatarUrl from '@/assets/js/avatars';
 import generateIdenticon from '@/assets/js/identicon-avatar';
 import mozillaM from '@/assets/images/mozilla-m.svg';
+import checkSVG from '@/assets/svg/check.svg';
 
 const FILTERS = {
   includes: (value) => (entry) =>
@@ -23,6 +24,9 @@ function itemToString(item) {
   return (item && item.display) || item;
 }
 
+const checkIcon = require(`!svg-sprite-loader?extract=false!image-webpack-loader!@/assets/svg/check.svg`)
+  .default.id;
+
 const Combobox = ({
   id,
   filter,
@@ -30,7 +34,7 @@ const Combobox = ({
   placeholder,
   value,
   source,
-  onSelect = () => {},
+  onPreSelect = () => {},
   isAlreadySelected,
   ...props
 }) =>
@@ -40,7 +44,7 @@ const Combobox = ({
       inputValue: value,
       selectedItem: value,
       onStateChange: onChange,
-      onSelect,
+      onSelect: onPreSelect,
       itemToString,
       ...props,
     },
@@ -143,7 +147,22 @@ const Combobox = ({
                     h(
                       'div',
                       { class: 'member-list-meta' },
-                      h('p', null, 'Already selected'),
+                      h(
+                        'svg',
+                        {
+                          class: 'icon member-list-meta__icon',
+                          viewBox: '0 0 24 24',
+                          role: 'presentation',
+                          height: 16,
+                          width: 16,
+                        },
+                        h('use', { href: `#${checkIcon}` }),
+                      ),
+                      h(
+                        'p',
+                        { class: 'member-list-meta__text' },
+                        'Already selected',
+                      ),
                     );
 
                   return h(
@@ -154,14 +173,15 @@ const Combobox = ({
                         i === highlightedIndex
                           ? 'combobox__option--highlighted'
                           : ''
-                      }${memberIsAlreadySelected ? 'disabled' : ''}`,
+                      }`,
                       ...getItemProps({ item }),
                     },
                     h(
                       'div',
                       {
-                        class:
-                          'member-list-display selector-auto-complete__item',
+                        class: `member-list-display selector-auto-complete__item${
+                          memberIsAlreadySelected ? ' disabled' : ''
+                        }`,
                       },
                       img,
                       memberListDescription,
@@ -206,6 +226,13 @@ export default {
     },
   },
   methods: {
+    onPreSelect(data) {
+      if (this.isAlreadySelected(data)) {
+        return false;
+      }
+
+      return this.onSelect(data);
+    },
     renderPreact() {
       this.node = render(
         h(Combobox, {
@@ -214,7 +241,7 @@ export default {
             'source',
             'value',
             'placeholder',
-            'onSelect',
+            'onPreSelect',
             'isAlreadySelected',
           ]),
           filter: FILTERS[this.filter],
@@ -280,7 +307,6 @@ export default {
 }
 .combobox__option {
   list-style: none;
-  padding: 0.5em 1em;
 }
 .combobox__option--highlighted {
   background-color: var(--gray-20);
