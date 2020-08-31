@@ -62,6 +62,10 @@ export default {
   background: var(--gray-10);
 }
 
+.member-list-description {
+  word-break: break-word;
+}
+
 .member-list-description p {
   margin: 0.5em;
 }

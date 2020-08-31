@@ -1,11 +1,16 @@
 <template>
-  <div
-    class="tag-selector-container"
-    tabindex="-1"
-    @click="onTagSelectorClicked"
-  >
+  <div class="tag-selector-container">
     <div class="tag-selector">
-      <div class="tag-container" v-for="(tag, idx) in tagsDisplay" :key="idx">
+      <div
+        class="tag-container"
+        v-for="(tag, idx) in tagsDisplay"
+        :key="idx"
+        v-on:keyup.delete="tagActionClicked(idx)"
+        :aria-label="canBeRemoved(tag) ? 'Remove this tag' : ''"
+        :aria-disabled="!canBeRemoved(tag)"
+        :aria-role="canBeRemoved(tag) ? 'button' : ''"
+        tabindex="0"
+      >
         <p class="tag-container__text" v-if="getLabel">{{ getLabel(tag) }}</p>
         <p class="tag-container__text" v-else>{{ tag }}</p>
         <Icon
@@ -17,49 +22,23 @@
           :height="16"
         />
       </div>
-      <input
-        class="tag-selector__value"
-        type="text"
-        ref="auto-complete-input"
-        v-model="currentInput"
-        @change="onSelectorInput"
+      <Combobox
+        id="tag-selector__value"
         @input="onInput"
-        @blur="onInputBlur"
-        @focus="onInputFocus"
+        v-model="currentInput"
+        :filter="'none'"
+        :onSelect="handleAddItem"
+        :source="autoCompleteList"
+        :isAlreadySelected="isAlreadySelected"
+        :displayUser="true"
       />
     </div>
-    <ul
-      ref="auto-complete-list"
-      class="selector-auto-complete"
-      v-if="autoCompleteList.length > 0"
-    >
-      <li
-        :class="{
-          'selector-auto-complete__item-container': true,
-          active: focusedChild === idx,
-        }"
-        v-for="(item, idx) in autoCompleteList"
-        :key="idx"
-        @click="handleAddItem(item)"
-        tabindex="-1"
-      >
-        <AccessGroupMemberListDisplay
-          :class="{
-            'selector-auto-complete__item': true,
-            disabled: showMeta(item),
-          }"
-          :member="item"
-          :subRowText="subRowTextDisplay"
-          :showMeta="showMeta(item)"
-        />
-      </li>
-    </ul>
   </div>
 </template>
 
 <script>
+import Combobox from '@/components/ui/Combobox.vue';
 import Icon from '@/components/ui/Icon.vue';
-import AccessGroupMemberListDisplay from '@/components/access_group/AccessGroupMemberListDisplay.vue';
 import throttle from 'lodash.throttle';
 
 /**
@@ -79,10 +58,14 @@ export default {
       type: Function,
       default: (item) => false,
     },
+    isAlreadySelected: {
+      type: Function,
+      default: (autocompleteSuggestion) => false,
+    },
   },
   components: {
+    Combobox,
     Icon,
-    AccessGroupMemberListDisplay,
   },
   mounted() {},
   data() {
@@ -102,99 +85,36 @@ export default {
     subRowTextDisplay(member) {
       return member.email;
     },
-    onTagSelectorClicked(e) {
-      const parent = e.target.closest('.tag-selector-container');
-      const itemParent = e.target.closest('.selector-auto-complete__item');
-      if (parent || itemParent) {
-        this.$el.querySelector('.tag-selector__value').focus();
-      }
-    },
-    onInputBlur(e) {
-      this.$refs['auto-complete-input'].removeEventListener(
-        'keydown',
-        this.arrowListener,
-      );
-      // TODO: This currently only works on firefox.
-      if (!e.explicitOriginalTarget || !e.explicitOriginalTarget.closest) {
-        return;
-      }
-      const parent = e.explicitOriginalTarget.closest(
-        '.tag-selector-container',
-      );
-      if (!parent) {
-        this.autoCompleteList = [];
-      }
-    },
-    onSelectorInput(el) {
-      if (!this.currentInput) {
-        return;
-      }
-    },
     tagActionClicked(idx) {
       this.$emit('tag:remove', this.tagsDisplay[idx]);
       this.tagsDisplay.splice(idx, 1);
       this.$emit('input', this.tagsDisplay);
     },
-    onInputFocus(e) {
-      this.$refs['auto-complete-input'].addEventListener(
-        'keydown',
-        this.arrowListener,
-      );
-    },
-    arrowListener(e) {
-      if (this.autoCompleteList.length) {
-        if (
-          e.keyCode === 40 &&
-          this.focusedChild < this.autoCompleteList.length - 1
-        ) {
-          e.preventDefault();
-          this.focusedChild += 1;
-        } else if (e.keyCode === 38 && this.focusedChild > 0) {
-          e.preventDefault();
-          this.focusedChild -= 1;
-        } else if (e.keyCode === 13) {
-          e.preventDefault();
-          if (
-            this.handleAddItem(this.autoCompleteList[this.focusedChild]) !==
-            false
-          ) {
-            this.focusedChild = -1;
-          }
-        } else if (e.keyCode === 27) {
-          e.preventDefault();
-          this.autoCompleteList = [];
-        } else {
-          this.focusedChild = -1;
-        }
-      } else {
-        this.focusedChild = -1;
-      }
-    },
-    onInput: throttle(function (e) {
-      if (!e || e.target.value === '') {
-        if (e.target.value === '') {
-          this.autoCompleteList = [];
-        }
+    onInput: throttle(function (value) {
+      if (value === '') {
+        this.autoCompleteList = [];
         return;
       }
-      this.updateAutoComplete(e.target.value).then((members) => {
-        this.autoCompleteList = members;
+
+      this.updateAutoComplete(value).then((members) => {
+        this.autoCompleteList = members.map((member) => {
+          return {
+            display: member.displayName,
+            item: member.uuid,
+            ...member,
+          };
+        });
       });
-    }, 1000),
+    }, 250),
     handleAddItem(item) {
       if (this.showMeta(item)) {
         return false;
       }
+      this.autoCompleteList = [];
       this.$emit('tag:add', item);
       this.tagsDisplay.push(item);
       this.$emit('input', this.tagsDisplay);
-      this.autoCompleteList = [];
       this.currentInput = '';
-    },
-  },
-  computed: {
-    autocompleteList() {
-      return [];
     },
   },
 };
@@ -213,7 +133,6 @@ export default {
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
-  padding-left: 1em;
 }
 
 .tag-selector .tag-selector__list {
@@ -233,7 +152,7 @@ export default {
   border-radius: var(--formElementRadius);
   margin-right: 0.5em;
   align-items: center;
-  margin: 0.6em 0.25em 0.6em 0;
+  margin: 0.6em 0.25em;
 }
 
 .tag-container .tag-container__text {
@@ -263,12 +182,11 @@ export default {
   position: absolute;
   top: 100%;
   background: var(--white);
-  border: 1px solid var(--blue-60);
   border-radius: var(--formElementRadius);
   margin: 0;
   padding: 0;
   width: 100%;
-  max-height: 20em;
+  max-height: 25em;
   overflow-y: auto;
   z-index: 1;
 }

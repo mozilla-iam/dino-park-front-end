@@ -125,7 +125,7 @@ export default {
 .input input[maxlength] + span {
   position: absolute;
   right: 1em;
-  top: 0.5em;
+  top: 1em;
   color: var(--gray-50);
   letter-spacing: 0.1em;
 }

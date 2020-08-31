@@ -76,7 +76,7 @@
               </p>
               <Button
                 class="primary-button delete"
-                @click="handleRemoveConfirmClick(member)"
+                @click="handleRemoveClick(member)"
                 v-if="canMemberBeRemoved(member)"
                 >{{ fluent('access-group_members', 'remove-action') }}</Button
               >
@@ -127,6 +127,7 @@
             v-on:tag:add="handleCuratorAdded"
             v-model="curatorsList"
             :getLabel="getTagLabel"
+            :isAlreadySelected="isAlreadySelected"
             :updateAutoComplete="updateAutoCompleteList"
             :canBeRemoved="canMemberBeRemoved"
           />
@@ -288,7 +289,7 @@ export default {
     },
   },
   async created() {
-    this.curatorsList = await this.fetchAccessGroupCurators();
+    return this.fetchAccessGroupCurators();
   },
   data() {
     const accessGroupExpiration = this.groupInformation.group.expiration || 0;
@@ -427,7 +428,7 @@ export default {
         cont = next;
       }
 
-      return allMembers;
+      this.curatorsList = allMembers;
     },
     canMemberBeRemoved(member) {
       if (!this.membersList.length) {
@@ -480,18 +481,34 @@ export default {
       });
       this.$root.$emit('dp-reload-group');
     },
-    async handleRemoveConfirmClick(member) {
+    async handleRemoveClick(member) {
       this.setLoading();
       await this.accessGroupApi.execute({
         path: 'members/delete',
         endpointArguments: [this.groupName, member.uuid],
       });
       this.tinyNotification('access-group-member-removed', member.displayName);
+      await this.fetchAccessGroupCurators();
       this.$root.$emit('dp-reload-group');
       this.completeLoading();
     },
     getTagLabel(curator) {
-      return curator.displayName;
+      if (!curator) {
+        return false;
+      }
+
+      return curator.displayName || curator.data.displayName;
+    },
+    isAlreadySelected(autocompleteSuggestion) {
+      for (const alreadyAddedCurator of this.curatorsList.concat(
+        this.addedCurators,
+      )) {
+        if (alreadyAddedCurator.username === autocompleteSuggestion.username) {
+          return true;
+        }
+      }
+
+      return false;
     },
     updateAutoCompleteList(search) {
       return this.accessGroupApi
@@ -510,7 +527,14 @@ export default {
       this.addedCurators.push(curator);
     },
     handleCuratorRemoved(curator) {
-      this.removedCurators.push(curator);
+      const idx = this.addedCurators.findIndex(
+        (c) => c.username === curator.username,
+      );
+      if (idx >= 0) {
+        this.addedCurators.splice(idx, 1);
+      } else {
+        this.removedCurators.push(curator);
+      }
     },
     handleCuratorsUpdateClicked() {
       // TODO: Fix https://github.com/mozilla-iam/dino-park-issues/issues/203 here (avoiding group ownership taken over by one person)

@@ -1,5 +1,5 @@
 <template>
-  <div class="combobox"></div>
+  <div :class="{ combobox: true, combobox__displayuser: displayUser }" />
 </template>
 
 <script>
@@ -7,6 +7,9 @@ import pick from 'object.pick';
 // lack of a better solution: https://github.com/downshift-js/downshift/pull/808#issuecomment-546994349
 import { h, render } from 'hack/preact';
 import Downshift from 'downshift/preact';
+import avatarUrl from '@/assets/js/avatars';
+import generateIdenticon from '@/assets/js/identicon-avatar';
+import mozillaM from '@/assets/images/mozilla-m.svg';
 
 const FILTERS = {
   includes: (value) => (entry) =>
@@ -20,6 +23,9 @@ function itemToString(item) {
   return (item && item.display) || item;
 }
 
+const checkIcon = require(`!svg-sprite-loader?extract=false!image-webpack-loader!@/assets/svg/check.svg`)
+  .default.id;
+
 const Combobox = ({
   id,
   filter,
@@ -27,7 +33,9 @@ const Combobox = ({
   placeholder,
   value,
   source,
-  onSelect = () => {},
+  onPreSelect = () => {},
+  isAlreadySelected,
+  displayUser,
   ...props
 }) =>
   h(
@@ -36,7 +44,7 @@ const Combobox = ({
       inputValue: value,
       selectedItem: value,
       onStateChange: onChange,
-      onSelect,
+      onSelect: onPreSelect,
       itemToString,
       ...props,
     },
@@ -65,12 +73,122 @@ const Combobox = ({
           isOpen &&
           h(
             'ul',
-            { class: 'combobox__options', ...getMenuProps() },
+            {
+              class: 'selector-auto-complete combobox__options',
+              ...getMenuProps(),
+            },
             source
               .filter((option) => option !== null)
               .filter(filter(value))
               .map((item, i) => {
                 const option = itemToString(item);
+                let src = '""';
+                // check whether we are dealing with a user (which are displayed a little bit different)
+                if (displayUser) {
+                  const picture = item.picture;
+                  if (
+                    picture === null ||
+                    picture === '' ||
+                    picture === 'default:' ||
+                    picture.startsWith('https://s3.amazonaws.com/')
+                  ) {
+                    generateIdenticon(item.username, 40).then((src) => {
+                      // small delay to make sure that the image is actually in the dom
+                      setTimeout(() => {
+                        let div = document.querySelector(
+                          `div[data-uuid="${item.uuid}"]`,
+                        );
+
+                        // give up
+                        if (div === null) {
+                          return;
+                        }
+
+                        div.style.backgroundImage = `url("${src}")`;
+                      }, 120);
+                    });
+                  } else {
+                    src = `url("${avatarUrl(picture, 40)}")`;
+                  }
+                  const img = h(
+                    'div',
+                    {
+                      class: 'curator-image user-picture user-picture--small',
+                      'data-uuid': item.uuid,
+                      style: `background-size: 'cover'; background-image: ${src}`,
+                    },
+                    // FIXME: item.isStaff is false for staff members?
+                    item.isStaff &&
+                      h('img', {
+                        alt: 'Staff',
+                        class: 'dino-type',
+                        size: 'small',
+                        src: mozillaM,
+                      }),
+                  );
+                  const memberListDescription = h(
+                    'div',
+                    { class: 'member-list-description' },
+                    h(
+                      'p',
+                      { class: 'member-list-description__header' },
+                      option,
+                    ),
+                    h(
+                      'p',
+                      { class: 'member-list-description__sub' },
+                      item.email || item.username,
+                    ),
+                  );
+
+                  const memberIsAlreadySelected = isAlreadySelected(item);
+                  const memberListMeta =
+                    memberIsAlreadySelected &&
+                    h(
+                      'div',
+                      { class: 'member-list-meta' },
+                      h(
+                        'svg',
+                        {
+                          class: 'icon member-list-meta__icon',
+                          viewBox: '0 0 24 24',
+                          role: 'presentation',
+                          height: 16,
+                          width: 16,
+                        },
+                        h('use', { href: `#${checkIcon}` }),
+                      ),
+                      h(
+                        'p',
+                        { class: 'member-list-meta__text' },
+                        'Already selected',
+                      ),
+                    );
+
+                  return h(
+                    'li',
+                    {
+                      key: option,
+                      class: `combobox__option ${
+                        i === highlightedIndex
+                          ? 'combobox__option--highlighted'
+                          : ''
+                      }`,
+                      ...getItemProps({ item }),
+                    },
+                    h(
+                      'div',
+                      {
+                        class: `member-list-display selector-auto-complete__item${
+                          memberIsAlreadySelected ? ' disabled' : ''
+                        }`,
+                      },
+                      img,
+                      memberListDescription,
+                      memberListMeta,
+                    ),
+                  );
+                }
                 return h(
                   'li',
                   {
@@ -101,12 +219,32 @@ export default {
       type: String,
       default: 'includes',
     },
+    isAlreadySelected: {
+      type: Function,
+      default: (autocompleteSuggestion) => false,
+    },
+    displayUser: Boolean,
   },
   methods: {
+    onPreSelect(data) {
+      if (this.isAlreadySelected(data)) {
+        return false;
+      }
+
+      return this.onSelect(data);
+    },
     renderPreact() {
       this.node = render(
         h(Combobox, {
-          ...pick(this, ['id', 'source', 'value', 'placeholder', 'onSelect']),
+          ...pick(this, [
+            'id',
+            'source',
+            'value',
+            'placeholder',
+            'onPreSelect',
+            'isAlreadySelected',
+            'displayUser',
+          ]),
           filter: FILTERS[this.filter],
           onChange: (changes) => {
             if (Object.prototype.hasOwnProperty.call(changes, 'inputValue')) {
@@ -133,6 +271,15 @@ export default {
 </script>
 
 <style>
+.combobox__displayuser .combobox__input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  height: 1.5em;
+  font-size: 1em;
+  margin: 0.3em 0;
+  padding: 0 1em;
+}
 .combobox__input[aria-expanded='false'] + .combobox__options {
   display: none;
 }
@@ -142,6 +289,7 @@ export default {
 .combobox {
   display: flex;
   align-items: center;
+  width: 100%;
 }
 .combobox__inner {
   position: relative;
@@ -163,8 +311,15 @@ export default {
   list-style: none;
   padding: 0.5em 1em;
 }
+.combobox__displayuser .combobox__option {
+  padding: 0;
+}
 .combobox__option--highlighted {
   background-color: var(--blue-60);
   color: var(--white);
+}
+.combobox__displayuser .combobox__option--highlighted {
+  background-color: var(--gray-20);
+  color: var(--black);
 }
 </style>

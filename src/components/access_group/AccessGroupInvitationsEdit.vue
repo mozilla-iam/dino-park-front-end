@@ -145,6 +145,7 @@
             :getLabel="getTagLabel"
             :updateAutoComplete="updateAutoCompleteList"
             :showMeta="showTagSelectorMeta"
+            :isAlreadySelected="isAlreadySelected"
           />
           <p class="tags-selector__description">
             {{
@@ -312,6 +313,16 @@ export default {
     },
   },
   methods: {
+    isAlreadySelected(data) {
+      if (data === null) {
+        return false;
+      }
+
+      if (this.newInvites.some((user) => user.username === data.username)) {
+        return true;
+      }
+      return data.role !== null;
+    },
     async fetchGroupInvitations() {
       let data = await this.accessGroupApi.execute({
         path: 'groupInvitations/get',
