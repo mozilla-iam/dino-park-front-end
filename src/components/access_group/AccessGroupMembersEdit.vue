@@ -502,7 +502,7 @@ export default {
       for (const alreadyAddedCurator of this.curatorsList.concat(
         this.addedCurators,
       )) {
-        if (alreadyAddedCurator.uuid === autocompleteSuggestion.uuid) {
+        if (alreadyAddedCurator.username === autocompleteSuggestion.username) {
           return true;
         }
       }

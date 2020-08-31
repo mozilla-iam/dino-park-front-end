@@ -318,6 +318,9 @@ export default {
         return false;
       }
 
+      if (this.newInvites.some((user) => user.username === data.username)) {
+        return true;
+      }
       return data.role !== null;
     },
     async fetchGroupInvitations() {
