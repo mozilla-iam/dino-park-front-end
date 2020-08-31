@@ -287,7 +287,7 @@ export default {
   display: block;
 }
 .combobox {
-  display: block;
+  display: flex;
   align-items: center;
   width: 100%;
 }
@@ -309,8 +309,17 @@ export default {
 }
 .combobox__option {
   list-style: none;
+  padding: 0.5em 1em;
+}
+.combobox__displayuser .combobox__option {
+  padding: 0;
 }
 .combobox__option--highlighted {
+  background-color: var(--blue-60);
+  color: var(--white);
+}
+.combobox__displayuser .combobox__option--highlighted {
   background-color: var(--gray-20);
+  color: var(--black);
 }
 </style>
