@@ -76,7 +76,7 @@
               </p>
               <Button
                 class="primary-button delete"
-                @click="handleRemoveConfirmClick(member)"
+                @click="handleRemoveClick(member)"
                 v-if="canMemberBeRemoved(member)"
                 >{{ fluent('access-group_members', 'remove-action') }}</Button
               >
@@ -289,7 +289,7 @@ export default {
     },
   },
   async created() {
-    this.curatorsList = await this.fetchAccessGroupCurators();
+    return this.fetchAccessGroupCurators();
   },
   data() {
     const accessGroupExpiration = this.groupInformation.group.expiration || 0;
@@ -428,7 +428,7 @@ export default {
         cont = next;
       }
 
-      return allMembers;
+      this.curatorsList = allMembers;
     },
     canMemberBeRemoved(member) {
       if (!this.membersList.length) {
@@ -481,13 +481,14 @@ export default {
       });
       this.$root.$emit('dp-reload-group');
     },
-    async handleRemoveConfirmClick(member) {
+    async handleRemoveClick(member) {
       this.setLoading();
       await this.accessGroupApi.execute({
         path: 'members/delete',
         endpointArguments: [this.groupName, member.uuid],
       });
       this.tinyNotification('access-group-member-removed', member.displayName);
+      await this.fetchAccessGroupCurators();
       this.$root.$emit('dp-reload-group');
       this.completeLoading();
     },
