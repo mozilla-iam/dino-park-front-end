@@ -103,7 +103,7 @@ export default {
 
 <style>
 .footer {
-  margin-top: 2em;
+  margin-top: auto;
 }
 .footer__links {
   background-color: var(--black);
