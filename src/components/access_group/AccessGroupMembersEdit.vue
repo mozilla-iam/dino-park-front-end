@@ -526,7 +526,14 @@ export default {
       this.addedCurators.push(curator);
     },
     handleCuratorRemoved(curator) {
-      this.removedCurators.push(curator);
+      const idx = this.addedCurators.findIndex(
+        (c) => c.username === curator.username,
+      );
+      if (idx >= 0) {
+        this.addedCurators.splice(idx, 1);
+      } else {
+        this.removedCurators.push(curator);
+      }
     },
     handleCuratorsUpdateClicked() {
       // TODO: Fix https://github.com/mozilla-iam/dino-park-issues/issues/203 here (avoiding group ownership taken over by one person)
