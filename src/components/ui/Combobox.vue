@@ -1,5 +1,5 @@
 <template>
-  <div class="combobox" />
+  <div :class="{ combobox: true, combobox__displayuser: displayUser }" />
 </template>
 
 <script>
@@ -10,7 +10,6 @@ import Downshift from 'downshift/preact';
 import avatarUrl from '@/assets/js/avatars';
 import generateIdenticon from '@/assets/js/identicon-avatar';
 import mozillaM from '@/assets/images/mozilla-m.svg';
-import checkSVG from '@/assets/svg/check.svg';
 
 const FILTERS = {
   includes: (value) => (entry) =>
@@ -36,6 +35,7 @@ const Combobox = ({
   source,
   onPreSelect = () => {},
   isAlreadySelected,
+  displayUser,
   ...props
 }) =>
   h(
@@ -84,7 +84,7 @@ const Combobox = ({
                 const option = itemToString(item);
                 let src = '""';
                 // check whether we are dealing with a user (which are displayed a little bit different)
-                if (item.hasOwnProperty('username')) {
+                if (displayUser) {
                   const picture = item.picture;
                   if (
                     picture === null ||
@@ -188,21 +188,20 @@ const Combobox = ({
                       memberListMeta,
                     ),
                   );
-                } else {
-                  return h(
-                    'li',
-                    {
-                      key: option,
-                      class: `combobox__option ${
-                        i === highlightedIndex
-                          ? 'combobox__option--highlighted'
-                          : ''
-                      }`,
-                      ...getItemProps({ item }),
-                    },
-                    option,
-                  );
                 }
+                return h(
+                  'li',
+                  {
+                    key: option,
+                    class: `combobox__option ${
+                      i === highlightedIndex
+                        ? 'combobox__option--highlighted'
+                        : ''
+                    }`,
+                    ...getItemProps({ item }),
+                  },
+                  option,
+                );
               }),
           ),
       ]),
@@ -224,6 +223,7 @@ export default {
       type: Function,
       default: (autocompleteSuggestion) => false,
     },
+    displayUser: Boolean,
   },
   methods: {
     onPreSelect(data) {
@@ -243,6 +243,7 @@ export default {
             'placeholder',
             'onPreSelect',
             'isAlreadySelected',
+            'displayUser',
           ]),
           filter: FILTERS[this.filter],
           onChange: (changes) => {
@@ -270,13 +271,14 @@ export default {
 </script>
 
 <style>
-.combobox__input {
+.combobox__displayuser .combobox__input {
   width: 100%;
   background: transparent;
   border: none;
   height: 1.5em;
   font-size: 1em;
   margin: 0.3em 0;
+  padding: 0 1em;
 }
 .combobox__input[aria-expanded='false'] + .combobox__options {
   display: none;

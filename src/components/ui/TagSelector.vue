@@ -1,5 +1,5 @@
 <template>
-  <div class="tag-selector-container" @click="onTagSelectorClicked">
+  <div class="tag-selector-container">
     <div class="tag-selector">
       <div
         class="tag-container"
@@ -30,13 +30,13 @@
         :onSelect="handleAddItem"
         :source="autoCompleteList"
         :isAlreadySelected="isAlreadySelected"
+        :displayUser="true"
       />
     </div>
   </div>
 </template>
 
 <script>
-import AccessGroupMemberListDisplay from '@/components/access_group/AccessGroupMemberListDisplay.vue';
 import Combobox from '@/components/ui/Combobox.vue';
 import Icon from '@/components/ui/Icon.vue';
 import throttle from 'lodash.throttle';
@@ -64,7 +64,6 @@ export default {
     },
   },
   components: {
-    AccessGroupMemberListDisplay,
     Combobox,
     Icon,
   },
@@ -86,73 +85,10 @@ export default {
     subRowTextDisplay(member) {
       return member.email;
     },
-    onTagSelectorClicked(e) {
-      // const parent = e.target.closest('.tag-selector-container');
-      // const itemParent = e.target.closest('.selector-auto-complete__item');
-      // if (parent || itemParent) {
-      //   this.$el.querySelector('.tag-selector__value').focus();
-      // }
-    },
-    onInputBlur(e) {
-      this.$refs['auto-complete-input'].removeEventListener(
-        'keydown',
-        this.arrowListener,
-      );
-      // TODO: This currently only works on firefox.
-      if (!e.explicitOriginalTarget || !e.explicitOriginalTarget.closest) {
-        return;
-      }
-      const parent = e.explicitOriginalTarget.closest(
-        '.tag-selector-container',
-      );
-      if (!parent) {
-        this.autoCompleteList = [];
-      }
-    },
-    onSelectorInput(el) {
-      if (!this.currentInput) {
-        return;
-      }
-    },
     tagActionClicked(idx) {
       this.$emit('tag:remove', this.tagsDisplay[idx]);
       this.tagsDisplay.splice(idx, 1);
       this.$emit('input', this.tagsDisplay);
-    },
-    onInputFocus(e) {
-      this.$refs['auto-complete-input'].addEventListener(
-        'keydown',
-        this.arrowListener,
-      );
-    },
-    arrowListener(e) {
-      if (this.autoCompleteList.length) {
-        if (
-          e.keyCode === 40 &&
-          this.focusedChild < this.autoCompleteList.length - 1
-        ) {
-          e.preventDefault();
-          this.focusedChild += 1;
-        } else if (e.keyCode === 38 && this.focusedChild > 0) {
-          e.preventDefault();
-          this.focusedChild -= 1;
-        } else if (e.keyCode === 13) {
-          e.preventDefault();
-          if (
-            this.handleAddItem(this.autoCompleteList[this.focusedChild]) !==
-            false
-          ) {
-            this.focusedChild = -1;
-          }
-        } else if (e.keyCode === 27) {
-          e.preventDefault();
-          this.autoCompleteList = [];
-        } else {
-          this.focusedChild = -1;
-        }
-      } else {
-        this.focusedChild = -1;
-      }
     },
     onInput: throttle(function (value) {
       if (value === '') {
@@ -197,7 +133,6 @@ export default {
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
-  padding-left: 1em;
 }
 
 .tag-selector .tag-selector__list {
@@ -217,7 +152,7 @@ export default {
   border-radius: var(--formElementRadius);
   margin-right: 0.5em;
   align-items: center;
-  margin: 0.6em 0.25em 0.6em 0;
+  margin: 0.6em 0.25em;
 }
 
 .tag-container .tag-container__text {
@@ -251,7 +186,7 @@ export default {
   margin: 0;
   padding: 0;
   width: 100%;
-  max-height: 20em;
+  max-height: 25em;
   overflow-y: auto;
   z-index: 1;
 }
