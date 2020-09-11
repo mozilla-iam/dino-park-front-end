@@ -269,6 +269,13 @@ export default {
               trust: this.groupTrust,
             },
           });
+          if (this.groupTermsRequiredData) {
+            await this.accessGroupApi.execute({
+              path: 'terms/post',
+              endpointArguments: [this.groupName],
+              dataArguments: this.groupTermsData,
+            });
+          }
           this.completeLoading();
           this.tinyNotification('access-group-created', this.groupName);
           this.$router.push({

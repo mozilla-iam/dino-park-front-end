@@ -262,7 +262,10 @@ export default {
     groupTermsRequiredData() {
       this.groupTermsDirty = true;
     },
-    emailInviteText() {
+    emailInviteText(value) {
+      if (value !== null && !this.emailInviteTextEnabled) {
+        this.emailInviteTextEnabled = true;
+      }
       this.emailInviteTextDirty = true;
     },
   },
@@ -294,10 +297,11 @@ export default {
       });
     },
     async fetchEmailInviteText() {
-      return await this.accessGroupApi.execute({
+      const { body } = await this.accessGroupApi.execute({
         path: 'groupInvitationEmail/get',
         endpointArguments: [this.groupInformation.group.name],
-      }).body;
+      });
+      return body;
     },
     async updateGroup(updateData) {
       await this.accessGroupApi.execute({
