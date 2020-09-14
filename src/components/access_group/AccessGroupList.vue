@@ -99,6 +99,13 @@ export default {
         this.resetOptions();
       }
       this.listOptions.search = searchQuery;
+      if (this.$route.query.group !== searchQuery) {
+        if (this.$route.query.group && searchQuery === '') {
+          this.$router.replace({ query: {} });
+        } else {
+          this.$router.replace({ query: { group: searchQuery } });
+        }
+      }
       await this.fetchList(this.listOptions);
     },
     searchFormKeyUpHandler(searchQuery, scope) {
@@ -140,8 +147,8 @@ export default {
       nextClicked: false,
       groupList: [],
       listOptions: {
-        search: this.$route.query.group || '',
         ...defaultListOptions,
+        search: this.$route.query.group || '',
       },
       selectedSort: defaultListOptions.sort,
       next: null,
