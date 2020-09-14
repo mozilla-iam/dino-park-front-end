@@ -54,6 +54,7 @@ export default {
       type: Function,
       default: null,
     },
+    initialQuery: String,
   },
   components: {
     Icon,
@@ -109,7 +110,7 @@ export default {
   },
   data() {
     return {
-      searchQuery: this.$route.query.query || '',
+      searchQuery: this.initialQuery || '',
     };
   },
   mounted() {

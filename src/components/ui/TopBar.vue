@@ -10,6 +10,7 @@
       <SearchForm
         :searchFormHandler="searchFormHandler"
         :searchFormLabel="fluent('search_input', 'placeholder')"
+        :initialQuery="$route.query.query"
         class="hide-mobile hl-search-form"
       >
       </SearchForm>
@@ -27,6 +28,7 @@
           <SearchForm
             :searchFormHandler="searchFormHandler"
             :searchFormLabel="fluent('search_input', 'placeholder')"
+            :initialQuery="$route.query.query"
             class="search-form--small hide-desktop"
             id="mobile-search"
             v-on:close-search-form="closeMobileSearchForm()"
@@ -99,6 +101,7 @@
       class="search-form--small hide-desktop"
       :searchFormLabel="fluent('search_input', 'placeholder')"
       :searchFormHandler="searchFormHandler"
+      :initialQuery="$route.query.query"
       v-if="showMobileSearch"
       id="mobile-search"
       v-on:close-search-form="closeMobileSearchForm()"

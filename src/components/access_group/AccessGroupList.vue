@@ -8,6 +8,7 @@
         :searchFormHandler="searchFormHandler"
         :searchFormLabel="fluent('access-group_list', 'search')"
         :searchFormKeyUpHandler="searchFormKeyUpHandler"
+        :initialQuery="$route.query.group"
       ></SearchForm>
       <Select
         class="options--chevron options--large group-select"
@@ -138,7 +139,10 @@ export default {
     return {
       nextClicked: false,
       groupList: [],
-      listOptions: defaultListOptions,
+      listOptions: {
+        search: this.$route.query.group || '',
+        ...defaultListOptions,
+      },
       selectedSort: defaultListOptions.sort,
       next: null,
       sortOptions: [
