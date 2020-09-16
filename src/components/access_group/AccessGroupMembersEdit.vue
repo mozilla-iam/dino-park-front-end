@@ -301,6 +301,7 @@ export default {
         ? accessGroupExpiration
         : 'custom';
     return {
+      edit: true,
       updateExpirationErrorHighlight: false,
       customExpirationErrorHighlight: false,
       groupExpiration: !accessGroupExpiration ? 0 : accessGroupExpiration,

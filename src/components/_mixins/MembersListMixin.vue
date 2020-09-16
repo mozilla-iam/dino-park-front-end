@@ -29,9 +29,13 @@ export default {
   },
   methods: {
     async fetchMembers() {
+      const edit = Boolean(this.edit);
       const memberData = await this.accessGroupApi.execute({
         path: 'members/get',
-        endpointArguments: [this.groupName, this.membersListOptions],
+        endpointArguments: [
+          this.groupName,
+          { edit, ...this.membersListOptions },
+        ],
       });
 
       const members = memberData.members.map(

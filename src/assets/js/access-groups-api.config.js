@@ -113,6 +113,9 @@ export default {
       if (!qsArray.length) {
         return `${endpoint}/${groupName}`;
       }
+      if (options.hasOwnProperty('edit')) {
+        qsArray.push(`p=${options.edit}`);
+      }
       return `${endpoint}/${groupName}?${qsArray.join('&')}`;
     },
     delete: (endpoint, groupName, uuid) => `${endpoint}/${groupName}/${uuid}`,
