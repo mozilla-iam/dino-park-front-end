@@ -64,14 +64,14 @@ export default {
           label: this.fluent('footer_faq'),
         },
         {
-          link: this.globalLinks.githubIssues,
+          link: this.globalLinks.github,
           icon: 'github',
           label: this.fluent('footer_github'),
         },
         {
-          link: this.globalLinks.githubIssues,
+          link: this.globalLinks.support,
           icon: 'irc',
-          label: this.fluent('footer_feedback'),
+          label: this.fluent('footer_support'),
         },
         {
           link: this.globalLinks.legal,

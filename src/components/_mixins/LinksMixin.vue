@@ -14,6 +14,8 @@ export default {
         faqNda: 'https://discourse.mozilla.org/t/dinopark-faq/33564',
         faqPublic: 'https://discourse.mozilla.org/t/50444',
         githubIssues: 'https://github.com/mozilla-iam/dino-park-issues',
+        support: 'mailto:people-mozilla-org-support@mozilla.com',
+        github: 'https://github.com/mozilla-iam/dino-park-front-end',
         legal: 'https://www.mozilla.org/en-US/legal',
         privacy: 'https://www.mozilla.org/en-US/privacy/',
         hrEmail: 'mailto:peopleops@mozilla.com',
