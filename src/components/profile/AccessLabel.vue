@@ -71,7 +71,11 @@ export default {
       if (this.staffInformation.staff.value) {
         return 'staff';
       }
-      if ('nda' in (this.accessInformation.mozilliansorg.values || {})) {
+      if (
+        'nda' in (this.accessInformation.mozilliansorg.values || {}) ||
+        'contingentworkernda' in
+          (this.accessInformation.mozilliansorg.values || {})
+      ) {
         return 'confidential';
       }
       return 'public';

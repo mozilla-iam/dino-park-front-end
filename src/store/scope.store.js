@@ -16,7 +16,9 @@ export default {
       } = user || {};
       const options = {
         isStaff,
-        isNdaed: 'nda' in (mozilliansorgGroups || {}),
+        isNdaed:
+          'nda' in (mozilliansorgGroups || {}) ||
+          'contingentworkernda' in (mozilliansorgGroups || {}),
         isLdap: Boolean(ldapGroups),
       };
       commit('set', options);

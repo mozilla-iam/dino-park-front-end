@@ -26,7 +26,9 @@ class Scope {
       this.isLoggedIn && (username === '' || username.startsWith('r--'));
     this.isReady = Boolean(username);
     this.isStaff = isStaff;
-    this.isNdaed = 'nda' in (mozilliansorgGroups || {});
+    this.isNdaed =
+      'nda' in (mozilliansorgGroups || {}) ||
+      'contingentworkernda' in (mozilliansorgGroups || {});
     this.isLdap = Boolean(ldapGroups);
     this.isGroupCreator =
       'group_creators' in (mozilliansorgGroups || {}) ||
