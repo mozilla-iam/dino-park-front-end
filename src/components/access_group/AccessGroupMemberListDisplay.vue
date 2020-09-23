@@ -8,7 +8,19 @@
       :useSrcset="true"
     />
     <div class="member-list-description">
-      <p class="member-list-description__header">{{ member.displayName }}</p>
+      <p class="member-list-description__header">
+        <RouterLink
+          :to="{
+            name: 'Profile',
+            params: {
+              username: member.username,
+            },
+          }"
+          class="member-list-description__link"
+        >
+          {{ member.displayName }}
+        </RouterLink>
+      </p>
       <p class="member-list-description__sub">{{ subText }}</p>
     </div>
     <div class="member-list-meta" v-if="showMeta">
@@ -68,6 +80,11 @@ export default {
 
 .member-list-description p {
   margin: 0.5em;
+}
+
+.member-list-description__link {
+  text-decoration: none;
+  color: var(--black);
 }
 
 .member-list-description .member-list-description__header {
