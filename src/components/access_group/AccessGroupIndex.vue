@@ -7,11 +7,13 @@
           <p class="summary-area__summary">
             {{ fluent('access-group_list', 'summary-area__summary--1') }}
             <br />
-            {{ fluent('access-group_list', 'summary-area__summary--2') }}
-            <ExternalLink href="/#help">
-              {{ fluent('access-group_list', 'summary-area__summary--3') }}
-            </ExternalLink>
-            {{ fluent('access-group_list', 'summary-area__summary--4') }}
+            <span v-if="scope.isStaff">
+              {{ fluent('access-group_list', 'summary-area__summary--2') }}
+              <ExternalLink :href="globalLinks.accessGroupsMana">
+                {{ fluent('access-group_list', 'summary-area__summary--3') }}
+              </ExternalLink>
+              {{ fluent('access-group_list', 'summary-area__summary--4') }}
+            </span>
           </p>
           <RouterLink
             class="button summary-area__action"

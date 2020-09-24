@@ -20,6 +20,8 @@ export default {
         privacy: 'https://www.mozilla.org/en-US/privacy/',
         hrEmail: 'mailto:peopleops@mozilla.com',
         iamFaq: 'https://wiki.mozilla.org/IAM/Frequently_asked_questions',
+        accessGroupsMana:
+          'https://mana.mozilla.org/wiki/display/IAM/Setting+up+Access+Groups',
       },
     };
   },
