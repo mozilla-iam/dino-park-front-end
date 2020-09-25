@@ -134,7 +134,7 @@ export default {
         : this.groupInformation.renewalCount;
     },
     pendingRenewalsIntroText() {
-      if (this.groupInformation.renewalCount == 1) {
+      if (this.groupInformation.renewalCount === 1) {
         return this.fluent(
           'access-group_membership-management',
           'pending-renewals-single',

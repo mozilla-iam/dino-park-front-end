@@ -79,10 +79,10 @@ export default {
         : groupData.member_count;
       groupInformation.invitationCount = !groupData.invitation_count
         ? 0
-        : groupInformation.invitation_count;
+        : groupData.invitation_count;
       groupInformation.renewalCount = !groupData.renewal_count
         ? 0
-        : groupInformation.renewal_count;
+        : groupData.renewal_count;
       groupInformation.requestCount = groupData.request_count;
       groupInformation.invitationConfig = groupData.invitation;
       groupInformation.isCurator = Boolean(groupData.curator);
