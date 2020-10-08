@@ -1,5 +1,12 @@
 <script>
-const ENABLED_ACCOUNTS = ['SLACK', 'ZOOM', 'DISCOURSE', 'IRC', 'MOZMATRIX'];
+const ENABLED_ACCOUNTS = [
+  'SLACK',
+  'ZOOM',
+  'DISCOURSE',
+  'IRC',
+  'MOZMATRIX',
+  'MOZILLIANS',
+];
 const EXTERNAL_ACCOUNTS = {
   AIM: { moz: false, text: 'AIM', icon: 'aim' },
   BITBUCKET: { moz: false, text: 'Bitbucket', icon: 'bitbucket' },
@@ -32,6 +39,12 @@ const EXTERNAL_ACCOUNTS = {
   SUMO: { moz: true, text: 'Mozilla Support', icon: 'sumo' },
   WEBMAKER: { moz: true, text: 'Mozilla Webmaker', icon: 'webmaker' },
   MOZILLAWIKI: { moz: true, text: 'Mozilla Wiki', icon: 'mozillawiki' },
+  MOZILLIANS: {
+    moz: true,
+    text: 'Mozillians Vouches',
+    icon: 'moz',
+    uri: 'https://vouches.mozillians.org/u/@@@',
+  },
   'Phone (Landline)': {
     moz: false,
     text: 'Phone (Landline)',
