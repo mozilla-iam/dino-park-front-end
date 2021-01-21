@@ -15,14 +15,13 @@
       <h3>{{ fluent('profile_access-groups_mozillians') }}</h3>
       <IconBlockList class="icon-block-list--multi-col">
         <IconBlock
-          v-for="[group, flag] in Object.entries(
+          v-for="[group] in Object.entries(
             accessInformation.mozilliansorg.values,
           )"
           :key="`group-${group}`"
           icon="moz"
         >
           <RouterLink
-            v-if="getFeature('accessGroupsToggle') && flag === ''"
             :to="{
               name: 'Access Group',
               params: {
@@ -31,16 +30,8 @@
             }"
             >{{ group }}</RouterLink
           >
-          <ExternalLink
-            v-else
-            :href="`https://mozillians.org/group/${encodeURIComponent(group)}`"
-            >{{ group }}</ExternalLink
-          >
         </IconBlock>
       </IconBlockList>
-      <p class="view-access-groups__mozillians-footer">
-        {{ fluent('profile_access-groups_mozillians', 'footer') }}
-      </p>
     </template>
   </div>
 </template>
