@@ -56,7 +56,6 @@
     "svg-sprite-loader": "^5.0.0",
     "vue-axe": "^2.3.0",
     "vue-template-compiler": "^2.6.11",
-    "vue-test-utils-helpers": "git+https://github.com/AmpleOrganics/vue-test-utils-helpers.git#1.0.3",
     "yaml": "^1.10.0"
   },
   "husky": {
