@@ -1,11 +1,10 @@
 <template>
   <div class="profile__name">
-    <h1>
-      {{ firstName }} {{ lastName }}
-      <span class="profile__alternative-name" v-if="alternativeName">
-        {{ alternativeName }}</span
-      >
-    </h1>
+    <h1>{{ firstName }} {{ lastName }}<span
+        class="profile__alternative-name" v-if="alternativeName"
+        >{{ alternativeName }}</span
+      ></h1
+    >
     <span class="profile__user-name" v-if="prettierUsername"
       >@{{ prettierUsername }}</span
     >
