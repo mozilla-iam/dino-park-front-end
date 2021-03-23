@@ -30,9 +30,9 @@
           :sectionId="section"
         ></EditButton>
       </div>
-      <h1 class="description-container__title">
-        {{ groupInformation.group.name }}
-      </h1>
+      <h1 class="description-container__title"
+        >{{ groupInformation.group.name }}<
+      /h1>
     </header>
     <section v-if="groupInformation.membership.role" class="membership">
       <dl>
