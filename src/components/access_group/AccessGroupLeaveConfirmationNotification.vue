@@ -100,7 +100,7 @@ export default {
         path: 'self/delete',
         endpointArguments: [this.$route.params.groupname],
       });
-      return r?.error === 'last_admin_of_group';
+      return r?.error !== 'last_admin_of_group';
     },
     async handleLeaveClick() {
       this.setLoading();
