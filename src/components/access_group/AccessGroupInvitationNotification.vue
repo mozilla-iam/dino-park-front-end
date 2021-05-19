@@ -81,7 +81,12 @@ export default {
         path: 'selfInvitations/get',
       });
 
-      return data.map((invite) => new GroupInvitationViewModel(invite));
+      if(data.map){
+        return data.map((invite) => new GroupInvitationViewModel(invite));
+      } else {
+        return {}
+      }
+
     },
     async acceptInvitation(currentInvitation) {
       return await this.accessGroupApi.execute({

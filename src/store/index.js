@@ -8,7 +8,12 @@ import user from './user.store';
 import scope from './scope.store';
 import features from './features.store';
 
+let shouldFetch = true;
+
 async function fetchUser(commit) {
+  if (shouldFetch === false){
+    return
+  }
   try {
     const fetchPolicy = 'network-only';
     const { data } = await client.query({
@@ -19,14 +24,21 @@ async function fetchUser(commit) {
     commit('setUser', data.profile);
     return true;
   } catch (e) {
-    const {
-      graphQLErrors: [{ message }],
-    } = e;
-    if (message === 'wait_for_profile') {
-      console.log('creating');
-    }
-    commit('setUser', { loggedIn: true });
-    return false;
+    try {
+      const {
+        graphQLErrors: [{ message }],
+      } = e;
+      if (message === 'wait_for_profile') {
+        console.log('creating');
+      }
+      commit('setUser', { loggedIn: true });
+      return false;
+      }
+      catch(e) {
+        // Probably getting a 403 for authentication
+        shouldFetch = false
+        return false
+      }
   }
 }
 
