@@ -20,7 +20,7 @@
         <h1 class="visually-hidden">{{ fluent('error') }}</h1>
         <h2>{{ fluent('error_404') }}</h2>
         <p>{{ fluent('search_error') }}</p>
-        <p class="search-error-login-required>{{ fluent('search_error_login_required') }}</p>
+        <p class="search-error-login-required">{{ fluent('search_error_login_required') }}</p>
         <p>
           <small>
             <Fluent
