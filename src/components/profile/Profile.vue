@@ -1,5 +1,15 @@
 <template>
-  <main class="profile">
+  <main class="profile" >
+    <div
+      v-if="typeof(accessInformation) === 'undefined'"
+    >
+    <p>
+      You must login to view profile.
+    </p>
+    </div>
+    <div
+      v-if="typeof(accessInformation) != 'undefined'"
+    >
     <div
       :class="
         'profile__section' +
@@ -233,6 +243,7 @@
         ></ViewKeys>
       </template>
     </ProfileSection>
+    </div>
   </main>
 </template>
 
@@ -343,7 +354,11 @@ export default {
       };
     },
     userOnOwnProfile() {
-      return this.$store.state.scope.uuid === this.uuid.value;
+      try {
+        return this.$store.state.scope.uuid === this.uuid.value;
+      } catch(e){
+        return false;
+      }
     },
     identitiesWrapper() {
       return new Identities(this.identities);
