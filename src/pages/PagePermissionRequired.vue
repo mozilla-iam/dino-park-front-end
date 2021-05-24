@@ -11,7 +11,7 @@
         />
       </template>
       <template slot="message">
-        <h1 class="visually-hidden">You must be logged into view this profile.</h1>
+        <h1>You must be logged into view this profile.</h1>
       </template>
     </Error>
   </main>
