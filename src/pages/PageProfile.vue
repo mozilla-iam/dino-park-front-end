@@ -23,6 +23,7 @@
           :allowStaffOnlyFields="allowStaffOnlyFields"
         ></Profile>
       </template>
+      <PagePermissionRequired v-else-if="error && (!data)"></PagePermissionRequired>
       <Page404 v-else-if="error || (data && data.profile === null)"></Page404>
       <LoadingSpinner v-else></LoadingSpinner>
     </template>
@@ -36,6 +37,7 @@ import { DISPLAY_PROFILE } from '@/queries/profile';
 import Related from '@/assets/js/related';
 import PreviewAs from '@/components/profile/PreviewAs.vue';
 import Page404 from './PageUnknown.vue';
+import PagePermissionRequired from './PagePermissionRequired.vue';
 
 export default {
   name: 'PageProfile',
