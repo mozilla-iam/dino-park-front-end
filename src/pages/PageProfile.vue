@@ -23,8 +23,7 @@
           :allowStaffOnlyFields="allowStaffOnlyFields"
         ></Profile>
       </template>
-      <PagePermissionRequired v-else-if="error && (!data)"></PagePermissionRequired>
-      <Page404 v-else-if="error || (data && data.profile === null)"></Page404>
+      <PagePermissionRequired v-else-if="error"></PagePermissionRequired>
       <LoadingSpinner v-else></LoadingSpinner>
     </template>
   </ApolloQuery>
