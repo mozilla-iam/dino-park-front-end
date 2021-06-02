@@ -16,6 +16,8 @@ phases:
       - export MASTER=$(if [ "$CODEBUILD_WEBHOOK_TRIGGER" = "branch/master" ]; then echo 1; fi)
       - echo "running for ${COMMIT_SHA} in ${DEPLOY_ENV}"
       - aws ecr get-login --region us-west-2 --no-include-email | bash
+      - echo "Logging Into Docker Hub"
+      - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
   build:
     commands:
       - if [ "$PR" = 1 ]; then myke docker; fi
