@@ -29,6 +29,18 @@ resource "aws_codebuild_project" "build" {
       name  = "DOCKER_REPO"
       value = aws_ecr_repository.registry.repository_url
     }
+
+    environment_variable {
+      name  = "DOCKERHUB_USERNAME"
+      type  = "PARAMETER_STORE"
+      value = " /iam/dino-park-front-end/mozilla/DOCKERHUB_USERNAME"
+    }
+
+    environment_variable {
+      name  = "DOCKERHUB_PASSWORD"
+      type  = "PARAMETER_STORE"
+      value = "/iam/dino-park-front-end/mozilla/DOCKERHUB_PASSWORD"
+    }
   }
 
   source {
@@ -45,7 +57,7 @@ resource "aws_codebuild_project" "build" {
 
 # Unomment this section if you do want to build automatically on push
 resource "aws_codebuild_webhook" "webhook" {
-  project_name  = aws_codebuild_project.build.name
+  project_name = aws_codebuild_project.build.name
   filter_group {
     filter {
       type    = "EVENT"
