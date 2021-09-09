@@ -18,6 +18,7 @@ export default {
         isStaff,
         isNdaed:
           'nda' in (mozilliansorgGroups || {}) ||
+          'ghe_group_curators' in (mozilliansorgGroups || {}) ||
           'contingentworkernda' in (mozilliansorgGroups || {}),
         isLdap: Boolean(ldapGroups),
       };

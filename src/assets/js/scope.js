@@ -28,6 +28,7 @@ class Scope {
     this.isStaff = isStaff;
     this.isNdaed =
       'nda' in (mozilliansorgGroups || {}) ||
+      'ghe_group_curators' in (mozilliansorgGroups || {}) ||
       'contingentworkernda' in (mozilliansorgGroups || {});
     this.isLdap = Boolean(ldapGroups);
     this.isGroupCreator =
