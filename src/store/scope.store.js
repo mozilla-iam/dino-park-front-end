@@ -14,10 +14,16 @@ export default {
           ldap: { values: ldapGroups = {} } = {},
         } = {},
       } = user || {};
+      /*
+      The other places these groups are handled.
+      https://github.com/mozilla-iam/dino-park-packs/pull/20
+      https://github.com/mozilla-iam/dino-park-gate/pull/3
+      */
       const options = {
         isStaff,
         isNdaed:
           'nda' in (mozilliansorgGroups || {}) ||
+          'ghe_group_curators' in (mozilliansorgGroups || {}) ||
           'contingentworkernda' in (mozilliansorgGroups || {}),
         isLdap: Boolean(ldapGroups),
       };
