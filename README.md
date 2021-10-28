@@ -97,4 +97,4 @@ Features:
 - We make sure components look good (not necessarily the same) in the devices, browsers, platforms our users use.
 
 ### Deploying
-This application will automatically deploy to test/dev from the `master` branch. To deploy to `prod` cut a release tag following the patter in `releases` with the suffix `-prod`.
+This application will automatically deploy to test/dev from the `master` branch. To deploy to `prod` cut a release tag following the pattern in `releases` with the suffix `-prod`.
