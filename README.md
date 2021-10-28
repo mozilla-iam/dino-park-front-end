@@ -95,3 +95,6 @@ Features:
   - `.block--modifier` is a variation on the block component
   - `.block__element` is something inside the block component
 - We make sure components look good (not necessarily the same) in the devices, browsers, platforms our users use.
+
+### Deploying
+This application will automatically deploy to test/dev from the `master` branch. To deploy to `prod` cut a release tag following the patter in `releases` with the suffix `-prod`.
