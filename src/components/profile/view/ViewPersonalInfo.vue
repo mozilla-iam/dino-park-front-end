@@ -76,14 +76,6 @@
           :metaValue="staffInformation.workerType.value"
         />
         <MetaItem
-          :metaKey="fluent('profile_desk-number')"
-          v-if="staffInformation.wprDeskNumber.value"
-          :metaValue="staffInformation.wprDeskNumber.value"
-          :link="
-            deskNumberToOfficePlanLink(staffInformation.wprDeskNumber.value)
-          "
-        />
-        <MetaItem
           :metaKey="fluent('profile_cost-center')"
           v-if="staffInformation.costCenter.value"
           :metaValue="

@@ -447,12 +447,6 @@ const DISPLAY_PROFILE = gql`
             display
           }
         }
-        wprDeskNumber {
-          value
-          metadata {
-            display
-          }
-        }
         costCenter {
           value
           metadata {

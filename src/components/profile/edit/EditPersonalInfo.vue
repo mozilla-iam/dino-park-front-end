@@ -367,39 +367,6 @@
         <hr role="presentation" />
 
         <div class="edit-personal-info__label">
-          <label for="field-desk-number">{{
-            fluent('profile_desk-number')
-          }}</label>
-          <Tooltip
-            :buttonText="fluent('profile_desk-number', 'tooltip-open')"
-            :alternateButtonText="
-              fluent('profile_desk-number', 'tooltip-close')
-            "
-            ><Fluent
-              id="profile_desk-number"
-              attr="tooltip"
-              :tags="{
-                email: { tag: 'a', href: globalLinks.hrEmail },
-              }"
-          /></Tooltip>
-        </div>
-        <input
-          type="text"
-          id="field-desk-number"
-          disabled
-          :value="staffInformation.wprDeskNumber.value"
-        />
-        <PrivacySetting
-          :label="fluent('profile_desk-number', 'privacy')"
-          id="field-desk-number-privacy"
-          profileFieldName="staffInformation.wprDeskNumber"
-          :profileFieldObject="staffInformation.wprDeskNumber"
-          :disabled="true"
-        />
-
-        <hr role="presentation" />
-
-        <div class="edit-personal-info__label">
           <label for="field-team">{{ fluent('profile_team') }}</label>
           <Tooltip
             :buttonText="fluent('profile_team', 'tooltip-open')"
