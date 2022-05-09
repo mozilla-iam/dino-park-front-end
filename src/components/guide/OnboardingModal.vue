@@ -28,7 +28,26 @@
         <p v-else>
           <Fluent :id="`onboarding_modal_username`" attr="paragraph_2" />
         </p>
-        <section v-if="scope.isReady" class="onboarding-modal__username">
+        <section v-if="scope.profileError" class="onboarding-modal__profile_error">
+        <p> 
+          <Fluent :id="`onboarding_modal_profile_error`"
+                  attr="profile_error" 
+                  :tags="{
+                    iam_slack: {
+                      tag: 'a',
+                      target: '_blank',
+                      href: 'https://mozilla.slack.com/archives/CBT3XRZKP',
+                    },
+                    support_email: {
+                      tag: 'a',
+                      target: '_blank',
+                      href: 'mailto:people-mozilla-org-support@mozilla.com',
+                    }
+                  }"
+          /> 
+        </p>
+        </section>
+        <section v-if="scope.isReady && !scope.profileError" class="onboarding-modal__username">
           <label for="field-username">{{ fluent('profile_username') }}</label>
           <TextInput
             class="username__input"
@@ -336,5 +355,10 @@ export default {
   display: flex;
   align-items: center;
   flex-direction: row;
+}
+
+.onboarding-modal__profile_error {
+  font-weight: bold;
+  color: red;
 }
 </style>

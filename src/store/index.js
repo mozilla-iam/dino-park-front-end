@@ -9,6 +9,7 @@ import scope from './scope.store';
 import features from './features.store';
 
 let shouldFetch = true;
+let userFound = false;
 
 async function fetchUser(commit) {
   if (shouldFetch === false){
@@ -21,6 +22,7 @@ async function fetchUser(commit) {
       variables: { username: null },
       fetchPolicy,
     });
+    userFound = true;
     commit('setUser', data.profile);
     return true;
   } catch (e) {
@@ -45,6 +47,8 @@ async function fetchUser(commit) {
 async function retryFetchUser(commit, retries = 120) {
   if (!(await fetchUser(commit)) && retries > 0) {
     setTimeout(() => retryFetchUser(commit, retries - 1), 1000);
+  } else if (!userFound) {
+    commit('setUser', {profileError: true});
   }
 }
 
@@ -64,7 +68,6 @@ export default new Vuex.Store({
     onboarding: new Onboarding(),
   },
   actions: {
-    // TODO: Create error handling for this action
     async fetchUser({ commit }) {
       await retryFetchUser(commit);
     },

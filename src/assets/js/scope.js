@@ -24,7 +24,7 @@ class Scope {
     this.isLoggedIn = Boolean(username || user?.loggedIn);
     this.firstTime =
       this.isLoggedIn && (username === '' || username.startsWith('r--'));
-    this.isReady = Boolean(username);
+    this.isReady = Boolean(username || user?.profileError);
     this.isStaff = isStaff;
     this.isNdaed =
       'nda' in (mozilliansorgGroups || {}) ||
@@ -34,6 +34,7 @@ class Scope {
     this.isGroupCreator =
       'group_creators' in (mozilliansorgGroups || {}) ||
       'group_admins' in (mozilliansorgGroups || {});
+    this.profileError = user?.profileError
   }
 
   hasTrust(trust) {
