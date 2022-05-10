@@ -109,7 +109,7 @@ onboarding_modal_username = Getting started
   .username_chars = Username must only contain latin characters a-z or digits 0-9
 
 onboarding_modal_profile_error =
-  .profile_error = Error in creating profile please reach out in <a data-l10n-name="iam_slack">#iam</a> Slack or at <a data-l10n-name="support_email">people-mozilla-org-support@mozilla.com</a>
+  .profile_error = Error in creating profile. Please reach out in <a data-l10n-name="iam_slack">#iam</a> Slack or at <a data-l10n-name="support_email">people-mozilla-org-support@mozilla.com</a>
 
 tooltip_tour = Welcome
   .skip = Skip tour
