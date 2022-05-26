@@ -11,7 +11,7 @@ ENV DP_BASE_URL=$baseurl
 RUN npm run build
 
 # production stage
-FROM nginx:1.17-alpine as production-stage
+FROM nginx:1.21.6-alpine as production-stage
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 ARG baseurl=/
 COPY --from=build-stage /app/dist /usr/share/nginx/html$baseurl
