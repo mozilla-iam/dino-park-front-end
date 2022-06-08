@@ -15,6 +15,6 @@ variable "buildspec_file" {
 # Find all the supported images by AWS here: 
 # https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-available.html
 variable "build_image" {
-  default = "aws/codebuild/standard:3.0"
+  default = "aws/codebuild/standard:4.0"
 }
 
