@@ -32,14 +32,14 @@ resource "aws_codebuild_project" "build" {
 
     environment_variable {
       name  = "DOCKERHUB_USERNAME"
-      type  = "PARAMETER_STORE"
-      value = " /iam/dino-park-front-end/mozilla/DOCKERHUB_USERNAME"
+      type  = "SECRETS_MANAGER"
+      value = "/CodeBuild/dockerhub:username"
     }
 
     environment_variable {
       name  = "DOCKERHUB_PASSWORD"
-      type  = "PARAMETER_STORE"
-      value = "/iam/dino-park-front-end/mozilla/DOCKERHUB_PASSWORD"
+      type  = "SECRETS_MANAGER"
+      value = "/CodeBuild/dockerhub:password"
     }
   }
 
@@ -127,6 +127,15 @@ resource "aws_iam_role_policy" "codebuild" {
         "eks:DescribeCluster"
       ],
       "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Resource": [
+        "arn:aws:secretsmanager:*:*:secret:/CodeBuild/dockerhub*"
+      ],
+      "Action": [
+        "secretsmanager:GetSecretValue"
+      ]
     }
   ]
 }
