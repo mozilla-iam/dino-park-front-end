@@ -122,6 +122,7 @@ export default {
     },
     showRequest() {
       return (
+        this.scope.isNdaed &&
         this.groupInformation.group.type === 'Reviewed' &&
         this.scope.hasTrust(this.groupInformation.group.trust)
       );
