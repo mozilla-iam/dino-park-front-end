@@ -54,17 +54,7 @@
       <div class="profile-team-location__timezone">
         <span
           class="timezone-print"
-          v-bind:class="{ 'timezone-print': true, 'has-diff': timezoneDiff }"
-          >{{ timezoneWithTime }}</span
-        >
-        <span class="timezone-diff">{{ timezoneDiff }}</span>
-        <Tooltip
-          v-if="hasTimezoneOffset"
-          :buttonText="fluent('profile_timezone', 'tooltip-open')"
-          :alternateButtonText="fluent('profile_timezone', 'tooltip-close')"
-          >{{
-            hasBrowserTimezone ? hasTimezoneInfoText : hasNoTimezoneInfoText
-          }}</Tooltip
+          >{{ timezone }}</span
         >
       </div>
     </div>
@@ -74,13 +64,6 @@
 <script>
 import Icon from '@/components/ui/Icon.vue';
 import Tooltip from '@/components/ui/Tooltip.vue';
-import {
-  getHoursDiff,
-  getFormattedDateWithTimezone,
-  getBrowserTimezone,
-  getTimezoneName,
-  decimalToHours,
-} from '@/assets/js/timezone-utils';
 
 export default {
   name: 'ProfileTeamLocation',
@@ -98,7 +81,7 @@ export default {
       return this.team || this.entity;
     },
     showLocation() {
-      return this.location || this.officeLocation || this.timezone;
+      return this.location || this.officeLocation; // || this.timezone;
     },
     officeLocationSearchString() {
       return 'officeLocation:"' + this.officeLocation + '"'; // eslint-disable-line
@@ -106,155 +89,6 @@ export default {
     locationSearchString() {
       return 'location:"' + this.location + '"'; // eslint-disable-line
     },
-    hasBrowserTimezone() {
-      const profileDate = getFormattedDateWithTimezone(
-        this.localtime,
-        this.timezone
-      );
-      const browserTimezone = getBrowserTimezone();
-      if (browserTimezone && browserTimezone !== this.currentTimezone) {
-        const currentBrowserDate = getFormattedDateWithTimezone(
-          this.localtime,
-          browserTimezone
-        );
-        const browserHoursDiff = getHoursDiff(profileDate, currentBrowserDate);
-        return browserHoursDiff !== null && browserHoursDiff !== 0;
-      }
-      return false;
-    },
-    hasTimezoneOffset() {
-      return this.timezoneDiff !== '' && this.timezoneDiff !== null;
-    },
-    timezoneWithTime() {
-      // Return final string
-      if (this.timezone) {
-        return this.fluent('profile_timezone_localtime', {
-          time: this.getLocaltime(),
-          timezone: getTimezoneName(this.timezone),
-        });
-      }
-      return null;
-    },
-    /**
-     * Get text for hour based time difference between user and viewing profile
-     */
-    timezoneDiff() {
-      if (!this.timezone) {
-        return null;
-      }
-
-      /**
-       * Get all 3 different timezones
-       */
-      // Get viewed profile timezone
-      const profileDate = getFormattedDateWithTimezone(
-        this.localtime,
-        this.timezone
-      );
-
-      // Get logged in profile timezone
-      const currentLocalDate = getFormattedDateWithTimezone(
-        this.localtime,
-        this.currentTimezone
-      );
-
-      // Get browser timezone
-      const browserTimezone = getBrowserTimezone();
-
-      /**
-       * Begin calculations
-       */
-      // Build browser timezone string
-      let currentBrowserDate = null;
-      let printedBrowserOffset = '';
-      let browserHoursDiff = null;
-      let validBrowserHoursDiff = false;
-      if (browserTimezone && browserTimezone !== this.currentTimezone) {
-        currentBrowserDate = getFormattedDateWithTimezone(
-          this.localtime,
-          browserTimezone
-        );
-        browserHoursDiff = getHoursDiff(profileDate, currentBrowserDate);
-        validBrowserHoursDiff =
-          browserHoursDiff !== null && browserHoursDiff !== 0;
-        if (validBrowserHoursDiff) {
-          printedBrowserOffset = this.fluent(
-            'profile_timezone_offset_current',
-            { difference: decimalToHours(browserHoursDiff) }
-          );
-        }
-      }
-
-      // Build local timezone string;
-      const hoursDiff = getHoursDiff(profileDate, currentLocalDate);
-      const validHoursDiff = hoursDiff !== null && hoursDiff !== 0;
-      let printedLocalOffset = '';
-      if (validHoursDiff) {
-        printedLocalOffset = this.fluent('profile_timezone_offset_local', {
-          difference: decimalToHours(hoursDiff),
-        });
-      }
-
-      // Return appropriate text
-      if (
-        validHoursDiff &&
-        validBrowserHoursDiff &&
-        hoursDiff !== browserHoursDiff
-      ) {
-        return `${printedLocalOffset}${
-          printedBrowserOffset === '' ? '' : `, ${printedBrowserOffset}`
-        }`;
-      }
-      if (validHoursDiff && validBrowserHoursDiff) {
-        return printedBrowserOffset;
-      }
-      if (validHoursDiff) {
-        return printedLocalOffset;
-      }
-      if (validBrowserHoursDiff) {
-        return printedBrowserOffset;
-      }
-      return null;
-    },
-  },
-  mounted() {
-    this.interval = window.setInterval(() => {
-      this.localtime = new Date();
-    }, 1000);
-  },
-  beforeDestroy() {
-    if (this.interval) {
-      window.clearInterval(this.interval);
-    }
-  },
-  methods: {
-    getLocaltime() {
-      if (this.timezone) {
-        try {
-          const options = { timeZone: this.timezone };
-          return this.localtime.toLocaleTimeString(navigator.language, options);
-        } catch (e) {
-          return 'unknown';
-        }
-      }
-      return '';
-    },
-  },
-  data() {
-    const { timezone: { value: timezone = null } = {} } =
-      this.$store.state.user || {};
-    return {
-      localtime: new Date(),
-      currentTimezone: timezone,
-      hasTimezoneInfoText: this.fluent(
-        'profile_timezone_offset_current',
-        'tooltip'
-      ),
-      hasNoTimezoneInfoText: this.fluent(
-        'profile_timezone_offset_local',
-        'tooltip'
-      ),
-    };
   },
 };
 </script>
@@ -316,13 +150,6 @@ export default {
   padding-right: 0.5em;
 }
 
-.timezone-print.has-diff {
-  border-right: 1px solid var(--gray-30);
-}
-
-.timezone-diff {
-  padding-left: 0.5em;
-}
 .profile__team-section {
   display: flex;
   flex-direction: column;

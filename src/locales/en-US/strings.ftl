@@ -158,11 +158,6 @@ profile_contact-me = Contact Me
   .show-in = Show in Contact Me button
   .on = on {$service}
 
-profile_timezone_localtime = {$time} local time ({$timezone})
-profile_timezone_offset_current = {$difference}hrs to your current time
-  .tooltip = Since your browser location and profile timezone are different, we get this from your browser
-profile_timezone_offset_local = {$difference}hrs to your local time
-  .tooltip = We get this from what you set up in your profile as your primary location
 profile_access-to = Access to
 profile_slack-access = Slack access
 
