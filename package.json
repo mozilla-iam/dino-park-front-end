@@ -35,7 +35,7 @@
     "@babel/preset-env": "^7.10.2",
     "@vue/cli-plugin-babel": "^4.4.1",
     "@vue/cli-plugin-eslint": "^4.4.1",
-    "@vue/cli-plugin-unit-jest": "^4.4.1",
+    "@vue/cli-plugin-unit-jest": "^5.0.8",
     "@vue/cli-service": "^4.4.1",
     "@vue/eslint-config-airbnb": "^5.0.2",
     "@vue/test-utils": "^1.0.3",
