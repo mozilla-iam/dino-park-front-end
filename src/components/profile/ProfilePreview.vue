@@ -28,6 +28,7 @@
     ></ProfileTitle>
     <div class="hide-desktop">
       <ContactMe
+        :identities="identities"
         :primaryEmail="primaryEmail.value"
         :phoneNumbers="phoneNumbers"
         :uris="uris"
@@ -47,6 +48,7 @@
     <div class="profile-preview__actions">
       <div class="hide-mobile">
         <ContactMe
+          :identities="identities"
           :primaryEmail="primaryEmail.value"
           :phoneNumbers="phoneNumbers"
           :uris="uris"
@@ -92,6 +94,7 @@ export default {
     location: Object,
     description: Object,
     uris: Object,
+    identities: Object,
     userId: Object,
     desktopView: Boolean,
   },
