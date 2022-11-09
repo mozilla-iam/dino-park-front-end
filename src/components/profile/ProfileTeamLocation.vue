@@ -51,7 +51,7 @@
           >{{ officeLocation }}</RouterLink
         >
       </span>
-      <div class="profile-team-lcation__timezone">
+      <div class="profile-team-location__timezone">
         <span
           class="timezone-print"
           v-bind:class="{ 'timezone-print': true, 'has-diff': timezoneDiff }"
