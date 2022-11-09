@@ -144,7 +144,7 @@ orgchart_full-profile = View full profile
 
 ## Profile Page
 
--staff-not-editable = Staff information is not editable and is shared by default with all Mozilla Staff. Please contact <a data-l10n-name="email">our HR Team</a> to request any change.
+-staff-not-editable = Staff information is not editable and is shared by default with all Mozilla Staff. Please contact PeopleOps to request any change.
 
 profile = Profile
 
