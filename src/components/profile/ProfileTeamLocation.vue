@@ -51,10 +51,11 @@
           >{{ officeLocation }}</RouterLink
         >
       </span>
+      <!-- Temporarily hidden for IAM-992 testing. Uncomment when Workday timezones are passed through unmodified. (atoll) -->
       <div class="profile-team-location__timezone">
         <span
           class="timezone-print"
-          >{{ timezone }}</span
+          ><!-- {{ timezone }} --></span
         >
       </div>
     </div>
