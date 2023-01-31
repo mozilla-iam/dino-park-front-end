@@ -82,7 +82,8 @@ export default {
       return this.team || this.entity;
     },
     showLocation() {
-      return this.location || this.officeLocation; // || this.timezone;
+      // Temporarily hide location altogether, pending a more detailed removal.
+      return false; // this.location || this.officeLocation; // || this.timezone;
     },
     officeLocationSearchString() {
       return 'officeLocation:"' + this.officeLocation + '"'; // eslint-disable-line
