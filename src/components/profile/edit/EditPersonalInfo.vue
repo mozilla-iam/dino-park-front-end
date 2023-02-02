@@ -354,7 +354,10 @@
           type="text"
           id="field-cost-center"
           disabled
-          :value="staffInformation.costCenter.value"
+          :value="
+            staffInformation.costCenter.value &&
+            staffInformation.costCenter.value.replace(/\.0$/, '')
+          "
         />
         <PrivacySetting
           :label="fluent('profile_cost-center', 'privacy')"
