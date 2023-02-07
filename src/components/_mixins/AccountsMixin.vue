@@ -28,7 +28,7 @@ const EXTERNAL_ACCOUNTS = {
     moz: true,
     text: 'Mozilla Matrix',
     icon: 'matrix',
-    uri: 'https://matrix.to/#/@@@?web-instance%5Belement.io%5D=chat.mozilla.org'
+    uri: 'https://matrix.to/#/@@@?web-instance%5Belement.io%5D=chat.mozilla.org',
   },
   MOZPHAB: { moz: true, text: 'Mozilla Phabricator', icon: 'mozphab' },
   MOZILLAPONTOON: {
