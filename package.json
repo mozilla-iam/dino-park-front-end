@@ -56,7 +56,7 @@
     "svg-sprite-loader": "^5.0.0",
     "vue-axe": "^2.3.0",
     "vue-template-compiler": "^2.6.11",
-    "yaml": "^1.10.0"
+    "yaml": "^2.2.2"
   },
   "husky": {
     "hooks": {
