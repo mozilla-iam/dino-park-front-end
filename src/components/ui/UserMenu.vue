@@ -65,15 +65,6 @@
         </a>
       </li>
       <li>
-        <a
-          href="https://sso.mozilla.com/notifications"
-          id="link-usermenu-sso-dashboard"
-        >
-          <span>{{ fluent('user-menu_notifications') }}</span>
-          <Icon id="bell" :width="24" :height="24" />
-        </a>
-      </li>
-      <li>
         <span class="user-menu__faux-link">
           <span>{{ fluent('user-menu_auto-login') }}</span>
           <Icon id="sliders" :width="24" :height="24" />
