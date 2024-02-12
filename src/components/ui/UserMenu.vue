@@ -64,12 +64,6 @@
           <Icon id="dashboard" :width="24" :height="24" />
         </a>
       </li>
-      <li>
-        <span class="user-menu__faux-link">
-          <span>{{ fluent('user-menu_auto-login') }}</span>
-          <Icon id="sliders" :width="24" :height="24" />
-        </span>
-      </li>
     </ul>
     <a href="/_/logout" class="user-menu__log-out">
       <span>{{ fluent('user-menu_logout') }}</span>
