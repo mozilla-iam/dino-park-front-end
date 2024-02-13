@@ -41,8 +41,6 @@ user-menu_open = Open user menu
 user-menu_close = Close user menu
 user-menu_my-profile = My Profile
 user-menu_dashboard = Dashboard
-user-menu_notifications = Notifications
-user-menu_auto-login = Manage Auto-Login
 user-menu_logout = Log Out
 
 ## Contribute
