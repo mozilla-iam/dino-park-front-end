@@ -14,6 +14,7 @@
         <!-- TODO: fix placeholder fluent. search 'searchFormLabel' and replace with fluent in all code -->
         <input
           type="text"
+          autofocus=""
           id="search-query"
           name="query"
           v-model="searchQuery"
